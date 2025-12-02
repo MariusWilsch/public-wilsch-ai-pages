@@ -107,7 +107,21 @@ Source: [RunPod Blog - FlashBoot](https://www.runpod.io/blog/introducing-flashbo
 | **L40S** (Ada, 48GB) | ✅ $1.90/hr | ✅ Single | ✅ Single |
 | **A10G** (Ampere, 24GB) | ✅ ~$1.10/hr | ✅ Single | ✅ Single |
 
-## 10. Source References
+## 10. Commitment-Based Pricing
+
+| Provider | Term | Discount | Source |
+|----------|------|----------|--------|
+| **RunPod** | 3 months | ~15% | [RunPod Savings Plan](https://docs.runpod.io/pods/savings-plans) |
+| **RunPod** | 6 months | ~20-25% | [RunPod Savings Plan](https://docs.runpod.io/pods/savings-plans) |
+| **AWS** | 1 year | ~30% | [AWS Savings Plans](https://aws.amazon.com/savingsplans/) |
+| **AWS** | 3 years | ~50% | [AWS Savings Plans](https://aws.amazon.com/savingsplans/) |
+
+**Key Differences:**
+- RunPod maximum term: 6 months ("we currently do not offer the option to commit for one year up-front")
+- AWS maximum term: 3 years with deeper discounts
+- Neither commitment changes cold start behavior or GPU availability
+
+## 11. Source References
 
 ### AWS Official Documentation
 - [SageMaker Pricing](https://aws.amazon.com/sagemaker/pricing/)
@@ -128,6 +142,10 @@ Source: [RunPod Blog - FlashBoot](https://www.runpod.io/blog/introducing-flashbo
 - [RunPod FlashBoot Blog](https://www.runpod.io/blog/introducing-flashboot-serverless-cold-start)
 - [RunPod Serverless Overview](https://docs.runpod.io/serverless/overview)
 - [RunPod Endpoint Configurations](https://docs.runpod.io/serverless/references/endpoint-configurations)
+- [RunPod Savings Plans](https://docs.runpod.io/pods/savings-plans)
+
+### AWS Savings Plans
+- [AWS Savings Plans](https://aws.amazon.com/savingsplans/)
 
 ### Third-Party Pricing Aggregators
 - [CloudPrice - SageMaker Instances](https://cloudprice.net/aws/sagemaker/)
