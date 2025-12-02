@@ -8,9 +8,10 @@ date: 2025-12-01
 
 ## 1. Executive Summary
 
-- AWS and RunPod offer different GPU compute models with distinct trade-offs in cold start time, single-GPU availability, and pricing structure
-- Key differentiator: RunPod Serverless achieves ~500ms cold starts vs SageMaker's ~5 minutes when scaling from zero
+- AWS and RunPod offer different GPU compute models with distinct trade-offs in single-GPU availability and pricing structure
+- Key differentiator: RunPod offers single-GPU instances for high-end GPUs (A100, H100, H200, B200) where AWS requires 8x bundles
 - Data compiled from official AWS documentation and RunPod pricing pages (December 2025)
+- **Note:** For cold start mechanics, see `serverless-llm-cold-start-mechanics.md` (global)
 
 ## 2. Product Category Mapping
 
@@ -26,23 +27,7 @@ date: 2025-12-01
 | **SageMaker Async** | Queued/batch processing model - requests placed in queue, not suitable for real-time chatbot responses | [AWS Docs](https://docs.aws.amazon.com/sagemaker/latest/dg/async-inference.html) |
 | **Inferentia2** | Custom NVIDIA-alternative silicon requiring vLLM source builds, smaller ecosystem, adds deployment complexity | [AWS Neuron SDK](https://awsdocs-neuron.readthedocs-hosted.com/) |
 
-## 4. Scale-to-Zero Comparison
-
-| Aspect | RunPod Serverless | SageMaker Real-Time | Source |
-|--------|-------------------|---------------------|--------|
-| Cold Start Time | ~500ms (FlashBoot) | ~5-6 minutes | [RunPod Blog](https://www.runpod.io/blog/introducing-flashboot-serverless-cold-start), [AWS Blog](https://aws.amazon.com/blogs/machine-learning/unlock-cost-savings-with-the-new-scale-down-to-zero-feature-in-amazon-sagemaker-inference/) |
-| 95th Percentile | <2.3 seconds | ~5-6 minutes | [RunPod Blog](https://www.runpod.io/blog/introducing-flashboot-serverless-cold-start) |
-| Request Handling During Cold Start | Buffered by FlashBoot | All requests fail with `NoCapacityInvocationFailures` | [AWS Docs](https://docs.aws.amazon.com/sagemaker/latest/dg/endpoint-auto-scaling-zero-instances.html) |
-
-### Cold Start Breakdown (SageMaker)
-
-Per AWS official documentation, when scaling from zero:
-- Trigger scaling policy: ~1 minute
-- Provision EC2 instance: ~1.75 minutes
-- Load model to GPU: ~2.28 minutes
-- **Total: ~5.03 minutes**
-
-## 5. Single-GPU Availability
+## 4. Single-GPU Availability
 
 | GPU | RunPod | SageMaker Inference | EC2 | Source |
 |-----|--------|---------------------|-----|--------|
@@ -53,7 +38,7 @@ Per AWS official documentation, when scaling from zero:
 | H200 (141GB) | ✅ Single | ❌ 8x only (ml.p5e) | ❌ 8x only (p5e) | [AWS Docs](https://aws.amazon.com/ec2/instance-types/p5/) |
 | B200 (180GB) | ✅ Single | ❌ Not available | ❌ Not available | [RunPod Pricing](https://www.runpod.io/pricing) |
 
-## 6. Serverless Pricing Comparison (Scale-to-Zero)
+## 5. Serverless Pricing Comparison (Scale-to-Zero)
 
 | GPU | Memory | RunPod Serverless | SageMaker Real-Time | Delta | Source |
 |-----|--------|-------------------|---------------------|-------|--------|
@@ -64,7 +49,7 @@ Per AWS official documentation, when scaling from zero:
 | H200 | 141GB | $5.58/hr | TBD (8x only) | N/A - no single GPU | [RunPod](https://www.runpod.io/pricing) |
 | B200 | 180GB | $8.64/hr | Not available | N/A | [RunPod](https://www.runpod.io/pricing) |
 
-## 7. Always-On Pricing Comparison (Pod vs EC2)
+## 6. Always-On Pricing Comparison (Pod vs EC2)
 
 | GPU | Memory | RunPod Pod | EC2 On-Demand | EC2 Spot | Source |
 |-----|--------|------------|---------------|----------|--------|
@@ -74,29 +59,7 @@ Per AWS official documentation, when scaling from zero:
 | H100 | 80GB | ~$3.35/hr | $55.04/hr (8x p5) | $27.97/hr (8x) | [RunPod](https://www.runpod.io/pricing), [Vantage](https://instances.vantage.sh/) |
 | H200 | 141GB | ~$4.46/hr | $63.30/hr (8x p5en) | $17.27/hr (8x) | [RunPod](https://www.runpod.io/pricing), [Vantage](https://instances.vantage.sh/) |
 
-## 8. Cold Start Architecture
-
-### SageMaker Real-Time (5-6 minute cold start)
-
-When scaling from 0 → 1 instances, SageMaker provisions infrastructure from scratch:
-
-1. **EC2 Instance Provisioning** (~1-2 min): Request GPU instance from AWS pool, boot operating system, initialize networking
-2. **Container Initialization** (~1 min): Pull/load Docker container, initialize runtime environment
-3. **Model Loading** (~2-3 min): Download model weights from S3 (10-100+ GB), load into GPU VRAM, initialize inference engine
-
-Source: [AWS Blog - Scale Down to Zero](https://aws.amazon.com/blogs/machine-learning/unlock-cost-savings-with-the-new-scale-down-to-zero-feature-in-amazon-sagemaker-inference/)
-
-### RunPod FlashBoot (500ms cold start)
-
-FlashBoot achieves faster cold starts through:
-
-1. **Pre-provisioned GPU Pool**: Instances already running and waiting for assignment - no EC2-style provisioning delay
-2. **Container Caching**: Popular containers kept warm at edge locations - no pull/download time
-3. **Model Snapshots**: GPU memory state restored from snapshot - skips full model loading step
-
-Source: [RunPod Blog - FlashBoot](https://www.runpod.io/blog/introducing-flashboot-serverless-cold-start)
-
-## 9. GPU Generation Availability Summary
+## 7. GPU Generation Availability Summary
 
 | Generation | RunPod Serverless | SageMaker Inference | EC2 |
 |------------|-------------------|---------------------|-----|
@@ -107,7 +70,7 @@ Source: [RunPod Blog - FlashBoot](https://www.runpod.io/blog/introducing-flashbo
 | **L40S** (Ada, 48GB) | ✅ $1.90/hr | ✅ Single | ✅ Single |
 | **A10G** (Ampere, 24GB) | ✅ ~$1.10/hr | ✅ Single | ✅ Single |
 
-## 10. Commitment-Based Pricing
+## 8. Commitment-Based Pricing
 
 | Provider | Term | Discount | Source |
 |----------|------|----------|--------|
@@ -121,7 +84,7 @@ Source: [RunPod Blog - FlashBoot](https://www.runpod.io/blog/introducing-flashbo
 - AWS maximum term: 3 years with deeper discounts
 - Neither commitment changes cold start behavior or GPU availability
 
-## 11. Source References
+## 9. Source References
 
 ### AWS Official Documentation
 - [SageMaker Pricing](https://aws.amazon.com/sagemaker/pricing/)
