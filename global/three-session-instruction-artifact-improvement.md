@@ -65,6 +65,7 @@ We will use a three-session model for instruction artifact improvements:
 ---
 
 **Key Resources:**
+- **Architecture blueprint:** [improve-system-architecture.md](improve-system-architecture.md) (detailed implementation guide)
 - Implementation tracking: [Issue #49](https://github.com/DaveX2001/deliverable-tracking/issues/49)
 - Conversation extraction: `soloforce/research/scripts/extract_conversation.py`
 - Related: `skill-lifecycle-execution-timing.md` (skill discovery pattern)
