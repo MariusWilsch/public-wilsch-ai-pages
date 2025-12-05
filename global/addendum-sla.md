@@ -53,8 +53,7 @@ All services under this Agreement are provided remotely. Should on-site support 
 ### SLA.3.1 Reporting Channels
 
 - **Primary:** [PRIMARY_CHANNEL - e.g., WhatsApp Group, Email]
-- **Email:** [SUPPORT_EMAIL]
-- **Phone:** [SUPPORT_PHONE] (for urgent cases during coverage hours)
+- **Email:** marius@wilsch-ai.com
 
 ### SLA.3.2 Issue Resolution Confirmation
 
