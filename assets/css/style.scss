@@ -1,0 +1,64 @@
+---
+---
+
+@import "{{ site.theme }}";
+
+/* Page wrapper for sticky footer */
+.page-wrapper {
+  min-height: 100vh;
+  display: flex;
+  flex-direction: column;
+}
+
+/* Header styling */
+.site-header {
+  text-align: center;
+  padding: 40px 20px 20px;
+  border-bottom: 1px solid #e1e4e8;
+  background: #fff;
+}
+
+.site-logo {
+  max-width: 200px;
+  height: auto;
+}
+
+/* Main content area */
+main.markdown-body {
+  flex: 1;
+  max-width: 900px;
+  margin: 0 auto;
+  padding: 40px 20px;
+}
+
+/* Footer styling */
+.site-footer {
+  text-align: center;
+  padding: 20px;
+  border-top: 1px solid #e1e4e8;
+  background: #fff;
+  font-size: 12px;
+  color: #586069;
+  margin-top: auto;
+}
+
+.footer-content {
+  max-width: 900px;
+  margin: 0 auto;
+}
+
+/* Print styles */
+@media print {
+  .site-header {
+    border-bottom: none;
+    padding: 20px;
+  }
+  
+  .site-footer {
+    position: fixed;
+    bottom: 0;
+    left: 0;
+    right: 0;
+    border-top: 1px solid #000;
+  }
+}
