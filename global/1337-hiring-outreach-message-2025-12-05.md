@@ -7,7 +7,10 @@ publish: true
 
 **Purpose:** Message to 1337/42 Network Staff to learn the formal process for listing job opportunities.
 
-**Recipients:** Bijo (Staff-Benguerir) and Mountassir (Staff) via Discord jobs-and-internships channel.
+**Recipients:**
+- Bijo (Staff-Benguerir) - Discord: `bijo_bijo`
+- Mountassir (Staff) - Discord: `mountassir`
+- Channel: Discord jobs-and-internships
 
 ---
 
