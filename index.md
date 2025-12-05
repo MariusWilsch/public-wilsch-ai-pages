@@ -3,24 +3,15 @@
 
 # Wilsch AI Services - Documents
 
-## Project Documents
+## All Documents
 
-### ROHDEX
-- [Service Level Agreement (Dezember 2025)](/public-wilsch-ai-pages/project/rohdex/sla-2025-12)
-
-### Archibus FM Assistant
-- [Documentation](/public-wilsch-ai-pages/project/archibus-fm-assistant/)
-
-### Paul YouTube Fullstack
-- [Faceless Reset Plan](/public-wilsch-ai-pages/project/paul_youtube_fullstack/faceless-reset-plan-talking-points)
+{% assign sorted_pages = site.pages | sort: "path" %}
+{% for page in sorted_pages %}
+{% if page.path contains ".md" and page.path != "index.md" %}
+- [{{ page.path | remove: ".md" | replace: "/", " / " }}]({{ page.url | relative_url }})
+{% endif %}
+{% endfor %}
 
 ---
 
-## Templates & Guides
-
-- [Base B2B Contract Template](/public-wilsch-ai-pages/global/base-b2b)
-- [SLA Addendum](/public-wilsch-ai-pages/global/addendum-sla)
-
----
-
-*Internal documentation portal for Wilsch AI Services OÜ*
+*Auto-generated document index for Wilsch AI Services OÜ*
