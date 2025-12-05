@@ -8,13 +8,19 @@ publish: true
 
 ## Concept
 
-Programmatic tool calling = executing tools through code rather than through Claude's native tool-use flow. This enables orchestration patterns where one system coordinates multiple tool calls, handles errors programmatically, or builds higher-level abstractions on top of raw tools.
+Programmatic tool calling = executing tools through code rather than through Claude's native tool-use flow. Instead of Claude requesting tools one at a time with each result returning to context, Claude writes code that calls multiple tools, processes outputs, and controls what enters the context window.
+
+Anthropic reports 98.7% token reduction in workflows using this pattern.
 
 **Use cases:**
 - Orchestrating multi-step workflows
 - Building agents that call tools in loops
-- Testing tools outside of Claude conversations
+- Processing large datasets without context overflow
 - Creating tool pipelines with error handling
+
+**Official sources:**
+→ [Programmatic Tool Calling - Claude Docs](https://platform.claude.com/docs/en/agents-and-tools/tool-use/programmatic-tool-calling)
+→ [Advanced Tool Use - Anthropic Engineering](https://www.anthropic.com/engineering/advanced-tool-use)
 
 ## Options
 
