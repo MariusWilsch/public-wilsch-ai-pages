@@ -11,11 +11,9 @@ publish: true
 
 ---
 
-## Message
+## Message to Bijo/Mountassir
 
-> Hi,
->
-> I'm a 1337 Khouribga alumni currently running an AI development company. I'm looking to potentially hire a developer from the network.
+> Hi, I got your contact through Yassine. I'm a 1337 Khouribga alumni currently running an AI development company. I'm looking to potentially hire a developer from the network.
 >
 > **What I offer:**
 > - Training on my AI development workflow (structured process I've built)
@@ -29,6 +27,12 @@ publish: true
 > I understand it's internship season. Could you walk me through the formal process for listing opportunities through 42? And what information would you need from me to get started?
 >
 > Thanks in advance.
+
+---
+
+## Parallel Message to Yassine
+
+> Hey Yassine, I'm reaching out to Bijo and Mountassir now about the hiring process. If you could give them a quick vouch, that'd be helpful. Thanks!
 
 ---
 
