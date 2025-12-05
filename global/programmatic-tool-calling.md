@@ -18,9 +18,29 @@ Programmatic tool calling = executing tools through code rather than through Cla
 
 ## Options
 
+### Code Mode (UTCP)
+
+Plug-and-play library enabling agents to call MCP and UTCP tools via code execution. The most popular option with universal tool calling abstraction.
+
+**How it works:** Framework-agnostic approach - agents write code that calls tools, reducing token usage through in-environment processing.
+
+**Status:** Active, well-maintained. 1,100+ stars.
+
+→ [universal-tool-calling-protocol/code-mode](https://github.com/universal-tool-calling-protocol/code-mode)
+
+### Open PTC Agent
+
+Open source implementation specifically designed for Programmatic Tool Calling (PTC) pattern with MCP.
+
+**How it works:** Purpose-built for the PTC pattern - code execution with direct MCP tool access.
+
+**Status:** Active. 440+ stars.
+
+→ [Chen-zexi/open-ptc-agent](https://github.com/Chen-zexi/open-ptc-agent)
+
 ### MCP Code Execution Mode
 
-Python runtime that can load MCP servers and call their tools programmatically.
+Python runtime that can load MCP servers and call their tools programmatically. Runs in isolated rootless containers.
 
 **How it works:** Pass `servers=["server_name"]` parameter to load MCPs dynamically, then use `session.call_tool()` to invoke tools.
 
