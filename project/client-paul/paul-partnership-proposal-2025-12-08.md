@@ -58,10 +58,9 @@ Paul's system today:
 - Neither side locked into terms that no longer reflect reality
 
 **Lifetime platform access**
-- I host the infrastructure, so free access to the system
 - Enables running our own YouTube channels without subscription fees
 
 **Roland mentorship from Paul**
-- Weekly calls to transfer YouTube strategy knowledge
-- Evaluated quarterly (continue/reduce based on progress)
-- Roland takes client-facing work off Paul's plate in exchange
+- Calls to transfer YouTube strategy knowledge to my team
+- Evaluated agenda quarterly (continue/reduce based on progress)
+- My team takes client-facing work off Paul's team in exchange
