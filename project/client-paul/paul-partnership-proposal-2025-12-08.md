@@ -14,16 +14,16 @@ Paul's system today:
 
 ## 2. Target State
 
-**Phase 1a - Baseline Validation**
+**Phase 1 - Baseline Validation**
 - Deploy Paul's original tar on my GPU box
 - Paul tests (prove his code works on different infra)
 
-**Phase 1b - TTS Integration**
+**Phase 2 - TTS Integration**
 - Replace TTS + Whisper with parallel TTS
 - Paul tests again (validate cost, availability, reliability)
 - Eric onboard as first client
 
-**Phase 2 - Scale & Multi-tenant (Dec 15-31)**
+**Phase 3 - Scale & Multi-tenant (Dec 15-31)**
 - Parallelize entire pipeline (image prompts, image gen, video gen)
 - Consolidate to 1 frontend, 1 backend
 - Proper database with multi-tenancy
@@ -47,7 +47,21 @@ Paul's system today:
 
 ## 5. Proposal Terms
 
-- **60/40 split** on net profit (deduct infra first, split remainder)
-- **Quarterly reevaluation** - mutual protection, revisit if contributions change
-- **Lifetime platform access** - I host the infrastructure
-- **Roland mentorship from Paul** - weekly calls, evaluated quarterly (non-negotiable)
+**60/40 split** on net profit
+- I pay infrastructure costs upfront
+- Deduct infra from gross revenue, split remainder 60/40
+- Example: $1000 revenue - $200 infra = $800 → Paul $480, Marius $320
+
+**Quarterly reevaluation**
+- Mutual protection clause
+- Revisit split if contributions change (workload, sales, codebase ownership)
+- Neither side locked into terms that no longer reflect reality
+
+**Lifetime platform access**
+- I host the infrastructure, so free access to the system
+- Enables running our own YouTube channels without subscription fees
+
+**Roland mentorship from Paul**
+- Weekly calls to transfer YouTube strategy knowledge
+- Evaluated quarterly (continue/reduce based on progress)
+- Roland takes client-facing work off Paul's plate in exchange
