@@ -14,10 +14,13 @@ Paul's system today:
 
 ## 2. Target State
 
-**Phase 1 - Validation (This week)**
-- Deploy Paul's tar on my GPU box (prove code works elsewhere)
+**Phase 1a - Baseline Validation**
+- Deploy Paul's original tar on my GPU box
+- Paul tests (prove his code works on different infra)
+
+**Phase 1b - TTS Integration**
 - Replace TTS + Whisper with parallel TTS
-- Validate cost, availability, reliability
+- Paul tests again (validate cost, availability, reliability)
 - Eric onboard as first client
 
 **Phase 2 - Multi-tenant (Dec 15-31)**
