@@ -23,7 +23,8 @@ Paul's system today:
 - Paul tests again (validate cost, availability, reliability)
 - Eric onboard as first client
 
-**Phase 2 - Multi-tenant (Dec 15-31)**
+**Phase 2 - Scale & Multi-tenant (Dec 15-31)**
+- Parallelize entire pipeline (image prompts, image gen, video gen)
 - Consolidate to 1 frontend, 1 backend
 - Proper database with multi-tenancy
 - Authentication and data separation
