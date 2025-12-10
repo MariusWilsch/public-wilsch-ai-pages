@@ -22,17 +22,20 @@ Two commands orchestrate a three-session workflow for fixing instruction artifac
 ```
 Session A (Project): Notice issue → /flag-for-improvement → Issue created
                                                               ↓
-Session B (soloforce): /improve-system → Pick issue → Worktree → Extract convo
+Session B (soloforce): /improve-system → FIFO + related hint → User picks
                                                               ↓
-                       Load background (ADRs, hooks, persuasion) → Rubber-duck
+                       Worktree → Extract convo → Layer 1 context
                                                               ↓
-                       Diagnose artifact type (command/skill/hook/protocol)
+                       /rubber-duck → Diagnose artifact type
                                                               ↓
-                       Clarity phases → Execute → PRE-COMMIT PAUSE
+                       Clarity phases → fix-artifact skill (Layer 2) → Execute
+                                                              ↓
+                       PRE-COMMIT PAUSE → "Verify in project session"
                                                               ↓
 Session A2 (Project): Verify fix → Report back
                                                               ↓
-Session B (cont): Confirm → Push worktree to main → Commit with issue ref
+                       ↙ If failed: back to rubber-duck with new context
+Session B (cont): Confirm → PR via worktree → Merge (auto-closes issue)
 ```
 
 ## Session A: Failure Capture
@@ -54,17 +57,49 @@ Session B (cont): Confirm → Push worktree to main → Commit with issue ref
 
 ## Session B: Diagnosis & Fix
 
+### Issue Selection (FIFO + Related Hint)
+
 | Step | Action | Notes |
 |------|--------|-------|
-| 1 | `/improve-system` (no args) | Lists all `CLAUDE-CODE-IMPROVEMENTS` issues |
-| 2 | User picks issue | - |
-| 3 | Create worktree | Via worktree skill - isolated branch |
-| 4 | Extract conversation | Script pulls from path in issue |
-| 5 | Load background context | ADRs, persuasion techniques, hooks docs |
-| 6 | `/rubber-duck` diagnosis | Includes artifact type decision |
-| 7 | Clarity phases | Requirements → Implementation → Evaluation |
-| 8 | Execute changes | In worktree |
-| 9 | PRE-COMMIT PAUSE | "Verify in new project session" |
+| 1 | `/improve-system` | Fetches oldest open issue (FIFO default) |
+| 2 | Semantic search for related | Search title+body for similar issues |
+| 3 | Present list to user | "Oldest: #49. Related: #137, #133 (step-skipping)" |
+| 4 | User picks issue | Can choose oldest or any from list |
+
+### Setup & Context (Progressive Disclosure)
+
+| Step | Action | Notes |
+|------|--------|-------|
+| 5 | Create worktree | Via worktree skill - isolated branch |
+| 6 | Extract conversation | Script pulls from path in issue |
+| 7 | **Layer 1 context** | Brief artifact summary (see below) |
+| 8 | `/rubber-duck` diagnosis | Outputs artifact type decision |
+
+**Layer 1 (before diagnosis, ~100 tokens):**
+```
+Artifact Types:
+- Command (instruction-based) → fix with /stage
+- Skill (reusable workflow) → fix with skill-creator
+- Hook (automatic enforcement) → fix via settings.json
+- Protocol (core patterns) → fix via CLAUDE.md edit
+```
+
+### Fix Workflow
+
+| Step | Action | Notes |
+|------|--------|-------|
+| 9 | `/requirements-clarity` | WHAT to fix |
+| 10 | `/implementation-clarity` | HOW to fix → `fix-artifact` skill discovered |
+| 11 | `/evaluation-clarity` | Success criteria |
+| 12 | Execute + **Layer 2 context** | `fix-artifact` skill loads relevant reference |
+| 13 | PRE-COMMIT PAUSE | "Verify in new project session" |
+
+### Failed Verification Handling
+
+If user returns from Session A2 saying "didn't work":
+- Return to Step 8 (rubber-duck) with NEW conversation context
+- Iterate diagnosis and fix with updated understanding
+- Issue stays open until fix verified
 
 ## Artifact Type Diagnostic
 
@@ -95,8 +130,10 @@ Part of `/rubber-duck` diagnosis - the fix depends on artifact type:
 | Step | Action | Notes |
 |------|--------|-------|
 | 1 | User confirms verification | - |
-| 2 | Push worktree to main | Only after verification passes |
-| 3 | Commit with issue reference | Auto-links to tracking |
+| 2 | Create PR via worktree skill | PR description includes `Fixes #X` |
+| 3 | Merge PR | GitHub auto-closes issue on merge |
+
+**Issue Closure:** Via PR workflow with `Fixes DaveX2001/deliverable-tracking#X` in PR description. GitHub auto-closes the issue when PR merges. This is handled by the worktree skill.
 
 ## Component Inventory
 
@@ -118,17 +155,28 @@ Part of `/rubber-duck` diagnosis - the fix depends on artifact type:
 
 | Component | Location | Purpose |
 |-----------|----------|---------|
-| `/flag-for-improvement` | `~/.claude/commands/` | Session A entry point |
+| `/flag-for-improvement` | `~/.claude/commands/` | Session A entry point ✓ Built |
 | `/improve-system` | `~/.claude/commands/` | Session B orchestrator |
+| `fix-artifact` | `~/.claude/skills/` | Layer 2 context loader (progressive disclosure) |
 
-## Background Context for /improve-system
+## fix-artifact Skill Structure
 
-Documents to load during Session B:
+Progressive disclosure skill for loading artifact-specific fix context:
 
-- Hook documentation (what hooks exist, capabilities)
-- Persuasion techniques ADRs
-- Protocol structure (CLAUDE.md sections)
-- Artifact type guidance (this document)
+```
+fix-artifact/
+├── SKILL.md (workflow + selection guidance)
+└── references/
+    ├── command.md (ADR-004, /stage, anthropic-template)
+    ├── skill.md (skill-lifecycle, persuasion, skill-creator)
+    ├── hook.md (settings.json pattern, example hooks)
+    └── protocol.md (ADR-008, CLAUDE.md structure)
+```
+
+**Discovery:** `(discovery: implementation-clarity)` - discovered during implementation-clarity phase
+**Execution:** Execute phase - loads relevant reference file based on diagnosed artifact type
+
+When diagnosis outputs "command" → Claude reads only `references/command.md`
 
 ## Introspection Reference
 
