@@ -1,84 +1,62 @@
-# DS-Kit Navigation RAG System - Estimate Document
+# DS-Kit Navigation RAG System - Festpreisangebot
 [[client-iitr]]
 
 ---
 publish: true
 ---
 
-## Purpose
+## Status
 
-- Internal document for client confirmation call
-- Price NOT FINALIZED pending confirmation
-
----
-
-## Input Sources
-
-- **DS-Kit PDF** (25 pages): Text-only extraction, ignore images
-- **FAQ Excel** (~15 Q&A pairs): Mix of DS-Kit answerable and out-of-scope business questions
-- FAQ = fallback for questions DS-Kit cannot answer
+**FINALIZED** - Ready for client
 
 ---
 
-## Infrastructure
+## Pflichtenheft
 
-- Fresh standalone deployment on IITR-STAGING
-- Does not touch existing Urteile RAG system
-
----
-
-## Output Format
-
-- Text-only responses (sprachfähig for TTS)
-- No links, no images, no document attachments
+Full technical specification: [Pflichtenheft DS-Kit Navigationssystem](https://mariuswilsch.github.io/public-wilsch-ai-pages/project/iitr/pflichtenheft-dskit-navigation)
 
 ---
 
-## LLM
+## Scope Summary
 
-- Model selection TBD (part of this work)
-
----
-
-## Estimate
-
-| Work Item | Hours |
-|-----------|-------|
-| Infrastructure deploy | 2-4 |
-| DS-Kit PDF processing | 4-6 |
-| FAQ processing | 2-3 |
-| Ingestion | 2-3 |
-| RAG pipeline + prompt | 4-6 |
-| Model selection/testing | 2-4 |
-| Testing + evaluation | 2-4 |
-| Revisions (1-2 rounds) | 4-8 |
-
-**Total**: 22-38 hours
+- RAG-System für DS-Kit Navigationsfragen ("Wo finde ich X?")
+- Streaming-Antworten in Echtzeit (Typesense v29 native RAG)
+- Konversationsverlauf mit Follow-up Fragen
+- Chat-Interface via OpenWebUI
+- Verarbeitung: PDF-Leitfaden + Excel Q&A + 56 ZIP-Vorlagen
+- Text-only Ausgabe (sprachfähig)
+- Evaluation: >90% korrekte Antworten auf Testfragen.xlsx
 
 ---
 
-## Pricing
+## Festpreis
 
-- Rate: EUR 80/hour
-- Range: EUR 1,760 - EUR 3,040
-- Middle: EUR 2,400 (30h)
-- Type: Festpreisangebot (fixed price)
+| Work Package | Hours |
+|--------------|-------|
+| Vision preprocessing (56 templates) | 3h |
+| Typesense v29 + indexing | 7h |
+| OpenWebUI integration | 4h |
+| Output formatting + prompt engineering | 4h |
+| Evaluation + iteration (>90% target) | 13h |
+| Deployment + documentation | 4h |
+| Handoff + support | 1h |
+| **Total** | **36h** |
 
-**STATUS: NOT FINALIZED**
+**Festpreis: EUR 2.880** (36h × EUR 80/h)
+
+---
+
+## Acceptance
+
+- Binary acceptance: >90% correct answers on Testfragen.xlsx
+- Delivery includes iteration until threshold achieved
 
 ---
 
 ## Out of Scope
 
-- Images/screenshots
-- Document linking
-- Full Technical Design Doc features (OCR, navigation paths, Keycloak)
-
----
-
-## Client Confirmation Checklist
-
-- [ ] DS-Kit PDF correct version?
-- [ ] FAQ Excel complete?
-- [ ] Text-only output confirmed?
-- [ ] Price range acceptable?
+- Images/screenshots in responses
+- Document linking / URL references
+- OCR for scanned documents
+- Keycloak authentication
+- Navigation path visualization
