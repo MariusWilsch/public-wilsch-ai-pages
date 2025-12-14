@@ -1,6 +1,5 @@
 ---
 publish: true
-date: 2025-12-03
 ---
 
 # AWS GPU Elimination Summary
