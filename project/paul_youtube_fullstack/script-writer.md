@@ -81,3 +81,21 @@ Decouples script writing workflow from video queue processing. Allows admins to 
 ### Related
 - Issue #226: Absorb Script-Writer into Main frontend
 - Issue #121: Parent issue for frontend consolidation
+
+## Feature Architecture
+
+**Three tabs in script-writer-frontend, all to be absorbed together:**
+
+| Tab | Component | Backend Endpoints | Table |
+|-----|-----------|-------------------|-------|
+| Script Jobs | ScriptManagement.jsx | `/api/scripts/*` | `scripts`, `script_assignments` |
+| My Assignments | MyAssignments.jsx | `/api/my-assignments/*` | `script_assignments` |
+| Script Files | App.jsx (inline) | `/api/script-writer/*` | `script_entry` |
+
+**Script Jobs** = Admin creates jobs → assigns to scripters
+**My Assignments** = Scripters view/complete assigned work (upload via `script_assignments.file_path`)
+**Script Files** = Standalone file repository with text extraction
+
+### Backend Files
+- `script_job_endpoints.py` - Script Jobs + My Assignments (`/api/scripts/*`, `/api/my-assignments/*`)
+- `script_writer_endpoints.py` - Script Files (`/api/script-writer/*`)
