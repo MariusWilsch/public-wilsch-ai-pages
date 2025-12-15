@@ -34,27 +34,27 @@ Phase 3: Post-Processing (Flask - unchanged)
 ├─ Verify output, save metadata, build segments
 ```
 
-## Stage 1: Handler Development (Slices 1-4) ✅ COMPLETE
+## Stage 1: Handler Development (Slices 1-4)
 
 Keep Flask code structure. Replace only the `model.generate()` call with a RunPod handler call. Handler absorbs more functionality with each slice.
 
-| Slice | Handler Responsibility | Flask Responsibility | Status |
-|-------|----------------------|---------------------|--------|
-| 1 | `model.generate()` only | Candidate loop, validation, selection, concatenation | ✅ Done |
-| 2 | Generate N candidates, return all | Validate each locally, select best locally | ✅ Done |
-| 3 | Generate N + Whisper validate each | Select best from scores | ✅ Done |
-| 4 | Generate N + Validate + Select best | Just receive 1 audio per chunk, concatenate | ✅ Done |
+| Slice | Handler Responsibility | Flask Responsibility | Test |
+|-------|----------------------|---------------------|------|
+| 1 | `model.generate()` only | Candidate loop, validation, selection, concatenation | AssemblyAI transcribe → compare |
+| 2 | Generate N candidates, return all | Validate each locally, select best locally | Same |
+| 3 | Generate N + Whisper validate each | Select best from scores | Same |
+| 4 | Generate N + Validate + Select best | Just receive 1 audio per chunk, concatenate | Same |
 
 **After Slice 4:** Handler is complete. It accepts text, returns best audio. Flask loops through chunks and concatenates results.
 
-## Stage 2: Parallel Dispatch (Slice 5) ✅ COMPLETE
+## Stage 2: Parallel Dispatch (Slice 5)
 
 **Decision:** Stay in Flask[async] instead of migrating to FastAPI. FastAPI is deferred to future work.
 
-| Slice | Change | Status |
-|-------|--------|--------|
-| 5 | Flask[async] + `asyncio.gather()` for parallel dispatch | ✅ Done |
-| 6+ | FastAPI migration (deferred) | 📅 Future |
+| Slice | Change | Why |
+|-------|--------|-----|
+| 5 | Flask[async] + `asyncio.gather()` for parallel dispatch | Performance gain without framework migration |
+| 6+ | FastAPI migration (deferred) | Architectural modernization when needed |
 
 **Why Flask[async] instead of FastAPI:**
 - Performance gain is the goal, not architectural modernization
