@@ -18,10 +18,11 @@ Decouples script writing workflow from video queue processing. Allows admins to 
 4. **Manage Assignments** - Remove users, delete jobs
 
 ### Scripter Workflow
-1. **View Assignments** - See all assigned work (pending + in-progress only)
+1. **View Assignments** - See all assigned work (filter by status)
 2. **Start Working** - Mark assignment as in-progress
-3. **Complete Work** - Submit with optional notes
-4. **Auto-hide** - Completed work disappears from view
+3. **Upload Files** - Attach PDF, DOC, DOCX, TXT (10MB limit)
+4. **Complete Work** - Submit with optional notes and file
+5. **Auto-hide** - Completed work hidden by default (can filter to view)
 
 ### Roles
 - **Admin/Scripter role**: Can create jobs, assign, track
@@ -38,11 +39,29 @@ Decouples script writing workflow from video queue processing. Allows admins to 
 
 ### Data Model
 - `scripts` table: id, name, description, created_by
-- `script_assignments` table: script_id, user_id, status, notes, timestamps
+- `script_assignments` table: script_id, user_id, status, notes, file_path, timestamps
+
+### API Endpoints
+
+**Admin (requires admin role):**
+- `GET/POST /api/scripts` - List/create scripts
+- `GET/PUT/DELETE /api/scripts/<id>` - Read/update/delete script
+- `GET /api/scripts/<id>/assignments` - View assignments
+- `POST /api/scripts/<id>/assign` - Assign to users
+- `DELETE /api/scripts/<id>/unassign/<user_id>` - Remove assignment
+- `GET /api/scripts/available-users` - List assignable users
+
+**Scripter (requires scripter/admin role):**
+- `GET /api/my-assignments` - List own assignments (`?status=` filter)
+- `POST /api/my-assignments/<id>/start` - Mark in_progress
+- `POST /api/my-assignments/<id>/complete` - Complete with optional file
+- `PUT /api/my-assignments/<id>/notes` - Update notes
+- `POST /api/my-assignments/<id>/upload` - Upload file
+- `GET /api/my-assignments/<id>/download` - Download file
 
 ### Frontend Components
 - `ScriptManagement.jsx` - Admin view (create, assign, track)
-- `MyAssignments.jsx` - Scripter view (view, start, complete)
+- `MyAssignments.jsx` - Scripter view (view, start, complete, upload)
 
 ## Done
 
@@ -55,9 +74,10 @@ Decouples script writing workflow from video queue processing. Allows admins to 
 
 ### Implementation Status
 - **Frontend**: Complete (`paul_queue/script-writer-frontend/`)
-- **Backend**: Spec exists (`paul_queue/SCRIPT_JOBS_FEATURE.md`), implementation may be on nuca-systems only
+- **Backend**: Complete (`paul_queue/app/script_job_endpoints.py`) - Flask blueprint
 - **Database**: Schema ready (migrations exist)
+- **Auth**: Custom Flask JWT with `@token_required` decorator (role-based)
 
 ### Related
 - Issue #226: Absorb Script-Writer into Main frontend
-- Backend uses Supabase JWT with `user_roles` claim for auth
+- Issue #121: Parent issue for frontend consolidation
