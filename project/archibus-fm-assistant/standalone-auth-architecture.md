@@ -53,19 +53,8 @@ When a backend supports only session/cookie authentication (no tokens):
 **Problem:** Session cookies are domain-bound. MCP server on different domain cannot use backend's session cookie.
 
 **Solution - Proxy Pattern:**
-```
-    ┌─────────────────────────────────────────────────────────────────┐
-    │                    PROXY PATTERN FOR SESSION AUTH               │
-    └─────────────────────────────────────────────────────────────────┘
 
-    ┌─────────┐       ┌─────────────────┐       ┌─────────────────┐
-    │   MCP   │──────▶│   YOUR PROXY    │──────▶│   BACKEND       │
-    │ SERVER  │ calls │   SERVER        │ with  │   (session)     │
-    │         │       │                 │ cookie│                 │
-    └─────────┘       │ holds session   │       └─────────────────┘
-                      │ cookie per user │
-                      └─────────────────┘
-```
+<img src="proxy-pattern.png" width="100%" alt="Proxy Pattern for Session-Based Authentication">
 
 **Recommendation:** Prefer OAuth path. If backend lacks OAuth, request backend owner add token-based API auth before implementing proxy.
 
