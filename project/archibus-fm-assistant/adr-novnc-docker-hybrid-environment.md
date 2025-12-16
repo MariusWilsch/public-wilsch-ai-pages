@@ -21,11 +21,11 @@ We will use **noVNC + Docker** (chromote image) to stream a server-side Chrome b
 
 **Architecture - View-Only Mode (MVP):**
 
-![View-Only Mode: User watches via noVNC while AI controls via CDP](novnc-view-only.png)
+<img src="novnc-view-only.png" width="100%" alt="View-Only Mode: User watches via noVNC while AI controls via CDP">
 
 **Architecture - Interactive Mode (Future):**
 
-![Interactive Mode: User can click/type through noVNC while AI also controls](novnc-interactive.png)
+<img src="novnc-interactive.png" width="100%" alt="Interactive Mode: User can click/type through noVNC while AI also controls">
 
 **Key configuration:**
 - Chrome `--kiosk` or `--app` flags for clean UI (no address bar)
