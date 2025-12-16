@@ -23,7 +23,7 @@ We propose the **OAuth Multi-Provider Pattern** where LibreChat acts as an OAuth
 
 ### Core Architecture
 
-![Standalone Auth Flow](standalone-auth-flow.png)
+<img src="standalone-auth-flow.png" width="100%" alt="Standalone Auth Flow">
 
 **Ownership Boundaries:**
 - **Blue (We Control):** LibreChat + MCP + Bruce BEM
