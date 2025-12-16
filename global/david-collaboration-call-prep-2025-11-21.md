@@ -6,7 +6,6 @@ publish: true
 
 **Date:** 2025-11-21
 **Goal:** Clarify how the deliverable tracking system should work
-**Related:** [[business-operations]]
 
 ---
 

@@ -63,16 +63,16 @@ We will use **noVNC + Docker** (chromote image) to stream a server-side Chrome b
 ## Alternatives Considered
 
 | Alternative | Rejection Reason |
-|-------------|------------------|
-| **Browserless.io** | Live viewing is paid feature; self-hosted similar complexity |
-| **CDP Screencast** | Frame-by-frame delivery (choppy), requires custom WebSocket relay |
-| **Apache Guacamole** | Full remote desktop stack - overkill for browser-only viewing |
-| **Puppeteer-stream** | Requires ffmpeg, designed for recording not live streaming |
+| --- | --- |
+| Browserless.io | Live viewing is paid feature; self-hosted similar complexity |
+| CDP Screencast | Frame-by-frame delivery (choppy), requires custom WebSocket relay |
+| Apache Guacamole | Full remote desktop stack - overkill for browser-only viewing |
+| Puppeteer-stream | Requires ffmpeg, designed for recording not live streaming |
 
 ## Scaling Model
 
-| Server (16-core/64GB) | Light Usage | Medium Usage |
-|-----------------------|-------------|--------------|
+| Server (16-core 64GB) | Light Usage | Medium Usage |
+| --- | --- | --- |
 | Containers | 8-12 | 4-8 |
 | RAM per container | 2GB | 3GB |
 | Use case | Static forms | JS-heavy pages |
@@ -80,30 +80,33 @@ We will use **noVNC + Docker** (chromote image) to stream a server-side Chrome b
 ## Gap Analysis (Open Items)
 
 ### Covered by This Architecture
+
 | Requirement | Status |
-|-------------|--------|
-| User sees what AI creates | ✅ noVNC streams Chrome display |
-| No client install | ✅ HTML5 viewer in any browser |
-| Read-only MVP | ✅ VNC view-only mode |
-| AI navigates to link | ✅ CDP `navigate_page` via port 9222 |
-| Hosted server-side | ✅ Docker container |
-| Hide Chrome UI (kiosk) | ✅ Chrome `--kiosk` or `--app` flags |
-| User clicking (future) | ✅ Disable view-only = enabled |
+| --- | --- |
+| User sees what AI creates | Done - noVNC streams Chrome display |
+| No client install | Done - HTML5 viewer in any browser |
+| Read-only MVP | Done - VNC view-only mode |
+| AI navigates to link | Done - CDP navigate_page via port 9222 |
+| Hosted server-side | Done - Docker container |
+| Hide Chrome UI (kiosk) | Done - Chrome kiosk or app flags |
+| User clicking (future) | Done - Disable view-only = enabled |
 
 ### Not Yet Addressed (MVP Doesn't Require)
+
 | Gap | Why It Matters at Scale | MVP Impact |
-|-----|-------------------------|------------|
-| **User → Container routing** | LibreChat needs to know which container's port 9222 to connect to | None (single container) |
-| **noVNC URL routing** | User's browser must be directed to their container's noVNC port | None (single URL) |
-| **Container lifecycle** | When to spawn/destroy containers, pool vs on-demand | None (always running) |
-| **Bruce BEM login in session** | Chrome must have valid Bruce BEM session to display work requests | Shelved (user has solution) |
+| --- | --- | --- |
+| User to Container routing | LibreChat needs to know which container port 9222 to connect to | None (single container) |
+| noVNC URL routing | User browser must be directed to their container noVNC port | None (single URL) |
+| Container lifecycle | When to spawn/destroy containers, pool vs on-demand | None (always running) |
+| Bruce BEM login in session | Chrome must have valid Bruce BEM session to display work requests | Shelved (user has solution) |
 
 ### External Dependencies
+
 | Dependency | Owner | Status |
-|------------|-------|--------|
+| --- | --- | --- |
 | API returns direct link to work request | Rein | Testing (Dec 12 message) |
 | Standalone chat interface | Architecture decision | Not started |
-| LibreChat ↔ MCP integration | Marius | Existing |
+| LibreChat to MCP integration | Marius | Existing |
 
 ---
 
