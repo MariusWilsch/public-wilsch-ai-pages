@@ -19,21 +19,13 @@ publish: true
 ## Decision
 We will use **noVNC + Docker** (chromote image) to stream a server-side Chrome browser to users via any web browser, with AI control via Chrome DevTools Protocol (CDP) on port 9222.
 
-**Architecture:**
-```
-┌─────────────────────────────────────────────────────┐
-│              Docker Container (chromote)             │
-│                                                      │
-│    Chrome Browser (with --kiosk for clean UI)       │
-│         ↓                    ↓                       │
-│    VNC capture          CDP (port 9222)             │
-│         ↓                    ↓                       │
-│    noVNC (6080)         AI Control (MCP)            │
-└─────────────────────────────────────────────────────┘
-         ↓                      ↓
-    User WATCHES           AI CONTROLS
-    (any browser)          (LibreChat)
-```
+**Architecture - View-Only Mode (MVP):**
+
+![View-Only Mode: User watches via noVNC while AI controls via CDP](novnc-view-only.png)
+
+**Architecture - Interactive Mode (Future):**
+
+![Interactive Mode: User can click/type through noVNC while AI also controls](novnc-interactive.png)
 
 **Key configuration:**
 - Chrome `--kiosk` or `--app` flags for clean UI (no address bar)
