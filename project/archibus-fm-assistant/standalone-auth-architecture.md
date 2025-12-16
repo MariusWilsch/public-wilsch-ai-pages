@@ -124,6 +124,54 @@ When a backend supports only session/cookie authentication (no tokens):
 
 **Recommendation:** Prefer OAuth path. If backend lacks OAuth, request backend owner add token-based API auth before implementing proxy.
 
+## Future Scalability
+
+The implicit routing pattern (user picks login button = backend selection) works well for 2-3 backends. When scaling beyond this, evolve to **JWT Claims + Tenant Catalog**:
+
+### When to Evolve
+
+| Trigger | Why It Matters |
+|---------|----------------|
+| 5+ backend systems | Login page becomes cluttered with buttons |
+| User belongs to multiple backends | Need automatic routing, not manual selection |
+| White-label deployments | Different clients need different default backends |
+| Single sign-on requirement | User logs in once, system routes automatically |
+
+### Evolution Path
+
+```
+CURRENT: Implicit Routing (2-3 backends)
+─────────────────────────────────────────
+User → picks provider → OAuth → tokens include provider info
+                                         │
+                                         ▼
+                               MCP knows backend from token issuer
+
+FUTURE: JWT Claims + Tenant Catalog (5+ backends)
+─────────────────────────────────────────────────
+User → single login → catalog lookup → determines backend
+                           │
+                           ▼
+              JWT issued with claims: tenant_id, backend_system
+                           │
+                           ▼
+              MCP reads claims → routes to correct API endpoint
+```
+
+### What the Catalog Adds
+
+- **Tenant database:** Maps user/org → backend system → API endpoint
+- **Claim injection:** JWT tokens include `backend_system` claim
+- **Dynamic routing:** MCP reads claim, routes without hardcoded logic
+- **Admin UI:** Manage tenant-to-backend mappings without code changes
+
+### Migration Triggers
+
+Revisit this section when ANY of these occur:
+- Adding 4th+ CAFM backend
+- Client requests "remember my system" across sessions
+- Need to support users with accounts in multiple backends
+
 ## Consequences
 
 ### Positive
