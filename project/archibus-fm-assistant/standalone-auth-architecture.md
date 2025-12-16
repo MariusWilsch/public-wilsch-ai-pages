@@ -172,15 +172,6 @@ Revisit this section when ANY of these occur:
 - Client requests "remember my system" across sessions
 - Need to support users with accounts in multiple backends
 
-### MCP Proxy Pattern (Future Exploration)
-
-If organizational separation becomes needed (different teams maintaining backend-specific MCP servers), explore the MCP Proxy Pattern:
-- [MCP Authorization Spec](https://modelcontextprotocol.io/specification/2025-11-25/basic/authorization) - OAuth 2.1 now officially supported
-- [AWS MCP Proxy](https://aws.amazon.com/about-aws/whats-new/2025/10/model-context-protocol-proxy-available/) - Production implementation
-- [Envoy AI Gateway](https://aigateway.envoyproxy.io/blog/mcp-implementation/) - Load balancing, session management
-
-**Note:** MCP Proxy solves routing/organizational concerns, NOT authentication. The auth challenge remains identical regardless of proxy usage.
-
 ## Consequences
 
 ### Positive
@@ -209,7 +200,6 @@ If organizational separation becomes needed (different teams maintaining backend
 | **Central IdP (Keycloak/Auth0)** | Adds infrastructure complexity; users must create new accounts or federate existing |
 | **JWT Claims + Tenant Catalog** | More scalable for many backends but premature; implicit routing via provider selection sufficient for 2-3 backends |
 | **Continue Iframe Pattern** | Blocks hybrid environment capability (visual feedback loop requires standalone interface we control) |
-| **MCP Proxy Pattern** | Solves organizational separation (multiple teams maintaining MCP servers), not auth; overkill for 2-3 backends we control |
 
 ## Prerequisites for Backend Integration
 
