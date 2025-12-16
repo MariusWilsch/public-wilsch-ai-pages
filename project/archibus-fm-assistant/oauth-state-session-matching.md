@@ -32,6 +32,8 @@ Use the standard OAuth `state` parameter for session matching. LibreChat already
 
 ### How LibreChat Solves It
 
+<img src="oauth-polling-flow.png" width="100%" alt="OAuth State Polling Architecture">
+
 LibreChat does NOT route callbacks directly to browser sessions. Instead:
 
 1. **Deterministic Flow ID** = `userId:serverName` used as `state` parameter
