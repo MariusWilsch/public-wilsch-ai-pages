@@ -9,7 +9,7 @@ publish: true
 **Duration:** ~65 minutes
 **Attendees:** Marius (facilitator), Ryan, Ian, Ali, Mujahid
 
-**Related:** ![Pattern Encoding Infographic](pattern-encoding-methodology.png)
+**Related:** <img src="pattern-encoding-methodology.png" width="100%" alt="Pattern Encoding Infographic">
 
 ---
 
