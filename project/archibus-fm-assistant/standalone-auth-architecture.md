@@ -24,56 +24,65 @@ We propose the **OAuth Multi-Provider Pattern** where LibreChat acts as an OAuth
 ### Core Architecture
 
 ```
-                                 STANDALONE CHAT AUTHENTICATION FLOW
+                    STANDALONE CHAT AUTHENTICATION FLOW
 
-    ┌──────────────────────────────────────────────────────────────────────────────┐
-    │                              USER JOURNEY                                     │
-    └──────────────────────────────────────────────────────────────────────────────┘
-
-         ┌─────────┐          ┌─────────────────┐          ┌─────────────────┐
-         │  USER   │─────────▶│  STANDALONE     │─────────▶│  SELECT LOGIN   │
-         │         │  visits  │  CHAT URL       │  sees    │  PROVIDER       │
-         └─────────┘          │  chat.domain.ai │          │                 │
-                              └─────────────────┘          │ ┌─────────────┐ │
-                                                           │ │ Bruce BEM   │ │
-                                                           │ └─────────────┘ │
-                                                           │ ┌─────────────┐ │
-                                                           │ │ Archibus    │ │
-                                                           │ └─────────────┘ │
-                                                           └────────┬────────┘
-                                                                    │ clicks
-    ┌──────────────────────────────────────────────────────────────────────────────┐
-    │                              OAUTH FLOW                                       │
-    └──────────────────────────────────────────────────────────────────────────────┘
-                                                                    │
-                                                                    ▼
-    ┌─────────────────┐          ┌─────────────────┐          ┌─────────────────┐
-    │  REDIRECT TO    │─────────▶│  BACKEND LOGIN  │─────────▶│  REDIRECT BACK  │
-    │  BACKEND OAUTH  │  browser │  PAGE           │  success │  WITH AUTH CODE │
-    │  /authorize     │          │  (user's creds) │          │  ?code=xyz      │
-    └─────────────────┘          └─────────────────┘          └────────┬────────┘
-                                                                       │
-    ┌──────────────────────────────────────────────────────────────────────────────┐
-    │                              TOKEN EXCHANGE                                   │
-    └──────────────────────────────────────────────────────────────────────────────┘
-                                                                       │
-                                                                       ▼
-    ┌─────────────────┐          ┌─────────────────┐          ┌─────────────────┐
-    │  LIBRECHAT      │─────────▶│  BACKEND TOKEN  │─────────▶│  LIBRECHAT      │
-    │  EXCHANGES CODE │  POST    │  ENDPOINT       │  returns │  STORES TOKENS  │
-    │  FOR TOKENS     │          │  /oauth/token   │          │  + PROVIDER ID  │
-    └─────────────────┘          └─────────────────┘          └────────┬────────┘
-                                                                       │
-    ┌──────────────────────────────────────────────────────────────────────────────┐
-    │                              API ACCESS (existing pattern)                    │
-    └──────────────────────────────────────────────────────────────────────────────┘
-                                                                       │
-                                                                       ▼
-    ┌─────────────────┐          ┌─────────────────┐          ┌─────────────────┐
-    │  USER SENDS     │─────────▶│  MCP SERVER     │─────────▶│  BACKEND API    │
-    │  CHAT MESSAGE   │  includes│  USES TOKENS    │  calls   │  EXECUTES       │
-    │                 │  tokens  │                 │          │  WITH USER CTX  │
-    └─────────────────┘          └─────────────────┘          └─────────────────┘
+┌─────────────────────────────────────────────────────────────┐
+│ 1. USER JOURNEY                                             │
+├─────────────────────────────────────────────────────────────┤
+│                                                             │
+│   User visits chat.domain.ai                                │
+│                 │                                           │
+│                 ▼                                           │
+│   Sees login options: [Bruce BEM] [Archibus]                │
+│                 │                                           │
+│                 ▼ clicks one                                │
+│                                                             │
+└─────────────────────────────────────────────────────────────┘
+                  │
+                  ▼
+┌─────────────────────────────────────────────────────────────┐
+│ 2. OAUTH REDIRECT                                           │
+├─────────────────────────────────────────────────────────────┤
+│                                                             │
+│   Browser redirects to backend's /oauth/authorize           │
+│                 │                                           │
+│                 ▼                                           │
+│   User enters credentials on BACKEND's login page           │
+│                 │                                           │
+│                 ▼ success                                   │
+│   Backend redirects back to chat with ?code=xyz             │
+│                                                             │
+└─────────────────────────────────────────────────────────────┘
+                  │
+                  ▼
+┌─────────────────────────────────────────────────────────────┐
+│ 3. TOKEN EXCHANGE                                           │
+├─────────────────────────────────────────────────────────────┤
+│                                                             │
+│   LibreChat POSTs code to backend's /oauth/token            │
+│                 │                                           │
+│                 ▼                                           │
+│   Backend returns: access_token, refresh_token              │
+│                 │                                           │
+│                 ▼                                           │
+│   LibreChat stores tokens + remembers "Bruce BEM user"      │
+│                                                             │
+└─────────────────────────────────────────────────────────────┘
+                  │
+                  ▼
+┌─────────────────────────────────────────────────────────────┐
+│ 4. API ACCESS (existing token passthrough)                  │
+├─────────────────────────────────────────────────────────────┤
+│                                                             │
+│   User sends chat message                                   │
+│                 │                                           │
+│                 ▼ includes tokens                           │
+│   MCP Server receives request + tokens                      │
+│                 │                                           │
+│                 ▼ calls API                                 │
+│   Backend API executes with user context                    │
+│                                                             │
+└─────────────────────────────────────────────────────────────┘
 ```
 
 ### Key Principle
