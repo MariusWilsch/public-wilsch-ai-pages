@@ -23,67 +23,12 @@ We propose the **OAuth Multi-Provider Pattern** where LibreChat acts as an OAuth
 
 ### Core Architecture
 
-```
-                    STANDALONE CHAT AUTHENTICATION FLOW
+![Standalone Auth Flow](standalone-auth-flow.png)
 
-┌─────────────────────────────────────────────────────────────┐
-│ 1. USER JOURNEY                                             │
-├─────────────────────────────────────────────────────────────┤
-│                                                             │
-│   User visits chat.domain.ai                                │
-│                 │                                           │
-│                 ▼                                           │
-│   Sees login options: [Bruce BEM] [Archibus]                │
-│                 │                                           │
-│                 ▼ clicks one                                │
-│                                                             │
-└─────────────────────────────────────────────────────────────┘
-                  │
-                  ▼
-┌─────────────────────────────────────────────────────────────┐
-│ 2. OAUTH REDIRECT                                           │
-├─────────────────────────────────────────────────────────────┤
-│                                                             │
-│   Browser redirects to backend's /oauth/authorize           │
-│                 │                                           │
-│                 ▼                                           │
-│   User enters credentials on BACKEND's login page           │
-│                 │                                           │
-│                 ▼ success                                   │
-│   Backend redirects back to chat with ?code=xyz             │
-│                                                             │
-└─────────────────────────────────────────────────────────────┘
-                  │
-                  ▼
-┌─────────────────────────────────────────────────────────────┐
-│ 3. TOKEN EXCHANGE                                           │
-├─────────────────────────────────────────────────────────────┤
-│                                                             │
-│   LibreChat POSTs code to backend's /oauth/token            │
-│                 │                                           │
-│                 ▼                                           │
-│   Backend returns: access_token, refresh_token              │
-│                 │                                           │
-│                 ▼                                           │
-│   LibreChat stores tokens + remembers "Bruce BEM user"      │
-│                                                             │
-└─────────────────────────────────────────────────────────────┘
-                  │
-                  ▼
-┌─────────────────────────────────────────────────────────────┐
-│ 4. API ACCESS (existing token passthrough)                  │
-├─────────────────────────────────────────────────────────────┤
-│                                                             │
-│   User sends chat message                                   │
-│                 │                                           │
-│                 ▼ includes tokens                           │
-│   MCP Server receives request + tokens                      │
-│                 │                                           │
-│                 ▼ calls API                                 │
-│   Backend API executes with user context                    │
-│                                                             │
-└─────────────────────────────────────────────────────────────┘
-```
+**Ownership Boundaries:**
+- **Blue (We Control):** LibreChat + MCP + Bruce BEM
+- **Orange (External):** Archibus and other CAFM systems
+- **White (User):** End user interacting with the system
 
 ### Key Principle
 **No central Identity Provider required.** Each CAFM backend IS the IdP for its users. The login button selection IS the routing decision.
