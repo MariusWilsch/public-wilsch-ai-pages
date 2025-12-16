@@ -161,15 +161,6 @@ For each CAFM backend to support this pattern:
 | **New client onboarding ops** | Operational concern, not architecture | Who configures new OAuth providers? |
 | **Security audit** | Requires implementation first | Token storage, scope review, HTTPS |
 
-### Questions for Backend Owner (Rein)
-
-| Question | Purpose |
-|----------|---------|
-| Does Bruce BEM expose OAuth 2.0 endpoints? | Confirms easy path |
-| What are the OAuth URLs? (authorize, token, userinfo) | Configuration data |
-| What scopes should we request? | Permission model |
-| Can you provide client_id and client_secret? | Registration step |
-
 ---
 
 **Key Resources:**
