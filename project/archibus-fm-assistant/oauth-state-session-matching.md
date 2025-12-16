@@ -2,6 +2,9 @@
 publish: true
 ---
 
+<script src="https://cdn.jsdelivr.net/npm/mermaid/dist/mermaid.min.js"></script>
+<script>mermaid.initialize({startOnLoad:true});</script>
+
 # ADR: OAuth State Parameter for Session Matching
 
 [[client-archibus]]
@@ -32,7 +35,28 @@ Use the standard OAuth `state` parameter for session matching. LibreChat already
 
 ### How LibreChat Solves It
 
-<img src="oauth-polling-flow.png" width="100%" alt="OAuth State Polling Architecture">
+<div class="mermaid">
+sequenceDiagram
+    participant Browser
+    participant LibreChat as LibreChat Server
+    participant BruceBEM as Bruce BEM
+    participant Redis
+
+    Browser->>LibreChat: 1. Initiate OAuth (state=S...)
+    LibreChat->>Redis: 2. Create Flow ("S...", PENDING)
+    Browser->>LibreChat: 3. Poll Status ("S...")
+    LibreChat-->>Browser: 4. Poll Response (PENDING)
+    Note over Browser: Polling continues...
+    Browser->>BruceBEM: 5. Redirect to Authorize (state=S...)
+    Note over BruceBEM: User Authenticates
+    BruceBEM->>LibreChat: 6. Callback (state=S..., tokens={T...})
+    LibreChat->>Redis: 7. Update Flow ("S...", COMPLETED, tokens)
+    Browser->>LibreChat: 8. Poll Status ("S...")
+    LibreChat->>Redis: 9. Get Flow ("S...")
+    Redis-->>LibreChat: 10. Flow Data (COMPLETED, {T...})
+    LibreChat-->>Browser: 11. Poll Response (COMPLETED, {T...})
+    Note over Browser: ✓ Login Complete
+</div>
 
 LibreChat does NOT route callbacks directly to browser sessions. Instead:
 
