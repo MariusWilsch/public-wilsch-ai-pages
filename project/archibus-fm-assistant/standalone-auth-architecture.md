@@ -7,7 +7,7 @@ publish: true
 [[client-archibus]]
 
 ## Status
-**Created** | Date: 2024-12-16
+**Created** | Date: 2025-12-16
 
 ## Context
 - AI chat interface (LibreChat) currently embedded as iframe within CAFM applications (Bruce BEM)
