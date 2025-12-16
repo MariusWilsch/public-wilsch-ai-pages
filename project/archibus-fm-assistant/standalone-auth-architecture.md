@@ -7,7 +7,7 @@ publish: true
 [[client-archibus]]
 
 ## Status
-**Created** | Date: 2025-12-16
+**Proposed** | Date: 2025-12-16
 
 ## Context
 - AI chat interface (LibreChat) currently embedded as iframe within CAFM applications (Bruce BEM)
@@ -18,8 +18,8 @@ publish: true
 - Token passthrough to MCP server already proven functional
 - Various backends may use different authentication mechanisms
 
-## Decision
-We will use the **OAuth Multi-Provider Pattern** where LibreChat acts as an OAuth client and each CAFM backend serves as its own Identity Provider (IdP). User routing to the correct backend is implicit via login button selection ("Login with Bruce BEM" / "Login with Archibus").
+## Proposal
+We propose the **OAuth Multi-Provider Pattern** where LibreChat acts as an OAuth client and each CAFM backend serves as its own Identity Provider (IdP). User routing to the correct backend is implicit via login button selection ("Login with Bruce BEM" / "Login with Archibus").
 
 ### Core Architecture
 
@@ -160,7 +160,7 @@ For each CAFM backend to support this pattern:
 
 | Topic | Coverage | Notes |
 |-------|----------|-------|
-| OAuth multi-provider pattern | Complete | Core architecture decision |
+| OAuth multi-provider pattern | Complete | Core architecture proposal |
 | LibreChat as OAuth client | Complete | Validated LibreChat supports this |
 | Auth pattern compatibility matrix | Complete | 8 patterns analyzed |
 | Session vs token tradeoffs | Complete | Proxy workaround documented |
