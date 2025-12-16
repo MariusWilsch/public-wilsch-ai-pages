@@ -84,24 +84,7 @@ The implicit routing pattern (user picks login button = backend selection) works
 
 ### Evolution Path
 
-```
-CURRENT: Implicit Routing (2-3 backends)
-─────────────────────────────────────────
-User → picks provider → OAuth → tokens include provider info
-                                         │
-                                         ▼
-                               MCP knows backend from token issuer
-
-FUTURE: JWT Claims + Tenant Catalog (5+ backends)
-─────────────────────────────────────────────────
-User → single login → catalog lookup → determines backend
-                           │
-                           ▼
-              JWT issued with claims: tenant_id, backend_system
-                           │
-                           ▼
-              MCP reads claims → routes to correct API endpoint
-```
+<img src="evolution-path.png" width="100%" alt="Evolution from Implicit Routing to JWT Claims + Tenant Catalog">
 
 ### What the Catalog Adds
 
