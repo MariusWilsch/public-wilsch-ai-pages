@@ -107,20 +107,18 @@ Bruce BEM returns:
 ## Reference Links
 
 ### Must Read
-| Resource | Why |
-|----------|-----|
-| [LibreChat OAuth handler.ts](https://github.com/danny-avila/LibreChat/blob/main/packages/api/src/mcp/oauth/handler.ts) | State parameter generation (line 216) |
-| [LibreChat mcp.js callback](https://github.com/danny-avila/LibreChat/blob/main/api/server/routes/mcp.js) | Callback handling (lines 74-98) |
-| [OAuth 2.0 RFC 6749 §4.1.1](https://datatracker.ietf.org/doc/html/rfc6749#section-4.1.1) | Official state parameter spec |
+
+- [LibreChat OAuth handler.ts](https://github.com/danny-avila/LibreChat/blob/main/packages/api/src/mcp/oauth/handler.ts) - State parameter generation (line 216)
+- [LibreChat mcp.js callback](https://github.com/danny-avila/LibreChat/blob/main/api/server/routes/mcp.js) - Callback handling (lines 74-98)
+- [OAuth 2.0 RFC 6749 §4.1.1](https://datatracker.ietf.org/doc/html/rfc6749#section-4.1.1) - Official state parameter spec
 
 ### Should Read
-| Resource | Why |
-|----------|-----|
-| [LibreChat flow manager.ts](https://github.com/danny-avila/LibreChat/blob/main/packages/api/src/flow/manager.ts) | Redis polling implementation |
-| [LibreChat useMCPServerManager.ts](https://github.com/danny-avila/LibreChat/blob/main/client/src/hooks/MCP/useMCPServerManager.ts) | Client-side polling hook |
-| [Auth0 state parameter guide](https://auth0.com/docs/secure/attack-protection/state-parameters) | Beginner-friendly explanation |
-| [OAuth Security RFC 6819 §5.3.5](https://datatracker.ietf.org/doc/html/rfc6819#section-5.3.5) | Security best practices |
-| [LibreChat OAuth docs](https://www.librechat.ai/docs/configuration/authentication/OAuth2-OIDC) | Configuration reference |
+
+- [LibreChat flow manager.ts](https://github.com/danny-avila/LibreChat/blob/main/packages/api/src/flow/manager.ts) - Redis polling implementation
+- [LibreChat useMCPServerManager.ts](https://github.com/danny-avila/LibreChat/blob/main/client/src/hooks/MCP/useMCPServerManager.ts) - Client-side polling hook
+- [Auth0 state parameter guide](https://auth0.com/docs/secure/attack-protection/state-parameters) - Beginner-friendly explanation
+- [OAuth Security RFC 6819 §5.3.5](https://datatracker.ietf.org/doc/html/rfc6819#section-5.3.5) - Security best practices
+- [LibreChat OAuth docs](https://www.librechat.ai/docs/configuration/authentication/OAuth2-OIDC) - Configuration reference
 
 ## Related Documentation
 
