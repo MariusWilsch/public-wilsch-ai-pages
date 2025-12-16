@@ -90,15 +90,7 @@ We will use **noVNC + Docker** (chromote image) to stream a server-side Chrome b
 | User to Container routing | LibreChat needs to know which container port 9222 to connect to | None (single container) |
 | noVNC URL routing | User browser must be directed to their container noVNC port | None (single URL) |
 | Container lifecycle | When to spawn/destroy containers, pool vs on-demand | None (always running) |
-| Bruce BEM login in session | Chrome must have valid Bruce BEM session to display work requests | Shelved (user has solution) |
-
-### External Dependencies
-
-| Dependency | Owner | Status |
-| --- | --- | --- |
-| API returns direct link to work request | Rein | Testing (Dec 12 message) |
-| Standalone chat interface | Architecture decision | Not started |
-| LibreChat to MCP integration | Marius | Existing |
+| Bruce BEM login in session | Chrome must have valid Bruce BEM session to display work requests | Shelved |
 
 ---
 
