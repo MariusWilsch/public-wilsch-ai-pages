@@ -93,8 +93,24 @@ Auth migration (FINAL STEP - breaking change)
 - [ ] Original port can be killed
 - [ ] PR merged
 
+## Example: Script-Writer Absorption (#226)
+
+First proof-of-concept using this workflow:
+
+| Phase | Outcome |
+|-------|---------|
+| 1. Document | `hippocampus/project/paul_youtube_fullstack/script-writer.md` |
+| 2. Absorb | `frontend/src/features/script-writer/` (ScriptWriterPage, ScriptManagement, MyAssignments, ScriptFiles) |
+| 3. Integrate | Route `/script-writer` added to router.jsx |
+| 4. Validate | Browser automation verified CRUD, role gating, file upload |
+| 5. Iterate | 3 cycles (missing endpoints, role badges, code review fixes) |
+
+**Cleanup:** Moved 7 legacy docs to `/legacy/` with `[ARCHIVED]` markers, deleted 78MB standalone frontend.
+
+**Result:** Port 3003 can be killed. PR #6 merged.
+
 ## Related
 
-- Issue #121: Frontend consolidation parent issue
+- Issue #122: Frontend consolidation parent issue
 - ADR: Strangler pattern sequencing
-- Evidence: Session `e034f45f-04b1-4198-9fb1-4af9e72bb8c1` (Script-Writer absorption)
+- Script-Writer feature doc: `hippocampus/project/paul_youtube_fullstack/script-writer.md`
