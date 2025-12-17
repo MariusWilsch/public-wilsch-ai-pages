@@ -144,11 +144,3 @@ Bruce BEM returns:
 - [OAuth Security RFC 6819 §5.3.5](https://datatracker.ietf.org/doc/html/rfc6819#section-5.3.5) - Security best practices
 - [LibreChat OAuth docs](https://www.librechat.ai/docs/configuration/authentication/OAuth2-OIDC) - Configuration reference
 
-## Related Documentation
-
-- [[standalone-auth-architecture]] - Overall OAuth multi-provider architecture
-- [[rain-token-dynamic-auth]] - Current iframe token passthrough (what exists today)
-
-## Research Source
-
-This ADR was created from a rubber-duck research session analyzing LibreChat's OAuth implementation. Session transcript available in conversation history.
