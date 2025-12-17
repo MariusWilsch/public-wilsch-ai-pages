@@ -111,6 +111,6 @@ First proof-of-concept using this workflow:
 
 ## Related
 
-- Issue #122: Frontend consolidation parent issue
+- Issue #121: Frontend consolidation parent issue
 - ADR: Strangler pattern sequencing
 - Script-Writer feature doc: `hippocampus/project/paul_youtube_fullstack/script-writer.md`
