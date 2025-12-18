@@ -3,7 +3,7 @@ publish: true
 ---
 
 # ADR: Strangler Pattern Sequencing - Auth Migration After Frontend Absorption
-[[paul-faceless-yt]]
+[[client-paul]]
 
 ## Status
 **Created** | Date: 2025-12-14
