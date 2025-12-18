@@ -38,7 +38,7 @@ Based on clarity workflow needs:
 
 **Why notable:** Only candidate with hands-on AI/LLM experience. Understands how AI generates code from evaluator perspective. Best fit for clarity workflow adoption.
 
-[Resume](1337-resumes-2025-12/Yassine_Khayri_SD_Resume%20-%20yassine%20khayri.pdf)
+[Resume](1337-resumes-2025-12/Yassine_Khayri_SD_Resume - yassine khayri.pdf)
 
 ---
 
@@ -54,7 +54,7 @@ Based on clarity workflow needs:
 
 **Why notable:** Exact stack match (Django/Flask backend). Currently learning React shows adaptability. Most moldable candidate.
 
-[Resume](1337-resumes-2025-12/resume_%20-%20yassine%20hamdani.pdf)
+[Resume](1337-resumes-2025-12/resume_ - yassine hamdani.pdf)
 
 ---
 
@@ -70,7 +70,7 @@ Based on clarity workflow needs:
 
 **Why notable:** Good fundamentals, recent internship experience. B1 English may limit async communication.
 
-[Resume](1337-resumes-2025-12/NABIL-BAGHOUGHI-CV%20-%20Nabil%20Baghoughi.pdf)
+[Resume](1337-resumes-2025-12/NABIL-BAGHOUGHI-CV - Nabil Baghoughi.pdf)
 
 ---
 
@@ -86,7 +86,7 @@ Based on clarity workflow needs:
 
 **Why notable:** Good React skills, but backend is Node/Fastify not Python. Cybersecurity interest tangential.
 
-[Resume](1337-resumes-2025-12/Oussama-Ait-Laasri-CV-DEV%20-%20Oussama.pdf)
+[Resume](1337-resumes-2025-12/Oussama-Ait-Laasri-CV-DEV - Oussama.pdf)
 
 ---
 
@@ -102,7 +102,7 @@ Based on clarity workflow needs:
 
 **Why disqualified:** Data engineer, not web developer. Projects are ETL pipelines, not web applications.
 
-[Resume](1337-resumes-2025-12/OUAMRHAR-HAMZA-RESUME%20-%20hamza%20ouamrhar.pdf)
+[Resume](1337-resumes-2025-12/OUAMRHAR-HAMZA-RESUME - hamza ouamrhar.pdf)
 
 ---
 
