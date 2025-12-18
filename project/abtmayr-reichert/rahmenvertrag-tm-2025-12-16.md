@@ -206,7 +206,29 @@ Der Dienstleister:
 
 ## 12. Vertraulichkeit
 
-Die Vertraulichkeitspflichten der Parteien werden durch eine separate Geheimhaltungsvereinbarung vom [TODO: NDA-Datum einfügen oder diesen Abschnitt entfernen] zwischen Auftraggeber und Dienstleister geregelt, die durch Bezugnahme in diesen Vertrag einbezogen wird.
+### 12.1 Vertrauliche Informationen
+
+„Vertrauliche Informationen" umfassen alle nicht-öffentlichen Informationen, die eine Partei der anderen im Rahmen dieses Vertrags offenlegt, einschließlich, aber nicht beschränkt auf: Geschäftsgeheimnisse, technische Daten, Kundenlisten, Geschäftspläne, Finanzdaten und proprietäre Methoden.
+
+### 12.2 Geheimhaltungspflicht
+
+Jede Partei verpflichtet sich:
+- Vertrauliche Informationen der anderen Partei streng vertraulich zu behandeln
+- Diese nur für die Zwecke dieses Vertrags zu verwenden
+- Diese nicht an Dritte weiterzugeben ohne vorherige schriftliche Zustimmung
+
+### 12.3 Ausnahmen
+
+Die Geheimhaltungspflicht gilt nicht für Informationen, die:
+- Zum Zeitpunkt der Offenlegung bereits öffentlich bekannt waren
+- Ohne Verschulden der empfangenden Partei öffentlich werden
+- Der empfangenden Partei bereits rechtmäßig bekannt waren
+- Von Dritten ohne Geheimhaltungspflicht rechtmäßig erhalten wurden
+- Aufgrund gesetzlicher Verpflichtung offengelegt werden müssen
+
+### 12.4 Dauer
+
+Die Vertraulichkeitspflichten überdauern die Beendigung dieses Vertrags um **zwei (2) Jahre**.
 
 ---
 
