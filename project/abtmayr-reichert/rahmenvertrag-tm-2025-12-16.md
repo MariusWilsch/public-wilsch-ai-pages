@@ -11,10 +11,10 @@ publish: true
 
 Dieser Rahmenvertrag für Beratungsdienstleistungen („Vertrag"), datiert auf den 16. Tag des Dezember 2025 („Inkrafttreten"), wird geschlossen zwischen:
 
-**Abtmayr & Reichert GmbH** („Auftraggeber")
-- Registernummer: [TODO: Vom Kunden erfragen]
-- Adresse: [TODO: Vom Kunden erfragen]
-- Ansprechpartner: Michael, [TODO: E-Mail erfragen]
+**Klimafolgenschutz e.V.** („Auftraggeber")
+- Registernummer: [TODO: VR-Nummer beim Amtsgericht Rosenheim erfragen]
+- Adresse: Bahnhofstr. 9a, 83139 Söchtenau
+- Ansprechpartner: Michael Reichert, [TODO: E-Mail erfragen]
 
 und
 
