@@ -63,25 +63,6 @@ After:   Flask (CPU) → RunPod (Express container) → video
 - **Scaling:** 1 active worker (no cold starts) + flex workers for spikes
 - **Preset:** NVENC P4 (balanced speed/quality) + lookahead 16 frames
 
-## Implementation Phases
-
-### Phase 1: Container + Handler
-
-- Dockerfile with nvidia/cuda base
-- Remove ~130 lines GPU detection code
-- Add RunPod handler interface
-
-### Phase 2: Flask Integration
-
-- Mirror TTS dispatch pattern
-- Status polling, completion handling
-- Direct Supabase upload from handler
-
-### Phase 3: Validation + Cutover
-
-- Parallel run for quality parity
-- Production migration
-
 ## Risks & Mitigations
 
 | Risk | Mitigation |
