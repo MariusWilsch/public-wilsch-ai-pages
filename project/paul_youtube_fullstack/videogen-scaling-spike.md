@@ -21,11 +21,11 @@ Confidence: 88%
 
 ## Key Findings
 
-### 1. Current Pipeline Timing
+### 1. Current Pipeline Timing (Measured)
 
 - Videos are 1-2 hours long (long-form YouTube)
-- NVENC encodes at 0.6x realtime (working correctly)
-- 200 users × 1.5h videos/day = ~12 GPUs needed
+- NVENC encodes at 0.6x realtime (faster than video duration)
+- GPU capacity scales linearly with concurrent video demand
 
 ### 2. Architecture Options Evaluated
 
@@ -40,7 +40,7 @@ Confidence: 88%
 - **Transfer:** 50MB assets vs 15GB intermediate video
 - **Code risk:** ~130 lines changed (GPU detection, CPU fallbacks)
 - **Pattern:** Identical to TTS (proven, familiar)
-- **Timeline:** 2-3 weeks vs 6-8 weeks for rewrite
+- **Timeline:** Containerize = minimal; Rewrite = significant
 
 ## Recommended Architecture
 
@@ -65,30 +65,22 @@ After:   Flask (CPU) → RunPod (Express container) → video
 
 ## Implementation Phases
 
-### Phase 1 (Week 1-2): Container + Handler
+### Phase 1: Container + Handler
 
 - Dockerfile with nvidia/cuda base
 - Remove ~130 lines GPU detection code
 - Add RunPod handler interface
 
-### Phase 2 (Week 2-3): Flask Integration
+### Phase 2: Flask Integration
 
 - Mirror TTS dispatch pattern
 - Status polling, completion handling
 - Direct Supabase upload from handler
 
-### Phase 3 (Week 3-4): Validation + Cutover
+### Phase 3: Validation + Cutover
 
 - Parallel run for quality parity
 - Production migration
-
-## Cost Model
-
-| Scale | Monthly Cost |
-|-------|--------------|
-| Low volume | $50-200 (scale to zero) |
-| 200 users | $4,000-6,600 |
-| Decision point | If >$3K/mo → evaluate dedicated GPU |
 
 ## Risks & Mitigations
 
