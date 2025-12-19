@@ -29,6 +29,7 @@ Keine zentrale Übersicht über:
 **Expense Tracking Dokument** in `hippocampus/project/WILSCH-AI-INTERNAL/expenses-2025.md`
 
 **Struktur:**
+
 | Section | Inhalt |
 |---------|--------|
 | **Summary** | Monthly totals by category |

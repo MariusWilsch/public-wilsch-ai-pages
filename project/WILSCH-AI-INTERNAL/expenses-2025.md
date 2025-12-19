@@ -88,6 +88,7 @@ publish: true
 - **Google Workspace annual** - ~€14/year savings
 
 **Annual Plan Candidates:**
+
 | Service | Monthly | Annual (est.) | Savings | Recommendation |
 |---------|---------|---------------|---------|----------------|
 | Timing App | €193.56/yr | ~€155/yr | €38 | **Do it** - stable usage |
