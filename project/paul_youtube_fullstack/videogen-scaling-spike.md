@@ -56,6 +56,13 @@ After:   Flask (CPU) → RunPod (Express container) → video
 - Input: Images + audio + config (~50MB)
 - Output: Direct upload to Supabase Storage
 
+### RunPod Configuration
+
+- **GPU:** RTX 4090 or equivalent with 9th-gen NVENC
+- **Concurrency:** 1 worker = 1 video (GPU-bound work)
+- **Scaling:** 1 active worker (no cold starts) + flex workers for spikes
+- **Preset:** NVENC P4 (balanced speed/quality) + lookahead 16 frames
+
 ## Implementation Phases
 
 ### Phase 1 (Week 1-2): Container + Handler
