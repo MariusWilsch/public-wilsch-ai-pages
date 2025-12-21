@@ -72,7 +72,11 @@ Use this prompt with `Task(subagent_type="general-purpose", model="sonnet")`:
 **Analyze [Module] for Supabase migration with "Native vs Workaround" heuristic**
 
 **STEP 1: Read architecture guidelines**
+# Backend architecture (FastAPI + Supabase patterns)
 gh api repos/veloxforce/velox-global-adrs/contents/README-FAST-API-BACKEND.md -H "Accept: application/vnd.github.raw"
+
+# Frontend architecture (React + Supabase SDK patterns)
+gh api repos/veloxforce/velox-global-adrs/contents/README-REACT-FRONTEND.md -H "Accept: application/vnd.github.raw"
 
 **STEP 2: Read endpoint code**
 - [path to endpoint file]
