@@ -20,11 +20,13 @@ publish: true
 ### main.py (the core - 104 routes)
 
 #### CORS & Infrastructure
+
 | Endpoint | Target | Why | Type |
 |----------|--------|-----|------|
 | `OPTIONS /api/<path:path>` | **Delete** | Handled by CORS middleware in FastAPI | Infrastructure |
 
 #### Transcripts & Projects
+
 | Endpoint | Target | Why | Type |
 |----------|--------|-----|------|
 | `GET /api/transcripts` | **Supabase** | Pure CRUD list with filtering | Native |
@@ -37,6 +39,7 @@ publish: true
 | `DELETE /api/projects/<project_id>` | **Supabase** | Simple delete (RLS handles ownership) | Native |
 
 #### Config Management
+
 | Endpoint | Target | Why | Type |
 |----------|--------|-----|------|
 | `GET /api/config/apikeys` | **Supabase** | Simple read from config table | Native |
@@ -49,6 +52,7 @@ publish: true
 | `GET /api/config/models` | **FastAPI** | Dynamic model discovery via OpenAI API | Workaround |
 
 #### Audio/Voice Management
+
 | Endpoint | Target | Why | Type |
 |----------|--------|-----|------|
 | `POST /api/transcripts/process/model` | **FastAPI** | OpenAI/Anthropic API calls for processing | Workaround |
@@ -60,6 +64,7 @@ publish: true
 | `PUT /api/audio/voice/<voice_name>` | **FastAPI** | Filesystem update | Workaround |
 
 #### Image Styles CRUD
+
 | Endpoint | Target | Why | Type |
 |----------|--------|-----|------|
 | `GET /api/image/styles` | **Supabase** | Pure CRUD list | Native |
@@ -69,6 +74,7 @@ publish: true
 | `DELETE /api/image/styles/<id>` | **Supabase** | Simple delete | Native |
 
 #### Image Generation
+
 | Endpoint | Target | Why | Type |
 |----------|--------|-----|------|
 | `POST /api/image/generate` | **FastAPI** | Runware API integration, complex orchestration | Workaround |
@@ -76,6 +82,7 @@ publish: true
 | `GET /api/image/video-models` | **FastAPI** | External API discovery | Workaround |
 
 #### Prompts CRUD
+
 | Endpoint | Target | Why | Type |
 |----------|--------|-----|------|
 | `POST /api/prompts` | **Supabase** | Simple create | Native |
@@ -85,6 +92,7 @@ publish: true
 | `GET /api/prompts/<id>` | **Supabase** | Single record read | Native |
 
 #### Templates CRUD
+
 | Endpoint | Target | Why | Type |
 |----------|--------|-----|------|
 | `POST /api/templates` | **Supabase** | Simple create | Native |
@@ -96,6 +104,7 @@ publish: true
 | `DELETE /api/templates/<id>` | **Supabase** | Cascade delete (handled by FK) | Native |
 
 #### Channels Management
+
 | Endpoint | Target | Why | Type |
 |----------|--------|-----|------|
 | `GET /api/channels` | **Supabase** | Pure CRUD list | Native |
@@ -109,6 +118,7 @@ publish: true
 | `GET /api/channels/oauth/callback` | **FastAPI** | OAuth callback handling | Workaround |
 
 #### Video Upload & Generation
+
 | Endpoint | Target | Why | Type |
 |----------|--------|-----|------|
 | `GET /api/drive-upload/<process_id>` | **FastAPI** | Google Drive API | Workaround |
@@ -117,6 +127,7 @@ publish: true
 | `POST /api/video/<id>/generate-description-and-tags` | **FastAPI** | OpenAI API for content generation | Workaround |
 
 #### Queue & Video Pipeline
+
 | Endpoint | Target | Why | Type |
 |----------|--------|-----|------|
 | `GET /api/video/queue-status` | **FastAPI** | Background worker state, complex aggregation | Workaround |
@@ -128,6 +139,7 @@ publish: true
 | `POST /api/multi-vid/<id>/process` | **FastAPI** | Pipeline orchestration | Workaround |
 
 #### Video Process CRUD
+
 | Endpoint | Target | Why | Type |
 |----------|--------|-----|------|
 | `POST /api/video/update-download-checked/<id>` | **Supabase** | Simple boolean update | Native |
@@ -141,6 +153,7 @@ publish: true
 | `DELETE /api/video/<id>` | **FastAPI** | Filesystem cleanup + cascade delete | Workaround |
 
 #### Video Step Endpoints
+
 | Endpoint | Target | Why | Type |
 |----------|--------|-----|------|
 | `GET /api/video/<id>/step-2/editable-file` | **FastAPI** | Filesystem read | Workaround |
@@ -153,6 +166,7 @@ publish: true
 | `POST /api/video/<id>/image-style/<style_id>/footage` | **FastAPI** | Runware API for footage generation | Workaround |
 
 #### Utility Endpoints
+
 | Endpoint | Target | Why | Type |
 |----------|--------|-----|------|
 | `POST /api/reverse-image-prompt` | **FastAPI** | OpenAI vision API | Workaround |
@@ -162,6 +176,7 @@ publish: true
 | `POST /api/video/<id>/rerun` | **FastAPI** | Pipeline orchestration | Workaround |
 
 #### Google Drive Integration
+
 | Endpoint | Target | Why | Type |
 |----------|--------|-----|------|
 | `GET /api/gdrive/auth` | **FastAPI** | OAuth flow | Workaround |
@@ -170,6 +185,7 @@ publish: true
 | `GET /api/gdrive/auth/disconnect` | **FastAPI** | Token revocation | Workaround |
 
 #### Video Generation Templates
+
 | Endpoint | Target | Why | Type |
 |----------|--------|-----|------|
 | `POST /api/video_gen_template` | **Supabase** | Simple create | Native |
@@ -179,6 +195,7 @@ publish: true
 | `DELETE /api/video_gen_template/<id>` | **Supabase** | Simple delete | Native |
 
 #### Final Video Endpoints
+
 | Endpoint | Target | Why | Type |
 |----------|--------|-----|------|
 | `GET /api/test-vid` | **Delete** | Debug endpoint | Delete |
