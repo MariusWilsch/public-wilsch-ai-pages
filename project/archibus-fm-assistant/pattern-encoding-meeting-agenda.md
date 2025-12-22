@@ -49,7 +49,8 @@ publish: true
 | **Navigator/Guide** | Reduce navigation complexity - AI knows where things are |
 | **Hybrid Model** | Chat + visual UI together (see: `adr-novnc-docker-hybrid-environment.md`) |
 | **Best Practice Enforcer** | Ensure correct way, every time |
-| **Platform-Agnostic** | Works at Mandala FM level, not hardcoded to one software |
+| **Platform-Agnostic** | Works at Mendeleev FM level, not hardcoded to one software |
+| **Prediction/Analytics** | Budget forecasting, asset status reporting (Smart Insight product) |
 
 **2.2 What AI should NOT do (Boundaries)**
 
@@ -58,7 +59,6 @@ publish: true
 | Replace visual UI entirely | Some things need forms/visual |
 | Handle everything in chat | Complex inputs need hybrid |
 | Be software-specific | Defeats platform value |
-| Prediction/Analytics | Different product (Smart Insight) |
 
 *"Check duplicates" and "route to team" are examples of Best Practice Enforcer - patterns we'll encode today.*
 
