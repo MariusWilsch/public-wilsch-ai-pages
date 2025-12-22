@@ -85,12 +85,12 @@ publish: true
 **Pattern reference:** Similar to [Anthropic Interviewer](https://www.anthropic.com/research/anthropic-interviewer) - AI proactively extracts knowledge from humans at scale
 
 **Notes:**
-- Partial data valuable: "even a quarter done saves money" (Ian)
+- Partial data collection still valuable - reduces manual survey effort
 - Adoption challenge: Cultural change required
-- Target audience debate: Kaia: "I don't want to be bothered"
+- Target audience consideration: FM managers, not general staff
 - Related pattern: Space utilization surveys (same push-prompt approach)
 
-**Question:** "On whose account and with what effort?" (Kaia)
+**Open Question:** Effort allocation and responsibility assignment
 
 ---
 
@@ -124,10 +124,9 @@ publish: true
 |---------|---------|
 | **Pain** | Craftsmen order wrong parts, waste time going back and forth |
 | **Workflow** | AI suggests parts based on asset type + problem |
-| **Best Practice** | "Stupid-proof" - constrain suggestions to compatible parts |
+| **Best Practice** | Constrain suggestions to compatible parts only |
 
-**Quote (Ali):**
-> "If you are responsible maintaining an elevator and the elevator needs some part and AI prompts you, these are the parts that fit in this elevator, which one do you choose? And then it checks... This part only fits latest models."
+**Mechanism:** AI validates part compatibility with asset model/version before suggesting
 
 **Also includes:** Suggesting assets to add to work requests
 
@@ -148,28 +147,6 @@ publish: true
 - Calibration tracking: "When was X last serviced?"
 
 **Product:** Relates to Smart Insight (Miguel's correction: AI SHOULD do prediction/analytics)
-
----
-
-## Open Decisions
-
-| Item | Status | Owner |
-|------|--------|-------|
-| AI vs Backend: Chains 4, 5 | Pending | Marius + Rein |
-| Partial chains: 4, 7 missing BP | Needs FM input | Team |
-| Mujahid's 50+ scenarios doc | Pending upload | Mujahid |
-
----
-
-## Action Items
-
-| Action | Owner | Status |
-|--------|-------|--------|
-| Sort AI vs Backend (Chains 4, 5) | Marius + Rein | Pending |
-| Upload AI scenarios doc to SharePoint | Mujahid | Pending |
-| Update Mendeleev spelling | Marius | Pending |
-| Update slide: prediction/analytics → "should do" | Marius | Pending |
-| Create SharePoint documentation sub-issue | Marius | Pending |
 
 ---
 
