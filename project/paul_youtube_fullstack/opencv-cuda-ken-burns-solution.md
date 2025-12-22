@@ -120,56 +120,68 @@ Getting OpenCV CUDA working required:
 
 This complexity is not needed since CPU solution is faster.
 
-## Integration Approach
+## Key Learnings Summary
 
-### Architecture
+### 1. The Bottleneck Discovery
+
+**FFmpeg zoompan is slow because:**
+- It rebuilds `SwsContext` (scaling pipeline) for EVERY frame
+- 86% of CPU time spent in `libswscale` functions
+- GPU sits idle at 2% while CPU maxes out at 158%
+
+**OpenCV is fast because:**
+- `cv2.resize()` reuses internal structures
+- No per-frame context rebuild
+- Direct memory access, SIMD optimized
+
+### 2. The Benchmark Results
+
+| Approach | 6hr Video Time |
+|----------|----------------|
+| FFmpeg single-pass | ~33 min |
+| OpenCV sequential | ~27 min |
+| **OpenCV 16 workers** | **~5.4 min** |
+
+Sequential OpenCV is marginally faster. **The real win is parallelization** - images are independent, so 16 workers = 6x speedup.
+
+### 3. How OpenCV Ken Burns Works
+
+```python
+def ken_burns(image, duration, zoom_percent=8, direction='in'):
+    frames = int(fps * duration)
+
+    for frame_num in range(frames):
+        t = frame_num / frames  # 0 → 1 progress
+
+        # Calculate zoom (replicates FFmpeg zoompan math)
+        zoom = 1.0 + (zoom_percent/100 * t)
+
+        # Crop window shrinks as zoom increases
+        crop_w = output_width / zoom
+        crop_h = output_height / zoom
+
+        # Extract and resize
+        cropped = image[y:y+crop_h, x:x+crop_w]
+        frame = cv2.resize(cropped, (output_width, output_height))
+
+        yield frame
+```
+
+### 4. Integration Plan
 
 ```
 Current:   images → FFmpeg zoompan → xfade → encode
-                    (slow, 86% CPU)
+                    (slow, sequential)
 
 Proposed:  images → OpenCV (parallel) → clips → FFmpeg xfade → encode
                     (fast, 16 workers)         (unchanged)
 ```
 
-Only Ken Burns moves to OpenCV. xfade, overlay, encode stay in FFmpeg.
-
-### Key Finding: xfade Works Unchanged
-
-The xfade offset formula `offset = currentTime + prevDuration - transitionDuration` is media-agnostic - works identically with infinite streams (current) or pre-rendered clips (proposed).
-
-### Dynamic Duration
-
-Pass calculated `perImageDuration` from TypeScript to OpenCV:
-- TypeScript calculates duration based on audio length (existing logic)
-- OpenCV generates clips with exact frame count
-- Preserves audio-driven timing behavior
-
-### TypeScript → Python Integration
-
-```typescript
-// In generateSlideshow.ts
-import { spawn } from 'child_process';
-
-await generateKenBurnsClips({
-  images: ['/footage/img1.jpg', '/footage/img2.jpg'],
-  duration: perImageDuration,  // calculated from audio
-  outputDir: '/tmp/clips',
-  workers: 16,
-  kenBurns: { zoom: 8, direction: 'in', pan: 'left' }
-});
-```
-
-### Next Steps
-
-1. Build standalone integration test (Python script)
-2. Test with real footage folder on nuca-systems
-3. Integrate Python call into generateSlideshow.ts
-4. Verify full pipeline with frontend
+**Only Ken Burns moves to OpenCV. xfade, overlay, encode stay in FFmpeg.**
 
 ## Sources
 
 - Spike testing: nuca-systems, Dec 2024
 - FFmpeg source: `libavfilter/vf_zoompan.c`
 - Issue: [#329 VideoGen Scaling Spike](https://github.com/DaveX2001/deliverable-tracking/issues/329)
-- Benchmark scripts: `/tmp/opencv_ken_burns_benchmark.py`, `/tmp/opencv_ken_burns_parallel.py`
+- Conversation: Dec 22, 2024
