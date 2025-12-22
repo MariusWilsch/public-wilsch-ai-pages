@@ -2,91 +2,103 @@
 publish: true
 ---
 
-# OpenCV CUDA for Ken Burns: Solving the zoompan Bottleneck
+# Ken Burns Optimization: Spike Results
 [[client-paul]]
 
-## Problem Statement
+## Executive Summary
 
-FFmpeg's `zoompan` filter creates Ken Burns effects by scaling an 8000px source image down to 1344px output resolution **for every frame** (550 frames per image at 30fps). This per-frame scaling consumes ~60% CPU while the GPU sits idle at 1%.
+**Hypothesis:** OpenCV CUDA would provide 2x+ speedup over FFmpeg zoompan.
+**Result:** OpenCV CUDA is 0.15x (7x slower) due to GPU→CPU transfer overhead.
+**Unexpected finding:** OpenCV CPU is 3500 fps - already extremely fast.
+**Root cause discovered:** FFmpeg zoompan rebuilds SwsContext per-frame (the real bottleneck).
 
-**Root cause:** zoompan is CPU-only. Each frame requires:
-- Calculate crop region (zoom window position)
-- Scale 8000px → 1344px via libswscale
-- Repeat 550 times per image
+## The Real Bottleneck
 
-## Why FFmpeg GPU Scaling Failed
+FFmpeg's `zoompan` filter **rebuilds the entire scaling pipeline from scratch for EVERY FRAME**:
 
-Attempted solution: `scale_cuda` filter for GPU-accelerated scaling.
-
-**Result:** No improvement. Perf profiling revealed:
-
-| Metric | CPU scale | GPU scale_cuda |
-|--------|-----------|----------------|
-| hscale functions | 60% | 60% |
-| Memory transfer | 1.4% | **10.4%** |
-
-**Root cause:** FFmpeg's filter pipeline is CPU-centric. Data flows:
-```
-CPU → upload → GPU scales → download → CPU → next filter
+```c
+// Per frame in vf_zoompan.c:
+s->sws = sws_alloc_context();        // allocate
+sws_init_context(s->sws, ...);       // compute filter coefficients (EXPENSIVE)
+sws_scale(s->sws, ...);              // actual scaling (fast)
+sws_freeContext(s->sws);             // free everything
 ```
 
-The 10.4% `__memmove` overhead (CPU↔GPU transfers) negates any GPU compute gains.
+The 60% CPU in `hscale` functions isn't scaling pixels - it's recomputing bicubic filter coefficients 30 times per second.
 
-## Solution: OpenCV CUDA
+## Spike Benchmark Results
 
-OpenCV CUDA solves the transfer problem by **keeping data in GPU memory** across operations.
+| Approach | Speed | Why |
+|----------|-------|-----|
+| FFmpeg zoompan | ~33 min for 6hr video | Per-frame SwsContext rebuild |
+| OpenCV CUDA | 290 fps (0.15x) | GPU→CPU transfer overhead |
+| **OpenCV CPU** | **3500 fps** | No context overhead |
 
-**Key difference:**
-```
-FFmpeg: CPU → GPU → CPU → GPU → CPU (per frame)
-OpenCV: CPU → GPU (stays there for 550 frames) → CPU
-```
+## Why OpenCV CUDA Failed
 
-### Implementation Approach
+Each of 90 frames per image requires `result.download()` (GPU→CPU transfer):
 
 ```python
-import cv2
-
-# Upload image ONCE
-gpu_image = cv2.cuda_GpuMat()
-gpu_image.upload(cpu_image)  # 8000px image
-
-# Process 550 frames entirely on GPU
-for frame in range(550):
-    M = compute_affine_matrix(frame)  # zoom/pan params
-    cropped = cv2.cuda.warpAffine(gpu_image, M, size)
-    resized = cv2.cuda.resize(cropped, (1344, 756))
-    # Frame stays in GPU memory or downloads for encoding
-
-# Download only when needed for FFmpeg encoding
+for frame in range(90):
+    result = cv2.cuda.warpAffine(gpu_img, M, size)
+    frames.append(result.download())  # 90 transfers per image!
 ```
 
-### Expected Performance
+Transfer overhead dominated any GPU compute gains.
 
-| Metric | Current (CPU) | OpenCV CUDA |
-|--------|---------------|-------------|
-| Scaling approach | Per-frame CPU | Per-frame GPU |
-| Memory transfers | N/A | 2 per image (not per frame) |
-| Speedup | 1x | 3-5x |
-| GPU utilization | 1% | High |
+## Why OpenCV CPU Wins
 
-**Hardware context:** nuca-systems has RTX 5080 with 10,240 CUDA cores, currently idle during video generation.
+OpenCV's `cv2.resize()` doesn't rebuild context per-frame:
+- No `sws_init_context()` equivalent
+- Reuses optimized SIMD paths
+- Direct memory access
 
-## Hybrid Pipeline
+## Solution Architecture
 
-OpenCV CUDA replaces **only** the Ken Burns step. FFmpeg handles everything else:
+Replace zoompan with OpenCV CPU, pipe to FFmpeg for encoding only:
 
-| Step | Tool |
-|------|------|
-| Ken Burns (zoompan) | **OpenCV CUDA** |
-| Transitions (xfade) | FFmpeg |
-| Audio mixing | FFmpeg |
-| Video encoding | FFmpeg NVENC |
-| Container muxing | FFmpeg |
+```
+Current:  Image → [FFmpeg zoompan (slow)] → Encoded video
+
+Proposed: Image → [OpenCV CPU Ken Burns (fast)] → [FFmpeg encode only] → Video
+```
+
+| Step | Tool | Why |
+|------|------|-----|
+| Ken Burns frames | OpenCV CPU | 3500 fps, no context rebuild |
+| Video encoding | FFmpeg NVENC | GPU encoding, already fast |
+| Transitions | FFmpeg xfade | Only 2% CPU, not bottleneck |
+| Audio | FFmpeg | Already fast |
+
+## Implementation Notes
+
+OpenCV CPU prototype (tested on nuca-systems):
+```python
+def ken_burns_cpu(img, frames=90, zoom=0.08):
+    h, w = img.shape[:2]
+    for i in range(frames):
+        t = i / frames
+        crop_w = int(OUTPUT_WIDTH / (1.0 + t * zoom))
+        crop_h = int(OUTPUT_HEIGHT / (1.0 + t * zoom))
+        x = (w - crop_w) // 2 + int(t * (w - crop_w) * 0.3)
+        y = (h - crop_h) // 2
+        frame = cv2.resize(img[y:y+crop_h, x:x+crop_w], (OUTPUT_WIDTH, OUTPUT_HEIGHT))
+        yield frame
+```
+
+## Infrastructure Note
+
+Getting OpenCV CUDA working required:
+- cudawarped pre-built wheel (official PyPI has no CUDA)
+- cuDNN 9.x installation
+- FFmpeg 4.x compatibility libs (symlinks to newer versions)
+- Total setup: ~1 hour
+
+This complexity is not needed since CPU solution is faster.
 
 ## Sources
 
-- Perf profiling: `/tmp/perf_*.data` on nuca-systems (Dec 2024)
-- Issue tracking: [#329 VideoGen Scaling Spike](https://github.com/DaveX2001/deliverable-tracking/issues/329)
-- Related doc: [CPU Filter Bottleneck Analysis](cpu-filter-bottleneck-analysis.md)
-- Related doc: [VideoGen Scaling Spike](videogen-scaling-spike.md)
+- Spike testing: nuca-systems, Dec 2024
+- FFmpeg source: `libavfilter/vf_zoompan.c`
+- Issue: [#329 VideoGen Scaling Spike](https://github.com/DaveX2001/deliverable-tracking/issues/329)
+- Conversation: Current session
