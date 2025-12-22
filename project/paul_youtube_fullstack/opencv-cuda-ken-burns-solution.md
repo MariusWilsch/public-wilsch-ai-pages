@@ -34,6 +34,30 @@ The 60% CPU in `hscale` functions isn't scaling pixels - it's recomputing bicubi
 | OpenCV CUDA | 290 fps (0.15x) | GPU→CPU transfer overhead |
 | **OpenCV CPU** | **3500 fps** | No context overhead |
 
+### Parallel Benchmark (Dec 22, 2024)
+
+Tested on nuca-systems (32 cores, RTX 5080):
+
+| Workers | Time (100 clips) | Per Clip | Speedup |
+|---------|------------------|----------|---------|
+| 1 | 24.02s | 0.240s | 1.0x |
+| 4 | 7.16s | 0.072s | 3.4x |
+| 8 | 5.35s | 0.053s | 4.5x |
+| **16** | **4.51s** | **0.045s** | **5.3x** |
+| 32 | 4.55s | 0.046s | 5.3x |
+
+Diminishing returns after 16 cores (likely disk I/O bottleneck).
+
+### 6-Hour Video Projection
+
+| Approach | Ken Burns Time | Full Pipeline |
+|----------|----------------|---------------|
+| FFmpeg zoompan | ~28 min | ~33 min |
+| OpenCV (1 worker) | ~29 min | ~34 min |
+| **OpenCV (16 workers)** | **~5.4 min** | **~10-11 min** |
+
+**3x overall pipeline speedup** for long-form content.
+
 ## Why OpenCV CUDA Failed
 
 Each of 90 frames per image requires `result.download()` (GPU→CPU transfer):
@@ -96,9 +120,56 @@ Getting OpenCV CUDA working required:
 
 This complexity is not needed since CPU solution is faster.
 
+## Integration Approach
+
+### Architecture
+
+```
+Current:   images → FFmpeg zoompan → xfade → encode
+                    (slow, 86% CPU)
+
+Proposed:  images → OpenCV (parallel) → clips → FFmpeg xfade → encode
+                    (fast, 16 workers)         (unchanged)
+```
+
+Only Ken Burns moves to OpenCV. xfade, overlay, encode stay in FFmpeg.
+
+### Key Finding: xfade Works Unchanged
+
+The xfade offset formula `offset = currentTime + prevDuration - transitionDuration` is media-agnostic - works identically with infinite streams (current) or pre-rendered clips (proposed).
+
+### Dynamic Duration
+
+Pass calculated `perImageDuration` from TypeScript to OpenCV:
+- TypeScript calculates duration based on audio length (existing logic)
+- OpenCV generates clips with exact frame count
+- Preserves audio-driven timing behavior
+
+### TypeScript → Python Integration
+
+```typescript
+// In generateSlideshow.ts
+import { spawn } from 'child_process';
+
+await generateKenBurnsClips({
+  images: ['/footage/img1.jpg', '/footage/img2.jpg'],
+  duration: perImageDuration,  // calculated from audio
+  outputDir: '/tmp/clips',
+  workers: 16,
+  kenBurns: { zoom: 8, direction: 'in', pan: 'left' }
+});
+```
+
+### Next Steps
+
+1. Build standalone integration test (Python script)
+2. Test with real footage folder on nuca-systems
+3. Integrate Python call into generateSlideshow.ts
+4. Verify full pipeline with frontend
+
 ## Sources
 
 - Spike testing: nuca-systems, Dec 2024
 - FFmpeg source: `libavfilter/vf_zoompan.c`
 - Issue: [#329 VideoGen Scaling Spike](https://github.com/DaveX2001/deliverable-tracking/issues/329)
-- Conversation: Current session
+- Benchmark scripts: `/tmp/opencv_ken_burns_benchmark.py`, `/tmp/opencv_ken_burns_parallel.py`
