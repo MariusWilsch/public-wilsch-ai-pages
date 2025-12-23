@@ -28,11 +28,11 @@ Session B (soloforce): /improve-system → FIFO + related hint → User picks
                                                               ↓
                        /rubber-duck → Diagnose artifact type
                                                               ↓
-                       Clarity phases → fix-artifact skill (Layer 2) → Execute
+                       Clarity phases → manage-artifact skill (Layer 2) → Execute
                                                               ↓
                        PRE-COMMIT PAUSE → "Verify in project session"
                                                               ↓
-Session A2 (Project): Verify fix → Report back
+Session C (Project): Verify fix → Report back
                                                               ↓
                        ↙ If failed: back to rubber-duck with new context
 Session B (cont): Confirm → PR via worktree → Merge (auto-closes issue)
@@ -89,14 +89,14 @@ Artifact Types:
 | Step | Action | Notes |
 |------|--------|-------|
 | 9 | `/requirements-clarity` | WHAT to fix |
-| 10 | `/implementation-clarity` | HOW to fix → `fix-artifact` skill discovered |
+| 10 | `/implementation-clarity` | HOW to fix → `manage-artifact` skill discovered |
 | 11 | `/evaluation-clarity` | Success criteria |
-| 12 | Execute + **Layer 2 context** | `fix-artifact` skill loads relevant reference |
+| 12 | Execute + **Layer 2 context** | `manage-artifact` skill loads relevant reference |
 | 13 | PRE-COMMIT PAUSE | "Verify in new project session" |
 
 ### Failed Verification Handling
 
-If user returns from Session A2 saying "didn't work":
+If user returns from Session C saying "didn't work":
 - Return to Step 8 (rubber-duck) with NEW conversation context
 - Iterate diagnosis and fix with updated understanding
 - Issue stays open until fix verified
@@ -116,7 +116,7 @@ Part of `/rubber-duck` diagnosis - the fix depends on artifact type:
 - Command fix: Strengthen `/rubber-duck` instruction
 - Hook fix: Stop hook that blocks plain-text questions
 
-## Session A2: Verification
+## Session C: Verification
 
 | Step | Action | Notes |
 |------|--------|-------|
@@ -124,6 +124,8 @@ Part of `/rubber-duck` diagnosis - the fix depends on artifact type:
 | 2 | Trigger same scenario | - |
 | 3 | Observe: fixed or not? | - |
 | 4 | Return to Session B | - |
+
+**Current Implementation:** `manage-artifact` skill has a monitoring loop that polls Session C conversation every 30 seconds, watching for success/failure signals in real-time.
 
 ## Session B (cont): Finalize
 
@@ -137,46 +139,16 @@ Part of `/rubber-duck` diagnosis - the fix depends on artifact type:
 
 ## Component Inventory
 
-### Existing (Ready to Use)
-
-| Component | Location | Purpose |
-|-----------|----------|---------|
-| `/rubber-duck` | `~/.claude/commands/` | Externalize thinking, diagnose |
-| `/requirements-clarity` | `~/.claude/commands/` | WHAT to build |
-| `/implementation-clarity` | `~/.claude/commands/` | HOW to build |
-| `/evaluation-clarity` | `~/.claude/commands/` | WHEN it's done |
-| `deliverable-tracking` skill | `~/.claude/skills/` | Issue creation pattern |
-| `worktree` skill | `~/.claude/skills/` | Isolated development |
-| `skill-creator` skill | `~/.claude/skills/` | Skill modifications |
-| `extract_conversation.py` | `soloforce/research/scripts/` | Conversation → JSONL |
-| `CLAUDE-CODE-IMPROVEMENTS` label | deliverable-tracking repo | Issue tagging |
-
-### To Build
-
-| Component | Location | Purpose |
-|-----------|----------|---------|
-| `/flag-for-improvement` | `~/.claude/commands/` | Session A entry point ✓ Built |
-| `/improve-system` | `~/.claude/commands/` | Session B orchestrator |
-| `fix-artifact` | `~/.claude/skills/` | Layer 2 context loader (progressive disclosure) |
-
-## fix-artifact Skill Structure
-
-Progressive disclosure skill for loading artifact-specific fix context:
-
-```
-fix-artifact/
-├── SKILL.md (workflow + selection guidance)
-└── references/
-    ├── command.md (ADR-004, /stage, anthropic-template)
-    ├── skill.md (skill-lifecycle, persuasion, skill-creator)
-    ├── hook.md (settings.json pattern, example hooks)
-    └── protocol.md (ADR-008, CLAUDE.md structure)
-```
-
-**Discovery:** `(discovery: implementation-clarity)` - discovered during implementation-clarity phase
-**Execution:** Execute phase - loads relevant reference file based on diagnosed artifact type
-
-When diagnosis outputs "command" → Claude reads only `references/command.md`
+| Component | Purpose |
+|-----------|---------|
+| `/flag-for-improvement` | Session A entry point |
+| `/improve-system` | Session B orchestrator |
+| `/rubber-duck` | Externalize thinking, diagnose |
+| Clarity commands | `/requirements`, `/implementation`, `/evaluation` |
+| `manage-artifact` skill | Layer 2 context loader + monitoring loop |
+| `worktree` skill | Isolated development branches |
+| `skill-creator` skill | Skill modifications |
+| `conversation-reader` skill | Conversation extraction |
 
 ## Introspection Reference
 
