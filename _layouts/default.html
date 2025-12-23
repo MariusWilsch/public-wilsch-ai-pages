@@ -70,6 +70,17 @@
     <!-- Mermaid.js for diagram rendering -->
     <script type="module">
       import mermaid from 'https://cdn.jsdelivr.net/npm/mermaid@11/dist/mermaid.esm.min.mjs';
+
+      // Jekyll wraps fenced code blocks in <pre><code class="language-mermaid">
+      // Mermaid expects <pre class="mermaid"> - convert Jekyll's format
+      document.querySelectorAll('pre code.language-mermaid').forEach((codeBlock) => {
+        const pre = codeBlock.parentElement;
+        const mermaidDiv = document.createElement('pre');
+        mermaidDiv.className = 'mermaid';
+        mermaidDiv.textContent = codeBlock.textContent;
+        pre.replaceWith(mermaidDiv);
+      });
+
       mermaid.initialize({ startOnLoad: true });
     </script>
   </body>
