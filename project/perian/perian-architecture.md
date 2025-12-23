@@ -242,7 +242,8 @@ sequenceDiagram
 - Automated deployment (manual via plugin update)
 - Agent SDK integration
 - Multi-model routing
-- API billing (users pay their own Claude subscription)
+
+**Prerequisite:** Users pay their own Claude subscription (we don't handle LLM costs)
 
 ---
 
