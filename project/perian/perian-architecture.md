@@ -62,12 +62,34 @@ Living architecture document for the PERIAN product. Consolidates strategic deci
 
 > Fast feedback loops that build YOUR context + AI that adapts to that context beats smarter models with generic knowledge. The user just flags—the system engineers the context.
 
-**The UV/pip Example:**
+**What we DON'T do:**
+- Wait for smarter models from Anthropic/OpenAI
+- Compete on model capability
+- Require users to learn Claude Code internals (hooks, skills, protocols)
 
-| Approach | What Happens |
-|----------|--------------|
-| Smart Model + Generic Context | Session 47: "WHY ARE YOU STILL USING PIP" |
-| Dumb Model + YOUR Context | Session 2: Hook blocks pip → AI uses uv run. Done. |
+**What we DO:**
+- Build a system where user feedback rapidly improves the AI's context
+- Create a "playbook" (skills, hooks, protocols) that adapts to YOUR patterns
+- Abstract away complexity: user flags → system creates appropriate artifact
+
+**Why it wins - The UV/pip Example:**
+
+Smart Model + Generic Context (FAILS):
+```
+Session 1: AI uses pip → Error
+Session 2: You explain uv → AI uses uv pip (still wrong)
+Session 47: "WHY ARE YOU STILL USING PIP"
+Result: You're the teacher. Forever.
+```
+
+Dumb Model + YOUR Context + Adaptation (WINS):
+```
+Session 1: AI uses pip → You /flag-for-improvement
+System: Creates hook blocking pip
+Session 2: AI tries pip → Hook blocks → AI uses uv run
+Session 47: AI automatically uses uv run
+Result: You taught once. Done.
+```
 
 ### H2: Scale AI for Test-Time Compute
 
@@ -97,6 +119,9 @@ Living architecture document for the PERIAN product. Consolidates strategic deci
 | **Flywheel** | Users pay while generating data that makes their AI better at inference. |
 | **Adaptation** | A dumb model with YOUR context beats a smart model without it. |
 | **Friction** | Flag once, never explain—system reads conversation and fixes itself. |
+| **Team Consistency** | AI becomes the enforcement layer—no need to hope teammates follow best practices, the system ensures it. |
+
+**Key insight for teams:** You don't need disciplined employees, you need disciplined AI. Skills and hooks encode best practices; every team member's AI follows them automatically.
 
 ---
 
