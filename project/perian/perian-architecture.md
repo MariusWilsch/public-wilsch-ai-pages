@@ -181,19 +181,68 @@ sequenceDiagram
 
 ## 7. MVP Scope (Concierge)
 
-**Approach:** Concierge MVP - we manually run the improvement loop for users.
+### Approach
 
-| Actor | Does |
-|-------|------|
-| **User** | Flags issues, uploads JSONL, keeps working |
-| **Us** | Diagnose, fix, deploy via plugin marketplace |
+**Concierge MVP:** We manually run the improvement loop for users. Maximum learning, minimum build.
 
-**Parallel spike:** BLOOM (Anthropic's behavioral evaluation framework) for automated Session C verification.
+| Actor | Does | Sees |
+|-------|------|------|
+| **User** | Flags issues, uploads JSONL, keeps working | "Issue stopped happening" |
+| **Us** | Diagnose, fix, deploy via plugin marketplace | Full improvement loop, all friction points |
 
-**MVP Users:**
-- David (already onboarded)
-- Roland (colleague)
-- External: recruitment strategy TBD
+**Why Concierge:**
+- Maximum learning for us (see every failure, diagnose every fix)
+- Minimum build (just need conversation access + deployment)
+- High touch = high signal (validate hypotheses tightly before scaling)
+
+### What We're Validating
+
+| Hypothesis | Validation Method |
+|------------|-------------------|
+| **H1: Feedback loops > intelligence** | Does flagged issue get fixed and stay fixed? |
+| **H2: Test-time compute** | Does accumulated context make AI better over time? |
+| **H3: Binary feedback** | Is flag + conversation sufficient to diagnose? (No structured forms needed) |
+
+### MVP Users
+
+**Primary validation (developer focus):**
+
+| User | Role | Status | Validation Purpose |
+|------|------|--------|-------------------|
+| **Hired Developer** | Developer | Hiring in process | **Core hypothesis validation** - target customer profile, high touchpoints, validates H1/H2/H3 for coding friction |
+
+**Warm-up / secondary validation:**
+
+| User | Role | Status | Validation Purpose |
+|------|------|--------|-------------------|
+| **David** | PM | Already has clarity workflow | Workflow usability, non-dev use case |
+| **Roland** | Business partner | In discussions | External perspective, non-dev use case |
+
+**Why this structure:**
+- David and Roland validate the *workflow mechanics* (does flag → fix → deploy work?)
+- Hired developer validates the *core value proposition* (does it reduce coding friction?)
+- Developer is the real test - David/Roland are warm-up that de-risks the workflow before target customer uses it
+
+**External validation (TBD):**
+- Recruitment strategy for additional developers needed
+- Goal: validate beyond internal network to avoid bias
+
+### Build Items
+
+| Item | Purpose | Blocking? |
+|------|---------|-----------|
+| **Conversation upload (GitHub repo)** | User pushes JSONL, we pull | Yes - MVP blocking |
+| **Plugin marketplace setup** | Deploy fixes back to users | Yes - MVP blocking |
+| **BLOOM spike** | Automated Session C verification | No - parallel research |
+
+### Explicitly Out of Scope
+
+- Custom UI (users stay in Claude Code)
+- Self-service fix creation (we do it for them)
+- Automated deployment (manual via plugin update)
+- Agent SDK integration
+- Multi-model routing
+- API billing (users pay their own Claude subscription)
 
 ---
 
