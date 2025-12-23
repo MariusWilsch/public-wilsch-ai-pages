@@ -129,13 +129,31 @@ Result: You taught once. Done.
 
 **Architecture:** [improve-system-architecture.md](../../global/improve-system-architecture.md)
 
-```
-Session A: User flags issue → uploads conversation JSONL
-                                     ↓
-Session B: We diagnose (rubber-duck) → fix (manage-artifact) → deploy
-                                     ↓
-Session C: User verification (implicit - keeps working, issue doesn't recur)
-           Our verification (BLOOM spike - automated scenario testing)
+```mermaid
+flowchart TD
+    subgraph A["Session A (User)"]
+        A1[Work normally] --> A2[Issue occurs]
+        A2 --> A3["/flag-for-improvement"]
+        A3 --> A4[Upload conversation JSONL]
+    end
+
+    subgraph B["Session B (Us - Concierge)"]
+        B1["/improve-system"] --> B2[Extract conversation]
+        B2 --> B3["/rubber-duck diagnosis"]
+        B3 --> B4["manage-artifact (fix)"]
+        B4 --> B5[Deploy via plugin]
+    end
+
+    subgraph C["Session C (Verification)"]
+        C1["User: keeps working<br/>(implicit verification)"]
+        C2["Us: BLOOM spike<br/>(automated scenarios)"]
+    end
+
+    A4 --> B1
+    B5 --> C1
+    B5 --> C2
+    C1 -->|"Issue recurs"| B3
+    C2 -->|"Test fails"| B3
 ```
 
 **Key insight:** For users, Session C is invisible—it's just their next work session. We verify on our side using automated behavioral testing.
