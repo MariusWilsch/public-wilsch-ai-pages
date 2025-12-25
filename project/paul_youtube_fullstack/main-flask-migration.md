@@ -11,8 +11,6 @@ publish: true
 
 > **Current vs Target:** Initial categorization was based on *current* Flask implementation (filesystem = FastAPI). After validation, categorization reflects *target* architecture (Supabase Storage = frontend direct, files move off filesystem).
 >
-> **Signal vs Decision:** Research provides usage signals ("not found in frontend scan" = potentially unused). Execution makes deletion decisions after deep validation. Research identifies WHAT might be unused; execution confirms and acts.
->
 > **Execution Scope Deferral:** Whether a specific endpoint should exist at all (vs being a direct Supabase query) is discovered during execution, not research. Research determines CAN it go to Supabase; execution determines HOW it should work.
 
 ## Summary
