@@ -352,10 +352,10 @@ publish: true
 | `DELETE /api/script-writer/scripts/<id>` | **Supabase** | Storage delete + DB delete (target: both Supabase) | Native |
 | `GET /api/script-writer/scripts/<id>/download` | **Supabase Storage** | File download | Native |
 
-**Dead Endpoints (3) - DELETE:**
+**Potentially Unused (3) - not found in frontend scan, validate before deletion:**
 
-| Endpoint | Why Dead |
-|----------|----------|
+| Endpoint | Why Not Found |
+|----------|---------------|
 | `GET /api/script-writer/scripts/<id>` | Frontend never fetches individual scripts - data embedded in list |
 | `PUT /api/script-writer/scripts/<id>` | No edit functionality in UI |
 | `GET /api/script-writer/scripts/<id>/text` | raw_text included in list response |
@@ -379,10 +379,10 @@ publish: true
 | `POST /api/my-assignments/<id>/complete` | **Supabase** | Storage upload + status update (target: both Supabase) | Native |
 | `GET /api/my-assignments/<id>/download` | **Supabase Storage** | File download | Native |
 
-**Dead Endpoints (5) - DELETE:**
+**Potentially Unused (5) - not found in frontend scan, validate before deletion:**
 
-| Endpoint | Why Dead |
-|----------|----------|
+| Endpoint | Why Not Found |
+|----------|---------------|
 | `GET /api/scripts/<id>` | Frontend never fetches individual - data in list |
 | `PUT /api/scripts/<id>` | No edit functionality |
 | `GET /api/scripts/<id>/assignments` | Assignments embedded in list response |
