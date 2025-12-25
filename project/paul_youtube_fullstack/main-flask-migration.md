@@ -341,57 +341,39 @@ publish: true
 
 ---
 
-### script_writer_endpoints.py ✓ VALIDATED
-
-> **Validation:** Frontend usage audit (Dec 2024). 15 used, 8 dead. Target architecture applied.
-
-**Used Endpoints (4):**
+### script_writer_endpoints.py
 
 | Endpoint | Target | Why | Type |
 |----------|--------|-----|------|
 | `POST /api/script-writer/upload` | **FastAPI** | PDF/DOCX text extraction (PyPDF2, python-docx) | Workaround |
-| `GET /api/script-writer/scripts` | **Supabase** | Pure CRUD list (supports pagination: page, per_page, search) | Native |
-| `DELETE /api/script-writer/scripts/<id>` | **Supabase** | Storage delete + DB delete (target: both Supabase) | Native |
+| `GET /api/script-writer/scripts` | **Supabase** | Pure CRUD list | Native |
+| `GET /api/script-writer/scripts/<id>` | **Supabase** | Single record read | Native |
+| `PUT /api/script-writer/scripts/<id>` | **Supabase** | Simple update | Native |
+| `DELETE /api/script-writer/scripts/<id>` | **Supabase** | Storage delete + DB delete | Native |
 | `GET /api/script-writer/scripts/<id>/download` | **Supabase Storage** | File download | Native |
-
-**Potentially Unused (3) - not found in frontend scan, validate before deletion:**
-
-| Endpoint | Why Not Found |
-|----------|---------------|
-| `GET /api/script-writer/scripts/<id>` | Frontend never fetches individual scripts - data embedded in list |
-| `PUT /api/script-writer/scripts/<id>` | No edit functionality in UI |
-| `GET /api/script-writer/scripts/<id>/text` | raw_text included in list response |
+| `GET /api/script-writer/scripts/<id>/text` | **Supabase** | Simple read | Native |
 
 ---
 
-### script_job_endpoints.py ✓ VALIDATED
-
-**Used Endpoints (11):**
+### script_job_endpoints.py
 
 | Endpoint | Target | Why | Type |
 |----------|--------|-----|------|
 | `GET /api/scripts` | **Supabase** | Pure CRUD list with RLS | Native |
+| `GET /api/scripts/<id>` | **Supabase** | Single record with RLS | Native |
 | `POST /api/scripts` | **Supabase** | Simple create | Native |
+| `PUT /api/scripts/<id>` | **Supabase** | Simple update | Native |
 | `DELETE /api/scripts/<id>` | **Supabase** | Cascade delete | Native |
+| `GET /api/scripts/<id>/assignments` | **Supabase** | Read with joins | Native |
 | `POST /api/scripts/<id>/assign` | **Supabase** | Multi-insert (can be RPC) | Native |
 | `DELETE /api/scripts/<id>/unassign/<user_id>` | **Supabase** | Simple delete | Native |
-| `GET /api/scripts/available-users` | **Supabase** | User query with RLS | Native |
-| `GET /api/my-assignments` | **Supabase** | List with RLS filter (supports ?status=completed) | Native |
-| `POST /api/my-assignments/<id>/start` | **Supabase** | Status update only | Native |
-| `POST /api/my-assignments/<id>/complete` | **Supabase** | Storage upload + status update (target: both Supabase) | Native |
+| `GET /api/my-assignments` | **Supabase** | List with RLS filter | Native |
+| `POST /api/my-assignments/<id>/start` | **Supabase** | Simple update | Native |
+| `POST /api/my-assignments/<id>/complete` | **Supabase** | Storage upload + status update | Native |
+| `PUT /api/my-assignments/<id>/notes` | **Supabase** | Simple update | Native |
+| `POST /api/my-assignments/<id>/upload` | **Supabase Storage** | File upload | Native |
 | `GET /api/my-assignments/<id>/download` | **Supabase Storage** | File download | Native |
-
-**Potentially Unused (5) - not found in frontend scan, validate before deletion:**
-
-| Endpoint | Why Not Found |
-|----------|---------------|
-| `GET /api/scripts/<id>` | Frontend never fetches individual - data in list |
-| `PUT /api/scripts/<id>` | No edit functionality |
-| `GET /api/scripts/<id>/assignments` | Assignments embedded in list response |
-| `PUT /api/my-assignments/<id>/notes` | Notes merged into complete endpoint |
-| `POST /api/my-assignments/<id>/upload` | File merged into complete endpoint |
-
-**Script-Writer Summary:** 23 original → 15 used → **14 Supabase, 1 FastAPI** (text extraction only)
+| `GET /api/scripts/available-users` | **Supabase** | Simple list with filter | Native |
 
 ---
 
