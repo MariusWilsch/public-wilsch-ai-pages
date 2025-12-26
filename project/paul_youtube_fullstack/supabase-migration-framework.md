@@ -119,16 +119,6 @@ def get_script(id):
 - Create feature sub-issues from spike output
 - Next spike only when previous frontend complete
 
-## Migration Sequence
-
-Based on #121 frontend absorption:
-
-1. **Script-Writer** (absorbed) → First spike candidate
-2. **Thumbnail** (absorbing #228) → After Script-Writer
-3. **Config** (#227) → After Thumbnail
-4. **Template** (#229) → After Config
-5. **Auth** (#230) → LAST (after all features migrated)
-
 ## Related Docs
 
 - [Strangler Pattern ADR](adr-strangler-pattern-sequencing.md) - Lesson learned
