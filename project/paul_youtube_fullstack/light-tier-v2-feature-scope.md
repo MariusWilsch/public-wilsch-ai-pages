@@ -172,6 +172,53 @@ issue: "#353"
 
 ---
 
+## Implementation Approach
+
+**JIT Vertical Slicing** (validated against Strangler Pattern)
+
+### The Pattern
+
+```
+Start: Create Video UI (v2, Supabase)
+       │
+       ▼
+   Empty dropdown? ──► Build Niche/Channel entity
+       │
+       ▼
+   FK error (no voices)? ──► Seed Voice data
+       │
+       ▼
+   Keep going until end-to-end works
+       │
+       ▼
+   Move to next feature
+```
+
+### Why This Works
+
+1. **Strangler Pattern recommends vertical slices by business domain**, not horizontal technical layers
+2. "Extracting by technical layers (database → services → UI) is problematic" - industry consensus
+3. Start with user-facing functionality, build dependencies as discovered
+4. Scope doc = MAP (what entities exist), Errors = ORDER (when to build each)
+
+### Known Dependencies
+
+When building Create Video UI, these entities will be needed:
+
+| Entity | UI Name | When Needed |
+|--------|---------|-------------|
+| Voice | Voice dropdown | Niche creation / Step 3 |
+| ImageStyle | Image Style dropdown | Niche creation / Step 4 |
+| VideoGenTemplate | Video Template dropdown | Niche creation |
+| PromptConfig | Prompt configuration | Script generation |
+| Template | Niche/Channel | Create Video Step 1 |
+
+### Starting Point
+
+**Create Video Flow** → discover → build → continue
+
+---
+
 ## Source References
 
 - **Transcript:** Dec 27, 2025 Paul-Marius call (Fireflies: 01KDG0H66T52T8BW7736QJRK83)
