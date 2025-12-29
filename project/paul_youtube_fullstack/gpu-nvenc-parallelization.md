@@ -12,6 +12,7 @@ publish: true
 **Solution:** ThreadPoolExecutor with 3 concurrent VideoWriters inside RunPod handler.
 
 **Result:**
+
 | Metric | Single Stream | 3 Parallel | Improvement |
 |--------|---------------|------------|-------------|
 | Effective FPS | 344 | ~1,030 | 3x |
