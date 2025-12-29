@@ -1,36 +1,41 @@
-# Light Tier v2 Feature Scope
+# Tier One Feature Scope
 [[client-paul]]
 
 ---
 publish: true
 date: 2025-12-28
+updated: 2025-12-29
 source: Dec 27 Paul-Marius call transcript
 issue: "#353"
 ---
 
 ## Overview
 
-**Light Tier** = Simplified, sellable version of Paul for small users (1 channel, 1 video/day).
+**Tier One** = Simplified, sellable version of Paul for small users (1 channel, 1 video/day).
 
 **Architecture:**
 - v2 domain with new frontend (Strangler Pattern)
 - Supabase Auth + FastAPI backend
-- v1 (existing "big boys") and v2 (Light Tier) coexist
+- v1 (existing "big boys") and v2 (Tier One) coexist
 - Migrate page-by-page, not big bang rewrite
 
 **Key Decision:** New frontend via Strangler Pattern (not feature flags in same codebase).
+
+**Tier Naming:**
+- **Tier One** = Simplified tier (this doc)
+- **Tier Two+** = Undefined - scope TBD after Tier One launch
 
 ---
 
 ## Navigation Items
 
-| Sub-feature | v2 Light Tier | Notes |
+| Sub-feature | Tier One | Notes |
 |-------------|---------------|-------|
-| Script Writer | ❌ OUT | Big boys only |
+| Script Writer | ❌ NOT IN | Big boys only |
 | Config | ⏸️ DEFER | Admin only, revisit later |
-| Thumbnail Manager | ❌ OUT | Internal graphic designers |
-| Create Video Template | ❌ OUT | Predefined templates only |
-| Create Voice | ❌ OUT | Predefined voices only, no cloning |
+| Thumbnail Manager | ❌ NOT IN | Internal graphic designers |
+| Create Video Template | ❌ NOT IN | Predefined templates only |
+| Create Voice | ❌ NOT IN | Predefined voices only, no cloning |
 | Channels (from Niches) | ✅ IN | Rename + build |
 | Competition | ✅ IN | Tracking + analysis |
 | Queue | ✅ IN | Simplified view |
@@ -41,7 +46,7 @@ issue: "#353"
 
 ## Channels Feature (formerly Niches)
 
-| Sub-feature | v2 Light Tier | Notes |
+| Sub-feature | Tier One | Notes |
 |-------------|---------------|-------|
 | Create channel | ✅ IN | Limit TBD (1 vs unlimited) |
 | Edit channel | ✅ IN | Basic CRUD |
@@ -54,14 +59,14 @@ issue: "#353"
 | Image style | ✅ IN | Predefined + custom |
 | Skip image processing | ✅ IN | Toggle |
 | Template assignment | ✅ IN | Predefined only |
-| Update Statistics | ❌ OUT | Advanced |
+| Update Statistics | ❌ NOT IN | Advanced |
 | Manage Channels button | ✅ IN | Auth visibility |
 
 ---
 
 ## Competition Feature
 
-| Sub-feature | v2 Light Tier | Notes |
+| Sub-feature | Tier One | Notes |
 |-------------|---------------|-------|
 | Add competitor channels | ✅ IN | Core |
 | Remove competitor channels | ✅ IN | Core |
@@ -73,73 +78,73 @@ issue: "#353"
 
 ## Create Video Flow
 
-| Sub-feature | v2 Light Tier | Notes |
+| Sub-feature | Tier One | Notes |
 |-------------|---------------|-------|
 | Title input | ✅ IN | Core |
 | Thumbnail Title input | ✅ IN | Core |
 | Upload Script (file picker) | ✅ IN | Manual upload |
-| "Use Completed Assigned Script" | ❌ OUT | Links to Script Writer |
+| "Use Completed Assigned Script" | ❌ NOT IN | Links to Script Writer |
 | Video URL input | ✅ IN | Core |
 | Title Generation toggle | ✅ IN | Core |
 | Autopilot toggle | ✅ IN | Automation |
 | Auto Upload YouTube | ✅ IN | Convenience |
 | Enable Video Preview | ✅ IN | Question on GPU load |
 | Require Thumbnail button | ✅ IN | Pricing TBD ($1-2) |
-| Add CTA | ❌ OUT | Phase 2 |
+| Add CTA | ❌ NOT IN | Phase 2 |
 
 ---
 
 ## Queue View
 
-| Sub-feature | v2 Light Tier | Notes |
+| Sub-feature | Tier One | Notes |
 |-------------|---------------|-------|
 | View queue (own videos only) | ✅ IN | Core |
 | View Final Video | ✅ IN | Core |
 | Download Video | ✅ IN | Core |
 | Thumbnail status indicator | ✅ IN | Shows when ready |
 | Edit button (for failures) | ✅ IN | Retry failed jobs |
-| Download Images | ❌ OUT | Simplified |
-| Download Transcript | ❌ OUT | Simplified |
-| Download Audio | ❌ OUT | Simplified |
-| Edit Title | ❌ OUT | UUID migration |
-| Delete | ❌ OUT | No delete |
-| Redo | ❌ OUT | Advanced |
-| Clone/Multi | ❌ OUT | Big boys |
-| Generate Description | ❌ OUT | Advanced |
-| Upload to YouTube (manual) | ❌ OUT | Use auto-upload |
+| Download Images | ❌ NOT IN | Simplified |
+| Download Transcript | ❌ NOT IN | Simplified |
+| Download Audio | ❌ NOT IN | Simplified |
+| Edit Title | ❌ NOT IN | UUID migration |
+| Delete | ❌ NOT IN | No delete |
+| Redo | ❌ NOT IN | Advanced |
+| Clone/Multi | ❌ NOT IN | Big boys |
+| Generate Description | ❌ NOT IN | Advanced |
+| Upload to YouTube (manual) | ❌ NOT IN | Use auto-upload |
 
 ---
 
 ## Voice System
 
-| Sub-feature | v2 Light Tier | Notes |
+| Sub-feature | Tier One | Notes |
 |-------------|---------------|-------|
 | View voices | ✅ IN | Select from list |
 | Select voice | ✅ IN | ~16 predefined |
-| Create voice | ❌ OUT | No custom |
-| Clone voice | ❌ OUT | Security risk ("Trump stuff") |
+| Create voice | ❌ NOT IN | No custom |
+| Clone voice | ❌ NOT IN | Security risk ("Trump stuff") |
 
 ---
 
 ## Template System
 
-| Sub-feature | v2 Light Tier | Notes |
+| Sub-feature | Tier One | Notes |
 |-------------|---------------|-------|
 | View templates | ✅ IN | Select from list |
 | Select template | ✅ IN | Predefined only |
-| Create template | ❌ OUT | Advanced |
-| Edit template | ❌ OUT | Advanced |
+| Create template | ❌ NOT IN | Advanced |
+| Edit template | ❌ NOT IN | Advanced |
 
 ---
 
 ## Infrastructure
 
-| Sub-feature | v2 Light Tier | Notes |
+| Sub-feature | Tier One | Notes |
 |-------------|---------------|-------|
 | v2 subdomain | ✅ REQUIRED | New domain |
 | Supabase Auth | ✅ REQUIRED | User registration |
 | Stripe integration | ✅ REQUIRED | Payments |
-| Tier routing | ✅ REQUIRED | Light vs Full |
+| Tier routing | ✅ REQUIRED | Tier One vs others |
 | Dark mode + Light mode | ✅ IN | UI polish |
 
 ---
@@ -158,7 +163,7 @@ issue: "#353"
 
 ## Summary Counts
 
-| Category | IN | OUT | TBD |
+| Category | IN | NOT IN | TBD |
 |----------|-----|-----|-----|
 | Navigation Items | 5 | 5 | 1 |
 | Channels | 10 | 1 | 2 |
