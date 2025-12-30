@@ -11,10 +11,10 @@ publish: true
 
 Dieser Rahmenvertrag für Beratungsdienstleistungen („Vertrag"), datiert auf den 16. Tag des Dezember 2025 („Inkrafttreten"), wird geschlossen zwischen:
 
-**Klimafolgenschutz e.V.** („Auftraggeber")
-- Registernummer: [TODO: VR-Nummer beim Amtsgericht Rosenheim erfragen]
-- Adresse: Bahnhofstr. 9a, 83139 Söchtenau
-- Ansprechpartner: Michael Reichert, [TODO: E-Mail erfragen]
+**Casa Curata UG** („Auftraggeber")
+- USt-IdNr.: DE407460820
+- Adresse: Werinherstraße 3, 81541 München
+- Ansprechpartner: Michael Reichert
 
 und
 
