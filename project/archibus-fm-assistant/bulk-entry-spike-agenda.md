@@ -27,11 +27,11 @@ Three focus chains for March: 1B, 3, 7
 
 ---
 
-## Chain 3: Data Currency (Brief)
+## Chain 3: Data Freshness (Brief)
 
 **What we know:** Gamification, AI-as-peer, absorbs Chain 1A
 
-**Success:** We understand the dependency to 1B. Binary: Is data currency part of March scope or after? Clear/Unclear.
+**Success:** We understand the dependency to 1B. Binary: Is data freshness part of March scope or after? Clear/Unclear.
 
 ---
 

@@ -23,10 +23,10 @@ From the 7 chains identified Dec 18, three moved into focus for March:
 | Chain | Status |
 |-------|--------|
 | **1B: Intelligent Bulk Entry** | IN FOCUS |
-| **3: Data Currency** | IN FOCUS (absorbs Chain 1A) |
+| **3: Data Freshness** | IN FOCUS (absorbs Chain 1A) |
 | **7: Smart Insight** | IN FOCUS (dependent on 1B + 3) |
 
-These form a coherent sequence: 1B (onboarding) → 3 (currency) → 7 (intelligence).
+These form a coherent sequence: 1B (onboarding) → 3 (freshness) → 7 (intelligence).
 
 ---
 
@@ -35,7 +35,7 @@ These form a coherent sequence: 1B (onboarding) → 3 (currency) → 7 (intellig
 | Theme | Insight |
 |-------|---------|
 | **Partner value prop** | AI makes low-margin implementation work profitable |
-| **Data access** | Cross-client analytics requires permission model (Siemens precedent) |
+| **Data access** | Cross-client analytics requires permission model |
 | **March milestone** | Need to demonstrate something beyond September webinar |
 | **Strategy** | Quick win → long-term value expansion |
 
@@ -66,7 +66,7 @@ These form a coherent sequence: 1B (onboarding) → 3 (currency) → 7 (intellig
 
 ---
 
-### Data Currency (Chain 3)
+### Data Freshness (Chain 3)
 
 *Absorbs Chain 1A*
 
@@ -119,7 +119,7 @@ Chain 7's value unlocks only after 1B and 3 deliver clean data. Without reliable
 Compliance queries (how many F200s per floor?), status queries (what's delayed? what's in bad condition?), budget forecasting (cost to replace all bad-condition assets), calibration tracking (when was X last serviced?).
 
 **Cross-Client Analytics (Future)**
-Potential to aggregate anonymized data across clients for regression analysis (Siemens precedent). Requires data access permission model.
+Potential to aggregate anonymized data across clients for regression analysis. Requires data access permission model.
 
 ---
 
