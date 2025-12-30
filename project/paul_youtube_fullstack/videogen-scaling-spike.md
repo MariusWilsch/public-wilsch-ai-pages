@@ -1,98 +1,49 @@
-# VideoGen Scaling Spike - Investigation Journey
+# VideoGen Scaling Spike - Root Cause Analysis
 [[client-paul]]
 
 ---
 publish: true
 date: 2025-12-19
-updated: 2025-12-23
+updated: 2025-12-29
 issue: 329
 ---
 
-## Final Decision
+## The Root Cause
 
-**OpenCV CPU for speed, RunPod CPU workers for scale**
+FFmpeg's `zoompan` filter rebuilds the entire scaling pipeline **per frame**:
 
-The original GPU-focused approach was invalidated. The bottleneck is CPU (filter processing), not GPU (encoding).
-
-## Investigation Timeline
-
-### Phase 1: Original Hypothesis (Dec 19)
-
-**Assumption:** GPU encoding is the bottleneck → need GPU workers on RunPod
-
-Recommended: Containerize Express on RunPod with GPU workers (88% confidence)
-
-### Phase 2: Benchmarking Revealed Truth (Dec 21)
-
-Instrumented the pipeline. Found:
-- GPU utilization: **2%** (idle, starved for frames)
-- CPU utilization: **158%** (bottleneck)
-- FFmpeg's `zoompan` filter rebuilds SwsContext per-frame (86% of CPU time)
-
-**Original hypothesis invalidated.** GPU isn't the problem.
-
-### Phase 3: OpenCV Discovery (Dec 22)
-
-Tested alternatives:
-| Approach | Result | Why |
-|----------|--------|-----|
-| FFmpeg zoompan | ~33 min/6hr video | Per-frame context rebuild |
-| OpenCV CUDA | 0.15x (7x slower) | GPU→CPU transfer overhead |
-| **OpenCV CPU** | **3500 fps** | No context rebuild |
-| OpenCV CPU (16 workers) | ~5.4 min/6hr video | **6x speedup** |
-
-**Root cause:** FFmpeg zoompan rebuilds the entire scaling pipeline for EVERY FRAME. OpenCV's `cv2.resize()` reuses internal structures.
-
-### Phase 4: Revised Architecture (Dec 23)
-
-```
-Speed solution:  OpenCV CPU (parallel) replaces FFmpeg zoompan
-Scale solution:  RunPod CPU workers (not GPU - cheaper!)
+```c
+// Per frame in vf_zoompan.c:
+s->sws = sws_alloc_context();        // allocate
+sws_init_context(s->sws, ...);       // compute filter coefficients (EXPENSIVE)
+sws_scale(s->sws, ...);              // actual scaling (fast)
+sws_freeContext(s->sws);             // free everything
 ```
 
-Since the bottleneck is CPU, not GPU:
-- Don't need expensive GPU workers
-- RunPod offers CPU-only endpoints
-- Same scaling pattern, lower cost
+The 86% CPU isn't scaling pixels - it's recomputing bicubic filter coefficients 30 times per second.
 
-## Current Path Forward
+## Key Findings
 
-1. **Validate OpenCV integration** (Slices 1-4 in [vertical slices doc](videogen-opencv-vertical-slices.md))
-2. **If validated:** Revisit RunPod with CPU worker framing
-3. **Implementation issues:** #333, #334 deprioritized pending OpenCV validation
+| Metric | Value | Implication |
+|--------|-------|-------------|
+| GPU utilization | 2% | Starved for frames, not the bottleneck |
+| CPU utilization | 158% | Bottleneck |
+| zoompan CPU share | 86% | Per-frame SwsContext rebuild |
 
-## Key Learnings
+**Conclusion:** GPU encoding is fast. CPU filter processing is slow. The GPU sat idle waiting for frames.
 
-1. **Measure before architecting.** Original spike assumed GPU was the bottleneck without profiling.
-2. **CPU filters can bottleneck GPU pipelines.** The GPU sat idle at 2% while CPU maxed out.
-3. **RunPod works for CPU workloads too.** Don't assume serverless = GPU-only.
+## Why OpenCV
 
-## Archived: Original GPU Approach
+OpenCV computes the affine transform matrix **once**, then applies it to all frames. No per-frame reallocation.
 
-<details>
-<summary>Original recommendation (superseded)</summary>
-
-### Original Architecture
-```
-Before:  Flask (CPU) → Express (nuca-systems GPU) → video
-After:   Flask (CPU) → RunPod (Express container with GPU) → video
-```
-
-### Why It Was Wrong
-- Assumed GPU encoding was the bottleneck
-- Didn't profile the actual pipeline
-- Missed that zoompan (CPU filter) was 86% of processing time
-
-### Container Spec (No Longer Relevant)
-- Base: `nvidia/cuda:12.x` + Node.js 20 + FFmpeg/NVENC
-- Handler: Thin wrapper around existing generateSlideshow.ts
-- Input: Images + audio + config (~50MB)
-- Output: Direct upload to Supabase Storage
-
-</details>
+| Approach | 6hr video time | Why |
+|----------|----------------|-----|
+| FFmpeg zoompan | ~33 min | Per-frame SwsContext rebuild |
+| OpenCV (16 workers) | ~5.4 min | Pre-computed transforms |
 
 ## Related Documents
 
-- [OpenCV Ken Burns Solution](opencv-cuda-ken-burns-solution.md) - Technical findings
-- [VideoGen Pipeline Architecture](videogen-pipeline-architecture.md) - Current pipeline
-- [OpenCV Vertical Slices](videogen-opencv-vertical-slices.md) - Implementation plan
+- [VideoGen Pipeline Architecture](videogen-pipeline-architecture.md)
+- [OpenCV Vertical Slices](videogen-opencv-vertical-slices.md)
+- [GPU NVENC Parallelization](gpu-nvenc-parallelization.md)
+- [cudacodec GPU Video Encoding](cudacodec-gpu-video-encoding.md)
