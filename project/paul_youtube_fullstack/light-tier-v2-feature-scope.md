@@ -4,7 +4,7 @@
 ---
 publish: true
 date: 2025-12-28
-updated: 2025-12-29
+updated: 2025-12-31
 source: Dec 27 Paul-Marius call transcript
 issue: "#353"
 ---
@@ -86,6 +86,11 @@ issue: "#353"
 | "Use Completed Assigned Script" | ❌ NOT IN | Links to Script Writer |
 | Video URL input | ✅ IN | Core |
 | Title Generation toggle | ✅ IN | Core |
+| Description textarea (Title Gen) | ✅ IN | User describes video content |
+| Script Preset dropdown (Title Gen) | ✅ IN | Select only, admin creates presets |
+| LLM Model dropdown (Title Gen) | ✅ IN | GPT-4o Mini, GPT-4, Claude, Gemini |
+| Configure Prompts button | ✅ IN | Optional - uses defaults if skipped |
+| Language badge | ❌ NOT IN | English only at launch |
 | Autopilot toggle | ✅ IN | Automation |
 | Auto Upload YouTube | ✅ IN | Convenience |
 | Enable Video Preview | ✅ IN | Question on GPU load |
@@ -168,12 +173,12 @@ issue: "#353"
 | Navigation Items | 5 | 5 | 1 |
 | Channels | 10 | 1 | 2 |
 | Competition | 5 | 0 | 0 |
-| Create Video Flow | 9 | 2 | 0 |
+| Create Video Flow | 13 | 3 | 0 |
 | Queue View | 5 | 9 | 0 |
 | Voice System | 2 | 2 | 0 |
 | Template System | 2 | 2 | 0 |
 | Infrastructure | 5 | 0 | 0 |
-| **TOTAL** | **43** | **21** | **3** |
+| **TOTAL** | **47** | **22** | **3** |
 
 ---
 
