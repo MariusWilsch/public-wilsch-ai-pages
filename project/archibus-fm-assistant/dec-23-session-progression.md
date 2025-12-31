@@ -47,18 +47,18 @@ These form a coherent sequence: 1B (onboarding) → 3 (freshness) → 7 (intelli
 
 #### Baseline
 
-| Element | Content |
-|---------|---------|
-| **Pain** | Days of work, error-prone, inconsistent data |
-| **Workflow** | Ingest data (Excel, BIM, or other formats) → sanitize → validate against standards |
-| **Best Practice** | IFMA standard + validation (before or after via survey) |
+| Element           | Content                                                                            |
+| ----------------- | ---------------------------------------------------------------------------------- |
+| **Pain**          | Days of work, error-prone, inconsistent data                                       |
+| **Workflow**      | Ingest data (Excel, BIM, or other formats) → sanitize → validate against standards |
+| **Best Practice** | IFMA standard + validation (before or after via survey)                            |
 
 #### Who Benefits (Dual Perspective)
 
 | Perspective | Pain Experienced | Value from AI |
 |-------------|------------------|---------------|
 | **End User** | Manual burden, errors, slow onboarding | Faster onboarding, cleaner data, less manual work |
-| **Partner** | Low-margin "donkey work", holds up implementations | Makes low-margin work profitable, faster implementations |
+| **Partner** | Low-margin repetitive work, holds up implementations | Makes low-margin work profitable, faster implementations |
 
 #### Pilot Opportunity
 
@@ -96,7 +96,7 @@ Tie participation to visible performance and rewards. Leverages social motivatio
 Meet users on their phone, the device they already like using.
 
 **Personality: AI-as-peer**
-Give the AI an expert persona. People are more willing to engage when they feel they're talking to a peer expert. (Anthropic Interviewer pattern)
+Give the AI an expert persona. People are more willing to engage when they feel they're talking to a peer expert. (Anthropic Interviewer pattern) https://www.anthropic.com/research/anthropic-interviewer
 
 ---
 
