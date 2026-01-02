@@ -211,8 +211,10 @@ For AC verification domain, this CAN answer "what if?":
 
 ## References
 
-| Source | Description |
-|--------|-------------|
-| Issue #89 | Missing Verify phase evidence |
-| Issue #153 | Testing validation needs authoritative source |
-| Context Graph articles | Two clocks, CRM to CRCG, trillion-dollar opportunity |
+| Source | Link |
+|--------|------|
+| Issue #89 | https://github.com/DaveX2001/claude-code-improvements/issues/89 |
+| Issue #153 | https://github.com/DaveX2001/claude-code-improvements/issues/153 |
+| Context Graph: How to Build | https://x.com/akoratana/status/1872755487498289488 |
+| Context Graph: CRM to CRCG | https://www.linkedin.com/pulse/from-crm-crcg-practical-example-context-graphs-animesh-koratana-cxcpc |
+| Context Graph: Trillion $ | https://www.foundation.co/resources/ai-trillion-dollar-opportunity-context-graphs |
