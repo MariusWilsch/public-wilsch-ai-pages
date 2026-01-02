@@ -134,9 +134,9 @@ Folgende Auslagen sind zum Selbstkostenpreis mit vorheriger schriftlicher Genehm
 - Cloud-Infrastrukturkosten
 - Gebühren für Drittanbieter-APIs
 
-### 7.2 Genehmigungsschwelle
+### 7.2 Genehmigung
 
-Auslagen über **500 EUR** bedürfen der vorherigen schriftlichen Genehmigung.
+Alle Auslagen bedürfen der vorherigen schriftlichen Genehmigung durch den Auftraggeber.
 
 ### 7.3 Dokumentation
 
