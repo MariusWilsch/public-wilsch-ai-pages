@@ -1,15 +1,9 @@
 ---
 publish: true
 ---
-
-# Rahmenvertrag für Beratungsdienstleistungen
-[[client-abtmayr-reichert]]
-
----
-
 ## Rahmenvertrag für Beratungsdienstleistungen (T&M)
 
-Dieser Rahmenvertrag für Beratungsdienstleistungen („Vertrag"), datiert auf den 16. Tag des Dezember 2025 („Inkrafttreten"), wird geschlossen zwischen:
+Dieser Rahmenvertrag für Beratungsdienstleistungen („Vertrag"), wirksam ab dem Datum der letzten Unterschrift („Inkrafttreten"), wird geschlossen zwischen:
 
 **Casa Curata UG** („Auftraggeber")
 - USt-IdNr.: DE407460820
@@ -51,7 +45,7 @@ Folgende Tätigkeiten sind NICHT abrechenbar:
 
 ## 2. Laufzeit und Dauer
 
-Dieser Vertrag tritt am 16. Dezember 2025 in Kraft und läuft auf unbestimmte Zeit, bis er von einer der Parteien gemäß Abschnitt 11 gekündigt wird.
+Dieser Vertrag tritt mit Unterzeichnung durch beide Parteien in Kraft und läuft auf unbestimmte Zeit, bis er von einer der Parteien gemäß Abschnitt 11 gekündigt wird.
 
 ---
 
@@ -274,8 +268,6 @@ Unterschrift: _________________________
 
 Name: _________________________
 
-Titel: _________________________
-
 Datum: _________________________
 
 **Dienstleister:**
@@ -283,7 +275,5 @@ Datum: _________________________
 Unterschrift: _________________________
 
 Name: Marius Wilsch
-
-Titel: Geschäftsführer
 
 Datum: _________________________
