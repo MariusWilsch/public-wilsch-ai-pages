@@ -39,10 +39,17 @@ This is NOT proof it still works. It IS:
 ## Key Insight: GWT = Reproducible Spec
 
 - Given-When-Then IS the test script
-- AI executes via Chrome DevTools
 - No coded tests to maintain
-- Adapts to UI changes naturally
+- Adapts to changes naturally
 - **Link to GWT, don't duplicate:** `gwt_ref: "tracking/issue-377.md#ac2"`
+
+**Execution tool by layer:**
+
+| Layer | Tool | Example |
+|-------|------|---------|
+| **UI** | Chrome DevTools | Navigate, click, check DOM state |
+| **Database** | Supabase MCP | Query tables, verify records |
+| **API** | curl / Bash | HTTP requests, check responses |
 
 ## Key Insight: Decision Trace vs State
 
