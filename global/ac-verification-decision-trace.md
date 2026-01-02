@@ -209,11 +209,65 @@ For AC verification domain, this CAN answer "what if?":
 }
 ```
 
+## Implementation Decisions (#146)
+
+Decisions made during implementation session (2026-01-02):
+
+### Verify Phase Trigger
+
+| Decision | Rationale |
+|----------|-----------|
+| **After Push, before Task Completed** | Work is preserved first (push), then verified |
+| **Can span sessions** | If context exhausts after push, next session continues from "verify pending" |
+
+### Gating Model
+
+| Model | Behavior |
+|-------|----------|
+| **Hybrid** | Must attempt verification (gate on execution) |
+| | Failure is valid result (not gate on outcome) |
+| | Task Completed happens regardless of pass/fail |
+
+### Folder Structure
+
+```
+.claude/tracking/issue-{N}/
+├── tracking.md        # DoD + AC (Given-When-Then specs)
+├── verification.jsonl # Decision traces (this schema)
+└── artifacts/         # Screenshots for failures only
+```
+
+### Artifact Naming
+
+Pattern: `{ac}-{result}-{timestamp}-{type}.{ext}`
+
+Example: `ac2-failure-2026-01-15T10-22-00Z-screenshot.png`
+
+### Reasoning Generation
+
+| Timing | What |
+|--------|------|
+| **Batch, not streaming** | AI generates reasoning AFTER AC complete |
+| **Two levels** | Per-step `interpretation` + AC-level `reasoning` |
+
+### Phase Transition Announcements
+
+```
+📍 Moving to [Phase Name]...
+```
+
+Added to Communication Standards in CLAUDE.md.
+
+### GWT Reference Update
+
+`gwt_ref` now points to subfolder: `tracking/issue-{N}/tracking.md#ac2`
+
 ## References
 
 | Source | Link |
 |--------|------|
 | Issue #89 | https://github.com/DaveX2001/claude-code-improvements/issues/89 |
+| Issue #146 | https://github.com/DaveX2001/claude-code-improvements/issues/146 |
 | Issue #153 | https://github.com/DaveX2001/claude-code-improvements/issues/153 |
 | Context Graph: How to Build | https://x.com/akoratana/status/1872755487498289488 |
 | Context Graph: CRM to CRCG | https://www.linkedin.com/pulse/from-crm-crcg-practical-example-context-graphs-animesh-koratana-cxcpc |
