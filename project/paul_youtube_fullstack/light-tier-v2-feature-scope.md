@@ -144,6 +144,20 @@ issue: "#353"
 
 ---
 
+## ImageStyle System
+
+| Sub-feature | Tier One | Notes |
+|-------------|---------------|-------|
+| View styles (list) | ✅ IN | Predefined + custom |
+| Create style | ✅ IN | Both text + image modes |
+| Edit style | ✅ IN | Full CRUD |
+| Delete style | ✅ IN | Full CRUD |
+| Preview generation | ✅ IN | Test image before saving |
+| Video model selection | ❌ NOT IN | Image model only |
+| Predefined styles | ✅ IN | Admin-seeded presets |
+
+---
+
 ## Infrastructure
 
 | Sub-feature | Tier One | Notes |
@@ -165,6 +179,7 @@ issue: "#353"
 | ~~Channel limit~~ | ~~1 channel or unlimited?~~ | ✅ RESOLVED: Unlimited (Jan 3) |
 | ~~Delete channel~~ | ~~Allowed or not?~~ | ✅ RESOLVED: No hard delete, soft delete only (Jan 3) |
 | Config page | What parts needed? | Deferred - revisit later |
+| Predefined style protection | Can users edit/delete predefined styles, or only custom? | Affects CRUD scope for ImageStyle |
 
 ---
 
@@ -179,8 +194,9 @@ issue: "#353"
 | Queue View | 5 | 9 | 0 |
 | Voice System | 2 | 2 | 0 |
 | Template System | 2 | 2 | 0 |
+| ImageStyle System | 6 | 1 | 0 |
 | Infrastructure | 5 | 0 | 0 |
-| **TOTAL** | **49** | **23** | **1** |
+| **TOTAL** | **55** | **24** | **1** |
 
 ---
 
