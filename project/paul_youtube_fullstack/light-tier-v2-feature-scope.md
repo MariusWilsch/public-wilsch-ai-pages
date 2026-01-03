@@ -150,8 +150,8 @@ issue: "#353"
 |-------------|---------------|-------|
 | View styles (list) | ✅ IN | Predefined + custom |
 | Create style | ✅ IN | Both text + image modes |
-| Edit style | ✅ IN | Full CRUD |
-| Delete style | ✅ IN | Full CRUD |
+| Edit style | ✅ IN | Custom styles only (predefined protected) |
+| Delete style | ✅ IN | Custom styles only (predefined protected) |
 | Preview generation | ✅ IN | Test image before saving |
 | Video model selection | ❌ NOT IN | Image model only |
 | Predefined styles | ✅ IN | Admin-seeded presets |
@@ -179,7 +179,7 @@ issue: "#353"
 | ~~Channel limit~~ | ~~1 channel or unlimited?~~ | ✅ RESOLVED: Unlimited (Jan 3) |
 | ~~Delete channel~~ | ~~Allowed or not?~~ | ✅ RESOLVED: No hard delete, soft delete only (Jan 3) |
 | Config page | What parts needed? | Deferred - revisit later |
-| Predefined style protection | Can users edit/delete predefined styles, or only custom? | Affects CRUD scope for ImageStyle |
+| ~~Predefined style protection~~ | ~~Can users edit/delete predefined styles?~~ | ✅ RESOLVED: Protected - CRUD for custom only (Jan 3) |
 
 ---
 
