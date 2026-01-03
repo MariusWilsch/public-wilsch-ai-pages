@@ -59,24 +59,43 @@ v2 will use a **unified step architecture** with mode-adaptive content:
 
 ### Express Path Decision
 
-When `autopilot=true`, show **Summary Review screen** before generation (not skip directly to downloads).
+When `autopilot=true`, all 5 step pills remain visible. Steps 2-4 show as "skipped" (dashed outline). User jumps from Step 1 directly to Step 5, which displays Summary Review content instead of video preview.
 
-**Why:** Users need transparency about what will be auto-configured. Even experienced users benefit from seeing settings before committing. Industry pattern: "Express Mode with Smart Defaults" (Stripe Express Checkout, Amazon One-Click show confirmation before action).
+**Why:** "Don't hide complexity—make it optional." Industry research shows users benefit from seeing the complete flow even when skipping parts. Builds trust and reduces uncertainty. Pattern: Material UI, GitLab, PatternFly all keep optional steps visible.
 
-**Flow:**
-- Manual Mode: Step 1 → 2 → 3 → 4 → 5
-- Express Mode: Step 1 → Summary Review → Generate → Queue
+**Flow with step indicators:**
+```
+Manual Mode (autopilot OFF):
+[1●] → [2●] → [3●] → [4●] → [5●]
+ ↓       ↓       ↓       ↓       ↓
+Setup  Script  Voice  Footage Preview
+
+Express Mode (autopilot ON):
+[1●] → [2┊] → [3┊] → [4┊] → [5●]
+ ↓     skip    skip   skip     ↓
+Setup ─────────────────────→ Summary Review
+```
+
+**Step 5 content adaptation:**
+- Autopilot OFF: Shows video preview (standard Preview)
+- Autopilot ON: Shows Summary Review (settings confirmation + Generate button)
 
 ### Skip State Decision
 
-Skipped steps remain **visible** (not hidden) with distinct visual state and explanation.
+All 5 steps remain visible regardless of mode. Skipped steps use distinct visual treatment.
 
-**Why:** Users learn full flow even in simple modes. Mental model transfers across configurations. Pattern: Spatial consistency - navigation never changes shape.
+**Why:** Spatial consistency—navigation never changes shape. Users learn the full flow even in express mode. Mental model transfers across configurations.
 
-**Visual states:**
-- Active: filled (current step)
-- Completed: outline (done, clickable)
-- Skipped: dashed outline + explanation (not applicable, still clickable to see why)
+**Visual states for step pills:**
+- **Active (●):** Filled color, current step
+- **Completed (✓):** Outline with checkmark, clickable to revisit
+- **Upcoming (○):** Gray outline, not yet reached
+- **Skipped (┊):** Dashed outline, "(optional)" label, clickable to see why skipped
+
+**Behavior when toggling autopilot on Step 1:**
+- Toggle OFF → ON: Steps 2-4 immediately change from "upcoming" to "skipped"
+- Toggle ON → OFF: Steps 2-4 change back to "upcoming"
+- User sees preview of what express mode will skip before clicking Continue
 
 ## Consequences
 
