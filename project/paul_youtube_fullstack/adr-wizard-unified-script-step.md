@@ -91,19 +91,17 @@ Skipped steps remain **visible** (not hidden) with distinct visual state and exp
 - Step 2 content varies significantly between modes
 - More complex Step 2 component implementation
 
-### Impact on Issues
+### Impact on Step Responsibilities
 
-**#379 (Step 3 - Voice Configuration):**
-- Scope NARROWS: Remove LLM output display from ACs
-- Keep: Voice selector + speed slider + audio preview
-- Remove: AC1 (Display LLM Output), AC2 (Edit Transcript)
+**Step 2 (Script):**
+- Owns all content editing (raw + enhanced)
+- Handles mode-adaptive switching
 
-**Step 2 (Transcript/Script):**
-- Scope EXPANDS: Add LLM output display and editing
-- Handle mode-adaptive content switching
+**Step 3 (Voice):**
+- Audio settings ONLY (voice selection + speed)
+- No content display or editing
 
 ## References
 
 - [Light Tier Scope](https://mariuswilsch.github.io/public-wilsch-ai-pages/project/paul_youtube_fullstack/light-tier-v2-feature-scope)
 - [Strangler Pattern ADR](https://mariuswilsch.github.io/public-wilsch-ai-pages/project/paul_youtube_fullstack/adr-strangler-pattern-sequencing)
-- Related issues: #418 (Wizard), #416 (Express Path), #417 (Step 2: Script), #379, #413
