@@ -4,14 +4,14 @@
 ---
 publish: true
 date: 2025-12-28
-updated: 2025-12-31T16:30
-source: Dec 27 Paul-Marius call transcript
+updated: 2026-01-03T08:35
+source: Dec 27 Paul-Marius call transcript + Jan 3 Paul confirmations
 issue: "#353"
 ---
 
 ## Overview
 
-**Tier One** = Simplified, sellable version of Paul for small users (1 channel, 1 video/day).
+**Tier One** = Simplified, sellable version of Paul for small users (unlimited channels, 1 video/day).
 
 **Architecture:**
 - v2 domain with new frontend (Strangler Pattern)
@@ -48,10 +48,11 @@ issue: "#353"
 
 | Sub-feature | Tier One | Notes |
 |-------------|---------------|-------|
-| Create channel | ✅ IN | Limit TBD (1 vs unlimited) |
+| Create channel | ✅ IN | Unlimited |
 | Edit channel | ✅ IN | Basic CRUD |
-| Delete channel | ❓ TBD | Not discussed |
-| YouTube OAuth + Upload | ❓ TBD | System load concern |
+| Delete channel | ❌ NOT IN | No hard delete |
+| Soft delete channel | ✅ IN | Rename + hide from display |
+| YouTube OAuth + Upload | ✅ IN | Confirmed Jan 3 |
 | Prompts config | ✅ IN | Optional |
 | Workflow config | ✅ IN | Core |
 | Preset voice selection | ✅ IN | Select only, no create |
@@ -159,10 +160,10 @@ issue: "#353"
 
 | Item | Question | Notes |
 |------|----------|-------|
-| YouTube OAuth | System load concern - in or out? | Edge functions may help |
+| ~~YouTube OAuth~~ | ~~System load concern - in or out?~~ | ✅ RESOLVED: IN (Jan 3) |
 | Thumbnail pricing | Bundled or $1-2 extra? | Affects conversion |
-| Channel limit | 1 channel or unlimited? | Paul said "as many as he wants" |
-| Delete channel | Allowed or not? | Not discussed in call |
+| ~~Channel limit~~ | ~~1 channel or unlimited?~~ | ✅ RESOLVED: Unlimited (Jan 3) |
+| ~~Delete channel~~ | ~~Allowed or not?~~ | ✅ RESOLVED: No hard delete, soft delete only (Jan 3) |
 | Config page | What parts needed? | Deferred - revisit later |
 
 ---
@@ -172,14 +173,14 @@ issue: "#353"
 | Category | IN | NOT IN | TBD |
 |----------|-----|-----|-----|
 | Navigation Items | 5 | 5 | 1 |
-| Channels | 10 | 1 | 2 |
+| Channels | 11 | 2 | 0 |
 | Competition | 5 | 0 | 0 |
 | Create Video Flow | 14 | 3 | 0 |
 | Queue View | 5 | 9 | 0 |
 | Voice System | 2 | 2 | 0 |
 | Template System | 2 | 2 | 0 |
 | Infrastructure | 5 | 0 | 0 |
-| **TOTAL** | **48** | **22** | **3** |
+| **TOTAL** | **49** | **23** | **1** |
 
 ---
 
