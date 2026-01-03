@@ -55,6 +55,28 @@ v2 will use a **unified step architecture** with mode-adaptive content:
 | LLM output display | In Voice Config (Step 3) | In Script (Step 2) |
 | Voice step content | LLM output + voice + speed | Voice + speed ONLY |
 | Step visibility | Conditional based on mode | Always 5 steps |
+| Autopilot flow | Skip wizard → /downloads | Summary Review → Generate |
+
+### Express Path Decision
+
+When `autopilot=true`, show **Summary Review screen** before generation (not skip directly to downloads).
+
+**Why:** Users need transparency about what will be auto-configured. Even experienced users benefit from seeing settings before committing. Industry pattern: "Express Mode with Smart Defaults" (Stripe Express Checkout, Amazon One-Click show confirmation before action).
+
+**Flow:**
+- Manual Mode: Step 1 → 2 → 3 → 4 → 5
+- Express Mode: Step 1 → Summary Review → Generate → Queue
+
+### Skip State Decision
+
+Skipped steps remain **visible** (not hidden) with distinct visual state and explanation.
+
+**Why:** Users learn full flow even in simple modes. Mental model transfers across configurations. Pattern: Spatial consistency - navigation never changes shape.
+
+**Visual states:**
+- Active: filled (current step)
+- Completed: outline (done, clickable)
+- Skipped: dashed outline + explanation (not applicable, still clickable to see why)
 
 ## Consequences
 
@@ -84,4 +106,4 @@ v2 will use a **unified step architecture** with mode-adaptive content:
 
 - [Light Tier Scope](https://mariuswilsch.github.io/public-wilsch-ai-pages/project/paul_youtube_fullstack/light-tier-v2-feature-scope)
 - [Strangler Pattern ADR](https://mariuswilsch.github.io/public-wilsch-ai-pages/project/paul_youtube_fullstack/adr-strangler-pattern-sequencing)
-- Related issues: #379, #378, #413
+- Related issues: #418 (Wizard), #416 (Express Path), #417 (Step 2: Script), #379, #413
