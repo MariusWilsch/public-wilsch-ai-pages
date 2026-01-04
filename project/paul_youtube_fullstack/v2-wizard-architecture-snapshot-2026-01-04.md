@@ -73,6 +73,35 @@ source: rubber-duck session #380
 - **Flow:** v2 frontend → v1 `/api/video/create` → returns `process_id`
 - **ID mapping:** Store `{supabase_video_id, v1_process_id}` in Supabase for tracking
 
+### v1 Template Requirement (Critical Constraint)
+
+**Discovery:** v1 REQUIRES `template_id` (integer). All configuration flows through the template relationship.
+
+| v1 Behavior | Implication |
+|-------------|-------------|
+| `template_id` required | Processing silently fails without it |
+| Config via template only | voice_id, image_style_id, prompts all read from template |
+| No direct config fields | VideoProcess has no voice_id/image_style_id columns in v1 |
+
+**Tier One Solution (predefined templates):**
+- Simple mapping: v2 preset UUID → v1 template_id (integer)
+- Zero v1 code changes needed
+- Works because template set is fixed and known
+
+**Future Tier Constraint (if templates become customizable):**
+
+| Scenario | Problem | Solution Required |
+|----------|---------|-------------------|
+| Custom template in v2 | No v1 record exists | Architectural investment |
+| Edit template in v2 | v1 record out of sync | Same |
+
+**Options if templates become non-fixed:**
+1. `templates_fdw` + v1 code changes to read via FDW
+2. Sync mechanism to auto-create v1 templates from v2
+3. Translation layer that creates v1 template on-demand
+
+**Source:** Investigation of `paul_queue/app/main.py:3872-4139` and `models.py`
+
 ## 8. Issue Structure
 
 - **#380 Update:** Step 4 = image demo only (config moved to Step 3)

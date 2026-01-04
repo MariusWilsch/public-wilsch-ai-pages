@@ -130,7 +130,7 @@ erDiagram
         text generated_script_url
         text raw_transcript_url
         numeric voice_speed
-        uuid v1_process_id
+        integer v1_process_id
         timestamptz created_at
         timestamptz updated_at
     }
@@ -196,6 +196,24 @@ For v1 backend to read v2 data via postgres_fdw:
 | image_styles_fdw | image_styles | Image generation config |
 | templates_fdw | templates | Full config bundle |
 | video_gen_templates_fdw | video_gen_templates | Video rendering config |
+
+---
+
+## v1 Integration Constraint
+
+**Critical:** v1 backend REQUIRES `template_id` (integer). All config flows through the template relationship.
+
+| v1 Field Access | Source |
+|-----------------|--------|
+| voice_id, voice_speed | template.voice_id, template.voice_speed |
+| image_style_id | template.image_style_id |
+| prompt configs | template.prompt_configuration, template.title_prompt_configuration |
+
+**v1 VideoProcess has NO direct config fields** - only template relationship.
+
+**Tier One:** Simple mapping (v2 preset UUID → v1 template_id integer) works because templates are predefined/fixed.
+
+**Future constraint:** If templates become customizable, requires architectural investment (FDW + v1 code changes, or sync mechanism).
 
 ---
 
