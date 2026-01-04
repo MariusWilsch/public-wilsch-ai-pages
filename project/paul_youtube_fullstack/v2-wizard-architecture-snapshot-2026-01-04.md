@@ -92,8 +92,8 @@ source: rubber-duck session #380
 - For Tier One: Introduce Template as "select only" presets
 
 **UI Placement:**
-- Template + VideoGenTemplate selection → Step 1 wizard (dropdown + dialog pattern)
-- Reference implementation: Voice selection in Step 3 (`Step3Voice.tsx`, `VoiceSelectionDialog.tsx`)
+- All config selection (Voice, ImageStyle, Template, VideoGenTemplate) → Step 3 "Configuration"
+- Reference implementation: Voice selection (`Step3Voice.tsx`, `VoiceSelectionDialog.tsx`)
 
 **Database Sync Pattern:**
 - Chose FDW over: dual-write, sync worker, CDC
