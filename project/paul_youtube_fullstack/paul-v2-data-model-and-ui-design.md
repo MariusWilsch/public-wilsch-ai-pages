@@ -194,13 +194,13 @@ The current v2 UI has separate sections: Templates, Voices, Image Styles, Channe
 
 ### Channel Detail Page (Option B drilldown)
 
-![Channel Detail Page showing presets](images/mockup-option2-detailpage.png)
+![Channel Detail Page showing presets](images/mockup-channel-detail-visual.png)
 
 Shows:
-- Channel name + YouTube OAuth status
-- All presets for this channel as cards
-- Each preset shows: voice, style, render template
-- "Create Video" button per preset
+- Channel name + YouTube stats
+- All presets for this channel as visual cards
+- Each preset has "Create Video" button
+- "+ Add Preset" button for creating new presets
 
 ---
 
@@ -237,21 +237,7 @@ Channel Detail page:
 
 ---
 
-## 6. Active Preset Concept
-
-### Decision: UI-Only (No DB Column)
-
-For Tier One, "active preset" is handled in the wizard UI only:
-- User always picks preset when creating video
-- No `channels.active_preset_id` column needed
-- Wizard shows presets grouped by channel
-- User selects one - no "default" concept
-
-**Rationale:** Simpler for Tier One. Can add persistent "active" concept later if needed.
-
----
-
-## 7. v2 → v1 Integration
+## 6. v2 → v1 Integration
 
 ### How v1 Consumes Data
 
@@ -275,7 +261,7 @@ v1 supports voice/speed override via Step 3 upload:
 
 ---
 
-## 8. Open Issues / Deliverables
+## 7. Open Issues / Deliverables
 
 | Issue | Scope | Priority |
 |-------|-------|----------|
