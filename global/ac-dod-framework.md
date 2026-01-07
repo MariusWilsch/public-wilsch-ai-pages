@@ -37,7 +37,49 @@ source: Rubber-duck session analyzing #377 and #89
 
 ---
 
-## 3. AC Enumeration Method
+## 3. DoD Dependency Analysis
+
+**Pre-phase before AC enumeration for complex DoD items.**
+
+### When to Use
+
+Required when DoD has:
+- 3+ items
+- Items spanning different layers (database → API → UI)
+- Implicit dependencies ("X requires Y first")
+
+### Abstract Layers
+
+| Layer | Code Example | Non-Code Example |
+|-------|--------------|------------------|
+| **Foundation** | Database, migrations | Research, data gathering |
+| **Structure** | API endpoints, services | Process design, templates |
+| **Interface** | UI components, flows | Deliverables, presentations |
+
+### Analysis Pattern
+
+1. **Map:** Place each DoD item in its layer
+2. **Mark:** Note existing (✓) vs new (NEW) using Scout output
+3. **Group:** Create passes where each pass has no internal dependencies
+4. **Select:** User chooses which pass to define ACs for
+
+### Pass Selection
+
+Present via AskUserQuestion:
+- Pass 1: Foundation items
+- Pass 2: Structure items (depends on Pass 1)
+- Pass 3: Interface items (depends on Pass 2)
+- All items: Full scope
+
+Selected pass filters which DoD items flow to AC enumeration.
+
+### Origin
+
+Pattern emerged from rubber-duck session on 2026-01-04 (issue #420). User feedback: "this pattern has been really nice to me" - provides ownership over scope before diving into AC details.
+
+---
+
+## 4. AC Enumeration Method
 
 **Step 1:** List user choices (inputs)
 ```
@@ -61,7 +103,7 @@ Create Video Step 1:
 
 ---
 
-## 4. Path Prioritization (Pareto)
+## 5. Path Prioritization (Pareto)
 
 | Tier | Path Type | Rule | Coverage |
 |------|-----------|------|----------|
@@ -76,7 +118,7 @@ Create Video Step 1:
 
 ---
 
-## 5. Given-When-Then Format
+## 6. Given-When-Then Format
 
 ### Best Practices
 
@@ -110,7 +152,7 @@ And I should see a welcome message
 
 ---
 
-## 6. Storage: Local Tracking File
+## 7. Storage: Local Tracking File
 
 ### Location
 ```
@@ -148,7 +190,7 @@ Then: ...
 
 ---
 
-## 7. Skill Responsibilities
+## 8. Skill Responsibilities
 
 | Skill | Responsibility |
 |-------|---------------|
@@ -186,7 +228,7 @@ When onboarding encounters an issue without a tracking file:
 
 ---
 
-## 8. Timing
+## 9. Timing
 
 | Element | When Created | Can Be Refined |
 |---------|--------------|----------------|
@@ -197,7 +239,7 @@ When onboarding encounters an issue without a tracking file:
 
 ---
 
-## 9. Issue Body Format
+## 10. Issue Body Format
 
 ### New Format (Minimal)
 
@@ -219,16 +261,7 @@ All details live in tracking file. Issue body is a pointer.
 
 ---
 
-## 10. Future Work
-
-- [ ] Design Verification Log format and workflow (tracked in #89)
-- [ ] Create `/ac-create` skill with methodology
-- [ ] Update `deliverable-tracking` to create tracking file
-- [ ] Update `onboarding` to verify tracking file + AC
-
----
-
-## Sources
+## 11. Sources
 
 - [Scrum.org: DoD vs AC](https://www.scrum.org/resources/blog/what-difference-between-definition-done-and-acceptance-criteria)
 - [Cucumber: Better Gherkin](https://cucumber.io/docs/bdd/better-gherkin/)
