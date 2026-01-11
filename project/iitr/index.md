@@ -13,6 +13,7 @@ publish: true
 |----------|-------------|
 | [Pflichtenheft](pflichtenheft-dskit-navigation.md) | Technical specification |
 | [Festpreisangebot](dskit-navigation-rag-estimate.md) | Fixed price proposal (EUR 2.880) |
+| [Design Document](dskit-navigation-design.md) | Stack and implementation decisions |
 
 ---
 
