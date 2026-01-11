@@ -27,8 +27,9 @@ Add these to your `.env` file:
 
 ```bash
 # Auto-login (bypasses LibreChat login screen)
-LIBRECHAT_LOCAL_EMAIL=admin@yourcompany.com
-LIBRECHAT_LOCAL_PASSWORD=your-secure-password
+AUTO_LOGIN_ENABLED=true
+AUTO_LOGIN_EMAIL=admin@yourcompany.com
+AUTO_LOGIN_PASSWORD=your-secure-password
 ```
 
 ### Step 3: Rebuild and Restart
