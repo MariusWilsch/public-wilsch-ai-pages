@@ -79,6 +79,19 @@ All infrastructure costs (hosting, GPU, API calls) split equally, matching our r
 
 ---
 
+## Open Items (Known Work to Launch)
+
+| Category | Item | Notes |
+|----------|------|-------|
+| **Payments** | Stripe integration | Critical blocker |
+| **Infrastructure** | Tier routing | Subscription enforcement |
+| **New Scope** | Avatar (YouTube policy) | Slideshows no longer monetized |
+| **Features** | Competition feature | In scope, not built |
+| **GPU** | Optimize TTS & image inference times | Reduce individual generation cycle time |
+| **Queue** | GPU queue backpressure handling | Prevent cascading timeouts at scale |
+
+---
+
 ## What This Means for You
 
 | Aspect | Impact |
