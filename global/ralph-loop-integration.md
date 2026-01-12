@@ -168,6 +168,35 @@ If all hypotheses prove true, the end state is a **queue model** where human and
 1. **Initial scope** - create parent issue with phases
 2. **Final review** - test completed work when ready
 
+### Ralph Loop Detail (per parent issue)
+
+For each parent issue in the queue, Ralph executes this loop:
+
+```
+    ┌──────────────────────────────────────────────┐
+    │              RALPH LOOP                       │
+    │                                              │
+    │  ┌─────────┐    ┌─────────┐    ┌─────────┐  │
+    │  │ design  │───▶│  impl   │───▶│ verify  │  │
+    │  │         │    │         │    │         │  │
+    │  │ Creates │    │ Builds  │    │ Runs    │  │
+    │  │ sub-    │    │ with    │    │ ACs     │  │
+    │  │ issue + │    │ sanity  │    │         │  │
+    │  │ DoD/AC  │    │ checks  │    │         │  │
+    │  └─────────┘    └─────────┘    └────┬────┘  │
+    │       ▲                             │       │
+    │       │         ┌───────────────────┘       │
+    │       │         │                           │
+    │       │    pass │  fail                     │
+    │       │         ▼                           │
+    │  next phase◄────┴────►back to impl          │
+    │                                              │
+    └──────────────────────────────────────────────┘
+           │
+           ▼
+    All phases complete → Parent issue closed → Next in queue
+```
+
 ## How to Extend
 
 Add hypotheses as new patterns emerge. Keep stateless.
