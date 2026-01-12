@@ -110,39 +110,63 @@ More efficient than multiple files. Same information, better locality.
 
 ## Future End State
 
-If all hypotheses prove true, the end state is:
+If all hypotheses prove true, the end state is a **queue model** where human and Ralph work in parallel:
 
 ```
-Human creates parent issue (one-time scope definition)
-           │
-           ▼
-    ┌──────────────────────────────────────────────┐
-    │              RALPH LOOP                       │
-    │                                              │
-    │  ┌─────────┐    ┌─────────┐    ┌─────────┐  │
-    │  │ design  │───▶│  impl   │───▶│ verify  │  │
-    │  │         │    │         │    │         │  │
-    │  │ Creates │    │ Builds  │    │ Runs    │  │
-    │  │ sub-    │    │ with    │    │ ACs     │  │
-    │  │ issue + │    │ sanity  │    │         │  │
-    │  │ DoD/AC  │    │ checks  │    │         │  │
-    │  └─────────┘    └─────────┘    └────┬────┘  │
-    │       ▲                             │       │
-    │       │         ┌───────────────────┘       │
-    │       │         │                           │
-    │       │    pass │  fail                     │
-    │       │         ▼                           │
-    │  next phase◄────┴────►back to impl          │
-    │                                              │
-    └──────────────────────────────────────────────┘
-           │
-           ▼
-    All phases complete → Parent issue closed
+┌─────────────────────────────────────────────────────────────┐
+│                    HUMAN (Issue Designer)                    │
+│                                                             │
+│   Creates parent issues with phases                         │
+│   Queues them up continuously                               │
+│   Doesn't wait - continues designing next project           │
+│                                                             │
+└─────────────────────────┬───────────────────────────────────┘
+                          │
+                          ▼
+              ┌───────────────────────┐
+              │      WORK QUEUE       │
+              │                       │
+              │  Parent #482 ← doing  │
+              │  Parent #500 ← next   │
+              │  Parent #501 ← queued │
+              │                       │
+              └───────────┬───────────┘
+                          │
+                          ▼
+┌─────────────────────────────────────────────────────────────┐
+│                 RALPH LOOP (Execution Engine)                │
+│                                                             │
+│   Picks parent from queue                                   │
+│   For each phase: design → impl → verify                    │
+│   Auto-chains between modes                                 │
+│   Moves to next parent when done                            │
+│                                                             │
+│  ┌─────────┐    ┌─────────┐    ┌─────────┐                 │
+│  │ design  │───▶│  impl   │───▶│ verify  │──┐              │
+│  └─────────┘    └─────────┘    └─────────┘  │              │
+│       ▲                                      │              │
+│       └──────── next phase / fix ────────────┘              │
+│                                                             │
+└─────────────────────────┬───────────────────────────────────┘
+                          │
+                          ▼
+              ┌───────────────────────┐
+              │    READY FOR REVIEW   │
+              │                       │
+              │  Completed projects   │
+              │  Human tests when     │
+              │  they have time       │
+              │                       │
+              └───────────────────────┘
 ```
 
-**Human role:** Create parent issue, monitor progress, intervene only on blockers.
+**Human role:** Issue designer. Create parent issues, queue them, review completed work when ready.
 
-**Ralph role:** Design sub-issues, implement with backpressure, verify with ACs, auto-chain between modes.
+**Ralph role:** Execution engine. Process queue autonomously, design sub-issues, implement with backpressure, verify with ACs, auto-chain between modes.
+
+**The dream:** Human attention only needed at two points:
+1. **Initial scope** - create parent issue with phases
+2. **Final review** - test completed work when ready
 
 ## How to Extend
 
