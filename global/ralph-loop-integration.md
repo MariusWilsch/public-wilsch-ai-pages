@@ -197,6 +197,47 @@ For each parent issue in the queue, Ralph executes this loop:
     All phases complete → Parent issue closed → Next in queue
 ```
 
+## Implementation v1 (2026-01-12)
+
+First iteration - subject to change based on testing.
+
+### File Locations
+
+| File | Location | Purpose |
+|------|----------|---------|
+| loop.sh | ~/.claude/ralph/ | Global loop script |
+| prompt_impl.md | ~/.claude/ralph/ | Implementation mode template |
+| CLAUDE.md.template | ~/.claude/ | Skeleton for new projects |
+| CLAUDE.md | Project root | Project-specific instance |
+
+### loop.sh Behavior
+
+- **Required args:** mode (impl/verify/design) + issue number
+- **No defaults:** Exits with help message if args missing
+- **Max iterations:** Optional third argument
+- **Alias:** `ralph` → ~/.claude/ralph/loop.sh
+
+### prompt_impl.md Structure
+
+Phases wrapped in XML tags (`<phase-0>` through `<phase-5>`):
+- Phase 0: Get Up to Speed (read tracking.md)
+- Phase 1: Select Task (Let Ralph Ralph - YOU decide priority)
+- Phase 2: Understand & Plan (layer→tool mapping for sanity checks)
+- Phase 3: Implement (resolve ambiguities per protocol)
+- Phase 4: Validate (run sanity checks)
+- Phase 5: Complete (mark done, commit, update CLAUDE.md)
+
+### CLAUDE.md Rules
+
+- **Sections:** Build & Run, Operational Notes
+- **Updates:** Append only, never delete
+- **Order:** New entries at bottom (bottom = current truth)
+- **Contradictions:** Add anyway, bottom supersedes
+
+### Sanity Checks
+
+Dynamic per implementation, not pre-defined. Determined in Phase 2 based on layers touched.
+
 ## How to Extend
 
 Add hypotheses as new patterns emerge. Keep stateless.
