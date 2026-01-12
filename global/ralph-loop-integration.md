@@ -238,6 +238,72 @@ Phases wrapped in XML tags (`<phase-0>` through `<phase-5>`):
 
 Dynamic per implementation, not pre-defined. Determined in Phase 2 based on layers touched.
 
+## Implementation v2: prompt_verify.md (2026-01-12)
+
+Specification for verification mode. Designed in rubber-duck session.
+
+### File Location
+
+| File | Location | Purpose |
+|------|----------|---------|
+| prompt_verify.md | ~/.claude/ralph/ | Verification mode template |
+
+### prompt_verify.md Structure
+
+| Phase | Content |
+|-------|---------|
+| **0** | Get Up to Speed: Read tracking.md + prior verification.jsonl + git state |
+| **1** | Select ACs: List all ACs from tracking.md, process sequentially (all per iteration) |
+| **2** | Per-AC Prep: Layer detection → tool selection → pre-verification code review |
+| **3** | Execute GWT: Follow ac-verify's 7 principles, always console+network |
+| **4** | Result Handling: passed → next; failed → #232 middle ground judgment |
+| **5** | Record + Commit: Append verification.jsonl, uncheck failed DoDs, commit |
+
+### Layer Detection (from ac-verify)
+
+| Layer | Keywords in AC | Tool |
+|-------|----------------|------|
+| UI | click, see, display, show, navigate | Chrome DevTools |
+| Database | record, stored, query, table | Supabase MCP |
+| API | endpoint, request, response, HTTP | curl/Bash |
+
+### Failure Handling (#232 Middle Ground)
+
+No explicit heuristic. Claude judgment using #232 principle:
+- **Quick fix** (config/env/typo): Apply fix, retry verification
+- **Big failure** (logic wrong/incomplete): Record failure, exit
+
+**Anti-patterns:**
+- ❌ Give up after first failure
+- ❌ Rewrite architecture when targeted fix works
+
+### DoD Authority
+
+| Action | Allowed? |
+|--------|----------|
+| Uncheck DoD (revert false positive) | ✅ Yes |
+| Check DoD (mark complete) | ❌ No (impl's job) |
+
+### Exit Signal
+
+- All ACs pass: `<promise>VERIFY_COMPLETE</promise>`
+- Failures exist: Exit normally (manual mode switching)
+
+### Commit Scope
+
+- verification.jsonl (always)
+- tracking.md (if DoD items unchecked)
+
+### Feedback Loop
+
+prompt_impl.md Phase 0 reads verification.jsonl **full trace**:
+- AC ID
+- Reasoning
+- Trace steps
+- Artifacts
+
+This enables impl to learn from prior verification failures.
+
 ## How to Extend
 
 Add hypotheses as new patterns emerge. Keep stateless.
