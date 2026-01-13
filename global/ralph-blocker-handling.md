@@ -36,7 +36,8 @@ No Event Clock trace of what happened or why.
   "attempting": "Run test harness for baseline accuracy",
   "cause": "OpenWebUI API key not available, AskUserQuestion unavailable in headless mode",
   "attempted_resolution": ["AskUserQuestion → failed", "hippocampus search → not found"],
-  "interpretation": "Cannot proceed without credential. Headless mode prevents interactive resolution."
+  "interpretation": "Cannot proceed without credential. Headless mode prevents interactive resolution.",
+  "action_taken": "Paused loop, called mcp-feedback-enhanced"
 }
 ```
 
@@ -45,6 +46,7 @@ No Event Clock trace of what happened or why.
 - `cause`: Generic name (not "blocked_by") - works for any type
 - `project` + `issue`: Include for co-occurrence pattern discovery
 - `attempted_resolution`: Document what was tried (not prescribe solutions)
+- `action_taken`: Document the action taken (pause, notify, etc.) - full decision trace
 - No `resolution_path`: Not AI's job to prescribe - let future AI learn from data
 - No `resume_from`: Redundant with tracking.md state
 
