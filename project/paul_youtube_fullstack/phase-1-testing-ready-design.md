@@ -4,7 +4,6 @@
 ---
 publish: true
 date: 2026-01-13
-status: active
 issue: "#353"
 ---
 
@@ -39,12 +38,12 @@ Get the system to a state where Paul's team can **test and create videos**. This
 
 ## Phase 1 Blockers
 
-| # | Title | Owner | Status |
-|---|-------|-------|--------|
-| #475 | Production Infrastructure (32 CPU + GPU) | Paul provisions | Open |
-| #460 | Docker Redeploy on new server | Marius | Ready |
-| #491 | Template-channel linking bug | Marius | Quick fix |
-| #465 | Per-Template Assets via Supabase Storage | Developer | First task |
+| # | Title | Owner |
+|---|-------|-------|
+| #475 | Production Infrastructure (32 CPU + GPU) | Paul |
+| #460 | Docker Redeploy on new server | Marius |
+| #491 | Template-channel linking bug | Marius |
+| #465 | Per-Template Assets via Supabase Storage | Developer |
 
 ---
 
@@ -70,9 +69,9 @@ Get the system to a state where Paul's team can **test and create videos**. This
 
 ## Success Criteria
 
-- [ ] Video can be created end-to-end on new infrastructure
-- [ ] Template-channel linking persists
-- [ ] Paul's team reports "usable for testing"
+- Video can be created end-to-end on new infrastructure
+- Template-channel linking persists
+- Paul's team reports "usable for testing"
 
 ---
 
