@@ -78,5 +78,45 @@ Get the system to a state where Paul's team can **test and create videos**. This
 ## Related
 
 - **Parent Issue:** #353 (Tier 1 Product Launch)
-- **Phase 2:** Post-testing fixes (#437, #381, #461)
+- **Phase 2:** Post-testing fixes
 - **Avatar:** Separate workstream (paid scope, end of January)
+
+---
+
+## Full Launch Structure
+
+### Phase 1: Testing Ready
+**Goal:** Paul's team can test and create videos
+
+- Infrastructure provisioned (server + GPU credits)
+- Docker deployed on new server
+- Critical bugs fixed
+- Review existing completed work
+
+**Outcome:** Working system for internal testing
+
+### Phase 2: Launch Readiness
+**Goal:** Polish based on testing feedback
+
+- Fix issues discovered during testing
+- UX improvements (wizard steps, admin pages)
+- Schema cleanup
+- Modal migration completion
+
+**Outcome:** Production-ready for first paying customer
+
+### Paid Workstream
+**Goal:** Market differentiation + scale readiness
+
+- **Avatar integration** - YouTube monetization compliance
+- **Queue backpressure** - Handle concurrent jobs without cascade failures
+- **GPU optimization** - Faster TTS and image generation
+- **Competition feature** - Track and analyze competitor channels
+
+**Outcome:** Scalable platform that "destroys the market"
+
+### Timeline
+
+- **Phase 1** → ~1 day
+- **Phase 2** → Testing feedback dependent
+- **Paid** → End of January (Avatar deadline)
