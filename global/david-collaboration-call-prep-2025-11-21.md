@@ -1,7 +1,7 @@
 ---
 publish: true
 ---
-[[david-collaboration]]
+[[team-scaling]]
 # Call Prep: Tracking System for Marius & David
 
 **Date:** 2025-11-21

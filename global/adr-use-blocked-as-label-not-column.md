@@ -2,7 +2,7 @@
 publish: true
 ---
 # ADR: Use Blocked as Label Overlay, Not Board Column
-[[david-collaboration]]
+[[team-scaling]]
 
 ## Status
 **Created** | Date: 2025-12-12

@@ -3,7 +3,7 @@ publish: true
 ---
 
 # 1337 Intern Candidate Assessment - December 2025
-[[david-collaboration]]
+[[team-scaling]]
 
 ## Context
 

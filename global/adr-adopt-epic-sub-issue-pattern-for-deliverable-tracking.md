@@ -3,7 +3,7 @@ publish: true
 ---
 
 # ADR: Adopt Epic/Sub-Issue Pattern for Deliverable Tracking
-[[david-collaboration]]
+[[team-scaling]]
 
 ## Status
 **Created** | Date: 2025-12-10

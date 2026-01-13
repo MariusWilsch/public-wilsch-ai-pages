@@ -3,7 +3,7 @@ publish: true
 ---
 
 # ADR: Adopt WIP-Limited Kanban Board for Deliverable Tracking
-[[david-collaboration]]
+[[team-scaling]]
 
 ## Status
 **Created** | Date: 2025-12-05

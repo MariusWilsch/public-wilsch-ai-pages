@@ -3,7 +3,7 @@ publish: true
 ---
 
 # 1337 Hiring Outreach Message
-[[david-collaboration]]
+[[team-scaling]]
 
 **Purpose:** Message to 1337/42 Network Staff to learn the formal process for listing job opportunities.
 

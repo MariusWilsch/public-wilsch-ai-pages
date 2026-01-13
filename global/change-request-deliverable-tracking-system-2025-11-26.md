@@ -3,7 +3,7 @@ publish: true
 ---
 
 # Change Request: Deliverable Tracking System
-[[david-collaboration]]
+[[team-scaling]]
 
 **From:** Marius
 **To:** David

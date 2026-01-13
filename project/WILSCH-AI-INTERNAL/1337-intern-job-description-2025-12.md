@@ -3,7 +3,7 @@ publish: true
 ---
 
 # AI Development Intern - Job Description
-[[david-collaboration]]
+[[team-scaling]]
 
 **Company:** Wilsch AI Services OÜ
 **Location:** Remote (Morocco timezone preferred)

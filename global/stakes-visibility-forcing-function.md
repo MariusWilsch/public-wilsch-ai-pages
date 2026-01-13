@@ -3,7 +3,7 @@ publish: true
 ---
 
 # Stakes Visibility: A Forcing Function for Task Prioritization
-[[david-collaboration]]
+[[team-scaling]]
 
 ## 1. Problem: Tasks Without Stakes
 

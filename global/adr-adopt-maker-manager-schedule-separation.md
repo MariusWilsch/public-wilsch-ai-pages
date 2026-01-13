@@ -2,7 +2,7 @@
 publish: true
 ---
 # ADR: Adopt Maker/Manager Schedule Separation
-[[david-collaboration]]
+[[team-scaling]]
 
 ## Status
 
