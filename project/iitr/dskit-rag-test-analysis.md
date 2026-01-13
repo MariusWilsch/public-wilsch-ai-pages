@@ -53,39 +53,39 @@ Analysis date: 2026-01-13
 
 ---
 
-## 3. Question Analysis Table
+## 3. Question Analysis Table (All 29)
 
-| Q# | Status | Question (short) | Expected Answer Key | In Corpus? | Evidence | Category |
-|----|--------|------------------|---------------------|------------|----------|----------|
-| 1 | ✅ PASS | Texte Webseitengestaltung | Kapitel 8 | ✅ Yes | Q&A #1 | Working |
-| 2 | ✅ PASS | Textgeneratoren | FreeTools | ✅ Yes | Q&A #2 | Working |
-| 3 | ✅ PASS | Andere E-Mail hinterlegen | dskit@iitr.de | ✅ Yes | Q&A #3 | Working |
-| 4 | ✅ PASS | Zugang Unterlagen | Alle Vorlagen | ✅ Yes | PDF general | Working |
-| 5 | ❌ FAIL | Schulungen eLearning | "eLearning" + "Statistik" | ✅ Yes | PDF chunk 51, 57 | **Ambiguous** |
-| 6 | ❌ FAIL | DSB auf Webseite | "Wenn als DSB bestellt" + Kontakt | ❌ No | - | **Data Gap** |
-| 7 | ✅ PASS | Beratungsstunde | 180€ / DS-Kit Plus | ✅ Yes | Q&A #7 | Working |
-| 8 | ✅ PASS | Audit | 360€ | ✅ Yes | Q&A #14 | Working |
-| 9 | ✅ PASS | Weiterer Mitarbeiter | dskit@iitr.de | ✅ Yes | Q&A #4 | Working |
-| 10 | ✅ PASS | Zusätzliches Benutzerkonto | dskit@iitr.de | ✅ Yes | Q&A #4 | Working |
-| 11 | ✅ PASS | TISAX Schulungsinhalte | Kapitel 11 UP 3 | ✅ Yes | PDF chunk 90 | Working |
-| 12 | ❌ FAIL | DSB Meldung wer | "durch Verantwortlichen" | ❌ No | - | **Data Gap** |
-| 13 | ❌ FAIL | Wo DSB melden | IITR Kontaktdaten Meldung | ❌ No | - | **Data Gap** |
-| 14 | ❌ FAIL | DSB Kontaktdaten | Marienplatz, email@iitr.de | ❌ No | VLM lost it | **VLM Loss** |
-| 15 | ✅ PASS | Kündigung Termin | 3 Monate | ✅ Yes | Q&A #8 | Working |
-| 16 | ❌ FAIL | eLearning 300€ | "vier Module" + 300€ | ❌ No | - | **Data Gap** |
-| 17 | ❌ FAIL | Englisch Zertifikat | "englischsprachig" | ❌ No | - | **Data Gap** |
-| 18 | ❌ FAIL | Zugang DS-Kit URL | "core.iitr.de" | ❌ No | - | **Data Gap** |
-| 19 | ✅ PASS | Magic-Link wiederholt | passwortfrei/passwortgestützt | ✅ Yes | Q&A #5 | Working |
-| 20 | ✅ PASS | Jahresvertrag automatisch | Verlängert sich | ✅ Yes | Q&A #8 | Working |
-| 21 | ❌ FAIL | Mitarbeiter Docs | Kapitel 11 UP 2 Verpflichtung | ✅ Yes | PDF chunk 90 | **Q&A Error** |
-| 22 | ✅ PASS | Mitarbeiter einladen | Mitarbeiterschulung eLearning | ✅ Yes | PDF chunk 52-53 | Working |
-| 23 | ✅ PASS | Schulung Häufigkeit | jährlich | ✅ Yes | Q&A #6 | Working |
-| 24 | ❌ FAIL | Video E-Mail Vereinbarung | E-Mail nach Beendigung | ❌ No | - | **Data Gap** |
-| 25 | ✅ PASS | Datenschutzverletzung | Kapitel 10 | ✅ Yes | Q&A #12 | Working |
-| 26 | ✅ PASS | Datenschutzhinweise DE/EN | Kapitel 8 | ✅ Yes | Q&A #1, PDF 83 | Working |
-| 27 | ❌ FAIL | Bewerber unterschreiben | "nicht erforderlich" | ❌ No | - | **Data Gap** |
-| 28 | ❌ FAIL | Cookie Banner 180€ | "prüfen Webseite" 180€ | ❌ No | - | **Data Gap** |
-| 29 | ✅ PASS | Webseite Beratung | 180€ / DS-Kit Plus | ✅ Yes | Q&A #7 | Working |
+| Q# | Status | Question | Expected (key) | RAG Response (key) | In Corpus? | Category |
+|----|--------|----------|----------------|-------------------|------------|----------|
+| 1 | ✅ | Texte Webseitengestaltung | Kapitel 8 | "finden Sie...Kapitel 8" | ✅ | Working |
+| 2 | ✅ | Textgeneratoren | FreeTools | "FreeTools auf Webseite" | ✅ | Working |
+| 3 | ✅ | Andere E-Mail hinterlegen | dskit@iitr.de | "dskit@iitr.de" | ✅ | Working |
+| 4 | ✅ | Zugang Unterlagen | Alle Vorlagen | "Zugang zu allen...Unterlagen" | ✅ | Working |
+| 5 | ❌ | Schulungen eLearning | **eLearning + Statistik** | "mindestens einmal im Jahr" | ✅ | **Ambiguous** |
+| 6 | ❌ | DSB auf Webseite | **"Ja, wenn bestellt"** | "Nein, Sie können nicht" | ❌ | **Data Gap** |
+| 7 | ✅ | Beratungsstunde | 180€ / DS-Kit Plus | "180€ netto...Beratung" | ✅ | Working |
+| 8 | ✅ | Audit | 360€ | "Audit...360€" | ✅ | Working |
+| 9 | ✅ | Weiterer Mitarbeiter | dskit@iitr.de | "dskit@iitr.de" | ✅ | Working |
+| 10 | ✅ | Zusätzliches Benutzerkonto | dskit@iitr.de | "DS-Kit-Team...dskit@" | ✅ | Working |
+| 11 | ✅ | TISAX Schulungsinhalte | Kapitel 11 UP 3 | "Dokument 11-03" | ✅ | Working |
+| 12 | ❌ | DSB Meldung wer | **"durch Verantwortlichen"** | "gemäß DS-Kit Vorgaben" | ❌ | **Data Gap** |
+| 13 | ❌ | Wo DSB melden | **Kontaktdaten für Meldung** | "wird im Kontext nicht beantwortet" | ❌ | **Data Gap** |
+| 14 | ❌ | DSB Kontaktdaten | **email@iitr.de, Marienplatz** | "dskit@iitr.de" (wrong) | ❌ | **VLM Loss** |
+| 15 | ✅ | Kündigung Termin | 3 Monate | "drei Monate vor Vertragsende" | ✅ | Working |
+| 16 | ❌ | eLearning 300€ | **"vier Module, 300€"** | "wenden Sie sich an Support" | ❌ | **Data Gap** |
+| 17 | ❌ | Englisch Zertifikat | **"Ja, gerne ausstellen"** | "standardmäßig keine" (wrong) | ❌ | **Data Gap** |
+| 18 | ❌ | Zugang DS-Kit URL | **"core.iitr.de"** | "wenden Sie sich an IITR" | ❌ | **Data Gap** |
+| 19 | ✅ | Magic-Link wiederholt | passwortfrei/passwortgestützt | "Magic-Link...passwortgestützt" | ✅ | Working |
+| 20 | ✅ | Jahresvertrag automatisch | Verlängert sich | "verlängert sich automatisch" | ✅ | Working |
+| 21 | ❌ | Mitarbeiter Docs | **Kapitel 11 UP 2** | "Kapitel 9" (wrong chapter) | ✅ | **Q&A Error** |
+| 22 | ✅ | Mitarbeiter einladen | Mitarbeiterschulung eLearning | "Mitarbeiterschulung...eLearning" | ✅ | Working |
+| 23 | ✅ | Schulung Häufigkeit | jährlich | "mindestens einmal im Jahr" | ✅ | Working |
+| 24 | ❌ | Video E-Mail Vereinbarung | **Kapitel 11 UP 3** | "wird nicht direkt...erwähnt" | ❌ | **Data Gap** |
+| 25 | ✅ | Datenschutzverletzung | Kapitel 10 | "Kapitel 10...Interne Meldung" | ✅ | Working |
+| 26 | ✅ | Datenschutzhinweise DE/EN | Kapitel 8 | "Kapitel 8...DS-Kit" | ✅ | Working |
+| 27 | ❌ | Bewerber unterschreiben | **"nicht erforderlich"** | "in vielen Fällen" (wrong) | ❌ | **Data Gap** |
+| 28 | ❌ | Cookie Banner 180€ | **"prüfen...180€"** | Gibt technische Beratung | ❌ | **Data Gap** |
+| 29 | ✅ | Webseite Beratung | 180€ / DS-Kit Plus | "180€ netto...Beratung" | ✅ | Working |
 
 ---
 
