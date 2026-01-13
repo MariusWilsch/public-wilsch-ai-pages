@@ -35,4 +35,13 @@ publish: true
 
 ---
 
-*Last updated: 2026-01-11*
+## Test Results & Analysis
+
+| Document | Description |
+|----------|-------------|
+| [Test Analysis](dskit-rag-test-analysis.md) | Question-by-question verification (17/29 working, 9 data gaps) |
+| [Test Reports](test-reports/index.md) | Raw CSV exports from all experiments |
+
+---
+
+*Last updated: 2026-01-13*
