@@ -55,134 +55,219 @@ Analysis date: 2026-01-13
 
 ## 3. Question Analysis Table (All 29)
 
-| Q# | Status | Question | Expected (key) | RAG Response (key) | In Corpus? | Category |
-|----|--------|----------|----------------|-------------------|------------|----------|
-| 1 | ✅ | Texte Webseitengestaltung | Kapitel 8 | "finden Sie...Kapitel 8" | ✅ | Working |
-| 2 | ✅ | Textgeneratoren | FreeTools | "FreeTools auf Webseite" | ✅ | Working |
-| 3 | ✅ | Andere E-Mail hinterlegen | dskit@iitr.de | "dskit@iitr.de" | ✅ | Working |
-| 4 | ✅ | Zugang Unterlagen | Alle Vorlagen | "Zugang zu allen...Unterlagen" | ✅ | Working |
-| 5 | ❌ | Schulungen eLearning | **eLearning + Statistik** | "mindestens einmal im Jahr" | ✅ | **Ambiguous** |
-| 6 | ❌ | DSB auf Webseite | **"Ja, wenn bestellt"** | "Nein, Sie können nicht" | ❌ | **Data Gap** |
-| 7 | ✅ | Beratungsstunde | 180€ / DS-Kit Plus | "180€ netto...Beratung" | ✅ | Working |
-| 8 | ✅ | Audit | 360€ | "Audit...360€" | ✅ | Working |
-| 9 | ✅ | Weiterer Mitarbeiter | dskit@iitr.de | "dskit@iitr.de" | ✅ | Working |
-| 10 | ✅ | Zusätzliches Benutzerkonto | dskit@iitr.de | "DS-Kit-Team...dskit@" | ✅ | Working |
-| 11 | ✅ | TISAX Schulungsinhalte | Kapitel 11 UP 3 | "Dokument 11-03" | ✅ | Working |
-| 12 | ❌ | DSB Meldung wer | **"durch Verantwortlichen"** | "gemäß DS-Kit Vorgaben" | ❌ | **Data Gap** |
-| 13 | ❌ | Wo DSB melden | **Kontaktdaten für Meldung** | "wird im Kontext nicht beantwortet" | ❌ | **Data Gap** |
-| 14 | ❌ | DSB Kontaktdaten | **email@iitr.de, Marienplatz** | "dskit@iitr.de" (wrong) | ❌ | **VLM Loss** |
-| 15 | ✅ | Kündigung Termin | 3 Monate | "drei Monate vor Vertragsende" | ✅ | Working |
-| 16 | ❌ | eLearning 300€ | **"vier Module, 300€"** | "wenden Sie sich an Support" | ❌ | **Data Gap** |
-| 17 | ❌ | Englisch Zertifikat | **"Ja, gerne ausstellen"** | "standardmäßig keine" (wrong) | ❌ | **Data Gap** |
-| 18 | ❌ | Zugang DS-Kit URL | **"core.iitr.de"** | "wenden Sie sich an IITR" | ❌ | **Data Gap** |
-| 19 | ✅ | Magic-Link wiederholt | passwortfrei/passwortgestützt | "Magic-Link...passwortgestützt" | ✅ | Working |
-| 20 | ✅ | Jahresvertrag automatisch | Verlängert sich | "verlängert sich automatisch" | ✅ | Working |
-| 21 | ❌ | Mitarbeiter Docs | **Kapitel 11 UP 2** | "Kapitel 9" (wrong chapter) | ✅ | **Q&A Error** |
-| 22 | ✅ | Mitarbeiter einladen | Mitarbeiterschulung eLearning | "Mitarbeiterschulung...eLearning" | ✅ | Working |
-| 23 | ✅ | Schulung Häufigkeit | jährlich | "mindestens einmal im Jahr" | ✅ | Working |
-| 24 | ❌ | Video E-Mail Vereinbarung | **Kapitel 11 UP 3** | "wird nicht direkt...erwähnt" | ❌ | **Data Gap** |
-| 25 | ✅ | Datenschutzverletzung | Kapitel 10 | "Kapitel 10...Interne Meldung" | ✅ | Working |
-| 26 | ✅ | Datenschutzhinweise DE/EN | Kapitel 8 | "Kapitel 8...DS-Kit" | ✅ | Working |
-| 27 | ❌ | Bewerber unterschreiben | **"nicht erforderlich"** | "in vielen Fällen" (wrong) | ❌ | **Data Gap** |
-| 28 | ❌ | Cookie Banner 180€ | **"prüfen...180€"** | Gibt technische Beratung | ❌ | **Data Gap** |
-| 29 | ✅ | Webseite Beratung | 180€ / DS-Kit Plus | "180€ netto...Beratung" | ✅ | Working |
+| Q# | Status | Question | In Corpus? | Category |
+|----|--------|----------|------------|----------|
+| 1 | ✅ | Texte Webseitengestaltung | ✅ | Working |
+| 2 | ✅ | Textgeneratoren | ✅ | Working |
+| 3 | ✅ | Andere E-Mail hinterlegen | ✅ | Working |
+| 4 | ✅ | Zugang Unterlagen | ✅ | Working |
+| 5 | ❌ | Schulungen eLearning | ✅ | **Ambiguous** |
+| 6 | ❌ | DSB auf Webseite | ❌ | **Data Gap** |
+| 7 | ✅ | Beratungsstunde | ✅ | Working |
+| 8 | ✅ | Audit | ✅ | Working |
+| 9 | ✅ | Weiterer Mitarbeiter | ✅ | Working |
+| 10 | ✅ | Zusätzliches Benutzerkonto | ✅ | Working |
+| 11 | ✅ | TISAX Schulungsinhalte | ✅ | Working |
+| 12 | ❌ | DSB Meldung wer | ❌ | **Data Gap** |
+| 13 | ❌ | Wo DSB melden | ❌ | **Data Gap** |
+| 14 | ❌ | DSB Kontaktdaten | ❌ | **VLM Loss** |
+| 15 | ✅ | Kündigung Termin | ✅ | Working |
+| 16 | ❌ | eLearning 300€ | ❌ | **Data Gap** |
+| 17 | ❌ | Englisch Zertifikat | ❌ | **Data Gap** |
+| 18 | ❌ | Zugang DS-Kit URL | ❌ | **Data Gap** |
+| 19 | ✅ | Magic-Link wiederholt | ✅ | Working |
+| 20 | ✅ | Jahresvertrag automatisch | ✅ | Working |
+| 21 | ❌ | Mitarbeiter Docs | ✅ | **Q&A Error** |
+| 22 | ✅ | Mitarbeiter einladen | ✅ | Working |
+| 23 | ✅ | Schulung Häufigkeit | ✅ | Working |
+| 24 | ❌ | Video E-Mail Vereinbarung | ❌ | **Data Gap** |
+| 25 | ✅ | Datenschutzverletzung | ✅ | Working |
+| 26 | ✅ | Datenschutzhinweise DE/EN | ✅ | Working |
+| 27 | ❌ | Bewerber unterschreiben | ❌ | **Data Gap** |
+| 28 | ❌ | Cookie Banner 180€ | ❌ | **Data Gap** |
+| 29 | ✅ | Webseite Beratung | ✅ | Working |
 
 ---
 
-## 4. Data Gap Details (9 questions)
+## 4. Detailed Answer Comparison (All 29)
 
-### Q6: DSB auf Webseite
-- **Question:** "Kann ich Sie als Datenschutzbeauftragter auf meiner Webseite angeben?"
-- **Expected:** "Wenn Sie uns als Ihren externen Datenschutzbeauftragten bestellt haben, können Sie uns auf Ihrer Webseite sowie in Verträgen und bei der zuständigen Datenschutzaufsichtsbehörde mit den folgenden Kontaktdaten..."
-- **Typesense:** Found 1 (Datenschutzverletzung content - wrong)
-- **Verdict:** Add Q&A about DSB listing policy with full contact details
+### Q1: Texte Webseitengestaltung ✅
+- **Question:** "Wo finde ich die Texte für die Webseitengestaltung?"
+- **Expected:** Texte für die Webseiten-Datenschutzerklärung finden Sie in Kapitel 8 des Datenschutz-Kit.
+- **Current:** Die Texte für die Webseitengestaltung finden Sie nicht direkt im Datenschutz-Kit. Allerdings finden Sie Texte für Webseitendatenschutzerklärung in Kapitel 8...
+- **Note:** ✅ Correct - mentions Kapitel 8
 
-### Q12: DSB Meldung - Wer
-- **Question:** "Übernehmen Sie die Meldung des externen Datenschutzbeauftragten?"
-- **Expected:** "Die Meldung des Datenschutzbeauftragten bei der zuständigen Datenschutzaufsichtsbehörde muss durch den Verantwortlichen erfolgen..."
-- **Typesense:** Found 5 (DSB Meldung document exists, but not WHO files)
-- **Verdict:** Add Q&A clarifying customer must file, not IITR
+### Q2: Textgeneratoren ✅
+- **Question:** "Bieten Sie auch Textgeneratoren für die Webseite?"
+- **Expected:** Wir bieten auf unserer Webseite im Bereich "FreeTools" entsprechende Textgeneratoren an.
+- **Current:** Ja, wir bieten Textgeneratoren für die Webseiten-Datenschutzerklärung an. Sie finden diese im Bereich FreeTools...
+- **Note:** ✅ Correct - mentions FreeTools
 
-### Q13: DSB Meldung - Wo
-- **Question:** "Wo melde ich den externen Datenschutzbeauftragten?"
-- **Expected:** Full IITR contact details for official DSB registration
-- **Typesense:** Found 2 (Datenschutzverletzung - wrong content)
-- **Verdict:** Add Q&A with official registration contact (email@iitr.de, Marienplatz address)
+### Q3: Andere E-Mail hinterlegen ✅
+- **Question:** "Können Sie eine andere E-Mail-Adresse als Zugriffberechtigten hinterlegen?"
+- **Expected:** Wir können eine andere E-Mailadresse für den Login hinterlegen. Nachricht an dskit@iitr.de
+- **Current:** Ja, es ist möglich, eine andere E-Mail-Adresse hinterlegen. Kontakt: dskit@iitr.de
+- **Note:** ✅ Correct - provides dskit@iitr.de
 
-### Q16: eLearning Vollzugriff 300€
-- **Question:** "Wie kann ich auf weitere eLearning Module zugreifen?"
-- **Expected:** "Im Rahmen des Datenschutz-Kit Basis stehen Ihnen standardmäßig vier eLearning-Schulungsmodule zur Verfügung. Zu einem Aufpreis von 300 € netto jährlich..."
-- **Typesense:** Found 0
-- **Verdict:** Add Q&A about eLearning tiers and pricing
+### Q4: Zugang Unterlagen ✅
+- **Question:** "Erhalten wir Zugang zu allen Datenschutzunterlagen?"
+- **Expected:** Im Datenschutz-Kit finden Sie alle erforderlichen Vorlagen für Datenschutzkonformität.
+- **Current:** Ja, Sie erhalten Zugang zu allen im Datenschutz-Kit hinterlegten Datenschutzunterlagen...
+- **Note:** ✅ Correct - confirms full access
 
-### Q17: Englische Zertifikate
-- **Question:** "Stellen Sie auch englischsprachige Zertifikate zur Verfügung?"
-- **Expected:** "Wir können Ihnen gerne ein englischsprachiges Datenschutz-Zertifikat ausstellen..."
-- **Typesense:** Found 0
-- **Verdict:** Add Q&A about English certificate availability
-
-### Q18: Zugang URL
-- **Question:** "Wie erhalte ich einen Zugang zum Datenschutz-Kit?"
-- **Expected:** "...core.iitr.de aufrufen und unter Angabe Ihrer E-Mail-Adresse und Login-Link..."
-- **Typesense:** Found 3 (Magic-Link Q&A - but no URL)
-- **Verdict:** Add Q&A with actual login URL (core.iitr.de)
-
-### Q24: E-Mail nach Beendigung
-- **Question:** "In welchen Videos wird die Personal-Vereinbarung besprochen, dass E-Mails mit privatem Inhalt nicht verschickt werden dürfen..."
-- **Expected:** "Eine Vorlage für eine Vereinbarung über den Zugriff auf die E-Mail-Adresse des Beschäftigten nach Beendigung des Beschäftigungsverhältnisses finden Sie in Kapitel 11, Unterpunkt 3..."
-- **Typesense:** Found 2 (general email content - wrong)
-- **Verdict:** Add Q&A about post-employment email access agreement location
-
-### Q27: Bewerber unterschreiben
-- **Question:** "Müssen unsere Bewerber unsere Datenschutzbestimmungen unterschreiben?"
-- **Expected:** "Es ist nicht erforderlich, dass Bewerber Datenschutzhinweise unterschreiben. Bewerber sollten jedenfalls die Datenschutzhinweise zur Kenntnis nehmen."
-- **Typesense:** Found 1 (Checkliste - wrong content)
-- **Verdict:** Add Q&A about applicant data protection acknowledgment policy
-
-### Q28: Cookie Banner Prüfung
-- **Question:** "Ist das Cookie Banner, wie wir es derzeit auf unserer Website nutzen, so in Ordnung?"
-- **Expected:** "Gerne prüfen wir Ihre Webseite auf Datenschutzkonformität zu unserem Stundensatz von 180€ netto..."
-- **Typesense:** Found 0
-- **Verdict:** Add Q&A about website review service and pricing
-
----
-
-## 5. Issue Details (3 questions)
-
-### Q5: Ambiguous Question (Schulungen)
+### Q5: Schulungen eLearning ❌ AMBIGUOUS
 - **Question:** "Kriegen wir auch Schulungen, damit wir unsere Mitarbeiter ab und zu mal beim Datenschutz auf den Stand bringen?"
-- **Expected:** eLearning feature description
-- **RAG answered:** Training frequency (yearly)
-- **Both in corpus:** Q&A #6 (yearly) and PDF Section 1.5 (eLearning feature)
-- **Issue:** Question ambiguous - "Schulungen" matches both frequency and feature
-- **Client decision needed:** Which interpretation is preferred?
+- **Expected:** Über das Datenschutz-Kit können Sie im Bereich "eLearning" auf eine Auswahl von Schulungsmodulen zugreifen + Statistik-Funktion
+- **Current:** Ja, Sie erhalten Schulungen. Die Datenschutzschulung sollte mindestens einmal im Jahr erfolgen...
+- **Note:** ⚠️ Both answers valid - RAG answered frequency, expected feature description. Client decision needed.
 
-### Q14: VLM Data Loss (Official Contact)
+### Q6: DSB auf Webseite ❌ DATA GAP
+- **Question:** "Kann ich Sie als Datenschutzbeauftragter auf meiner Webseite angeben?"
+- **Expected:** Wenn Sie uns als Ihren externen Datenschutzbeauftragten bestellt haben, können Sie uns auf Ihrer Webseite mit folgenden Kontaktdaten angeben...
+- **Current:** Nein, Sie können uns nicht als Datenschutzbeauftragten auf Ihrer Webseite angeben...
+- **Note:** ❌ Wrong - RAG says "Nein" but correct is "Ja, wenn bestellt". Content not in corpus.
+
+### Q7: Beratungsstunde ✅
+- **Question:** "Wir brauchen tiefergehende Beratung, wie können Sie uns helfen?"
+- **Expected:** Beratungsstunde zu 180€ netto oder Upgrade auf DS-Kit Plus.
+- **Current:** Als Datenschutz-Kit Basis-Kunde können Sie Beratung im Rahmen einer Beratungsstunde zu 180€ netto...
+- **Note:** ✅ Correct - mentions 180€ and options
+
+### Q8: Audit ✅
+- **Question:** "Machen Sie ein Audit?"
+- **Expected:** Wir überprüfen Ihren Datenschutz-Status. Aufwand: 360€ zzgl. USt.
+- **Current:** Ja, wir können ein Audit durchführen. Dabei überprüfen wir Ihren allgemeinen Datenschutz-Status...
+- **Note:** ✅ Correct - confirms audit service
+
+### Q9: Weiterer Mitarbeiter ✅
+- **Question:** "Wie kann ein weiterer Mitarbeiter auf das Datenschutz-Kit zugreifen?"
+- **Expected:** Wir richten gerne einen weiteren Benutzerzugang ein. E-Mail an dskit@iitr.de
+- **Current:** Um einem weiteren Mitarbeiter Zugriff zu gewähren, E-Mail an dskit@iitr.de senden...
+- **Note:** ✅ Correct - provides contact
+
+### Q10: Zusätzliches Benutzerkonto ✅
+- **Question:** "Wie kann ich ein zusätzliches Benutzerkonto einrichten?"
+- **Expected:** Wir richten gerne einen weiteren Benutzerzugang ein. E-Mail an dskit@iitr.de
+- **Current:** Um ein zusätzliches Benutzerkonto einzurichten, wenden Sie sich an das DS-Kit-Team unter dskit@iitr.de...
+- **Note:** ✅ Correct - provides contact
+
+### Q11: TISAX Schulungsinhalte ✅
+- **Question:** "Im Rahmen unseres TISAX Audits müssen wir genau dokumentieren welche Schulungsinhalte wir verwenden..."
+- **Expected:** Innerhalb des Datenschutz-Kits finden Sie unter Kapitel 11 im Unterpunkt 3 eine Übersicht aller Schulungsmodule.
+- **Current:** Ja, im Datenschutz-Kit finden Sie eine Übersicht über alle Sensibilisierungsschulungen im Dokument 11-03...
+- **Note:** ✅ Correct - references Dokument 11-03
+
+### Q12: DSB Meldung wer ❌ DATA GAP
+- **Question:** "Übernehmen Sie die Meldung des externen Datenschutzbeauftragten?"
+- **Expected:** Die Meldung des DSB bei der Aufsichtsbehörde muss durch den Verantwortlichen erfolgen.
+- **Current:** Die Meldung des externen Datenschutzbeauftragten an die zuständige Datenschutz-Aufsichtsbehörde...
+- **Note:** ❌ Doesn't clarify WHO must file. Content not in corpus.
+
+### Q13: Wo DSB melden ❌ DATA GAP
+- **Question:** "Wo melde ich den externen Datenschutzbeauftragten?"
+- **Expected:** Wenn Sie uns als DSB bestellt haben, können Sie uns mit folgenden Kontaktdaten melden: [IITR details]
+- **Current:** Die Frage, wo Sie den externen Datenschutzbeauftragten melden, wird im Kontext nicht direkt beantwortet...
+- **Note:** ❌ RAG admits it can't answer. Content not in corpus.
+
+### Q14: DSB Kontaktdaten ❌ VLM LOSS
 - **Question:** "Mit welchen Kontaktdaten melde ich den externen Datenschutzbeauftragten?"
-- **Expected:** email@iitr.de, Marienplatz 2, 80331 München, Tel (089) 18 91 73 60
-- **RAG answered:** dskit@iitr.de (support email - wrong)
-- **Root cause:**
-  - Standard Docling chunks (95) contain official contact in chunk 3
-  - VLM chunks (56) do NOT contain this information
-  - Production uses VLM chunks → data lost
-- **Fix options:**
-  1. Use standard Docling chunks instead of VLM
-  2. Add explicit Q&A pair for official DSB contact
-  3. Merge both chunk sets
+- **Expected:** email@iitr.de, IITR Datenschutz GmbH, Marienplatz 2, 80331 München, Tel (089) 18 91 73 60
+- **Current:** Für die Kontaktaufnahme: IITR Datenschutz GmbH, Dr. Sebastian Kraska, dskit@iitr.de
+- **Note:** ❌ Wrong email (dskit@ vs email@), missing address/phone. VLM chunks lost PDF header data.
 
-### Q21: Q&A Data Error (Wrong Chapter)
+### Q15: Kündigung Termin ✅
+- **Question:** "Zu welchem Termin kann ich den Vertrag kündigen?"
+- **Expected:** Die Kündigung ist drei Monate vor Vertragsverlängerung schriftlich unter dskit@iitr.de einzureichen.
+- **Current:** Der Bestellvertrag hat feste Laufzeit und verlängert sich automatisch. Kündigung drei Monate vor Vertragsende...
+- **Note:** ✅ Correct - mentions 3 months
+
+### Q16: eLearning 300€ ❌ DATA GAP
+- **Question:** "Wie kann ich auf weitere eLearning Module zugreifen?"
+- **Expected:** Im DS-Kit Basis stehen standardmäßig vier eLearning-Module zur Verfügung. Vollzugriff für 300€ netto jährlich.
+- **Current:** Wenn Sie auf weitere eLearning-Module zugreifen möchten, wenden Sie sich an den Support...
+- **Note:** ❌ Doesn't mention "vier Module" or "300€". Pricing not in corpus.
+
+### Q17: Englisch Zertifikat ❌ DATA GAP
+- **Question:** "Stellen Sie auch englischsprachige Zertifikate zur Verfügung?"
+- **Expected:** Wir können Ihnen gerne ein englischsprachiges Datenschutz-Zertifikat ausstellen.
+- **Current:** Die DS-Kit-Plattform bietet standardmäßig keine englischsprachigen Zertifikate an...
+- **Note:** ❌ Wrong - RAG says "Nein" but correct is "Ja, gerne". Service not documented in corpus.
+
+### Q18: Zugang DS-Kit URL ❌ DATA GAP
+- **Question:** "Wie erhalte ich einen Zugang zum Datenschutz-Kit?"
+- **Expected:** core.iitr.de aufrufen und unter Angabe Ihrer E-Mail-Adresse einen Login-Link anfordern.
+- **Current:** Um einen Zugang zu erhalten, wenden Sie sich direkt an die IITR...
+- **Note:** ❌ Doesn't mention "core.iitr.de" URL. Login URL not in corpus.
+
+### Q19: Magic-Link wiederholt ✅
+- **Question:** "Muss ich bei wiederholtem Besuch jedes Mal einen neuen Zugangslink anfordern?"
+- **Expected:** Login ist standardmäßig passwortfrei (Magic-Link). Passwortgestützter Zugang auf Wunsch möglich.
+- **Current:** Sie müssen nicht unbedingt einen neuen Link anfordern. Das Login-Verfahren ist auf passwortfreie Anmeldung (Magic-Link) eingestellt...
+- **Note:** ✅ Correct - explains Magic-Link
+
+### Q20: Jahresvertrag automatisch ✅
+- **Question:** "Läuft unser Jahresvertrag automatisch aus?"
+- **Expected:** Der Vertrag verlängert sich automatisch, sofern keine Kündigung erfolgt.
+- **Current:** Der Jahresvertrag läuft nicht automatisch ab. Der Bestellvertrag hat feste Laufzeit und verlängert sich...
+- **Note:** ✅ Correct - explains auto-renewal
+
+### Q21: Mitarbeiter Docs ❌ Q&A ERROR
 - **Question:** "Welche Dokumente brauchen wir unterschrieben von den Mitarbeitern?"
-- **Expected:** Kapitel 11, Unterpunkt 2 - Verpflichtungserklärung
-- **RAG answered:** Kapitel 9
-- **Root cause:**
-  - Q&A #9 says "Datenschutzverpflichtung" → Kapitel 09
-  - PDF shows: Kapitel 09 = DSFA (impact assessment), Kapitel 11 = Employee forms
-  - Q&A answer appears to be incorrect
-- **Client confirmation needed:** Which chapter is correct for employee commitment forms?
+- **Expected:** Verpflichtungserklärung auf Einhaltung des Datenschutzes. Vorlage unter Kapitel 11, Unterpunkt 2.
+- **Current:** Für die Erfüllung der datenschutzrechtlichen Pflichten gibt es mehrere Dokumente... [mentions Kapitel 9]
+- **Note:** ❌ Wrong chapter - RAG says Kapitel 9, expected is Kapitel 11 UP 2. Q&A CSV has error.
+
+### Q22: Mitarbeiter einladen ✅
+- **Question:** "Wie kann ich Mitarbeiter zu den Schulungen einladen?"
+- **Expected:** Über den Menüpunkt "Mitarbeiterschulung" in der Kategorie "eLearning" Online-Schulungen per E-Mail versenden.
+- **Current:** Um Mitarbeiter zu den Schulungen einzuladen: Mitarbeiterschulung im eLearning-Bereich auswählen...
+- **Note:** ✅ Correct - describes eLearning process
+
+### Q23: Schulung Häufigkeit ✅
+- **Question:** "Wie häufig sollte ich meine Mitarbeiter schulen?"
+- **Expected:** Die Datenschutz-Schulung sollte mindestens einmal im Jahr erfolgen (Erwartung der Aufsichtsbehörden).
+- **Current:** Die Datenschutzschulung sollte mindestens einmal im Jahr erfolgen. Dies ergibt sich aus der Erwartung...
+- **Note:** ✅ Correct - mentions yearly requirement
+
+### Q24: Video E-Mail Vereinbarung ❌ DATA GAP
+- **Question:** "In welchen Videos wird die Personal-Vereinbarung bzgl. E-Mail nach Beendigung besprochen?"
+- **Expected:** Eine Vorlage für Vereinbarung über Zugriff auf E-Mail nach Beendigung finden Sie in Kapitel 11, Unterpunkt 3.
+- **Current:** Die Information über E-Mails mit privatem Inhalt wird nicht direkt in Verbindung mit Videos erwähnt...
+- **Note:** ❌ RAG can't answer. Post-employment email policy not in corpus.
+
+### Q25: Datenschutzverletzung ✅
+- **Question:** "Wir haben eine Datenschutzverletzung, was ist zu tun?"
+- **Expected:** In Kapitel 10 Dokument "Interne Meldung Datenschutzverletzung" herunterladen und ausfüllen. An dskit@iitr.de senden.
+- **Current:** Zunächst das Dokument "Interne Meldung Datenschutzverletzung" in Kapitel 10 herunterladen...
+- **Note:** ✅ Correct - references Kapitel 10 and process
+
+### Q26: Datenschutzhinweise DE/EN ✅
+- **Question:** "Müssen wir unsere Datenschutzhinweise in Deutsch und Englisch aktualisieren?"
+- **Expected:** Unter Kapitel 8 erhalten Sie eine deutsche und englische Vorlage für die Datenschutzerklärung.
+- **Current:** Ja, Sie gehen richtig in der Annahme. Unter Kapitel 8 im Datenschutz-Kit erhalten Sie Vorlagen...
+- **Note:** ✅ Correct - mentions Kapitel 8
+
+### Q27: Bewerber unterschreiben ❌ DATA GAP
+- **Question:** "Müssen unsere Bewerber unsere Datenschutzbestimmungen unterschreiben?"
+- **Expected:** Es ist nicht erforderlich, dass Bewerber unterschreiben. Sie sollten jedoch zur Kenntnis nehmen.
+- **Current:** Die Frage, ob Bewerber unterschreiben müssen, wird im Kontext nicht direkt beantwortet...
+- **Note:** ❌ RAG can't answer. Applicant policy not in corpus.
+
+### Q28: Cookie Banner 180€ ❌ DATA GAP
+- **Question:** "Ist unser Cookie Banner so in Ordnung?"
+- **Expected:** Gerne prüfen wir Ihre Webseite auf Datenschutzkonformität zu 180€ netto Stundensatz.
+- **Current:** Die derzeit genutzte Cookie-Entscheidung mit "ich stimme zu" und "ich lehne ab"... [gives technical advice]
+- **Note:** ❌ Gives generic advice instead of offering review service. Service not in corpus.
+
+### Q29: Webseite Beratung ✅
+- **Question:** "Bieten Sie Beratung zu Webseiten im Bereich Datenschutz an?"
+- **Expected:** Beratung im Rahmen einer Beratungsstunde zu 180€ netto oder DS-Kit Plus Upgrade.
+- **Current:** Ja, wir bieten Beratung zu Webseiten im Bereich Datenschutz an. Im Rahmen einer Beratungsstunde zu 180€ netto...
+- **Note:** ✅ Correct - mentions 180€ and options
 
 ---
 
-## 6. Recommendations
+## 5. Recommendations
 
 ### Content Additions (9 items)
 Client should provide answers for:
