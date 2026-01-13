@@ -46,12 +46,42 @@ Templates provide **0-2/29 question coverage**. Analysis showed:
 
 **Decision:** Skip Phase 4, proceed directly to Phase 5 (Iteration).
 
-### Data Gap
+### Data Gap Analysis (Updated 2026-01-13)
 
-5 test questions require info not in any input source:
-- Q4, Q16, Q17, Q27, Q28
-- Best case accuracy: 24/29 (83%)
-- Documented for client delivery discussion
+**Original assumption:** 5 questions unanswerable (Q4, Q16, Q17, Q27, Q28) → 24/29 ceiling
+
+**Revised after rubber-duck investigation:**
+
+| Question | Original | Actual | Evidence |
+|----------|----------|--------|----------|
+| Q4 (Datenschutzerklärung templates) | Gap | **Retrieval failure** | PDF 2.8 + CSV Q1 |
+| Q16 (Schulungen dokumentieren) | Gap | Partial | PDF 1.5 + 2.11 |
+| Q17 (AVV templates) | Gap | **Retrieval failure** | PDF 2.5 + CSV Q11 |
+| Q27 (Verschlüsselung) | Gap | **True gap** | Not in sources |
+| Q28 (Aufsichtsbehörde) | Gap | Partial | Only "Meldung DSB" |
+
+**Root cause:** Vocabulary mismatch
+- Test questions use "Templates" (English loan word)
+- Content uses "Vorlage", "Mustervorlagen", "Texte" (German)
+- Current `all-MiniLM-L12-v2` embedding doesn't recognize German synonyms
+
+**Example:** CSV Q11 = "Wo finde ich Mustervorlagen für AV-Verträge?" → Kapitel 05
+Test Q17 = "Wo finde ich Templates für Auftragsverarbeitungsverträge?" (same question!)
+
+**Revised ceiling:** 27-28/29 (93-97%)
+
+**Solution:** Switch to `multilingual-e5-large-instruct` (MIT, MTEB German rank 6)
+
+---
+
+## Content Quality Analysis (2026-01-13)
+
+PDF structure analysis:
+- **Pages 1-2:** Title + TOC (noise)
+- **Pages 3-10:** UI instructions - 50% of PDF (useless for Q&A)
+- **Pages 11-16:** Leitfaden chapters (actual useful content)
+
+**Recommendation:** Index Section 2 only (pages 11-16) to remove ~60% noise
 
 ---
 
@@ -75,4 +105,4 @@ Questions → RAG → LLM-as-Judge → Score
 
 ---
 
-*Created: 2026-01-11*
+*Created: 2026-01-11 | Updated: 2026-01-13*
