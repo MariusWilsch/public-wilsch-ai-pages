@@ -30,14 +30,25 @@ publish: true
 ## Data Architecture
 
 ### Input Sources
-| Source | Processing |
-|--------|------------|
-| PDF Leitfaden | Docling chunking → Typesense |
-| Q&A CSV (14 pairs) | Direct ingest (structured data) |
-| 56 Templates | Docling chunking → Typesense |
+
+| Source | Processing | Status |
+|--------|------------|--------|
+| PDF Leitfaden | Docling chunking → Typesense | ✅ Phase 2 |
+| Q&A CSV (14 pairs) | Direct ingest | ✅ Phase 3 |
+| 56 Templates | ~~Docling chunking~~ | ❌ Skipped |
+
+### Phase 4 Skip Decision (2026-01-13)
+
+Templates provide **0-2/29 question coverage**. Analysis showed:
+- Test questions ask "where to find" documents, not template content
+- PDF + CSV already cover 24/29 answerable questions
+- Vision AI for forms/diagrams adds complexity without accuracy improvement
+
+**Decision:** Skip Phase 4, proceed directly to Phase 5 (Iteration).
 
 ### Data Gap
-5 test questions require info not in input sources:
+
+5 test questions require info not in any input source:
 - Q4, Q16, Q17, Q27, Q28
 - Best case accuracy: 24/29 (83%)
 - Documented for client delivery discussion
