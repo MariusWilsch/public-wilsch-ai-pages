@@ -43,7 +43,7 @@ Get the system to a state where Paul's team can **test and create videos**. This
 | #475 | Production Infrastructure (32 CPU + GPU) | Paul |
 | #460 | Docker Redeploy on new server | Marius |
 | #491 | Template-channel linking bug | Marius |
-| #465 | Per-Template Assets via Supabase Storage | Developer |
+| #508 | Per-Template Assets via Supabase Storage | Developer |
 
 ---
 
@@ -53,7 +53,7 @@ Get the system to a state where Paul's team can **test and create videos**. This
 1. Paul provisions server (Hetzner) + GPU credits (Modal)
 2. Marius redeploys Docker (#460)
 3. Marius fixes linking bug (#491)
-4. Developer starts on template assets (#465)
+4. Developer starts on template assets (#508)
 5. Paul's team can test
 ```
 

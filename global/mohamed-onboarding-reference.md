@@ -88,7 +88,7 @@ This gives you all the commands, hooks, and skills listed below.
 - AC/DoD framework
 
 ### Part 2: Walkthrough (~45-90 min)
-- Using issue #465 as live example
+- Using issue #508 as live example
 - See tracking.md structure
 - Run /onboarding, clarity phases, execute, commit
 

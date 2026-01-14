@@ -81,7 +81,7 @@ Dependencies:
 
 #### Part 2: Walkthrough (~45-90 min)
 
-Using issue #465 (Paul: Per-Template Assets) as example:
+Using issue #508 (Paul: Per-Template Assets) as example:
 
 | Step | What Happens |
 |------|--------------|
