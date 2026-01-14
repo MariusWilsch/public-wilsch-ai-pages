@@ -1,0 +1,109 @@
+---
+publish: true
+---
+
+# Mohamed Onboarding Reference
+[[team-scaling]]
+
+Quick reference for Mohamed during and after onboarding.
+
+## 1. Daily Grooming
+
+**What:** Data quality gate for issues - ensure correct assignee, blocked/ready status, context clarity.
+
+**Doc:** [GROOMING.md](https://github.com/DaveX2001/deliverable-tracking/blob/main/GROOMING.md)
+
+**Learning:** You'll learn by doing it daily with David.
+
+---
+
+## 2. System Access
+
+| System | What you provide | Method |
+|--------|-----------------|--------|
+| GitHub | Email/username | Invite to repos |
+| Supabase | Email | Org invite |
+| SSH | Public key | Added to servers |
+| Claude Code | (shared setup) | Live during kickoff |
+
+---
+
+## 3. Tools & Commands
+
+### Slash Commands (you invoke)
+
+| Command | Purpose |
+|---------|---------|
+| `/onboarding` | Start a work session |
+| `/requirements-clarity` | Clarify WHAT to build |
+| `/implementation-clarity` | Clarify HOW to build |
+| `/evaluation-clarity` | Define success criteria |
+| `/issue-comment` | Post standardized updates |
+| `/rubber-duck` | Think through problems |
+| `/flag-for-improvement` | Escape hatch when stuck |
+
+### Reference Documentation
+
+| Topic | Link |
+|-------|------|
+| Global Protocol | [CLAUDE.md](https://raw.githubusercontent.com/veloxforce/claude-user-configs/main/CLAUDE.md) |
+| AC/DoD Framework | [ac-dod-framework](https://mariuswilsch.github.io/public-wilsch-ai-pages/global/ac-dod-framework) |
+| Flag-for-Improvement | [improve-system-architecture](https://mariuswilsch.github.io/public-wilsch-ai-pages/global/improve-system-architecture) |
+
+### Command Files (for reference)
+
+- [onboarding.md](https://raw.githubusercontent.com/veloxforce/claude-user-configs/main/commands/onboarding.md)
+- [requirements-clarity.md](https://raw.githubusercontent.com/veloxforce/claude-user-configs/main/commands/requirements-clarity.md)
+- [implementation-clarity.md](https://raw.githubusercontent.com/veloxforce/claude-user-configs/main/commands/implementation-clarity.md)
+- [evaluation-clarity.md](https://raw.githubusercontent.com/veloxforce/claude-user-configs/main/commands/evaluation-clarity.md)
+- [rubber-duck.md](https://raw.githubusercontent.com/veloxforce/claude-user-configs/main/commands/rubber-duck.md)
+- [flag-for-improvement.md](https://raw.githubusercontent.com/veloxforce/claude-user-configs/main/commands/flag-for-improvement.md)
+
+---
+
+## 4. Explain Once Session
+
+**Format:** Live screen share, recorded for rewatching
+
+### Part 1: Concepts (~45 min)
+- Navigator/driver mental model
+- Clarity workflow (requirements → implementation → evaluation)
+- Skills and commands overview
+- AC/DoD framework
+
+### Part 2: Walkthrough (~45-90 min)
+- Using issue #465 as live example
+- See tracking.md structure
+- Run /onboarding, clarity phases, execute, commit
+
+---
+
+## 5. Support Model (First 2 Weeks)
+
+### Communication Channels
+
+| Channel | Use for |
+|---------|---------|
+| WhatsApp group | Daily updates, async questions |
+| WhatsApp call | Urgent blocks - **call, don't text and wait** |
+| `/flag-for-improvement` | System issues to fix later |
+
+### Escalation Rule
+
+> **Stuck for 15+ minutes?**
+>
+> Tried: (1) reading the error, (2) searching codebase, (3) asking Claude?
+>
+> **→ CALL MARIUS**
+
+### Mindset
+
+> "I EXPECT you to call. Not calling when stuck is worse than calling too much."
+
+Better to interrupt than be stuck in silence.
+
+---
+
+## Related
+
+- [Mohamed Onboarding Plan](https://mariuswilsch.github.io/public-wilsch-ai-pages/global/mohamed-onboarding-plan) (full plan for Marius)
