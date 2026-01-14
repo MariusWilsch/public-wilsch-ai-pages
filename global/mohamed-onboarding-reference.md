@@ -26,6 +26,20 @@ Quick reference for Mohamed during and after onboarding.
 | SSH | Public key | Added to servers |
 | Claude Code | (shared setup) | Live during kickoff |
 
+### Plugin Installation
+
+After Claude Code is set up, install the team plugin:
+
+```bash
+# Step 1: Add marketplace
+claude plugin marketplace add MariusWilsch/claude-code-team-plugin
+
+# Step 2: Install plugin
+claude plugin install claude-code-team-plugin@wilsch-ai-plugins
+```
+
+This gives you all the commands, hooks, and skills listed below.
+
 ---
 
 ## 3. Tools & Commands
