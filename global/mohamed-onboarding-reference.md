@@ -38,6 +38,8 @@ claude plugin marketplace add MariusWilsch/claude-code-team-plugin
 claude plugin install claude-code-team-plugin@wilsch-ai-plugins
 ```
 
+**Repo:** [MariusWilsch/claude-code-team-plugin](https://github.com/MariusWilsch/claude-code-team-plugin)
+
 This gives you all the commands, hooks, and skills listed below.
 
 ---
