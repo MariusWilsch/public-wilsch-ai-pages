@@ -285,13 +285,21 @@ Die Beschäftigten sollten die Verpflichtungserklärung auf Einhaltung des Daten
 ### RAG Response
 Für die Arbeit mit dem Datenschutz-Kit und die Erfüllung der datenschutzrechtlichen Pflichten gibt es mehrere Dokumente...
 
-### Source Check
-- **CSV Row 9:** Says "Kapitel 09"
-- **Expected:** "Kapitel 11, Unterpunkt 2"
-- **Result:** Q&A CSV has WRONG chapter reference
+### Source Data Conflict
 
-### Client Discussion
-**FIXABLE:** Correct CSV Row 9 from "Kapitel 09" to "Kapitel 11, Unterpunkt 2".
+**CSV Row 9 says:**
+> "Wo finde ich eine Vorlage für eine Datenschutzverpflichtung?"
+> → "Eine Vorlage... erhalten Sie im **Kapitel 09** des Datenschutz-Kits."
+
+**PDF Page 15-16 (Chapter 11) says:**
+> "Das Dokument **11-01** DS-Kit Verpflichtung Datenschutz dient zur Verpflichtung der mit der Datenverarbeitung beschäftigten Personen auf die Einhaltung des Datenschutzes."
+
+**Verdict:** CSV has wrong chapter number. PDF clearly shows Verpflichtung is in Chapter 11, Document 11-01.
+
+### Client Action Required
+**FIXABLE:** Correct CSV Row 9:
+- **From:** "Kapitel 09"
+- **To:** "Kapitel 11" (matching PDF)
 
 ---
 
