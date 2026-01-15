@@ -123,8 +123,23 @@ Die Meldung des externen Datenschutzbeauftragten (DSB) an die zuständige Datens
 - Retrieved the PDF chunk that references Document 01-02
 - But cannot retrieve the document itself (doesn't exist in corpus)
 
-### Client Discussion
-Client must clarify: CUSTOMER (Verantwortlicher) files DSB registration, not IITR.
+### What RAG Got Right
+- ✓ Document 01-02 exists for DSB registration
+- ✓ It's for registering with Aufsichtsbehörde
+
+### What RAG Got Wrong
+- **Missing WHO:** Does not say the CUSTOMER must file (not IITR)
+- **Missing responsibility:** "muss durch den Verantwortlichen erfolgen"
+
+### Why It Failed
+Same pattern as Q6: RAG knows WHAT (the document) but not WHO (customer's responsibility). Document 01-02 itself doesn't exist in corpus - only a reference to it.
+
+### Client Action Required
+Add ONE Q&A pair to CSV:
+
+**Frage:** "Übernehmen Sie die Meldung des externen Datenschutzbeauftragten?"
+
+**Antwort:** "Nein. Die Meldung des DSB bei der Aufsichtsbehörde muss durch den Verantwortlichen (Sie als Kunde) erfolgen. Weitere Informationen finden Sie in Dokument 01-02 unter Kapitel 1 des Datenschutz-Kits."
 
 ---
 
