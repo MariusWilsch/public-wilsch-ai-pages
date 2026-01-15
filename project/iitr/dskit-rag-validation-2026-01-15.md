@@ -316,13 +316,27 @@ Eine Vorlage für eine Vereinbarung über den Zugriff auf die E-Mail-Adresse des
 ### RAG Response
 Die Information über E-Mails mit privatem Inhalt wird nicht direkt in Verbindung mit Videos im Portal erwähnt.
 
-### Source Check
-- **PDF:** NOT FOUND
-- **CSV:** NOT FOUND
-- **Result:** Post-employment email agreement location NOT in corpus
+### Source Check: Expected Answer vs PDF
+
+**Expected answer says:** "Kapitel 11, Unterpunkt 3" has post-employment email agreement
+
+**PDF Chapter 11 actually lists:**
+- 11-01: Verpflichtung Datenschutz
+- 11-02: Verpflichtung IT
+- 11-03: **eLearning overview** (NOT email agreement!)
+- 11-06: Hardware im privaten Umfeld
+- 11-07: Nutzung unternehmensfremder Hardware
+- 11-08: Nutzung Email und Internet
+
+**No post-employment email agreement template described in PDF.**
 
 ### Client Discussion
-Client must provide: Where to find post-employment email agreement (Kapitel 11, Unterpunkt 3).
+**EXPECTED ANSWER MAY BE WRONG.** The PDF does not describe any post-employment email agreement template in Chapter 11.
+
+Client must clarify:
+1. Does this template actually exist?
+2. If yes, where is it located?
+3. Is the expected answer pointing to wrong location?
 
 ---
 
