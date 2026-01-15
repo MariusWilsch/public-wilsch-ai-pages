@@ -79,8 +79,24 @@ Nein, Sie können uns nicht als Datenschutzbeauftragten auf Ihrer Webseite angeb
 - **CSV:** NOT FOUND (14 rows checked)
 - **Result:** Policy about listing IITR on customer website does NOT exist
 
-### Client Discussion
-Client must provide: Policy statement that customers CAN list IITR as DSB on their websites + contact details to use.
+### What RAG Got Right
+- ✓ Company name: IITR Datenschutz GmbH
+- ✓ Contact person: Dr. Sebastian Kraska
+
+### What RAG Got Wrong
+1. **Said "Nein"** - Should be "Ja" (with condition)
+2. **Missing condition:** "wenn Sie uns als externen DSB bestellt haben"
+3. **Missing contact details:** Address, phone, correct email
+
+### Why It Failed
+RAG has no policy statement saying customers CAN list IITR. Without explicit permission, it defaulted to "Nein."
+
+### Client Action Required
+Add ONE Q&A pair to CSV:
+
+**Frage:** "Kann ich Sie als Datenschutzbeauftragter auf meiner Webseite angeben?"
+
+**Antwort:** "Ja. Wenn Sie uns als Ihren externen Datenschutzbeauftragten bestellt haben, können Sie uns auf Ihrer Webseite mit folgenden Kontaktdaten angeben: IITR Datenschutz GmbH, Dr. Sebastian Kraska, Marienplatz 2, 80331 München, E-Mail: email@iitr.de, Telefon: 089 189 173 60"
 
 ---
 
