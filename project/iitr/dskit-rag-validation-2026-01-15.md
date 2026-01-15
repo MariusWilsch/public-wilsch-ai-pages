@@ -162,8 +162,22 @@ Die Frage, wo Sie den externen Datenschutzbeauftragten melden, wird im Kontext n
 - **CSV:** NOT FOUND
 - **Result:** DSB registration contact details missing in proper context
 
-### Client Discussion
-Client must provide: DSB registration contact details in proper context.
+### What RAG Got Right
+- ✓ Knows DSB registration involves Aufsichtsbehörde
+
+### What RAG Got Wrong
+- Could not answer WHERE to register
+- Contact details exist in PDF header but NOT in DSB context
+
+### Why It Failed
+Same root cause as Q6, Q12, Q14: **No DSB policy content exists.** Contact info is there, but not connected to "use this for DSB registration."
+
+### Client Action Required
+**ONE DSB policy Q&A would fix Q6, Q12, Q13, Q14:**
+
+**Frage:** "Welche Kontaktdaten verwende ich für die DSB-Meldung?"
+
+**Antwort:** "Für die Meldung des externen Datenschutzbeauftragten verwenden Sie: IITR Datenschutz GmbH, Dr. Sebastian Kraska, Marienplatz 2, 80331 München, E-Mail: email@iitr.de, Telefon: 089 189 173 60. Die Meldung muss durch Sie als Verantwortlicher erfolgen."
 
 ---
 
