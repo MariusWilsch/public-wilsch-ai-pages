@@ -40,10 +40,21 @@ Kriegen wir auch Schulungen, damit wir unsere Mitarbeiter ab und zu mal beim Dat
 ### RAG Response
 Ja, Sie erhalten Schulungen, um Ihre Mitarbeiter regelmäßig beim Thema Datenschutz zu schulen. Die Datenschutzschulung der Mitarbeiter sollte mindestens einmal im Jahr erfolgen. Dies ergibt sich aus der Erwartung der deutschen Datenschutz-Aufsichtsbehörden.
 
-### Source Check
+### Source Check: In Data?
 - **PDF p.9-10:** eLearning features exist ✓
 - **CSV Row 6:** Frequency answer exists ✓
-- **Result:** BOTH answers in corpus
+- **Result:** BOTH answers exist in source data
+
+### Source Check: Retrieved by RAG?
+Retrieved 6 chunks (Typesense search "Schulung"):
+1. **Rank 1 (CSV):** "Wie häufig sollte ich... schulen? - mindestens einmal im Jahr" ← LLM used this
+2. **Rank 2 (PDF):** Statistik feature description
+3. **Rank 3 (PDF):** eLEARNING overview
+4. **Rank 4 (PDF):** Schulungsmodul selection
+5. **Rank 5 (CSV):** Beratungsstunde (not relevant)
+6. **Rank 6 (PDF):** Mitarbeiterschulung in eLEARNING
+
+**Result:** eLearning content WAS retrieved (ranks 2-6), but LLM chose rank 1 (frequency)
 
 ### Client Discussion
 Client decides: Feature description (where/how to access) OR frequency (how often)?
