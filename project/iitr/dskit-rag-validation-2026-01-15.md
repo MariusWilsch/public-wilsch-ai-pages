@@ -97,11 +97,15 @@ Die Meldung des Datenschutzbeauftragten bei der zuständigen Datenschutzaufsicht
 ### RAG Response
 Die Meldung des externen Datenschutzbeauftragten (DSB) an die zuständige Datenschutz-Aufsichtsbehörde erfolgt gemäß den Vorgaben des DS-Kit. Dazu steht Ihnen das Dokument 01-02 DS-Kit Meldung DSB an Aufsicht zur Verfügung.
 
-### Source Check
-- **PDF p.11:** Document 01-02 exists for filing ✓
-- **BUT:** Does NOT say WHO must file
+### Source Check: In Data?
+- **PDF p.11:** REFERENCES Document 01-02, but only says "use this document"
+- **Templates folder:** Document 01-02 does NOT exist (templates start at Chapter 03)
 - **CSV:** NOT FOUND
-- **Result:** Clarification that CUSTOMER files (not IITR) is missing
+- **Result:** The actual Document 01-02 is NOT in our corpus - only a reference to it
+
+### Source Check: Retrieved by RAG?
+- Retrieved the PDF chunk that references Document 01-02
+- But cannot retrieve the document itself (doesn't exist in corpus)
 
 ### Client Discussion
 Client must clarify: CUSTOMER (Verantwortlicher) files DSB registration, not IITR.
