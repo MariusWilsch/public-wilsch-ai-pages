@@ -50,7 +50,6 @@ Add the shared MCP tools server:
 claude mcp add -s user -t http hand-picked-tools https://metamcp.iitr-cloud.de/metamcp/hand-picked-tools/mcp
 ```
 
-This provides: Supabase, Context7 docs, Fireflies transcripts, sequential thinking, and web reading tools.
 
 **Learn more:** [Model Context Protocol (MCP)](https://www.anthropic.com/news/model-context-protocol)
 
@@ -74,8 +73,8 @@ This provides: Supabase, Context7 docs, Fireflies transcripts, sequential thinki
 
 | Topic | Link |
 |-------|------|
-| Global Protocol | [CLAUDE.md](https://raw.githubusercontent.com/veloxforce/claude-user-configs/main/CLAUDE.md) |
-| Clarity Workflow Guide | [Learning Doc](https://docs.google.com/document/d/1U4x9o_oAfLBeQqKCUK_odQAA3D6SZSVA5A6VU-B0X2k/edit?tab=t.0#heading=h.vm57fatrx2rm) |
+| Model Context Protocol | [MCP Announcement](https://www.anthropic.com/news/model-context-protocol) |
+| CLAUDE.md | [Learning Doc](https://docs.google.com/document/d/1U4x9o_oAfLBeQqKCUK_odQAA3D6SZSVA5A6VU-B0X2k/edit?tab=t.0#heading=h.vm57fatrx2rm) |
 | GitHub Board SOP | [SOP Doc](https://docs.google.com/document/d/1h_BoV1HW9i4wkixyEHY26UsoNRH8qZomtOJPQhPKJCA/edit?usp=sharing) |
 | AC/DoD Framework | [ac-dod-framework](https://mariuswilsch.github.io/public-wilsch-ai-pages/global/ac-dod-framework) |
 | Flag-for-Improvement | [improve-system-architecture](https://mariuswilsch.github.io/public-wilsch-ai-pages/global/improve-system-architecture) |
