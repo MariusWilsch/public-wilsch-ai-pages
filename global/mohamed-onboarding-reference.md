@@ -81,12 +81,13 @@ claude mcp add -s user -t http hand-picked-tools https://metamcp.iitr-cloud.de/m
 
 ### Command Files (for reference)
 
-- [onboarding.md](https://raw.githubusercontent.com/veloxforce/claude-user-configs/main/commands/onboarding.md)
-- [requirements-clarity.md](https://raw.githubusercontent.com/veloxforce/claude-user-configs/main/commands/requirements-clarity.md)
-- [implementation-clarity.md](https://raw.githubusercontent.com/veloxforce/claude-user-configs/main/commands/implementation-clarity.md)
-- [evaluation-clarity.md](https://raw.githubusercontent.com/veloxforce/claude-user-configs/main/commands/evaluation-clarity.md)
-- [rubber-duck.md](https://raw.githubusercontent.com/veloxforce/claude-user-configs/main/commands/rubber-duck.md)
-- [flag-for-improvement.md](https://raw.githubusercontent.com/veloxforce/claude-user-configs/main/commands/flag-for-improvement.md)
+- [onboarding.md](https://github.com/MariusWilsch/claude-code-team-plugin/blob/main/plugins/claude-code-team-plugin/commands/onboarding.md)
+- [requirements-clarity.md](https://github.com/MariusWilsch/claude-code-team-plugin/blob/main/plugins/claude-code-team-plugin/commands/requirements-clarity.md)
+- [implementation-clarity.md](https://github.com/MariusWilsch/claude-code-team-plugin/blob/main/plugins/claude-code-team-plugin/commands/implementation-clarity.md)
+- [evaluation-clarity.md](https://github.com/MariusWilsch/claude-code-team-plugin/blob/main/plugins/claude-code-team-plugin/commands/evaluation-clarity.md)
+- [rubber-duck.md](https://github.com/MariusWilsch/claude-code-team-plugin/blob/main/plugins/claude-code-team-plugin/commands/rubber-duck.md)
+- [flag-for-improvement.md](https://github.com/MariusWilsch/claude-code-team-plugin/blob/main/plugins/claude-code-team-plugin/commands/flag-for-improvement.md)
+- [issue-comment.md](https://github.com/MariusWilsch/claude-code-team-plugin/blob/main/plugins/claude-code-team-plugin/commands/issue-comment.md)
 
 ---
 
