@@ -42,6 +42,16 @@ claude plugin install claude-code-team-plugin@wilsch-ai-plugins
 
 This gives you all the commands, hooks, and skills listed below.
 
+### MCP Server Installation
+
+Add the shared MCP tools server:
+
+```bash
+claude mcp add -s user -t http hand-picked-tools https://metamcp.iitr-cloud.de/metamcp/hand-picked-tools/mcp
+```
+
+This provides: Supabase, Context7 docs, Fireflies transcripts, sequential thinking, and web reading tools.
+
 ---
 
 ## 3. Tools & Commands
