@@ -52,6 +52,8 @@ claude mcp add -s user -t http hand-picked-tools https://metamcp.iitr-cloud.de/m
 
 This provides: Supabase, Context7 docs, Fireflies transcripts, sequential thinking, and web reading tools.
 
+**Learn more:** [Model Context Protocol (MCP)](https://www.anthropic.com/news/model-context-protocol)
+
 ---
 
 ## 3. Tools & Commands
