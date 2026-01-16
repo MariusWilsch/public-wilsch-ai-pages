@@ -74,6 +74,7 @@ claude mcp add -s user -t http hand-picked-tools https://metamcp.iitr-cloud.de/m
 | Topic | Link |
 |-------|------|
 | Model Context Protocol | [MCP Announcement](https://www.anthropic.com/news/model-context-protocol) |
+| Slash Commands | [Claude Code Docs](https://code.claude.com/docs/en/slash-commands) |
 | CLAUDE.md | [Learning Doc](https://docs.google.com/document/d/1U4x9o_oAfLBeQqKCUK_odQAA3D6SZSVA5A6VU-B0X2k/edit?tab=t.0#heading=h.vm57fatrx2rm) |
 | GitHub Board SOP | [SOP Doc](https://docs.google.com/document/d/1h_BoV1HW9i4wkixyEHY26UsoNRH8qZomtOJPQhPKJCA/edit?usp=sharing) |
 | AC/DoD Framework | [ac-dod-framework](https://mariuswilsch.github.io/public-wilsch-ai-pages/global/ac-dod-framework) |
