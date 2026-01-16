@@ -75,6 +75,7 @@ This provides: Supabase, Context7 docs, Fireflies transcripts, sequential thinki
 | Topic | Link |
 |-------|------|
 | Global Protocol | [CLAUDE.md](https://raw.githubusercontent.com/veloxforce/claude-user-configs/main/CLAUDE.md) |
+| Clarity Workflow Guide | [Learning Doc](https://docs.google.com/document/d/1U4x9o_oAfLBeQqKCUK_odQAA3D6SZSVA5A6VU-B0X2k/edit?tab=t.0#heading=h.vm57fatrx2rm) |
 | AC/DoD Framework | [ac-dod-framework](https://mariuswilsch.github.io/public-wilsch-ai-pages/global/ac-dod-framework) |
 | Flag-for-Improvement | [improve-system-architecture](https://mariuswilsch.github.io/public-wilsch-ai-pages/global/improve-system-architecture) |
 
