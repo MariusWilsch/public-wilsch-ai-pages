@@ -1,0 +1,212 @@
+---
+publish: true
+---
+
+# Staging + UAT Workflow
+[[testing-methodology]]
+
+## Overview
+
+This document defines the testing workflow between automated AC verification and production deployment. It establishes staging as the environment for human verification (UAT) before production release.
+
+## Problem Statement
+
+**Merge paralysis occurs when:**
+- Automated tests pass (ACs verified)
+- But no environment exists to witness actual output
+- Local environment is fragile (missing configs, dependency issues)
+- Production feels too risky (real users affected)
+
+**Result:** Features pile up in worktrees, nothing gets merged.
+
+## Testing Pyramid
+
+```
+         /\
+        /  \  Business UAT (Product Owner) - "Is this what I wanted?"
+       /----\
+      / Feat \  Feature UAT (Developer) - "Does it work?"
+     /  UAT   \
+    /----------\
+   / Smoke Test \ - Core flow regression check (every deploy)
+  /--------------\
+ /  ACs (AI)      \ - Automated Given/When/Then verification
+/------------------\
+```
+
+| Layer | Tester | Question | When |
+|-------|--------|----------|------|
+| **ACs** | AI | "Does code behave as specified?" | Before merge to staging |
+| **Smoke Test** | Developer | "Does core flow still work?" | Every staging deploy |
+| **Feature UAT** | Developer | "Does new feature work?" | After staging deploy |
+| **Business UAT** | Product Owner | "Is this what I wanted?" | Before production |
+
+## Workflow
+
+```
+┌───────────────────────────────────────────────────────────────────┐
+│  ISSUE CREATION (Product Owner)                                    │
+│  ├── DoD (what to build)                                           │
+│  ├── ACs (automated verification criteria)                         │
+│  └── UAT Hints (what to pay attention to - business level)         │
+└──────────────────────────────┬────────────────────────────────────┘
+                               ▼
+┌───────────────────────────────────────────────────────────────────┐
+│  IMPLEMENTATION (Developer)                                        │
+│  ├── Code in worktree/feature branch                               │
+│  ├── AC Verification (AI runs Given/When/Then)                     │
+│  └── Merge to staging branch                                       │
+└──────────────────────────────┬────────────────────────────────────┘
+                               ▼
+┌───────────────────────────────────────────────────────────────────┐
+│  STAGING                                                           │
+│                                                                    │
+│  1. SMOKE TEST (Developer, 2-3 min)                                │
+│     - Run fixed checklist for core flow                            │
+│     - FAIL → fix before proceeding                                 │
+│                                                                    │
+│  2. FEATURE UAT (Developer, 5-15 min)                              │
+│     - Test specific new feature                                    │
+│     - Exploratory: anything feel wrong?                            │
+│     - FAIL → fix in worktree, re-merge                            │
+│                                                                    │
+│  3. BUSINESS UAT (Product Owner)                                   │
+│     - "Is this what I wanted?"                                     │
+│     - REJECT → back to worktree                                    │
+│     - APPROVE → ready for production                               │
+└──────────────────────────────┬────────────────────────────────────┘
+                               ▼
+┌───────────────────────────────────────────────────────────────────┐
+│  PRODUCTION                                                        │
+│  Merge staging → main → deploy                                     │
+└───────────────────────────────────────────────────────────────────┘
+```
+
+## Testing Artifacts
+
+### AC (Automated)
+
+**Format:** Given/When/Then
+**Tester:** AI
+**Created:** Issue creation or just before implementation
+**Purpose:** Verify code behaves as specified
+
+```gherkin
+AC2.1: URL Asset Detection
+Given: A VGT with asset path starting with "https://"
+When: Video generation is triggered
+Then: Asset is downloaded to temp location
+And: Video uses the downloaded local file
+```
+
+### Smoke Test (Fixed per Project)
+
+**Format:** Checklist
+**Tester:** Developer
+**Created:** When core flow exists (project-level, not per-feature)
+**Purpose:** Regression check - did we break the core flow?
+
+```markdown
+## Smoke Test: [Project Name]
+Environment: Staging
+Frequency: Every deploy
+
+### Steps:
+1. [Step to trigger core flow]
+2. [Wait for completion]
+
+### Verify:
+[ ] [Core output exists]
+[ ] [Core behavior works]
+[ ] [No obvious errors]
+
+### Verdict:
+PASS → continue to Feature UAT
+FAIL → investigate before proceeding
+```
+
+**Evolution:** Update when critical path changes. Keep <5 minutes.
+
+### Feature UAT (Variable per Feature)
+
+**Format:** Checklist + Exploratory
+**Tester:** Developer
+**Created:** At staging deploy (per-feature)
+**Purpose:** Verify new feature works as expected
+
+```markdown
+## Feature UAT: [Feature Name]
+Environment: Staging
+
+### Guided Checks (from issue UAT hints):
+[ ] [Specific thing to verify]
+[ ] [Edge case to try]
+
+### Exploratory:
+- Tried: [what you explored]
+- Noticed: [anything unexpected]
+
+### Verdict:
+PASS → notify Product Owner
+FAIL → fix in worktree, re-merge
+```
+
+### Business UAT (Judgment)
+
+**Format:** Minimal checklist + subjective judgment
+**Tester:** Product Owner
+**Created:** At staging deploy
+**Purpose:** Business acceptance - "Would I ship this?"
+
+```markdown
+## Business UAT: [Feature Name]
+Environment: Staging
+
+### Quick Check:
+[ ] Watched actual output
+[ ] Business logic correct
+[ ] Would ship to client
+
+### Verdict:
+APPROVE → merge to production
+REJECT → [specific feedback]
+```
+
+## Key Distinctions
+
+| | ACs | Smoke Test | Feature UAT | Business UAT |
+|--|-----|------------|-------------|--------------|
+| **Scope** | Defined behavior | Core flow regression | New feature | Business value |
+| **Method** | Scripted (GWT) | Fixed checklist | Guided + exploratory | Subjective judgment |
+| **Catches** | What's specified | Regressions | Unexpected issues | "Not what I wanted" |
+| **Misses** | Unspecified behavior | Feature-specific issues | Business judgment | - |
+
+## Rollback Strategy
+
+| Situation | Action |
+|-----------|--------|
+| Staging breaks (quick fix <30 min) | Fix on staging, redeploy |
+| Staging breaks (complex) | Revert PR, fix in worktree, re-merge |
+| Production breaks | Revert to previous version, fix in staging first |
+
+## Role Responsibilities
+
+| Role | Creates | Tests | Approves |
+|------|---------|-------|----------|
+| **Product Owner** | Issues, ACs, UAT hints | Business UAT | Production deploy |
+| **Developer** | Code, AC verification | Smoke test, Feature UAT | Staging deploy |
+| **AI** | - | AC verification | - |
+
+## Staging Environment Requirements
+
+Staging must be:
+- **Isolated** from production (separate containers, ports, volumes)
+- **Production-like** (same services, same architecture)
+- **Safe to break** (no real users, easy rollback)
+- **Accessible** for testing (can run actual workflows)
+
+## Related Documents
+
+- [[feature-branching-environment-isolation]] - Environment architecture
+- [[session-type-model-impl-vs-verify]] - AC verification methodology
+- [[caddy-conf-subdomain-deployment-pattern]] - Deployment patterns
