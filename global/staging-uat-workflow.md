@@ -19,6 +19,48 @@ This document defines the testing workflow between automated AC verification and
 
 **Result:** Features pile up in worktrees, nothing gets merged.
 
+## Why Human Witness Layer
+
+**Reference:** [Don't Waste Your Backpressure](https://banay.me/dont-waste-your-backpressure/)
+
+**Backpressure** = automated feedback that lets agents self-correct without human intervention. AC verification is backpressure for AI development.
+
+**But AC verification has limits:**
+
+| Layer | Tests | Blind Spot |
+|-------|-------|------------|
+| **AC Verification** | "Does it match the spec?" | Unspecified behavior |
+| **Human Witness** | "Does this feel right?" | Nothing - catches unknowns |
+
+**Three purposes of human witness layer:**
+
+1. **Break AI-AI Bias Loop**
+   - AI implementing → AI verifying = same "alliance" with implementation
+   - Even with fresh context, AI tests what AI built
+   - Human perspective is truly independent
+
+2. **Test Experience (Not Spec)**
+   - ACs verify "code behaves as specified"
+   - Humans verify "this is what I wanted"
+   - Emergent behaviors, UX issues, "feels wrong" moments
+
+3. **Trust Building**
+   - Psychological: can't confidently ship code you've never seen run
+   - "I witnessed it work" → confidence to merge
+   - Even if AC passes, human needs to see it
+
+**AC Verification Scope (based on analysis of verification.jsonl patterns):**
+
+AC verification is MORE comprehensive than "isolation testing":
+- Tests multi-service integration (FDW, OAuth, storage)
+- Verifies end-to-end data flows
+- Runs against real backends (Supabase, APIs)
+
+What AC does NOT test:
+- Performance/load (single-user only)
+- Browser compatibility (Chrome only)
+- Unknown unknowns (human catches these)
+
 ## Testing Pyramid
 
 ```
@@ -193,9 +235,40 @@ REJECT → [specific feedback]
 
 | Role | Creates | Tests | Approves |
 |------|---------|-------|----------|
-| **Product Owner** | Issues, ACs, UAT hints | Business UAT | Production deploy |
-| **Developer** | Code, AC verification | Smoke test, Feature UAT | Staging deploy |
-| **AI** | - | AC verification | - |
+| **Product Owner (Marius)** | Issues, ACs, UAT hints | Business UAT | Production merge |
+| **Developer (Mohamed)** | Code, AC verification | Smoke test, Feature UAT | Staging merge |
+| **AI (Ralph)** | - | AC verification | - |
+
+### Handoff Model
+
+**Industry standard:** Developers can self-merge to staging. Production requires approval.
+
+**Specific authority:**
+
+| Actor | Staging Merge | Production Merge |
+|-------|---------------|------------------|
+| **Mohamed** | ✅ Self-merge allowed | ❌ Requires Marius approval |
+| **Ralph** | ❌ Requires human (Mohamed/Marius) | ❌ Requires Marius approval |
+| **Marius** | ✅ Full access | ✅ Final gatekeeper |
+
+**Handoff signal:** Add `review` label when smoke test passes → Marius notified for business UAT.
+
+**Workflow:**
+```
+VERIFY_COMPLETE
+    ↓
+Developer (Ralph/Mohamed):
+    - PR toolkit review + fixes
+    - Merge to staging (one feature at a time)
+    - Run smoke test
+    - Add `review` label when passes
+    ↓
+Marius:
+    - Business UAT (if critical path)
+    - Merge to main approval
+```
+
+**Concurrency:** Sequential staging (one feature at a time) appropriate for team size. Upgrade to ephemeral environments when deployment queue blocks work >1x/week.
 
 ## Staging Environment Requirements
 
