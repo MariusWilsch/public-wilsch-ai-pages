@@ -158,6 +158,31 @@ sequenceDiagram
 
 **Key insight:** Testing grabs human attention (backpressure). That's the point - it forces the developer to actually witness their work.
 
+### Detailed: Worktree → Staging Flow
+
+**Development Phase:**
+1. Create worktree for issue (`git gtr new issue-{N}`)
+2. Work in worktree, commits reference issue
+3. Push branch to GitHub
+4. PR exists (draft created by worktree skill)
+
+**Review Phase:**
+5. Mark PR ready for review
+6. PR Toolkit review (automated findings)
+7. Augment code review (automated findings)
+8. Developer reviews findings interactively
+9. Fix or dismiss each finding
+
+**Deploy to Staging:**
+10. Merge PR to staging branch (squash)
+11. SSH to server: `ssh WILSCH-AI-SERVER`
+12. `cd ~/projects/billable/{project}/ && git pull && make staging`
+
+**Testing Phase:**
+13. Run SMOKE-TEST.md checklist
+14. Human Witness (click through feature)
+15. If pass → add `review` label to issue
+
 ## Testing Artifacts
 
 ### AC (Automated)
