@@ -6,8 +6,11 @@ publish: true
 [[client-paul]]
 
 **Date:** 2026-01-18
+
 **Status:** Scope Complete, Questions Pending
+
 **Issue:** [#474](https://github.com/DaveX2001/deliverable-tracking/issues/474)
+
 **Related:** [Avatar Research](./avatar-talking-head-research.md) | [Original Scope](./avatar-integration-scope.md)
 
 ---
@@ -49,6 +52,7 @@ Each phase has a confidence gate. Work stops if a phase fails.
 - Path: `{transcript_dir}/audio/audio_narrative_transcript.wav`
 
 **Models to test:**
+
 | Model | Quality | VRAM | Notes |
 |-------|---------|------|-------|
 | HunyuanVideo-Avatar (via Wan2GP) | 85-90% | 10GB | Best quality, low VRAM mode |
@@ -110,6 +114,7 @@ Scene Extraction (1) ──┬──→ Image Gen (2) → Video Segments (4) ─
 - FFmpeg composites at the end
 
 **Current pipeline (from codebase):**
+
 | Phase | What | Where |
 |-------|------|-------|
 | 1 | Scene Extraction | Local |
@@ -132,18 +137,6 @@ Scene Extraction (1) ──┬──→ Image Gen (2) → Video Segments (4) ─
 | 4 | Avatar size: What % of frame? | Phase 3 (overlay dimensions) |
 | 5 | Avatar style: Head only or half-body? | Phase 1 (model selection) |
 | 6 | Acceptable processing time for 10-min video? | Phase 1 (speed gate criteria) |
-
----
-
-## Infrastructure
-
-| GPU | VRAM | Modal Price | HunyuanVideo? |
-|-----|------|-------------|---------------|
-| T4 | 16GB | ~$0.20/hr | Yes (10GB mode) |
-| A10G | 24GB | ~$0.60/hr | Yes, comfortable |
-| A100 40GB | 40GB | ~$2.50/hr | Yes |
-
-**Development costs:** ~$200 Modal credits for spike + testing.
 
 ---
 

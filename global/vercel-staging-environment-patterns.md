@@ -65,17 +65,49 @@ Separate Vercel projects for production and staging with independent configurati
 ## Environment Variables
 
 ```bash
-# Add variable to specific environment
+# Add variable to specific environment (interactive prompt for value)
 vercel env add VITE_API_URL preview
 
-# Add variable scoped to specific branch
-vercel env add VITE_API_URL preview --git-branch staging
+# Add variable scoped to specific branch (pipe value to avoid prompt)
+echo "https://staging-api.example.com" | vercel env add VITE_API_URL preview staging
+
+# List all env vars
+vercel env ls
 
 # Pull variables locally
 vercel env pull .env.local
 ```
 
-**Important:** Changes only apply to new deployments. Redeploy after changing variables.
+**CLI Syntax:** `vercel env add <NAME> <environment> [branch]`
+- Environment: `production`, `preview`, or `development`
+- Branch: Optional, scopes to specific Git branch
+
+**⚠️ Use `printf` not `echo`:** When piping values, `echo` adds a trailing newline which breaks string comparisons:
+```bash
+# ❌ BAD - adds newline, value becomes "true\n"
+echo "true" | vercel env add MY_VAR preview staging
+
+# ✅ GOOD - no trailing newline, value is "true"
+printf "true" | vercel env add MY_VAR preview staging
+```
+
+**Important:** Changes only apply to new deployments. Trigger redeploy:
+```bash
+# Push empty commit to trigger redeploy
+git commit --allow-empty -m "chore: trigger redeploy" && git push
+```
+
+## Stable Branch URLs (No Custom Domain Needed)
+
+Vercel auto-generates **stable URLs** for each branch:
+
+```
+{project}-git-{branch}-{team}.vercel.app
+```
+
+Example: `v2-frontend-faceless-git-staging-mariuswilschs-projects.vercel.app`
+
+This URL is stable - every push to that branch deploys to the same URL. No DNS configuration needed.
 
 ## Custom Domain Assignment
 
@@ -110,13 +142,47 @@ vercel --prod
 vercel deploy --target=staging
 ```
 
+## Key Dashboard Settings
+
+### Auto-assign Custom Production Domains
+
+**Location:** Settings → Environments → Production
+
+Controls whether production domains auto-update on push to production branch.
+
+| Setting | Behavior |
+|---------|----------|
+| **Enabled** (default) | Push to prod branch → auto-assigns custom domains |
+| **Disabled** | Push to prod branch → deploys but domains unchanged, manual promotion required |
+
+**Use case:** Disable for controlled releases where you manually promote deployments.
+
+### Deployment Protection
+
+**Location:** Settings → Deployment Protection
+
+| Setting | Effect |
+|---------|--------|
+| **Vercel Authentication** | Preview deployments require Vercel login |
+| **Standard Protection** | Protects all except production custom domains |
+
+To make staging publicly accessible: Toggle OFF "Vercel Authentication".
+
+### Production Branch
+
+**Location:** Settings → Environments → Production → Branch Tracking
+
+Change which branch triggers production deployments. Default is `main`.
+
+**Note:** No CLI command available - dashboard only.
+
 ## Best Practices
 
 1. **Branch Naming**: Use consistent names (`staging`, `develop`)
 2. **Environment Variables**: Scope to correct environment + branch
 3. **DNS**: Use CNAME (Vercel can update IPs without DNS changes)
 4. **Redeploy**: Always redeploy after changing env vars
-5. **Password Protection**: Use Vercel deployment protection for staging (Dashboard > Deployment Protection)
+5. **Deployment Protection**: Disable Vercel Authentication for public staging access
 
 ## Workflow Example
 
