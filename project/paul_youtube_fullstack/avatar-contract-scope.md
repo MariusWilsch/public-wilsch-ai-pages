@@ -19,6 +19,24 @@ YouTube demonetized Paul's fictional content channels (~€30k loss). Avatar ove
 
 ---
 
+## Licensing Constraint
+
+**HunyuanVideo-Avatar is excluded.** The Tencent Community License explicitly states: *"THIS LICENSE AGREEMENT DOES NOT APPLY IN THE EUROPEAN UNION, UNITED KINGDOM AND SOUTH KOREA."* Paul operates from Germany (EU) → not legally usable.
+
+**This is unfortunate because HunyuanVideo-Avatar would be preferred:**
+- Accepts portraits at arbitrary scales/resolutions (no preprocessing needed)
+- Supports emotion control via reference image
+- Supports multi-character dialogue
+- Lower VRAM (10GB via Wan2GP)
+
+**EchoMimicV2 (Apache 2.0) is the only viable option:**
+- Requires portrait pose-alignment preprocessing (additional scope)
+- Half-body only (no head-only option)
+- No emotion control
+- 16GB VRAM, but 9x acceleration available (~50s for 120 frames on A100)
+
+---
+
 ## Phase Structure
 
 ```
@@ -32,15 +50,16 @@ Each phase has a confidence gate. Work stops if a phase fails.
 
 ## Phase 1: Speed + Feasibility Spike
 
-**Goal:** Prove avatar generation is fast enough AND technically viable for production.
+**Goal:** Prove EchoMimicV2 avatar generation is fast enough AND technically viable for production.
 
 | Atom | What | Output |
 |------|------|--------|
-| 1.1 | Deploy HunyuanVideo-Avatar + EchoMimicV2 on Modal | Two working endpoints |
-| 1.2 | Create input interface (TTS audio + portrait) | API accepting 24kHz WAV + image |
-| 1.3 | Run benchmark using **real project audio** (10-min + 1-hour samples) | Timing data for both models |
-| 1.4 | Test BG removal (Matanyone) | Transparent avatar video quality |
-| 1.5 | Evaluate vs threshold (Paul defines) | Model recommendation + Go/No-Go |
+| 1.1 | Deploy EchoMimicV2 on Modal | Working endpoint |
+| 1.2 | Build portrait preprocessing pipeline | Pose-alignment automation |
+| 1.3 | Create input interface (TTS audio + portrait) | API accepting 24kHz WAV + image |
+| 1.4 | Run benchmark using **real project audio** (10-min + 1-hour samples) | Timing data |
+| 1.5 | Test BG removal (Matanyone) | Transparent avatar video quality |
+| 1.6 | Evaluate vs threshold (Paul defines) | Go/No-Go |
 
 **TTS Output Format (from codebase):**
 - Sample rate: 24,000 Hz
@@ -50,16 +69,16 @@ Each phase has a confidence gate. Work stops if a phase fails.
 
 **Test inputs:** Use actual TTS audio from existing projects (not synthetic test audio) to validate audio compatibility with lip-sync.
 
-**Models to test:**
+**Model:**
 
 | Model | Quality | VRAM | Notes |
 |-------|---------|------|-------|
-| HunyuanVideo-Avatar (via Wan2GP) | 85-90% | 10GB | Best quality, low VRAM mode |
-| EchoMimicV2 | 80-85% | 16GB | Apache 2.0, 9x speedup optimization |
+| EchoMimicV2 | 80-85% | 16GB | Apache 2.0, 9x speedup (~50s/120 frames on A100) |
 
 **Gate criteria:**
 - Processing time < Paul's acceptable threshold (for both 10-min and 1-hour videos)
 - BG removal produces clean transparent output
+- Portrait preprocessing works reliably
 
 ---
 
@@ -136,9 +155,10 @@ Scene Extraction (1) ──┬──→ Image Gen (2) → Video Segments (4) ─
 | 2 | *(If per-channel)* How should portraits be sourced? You provide / Library / AI-generated? | Portrait workflow |
 | 3 | Avatar position: Bottom-right? Side panel? Other? | Phase 3 (FFmpeg overlay config) |
 | 4 | Avatar size: What % of frame? | Phase 3 (overlay dimensions) |
-| 5 | Avatar style: Head only or half-body? | Phase 1 (model selection) |
-| 6 | Acceptable turnaround time for a 10-minute video? | Phase 1 (speed gate) |
-| 7 | Acceptable turnaround time for a 1-hour video? | Phase 1 (speed gate) |
+| 5 | Acceptable turnaround time for a 10-minute video? | Phase 1 (speed gate) |
+| 6 | Acceptable turnaround time for a 1-hour video? | Phase 1 (speed gate) |
+
+**Note:** Style question (head vs half-body) removed. EchoMimicV2 is half-body only.
 
 ---
 
