@@ -86,15 +86,18 @@ The spec cannot anticipate:
 | Layer | Tester | What They Do | Where |
 |-------|--------|--------------|-------|
 | **ACs** | AI | Verify code matches spec (Given-When-Then) | Feature branch |
-| **Smoke Test** | Developer | Run fixed checklist, check core flow works | Ephemeral or Staging |
-| **Feature UAT** | Developer | Click through as user, catch unspecified weirdness | Ephemeral or Staging |
-| **Business UAT** | Non-technical | Give feedback: "Is this what I wanted?" | Staging |
+| **Smoke Test** | Developer | Run fixed checklist, check core flow works | Ephemeral → then Staging |
+| **Feature UAT** | Developer | Click through as user, catch unspecified weirdness | Ephemeral → then Staging |
+| **Business UAT** | Non-technical | Give feedback: "Is this what I wanted?" | Staging only |
 
-**Smoke test location:**
-- **Ephemeral:** Run after rebase-first spin-up, before merge to staging
-- **Staging:** Run after merge, before production
+**Two-stage testing (Ephemeral → Staging):**
 
-Both are valid - ephemeral catches issues earlier, staging catches integration issues with other merged features.
+| Stage | Purpose | Bug expectation |
+|-------|---------|-----------------|
+| **Ephemeral** | Discovery - find bugs, iron them out | High |
+| **Staging** | Confirmation - final check before production | Low |
+
+Ephemeral is where bugs get caught and fixed. By the time code reaches staging, it should be clean - ephemeral already validated it. Staging smoke/UAT is confirmation, not discovery.
 
 ## Workflow
 
