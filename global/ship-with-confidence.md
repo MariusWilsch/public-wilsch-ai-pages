@@ -183,6 +183,35 @@ sequenceDiagram
 14. Human Witness (click through feature)
 15. If pass → add `review` label to issue
 
+### Example: Mohamed Workflow for #461
+
+**Phase 1: AC Verification**
+1. Create worktree: `git gtr new issue-461` (uses existing branch)
+2. Run `/ac-verify` against tracking.md
+3. If FAIL → fix in worktree → commit → repeat
+4. If PASS → proceed to deploy
+
+**Phase 2: Deploy to Staging**
+5. Merge PR to staging branch (squash)
+6. SSH to WILSCH-AI-SERVER
+7. `cd ~/projects/billable/PAUL-FACELESS-YT__paul_template_generation/ && git pull && make staging`
+
+**Phase 3: Smoke Test**
+8. Run SMOKE-TEST.md checklist
+9. Verify prompt_config feature is working
+10. If FAIL → fix → redeploy
+
+**Phase 4: Human Witness**
+11. Click through `/admin/prompt-configs` page
+12. Create/edit/delete prompt configs
+13. Verify dropdown in AdminTemplatesPage has data
+14. If issues → comment on #461
+
+**Phase 5: Handoff to Marius**
+15. Add `review` label to #461
+16. Marius does business witness
+17. Marius approves → deploy to production
+
 ## Testing Artifacts
 
 ### AC (Automated)
