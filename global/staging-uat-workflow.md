@@ -258,23 +258,6 @@ FAIL → investigate before proceeding
 
 **Handoff signal:** Add `review` label when smoke test passes → Marius notified for business UAT.
 
-**Workflow:**
-```
-VERIFY_COMPLETE
-    ↓
-Developer (Ralph/Mohamed):
-    - PR toolkit review + fixes
-    - Merge to staging (one feature at a time)
-    - Run smoke test
-    - Add `review` label when passes
-    ↓
-Marius:
-    - Business UAT (if critical path)
-    - Merge to main approval
-```
-
-**Concurrency:** Sequential staging (one feature at a time) appropriate for team size. Upgrade to ephemeral environments when deployment queue blocks work >1x/week.
-
 ## Staging Environment Requirements
 
 Staging must be:
