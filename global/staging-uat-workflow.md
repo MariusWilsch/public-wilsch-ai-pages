@@ -101,44 +101,70 @@ Ephemeral is where bugs get caught and fixed. By the time code reaches staging, 
 
 ## Workflow
 
+### Overview: Parallel Dev → Sequential Testing
+
+Development is parallel (AI can run multiple worktrees). Testing is sequential (human attention is the bottleneck - by design).
+
 ```
-┌───────────────────────────────────────────────────────────────────┐
-│  ISSUE CREATION (Product Owner)                                    │
-│  ├── DoD (what to build)                                           │
-│  ├── ACs (automated verification criteria)                         │
-│  └── UAT Hints (what to pay attention to - business level)         │
-└──────────────────────────────┬────────────────────────────────────┘
-                               ▼
-┌───────────────────────────────────────────────────────────────────┐
-│  IMPLEMENTATION (Developer)                                        │
-│  ├── Code in worktree/feature branch                               │
-│  ├── AC Verification (AI runs Given/When/Then)                     │
-│  └── Merge to staging branch                                       │
-└──────────────────────────────┬────────────────────────────────────┘
-                               ▼
-┌───────────────────────────────────────────────────────────────────┐
-│  STAGING                                                           │
-│                                                                    │
-│  1. SMOKE TEST (Developer, 2-3 min)                                │
-│     - Run fixed checklist for core flow                            │
-│     - FAIL → fix before proceeding                                 │
-│                                                                    │
-│  2. FEATURE UAT (Developer, 5-15 min)                              │
-│     - Test specific new feature                                    │
-│     - Exploratory: anything feel wrong?                            │
-│     - FAIL → fix in worktree, re-merge                            │
-│                                                                    │
-│  3. BUSINESS UAT (Product Owner)                                   │
-│     - "Is this what I wanted?"                                     │
-│     - REJECT → back to worktree                                    │
-│     - APPROVE → ready for production                               │
-└──────────────────────────────┬────────────────────────────────────┘
-                               ▼
-┌───────────────────────────────────────────────────────────────────┐
-│  PRODUCTION                                                        │
-│  Merge staging → main → deploy                                     │
-└───────────────────────────────────────────────────────────────────┘
+┌─────────────────────┐     ┌────────────────────┐     ┌─────────────┐
+│   DEV (parallel)    │     │   TESTING QUEUE    │     │   MARIUS    │
+│   AI + worktrees    │     │   (sequential)     │     │   (async)   │
+│                     │     │                    │     │             │
+│  Issue A ───────────┼────►│ [A: smoke + UAT]   │     │             │
+│  Issue B ───────────┼────►│ [B: waiting]       │     │             │
+│  Issue C ───────────┼────►│ [C: waiting]       │     │             │
+│                     │     │                    │     │             │
+│                     │     │  A done ───────────┼────►│ A: review   │
+│                     │     │  B: smoke + UAT    │     │             │
+│                     │     │  B done ───────────┼────►│ B: review   │
+└─────────────────────┘     └────────────────────┘     └─────────────┘
 ```
+
+### Sequence: Handoffs Over Time
+
+```mermaid
+sequenceDiagram
+    participant Dev as Mohamed/Ralph
+    participant Stage as Staging
+    participant Marius
+
+    Dev->>Stage: impl A (AC verified)
+    Dev->>Stage: impl B (queued)
+    Dev->>Stage: impl C (queued)
+
+    Note over Stage: A: merge to staging
+    Stage->>Stage: A: smoke test
+    Stage->>Stage: A: feature UAT
+    Stage->>Marius: A: add `review` label
+    Marius->>Marius: A: business UAT
+    Marius->>Stage: A: approve → merge to prod
+
+    Note over Stage: B: merge to staging
+    Stage->>Stage: B: smoke test
+    Stage->>Stage: B: feature UAT
+    Stage->>Marius: B: add `review` label
+```
+
+### What Can Be Parallel
+
+| Activity | Who | Parallel? | Why |
+|----------|-----|-----------|-----|
+| Implementation | AI (Ralph) | ✅ Yes | Multiple worktrees |
+| AC Verification | AI | ✅ Yes | Can run multiple |
+| Smoke Test | Mohamed | ❌ Sequential | Human attention |
+| Feature UAT | Mohamed | ❌ Sequential | Human witness |
+| Business UAT | Marius | ❌ Sequential | Async from Mohamed |
+
+**Key insight:** Testing grabs human attention (backpressure). That's the point - it forces the developer to actually witness their work.
+
+### Future: Ephemeral Environments
+
+When the testing queue becomes a bottleneck (deployment blocked >1x/week), upgrade to ephemeral environments:
+
+- Each feature gets its own staging-like environment
+- Testing can happen in parallel
+- See: [Scaling: Ephemeral Environments](#scaling-ephemeral-environments)
+- Implementation: [#527](https://github.com/DaveX2001/deliverable-tracking/issues/527)
 
 ## Testing Artifacts
 
