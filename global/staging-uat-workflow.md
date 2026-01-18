@@ -243,11 +243,7 @@ FAIL → investigate before proceeding
 
 ## Rollback Strategy
 
-| Situation | Action |
-|-----------|--------|
-| Staging breaks (quick fix <30 min) | Fix on staging, redeploy |
-| Staging breaks (complex) | Revert PR, fix in worktree, re-merge |
-| Production breaks | Revert to previous version, fix in staging first |
+*TBD - to be defined in future session (#308)*
 
 ## Role Responsibilities
 
