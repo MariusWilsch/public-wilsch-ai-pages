@@ -5,10 +5,6 @@ publish: true
 # Avatar Integration Contract Scope
 [[client-paul]]
 
-**Date:** 2026-01-18 (refined)
-
-**Status:** Scope Refined, Questions Ready for Paul
-
 **Issue:** [#474](https://github.com/DaveX2001/deliverable-tracking/issues/474)
 
 **Related:** [Avatar Research](./avatar-talking-head-research.md) | [Original Scope](./avatar-integration-scope.md)
