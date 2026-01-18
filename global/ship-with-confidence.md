@@ -71,26 +71,33 @@ The spec cannot anticipate:
 ## Testing Pyramid
 
 ```
-         /\
-        /  \  Business UAT - Non-technical feedback: "Is this good?"
-       /----\
-      / Feat \  Feature UAT - Human witness: click through, validate
-     /  UAT   \
-    /----------\
-   / Smoke Test \ - Regression: "Does core flow still work?"
-  /--------------\
- /  ACs (AI)      \ - Spec verification: "Does it match what we specified?"
-/------------------\
+              /\
+             /  \  Human Witness - Freeform: catches unspecified weirdness
+            /----\
+           /      \  (Developer: technical, Product Owner: business perspective)
+          /--------\
+         / Smoke    \ - Backpressure: "Does infrastructure work?" (automated)
+        /  Test      \
+       /--------------\
+      /  ACs (AI)      \ - Backpressure: "Does it match spec?" (automated)
+     /------------------\
 ```
 
-| Layer | Tester | What They Do | Catches | Misses |
-|-------|--------|--------------|---------|--------|
-| **ACs** | AI | Verify spec (GWT) | What's specified | Unspecified behavior |
-| **Smoke Test** | Developer | Fixed checklist | Regressions | Feature-specific |
-| **Feature UAT** | Developer | Click through | Unexpected issues | *TBD* |
-| **Business UAT** | Non-technical | Subjective judgment | "Not what I wanted" | *TBD* |
+| Layer | Type | Tester | What It Does | Catches |
+|-------|------|--------|--------------|---------|
+| **ACs** | Backpressure | AI | Verify spec (GWT) | What's specified |
+| **Smoke Test** | Backpressure | Script | Infrastructure regression | "Did we break services?" |
+| **Human Witness** | NOT backpressure | Human | Freeform discovery | Unspecified weirdness |
 
-Testing happens on staging. Developer merges, tests, notifies for business UAT. Sequential by design - human attention is the bottleneck (backpressure).
+**Key distinction:** ACs and Smoke Test are **backpressure** - automated feedback that lets agents self-correct. Human Witness is fundamentally different - it catches what automation CAN'T anticipate.
+
+**Role perspectives in Human Witness:**
+- **Developer (Mohamed):** Technical validation - "Does this work as expected?"
+- **Product Owner (Marius):** Business validation - "Is this what I wanted?"
+
+Same freeform process, different eyes. Issues found → comment on GitHub issue → fix in new session.
+
+Testing happens on staging. Sequential by design - human attention is the bottleneck.
 
 **Future upgrade:** When testing queue becomes a bottleneck, add ephemeral environments for parallel testing. See [Scaling: Ephemeral Environments](#scaling-ephemeral-environments).
 
@@ -129,14 +136,14 @@ sequenceDiagram
 
     Note over Stage: A: merge to staging
     Stage->>Stage: A: smoke test
-    Stage->>Stage: A: feature UAT
+    Stage->>Stage: A: human witness (technical)
     Stage->>Marius: A: add `review` label
-    Marius->>Marius: A: business UAT
+    Marius->>Marius: A: human witness (business)
     Marius->>Stage: A: approve → merge to prod
 
     Note over Stage: B: merge to staging
     Stage->>Stage: B: smoke test
-    Stage->>Stage: B: feature UAT
+    Stage->>Stage: B: human witness (technical)
     Stage->>Marius: B: add `review` label
 ```
 
@@ -147,8 +154,7 @@ sequenceDiagram
 | Implementation | AI (Ralph) | ✅ Yes | Multiple worktrees |
 | AC Verification | AI | ✅ Yes | Can run multiple |
 | Smoke Test | Mohamed | ❌ Sequential | Human attention |
-| Feature UAT | Mohamed | ❌ Sequential | Human witness |
-| Business UAT | Marius | ❌ Sequential | Async from Mohamed |
+| Human Witness | Mohamed/Marius | ❌ Sequential | Human attention |
 
 **Key insight:** Testing grabs human attention (backpressure). That's the point - it forces the developer to actually witness their work.
 
@@ -206,31 +212,31 @@ Frequency: Every deploy
 [ ] [No obvious errors]
 
 ### Verdict:
-PASS → continue to Feature UAT
+PASS → continue to Human Witness
 FAIL → investigate before proceeding
 ```
 
 **Evolution:** Update when critical path changes. Keep <5 minutes.
 
-### Feature UAT (Variable per Feature)
+### Human Witness (Freeform per Feature)
 
-**Format:** TBD - human clicks through, catches unspecified weirdness
+**Format:** Freeform discovery - click through, notice things, comment issues
 
-**Tester:** Developer
+**Tester:** Developer (technical) or Product Owner (business)
 
-**Purpose:** Verify new feature works as expected
+**Purpose:** Catch unspecified weirdness that automation can't anticipate
 
-*Format to be defined in future session (#308 element #3)*
+**Process:**
+1. Click through the feature on staging
+2. If something feels wrong → comment on GitHub issue
+3. Fix in new implementation session
+4. If nothing wrong → proceed to add `review` label
 
-### Business UAT (Judgment)
+**Role perspectives:**
+- **Developer witness:** "Does this work as expected?" (technical validation)
+- **Product Owner witness:** "Is this what I wanted?" (business validation)
 
-**Format:** TBD - non-technical feedback
-
-**Tester:** Product Owner
-
-**Purpose:** Business acceptance - "Is this what I wanted?"
-
-*Format to be defined in future session (#308 element #3)*
+**Artifact:** The GitHub issue comment trail IS the artifact. No separate document needed.
 
 ## Rollback Strategy
 
@@ -240,8 +246,8 @@ FAIL → investigate before proceeding
 
 | Role | Creates | Tests | Approves |
 |------|---------|-------|----------|
-| **Product Owner (Marius)** | Issues, ACs, UAT hints | Business UAT | Production merge |
-| **Developer (Mohamed)** | Code, AC verification | Smoke test, Feature UAT | Staging merge |
+| **Product Owner (Marius)** | Issues, ACs, Witness hints | Human Witness (business) | Production merge |
+| **Developer (Mohamed)** | Code, AC verification | Smoke test, Human Witness (technical) | Staging merge |
 | **AI (Ralph)** | - | AC verification | - |
 
 ### Handoff Model
@@ -256,7 +262,7 @@ FAIL → investigate before proceeding
 | **Ralph** | ❌ Requires human (Mohamed/Marius) | ❌ Requires Marius approval |
 | **Marius** | ✅ Full access | ✅ Final gatekeeper |
 
-**Handoff signal:** Add `review` label when smoke test passes → Marius notified for business UAT.
+**Handoff signal:** Add `review` label when Human Witness (technical) passes → Marius notified for Human Witness (business).
 
 ## Staging Environment Requirements
 
