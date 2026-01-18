@@ -242,7 +242,7 @@ And: Video uses the downloaded local file
 
 **Purpose:** Regression check - did we break the core flow?
 
-**Example:** [Paul Platform SMOKE-TEST.md](https://github.com/MariusWilsch/christmas-paul-package/blob/main/SMOKE-TEST.md)
+**Example:** [Paul Platform SMOKE-TEST.md](https://github.com/MariusWilsch/christmas-paul-package/blob/staging/SMOKE-TEST.md)
 
 ```markdown
 ## Smoke Test: [Project Name]
