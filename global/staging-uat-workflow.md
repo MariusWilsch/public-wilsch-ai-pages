@@ -214,54 +214,23 @@ FAIL → investigate before proceeding
 
 ### Feature UAT (Variable per Feature)
 
-**Format:** Checklist + Exploratory
+**Format:** TBD - human clicks through, catches unspecified weirdness
 
 **Tester:** Developer
 
-**Created:** At staging deploy (per-feature)
-
 **Purpose:** Verify new feature works as expected
 
-```markdown
-## Feature UAT: [Feature Name]
-Environment: Staging
-
-### Guided Checks (from issue UAT hints):
-[ ] [Specific thing to verify]
-[ ] [Edge case to try]
-
-### Exploratory:
-- Tried: [what you explored]
-- Noticed: [anything unexpected]
-
-### Verdict:
-PASS → notify Product Owner
-FAIL → fix in worktree, re-merge
-```
+*Format to be defined in future session (#308 element #3)*
 
 ### Business UAT (Judgment)
 
-**Format:** Minimal checklist + subjective judgment
+**Format:** TBD - non-technical feedback
 
 **Tester:** Product Owner
 
-**Created:** At staging deploy
+**Purpose:** Business acceptance - "Is this what I wanted?"
 
-**Purpose:** Business acceptance - "Would I ship this?"
-
-```markdown
-## Business UAT: [Feature Name]
-Environment: Staging
-
-### Quick Check:
-[ ] Watched actual output
-[ ] Business logic correct
-[ ] Would ship to client
-
-### Verdict:
-APPROVE → merge to production
-REJECT → [specific feedback]
-```
+*Format to be defined in future session (#308 element #3)*
 
 ## Key Distinctions
 
