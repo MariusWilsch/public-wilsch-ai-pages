@@ -72,23 +72,29 @@ The spec cannot anticipate:
 
 ```
          /\
-        /  \  Business UAT (Product Owner) - "Is this what I wanted?"
+        /  \  Business UAT - Non-technical feedback: "Is this good?"
        /----\
-      / Feat \  Feature UAT (Developer) - "Does it work?"
+      / Feat \  Feature UAT - Human witness: click through, validate
      /  UAT   \
     /----------\
-   / Smoke Test \ - Core flow regression check (every deploy)
+   / Smoke Test \ - Regression: "Does core flow still work?"
   /--------------\
- /  ACs (AI)      \ - Automated Given/When/Then verification
+ /  ACs (AI)      \ - Spec verification: "Does it match what we specified?"
 /------------------\
 ```
 
-| Layer | Tester | Question | When |
-|-------|--------|----------|------|
-| **ACs** | AI | "Does code behave as specified?" | Before merge to staging |
-| **Smoke Test** | Developer | "Does core flow still work?" | Every staging deploy |
-| **Feature UAT** | Developer | "Does new feature work?" | After staging deploy |
-| **Business UAT** | Product Owner | "Is this what I wanted?" | Before production |
+| Layer | Tester | What They Do | Where |
+|-------|--------|--------------|-------|
+| **ACs** | AI | Verify code matches spec (Given-When-Then) | Feature branch |
+| **Smoke Test** | Developer | Run fixed checklist, check core flow works | Ephemeral or Staging |
+| **Feature UAT** | Developer | Click through as user, catch unspecified weirdness | Ephemeral or Staging |
+| **Business UAT** | Non-technical | Give feedback: "Is this what I wanted?" | Staging |
+
+**Smoke test location:**
+- **Ephemeral:** Run after rebase-first spin-up, before merge to staging
+- **Staging:** Run after merge, before production
+
+Both are valid - ephemeral catches issues earlier, staging catches integration issues with other merged features.
 
 ## Workflow
 
