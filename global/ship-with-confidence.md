@@ -2,7 +2,7 @@
 publish: true
 ---
 
-# Staging + UAT Workflow
+# Ship with Confidence
 [[testing-methodology]]
 
 ## Overview
