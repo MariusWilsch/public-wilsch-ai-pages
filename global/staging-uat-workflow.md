@@ -56,10 +56,17 @@ AC verification is MORE comprehensive than "isolation testing":
 - Verifies end-to-end data flows
 - Runs against real backends (Supabase, APIs)
 
-What AC does NOT test:
-- Performance/load (single-user only)
-- Browser compatibility (Chrome only)
-- Unknown unknowns (human catches these)
+**What AC does NOT test:**
+
+AC tests what the spec says. Nothing more.
+
+The spec cannot anticipate:
+- Weird bugs that only appear when a real user clicks through
+- Edge cases nobody thought to specify
+- "It works but something feels off" moments
+- Interactions between features that weren't in scope
+
+**Learned the hard way:** It's tempting to think comprehensive ACs test everything. They don't. They test exactly what you specified - and specs always have blind spots. Human witness catches the unspecified weirdness.
 
 ## Testing Pyramid
 
