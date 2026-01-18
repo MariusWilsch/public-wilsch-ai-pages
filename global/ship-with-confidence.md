@@ -233,7 +233,33 @@ FAIL → investigate before proceeding
 
 ## Rollback Strategy
 
-*TBD - to be defined in future session (#308)*
+**Premise:** Worktree workflow ensures each feature = one PR = one squash commit. This makes rollback atomic by design.
+
+**If production breaks after deploy:**
+
+```bash
+# 1. Identify the problematic commit
+git log --oneline -10  # Find the PR squash commit that caused the issue
+
+# 2. Revert that specific commit
+git revert {commit-hash}
+
+# 3. Push to staging branch
+git push
+
+# 4. On server: pull and redeploy
+ssh WILSCH-AI-SERVER
+cd ~/projects/billable/{project}/
+git pull && make deploy
+```
+
+**Why this works:**
+- Each PR = one squash commit = one revert target
+- `git revert` creates a NEW commit (doesn't rewrite history)
+- Works even if other commits came after the bad one
+- The revert itself can be reverted once proper fix is ready
+
+**After rollback:** Create new issue to properly fix the bug, go through normal workflow.
 
 ## Role Responsibilities
 
