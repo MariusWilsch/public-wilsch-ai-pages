@@ -158,15 +158,6 @@ sequenceDiagram
 
 **Key insight:** Testing grabs human attention (backpressure). That's the point - it forces the developer to actually witness their work.
 
-### Future: Ephemeral Environments
-
-When the testing queue becomes a bottleneck (deployment blocked >1x/week), upgrade to ephemeral environments:
-
-- Each feature gets its own staging-like environment
-- Testing can happen in parallel
-- See: [Scaling: Ephemeral Environments](#scaling-ephemeral-environments)
-- Implementation: [#527](https://github.com/DaveX2001/deliverable-tracking/issues/527)
-
 ## Testing Artifacts
 
 ### AC (Automated)
