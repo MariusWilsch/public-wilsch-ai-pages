@@ -21,7 +21,7 @@ YouTube demonetized Paul's fictional content channels (~€30k loss). Avatar ove
 
 ## Licensing Constraint
 
-**HunyuanVideo-Avatar is excluded.** The Tencent Community License explicitly states: *"THIS LICENSE AGREEMENT DOES NOT APPLY IN THE EUROPEAN UNION, UNITED KINGDOM AND SOUTH KOREA."* Paul operates from Germany (EU) → not legally usable.
+**HunyuanVideo-Avatar is excluded.** The [Tencent Community License](https://github.com/Tencent-Hunyuan/HunyuanVideo-Avatar/blob/main/LICENSE) explicitly states: *"THIS LICENSE AGREEMENT DOES NOT APPLY IN THE EUROPEAN UNION, UNITED KINGDOM AND SOUTH KOREA."* Paul operates from Germany (EU) → not legally usable.
 
 **This is unfortunate because HunyuanVideo-Avatar would be preferred:**
 - Accepts portraits at arbitrary scales/resolutions (no preprocessing needed)
