@@ -136,18 +136,9 @@ Scene Extraction (1) ──┬──→ Image Gen (2) → Video Segments (4) ─
 | 2 | *(If per-channel)* How should portraits be sourced? You provide / Library / AI-generated? | Portrait workflow |
 | 3 | Avatar position: Bottom-right? Side panel? Other? | Phase 3 (FFmpeg overlay config) |
 | 4 | Avatar size: What % of frame? | Phase 3 (overlay dimensions) |
-| 5 | Avatar style: Head only or half-body? | Phase 1 (model selection) - **DIRECT impact** |
+| 5 | Avatar style: Head only or half-body? | Phase 1 (model selection) |
 | 6 | Acceptable turnaround time for a 10-minute video? | Phase 1 (speed gate) |
 | 7 | Acceptable turnaround time for a 1-hour video? | Phase 1 (speed gate) |
-
-**Model Selection Dependencies:**
-
-| Paul's answer | Impact |
-|---------------|--------|
-| Half-body style | Narrows to EchoMimicV2 or HunyuanVideo-Avatar |
-| Head-only style | More model options available |
-| Fast turnaround priority | Favors EchoMimicV2 (9x speedup optimization) |
-| Quality over speed | Favors HunyuanVideo-Avatar (85-90% quality) |
 
 ---
 
