@@ -166,8 +166,11 @@ When the testing queue becomes a bottleneck (deployment blocked >1x/week), upgra
 ### AC (Automated)
 
 **Format:** Given/When/Then
+
 **Tester:** AI
+
 **Created:** Issue creation or just before implementation
+
 **Purpose:** Verify code behaves as specified
 
 ```gherkin
@@ -181,8 +184,11 @@ And: Video uses the downloaded local file
 ### Smoke Test (Fixed per Project)
 
 **Format:** Checklist
+
 **Tester:** Developer
+
 **Created:** When core flow exists (project-level, not per-feature)
+
 **Purpose:** Regression check - did we break the core flow?
 
 ```markdown
@@ -209,8 +215,11 @@ FAIL → investigate before proceeding
 ### Feature UAT (Variable per Feature)
 
 **Format:** Checklist + Exploratory
+
 **Tester:** Developer
+
 **Created:** At staging deploy (per-feature)
+
 **Purpose:** Verify new feature works as expected
 
 ```markdown
@@ -233,8 +242,11 @@ FAIL → fix in worktree, re-merge
 ### Business UAT (Judgment)
 
 **Format:** Minimal checklist + subjective judgment
+
 **Tester:** Product Owner
+
 **Created:** At staging deploy
+
 **Purpose:** Business acceptance - "Would I ship this?"
 
 ```markdown
