@@ -5,9 +5,9 @@ publish: true
 # Avatar Integration Contract Scope
 [[client-paul]]
 
-**Date:** 2026-01-18
+**Date:** 2026-01-18 (refined)
 
-**Status:** Scope Complete, Questions Pending
+**Status:** Scope Refined, Questions Ready for Paul
 
 **Issue:** [#474](https://github.com/DaveX2001/deliverable-tracking/issues/474)
 
@@ -34,22 +34,25 @@ Each phase has a confidence gate. Work stops if a phase fails.
 
 ---
 
-## Phase 1: Speed Spike
+## Phase 1: Speed + Feasibility Spike
 
-**Goal:** Prove avatar generation is fast enough for production.
+**Goal:** Prove avatar generation is fast enough AND technically viable for production.
 
 | Atom | What | Output |
 |------|------|--------|
 | 1.1 | Deploy HunyuanVideo-Avatar + EchoMimicV2 on Modal | Two working endpoints |
 | 1.2 | Create input interface (TTS audio + portrait) | API accepting 24kHz WAV + image |
-| 1.3 | Run benchmark (short clip + full 10-min) | Timing data for both models |
-| 1.4 | Evaluate vs threshold (Paul defines) | Model recommendation + Go/No-Go |
+| 1.3 | Run benchmark using **real project audio** (10-min + 1-hour samples) | Timing data for both models |
+| 1.4 | Test BG removal (Matanyone) | Transparent avatar video quality |
+| 1.5 | Evaluate vs threshold (Paul defines) | Model recommendation + Go/No-Go |
 
 **TTS Output Format (from codebase):**
 - Sample rate: 24,000 Hz
 - Channels: Mono
 - Bit depth: 32-bit Float
 - Path: `{transcript_dir}/audio/audio_narrative_transcript.wav`
+
+**Test inputs:** Use actual TTS audio from existing projects (not synthetic test audio) to validate audio compatibility with lip-sync.
 
 **Models to test:**
 
@@ -58,7 +61,9 @@ Each phase has a confidence gate. Work stops if a phase fails.
 | HunyuanVideo-Avatar (via Wan2GP) | 85-90% | 10GB | Best quality, low VRAM mode |
 | EchoMimicV2 | 80-85% | 16GB | Apache 2.0, 9x speedup optimization |
 
-**Gate criteria:** Processing time < Paul's acceptable threshold for 10-min video.
+**Gate criteria:**
+- Processing time < Paul's acceptable threshold (for both 10-min and 1-hour videos)
+- BG removal produces clean transparent output
 
 ---
 
@@ -68,16 +73,16 @@ Each phase has a confidence gate. Work stops if a phase fails.
 
 | Atom | What | Output |
 |------|------|--------|
-| 2.1 | BG removal test | Transparent avatar video |
-| 2.2 | Portrait spec discovery | Optimal image format/size |
-| 2.3 | Quality review | Send snippets → Paul approves |
-| 2.4 | Integration architecture design | How avatar fits into pipeline |
+| 2.1 | Portrait spec discovery | Optimal image format/size |
+| 2.2 | Quality review | Send snippets → Paul approves |
+| 2.3 | Integration architecture design | How avatar fits into pipeline |
 
-**BG Removal (conditional on Phase 1 winner):**
-- If HunyuanVideo-Avatar wins → Use Wan2GP's built-in Matanyone
-- If EchoMimicV2 wins → Integrate standalone Matanyone
+**Quality Approval Criteria (milestone-based):**
+- Lip-sync is acceptable
+- No visual artifacts
+- Paul signs off
 
-**Phase 2 deliverable:** "It works" + "Here's how we'll integrate it"
+**Phase 2 deliverable:** "Quality approved" + "Here's how we'll integrate it"
 
 ---
 
@@ -131,12 +136,22 @@ Scene Extraction (1) ──┬──→ Image Gen (2) → Video Segments (4) ─
 
 | # | Question | Affects |
 |---|----------|---------|
-| 1 | Avatar persona: Single or per-channel? | Scope (one portrait vs multiple) |
-| 2 | Reference image source: Stock/AI/Custom? | Who provides portrait |
-| 3 | Avatar position: Bottom-right? Side panel? | Phase 3 (FFmpeg overlay config) |
+| 1 | Single avatar for all channels, or different persona per channel? | Scope (one portrait vs multiple) |
+| 2 | *(If per-channel)* How should portraits be sourced? You provide / Library / AI-generated? | Portrait workflow |
+| 3 | Avatar position: Bottom-right? Side panel? Other? | Phase 3 (FFmpeg overlay config) |
 | 4 | Avatar size: What % of frame? | Phase 3 (overlay dimensions) |
-| 5 | Avatar style: Head only or half-body? | Phase 1 (model selection) |
-| 6 | Acceptable processing time for 10-min video? | Phase 1 (speed gate criteria) |
+| 5 | Avatar style: Head only or half-body? | Phase 1 (model selection) - **DIRECT impact** |
+| 6 | Acceptable turnaround time for a 10-minute video? | Phase 1 (speed gate) |
+| 7 | Acceptable turnaround time for a 1-hour video? | Phase 1 (speed gate) |
+
+**Model Selection Dependencies:**
+
+| Paul's answer | Impact |
+|---------------|--------|
+| Half-body style | Narrows to EchoMimicV2 or HunyuanVideo-Avatar |
+| Head-only style | More model options available |
+| Fast turnaround priority | Favors EchoMimicV2 (9x speedup optimization) |
+| Quality over speed | Favors HunyuanVideo-Avatar (85-90% quality) |
 
 ---
 
@@ -146,8 +161,8 @@ Scene Extraction (1) ──┬──→ Image Gen (2) → Video Segments (4) ─
 
 | Phase | Nature | Gate |
 |-------|--------|------|
-| 1: Speed | Discovery | Generation time acceptable? |
-| 2: Quality | Discovery + Design | Paul approves snippets? |
+| 1: Speed + Feasibility | Discovery | Turnaround acceptable? BG removal clean? |
+| 2: Quality | Discovery + Design | Lip-sync OK, no artifacts, Paul signs off |
 | 3: Integration | Implementation | Avatar working in pipeline |
 
 **Key insight:** Phases 1-2 are "paid discovery" with uncertain outcomes. Phase 3 is predictable engineering once discovery passes.
@@ -156,7 +171,7 @@ Scene Extraction (1) ──┬──→ Image Gen (2) → Video Segments (4) ─
 
 ## Next Steps
 
-1. Send questions to Paul (6 questions above)
+1. Send questions to Paul (7 questions above)
 2. Define pricing per phase
 3. Create formal contract/proposal
 4. Begin Phase 1 after contract signed

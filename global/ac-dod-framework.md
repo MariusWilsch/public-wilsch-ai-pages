@@ -3,8 +3,8 @@
 
 ---
 publish: true
-date: 2026-01-01
-source: Rubber-duck session analyzing #377 and #89
+date: 2026-01-18
+source: Rubber-duck session analyzing #377, #89, #314, #307
 ---
 
 ## 1. Core Concepts
@@ -150,6 +150,18 @@ And I should see a welcome message
 
 **Sources:** [Cucumber](https://cucumber.io/docs/bdd/better-gherkin/), [Martin Fowler](https://martinfowler.com/bliki/GivenWhenThen.html)
 
+### Anti-Patterns to Avoid
+
+| Anti-Pattern | Why It's Wrong | Fix |
+|--------------|----------------|-----|
+| Testing database state | Not user-observable | Test user-facing outcome |
+| UI element IDs in Given/When | Implementation detail | Use business language |
+| "Fast", "good", "properly" | Subjective, untestable | Use specific metrics ("< 3s") |
+| Multiple behaviors per AC | Hard to isolate failures | Split into separate ACs |
+| Imperative style ("Click X, verify Y") | Procedure, not behavior | Declarative ("When X, Then Y") |
+| "AI reasons correctly" | Unobservable | Observable output (file, response) |
+| Ephemeral UI (toasts, spinners) | Hard to capture | Reframe to console.log or API response |
+
 ---
 
 ## 7. Storage: Local Tracking File
@@ -197,9 +209,27 @@ Then: ...
 | **deliverable-tracking** | Create issue + tracking file (with initial DoD) |
 | **onboarding** | Verify file exists, check for AC, prompt rubber-duck if missing |
 | **rubber-duck** | Where DoD/AC is refined through conversation |
-| **ac-create** | AC methodology and best practices |
+| **ac-create** | AC methodology - 7-step I/O pipeline |
 
-### Workflow
+### ac-create Workflow (7 Steps)
+
+| Step | Name | Input | Output |
+|------|------|-------|--------|
+| **1** | Scout | Issue body, codebase | Context understanding |
+| **2** | Analyze | Scout findings | Structured DoD + passes |
+| **3** | Enumerate | DoD items | Raw ACs (choices × outcomes) |
+| **4** | Format | Raw ACs | Given-When-Then (business language) |
+| **5** | Refinement Gate | Draft ACs | Refined ACs + Testability |
+| **6** | Save | Final ACs | Tracking file |
+| **7** | Inform | Link | User confirmation |
+
+**Key step:** Step 5 (Refinement Gate) runs 4 checks:
+1. Observable Output
+2. Test Data Availability
+3. Design Questions
+4. Blocking Dependencies
+
+### System Workflow
 
 ```
 deliverable-tracking (Issue Creation)
@@ -211,7 +241,7 @@ onboarding (Session Start)
 └── IF no AC → prompts: "Run /rubber-duck to create AC?"
     ↓
 rubber-duck (AC Creation)
-├── Invokes AC methodology
+├── Invokes ac-create skill (7-step pipeline)
 ├── Defines Given-When-Then scenarios
 └── Updates tracking file
     ↓
