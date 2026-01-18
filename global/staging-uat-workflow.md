@@ -83,12 +83,12 @@ The spec cannot anticipate:
 /------------------\
 ```
 
-| Layer | Tester | What They Do | Where |
-|-------|--------|--------------|-------|
-| **ACs** | AI | Verify code matches spec (Given-When-Then) | Feature branch |
-| **Smoke Test** | Developer | Run fixed checklist, check core flow works | Staging |
-| **Feature UAT** | Developer | Click through as user, catch unspecified weirdness | Staging |
-| **Business UAT** | Non-technical | Give feedback: "Is this what I wanted?" | Staging |
+| Layer | Tester | What They Do | Catches | Misses |
+|-------|--------|--------------|---------|--------|
+| **ACs** | AI | Verify spec (GWT) | What's specified | Unspecified behavior |
+| **Smoke Test** | Developer | Fixed checklist | Regressions | Feature-specific |
+| **Feature UAT** | Developer | Click through | Unexpected issues | *TBD* |
+| **Business UAT** | Non-technical | Subjective judgment | "Not what I wanted" | *TBD* |
 
 Testing happens on staging. Developer merges, tests, notifies for business UAT. Sequential by design - human attention is the bottleneck (backpressure).
 
@@ -231,15 +231,6 @@ FAIL → investigate before proceeding
 **Purpose:** Business acceptance - "Is this what I wanted?"
 
 *Format to be defined in future session (#308 element #3)*
-
-## Key Distinctions
-
-| | ACs | Smoke Test | Feature UAT | Business UAT |
-|--|-----|------------|-------------|--------------|
-| **Scope** | Defined behavior | Core flow regression | New feature | Business value |
-| **Method** | Scripted (GWT) | Fixed checklist | Guided + exploratory | Subjective judgment |
-| **Catches** | What's specified | Regressions | Unexpected issues | "Not what I wanted" |
-| **Misses** | Unspecified behavior | Feature-specific issues | Business judgment | - |
 
 ## Rollback Strategy
 
