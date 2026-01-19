@@ -43,6 +43,4 @@ The wow factor: "Here's messy data. Watch AI make it Bruce-ready."
 
 ---
 
-*Synthesis of Dec 29 + Dec 30 meetings. For alignment - does this match your understanding?*
-
-*Refs: [#373](https://github.com/DaveX2001/deliverable-tracking/issues/373)*
+*Synthesis of Dec 29 + Dec 30 meetings.*
