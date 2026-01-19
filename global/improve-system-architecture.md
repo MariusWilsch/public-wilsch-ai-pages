@@ -10,33 +10,33 @@ Implementation blueprint for the instruction artifact improvement ecosystem.
 
 ## Overview
 
-Two commands orchestrate a three-session workflow for fixing instruction artifacts (skills, commands, hooks, protocol).
+Two commands orchestrate a multi-session workflow for fixing instruction artifacts (skills, commands, hooks, protocol).
 
 | Command | Session | Purpose |
 |---------|---------|---------|
 | `/flag-for-improvement` | A (Project) | Capture failure: introspect + create issue |
-| `/improve-system` | B (soloforce) | Fix workflow: load context + guide phases + verify gate |
+| `/improve-system [issue_number]` | B (soloforce) | Fix workflow: load context + guide phases + verify |
 
-## Session Flow
+## Prerequisites
 
+**Critical dependency:** The conversation path must be available for context extraction.
+
+| Component | Location | Purpose |
+|-----------|----------|---------|
+| SessionStart hook | `~/.claude/settings.json` | Sets `CLAUDE_CONVERSATION_PATH` env var |
+| onboarding_bootstrap.py | `~/.claude/lib/` | Reads env var, outputs in session context |
+
+**Hook configuration** (in settings.json):
+```json
+"SessionStart": [{
+  "hooks": [{
+    "type": "command",
+    "command": "jq -r '.transcript_path' | xargs -I{} sh -c 'echo \"export CLAUDE_CONVERSATION_PATH=\\\"{}\\\"\" >> \"$CLAUDE_ENV_FILE\"'"
+  }]
+}]
 ```
-Session A (Project): Notice issue → /flag-for-improvement → Issue created
-                                                              ↓
-Session B (soloforce): /improve-system → FIFO + related hint → User picks
-                                                              ↓
-                       Worktree → Extract convo → Layer 1 context
-                                                              ↓
-                       /rubber-duck → Diagnose artifact type
-                                                              ↓
-                       Clarity phases → manage-artifact skill (Layer 2) → Execute
-                                                              ↓
-                       PRE-COMMIT PAUSE → "Verify in project session"
-                                                              ↓
-Session C (Project): Verify fix → Report back
-                                                              ↓
-                       ↙ If failed: back to rubber-duck with new context
-Session B (cont): Confirm → PR via worktree → Merge (auto-closes issue)
-```
+
+Without this hook, conversation-reader cannot extract context from the failing session.
 
 ## Session A: Failure Capture
 
@@ -57,49 +57,50 @@ Session B (cont): Confirm → PR via worktree → Merge (auto-closes issue)
 
 ## Session B: Diagnosis & Fix
 
-### Issue Selection (FIFO + Related Hint)
+### Issue Selection
 
 | Step | Action | Notes |
 |------|--------|-------|
-| 1 | `/improve-system` | Fetches oldest open issue (FIFO default) |
-| 2 | Semantic search for related | Search title+body for similar issues |
-| 3 | Present list to user | "Oldest: #49. Related: #137, #133 (step-skipping)" |
-| 4 | User picks issue | Can choose oldest or any from list |
+| 1 | `/improve-system {issue_number}` | Pass issue number directly |
 
-### Setup & Context (Progressive Disclosure)
+No FIFO queue - user knows which issue to work on.
+
+### Context Extraction
 
 | Step | Action | Notes |
 |------|--------|-------|
-| 5 | Create worktree | Via worktree skill - isolated branch |
-| 6 | Extract conversation | Script pulls from path in issue |
-| 7 | **Layer 1 context** | Brief artifact summary (see below) |
-| 8 | `/rubber-duck` diagnosis | Outputs artifact type decision |
+| 2 | `conversation-reader` skill | Extracts conversation from path in issue body |
+| 3 | `/rubber-duck` diagnosis | Analyze failure, determine artifact type |
 
-**Layer 1 (before diagnosis, ~100 tokens):**
-```
-Artifact Types:
+**Artifact types:**
 - Command (instruction-based) → fix with /stage
 - Skill (reusable workflow) → fix with skill-creator
 - Hook (automatic enforcement) → fix via settings.json
 - Protocol (core patterns) → fix via CLAUDE.md edit
-```
 
 ### Fix Workflow
 
 | Step | Action | Notes |
 |------|--------|-------|
-| 9 | `/requirements-clarity` | WHAT to fix |
-| 10 | `/implementation-clarity` | HOW to fix → `manage-artifact` skill discovered |
-| 11 | `/evaluation-clarity` | Success criteria |
-| 12 | Execute + **Layer 2 context** | `manage-artifact` skill loads relevant reference |
-| 13 | PRE-COMMIT PAUSE | "Verify in new project session" |
+| 4 | `/requirements-clarity` | WHAT to fix |
+| 5 | `/implementation-clarity` | HOW to fix → `manage-artifact` skill discovered |
+| 6 | `/evaluation-clarity` | Success criteria |
+| 7 | Execute fix | `manage-artifact` skill loads relevant reference |
+| 8 | `git push` | Direct to main (non-code artifacts) |
 
-### Failed Verification Handling
+### Verification & Iteration
 
-If user returns from Session C saying "didn't work":
-- Return to Step 8 (rubber-duck) with NEW conversation context
-- Iterate diagnosis and fix with updated understanding
-- Issue stays open until fix verified
+After push, start new project session:
+- Use same conversation path from the issue
+- Trigger the scenario that originally failed
+- Observe: fixed or not?
+
+**If failed:** Start new Session B with updated context. The issue body now contains:
+- Original failure + conversation path
+- First fix attempt results
+- New failure observations
+
+Iterate until verified.
 
 ## Artifact Type Diagnostic
 
@@ -121,21 +122,36 @@ Part of `/rubber-duck` diagnosis - the fix depends on artifact type:
 | Step | Action | Notes |
 |------|--------|-------|
 | 1 | New project session | Fresh context |
-| 2 | Trigger same scenario | - |
+| 2 | Trigger same scenario | Use conversation path from issue |
 | 3 | Observe: fixed or not? | - |
-| 4 | Return to Session B | - |
 
-**Current Implementation:** `manage-artifact` skill has a monitoring loop that polls Session C conversation every 30 seconds, watching for success/failure signals in real-time.
+**Issue Closure:** Close issue manually after verified fix, or use `Fixes DaveX2001/claude-code-improvements#{number}` in commit message.
 
-## Session B (cont): Finalize
+## Sequence Diagram
 
-| Step | Action | Notes |
-|------|--------|-------|
-| 1 | User confirms verification | - |
-| 2 | Create PR via worktree skill | PR description includes `Fixes #X` |
-| 3 | Merge PR | GitHub auto-closes issue on merge |
+```mermaid
+sequenceDiagram
+    participant A as Session A (Project)
+    participant Issue as GitHub Issue
+    participant B as Session B (soloforce)
+    participant C as Session C (Project)
 
-**Issue Closure:** Via PR workflow with `Fixes DaveX2001/deliverable-tracking#X` in PR description. GitHub auto-closes the issue when PR merges. This is handled by the worktree skill.
+    A->>Issue: /flag-for-improvement
+    Note over Issue: Contains conversation path
+    B->>Issue: /improve-system {number}
+    B->>B: conversation-reader skill
+    B->>B: /rubber-duck diagnosis
+    B->>B: clarity phases
+    B->>B: manage-artifact skill
+    B->>main: git push
+    C->>C: verify (same conv path)
+    alt Fix works
+        C-->>Issue: close issue
+    else Fix fails
+        C-->>B: new session with context
+        B->>B: iterate
+    end
+```
 
 ## Component Inventory
 
