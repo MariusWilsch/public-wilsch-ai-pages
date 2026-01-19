@@ -137,19 +137,21 @@ sequenceDiagram
     participant C as Session C (Project)
 
     A->>Issue: /flag-for-improvement
-    Note over Issue: Contains conversation path
+    Note over Issue: Contains conv path A
     B->>Issue: /improve-system {number}
-    B->>B: conversation-reader skill
+    B->>B: conversation-reader (reads path A)
     B->>B: /rubber-duck diagnosis
-    B->>B: clarity phases
-    B->>B: manage-artifact skill
+    B->>B: clarity phases + fix
     B->>main: git push
-    C->>C: verify (same conv path)
+    Note over C: Fresh session (new conv path C)
+    C->>C: trigger same scenario
     alt Fix works
         C-->>Issue: close issue
     else Fix fails
-        C-->>B: new session with context
-        B->>B: iterate
+        Note over C: Conv path C has failure context
+        C-->>Issue: add path C to issue
+        Note over B: New session reads path C
+        B->>B: iterate with new context
     end
 ```
 
