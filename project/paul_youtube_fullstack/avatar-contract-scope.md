@@ -117,31 +117,31 @@ Each phase has a confidence gate. Work stops if a phase fails.
 
 ## Architecture: Parallel Processing
 
-Avatar runs **parallel** to Video Segments (both after TTS):
+Avatar runs **parallel** to the slideshow pipeline (both start after TTS):
 
 ```
-Scene Extraction (1) ──┬──→ Image Gen (2) → Video Segments (4) ──┐
-                       │                                          │
-                       └──→ TTS (3) → Avatar Gen (NEW) ──────────┼──→ FFmpeg Overlay → Final
-                                                                  │
-                                                                  └───────────────────────┘
+TTS (1) ──┬──→ Scene Extraction (2) → Image Gen (3) → Video Segments (4) ──┐
+          │                                                                 │
+          └──→ Avatar Gen (NEW) ───────────────────────────────────────────┼──→ Concat + Overlay (5) → Upload (6)
+                                                                            │
+                                                                            └─────────────────────────────────────┘
 ```
 
 **Why parallel?**
-- Avatar needs TTS audio (for lip sync)
+- Avatar only needs TTS audio (for lip sync)
 - Avatar does NOT need slideshow images
-- Both can run simultaneously after TTS completes
+- Both pipelines run simultaneously after TTS completes
 - FFmpeg composites at the end
 
-**Current pipeline (from codebase):**
+**Current pipeline:**
 
 | Phase | What | Where |
 |-------|------|-------|
-| 1 | Scene Extraction | Local |
-| 2 | Image Gen (FLUX) | Modal (H100 GPU) |
-| 3 | TTS (Chatterbox) | Modal (L4 GPU) |
+| 1 | TTS (Chatterbox) | Modal (L4 GPU) |
+| 2 | Scene Extraction | Local |
+| 3 | Image Gen (FLUX) | Modal (H100 GPU) |
 | 4 | Video Segments (Ken Burns) | Modal (CPU workers) |
-| 4' | **Avatar Gen (NEW)** | Modal (GPU) |
+| 1' | **Avatar Gen (NEW)** | Modal (GPU) — parallel after TTS |
 | 5 | FFmpeg Concat + Overlay | Local |
 | 6 | Upload to Supabase | Local |
 
