@@ -10,7 +10,7 @@ publish: true
 
 ## Problem
 
-BluSpem (Code on Time framework) strips OAuth `state` query parameter during internal redirect to login form. State is required for LibreChat to match callback to originating session.
+Bruce BEM (Code on Time framework) strips OAuth `state` query parameter during internal redirect to login form. State is required for LibreChat to match callback to originating session.
 
 ## Constraint
 
@@ -25,7 +25,7 @@ Bruce BEM must return this value unchanged in callback URL.
 | Approach | Implementation | Complexity |
 |----------|---------------|------------|
 | **A1. UserLogin Override** | Intercept state pre-login, store in DB/cache, restore post-login | Medium |
-| **A2. Global.asax BeginRequest** | Catch request before BluSpem processes, preserve state | Medium |
+| **A2. Global.asax BeginRequest** | Catch request before Bruce BEM processes, preserve state | Medium |
 | **A3. Hidden Form Field** | Modify login form to carry state through POST | Low |
 
 **Code on Time docs:** [UserLogin override documented](https://codeontime.com/print/learn/security/handling-login-and-logout). BeginRequest requires standard ASP.NET Global.asax (outside framework).
@@ -39,7 +39,7 @@ Bruce BEM must return this value unchanged in callback URL.
 ```
 LibreChat sends:
   redirect_uri = /api/mcp/bruce-bem/oauth/callback/{flowId}
-  state = {flowId}  (stripped by BluSpem)
+  state = {flowId}  (stripped by Bruce BEM)
 
 Bruce BEM:
   1. Extract flowId from redirect_uri path
@@ -62,9 +62,9 @@ Can Rein intercept state in Code on Time?
 
 ## Open Questions
 
-- Does BluSpem preserve `redirect_uri` intact?
-- Does BluSpem preserve `nonce` or other OAuth params?
-- Is there a BluSpem config to preserve unknown query params?
+- Does Bruce BEM preserve `redirect_uri` intact?
+- Does Bruce BEM preserve `nonce` or other OAuth params?
+- Is there a Bruce BEM config to preserve unknown query params?
 
 ## References
 
