@@ -28,7 +28,7 @@ Bruce BEM must return this value unchanged in callback URL.
 | **A2. Global.asax BeginRequest** | Catch request before BluSpem processes, preserve state | Medium |
 | **A3. Hidden Form Field** | Modify login form to carry state through POST | Low |
 
-**Code on Time docs:** UserLogin override documented. BeginRequest requires standard ASP.NET Global.asax (outside framework).
+**Code on Time docs:** [UserLogin override documented](https://codeontime.com/print/learn/security/handling-login-and-logout). BeginRequest requires standard ASP.NET Global.asax (outside framework).
 
 ### Category B: LibreChat + Bruce BEM
 
@@ -68,5 +68,6 @@ Can Rein intercept state in Code on Time?
 
 ## References
 
-- [Code on Time UserLogin Override](https://codeontime.com/print/learn/security/handling-login-and-logout)
+- [Code on Time: Handling Login and Logout](https://codeontime.com/print/learn/security/handling-login-and-logout) - UserLogin override documented
+- [Code on Time: Custom Login Form](https://codeontime.com/learn/security/custom-login-form)
 - [LibreChat OAuth handler](services/librechat/packages/api/src/mcp/oauth/handler.ts)

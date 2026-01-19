@@ -5,23 +5,25 @@ publish: true
 # DS-Kit RAG Test Analysis - Question-by-Question Verification
 
 Analysis date: 2026-01-13
+**Last updated:** 2026-01-19
+**Source:** [Meeting transcript 2026-01-15](https://app.fireflies.ai/view/01KF0N6JDANZB4JGW9WEP4GNMC)
 
 ---
 
 ## 1. Executive Summary
 
-| Metric | Value |
-|--------|-------|
-| Total questions | 29 |
-| Working | 17 (58.6%) |
-| Data Gap | 9 |
-| Ambiguous | 1 |
-| VLM Data Loss | 1 |
-| Q&A Data Error | 1 |
-| **Current accuracy** | **17/29 (58.6%)** |
-| **Max with current corpus** | **20/29 (69%)** |
+| Metric | Pre-Meeting | Post-Meeting |
+|--------|-------------|--------------|
+| Total questions | 29 | 29 |
+| Working | 17 | **18** (+Q5) |
+| Data Gap | 9 | **6** (Q6,Q12,Q13,Q17,Q18,Q24,Q27) |
+| Intentional | 0 | **2** (Q16,Q28) |
+| Fixed | 0 | **1** (Q21) |
+| VLM Data Loss | 1 | 1 (Q14) |
+| **Current accuracy** | 17/29 (58.6%) | **18/29 (62%)** |
+| **After website extraction** | - | **24/29 (83%)** |
 
-**Key finding:** 9 of 12 failures are due to expected answers not existing in the indexed corpus. No retrieval tuning can fix questions whose answers aren't indexed.
+**Key finding:** Client meeting (2026-01-15) validated several "failures" as acceptable. Website extraction identified as solution for remaining DATA GAPs.
 
 ---
 
@@ -44,7 +46,7 @@ Analysis date: 2026-01-13
 6. Schulung Häufigkeit → jährlich
 7. Beratungsstunde → 180€ / DS-Kit Plus
 8. Kündigung → 3 Monate
-9. Datenschutzverpflichtung → Kapitel 09 (⚠️ should be 11)
+9. Datenschutzverpflichtung → Kapitel 11.2 (✅ corrected during meeting from 09)
 10. Womit anfangen → Kapitel 02, 04, 05, 06, eLearning
 11. AV-Verträge → Kapitel 05
 12. Datenschutzverletzung → Kapitel 10
@@ -55,37 +57,37 @@ Analysis date: 2026-01-13
 
 ## 3. Question Analysis Table (All 29)
 
-| Q# | Status | Question | In Corpus? | Category |
-|----|--------|----------|------------|----------|
-| 1 | ✅ | Texte Webseitengestaltung | ✅ | Working |
-| 2 | ✅ | Textgeneratoren | ✅ | Working |
-| 3 | ✅ | Andere E-Mail hinterlegen | ✅ | Working |
-| 4 | ✅ | Zugang Unterlagen | ✅ | Working |
-| 5 | ❌ | Schulungen eLearning | ✅ | **Ambiguous** |
-| 6 | ❌ | DSB auf Webseite | ❌ | **Data Gap** |
-| 7 | ✅ | Beratungsstunde | ✅ | Working |
-| 8 | ✅ | Audit | ✅ | Working |
-| 9 | ✅ | Weiterer Mitarbeiter | ✅ | Working |
-| 10 | ✅ | Zusätzliches Benutzerkonto | ✅ | Working |
-| 11 | ✅ | TISAX Schulungsinhalte | ✅ | Working |
-| 12 | ❌ | DSB Meldung wer | ❌ | **Data Gap** |
-| 13 | ❌ | Wo DSB melden | ❌ | **Data Gap** |
-| 14 | ❌ | DSB Kontaktdaten | ❌ | **VLM Loss** |
-| 15 | ✅ | Kündigung Termin | ✅ | Working |
-| 16 | ❌ | eLearning 300€ | ❌ | **Data Gap** |
-| 17 | ❌ | Englisch Zertifikat | ❌ | **Data Gap** |
-| 18 | ❌ | Zugang DS-Kit URL | ❌ | **Data Gap** |
-| 19 | ✅ | Magic-Link wiederholt | ✅ | Working |
-| 20 | ✅ | Jahresvertrag automatisch | ✅ | Working |
-| 21 | ❌ | Mitarbeiter Docs | ✅ | **Q&A Error** |
-| 22 | ✅ | Mitarbeiter einladen | ✅ | Working |
-| 23 | ✅ | Schulung Häufigkeit | ✅ | Working |
-| 24 | ❌ | Video E-Mail Vereinbarung | ❌ | **Data Gap** |
-| 25 | ✅ | Datenschutzverletzung | ✅ | Working |
-| 26 | ✅ | Datenschutzhinweise DE/EN | ✅ | Working |
-| 27 | ❌ | Bewerber unterschreiben | ❌ | **Data Gap** |
-| 28 | ❌ | Cookie Banner 180€ | ❌ | **Data Gap** |
-| 29 | ✅ | Webseite Beratung | ✅ | Working |
+| Q# | Status | Question | In Corpus? | Category | Solution |
+|----|--------|----------|------------|----------|----------|
+| 1 | ✅ | Texte Webseitengestaltung | ✅ | Working | - |
+| 2 | ✅ | Textgeneratoren | ✅ | Working | - |
+| 3 | ✅ | Andere E-Mail hinterlegen | ✅ | Working | - |
+| 4 | ✅ | Zugang Unterlagen | ✅ | Working | - |
+| 5 | ✅ | Schulungen eLearning | ✅ | **Working** | Client validated |
+| 6 | ❌ | DSB auf Webseite | ❌ | Data Gap | Website extraction |
+| 7 | ✅ | Beratungsstunde | ✅ | Working | - |
+| 8 | ✅ | Audit | ✅ | Working | - |
+| 9 | ✅ | Weiterer Mitarbeiter | ✅ | Working | - |
+| 10 | ✅ | Zusätzliches Benutzerkonto | ✅ | Working | - |
+| 11 | ✅ | TISAX Schulungsinhalte | ✅ | Working | - |
+| 12 | ❌ | DSB Meldung wer | ❌ | Data Gap | Website extraction |
+| 13 | ❌ | Wo DSB melden | ❌ | Data Gap | Website extraction |
+| 14 | ❌ | DSB Kontaktdaten | ❌ | VLM Loss | Standard Docling |
+| 15 | ✅ | Kündigung Termin | ✅ | Working | - |
+| 16 | ⏸️ | eLearning 300€ | ❌ | **Intentional** | No prices |
+| 17 | ❌ | Englisch Zertifikat | ❌ | Data Gap | Masterfragen |
+| 18 | ❌ | Zugang DS-Kit URL | ❌ | Data Gap | Website extraction |
+| 19 | ✅ | Magic-Link wiederholt | ✅ | Working | - |
+| 20 | ✅ | Jahresvertrag automatisch | ✅ | Working | - |
+| 21 | ✅ | Mitarbeiter Docs | ✅ | **Fixed** | CSV corrected |
+| 22 | ✅ | Mitarbeiter einladen | ✅ | Working | - |
+| 23 | ✅ | Schulung Häufigkeit | ✅ | Working | - |
+| 24 | ❌ | Video E-Mail Vereinbarung | ❌ | Data Gap | Website/Masterfragen |
+| 25 | ✅ | Datenschutzverletzung | ✅ | Working | - |
+| 26 | ✅ | Datenschutzhinweise DE/EN | ✅ | Working | - |
+| 27 | ❌ | Bewerber unterschreiben | ❌ | Data Gap | Masterfragen |
+| 28 | ⏸️ | Cookie Banner 180€ | ❌ | **Intentional** | Support escalation |
+| 29 | ✅ | Webseite Beratung | ✅ | Working | - |
 
 ---
 
@@ -115,17 +117,18 @@ Analysis date: 2026-01-13
 - **Current:** Ja, Sie erhalten Zugang zu allen im Datenschutz-Kit hinterlegten Datenschutzunterlagen...
 - **Note:** ✅ Correct - confirms full access
 
-### Q5: Schulungen eLearning ❌ AMBIGUOUS
+### Q5: Schulungen eLearning ✅ WORKING (validated 2026-01-15)
 - **Question:** "Kriegen wir auch Schulungen, damit wir unsere Mitarbeiter ab und zu mal beim Datenschutz auf den Stand bringen?"
 - **Expected:** Über das Datenschutz-Kit können Sie im Bereich "eLearning" auf eine Auswahl von Schulungsmodulen zugreifen + Statistik-Funktion
 - **Current:** Ja, Sie erhalten Schulungen. Die Datenschutzschulung sollte mindestens einmal im Jahr erfolgen...
-- **Note:** ⚠️ Both answers valid - RAG answered frequency, expected feature description. Client decision needed.
+- **Note:** ✅ **Client validated (meeting 2026-01-15):** General answer IS correct for non-expert users. RAG answering the spirit of the question, not expecting navigation-specific answer. Stellmacher: "Die Frage zielt darauf ab, ob Schulungen im Leistungsportfolio sind. Die RAG Response ist richtig." CSV update pending.
 
-### Q6: DSB auf Webseite ❌ DATA GAP
+### Q6: DSB auf Webseite ❌ DATA GAP → Website Extraction
 - **Question:** "Kann ich Sie als Datenschutzbeauftragter auf meiner Webseite angeben?"
 - **Expected:** Wenn Sie uns als Ihren externen Datenschutzbeauftragten bestellt haben, können Sie uns auf Ihrer Webseite mit folgenden Kontaktdaten angeben...
 - **Current:** Nein, Sie können uns nicht als Datenschutzbeauftragten auf Ihrer Webseite angeben...
-- **Note:** ❌ Wrong - RAG says "Nein" but correct is "Ja, wenn bestellt". Content not in corpus.
+- **Note:** ❌ Wrong - RAG says "Nein" but correct is "Ja, wenn bestellt".
+- **Solution (meeting 2026-01-15):** Content exists in core.iitr.de Chapter 01 ("Verwenden Sie bitte folgende Angaben: IITR Datenschutz GmbH..."). Website extraction will fix.
 
 ### Q7: Beratungsstunde ✅
 - **Question:** "Wir brauchen tiefergehende Beratung, wie können Sie uns helfen?"
@@ -157,23 +160,26 @@ Analysis date: 2026-01-13
 - **Current:** Ja, im Datenschutz-Kit finden Sie eine Übersicht über alle Sensibilisierungsschulungen im Dokument 11-03...
 - **Note:** ✅ Correct - references Dokument 11-03
 
-### Q12: DSB Meldung wer ❌ DATA GAP
+### Q12: DSB Meldung wer ❌ DATA GAP → Website Extraction
 - **Question:** "Übernehmen Sie die Meldung des externen Datenschutzbeauftragten?"
 - **Expected:** Die Meldung des DSB bei der Aufsichtsbehörde muss durch den Verantwortlichen erfolgen.
 - **Current:** Die Meldung des externen Datenschutzbeauftragten an die zuständige Datenschutz-Aufsichtsbehörde...
-- **Note:** ❌ Doesn't clarify WHO must file. Content not in corpus.
+- **Note:** ❌ Doesn't clarify WHO must file.
+- **Solution:** Website extraction (Chapter 01 contains DSB policy cluster).
 
-### Q13: Wo DSB melden ❌ DATA GAP
+### Q13: Wo DSB melden ❌ DATA GAP → Website Extraction
 - **Question:** "Wo melde ich den externen Datenschutzbeauftragten?"
 - **Expected:** Wenn Sie uns als DSB bestellt haben, können Sie uns mit folgenden Kontaktdaten melden: [IITR details]
 - **Current:** Die Frage, wo Sie den externen Datenschutzbeauftragten melden, wird im Kontext nicht direkt beantwortet...
-- **Note:** ❌ RAG admits it can't answer. Content not in corpus.
+- **Note:** ❌ RAG admits it can't answer.
+- **Solution:** Website extraction (Chapter 01 contains DSB policy cluster).
 
-### Q14: DSB Kontaktdaten ❌ VLM LOSS
+### Q14: DSB Kontaktdaten ❌ VLM LOSS → Standard Docling
 - **Question:** "Mit welchen Kontaktdaten melde ich den externen Datenschutzbeauftragten?"
 - **Expected:** email@iitr.de, IITR Datenschutz GmbH, Marienplatz 2, 80331 München, Tel (089) 18 91 73 60
 - **Current:** Für die Kontaktaufnahme: IITR Datenschutz GmbH, Dr. Sebastian Kraska, dskit@iitr.de
 - **Note:** ❌ Wrong email (dskit@ vs email@), missing address/phone. VLM chunks lost PDF header data.
+- **Solution:** Switch to standard Docling (includes PDF header with official contact) or website extraction.
 
 ### Q15: Kündigung Termin ✅
 - **Question:** "Zu welchem Termin kann ich den Vertrag kündigen?"
@@ -181,23 +187,25 @@ Analysis date: 2026-01-13
 - **Current:** Der Bestellvertrag hat feste Laufzeit und verlängert sich automatisch. Kündigung drei Monate vor Vertragsende...
 - **Note:** ✅ Correct - mentions 3 months
 
-### Q16: eLearning 300€ ❌ DATA GAP
+### Q16: eLearning 300€ ⏸️ INTENTIONAL (no prices)
 - **Question:** "Wie kann ich auf weitere eLearning Module zugreifen?"
 - **Expected:** Im DS-Kit Basis stehen standardmäßig vier eLearning-Module zur Verfügung. Vollzugriff für 300€ netto jährlich.
 - **Current:** Wenn Sie auf weitere eLearning-Module zugreifen möchten, wenden Sie sich an den Support...
-- **Note:** ❌ Doesn't mention "vier Module" or "300€". Pricing not in corpus.
+- **Note:** ⏸️ **Client decision (meeting 2026-01-15):** Do NOT include prices. Kraska: "Wollen wir überhaupt die Preise nennen? Eigentlich ja nicht." Generic "contact support" answer is intentionally acceptable.
 
-### Q17: Englisch Zertifikat ❌ DATA GAP
+### Q17: Englisch Zertifikat ❌ DATA GAP → Masterfragen
 - **Question:** "Stellen Sie auch englischsprachige Zertifikate zur Verfügung?"
 - **Expected:** Wir können Ihnen gerne ein englischsprachiges Datenschutz-Zertifikat ausstellen.
 - **Current:** Die DS-Kit-Plattform bietet standardmäßig keine englischsprachigen Zertifikate an...
 - **Note:** ❌ Wrong - RAG says "Nein" but correct is "Ja, gerne". Service not documented in corpus.
+- **Solution:** Masterfragen addition (Stellmacher to provide).
 
-### Q18: Zugang DS-Kit URL ❌ DATA GAP
+### Q18: Zugang DS-Kit URL ❌ DATA GAP → Website Extraction
 - **Question:** "Wie erhalte ich einen Zugang zum Datenschutz-Kit?"
 - **Expected:** core.iitr.de aufrufen und unter Angabe Ihrer E-Mail-Adresse einen Login-Link anfordern.
 - **Current:** Um einen Zugang zu erhalten, wenden Sie sich direkt an die IITR...
 - **Note:** ❌ Doesn't mention "core.iitr.de" URL. Login URL not in corpus.
+- **Solution:** Website extraction will include platform URL reference.
 
 ### Q19: Magic-Link wiederholt ✅
 - **Question:** "Muss ich bei wiederholtem Besuch jedes Mal einen neuen Zugangslink anfordern?"
@@ -211,11 +219,11 @@ Analysis date: 2026-01-13
 - **Current:** Der Jahresvertrag läuft nicht automatisch ab. Der Bestellvertrag hat feste Laufzeit und verlängert sich...
 - **Note:** ✅ Correct - explains auto-renewal
 
-### Q21: Mitarbeiter Docs ❌ Q&A ERROR
+### Q21: Mitarbeiter Docs ✅ FIXED (CSV corrected)
 - **Question:** "Welche Dokumente brauchen wir unterschrieben von den Mitarbeitern?"
 - **Expected:** Verpflichtungserklärung auf Einhaltung des Datenschutzes. Vorlage unter Kapitel 11, Unterpunkt 2.
 - **Current:** Für die Erfüllung der datenschutzrechtlichen Pflichten gibt es mehrere Dokumente... [mentions Kapitel 9]
-- **Note:** ❌ Wrong chapter - RAG says Kapitel 9, expected is Kapitel 11 UP 2. Q&A CSV has error.
+- **Note:** ✅ **Fixed during meeting (2026-01-15):** CSV corrected from Kapitel 9 → Kapitel 11.2. Stellmacher: "Kapitel 11 ist es... Kapitel 9 ist ein ganz anderes Thema." **Action:** Re-index after CSV update.
 
 ### Q22: Mitarbeiter einladen ✅
 - **Question:** "Wie kann ich Mitarbeiter zu den Schulungen einladen?"
@@ -229,11 +237,12 @@ Analysis date: 2026-01-13
 - **Current:** Die Datenschutzschulung sollte mindestens einmal im Jahr erfolgen. Dies ergibt sich aus der Erwartung...
 - **Note:** ✅ Correct - mentions yearly requirement
 
-### Q24: Video E-Mail Vereinbarung ❌ DATA GAP
+### Q24: Video E-Mail Vereinbarung ❌ DATA GAP → Website/Masterfragen
 - **Question:** "In welchen Videos wird die Personal-Vereinbarung bzgl. E-Mail nach Beendigung besprochen?"
 - **Expected:** Eine Vorlage für Vereinbarung über Zugriff auf E-Mail nach Beendigung finden Sie in Kapitel 11, Unterpunkt 3.
 - **Current:** Die Information über E-Mails mit privatem Inhalt wird nicht direkt in Verbindung mit Videos erwähnt...
 - **Note:** ❌ RAG can't answer. Post-employment email policy not in corpus.
+- **Solution:** Website extraction (Chapter 11) or Masterfragen addition.
 
 ### Q25: Datenschutzverletzung ✅
 - **Question:** "Wir haben eine Datenschutzverletzung, was ist zu tun?"
@@ -247,17 +256,18 @@ Analysis date: 2026-01-13
 - **Current:** Ja, Sie gehen richtig in der Annahme. Unter Kapitel 8 im Datenschutz-Kit erhalten Sie Vorlagen...
 - **Note:** ✅ Correct - mentions Kapitel 8
 
-### Q27: Bewerber unterschreiben ❌ DATA GAP
+### Q27: Bewerber unterschreiben ❌ DATA GAP → Masterfragen
 - **Question:** "Müssen unsere Bewerber unsere Datenschutzbestimmungen unterschreiben?"
 - **Expected:** Es ist nicht erforderlich, dass Bewerber unterschreiben. Sie sollten jedoch zur Kenntnis nehmen.
 - **Current:** Die Frage, ob Bewerber unterschreiben müssen, wird im Kontext nicht direkt beantwortet...
 - **Note:** ❌ RAG can't answer. Applicant policy not in corpus.
+- **Solution:** Masterfragen addition (Stellmacher to provide).
 
-### Q28: Cookie Banner 180€ ❌ DATA GAP
+### Q28: Cookie Banner ⏸️ INTENTIONAL (support escalation)
 - **Question:** "Ist unser Cookie Banner so in Ordnung?"
 - **Expected:** Gerne prüfen wir Ihre Webseite auf Datenschutzkonformität zu 180€ netto Stundensatz.
 - **Current:** Die derzeit genutzte Cookie-Entscheidung mit "ich stimme zu" und "ich lehne ab"... [gives technical advice]
-- **Note:** ❌ Gives generic advice instead of offering review service. Service not in corpus.
+- **Note:** ⏸️ **Client decision (meeting 2026-01-15):** Out-of-scope questions should escalate to human support. Kraska: "Immer wenn er nach Preise fragt, ausschleifen auf Rückruf." **Action:** Implement support escalation path (Level 2: email link).
 
 ### Q29: Webseite Beratung ✅
 - **Question:** "Bieten Sie Beratung zu Webseiten im Bereich Datenschutz an?"
