@@ -10,7 +10,7 @@ publish: true
 **Related:** [Avatar Research](./avatar-talking-head-research.md) | [Original Scope](./avatar-integration-scope.md)
 
 **Model Demos:**
-- EchoMimicV2: [GitHub (embedded demos)](https://github.com/antgroup/echomimic_v2)
+- EchoMimicV3: [GitHub](https://github.com/antgroup/echomimic_v3) | [Project Page](https://antgroup.github.io/ai/echomimic_v3/)
 - HunyuanVideo-Avatar: [Project Page](https://hunyuanvideo-avatar.github.io/) | [Try it Live](https://hunyuan.tencent.com/modelSquare/home/play?modelId=126)
 
 ---
@@ -33,11 +33,11 @@ YouTube demonetized Paul's fictional content channels (~€30k loss). Avatar ove
 - Supports multi-character dialogue
 - Lower VRAM (10GB via Wan2GP)
 
-**EchoMimicV2 (Apache 2.0) is the only viable option:**
-- Requires portrait pose-alignment preprocessing (additional scope)
-- Half-body only (no head-only option)
-- No emotion control
-- 16GB VRAM, but 9x acceleration available (~50s for 120 frames on A100)
+**EchoMimicV3 (Apache 2.0) is the production candidate:**
+- Unified multi-modal (audio + text driven)
+- 12GB VRAM (quantized) — more efficient than V2
+- 1.3B parameter model
+- Released Aug 2025 (AAAI 2026 paper)
 
 ---
 
@@ -58,9 +58,9 @@ Each phase has a confidence gate. Work stops if a phase fails.
 
 | Atom | What | Output |
 |------|------|--------|
-| 1.1 | Deploy EchoMimicV2 on Modal | Working endpoint (dev) |
+| 1.1 | Deploy EchoMimicV3 on Modal | Working endpoint (dev) |
 | 1.2 | Deploy HunyuanVideo-Avatar on Modal | Working endpoint (comparison only) |
-| 1.3 | Build portrait preprocessing pipeline | Pose-alignment automation (EchoMimicV2) |
+| 1.3 | Build portrait preprocessing pipeline | Pose-alignment automation (if needed) |
 | 1.4 | Create input interface (TTS audio + portrait) | API accepting audio + image |
 | 1.5 | Run benchmark using **real project audio** (10-min + 1-hour samples) | Timing + quality comparison |
 | 1.6 | Test BG removal (Matanyone) | Transparent avatar video quality |
@@ -72,10 +72,10 @@ Each phase has a confidence gate. Work stops if a phase fails.
 
 | Model | Quality | VRAM | Purpose | Demo |
 |-------|---------|------|---------|------|
-| EchoMimicV2 | 80-85% | 16GB | Production candidate (Apache 2.0) | [GitHub](https://github.com/antgroup/echomimic_v2) |
+| EchoMimicV3 | TBD | 12GB | Production candidate (Apache 2.0) | [GitHub](https://github.com/antgroup/echomimic_v3) |
 | HunyuanVideo-Avatar | 85-90% | 10GB | Quality benchmark only (EU license excluded) | [Project](https://hunyuanvideo-avatar.github.io/) / [Try it](https://hunyuan.tencent.com/modelSquare/home/play?modelId=126) |
 
-**Note:** HunyuanVideo-Avatar is spiked for quality comparison data only. Due to EU licensing restriction, it cannot be used in production—EchoMimicV2 is the production candidate regardless of benchmark results.
+**Note:** HunyuanVideo-Avatar is spiked for quality comparison data only. Due to EU licensing restriction, it cannot be used in production—EchoMimicV3 is the production candidate regardless of benchmark results.
 
 **Gate criteria:**
 - Processing time < Paul's acceptable threshold (for both 10-min and 1-hour videos)
@@ -164,8 +164,8 @@ TTS (1) ──┬──→ Scene Extraction (2) → Image Gen (3) → Video Segm
 | 7 | Do you see any workaround for the EU licensing restriction on HunyuanVideo-Avatar? (e.g., business entity, legal advice) | Model selection (if workaround exists, HunyuanVideo-Avatar becomes viable) |
 
 **Notes:**
-- Style question (head vs half-body) removed. EchoMimicV2 is half-body only.
-- Question 7: If Paul knows a legal workaround, HunyuanVideo-Avatar's quality advantage (85-90% vs 80-85%) could justify switching.
+- Style question (head vs half-body) removed — both models handle this.
+- Question 7: If Paul knows a legal workaround, HunyuanVideo-Avatar's features (emotion control, multi-character) could justify switching.
 
 ---
 
