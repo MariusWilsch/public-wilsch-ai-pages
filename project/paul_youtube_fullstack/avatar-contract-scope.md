@@ -50,30 +50,28 @@ Each phase has a confidence gate. Work stops if a phase fails.
 
 ## Phase 1: Speed + Feasibility Spike
 
-**Goal:** Prove EchoMimicV2 avatar generation is fast enough AND technically viable for production.
+**Goal:** Benchmark both avatar models for quality comparison, then validate production viability.
 
 | Atom | What | Output |
 |------|------|--------|
 | 1.1 | Deploy EchoMimicV2 on Modal | Working endpoint |
-| 1.2 | Build portrait preprocessing pipeline | Pose-alignment automation |
-| 1.3 | Create input interface (TTS audio + portrait) | API accepting 24kHz WAV + image |
-| 1.4 | Run benchmark using **real project audio** (10-min + 1-hour samples) | Timing data |
-| 1.5 | Test BG removal (Matanyone) | Transparent avatar video quality |
-| 1.6 | Evaluate vs threshold (Paul defines) | Go/No-Go |
+| 1.2 | Deploy HunyuanVideo-Avatar on Modal | Working endpoint (comparison only) |
+| 1.3 | Build portrait preprocessing pipeline | Pose-alignment automation (EchoMimicV2) |
+| 1.4 | Create input interface (TTS audio + portrait) | API accepting audio + image |
+| 1.5 | Run benchmark using **real project audio** (10-min + 1-hour samples) | Timing + quality comparison |
+| 1.6 | Test BG removal (Matanyone) | Transparent avatar video quality |
+| 1.7 | Evaluate vs threshold (Paul defines) | Go/No-Go |
 
-**TTS Output Format (from codebase):**
-- Sample rate: 24,000 Hz
-- Channels: Mono
-- Bit depth: 32-bit Float
-- Path: `{transcript_dir}/audio/audio_narrative_transcript.wav`
+**Test inputs:** Use actual TTS audio from existing projects to validate audio compatibility with lip-sync.
 
-**Test inputs:** Use actual TTS audio from existing projects (not synthetic test audio) to validate audio compatibility with lip-sync.
+**Models:**
 
-**Model:**
+| Model | Quality | VRAM | Purpose |
+|-------|---------|------|---------|
+| EchoMimicV2 | 80-85% | 16GB | Production candidate (Apache 2.0) |
+| HunyuanVideo-Avatar | 85-90% | 10GB | Quality benchmark only (EU license excluded) |
 
-| Model | Quality | VRAM | Notes |
-|-------|---------|------|-------|
-| EchoMimicV2 | 80-85% | 16GB | Apache 2.0, 9x speedup (~50s/120 frames on A100) |
+**Note:** HunyuanVideo-Avatar is spiked for quality comparison data only. Due to EU licensing restriction, it cannot be used in production—EchoMimicV2 is the production candidate regardless of benchmark results.
 
 **Gate criteria:**
 - Processing time < Paul's acceptable threshold (for both 10-min and 1-hour videos)
