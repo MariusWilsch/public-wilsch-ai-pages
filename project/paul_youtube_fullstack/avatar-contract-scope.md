@@ -9,6 +9,10 @@ publish: true
 
 **Related:** [Avatar Research](./avatar-talking-head-research.md) | [Original Scope](./avatar-integration-scope.md)
 
+**Model Demos:**
+- EchoMimicV2: [GitHub (embedded demos)](https://github.com/antgroup/echomimic_v2)
+- HunyuanVideo-Avatar: [Project Page](https://hunyuanvideo-avatar.github.io/) | [Try it Live](https://hunyuan.tencent.com/modelSquare/home/play?modelId=126)
+
 ---
 
 ## Context
@@ -54,7 +58,7 @@ Each phase has a confidence gate. Work stops if a phase fails.
 
 | Atom | What | Output |
 |------|------|--------|
-| 1.1 | Deploy EchoMimicV2 on Modal | Working endpoint |
+| 1.1 | Deploy EchoMimicV2 on Modal | Working endpoint (dev) |
 | 1.2 | Deploy HunyuanVideo-Avatar on Modal | Working endpoint (comparison only) |
 | 1.3 | Build portrait preprocessing pipeline | Pose-alignment automation (EchoMimicV2) |
 | 1.4 | Create input interface (TTS audio + portrait) | API accepting audio + image |
@@ -66,10 +70,10 @@ Each phase has a confidence gate. Work stops if a phase fails.
 
 **Models:**
 
-| Model | Quality | VRAM | Purpose |
-|-------|---------|------|---------|
-| EchoMimicV2 | 80-85% | 16GB | Production candidate (Apache 2.0) |
-| HunyuanVideo-Avatar | 85-90% | 10GB | Quality benchmark only (EU license excluded) |
+| Model | Quality | VRAM | Purpose | Demo |
+|-------|---------|------|---------|------|
+| EchoMimicV2 | 80-85% | 16GB | Production candidate (Apache 2.0) | [GitHub](https://github.com/antgroup/echomimic_v2) |
+| HunyuanVideo-Avatar | 85-90% | 10GB | Quality benchmark only (EU license excluded) | [Project](https://hunyuanvideo-avatar.github.io/) / [Try it](https://hunyuan.tencent.com/modelSquare/home/play?modelId=126) |
 
 **Note:** HunyuanVideo-Avatar is spiked for quality comparison data only. Due to EU licensing restriction, it cannot be used in production—EchoMimicV2 is the production candidate regardless of benchmark results.
 
@@ -107,11 +111,11 @@ Each phase has a confidence gate. Work stops if a phase fails.
 
 | Atom | What | Output |
 |------|------|--------|
-| 3.1 | Create Modal avatar service | `modal/avatar/app.py` |
+| 3.1 | Create avatar service on Modal | `modal/avatar/app.py` (dev) |
 | 3.2 | Pipeline integration | Avatar step parallel to video segments |
 | 3.3 | FFmpeg overlay | Composite avatar on slideshow |
 | 3.4 | Parallelization (if needed) | Split audio for parallel workers |
-| 3.5 | RunPod deployment | Production endpoint |
+| 3.5 | Production deployment | RunPod endpoint (or keep Modal) |
 
 ---
 
@@ -137,11 +141,11 @@ TTS (1) ──┬──→ Scene Extraction (2) → Image Gen (3) → Video Segm
 
 | Phase | What | Where |
 |-------|------|-------|
-| 1 | TTS (Chatterbox) | Modal (L4 GPU) |
+| 1 | TTS (Chatterbox) | RunPod 490 |
 | 2 | Scene Extraction | Local |
-| 3 | Image Gen (FLUX) | Modal (H100 GPU) |
-| 4 | Video Segments (Ken Burns) | Modal (CPU workers) |
-| 1' | **Avatar Gen (NEW)** | Modal (GPU) — parallel after TTS |
+| 3 | Image Gen (FLUX) | RunPod 590 |
+| 4 | Video Segments (Ken Burns) | RunPod (CPU) |
+| 1' | **Avatar Gen (NEW)** | RunPod (GPU) — parallel after TTS |
 | 5 | FFmpeg Concat + Overlay | Local |
 | 6 | Upload to Supabase | Local |
 
@@ -157,8 +161,11 @@ TTS (1) ──┬──→ Scene Extraction (2) → Image Gen (3) → Video Segm
 | 4 | Avatar size: What % of frame? | Phase 3 (overlay dimensions) |
 | 5 | Acceptable turnaround time for a 10-minute video? | Phase 1 (speed gate) |
 | 6 | Acceptable turnaround time for a 1-hour video? | Phase 1 (speed gate) |
+| 7 | Do you see any workaround for the EU licensing restriction on HunyuanVideo-Avatar? (e.g., business entity, legal advice) | Model selection (if workaround exists, HunyuanVideo-Avatar becomes viable) |
 
-**Note:** Style question (head vs half-body) removed. EchoMimicV2 is half-body only.
+**Notes:**
+- Style question (head vs half-body) removed. EchoMimicV2 is half-body only.
+- Question 7: If Paul knows a legal workaround, HunyuanVideo-Avatar's quality advantage (85-90% vs 80-85%) could justify switching.
 
 ---
 
@@ -173,12 +180,3 @@ TTS (1) ──┬──→ Scene Extraction (2) → Image Gen (3) → Video Segm
 | 3: Integration | Implementation | Avatar working in pipeline |
 
 **Key insight:** Phases 1-2 are "paid discovery" with uncertain outcomes. Phase 3 is predictable engineering once discovery passes.
-
----
-
-## Next Steps
-
-1. Send questions to Paul (7 questions above)
-2. Define pricing per phase
-3. Create formal contract/proposal
-4. Begin Phase 1 after contract signed
