@@ -101,6 +101,8 @@ Each phase has a confidence gate. Work stops if a phase fails.
 
 ## Phase 3: Integration + Deployment
 
+> **Draft:** This phase is a preliminary outline. Actual scope will be validated after Phase 2's integration architecture design (atom 2.3).
+
 **Goal:** Wire avatar into production pipeline.
 
 | Atom | What | Output |
