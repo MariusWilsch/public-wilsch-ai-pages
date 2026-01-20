@@ -31,7 +31,7 @@ publish: true
 
 ### Außerhalb Umfang
 - Telefon-Support oder Live-Chat
-- Automatische Synchronisation mit core.iitr.de
+- Automatische Synchronisation der Textinhalte mit core.iitr.de (einmalige Extraktion)
 - Änderungen an bestehender POC-Funktionalität
 
 ---
