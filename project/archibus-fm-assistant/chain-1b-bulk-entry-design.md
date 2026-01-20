@@ -123,7 +123,7 @@ From [Don't Waste Your Backpressure](https://banay.me/dont-waste-your-backpressu
 
 ### Component 5: Context Engineering
 
-**Hierarchy IS a property of schema** (FK relationships). The real question is how to encode schema into AI context.
+**Hierarchy IS a property of schema** (FK relationships). The real question is how to encode schema into AI context. ([Read more](https://www.anthropic.com/engineering/effective-context-engineering-for-ai-agents))
 
 **Two approaches:**
 - A: Let AI try (trial and error)
