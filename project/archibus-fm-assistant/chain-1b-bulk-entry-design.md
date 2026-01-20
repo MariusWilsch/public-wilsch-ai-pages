@@ -141,9 +141,3 @@ From [Don't Waste Your Backpressure](https://banay.me/dont-waste-your-backpressu
 | 9 | Loop Mechanism | Architecture | Batch / Streaming / Interactive |
 
 These are implementation-specific.
-
-## Related Issues
-
-- [#373: AI Bulk Data Entry Prototype for FMM Use Case](https://github.com/DaveX2001/deliverable-tracking/issues/373)
-- [#267: Value Discovery Methodology](https://github.com/DaveX2001/deliverable-tracking/issues/267)
-- [#146: AI querying large SQL datasets](https://github.com/DaveX2001/deliverable-tracking/issues/146) (related: insertion mechanisms)
