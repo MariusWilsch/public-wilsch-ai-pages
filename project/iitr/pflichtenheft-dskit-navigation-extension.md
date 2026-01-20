@@ -40,7 +40,7 @@ publish: true
 
 ### Website-Extraktion (core.iitr.de)
 
-- **FR-E01:** Alle DS-Kit-relevanten Kapitel aus core.iitr.de extrahieren
+- **FR-E01:** Textinhalte der DS-Kit-relevanten Kapitel aus core.iitr.de extrahieren (nur Text – keine Videos, keine Transkripte)
 - **FR-E02:** Extrahierte Inhalte in Typesense indexieren, Genauigkeit bei DATA-GAP-Fragen verbessern (Q6, Q12, Q13, Q17, Q18, Q24, Q27)
 
 ### Support-Eskalation Level 2
