@@ -90,7 +90,7 @@ From [Don't Waste Your Backpressure](https://banay.me/dont-waste-your-backpressu
 
 **Requirements:** Real client data OR synthetic test data
 
-### Component 3: Intelligent Mapping
+### Component 3: AI-Powered Mapping
 
 **What it is:** AI reasons about messy input to find the right schema destination - not just column matching, but understanding what the data *means*
 
