@@ -11,19 +11,15 @@ Partners spend days reformatting client Excel for Bruce onboarding. This is low-
 
 ## Success Definition
 
-> **AI fills schema where confident, asks where uncertain, flags what it cannot resolve - using schema validation as the feedback loop for self-correction.**
+> **AI fills background tables where confident, asks where uncertain, flags what it cannot resolve - using data validation as the feedback loop for self-correction.**
 
-Think of it like spell-check for data structure: red squiggles appear when data doesn't fit the schema, with suggestions for how to fix it.
+Think of it like spell-check for data structure: red squiggles appear when data doesn't fit, with suggestions for how to fix it.
 
 **Goal:** Speed up the process, not achieve 100% perfection. If we can reduce partner onboarding time, that's success.
 
 ## How It Works
 
-```
-INPUT (messy Excel) → MAPPING → SCHEMA (feedback) → OUTPUT (accepted + rejected)
-                                    ↑
-                              AI iterates here
-```
+![Chain 1B Flow](chain-1b-flow.png)
 
 1. **Client uploads messy Excel** - inconsistent columns, varying naming conventions
 2. **AI maps columns to Bruce schema fields** - fuzzy matching, semantic understanding

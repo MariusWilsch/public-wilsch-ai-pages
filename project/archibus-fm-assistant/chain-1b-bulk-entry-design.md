@@ -1,8 +1,5 @@
 ---
 publish: true
-date: 2026-01-19
-source: Dec 30 meeting synthesis + Jan 19 decomposition session
-status: draft
 ---
 
 # Chain 1B: AI Bulk Data Entry - Design Document
@@ -36,11 +33,7 @@ From [Don't Waste Your Backpressure](https://banay.me/dont-waste-your-backpressu
 - **Mapping = connecting input TO the backpressure mechanism**
 - **Validation = executing the backpressure** (the actual accept/reject loop)
 
-```
-INPUT (messy Excel) → MAPPING → SCHEMA (backpressure) → OUTPUT (accepted + rejected)
-                                    ↑
-                              AI iterates here
-```
+![Chain 1B Flow](chain-1b-flow.png)
 
 ## Success Definition
 
@@ -70,40 +63,34 @@ INPUT (messy Excel) → MAPPING → SCHEMA (backpressure) → OUTPUT (accepted +
 
 ## Component Decomposition
 
-### Component 1: Schema (BLOCKED)
+### Component 1: Schema
 
 **What it is:** Bruce BEM background data tables
 
-**What we know:**
+**Characteristics:**
 - "Background data" = spatial drill down + assets + people
 - Spatial hierarchy: site → building → floor → room → desk
 - Bruce BEM has different structure than Archibus (hierarchy in same table vs separate)
 
-**What we need:** List of Bruce BEM tables for background data
-
-**Action:** Rein session with questions:
-1. What are the Bruce BEM background data tables?
-2. What insertion mechanisms does Bruce BEM support?
+**Requirements:**
+- List of Bruce BEM background data tables
+- Insertion mechanisms Bruce BEM supports
 
 **Why this matters:** Schema IS the backpressure mechanism. Without it, the loop has nothing to validate against.
 
-### Component 2: Inputs (PARTIAL)
+### Component 2: Inputs
 
 **What it is:** Sample client Excel files
 
-**What we know:**
+**Characteristics:**
 - Clients give Excel (inconsistent formats)
 - Column names vary (equipment_code vs eq_id vs asset_id)
 - Data often incomplete
 - Format unpredictable
 
-**What we need:** Real client data OR synthetic test data
+**Requirements:** Real client data OR synthetic test data
 
-**Action:** Contact Ali/Mujahid for sample Excel (any client works)
-
-**Fallback:** Create synthetic test data
-
-### Component 3: Mapping (BLOCKED by 1+2)
+### Component 3: Mapping
 
 **What it is:** Connecting messy input columns → schema fields
 
@@ -119,9 +106,9 @@ INPUT (messy Excel) → MAPPING → SCHEMA (backpressure) → OUTPUT (accepted +
 4. Hierarchy detection (is this a Site or Building?)
 5. Missing field handling
 
-**Status:** Design after schema + input available
+**Dependencies:** Requires schema + input
 
-### Component 4: Validation Rules (BLOCKED by 1)
+### Component 4: Validation Rules
 
 **Two types of correctness:**
 
@@ -134,13 +121,9 @@ INPUT (messy Excel) → MAPPING → SCHEMA (backpressure) → OUTPUT (accepted +
 
 **Value validation:** Lookup existing data, ask human, contextual inference
 
-**Action:** Clarify validation rules when discussing schema with Rein
+### Component 5: Context Engineering
 
-### Component 5: Hierarchy → Context Engineering
-
-**Original framing:** Hierarchy enforcement (site → building → floor → room → asset)
-
-**Refined framing:** Hierarchy IS a property of schema (FK relationships). The real question is **context engineering** - how do we encode schema into AI?
+**Hierarchy IS a property of schema** (FK relationships). The real question is how to encode schema into AI context.
 
 **Two approaches:**
 - A: Let AI try (trial and error)
@@ -148,7 +131,7 @@ INPUT (messy Excel) → MAPPING → SCHEMA (backpressure) → OUTPUT (accepted +
 
 **Hypothesis:** Background data tables are KNOWN and STABLE → encode into AI context
 
-### Components 6-9: Design Decisions (After Prototype)
+### Components 6-9: Design Decisions
 
 | # | Component | Decision Type | Options |
 |---|-----------|---------------|---------|
@@ -157,52 +140,10 @@ INPUT (messy Excel) → MAPPING → SCHEMA (backpressure) → OUTPUT (accepted +
 | 8 | Output Format | UX | JSON / Excel / Dashboard / Report |
 | 9 | Loop Mechanism | Architecture | Batch / Streaming / Interactive |
 
-These are implementation-specific. Decide during prototyping.
-
-## Dependencies
-
-```
-Schema (Rein) ──┬──→ Mapping
-                │
-Input (Ali) ────┘
-                │
-                ↓
-        Context Engineering
-                │
-                ↓
-           Prototype
-                │
-                ↓
-      Design Decisions (6-9)
-```
-
-**Critical path:** Schema unlocks everything.
-
-## Action Plan
-
-1. **Schedule Rein session**
-   - Q1: What are Bruce BEM background data tables?
-   - Q2: What insertion mechanisms does Bruce BEM support?
-
-2. **Get sample input** (parallel)
-   - Contact Ali/Mujahid for real client Excel
-   - Fallback: synthetic test data
-
-3. **Create summary document** → Share for team alignment
-
-4. **Design context engineering** → How AI uses schema
-
-5. **Prototype the loop**
+These are implementation-specific.
 
 ## Related Issues
 
 - [#373: AI Bulk Data Entry Prototype for FMM Use Case](https://github.com/DaveX2001/deliverable-tracking/issues/373)
 - [#267: Value Discovery Methodology](https://github.com/DaveX2001/deliverable-tracking/issues/267)
 - [#146: AI querying large SQL datasets](https://github.com/DaveX2001/deliverable-tracking/issues/146) (related: insertion mechanisms)
-
-## Meeting Sources
-
-- Dec 18: Pattern encoding session (7 chains identified)
-- Dec 23: Chain prioritization (1B → 3 → 7 sequence)
-- Dec 30: Bulk Entry Spike (workflow definition, hierarchy constraint)
-- Jan 19: Component decomposition session
