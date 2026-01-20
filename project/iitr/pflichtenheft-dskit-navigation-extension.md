@@ -51,12 +51,7 @@ publish: true
 
 ---
 
-## 4. Aufwand und Preis
-
-| | |
-|---|---|
-| **Aufwand geschätzt** | ~4 Stunden |
-| **Preis** | EUR 800 (Fixpreis) |
+**Preis:** EUR 800 (Fixpreis)
 
 ---
 
