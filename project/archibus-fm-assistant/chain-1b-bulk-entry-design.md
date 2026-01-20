@@ -90,9 +90,9 @@ From [Don't Waste Your Backpressure](https://banay.me/dont-waste-your-backpressu
 
 **Requirements:** Real client data OR synthetic test data
 
-### Component 3: Mapping
+### Component 3: Intelligent Mapping
 
-**What it is:** Connecting messy input columns → schema fields
+**What it is:** AI reasons about messy input to find the right schema destination - not just column matching, but understanding what the data *means*
 
 **This is the core problem:**
 - Fuzzy matching (equipment_code ≈ eq_id)
