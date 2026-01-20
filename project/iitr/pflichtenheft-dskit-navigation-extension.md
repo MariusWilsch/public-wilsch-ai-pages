@@ -25,9 +25,9 @@ publish: true
 - Website-Extraktion: Kapitel von core.iitr.de extrahieren und indexieren
 - Support-Eskalation: "Support kontaktieren"-Button bei unsicheren Antworten
 
-### Später (Nach Erweiterung)
-- Integration neuer Masterfragen (wenn von Stellmacher bereitgestellt)
-- CSV-Updates für Detailfragen
+### Später (Wartet auf Kundenzulieferung)
+- Integration neuer Masterfragen – wartet auf Zulieferung von Stellmacher (~Ende Januar)
+- Zusätzliche Q&A-Paare – Stellmacher liefert erweiterte CSV mit Detailfragen
 
 ### Außerhalb Umfang
 - Telefon-Support oder Live-Chat
