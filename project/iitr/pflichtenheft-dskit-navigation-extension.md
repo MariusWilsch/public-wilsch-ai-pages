@@ -53,6 +53,3 @@ publish: true
 
 **Preis:** EUR 800 (Fixpreis)
 
----
-
-*WILSCH AI SERVICES OÜ | Harju maakond, Tallinn, Sepapaja tn 6, 15551*
