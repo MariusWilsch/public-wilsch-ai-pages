@@ -19,7 +19,7 @@ Think of it like spell-check for data structure: red squiggles appear when data 
 
 ## How It Works
 
-![Chain 1B Flow](chain-1b-flow.png)
+<img src="chain-1b-flow.png" width="600" alt="Chain 1B Flow">
 
 1. **Client uploads messy Excel** - inconsistent columns, varying naming conventions
 2. **AI maps columns to Bruce schema fields** - fuzzy matching, semantic understanding

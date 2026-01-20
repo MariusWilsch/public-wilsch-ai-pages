@@ -33,7 +33,7 @@ From [Don't Waste Your Backpressure](https://banay.me/dont-waste-your-backpressu
 - **Mapping = connecting input TO the backpressure mechanism**
 - **Validation = executing the backpressure** (the actual accept/reject loop)
 
-![Chain 1B Flow](chain-1b-flow.png)
+<img src="chain-1b-flow.png" width="600" alt="Chain 1B Flow">
 
 ## Success Definition
 
