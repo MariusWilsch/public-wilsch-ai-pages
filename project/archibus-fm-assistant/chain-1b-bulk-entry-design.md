@@ -37,7 +37,7 @@ From [Don't Waste Your Backpressure](https://banay.me/dont-waste-your-backpressu
 
 ## Success Definition
 
-> "An AI-powered feedback loop that fills background data schema as much as possible from client inputs, flags what it cannot fill, thereby freeing partner time."
+> "An AI-powered feedback loop that fills background data schema as much as possible from client inputs, asks where uncertain, flags what it cannot fill, thereby freeing partner time."
 
 | Element | Definition |
 |---------|------------|

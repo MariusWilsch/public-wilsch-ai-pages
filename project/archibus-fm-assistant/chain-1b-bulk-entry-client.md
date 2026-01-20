@@ -11,7 +11,7 @@ Partners spend days reformatting client Excel for Bruce onboarding. This is low-
 
 ## Success Definition
 
-> **AI fills where confident, asks where you can help, flags what needs decision** - using data validation as the feedback loop for self-correction.
+> **AI fills background tables where confident, asks where uncertain, flags what it cannot resolve** - using data validation as the feedback loop for self-correction.
 
 Think of it like spell-check for data structure: red squiggles appear when data doesn't fit, with suggestions for how to fix it.
 
