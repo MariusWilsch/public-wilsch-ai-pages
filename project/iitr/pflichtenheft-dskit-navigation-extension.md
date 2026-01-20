@@ -16,7 +16,6 @@ publish: true
 | **Projekt** | DS-Kit Navigation – Erweiterung |
 | **Auftraggeber** | IITR Datenschutz GmbH |
 | **Auftragnehmer** | Wilsch AI Services OÜ |
-| **Basisdokument** | [Pflichtenheft DS-Kit Navigationssystem](pflichtenheft-dskit-navigation) |
 
 ---
 
