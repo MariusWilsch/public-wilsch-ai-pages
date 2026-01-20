@@ -33,9 +33,9 @@ End-to-end flow demonstrating:
 
 1. **Input:** Messy client Excel (like what Mujahid showed from Qatar Museum)
 2. **Processing:** AI validates against Bruce schema, asks clarifying questions
-3. **Output:** Clean data ready for import + actionable rejection list for human decisions
+3. **Output:** Data imported into background tables + actionable rejection list for human decisions
 
-The wow factor: "Here's messy data. Watch AI make it Bruce-ready."
+The wow factor: "Here's messy data. Watch AI put it into Bruce."
 
 ---
 
