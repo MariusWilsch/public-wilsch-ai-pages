@@ -27,7 +27,7 @@ The distinction isn't about whether issues have structure - both had issue bodie
 - Some issues output **specifications** (workflow definitions, architecture decisions, alignment documents)
 - Some issues output **implementations** (code, features, configurations from a specification)
 
-Even with perfect ACs, issues that output specifications require different judgment than issues that implement specifications. The ACs for a spec-creation issue judge "is the spec good?" while ACs for a spec-execution issue verify "does code match spec?"
+The verification method differs fundamentally between these types. Spec-creation outputs artifacts (documents, diagrams) - verified by DoD ("does this exist and cover the requirements?"). Spec-execution outputs behavior - verified by ACs ("does the code behave as specified?"). This distinction determines what's delegable: ACs enable someone else to verify without your judgment.
 
 **The existing maker/manager labels don't capture this:**
 - Maker = focused deep work (could be either type)
