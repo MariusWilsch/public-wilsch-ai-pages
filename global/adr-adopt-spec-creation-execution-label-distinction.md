@@ -122,19 +122,9 @@ The E-Myth describes this as the core founder struggle: entrepreneurs start doin
 - Build backpressure systems (tests, types, builds) to enable spec-execution quality
 - Eventually: can spec-creation itself be partially delegated?
 
-## Implementation
+## Notes
 
-1. **Create labels** in deliverable-tracking:
-   ```bash
-   gh label create 'spec-creation' --description 'Output is a specification' --repo DaveX2001/deliverable-tracking
-   gh label create 'spec-execution' --description 'Implementing from a specification' --repo DaveX2001/deliverable-tracking
-   ```
-
-2. **Update BOARD-SOP.md:** Add labels to documentation, update grooming questions
-
-3. **Apply to existing issues:** During grooming, classify backlog/to-do items
-
-4. **Observe patterns:** Document what makes handoff work vs fail
+Implementation tracked in: [#357](https://github.com/DaveX2001/claude-code-improvements/issues/357)
 
 ## Related
 
