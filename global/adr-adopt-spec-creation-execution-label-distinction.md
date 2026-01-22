@@ -70,6 +70,28 @@ MANAGER (quick coordination)
 
 Initial heuristic: If the issue's Definition of Done includes "Define X" or "Design X" as the primary deliverable, it's likely spec-creation. If it includes "Implement X" or "Build X" per an existing design, it's spec-execution.
 
+### Verification by Type
+
+The verification method differs by issue type:
+
+| Issue Type | DoD | ACs (Given-When-Then) | Why |
+|------------|-----|----------------------|-----|
+| **spec-creation** | Required | Optional/rare | Output is an artifact (document, diagram), not behavior |
+| **spec-execution** | Required | Required | ACs enable delegation - someone else can verify "does code match AC?" |
+
+**Rationale:** ACs are designed for behavioral verification ("Given X, When Y, Then Z"). Spec-creation outputs artifacts, not behavior. You can't meaningfully write: "Given problem context, When stakeholder reads spec, Then they understand" - that's subjective.
+
+**For spec-creation, DoD handles verification:**
+- "Workflow diagram exists"
+- "Decision covers options A, B, C"
+- "Stakeholders aligned"
+- "Reviewed by X"
+
+**For spec-execution, ACs enable delegation:**
+- Clear pass/fail criteria
+- Someone else can verify without needing your judgment
+- This is what makes handoff possible
+
 ## Research Basis
 
 | Term | Source |
