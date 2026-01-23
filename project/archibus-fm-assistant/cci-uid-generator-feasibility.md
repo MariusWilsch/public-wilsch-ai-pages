@@ -81,15 +81,11 @@ Specific instance → 03
 OUTPUT: CO-GPB03
 ```
 
-## What I Need to Validate
+## What I Need
 
-To confirm this works for your use case, I need **one real example**:
-
-1. **Your input:** What do you see/know when you create a UID?
-2. **Your output:** What CCI code did you produce?
-3. **Your process:** How did you look it up?
-
-**Key question:** Do you know the *specific* asset type (e.g., "centrifugal pump") or just the *generic* category (e.g., "pump")?
+1. **Example input data** - Excel, screenshot, whatever format you have
+2. **Input type** - Structured, unstructured, or both?
+3. **What success looks like** - Expected output for that input
 
 ## Resources
 
