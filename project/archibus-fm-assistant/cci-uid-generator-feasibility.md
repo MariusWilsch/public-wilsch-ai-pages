@@ -46,32 +46,50 @@ CO-GPB01%GPB03(DA01;5;30;75)
 
 ### Why AI could do this
 
-Given structured input, AI can:
-1. Identify asset type → select correct table (CO for components)
-2. Map asset name to class code → lookup in table
-3. Add type/variant code → if specified
-4. Append properties → if provided
+Given any input (structured or natural language), AI can:
+1. Parse and extract the asset type
+2. Select correct table (CO for components)
+3. Map asset name to class code via lookup
+4. Add type/variant and properties if provided
 
-## Open Question: Input Structure
+## How It Works
 
-**We don't know what data Kaia starts with.**
+**Input:** Any description of the asset
+**Output:** CCI code
 
-| Input Scenario | Feasibility |
-| -------------- | ----------- |
-| Structured fields (asset_type: "centrifugal_pump") | Easy |
-| Semi-structured (spreadsheet with some typed fields) | Medium |
-| Free-text ("there's a pump somewhere") | Hard |
+### Example Mapping
 
-## Next Step: Request from Kaia
+| Input | → | CCI Code |
+| ----- | - | -------- |
+| "centrifugal pump" | → | CO-GPB03 |
+| "there's a pump in room 201" | → | CO-GPB (+ location) |
+| "liquid velocity pump, 5 l/s" | → | CO-GPB03(DA01;5) |
 
-To validate feasibility, we need ONE worked example:
+### The Lookup Path
 
-> "Please provide:
-> 1. **Input:** What data do you START with? (screenshot or export from Bruce BEM)
-> 2. **Output:** What CCI code did you CREATE?
-> 3. **Process:** What steps did you take to look it up?"
+```
+"centrifugal pump"
+      ↓
+It's a physical component → CO table
+      ↓
+It's a pump → GP category
+      ↓
+It's centrifugal (velocity-based) → GPB
+      ↓
+Specific instance → 03
+      ↓
+OUTPUT: CO-GPB03
+```
 
-This tells us if the input structure supports automation.
+## What I Need to Validate
+
+To confirm this works for your use case, I need **one real example**:
+
+1. **Your input:** What do you see/know when you create a UID?
+2. **Your output:** What CCI code did you produce?
+3. **Your process:** How did you look it up?
+
+**Key question:** Do you know the *specific* asset type (e.g., "centrifugal pump") or just the *generic* category (e.g., "pump")?
 
 ## Resources
 
