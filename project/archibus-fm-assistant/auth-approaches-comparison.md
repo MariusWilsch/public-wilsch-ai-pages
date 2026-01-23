@@ -105,14 +105,3 @@ sequenceDiagram
 | Token generation | Bruce BEM creates tokens | Tiny app creates tokens |
 | State preservation | Broken | Works |
 
----
-
-## Open Questions for Rein
-
-1. **Auth validation:** Does Bruce BEM expose an API to validate credentials? Or does the tiny app need direct DB access?
-
-2. **Token format:** What format should userToken be? Does it need to match what Bruce BEM's API expects?
-
-3. **Hosting:** Where would the tiny app live? Same server as Bruce BEM? Separate?
-
-4. **SSO consideration:** Rein mentioned "if we want SSO services as well, this must be a little more complex." What does he envision for SSO?
