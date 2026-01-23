@@ -37,8 +37,8 @@ CO-GPB01%GPB03(DA01;5;30;75)
 
 ### Why it's deterministic
 
-1. **Table lookup is mechanical:** "Centrifugal pump" → GPB (no judgment needed)
-2. **616 component codes** in CO table - finite, well-defined mappings
+1. **Table lookup:** "Liquid velocity pump" → GPB (defined mapping)
+2. **802 component codes** in CO table - finite, well-defined mappings
 3. **Hierarchical structure:** Category → Subcategory → Specific (3 levels)
 4. **ISO-based rules:** Clear standards, not ad-hoc decisions
 
@@ -59,14 +59,14 @@ Given any input (structured or natural language), AI can:
 
 | Input | → | CCI Code |
 | ----- | - | -------- |
-| "centrifugal pump" | → | CO-GPB03 |
+| "liquid velocity pump" | → | CO-GPB03 |
 | "there's a pump in room 201" | → | CO-GPB (+ location) |
 | "liquid velocity pump, 5 l/s" | → | CO-GPB03(DA01;5) |
 
 ### The Lookup Path
 
 ```
-"centrifugal pump"
+"liquid velocity pump"
       ↓
 It's a physical component → CO table
       ↓
