@@ -5,8 +5,6 @@ publish: true
 # CCI UID Generator - Feasibility Assessment
 [[client-archibus]]
 
-**Status:** Assessment Complete | **Date:** 2026-01-23 | **Issue:** [#591](https://github.com/DaveX2001/deliverable-tracking/issues/591)
-
 ## Context
 
 Kaia asked if AI could automatically generate unique IDs for building assets based on CCI (Construction Classification International) rules. Currently this is done manually by looking up classification tables.
