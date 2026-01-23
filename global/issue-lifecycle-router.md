@@ -366,6 +366,7 @@ These documents apply across all stages:
 
 | Doc | URL | Purpose |
 |-----|-----|---------|
+| **Invocation Taxonomy** | [Link](https://mariuswilsch.github.io/public-wilsch-ai-pages/global/claude-code-extension-invocation-taxonomy) | Protocol vs Commands vs Skills - when to use what |
 | **Skills as Pre-packaged HOWs** | [Link](https://mariuswilsch.github.io/public-wilsch-ai-pages/global/skill-lifecycle-execution-timing) | How skills work in lifecycle |
 
 ---
