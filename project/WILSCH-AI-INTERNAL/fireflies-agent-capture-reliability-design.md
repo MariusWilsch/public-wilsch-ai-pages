@@ -6,8 +6,9 @@ publish: true
 [[claude-code-sdk-agents]]
 
 **Date:** 2026-01-23
-**Status:** Design (not implemented)
-**Owner:** To be assigned
+**Status:** Ready for Implementation
+**Owner:** David
+**Issue:** [#601](https://github.com/DaveX2001/deliverable-tracking/issues/601)
 **Repo:** `DaveX2001/deliverable-tracking/agents/fireflies-webhook`
 
 ---
@@ -60,6 +61,22 @@ Transcripts contain multiple topics. If topic segmentation fails, entire topics 
 Current approach: LLM identifies topics and routes in single pass.
 
 Potential improvement: External topic detection (e.g., AssemblyAI) as preprocessing step.
+
+### 3. Core Insight: Themes vs Action Items
+
+**The agent extracts the wrong thing.**
+
+| What agent does | What is needed |
+|-----------------|----------------|
+| Extracts **action items** (what to DO) | Identifies **parent themes** (what was DISCUSSED) |
+| "Send Estonian BIM requirements to Marius" | "Estonian BIM Standards" |
+| Verb-based: Send, Create, Research, Define | Noun-based: Marketing, BIM Standards, Trading |
+
+The agent's fundamental approach needs to change:
+- **From:** Find action items with assignees and deadlines
+- **To:** Identify the parent themes discussed in this meeting
+
+Marius (issue designer) then decides what actions to take for each theme.
 
 ---
 
