@@ -395,6 +395,8 @@ These documents apply across all stages:
 
 | Doc | URL | Purpose |
 |-----|-----|---------|
+| **Maker/Manager Schedule ADR** | [Link](https://mariuswilsch.github.io/public-wilsch-ai-pages/global/adr-adopt-maker-manager-schedule-separation) | Work style separation (ON vs IN the business) |
+| **Board SOP** | [Link](https://github.com/DaveX2001/deliverable-tracking/blob/main/docs/BOARD-SOP.md) | Board documentation and label usage |
 | **Invocation Taxonomy** | [Link](https://mariuswilsch.github.io/public-wilsch-ai-pages/global/claude-code-extension-invocation-taxonomy) | Protocol vs Commands vs Skills - when to use what |
 | **Skills as Pre-packaged HOWs** | [Link](https://mariuswilsch.github.io/public-wilsch-ai-pages/global/skill-lifecycle-execution-timing) | How skills work in lifecycle |
 
