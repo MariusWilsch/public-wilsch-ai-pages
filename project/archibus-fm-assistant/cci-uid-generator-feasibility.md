@@ -89,6 +89,7 @@ OUTPUT: CO-GPB03
 
 ## Resources
 
-- [CCI-EE Tables](https://ehituskeskus.ee/cci/ee-tabelid/) (Estonian, Excel downloads)
+- [CCI-EE Excel (2023.08.0.1)](https://ehituskeskus.ee/wp-content/uploads/2023/08/CCI-EE-2023.08.0.1.xlsx) - Source data with all classification tables
 - [CCI-EE Guidance PDF](https://ehituskeskus.ee/wp-content/uploads/2022/03/CCI-EE-guidance-material_14.02.2022_70-p_En.pdf) (English, 70 pages)
+- [CCI-EE Tables Portal](https://ehituskeskus.ee/cci/ee-tabelid/) (Estonian)
 - [FlowBIM CCI Introduction](https://flowbim.ee/cci-ee-context/introduction-cci-ee/)
