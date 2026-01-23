@@ -84,7 +84,9 @@ OUTPUT: CO-GPB03
 ## What I Need
 
 1. **Example input data** - Excel, screenshot, whatever format you have
+
 2. **Input type** - Structured, unstructured, or both?
+
 3. **What success looks like** - Expected output for that input
 
 ## Resources
