@@ -1,96 +1,65 @@
 ---
 publish: true
 ---
-# ADR: Adopt Spec-Creation / Spec-Execution Label Distinction
+# ADR: Adopt Maker/Spec-Design and Maker/Spec-Implement Label Distinction
 
 [[team-scaling]]
 
 ## Status
 
-Accepted (2026-01-22)
+Accepted (2026-01-22) | Updated (2026-01-23)
 
 ## Context
 
-After 6-8 weeks working with the Paul YouTube Faceless client, a clear pattern emerged: **I cannot do everything alone anymore.**
+After 6-8 weeks working with a client project, a clear pattern emerged: **I cannot do everything alone anymore.**
 
-The project ended with the client relationship terminating. Key learning: by the time I tried to delegate (14 days past deadline), there was no time to specify work for handoff. Issues existed with bodies (What/Why/Architecture) but tracking files were empty - no ACs, no clear "done" criteria for someone else to verify against.
+Key learning: by the time I tried to delegate, there was no time to specify work for handoff. Issues existed with bodies (What/Why) but tracking files were empty - no ACs, no clear "done" criteria for someone else to verify against.
 
-**Analysis of real issues revealed:**
+The distinction isn't about whether issues have structure. It's about **what the issue outputs**:
 
-| Issue Type | Example | Characteristic |
-|------------|---------|----------------|
-| Paul #491 (tracking.md) | Empty placeholder | No ACs - not delegation-ready |
-| Internal #320 (tracking.md) | Full ACs, Given-When-Then | Clear verification - delegation-ready |
-
-The distinction isn't about whether issues have structure - both had issue bodies. It's about **what the issue outputs**:
-
-- Some issues output **specifications** (workflow definitions, architecture decisions, alignment documents)
+- Some issues output **specifications** (workflow definitions, architecture decisions, design documents)
 - Some issues output **implementations** (code, features, configurations from a specification)
 
-The verification method differs fundamentally between these types. Spec-creation outputs artifacts (documents, diagrams) - verified by DoD ("does this exist and cover the requirements?"). Spec-execution outputs behavior - verified by ACs ("does the code behave as specified?"). This distinction determines what's delegable: ACs enable someone else to verify without your judgment.
+The verification method differs fundamentally between these types:
+- **Spec-design** outputs artifacts - verified by DoD ("does this exist?")
+- **Spec-implement** outputs behavior - verified by DoD + ACs ("does code behave as specified?")
 
-**The existing maker/manager labels don't capture this:**
-- Maker = focused deep work (could be either type)
-- Manager = quick coordination (admin, emails)
-- Both spec-creation and spec-execution are maker work
+This distinction determines what's delegable: ACs enable someone else to verify without your judgment.
 
 ## Decision
 
-**Adopt two new labels that distinguish issues by their output:**
+**Adopt two labels under MAKER that distinguish issues by context requirement:**
 
-### Labels
-
-| Label | Meaning | Who |
-|-------|---------|-----|
-| `spec-creation` | Output is a specification (workflow, decision, design doc) | Marius |
-| `spec-execution` | Output is implementation of an existing specification | David, Mohamed |
+| Label | Meaning | Context Requirement |
+|-------|---------|---------------------|
+| `maker/spec-design` | Output is a specification | Needs context OUTSIDE the issue |
+| `maker/spec-implement` | Output is implementation | Everything needed is IN the issue |
 
 ### Hierarchy
 
 ```
 MAKER (focused work)
-├── spec-creation  ← Designing specifications (Marius)
-└── spec-execution ← Implementing from specifications (David, Mohamed)
+├── maker/spec-design   ← Designing specifications
+└── maker/spec-implement ← Implementing from specifications
 
 MANAGER (quick coordination)
-└── unchanged (admin, emails, decisions)
+└── unchanged
 ```
 
-### Team Mapping
+### Core Distinction
 
-| Person | Scope |
-|--------|-------|
-| **Marius** | Spec-creation (all complexity levels) |
-| **David** | Spec-execution: single-phase systems (agents, bots, admin/ops, content) |
-| **Mohamed** | Spec-execution: multi-phase systems (backend + database + frontend) |
+**Context containment determines type:**
+- If the work requires exploration, decisions, external knowledge → `maker/spec-design`
+- If the issue is self-contained and executable as-is → `maker/spec-implement`
 
-### Handoff Criteria
+### Verification Rationale
 
-**Build → Learn → Refine approach:** Don't over-define upfront. Start using labels based on judgment, observe patterns, formalize criteria over time.
+| Type | DoD | ACs | Why |
+|------|-----|-----|-----|
+| **maker/spec-design** | Required | Optional | Output is artifact, not behavior |
+| **maker/spec-implement** | Required | Required | ACs enable delegation |
 
-Initial heuristic: If the issue's Definition of Done includes "Define X" or "Design X" as the primary deliverable, it's likely spec-creation. If it includes "Implement X" or "Build X" per an existing design, it's spec-execution.
-
-### Verification by Type
-
-The verification method differs by issue type:
-
-| Issue Type | DoD | ACs (Given-When-Then) | Why |
-|------------|-----|----------------------|-----|
-| **spec-creation** | Required | Optional/rare | Output is an artifact (document, diagram), not behavior |
-| **spec-execution** | Required | Required | ACs enable delegation - someone else can verify "does code match AC?" |
-
-**Rationale:** ACs are designed for behavioral verification ("Given X, When Y, Then Z"). Spec-creation outputs artifacts, not behavior. You can't meaningfully write: "Given problem context, When stakeholder reads spec, Then they understand" - that's subjective.
-
-**For spec-creation, DoD handles verification:**
-- "Workflow diagram exists"
-- "Decision covers options A, B, C"
-- "Stakeholders aligned"
-- "Reviewed by X"
-
-**For spec-execution, ACs enable delegation:**
-- Clear pass/fail criteria
-- Someone else can verify without needing your judgment
-- This is what makes handoff possible
+ACs are designed for behavioral verification. Spec-design outputs artifacts, not behavior - DoD handles verification ("artifact exists", "decision documented").
 
 ## Research Basis
 
@@ -100,34 +69,28 @@ The verification method differs by issue type:
 | Problem Space vs Solution Space | Product management discipline |
 | Work ON vs Work IN the business | Michael Gerber (E-Myth Revisited) |
 
-The E-Myth describes this as the core founder struggle: entrepreneurs start doing technical work, realize they need to work ON systems, but can't let go of execution because no one else "gets it."
-
-**The backpressure insight** (from banay.me): Systems with automated feedback mechanisms (builds, type checkers, tests) enable spec-execution delegation. Without backpressure, the context holder spends their time manually catching errors.
+**The backpressure insight** (from banay.me): Systems with automated feedback mechanisms enable delegation. Without backpressure, the context holder spends time manually catching errors.
 
 ## Consequences
 
 **Positive:**
-- Clear visual distinction on board: "Marius needs to design this" vs "ready for delegation"
-- Enables working ON the business (spec-creation) vs IN the business (spec-execution)
-- Scalable: as team grows, spec-execution capacity grows
-- Forces specification discipline: issues must be spec-complete before delegation
+- Clear visual distinction: "needs design" vs "ready for delegation"
+- Enables working ON the business vs IN the business
+- Scalable: as team grows, spec-implement capacity grows
 
 **Negative:**
 - Additional labels to maintain
-- Handoff point requires judgment (not fully automated)
-- Spec-creation still bottlenecked on Marius
+- Handoff point requires judgment
 
-**Mitigations:**
-- Learn handoff criteria through real examples
-- Build backpressure systems (tests, types, builds) to enable spec-execution quality
-- Eventually: can spec-creation itself be partially delegated?
+## Implementation
 
-## Notes
-
-Implementation tracked in: [#357](https://github.com/DaveX2001/claude-code-improvements/issues/357)
+See [Issue Lifecycle Router](https://mariuswilsch.github.io/public-wilsch-ai-pages/global/issue-lifecycle-router) for:
+- Detailed workflows by type
+- Stage definitions
+- Tools and skills
+- Gap analysis
 
 ## Related
 
-- [Maker/Manager Schedule ADR](./adr-adopt-maker-manager-schedule-separation.md) - Work style separation
-- [BOARD-SOP.md](https://github.com/DaveX2001/deliverable-tracking/blob/main/docs/BOARD-SOP.md) - Board documentation
-- [Don't Waste Your Backpressure](https://banay.me/dont-waste-your-backpressure/) - Feedback mechanisms for delegation
+- [Issue Lifecycle Router](https://mariuswilsch.github.io/public-wilsch-ai-pages/global/issue-lifecycle-router) - Implementation workflows
+- [Don't Waste Your Backpressure](https://banay.me/dont-waste-your-backpressure/) - Feedback mechanisms
