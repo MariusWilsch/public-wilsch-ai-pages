@@ -22,7 +22,7 @@ Router document for issue lifecycle. Issues follow one of two paths based on typ
 |-----------|---------|
 | **Immediate capture** | Work only exists in issues - email comes in → create issue immediately |
 | **Fast closing** | Issues should close quickly, not linger in backlog |
-| **Cascade creation** | Close one → spawn next if needed (spec-design → spec-implement) |
+| **Cascade creation** | Close one → spawn next if needed (maker/spec-design → maker/spec-implement) |
 | **No floating context** | Nothing lives outside the system - no emails sitting, no "I'll remember" |
 
 ### Closure Clarity
@@ -31,8 +31,8 @@ Router document for issue lifecycle. Issues follow one of two paths based on typ
 
 | Type | Closure Criteria |
 |------|------------------|
-| **spec-design** | Artifact created (design doc, follow-up issue) |
-| **spec-implement** | DoD + AC verified |
+| **maker/spec-design** | Artifact created (design doc, follow-up issue) |
+| **maker/spec-implement** | DoD + AC verified |
 | **Waiting for feedback** | Set deadline - close if no response by X |
 
 **AI should infer closure criteria** based on type. This is automatic, not a separate decision.
@@ -43,8 +43,8 @@ Router document for issue lifecycle. Issues follow one of two paths based on typ
 
 | Type | Description | Context Requirement | Executor |
 |------|-------------|---------------------|----------|
-| **spec-design** | Creates specs to be executed later | Needs context OUTSIDE the issue | Marius |
-| **spec-implement** | Implementable directly | Everything needed is IN the issue | David, Mohamed |
+| **maker/spec-design** | Creates specs to be executed later | Needs context OUTSIDE the issue | Marius |
+| **maker/spec-implement** | Implementable directly | Everything needed is IN the issue | David, Mohamed |
 
 **Key insight:** Type is about context containment, not output format.
 
@@ -52,27 +52,27 @@ Router document for issue lifecycle. Issues follow one of two paths based on typ
 
 ## Path Overview
 
-### Path A: spec-design (3 stages)
+### Path A: maker/spec-design (3 stages)
 
 ```
 Stage 1: Creation
-  └─ Shell + spec-design label
+  └─ Shell + maker/spec-design label
        ↓
 Stage 2: Design = Execution
   └─ rubber-duck creates artifact
        ↓
 Stage 3: Closing
   └─ Artifact determines action:
-     • Internal spec → Create spec-implement issue
+     • Internal spec → Create maker/spec-implement issue
      • Client deliverable → Send to client
   └─ Label "done", issue closed
 ```
 
-### Path B: spec-implement (5 stages)
+### Path B: maker/spec-implement (5 stages)
 
 ```
 Stage 1: Creation
-  └─ Shell + spec-implement label
+  └─ Shell + maker/spec-implement label
        ↓
 Stage 2: Design
   └─ rubber-duck + ac-create (DoD + AC)
@@ -103,14 +103,14 @@ Work is identified as needing tracking. The `deliverable-tracking` skill creates
 | **Why?** | Motivation/importance |
 | **Tracking** | `[DoD + AC](to be created via /rubber-duck)` (placeholder) |
 | **Notes** | Optional references, blockers, context |
-| **Label** | `backlog` + (`spec-design` OR `spec-implement`) |
+| **Label** | `backlog` + (`maker/spec-design` OR `maker/spec-implement`) |
 
 ### Type Determination
 
 | Type | Assign When |
 |------|-------------|
-| `spec-design` | Needs context outside the issue (exploration, decisions required) |
-| `spec-implement` | Self-contained (everything needed is in the issue) |
+| `maker/spec-design` | Needs context outside the issue (exploration, decisions required) |
+| `maker/spec-implement` | Self-contained (everything needed is in the issue) |
 
 **If wrong:** Corrected during Design stage (rubber-duck reveals truth).
 
@@ -139,7 +139,7 @@ An issue should be EITHER about designing something OR about implementing someth
 | **Mix prevention** | deliverable-tracking skill | Detect conflated issues → prompt split |
 | **design-doc skill** | NEW skill | Standalone skill for design docs |
 | **Protocol: Lifecycle start** | CLAUDE.md | AI understands issues start as reminders, get refined (abstract concept) |
-| **Label rename** | ADR + GitHub | spec-creation → spec-design, spec-execution → spec-implement |
+| **Label rename** | ADR + GitHub | spec-creation → maker/spec-design, spec-execution → maker/spec-implement |
 
 ---
 
@@ -151,7 +151,7 @@ Pull issue from backlog. Process differs by type.
 
 ### Process by Type
 
-#### spec-design path
+#### maker/spec-design path
 
 ```
 1. Pull issue (onboarding)
@@ -160,9 +160,9 @@ Pull issue from backlog. Process differs by type.
 3. → Closing (Stage 3)
 ```
 
-**No separate execution stage** - rubber-duck session IS the execution for spec-design.
+**No separate execution stage** - rubber-duck session IS the execution for maker/spec-design.
 
-#### spec-implement path
+#### maker/spec-implement path
 
 ```
 1. Pull issue (onboarding)
@@ -179,13 +179,13 @@ Pull issue from backlog. Process differs by type.
 | Tool | Used For |
 |------|----------|
 | **rubber-duck** | Both types: externalization |
-| **ac-create** | spec-implement only: DoD + AC |
-| **design-doc** (NEW) | spec-design: create design doc artifact |
+| **ac-create** | maker/spec-implement only: DoD + AC |
+| **design-doc** (NEW) | maker/spec-design: create design doc artifact |
 
 ### Purpose
 
-- **spec-design:** Think through problem + create specification artifact (same session)
-- **spec-implement:** Prepare issue for delegation (DoD + AC defined)
+- **maker/spec-design:** Think through problem + create specification artifact (same session)
+- **maker/spec-implement:** Prepare issue for delegation (DoD + AC defined)
 
 ### Router Links
 
@@ -194,14 +194,14 @@ Pull issue from backlog. Process differs by type.
 | **AC DoD Framework** | [Link](https://mariuswilsch.github.io/public-wilsch-ai-pages/global/ac-dod-framework) | DoD vs AC distinction, enumeration method |
 | **task-lifecycle-reference** | [Link](https://mariuswilsch.github.io/public-wilsch-ai-pages/global/task-lifecycle-reference) | Rubber-duck mode definition, phase overview |
 | rubber-duck skill | Local | Externalization methodology |
-| ac-create skill | Local | DoD + AC (spec-implement) |
+| ac-create skill | Local | DoD + AC (maker/spec-implement) |
 | design-doc skill (NEW) | TBD | Create design artifacts |
 
 ### Gap Analysis
 
 | Gap | Where | What's Needed |
 |-----|-------|---------------|
-| **Type-aware workflow** | Skills | Clear branching: spec-design → rubber-duck only, spec-implement → rubber-duck + ac-create |
+| **Type-aware workflow** | Skills | Clear branching: maker/spec-design → rubber-duck only, maker/spec-implement → rubber-duck + ac-create |
 | **design-doc skill** | NEW skill | Standalone skill with template |
 | **design-doc trigger** | TBD | Behavioral trigger - WHEN during rubber-duck to invoke |
 | **Type correction path** | TBD (either rubber-duck OR ac-create) | Update label if type was wrong at creation |
@@ -211,7 +211,7 @@ Pull issue from backlog. Process differs by type.
 
 ## Stage 3: EXECUTION
 
-### Path A: spec-design
+### Path A: maker/spec-design
 
 **Stage 2 = Execution** (combined)
 
@@ -226,7 +226,7 @@ Design (rubber-duck) creates artifact directly:
 
 **No separate Stage 3** - execution happens during Design.
 
-### Path B: spec-implement
+### Path B: maker/spec-implement
 
 **Stage 3: Separate Execution**
 
@@ -245,7 +245,7 @@ New session (David/Mohamed):
 → Review (Stage 4)
 ```
 
-### Tools (spec-implement only)
+### Tools (maker/spec-implement only)
 
 | Tool | Purpose |
 |------|---------|
@@ -262,13 +262,13 @@ New session (David/Mohamed):
 
 | Gap | Where | What's Needed |
 |-----|-------|---------------|
-| None | - | Ship with Confidence covers spec-implement execution |
+| None | - | Ship with Confidence covers maker/spec-implement execution |
 
 ---
 
 ## Stage 4: REVIEW
 
-### Path A: spec-design
+### Path A: maker/spec-design
 
 **No Review stage** - Marius creates and owns the artifact, no handoff.
 
@@ -278,7 +278,7 @@ After Design (artifact created):
 → Closing (directly)
 ```
 
-### Path B: spec-implement
+### Path B: maker/spec-implement
 
 **Stage 4: Review**
 
@@ -296,7 +296,7 @@ Marius batch review session:
 → Closing (Stage 5)
 ```
 
-### Tools (spec-implement only)
+### Tools (maker/spec-implement only)
 
 | Tool | Purpose |
 |------|---------|
@@ -319,7 +319,7 @@ Marius batch review session:
 
 ## Stage 5: CLOSING
 
-### Path A: spec-design
+### Path A: maker/spec-design
 
 **Stage 3: Closing**
 
@@ -327,7 +327,7 @@ Marius batch review session:
 After Design (artifact created):
      ↓
 Artifact type determines action:
-  - Internal spec → Create spec-implement issue (deliverable-tracking)
+  - Internal spec → Create maker/spec-implement issue (deliverable-tracking)
   - Client deliverable → Send to client
      ↓
 Change issue label to "done"
@@ -335,10 +335,10 @@ Issue closed
 ```
 
 **Outputs:**
-- New spec-implement issue (if internal)
+- New maker/spec-implement issue (if internal)
 - Sent artifact (if client deliverable)
 
-### Path B: spec-implement
+### Path B: maker/spec-implement
 
 **Stage 5: Closing**
 
@@ -372,7 +372,7 @@ After Review (Marius approves):
 | Layer | Contains | Portable? | Example |
 |-------|----------|-----------|---------|
 | **Protocol** | Abstract concepts | Yes (works with GitHub, Asana, Linear, etc.) | "Issues start as reminders", "Tasks need closing behavior" |
-| **Skill/Command** | Specific implementations | No (tied to current tools) | `spec-design`/`spec-implement` labels, `deliverable-tracking`, GitHub workflows |
+| **Skill/Command** | Specific implementations | No (tied to current tools) | `maker/spec-design`/`maker/spec-implement` labels, `deliverable-tracking`, GitHub workflows |
 
 **What belongs where:**
 
@@ -381,7 +381,7 @@ After Review (Marius approves):
 | "Issues start as reminders, get refined" | Protocol | Abstract lifecycle start |
 | "Tasks need closing behavior" | Protocol | Abstract lifecycle end |
 | Design vs implementation work types | Skill | Our specific workflow distinction |
-| `spec-design` / `spec-implement` labels | Skill | GitHub-specific implementation |
+| `maker/spec-design` / `maker/spec-implement` labels | Skill | GitHub-specific implementation |
 | `deliverable-tracking` workflow | Skill | GitHub-specific tool |
 | "done" label application | Skill | GitHub-specific |
 
@@ -416,8 +416,8 @@ These documents apply across all stages:
 | Closure criteria inference | 1 | TBD | AI infers closure criteria based on type (behavioral trigger location TBD) |
 | Type assignment | 1 | deliverable-tracking | Ask type at creation |
 | Mix prevention | 1 | deliverable-tracking | Validate single-phase |
-| Label rename | 1 | ADR + GitHub | spec-creation → spec-design, spec-execution → spec-implement |
-| Type-aware workflow | 2 | Skills | Branch by type (spec-design vs spec-implement) |
+| Label rename | 1 | ADR + GitHub | spec-creation → maker/spec-design, spec-execution → maker/spec-implement |
+| Type-aware workflow | 2 | Skills | Branch by type (maker/spec-design vs maker/spec-implement) |
 | design-doc skill | 2 | NEW | Standalone skill + template |
 | design-doc trigger | 2 | TBD | Behavioral trigger |
 | Type correction | 2 | TBD | Update label if wrong |
