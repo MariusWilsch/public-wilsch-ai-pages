@@ -25,8 +25,9 @@ CO-GPB01%GPB03(DA01;5;30;75)
 ```
 
 **Classification Tables:**
+
 | Code | What it classifies |
-|------|-------------------|
+|:-----|:-------------------|
 | CO | Components (pumps, doors, equipment) |
 | CS | Spaces (rooms, corridors) |
 | CE | Buildings |
@@ -56,7 +57,7 @@ Given structured input, AI can:
 **We don't know what data Kaia starts with.**
 
 | Input Scenario | Feasibility |
-|----------------|-------------|
+|:---------------|:------------|
 | Structured fields (asset_type: "centrifugal_pump") | Easy |
 | Semi-structured (spreadsheet with some typed fields) | Medium |
 | Free-text ("there's a pump somewhere") | Hard |
