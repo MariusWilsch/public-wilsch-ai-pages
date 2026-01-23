@@ -10,6 +10,35 @@ source: Rubber-duck session on issue #362
 
 Router document for issue lifecycle. Issues follow one of two paths based on type assigned at creation.
 
+---
+
+## Foundational Principles (Protocol-Level)
+
+### Issues Are Cheap
+
+**"We cannot rely on anybody to be aware of anything. The system must be aware of everything."**
+
+| Principle | Meaning |
+|-----------|---------|
+| **Immediate capture** | Work only exists in issues - email comes in → create issue immediately |
+| **Fast closing** | Issues should close quickly, not linger in backlog |
+| **Cascade creation** | Close one → spawn next if needed (spec-design → spec-implement) |
+| **No floating context** | Nothing lives outside the system - no emails sitting, no "I'll remember" |
+
+### Closure Clarity
+
+**Every issue has clear "when is this done?"**
+
+| Type | Closure Criteria |
+|------|------------------|
+| **spec-design** | Artifact created (design doc, follow-up issue) |
+| **spec-implement** | DoD + AC verified |
+| **Waiting for feedback** | Set deadline - close if no response by X |
+
+**AI should infer closure criteria** based on type. This is automatic, not a separate decision.
+
+---
+
 ## Type Distinction
 
 | Type | Description | Context Requirement | Executor |
@@ -384,6 +413,7 @@ These documents apply across all stages:
 
 | Gap | Stage | Where | What's Needed |
 |-----|-------|-------|---------------|
+| Closure criteria inference | 1 | TBD | AI infers closure criteria based on type (behavioral trigger location TBD) |
 | Type assignment | 1 | deliverable-tracking | Ask type at creation |
 | Mix prevention | 1 | deliverable-tracking | Validate single-phase |
 | Label rename | 1 | ADR + GitHub | spec-creation → spec-design, spec-execution → spec-implement |
