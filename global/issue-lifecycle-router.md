@@ -109,7 +109,7 @@ An issue should be EITHER about designing something OR about implementing someth
 | **Type assignment** | deliverable-tracking skill | Ask type at creation, apply label |
 | **Mix prevention** | deliverable-tracking skill | Detect conflated issues → prompt split |
 | **design-doc skill** | NEW skill | Standalone skill for design docs |
-| **Protocol understanding** | CLAUDE.md | AI understands shell + type purpose |
+| **Protocol: Lifecycle start** | CLAUDE.md | AI understands issues start as reminders, get refined (abstract concept) |
 | **Label rename** | ADR + GitHub | spec-creation → spec-design, spec-execution → spec-implement |
 
 ---
@@ -172,11 +172,11 @@ Pull issue from backlog. Process differs by type.
 
 | Gap | Where | What's Needed |
 |-----|-------|---------------|
-| **Type-aware workflow** | Protocol/skills | Clear branching: spec-design → rubber-duck only, spec-implement → rubber-duck + ac-create |
+| **Type-aware workflow** | Skills | Clear branching: spec-design → rubber-duck only, spec-implement → rubber-duck + ac-create |
 | **design-doc skill** | NEW skill | Standalone skill with template |
 | **design-doc trigger** | TBD | Behavioral trigger - WHEN during rubber-duck to invoke |
 | **Type correction path** | TBD (either rubber-duck OR ac-create) | Update label if type was wrong at creation |
-| **Protocol understanding** | CLAUDE.md | AI understands different paths by type |
+| **Work type branching** | Skills | Different workflows for design vs implementation work |
 
 ---
 
@@ -331,8 +331,32 @@ After Review (Marius approves):
 
 | Gap | Where | What's Needed |
 |-----|-------|---------------|
-| **spec-design closing flow** | Protocol | Document the artifact type → action branching |
-| **Label workflow** | deliverable-tracking / board SOP | When/how "done" label gets applied |
+| **Protocol: Lifecycle end** | CLAUDE.md | AI understands tasks need closing behavior (abstract concept) |
+| **Closing workflow** | Skills / board SOP | Specific implementation of closing (labels, status changes) |
+
+---
+
+## Architecture: Protocol vs Skill Separation
+
+**Critical principle:** Protocol is tool-agnostic. Skills handle specific implementations.
+
+| Layer | Contains | Portable? | Example |
+|-------|----------|-----------|---------|
+| **Protocol** | Abstract concepts | Yes (works with GitHub, Asana, Linear, etc.) | "Issues start as reminders", "Tasks need closing behavior" |
+| **Skill/Command** | Specific implementations | No (tied to current tools) | `spec-design`/`spec-implement` labels, `deliverable-tracking`, GitHub workflows |
+
+**What belongs where:**
+
+| Concept | Layer | Why |
+|---------|-------|-----|
+| "Issues start as reminders, get refined" | Protocol | Abstract lifecycle start |
+| "Tasks need closing behavior" | Protocol | Abstract lifecycle end |
+| Design vs implementation work types | Skill | Our specific workflow distinction |
+| `spec-design` / `spec-implement` labels | Skill | GitHub-specific implementation |
+| `deliverable-tracking` workflow | Skill | GitHub-specific tool |
+| "done" label application | Skill | GitHub-specific |
+
+**Implication for gaps:** Protocol gaps should be ABSTRACT concepts the AI needs to understand. Skill gaps are SPECIFIC implementations to build.
 
 ---
 
@@ -348,18 +372,25 @@ These documents apply across all stages:
 
 ## Full Gap Analysis Summary
 
+### Protocol Gaps (Abstract Concepts)
+
+| Gap | What AI Needs to Understand |
+|-----|----------------------------|
+| **Lifecycle start** | Issues start as reminders, get refined over time |
+| **Lifecycle end** | Tasks need closing behavior when complete |
+
+### Skill/Command Gaps (Specific Implementations)
+
 | Gap | Stage | Where | What's Needed |
 |-----|-------|-------|---------------|
 | Type assignment | 1 | deliverable-tracking | Ask type at creation |
 | Mix prevention | 1 | deliverable-tracking | Validate single-phase |
 | Label rename | 1 | ADR + GitHub | spec-creation → spec-design, spec-execution → spec-implement |
-| Type-aware ac-create | 2 | ac-create skill | Branch by type |
+| Type-aware workflow | 2 | Skills | Branch by type (spec-design vs spec-implement) |
 | design-doc skill | 2 | NEW | Standalone skill + template |
 | design-doc trigger | 2 | TBD | Behavioral trigger |
 | Type correction | 2 | TBD | Update label if wrong |
-| spec-design closing flow | 5 | Protocol | Artifact → action branching |
-| Label workflow | 5 | Board SOP | "done" label application |
-| Protocol understanding | All | CLAUDE.md | AI understands lifecycle |
+| Closing workflow | 5 | Skills / Board SOP | Specific closing implementation |
 
 ---
 
