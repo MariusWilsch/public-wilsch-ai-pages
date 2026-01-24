@@ -64,4 +64,3 @@ What should we dive deeper into in a follow-up session?
 
 - **Type:** Orientation and terminology alignment
 - **Expectation:** This is the first of potentially multiple sessions - collaborative discovery, not a deep technical dive
-- **Duration:** ~30 minutes
