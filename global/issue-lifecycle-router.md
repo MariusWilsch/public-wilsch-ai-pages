@@ -57,6 +57,11 @@ Router document for issue lifecycle. Issues follow one of two paths based on typ
 
 ### Zineb Eligibility Criteria
 
+**Principle: Doing vs Deciding**
+- **Doing** = Zineb (clicking, collecting, checking)
+- **Deciding** = Marius (drafting, explaining, judging)
+- **When unsure** = Ask
+
 All must be true for Zineb delegation:
 
 | Criterion | Description |
@@ -65,6 +70,17 @@ All must be true for Zineb delegation:
 | **Clicking tasks** | Portal interactions, status checking, document collection |
 | **Collect, not draft** | She collects/organizes; Marius drafts explanations |
 | **Approval checkpoint** | Prep → Marius approves → Execute |
+
+**Examples (illustrative, not exhaustive):**
+
+| She CAN do (doing) | She ESCALATES (deciding) |
+|-------------------|-------------------------|
+| Log into portals | Draft explanations |
+| Check status | Answer business questions |
+| Upload documents | Make decisions |
+| Collect files from email | Client communication |
+| Follow up with service providers | German language tasks |
+| Take screenshots | Anything unclear |
 
 **Zineb workflow:**
 ```
