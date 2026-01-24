@@ -1,7 +1,5 @@
 ---
 publish: true
-date: 2026-01-22
-source: Rubber-duck session on issue #362
 ---
 
 # Issue Lifecycle Router
@@ -41,12 +39,56 @@ Router document for issue lifecycle. Issues follow one of two paths based on typ
 
 ## Type Distinction
 
+### Maker Work (Technical)
+
 | Type | Description | Context Requirement | Executor |
 |------|-------------|---------------------|----------|
 | **maker/spec-design** | Creates specs to be executed later | Needs context OUTSIDE the issue | Marius |
 | **maker/spec-implement** | Implementable directly | Everything needed is IN the issue | David, Mohamed |
 
+### Manager Work (Admin/Coordination)
+
+| Type | Description | Context Requirement | Executor |
+|------|-------------|---------------------|----------|
+| **manager** | Admin, coordination, waiting | Client-facing OR needs judgment | Marius |
+| **manager** (Zineb-eligible) | Clicking, collecting, follow-ups | Non-client-facing, self-contained | Zineb |
+
 **Key insight:** Type is about context containment, not output format.
+
+### Zineb Eligibility Criteria
+
+All must be true for Zineb delegation:
+
+| Criterion | Description |
+|-----------|-------------|
+| **Non-client-facing** | Internal admin OR service provider interactions (not Archibus, UWI, AVO, etc.) |
+| **Clicking tasks** | Portal interactions, status checking, document collection |
+| **Collect, not draft** | She collects/organizes; Marius drafts explanations |
+| **Approval checkpoint** | Prep → Marius approves → Execute |
+
+**Zineb workflow:**
+```
+Zineb: Prep (collect, click, organize)
+  ↓
+Marius: Quick approval (always, for now)
+  ↓
+Zineb: Execute (upload, submit, send)
+  ↓
+Zineb: Report (GitHub comment + daily sync)
+```
+
+**Example tasks:**
+- Portal verification (#530 Nexo)
+- Status tracking (#469 Wise appeal)
+- Account migration (#558 Willow Voice)
+- Document collection (#600 Insurance research)
+- Follow-ups (#603 NDA with lawyer)
+
+### Audit Trail Requirement
+
+**All outputs must be documented in GitHub comments.**
+
+When Zineb collects something or completes work, she comments on the issue with what was done and the result. No floating context - if it's not in a comment, it didn't happen.
 
 ---
 
@@ -85,6 +127,31 @@ Stage 4: Review
        ↓
 Stage 5: Closing
   └─ Production deployed, issue closed
+```
+
+### Path C: manager (2 stages)
+
+```
+Stage 1: Assignment
+  └─ Issue assigned to executor (Marius or Zineb)
+       ↓
+Stage 2: Execution + Closing
+  └─ Task completed, issue closed
+```
+
+**Zineb-eligible manager work:**
+```
+Stage 1: Assignment
+  └─ Zineb assigned in daily sync
+       ↓
+Stage 2: Prep
+  └─ Zineb clicks, collects, organizes
+       ↓
+Stage 3: Approval
+  └─ Marius reviews prep, approves execution
+       ↓
+Stage 4: Execute + Close
+  └─ Zineb executes, comments on issue, issue closed
 ```
 
 ---
@@ -130,16 +197,6 @@ An issue should be EITHER about designing something OR about implementing someth
 |-----|---------|
 | [deliverable-tracking skill](~/.claude/skills/deliverable-tracking/SKILL.md) | Creates shell + type label |
 | [Spec-Design/Spec-Implement ADR](https://mariuswilsch.github.io/public-wilsch-ai-pages/global/adr-adopt-spec-creation-execution-label-distinction) | Type distinction and verification differences |
-
-### Gap Analysis
-
-| Gap | Where | What's Needed |
-|-----|-------|---------------|
-| **Type assignment** | deliverable-tracking skill | Ask type at creation, apply label |
-| **Mix prevention** | deliverable-tracking skill | Detect conflated issues → prompt split |
-| **design-doc skill** | NEW skill | Standalone skill for design docs |
-| **Protocol: Lifecycle start** | CLAUDE.md | AI understands issues start as reminders, get refined (abstract concept) |
-| **Label rename** | ADR + GitHub | spec-creation → maker/spec-design, spec-execution → maker/spec-implement |
 
 ---
 
@@ -197,16 +254,6 @@ Pull issue from backlog. Process differs by type.
 | ac-create skill | Local | DoD + AC (maker/spec-implement) |
 | design-doc skill (NEW) | TBD | Create design artifacts |
 
-### Gap Analysis
-
-| Gap | Where | What's Needed |
-|-----|-------|---------------|
-| **Type-aware workflow** | Skills | Clear branching: maker/spec-design → rubber-duck only, maker/spec-implement → rubber-duck + ac-create |
-| **design-doc skill** | NEW skill | Standalone skill with template |
-| **design-doc trigger** | TBD | Behavioral trigger - WHEN during rubber-duck to invoke |
-| **Type correction path** | TBD (either rubber-duck OR ac-create) | Update label if type was wrong at creation |
-| **Work type branching** | Skills | Different workflows for design vs implementation work |
-
 ---
 
 ## Stage 3: EXECUTION
@@ -258,12 +305,6 @@ New session (David/Mohamed):
 |-----|-----|---------|
 | **Ship with Confidence** | [Link](https://mariuswilsch.github.io/public-wilsch-ai-pages/global/ship-with-confidence) | Full execution → testing → review workflow |
 
-### Gap Analysis
-
-| Gap | Where | What's Needed |
-|-----|-------|---------------|
-| None | - | Ship with Confidence covers maker/spec-implement execution |
-
 ---
 
 ## Stage 4: REVIEW
@@ -309,12 +350,6 @@ Marius batch review session:
 |-----|-----|---------|
 | **Ship with Confidence** | [Link](https://mariuswilsch.github.io/public-wilsch-ai-pages/global/ship-with-confidence) | Human Witness methodology, Review workflow |
 
-### Gap Analysis
-
-| Gap | Where | What's Needed |
-|-----|-------|---------------|
-| None | - | Ship with Confidence covers review |
-
 ---
 
 ## Stage 5: CLOSING
@@ -356,13 +391,6 @@ After Review (Marius approves):
 |-----|-----|---------|
 | **Ship with Confidence** | [Link](https://mariuswilsch.github.io/public-wilsch-ai-pages/global/ship-with-confidence) | Rollback Strategy (if issues arise post-deploy) |
 
-### Gap Analysis
-
-| Gap | Where | What's Needed |
-|-----|-------|---------------|
-| **Protocol: Lifecycle end** | CLAUDE.md | AI understands tasks need closing behavior (abstract concept) |
-| **Closing workflow** | Skills / board SOP | Specific implementation of closing (labels, status changes) |
-
 ---
 
 ## Architecture: Protocol vs Skill Separation
@@ -399,31 +427,6 @@ These documents apply across all stages:
 | **Board SOP** | [Link](https://github.com/DaveX2001/deliverable-tracking/blob/main/docs/BOARD-SOP.md) | Board documentation and label usage |
 | **Invocation Taxonomy** | [Link](https://mariuswilsch.github.io/public-wilsch-ai-pages/global/claude-code-extension-invocation-taxonomy) | Protocol vs Commands vs Skills - when to use what |
 | **Skills as Pre-packaged HOWs** | [Link](https://mariuswilsch.github.io/public-wilsch-ai-pages/global/skill-lifecycle-execution-timing) | How skills work in lifecycle |
-
----
-
-## Full Gap Analysis Summary
-
-### Protocol Gaps (Abstract Concepts)
-
-| Gap | What AI Needs to Understand |
-|-----|----------------------------|
-| **Lifecycle start** | Issues start as reminders, get refined over time |
-| **Lifecycle end** | Tasks need closing behavior when complete |
-
-### Skill/Command Gaps (Specific Implementations)
-
-| Gap | Stage | Where | What's Needed |
-|-----|-------|-------|---------------|
-| Closure criteria inference | 1 | TBD | AI infers closure criteria based on type (behavioral trigger location TBD) |
-| Type assignment | 1 | deliverable-tracking | Ask type at creation |
-| Mix prevention | 1 | deliverable-tracking | Validate single-phase |
-| Label rename | 1 | ADR + GitHub | spec-creation → maker/spec-design, spec-execution → maker/spec-implement |
-| Type-aware workflow | 2 | Skills | Branch by type (maker/spec-design vs maker/spec-implement) |
-| design-doc skill | 2 | NEW | Standalone skill + template |
-| design-doc trigger | 2 | TBD | Behavioral trigger |
-| Type correction | 2 | TBD | Update label if wrong |
-| Closing workflow | 5 | Skills / Board SOP | Specific closing implementation |
 
 ---
 
