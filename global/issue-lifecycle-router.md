@@ -77,13 +77,6 @@ Zineb: Execute (upload, submit, send)
 Zineb: Report (GitHub comment + daily sync)
 ```
 
-**Example tasks:**
-- Portal verification (#530 Nexo)
-- Status tracking (#469 Wise appeal)
-- Account migration (#558 Willow Voice)
-- Document collection (#600 Insurance research)
-- Follow-ups (#603 NDA with lawyer)
-
 ### Audit Trail Requirement
 
 **All outputs must be documented in GitHub comments.**
