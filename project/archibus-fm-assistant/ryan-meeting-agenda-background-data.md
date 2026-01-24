@@ -2,69 +2,66 @@
 publish: true
 ---
 
-# Ryan Meeting: Bruce BEM Background Data
+# Meeting Agenda: Bruce BEM Data Structure for AI Bulk Entry
 [[client-archibus]]
 
-## Success Criterion
+## Meeting Goal
 
-After this meeting, both you and Ryan have a shared understanding of:
-1. **What information** we're trying to collect
-2. **What Bruce BEM calls it** (terminology alignment)
-3. **Where to find it** (resources, documentation, people)
+Establish shared understanding of Bruce BEM's data structure to support the AI bulk data entry prototype. By the end of this session, we should be aligned on:
 
-You leave with a clear "what to dig into next."
+1. **Terminology** - What Bruce BEM calls "background data" or prerequisite data
+2. **Structure** - How the data hierarchy works in Bruce BEM
+3. **Next steps** - What to explore in follow-up sessions
 
 ## Pre-Read
+
+Please review this design document before the meeting:
 
 [Chain 1B: AI Bulk Data Entry - Design Document](https://mariuswilsch.github.io/public-wilsch-ai-pages/project/archibus-fm-assistant/chain-1b-bulk-entry-design)
 
 ---
 
-## Topic 1: Context (2-min verbal recap)
+## Discussion Topics
 
-**Frame:**
-> "We're building an AI-assisted bulk data entry system. The problem: partners spend too much time formatting client data for onboarding - it's low-margin work that delays implementations. Our goal: AI fills as much as possible, asks where uncertain, flags what needs human decision. To build this, I need to understand Bruce BEM's data structure - specifically what needs to exist BEFORE we can load asset data."
+### 1. Project Context
 
----
+We're building an AI-assisted bulk data entry system to reduce partner time spent on data formatting during onboarding. The AI would fill data where confident, ask where uncertain, and flag what needs human decision.
 
-## Topic 2: Terminology
+To make this work, we need to understand what prerequisite data must exist in Bruce BEM before asset data can be loaded.
 
-**Frame:**
-> "Ian described 'background data' as three buckets: spatial (site→building→floor→room), assets, and people. Each has foreign key dependencies - the precursor must exist before you can add the next level. How does Bruce BEM think about this? Walk me through how you'd describe the prerequisite data."
+### 2. Terminology Alignment
 
-**Ian's definition (Dec 30):**
-- **Spatial drill-down:** Site → Building → Floor → Room → Desk
-- **Asset systems:** Follow similar hierarchical patterns
-- **People data:** Department → Division → hierarchy
-- **Key constraint:** "If you try and input into those tables without the background data being there, it'll just throw it out."
+Ian described "background data" as three buckets with foreign key dependencies:
 
----
+| Bucket | Example Hierarchy |
+|--------|-------------------|
+| Spatial | Site → Building → Floor → Room → Desk |
+| Assets | Similar hierarchical patterns |
+| People | Department → Division → hierarchy |
 
-## Topic 3: Scope
+**Discussion:** How does Bruce BEM structure this? What terminology does Bruce use for these concepts?
 
-**Frame (two parts):**
+### 3. Scope
 
-1. **Broad:** "What's the full landscape of prerequisite data in Bruce BEM?"
-2. **Narrow:** "For our prototype, where should we focus first?"
+**Two questions:**
+1. What's the full landscape of prerequisite data in Bruce BEM?
+2. For the prototype, where should we focus first?
 
----
+### 4. Resources
 
-## Topic 4: Source
+What documentation or tools exist for understanding Bruce BEM's data structure?
+- API documentation?
+- Database schema?
+- UI where we can see the hierarchy?
 
-**Frame:**
-> "What resources exist for understanding Bruce BEM's data structure? API docs? Database schema? UI where I can see it? And what's the best way for ME to learn this going forward?"
+### 5. Next Steps
 
----
-
-## Topic 5: Next
-
-**Frame:**
-> "What should we dive into first in our next session?"
+What should we dive deeper into in a follow-up session?
 
 ---
 
-## Notes
+## Meeting Format
 
-- **Meeting type:** Orientation + terminology alignment (first of potentially multiple sessions)
-- **Expectation:** Ryan may not have all answers immediately - this is collaborative discovery
-- **Follow-up:** Once we understand schema, we can articulate specific input data needs for Ali/Mujahid
+- **Type:** Orientation and terminology alignment
+- **Expectation:** This is the first of potentially multiple sessions - collaborative discovery, not a deep technical dive
+- **Duration:** ~30 minutes
