@@ -90,6 +90,10 @@ Zineb: Report (GitHub comment + daily sync)
 
 When Zineb collects something or completes work, she comments on the issue with what was done and the result. No floating context - if it's not in a comment, it didn't happen.
 
+**Example:**
+> [screenshot]
+> "Email has been migrated to the new account in Willow."
+
 ---
 
 ## Path Overview
