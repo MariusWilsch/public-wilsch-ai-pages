@@ -103,6 +103,14 @@ When Zineb collects something or completes work, she comments on the issue with 
 > [screenshot]
 > "Email has been migrated to the new account in Willow."
 
+### Friction Discovery (Stage 1)
+
+Zineb's manual work is **Stage 1** of the [Process Refinement Ladder](https://mariuswilsch.github.io/public-wilsch-ai-pages/project/WILSCH-AI-INTERNAL/process-refinement-ladder).
+
+Her friction points ("I don't have access to X", "I can't find Y") feed Stage 2 (interactive automation) and Stage 3 (full automation).
+
+**Report friction via issue comments** - this enables future process improvement.
+
 ---
 
 ## Path Overview
