@@ -18,14 +18,16 @@ publish: true
 ## Decision
 We will separate framework development from marketing quick wins as **parallel tracks** with independent dependencies and timelines.
 
-**Framework Path (#373 under #267):**
+**Framework Path (Parent: #267 Value Discovery):**
 - Broad capabilities requiring schema understanding
 - Proceeds when external dependency resolves
+- Examples (not exhaustive): #373
 
-**Quick Wins Path (#591, #605 under #594):**
+**Quick Wins Path (Parent: #594 Marketing):**
 - Marketing-driven demos
 - No schema dependency - proceed immediately
 - Workflow: Spec-design → David spec-implement → SDK Agent
+- Examples (not exhaustive): #591, #605
 
 ## Consequences
 
@@ -54,7 +56,7 @@ We will separate framework development from marketing quick wins as **parallel t
 ---
 
 **Key Resources:**
-- #267: Value Discovery Methodology (framework parent)
-- #373: AI Bulk Data Entry Prototype (framework path)
-- #594: YouTube Marketing Funnel (quick wins parent)
-- #591, #605: Current quick win examples
+- **Framework Path Parent:** #267 Value Discovery Methodology
+  - Example: #373 AI Bulk Data Entry Prototype
+- **Quick Wins Path Parent:** #594 YouTube Marketing Funnel
+  - Examples: #591 CCI codes, #605 Equipment codes
