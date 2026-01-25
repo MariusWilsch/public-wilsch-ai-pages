@@ -60,6 +60,21 @@ What should we dive deeper into in a follow-up session?
 
 ---
 
+---
+
+## Additional Topic: noVNC POC - BEM Login Persistence
+
+**Context:** We've deployed a noVNC container where AI navigates Chrome to show work requests to users. When Chrome restarts or sessions timeout, users see the BEM login page instead of the work request.
+
+**Question for Ryan:**
+- How does BEM session persistence work?
+- Can we maintain login state across Chrome restarts?
+- Is there a token/cookie approach that would work?
+
+**Reference:** [Issue #626 - noVNC POC Enhancements](https://github.com/DaveX2001/deliverable-tracking/issues/626) (friction point #4)
+
+---
+
 ## Meeting Format
 
 - **Type:** Orientation and terminology alignment
