@@ -100,7 +100,7 @@ Execution capacity beyond Marius - who handles YouTube management, video editing
 - Execution capacity / role assignments
 - Timeline for first content
 
-*These gaps are expected. Get buy-in first, define details as we go.*
+*To be defined collaboratively in upcoming meeting.*
 
 ---
 
