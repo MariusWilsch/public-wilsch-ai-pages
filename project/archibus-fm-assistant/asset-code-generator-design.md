@@ -135,15 +135,14 @@ with raw data            2. Transform each segment          Equipment Codes
 
 ### Uncertainty #4: Output Format
 
-**Core question:** What should the tool produce?
+**Core question:** What should the tool produce and how?
 
-| Option | Description |
-|--------|-------------|
-| Same file (in-place) | Update Equipment Code column in original Excel |
-| New file | Create separate output file, preserve original |
-| Preview first | Show codes before saving, user approves |
+**Examples (including but not limited to):**
+- Update the original Excel file directly
+- Create a new file, keep original untouched
+- Show preview before saving
 
-**Question:** What workflow do partners expect?
+**Question:** What output format and workflow makes sense for partners?
 
 ---
 
