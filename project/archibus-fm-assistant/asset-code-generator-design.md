@@ -35,7 +35,7 @@ This is tedious, error-prone work repeated for every FM implementation.
 
 ## Target Audience
 
-**Primary: FM Implementation Partners (Mujahid, Ali)**
+**Primary: FM Implementation Partners**
 - Repeatable pain (every implementation)
 - Currently manual, time-consuming work
 - Direct beneficiaries of automation
