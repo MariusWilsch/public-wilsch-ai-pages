@@ -195,18 +195,12 @@ Full example file: `/Users/verdant/Downloads/Sample Asset Data (1).xlsx`
 
 ---
 
-## Questions Summary
+## Next Step
 
-| # | Topic | Question |
-|---|-------|----------|
-| 1 | Schema | Do client Excel schemas follow a consistent structure (same columns, same names)? |
-| 2 | Building | Why strip `A-` prefix from `A-DUP`? Is this a universal rule? |
-| 3 | Room | Always truncate to 4 characters? What about codes shorter than 4? |
-| 4 | Abbreviations | Who defines the Equipment Standard → abbreviation mapping? |
-| 5 | Abbreviations | Must abbreviations be unique, or is collision acceptable? |
-| 6 | Missing Data | What should happen when a row has incomplete data? |
-| 7 | Format | Do value formats vary (e.g., "GF" vs "Ground Floor")? |
-| 8 | Output | Update original file or create new? |
+Before building, one core question: **How standardized is the data we'll receive?**
+
+- If data is consistent → straightforward tool
+- If data varies wildly → need more design work first
 
 ---
 
