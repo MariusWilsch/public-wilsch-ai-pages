@@ -110,9 +110,8 @@ with raw data            2. Transform each segment          Equipment Codes
 | Equipment Standard | Always like `AIR-CON`, `ELEC-LGHT` | Could be "Air Conditioner", "Light Fixture" |
 
 **Questions:**
-1. How consistent are the VALUES (not just presence)?
-2. If formats vary, do we need to standardize/transform them first?
-3. What should happen when a row has missing data?
+1. Do clients use short codes like `KIT` or write out full words like "Kitchen"?
+2. How common are rows missing one of the four segments (Building, Floor, Room, Type)?
 
 ---
 
