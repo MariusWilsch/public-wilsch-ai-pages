@@ -9,7 +9,7 @@ publish: true
 
 **Need a scalable path alongside direct sales.**
 
-Ian's traditional approach works but is labor-intensive (high cost per acquisition). Bruce BEM is the next-generation platform; the market is ready for modern solutions.
+Ian's traditional approach works and delivers results, but scaling it requires more capacity. Bruce BEM is the next-generation platform; the market is ready for modern solutions.
 
 Kaia's insight: "1 out of 20 is not bad... which shows us that social media is important."
 
