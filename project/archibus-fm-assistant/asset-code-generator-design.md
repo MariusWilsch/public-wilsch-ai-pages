@@ -171,7 +171,7 @@ V01-GF-BED1-ACO-0005    AIR-CON            V01       BED1   GF
 DUP-GF-LRBA-ELE-0009    ELEC-LGHT          A-DUP     LRBAL  GF
 ```
 
-Full example file: `/Users/verdant/Downloads/Sample Asset Data (1).xlsx`
+Full example file: [Sample Asset Data - Equipment Code Generator Example](https://docs.google.com/spreadsheets/d/1_OOUyGDXXf_OHfg4hqpc1AO_8PoNQXqu/edit)
 
 ---
 
