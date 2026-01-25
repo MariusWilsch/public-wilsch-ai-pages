@@ -83,15 +83,9 @@ with raw data            2. Transform each segment          Equipment Codes
 | Column index | Will Building Code always be in Column E? | Or could it be Column C in another file? |
 | Header name | Will the header always say "Building Code"? | Or could it be "Site", "Block", "Location"? |
 
-**Likely approach: Semantic column detection**
+**Why this matters:** If every client file looks different, the tool needs to handle that variation. If files are mostly consistent, it's simpler.
 
-AI can understand that "Building Code", "Site", "Block", "Location" all semantically refer to the same concept (building identifier). Rather than exact string matching, the tool would:
-
-1. Read column headers
-2. Match semantically to required fields (Building, Floor, Room, Type)
-3. Flag ambiguous cases for user confirmation
-
-**Question:** How varied are the column names you typically see? Any unusual naming conventions?
+**Question:** How similar are client Excel files? Same columns in same places, or does every file look different?
 
 ---
 
