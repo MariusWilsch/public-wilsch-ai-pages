@@ -92,34 +92,34 @@ AI can understand that "Building Code", "Site", "Block", "Location" all semantic
 2. Match semantically to required fields (Building, Floor, Room, Type)
 3. Flag ambiguous cases for user confirmation
 
-**Question for Mohammed:** How varied are the column names you typically see? Any unusual naming conventions?
+**Question for Mujahid:** How varied are the column names you typically see? Any unusual naming conventions?
 
 ---
 
-### Uncertainty #2: Data Quality
+### Uncertainty #2: Data Availability & Value Consistency
 
-**Core question:** What state is the client data in when we receive it?
+**Two dimensions:**
 
-**Two things we need to know:**
+| Dimension | Question |
+|-----------|----------|
+| Presence | Are all required fields populated? |
+| Format | Do values follow a consistent pattern? |
 
-1. **Is data complete?** Are all the columns filled in, or are some cells empty?
-2. **Are values in short-code format or written out as full words?**
+**Required fields:** Building Code, Floor Code, Room Code, Equipment Standard
 
-**Example - the same floor could be written as:**
+**Format examples:**
 
-| Short code (good for tool) | Full text (needs conversion) |
-|---------------------------|------------------------------|
-| `GF` | "Ground Floor" |
-| `1F` | "First Floor" or "Level 1" |
-| `A-DUP` | "Duplex Building A" |
-| `AIR-CON` | "Air Conditioning Unit" |
+| Field | Consistent | Inconsistent |
+|-------|------------|--------------|
+| Building Code | Always like `A-DUP`, `V01`, `F704` | Could be "Main Building", "Block A", "HQ" |
+| Floor Code | Always like `GF`, `1F`, `7F` | Could be "Ground", "First", "Level 1" |
+| Room Code | Always like `LRBAL`, `KIT`, `BED1` | Could be "Living Room", "Kitchen", "Bedroom" |
+| Equipment Standard | Always like `AIR-CON`, `ELEC-LGHT` | Could be "Air Conditioner", "Light Fixture" |
 
-**Why this matters:** The tool expects short codes. If clients write "Ground Floor" instead of "GF", someone needs to convert it first.
-
-**Questions for Mohammed:**
-1. Do clients typically use short codes or full descriptions?
-2. If data comes as full text, who converts it to codes - the client or your team?
-3. What should happen when a cell is empty?
+**Questions for Mujahid:**
+1. How consistent are the VALUES (not just presence)?
+2. If formats vary, do we need to standardize/transform them first?
+3. What should happen when a row has missing data?
 
 ---
 
@@ -142,7 +142,7 @@ AI can understand that "Building Code", "Site", "Block", "Location" all semantic
 | Rules are universal | Encode once, use everywhere |
 | Rules are client-specific | Need configuration per project |
 
-**Question for Mohammed:** Are these transformation rules used EVERYWHERE, or did this client just happen to use these rules?
+**Question for Mujahid:** Are these transformation rules used EVERYWHERE, or did this client just happen to use these rules?
 
 ---
 
@@ -156,7 +156,7 @@ AI can understand that "Building Code", "Site", "Block", "Location" all semantic
 | New file | Create separate output file, preserve original |
 | Preview first | Show codes before saving, user approves |
 
-**Question for Mohammed:** What workflow do partners expect?
+**Question for Mujahid:** What workflow do partners expect?
 
 ---
 
@@ -173,7 +173,7 @@ AI can understand that "Building Code", "Site", "Block", "Location" all semantic
 | Two different equipment types can have same abbreviation | Need distinct abbreviation for each type |
 | Sequence number is the differentiator | Type can be identified from code alone |
 
-**Question for Mohammed:** Does each equipment type need its own unique abbreviation?
+**Question for Mujahid:** Does each equipment type need its own unique abbreviation?
 
 ---
 
@@ -195,7 +195,7 @@ Full example file: `/Users/verdant/Downloads/Sample Asset Data (1).xlsx`
 
 ---
 
-## Questions Summary for Mohammed
+## Questions Summary for Mujahid
 
 | # | Topic | Question |
 |---|-------|----------|
