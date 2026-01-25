@@ -92,7 +92,7 @@ AI can understand that "Building Code", "Site", "Block", "Location" all semantic
 2. Match semantically to required fields (Building, Floor, Room, Type)
 3. Flag ambiguous cases for user confirmation
 
-**Question for Mujahid:** How varied are the column names you typically see? Any unusual naming conventions?
+**Question:** How varied are the column names you typically see? Any unusual naming conventions?
 
 ---
 
@@ -116,7 +116,7 @@ AI can understand that "Building Code", "Site", "Block", "Location" all semantic
 | Room Code | Always like `LRBAL`, `KIT`, `BED1` | Could be "Living Room", "Kitchen", "Bedroom" |
 | Equipment Standard | Always like `AIR-CON`, `ELEC-LGHT` | Could be "Air Conditioner", "Light Fixture" |
 
-**Questions for Mujahid:**
+**Questions:**
 1. How consistent are the VALUES (not just presence)?
 2. If formats vary, do we need to standardize/transform them first?
 3. What should happen when a row has missing data?
@@ -142,7 +142,7 @@ AI can understand that "Building Code", "Site", "Block", "Location" all semantic
 | Rules are universal | Encode once, use everywhere |
 | Rules are client-specific | Need configuration per project |
 
-**Question for Mujahid:** Are these transformation rules used EVERYWHERE, or did this client just happen to use these rules?
+**Question:** Are these transformation rules used EVERYWHERE, or did this client just happen to use these rules?
 
 ---
 
@@ -156,7 +156,7 @@ AI can understand that "Building Code", "Site", "Block", "Location" all semantic
 | New file | Create separate output file, preserve original |
 | Preview first | Show codes before saving, user approves |
 
-**Question for Mujahid:** What workflow do partners expect?
+**Question:** What workflow do partners expect?
 
 ---
 
@@ -173,7 +173,7 @@ AI can understand that "Building Code", "Site", "Block", "Location" all semantic
 | Two different equipment types can have same abbreviation | Need distinct abbreviation for each type |
 | Sequence number is the differentiator | Type can be identified from code alone |
 
-**Question for Mujahid:** Does each equipment type need its own unique abbreviation?
+**Question:** Does each equipment type need its own unique abbreviation?
 
 ---
 
@@ -195,7 +195,7 @@ Full example file: `/Users/verdant/Downloads/Sample Asset Data (1).xlsx`
 
 ---
 
-## Questions Summary for Mujahid
+## Questions Summary
 
 | # | Topic | Question |
 |---|-------|----------|
