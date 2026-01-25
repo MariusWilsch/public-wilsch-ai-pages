@@ -146,20 +146,14 @@ with raw data            2. Transform each segment          Equipment Codes
 
 ---
 
-### Uncertainty #5: Abbreviation Uniqueness
+### Uncertainty #5: Abbreviations
 
-**Core question:** Must each Equipment Standard have a unique abbreviation?
+**Core question:** Can we agree on one set of abbreviations, or will each client have different ones?
 
-**The collision problem:**
-- `ELEC-LGHT`, `ELEC-OVE`, `ELEC-REFRI`, `ELEC-WASH` → all map to `ELE` if using first 3 chars
-- Same with `FURN-*` types → all map to `FUR`
+**Example from sample file:**
+- `AIR-CON` → `ACO`
 
-| If collisions are OK | If must be unique |
-|----------------------|-------------------|
-| Two different equipment types can have same abbreviation | Need distinct abbreviation for each type |
-| Sequence number is the differentiator | Type can be identified from code alone |
-
-**Question:** Does each equipment type need its own unique abbreviation?
+**Question:** Is there a standard abbreviation table, or does each client define their own?
 
 ---
 
