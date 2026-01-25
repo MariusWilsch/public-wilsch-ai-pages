@@ -11,7 +11,7 @@ publish: true
 
 ## Meeting Goal
 
-Explore whether AI can help automate CCI code generation. Kaia walks through the current process; Marius asks questions to understand where automation could help.
+Explore whether AI can help automate CCI code generation by understanding the current manual process.
 
 ---
 
