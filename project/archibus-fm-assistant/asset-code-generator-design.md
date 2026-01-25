@@ -29,7 +29,6 @@ This is tedious, error-prone work repeated for every FM implementation.
 | Goal | Generate Equipment Codes for all rows with sufficient data |
 | Success | Excel file with Equipment Code column populated correctly |
 | Failure mode | Actionable - tool flags rows it cannot process with clear reason |
-| Human role | Define transformation rules, resolve ambiguous data |
 
 ---
 
