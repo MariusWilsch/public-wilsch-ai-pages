@@ -84,7 +84,7 @@ Execution capacity beyond Marius - who handles YouTube management, video editing
 
 **What we're trying to achieve:**
 - Content library that demonstrates expertise
-- Thought leadership position in AI + FM space
+- Thought leadership position in FM + AI space
 - Leads flowing to Ian from a new channel
 
 **How we'll know it's working:**
