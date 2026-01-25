@@ -55,61 +55,18 @@ Router document for issue lifecycle. Issues follow one of two paths based on typ
 
 **Key insight:** Type is about context containment, not output format.
 
-### Zineb Eligibility Criteria
+### Team Role Definitions
 
-**Principle: Doing vs Deciding**
-- **Doing** = Zineb (clicking, collecting, checking)
-- **Deciding** = Marius (drafting, explaining, judging)
-- **When unsure** = Ask
+**Detailed role definitions live in separate documents:**
 
-All must be true for Zineb delegation:
+| Role | Document |
+|------|----------|
+| **Zineb** (Virtual Assistant) | [Zineb Role Definition](https://mariuswilsch.github.io/public-wilsch-ai-pages/project/WILSCH-AI-INTERNAL/zineb-role-definition) |
+| **David/Mohamed** (Implementers) | *TBD - role definition to be created* |
 
-| Criterion | Description |
-|-----------|-------------|
-| **Non-client-facing** | Internal admin OR service provider interactions (not Archibus, UWI, AVO, etc.) |
-| **Clicking tasks** | Portal interactions, status checking, document collection |
-| **Collect, not draft** | She collects/organizes; Marius drafts explanations |
-| **Approval checkpoint** | Prep → Marius approves → Execute |
-
-**Examples (illustrative, not exhaustive):**
-
-| She CAN do (doing) | She ESCALATES (deciding) |
-|-------------------|-------------------------|
-| Log into portals | Draft explanations |
-| Check status | Answer business questions |
-| Upload documents | Make decisions |
-| Collect files from email | Client communication |
-| Follow up with service providers | German language tasks |
-| Take screenshots | Anything unclear |
-
-**Zineb workflow:**
-```
-Zineb: Prep (collect, click, organize)
-  ↓
-Marius: Quick approval (always, for now)
-  ↓
-Zineb: Execute (upload, submit, send)
-  ↓
-Zineb: Report (GitHub comment + daily sync)
-```
-
-### Audit Trail Requirement
-
-**All outputs must be documented in GitHub comments.**
-
-When Zineb collects something or completes work, she comments on the issue with what was done and the result. No floating context - if it's not in a comment, it didn't happen.
-
-**Example:**
-> [screenshot]
-> "Email has been migrated to the new account in Willow."
-
-### Friction Discovery (Stage 1)
-
-Zineb's manual work is **Stage 1** of the [Process Refinement Ladder](https://mariuswilsch.github.io/public-wilsch-ai-pages/project/WILSCH-AI-INTERNAL/process-refinement-ladder).
-
-Her friction points ("I don't have access to X", "I can't find Y") feed Stage 2 (interactive automation) and Stage 3 (full automation).
-
-**Report friction via issue comments** - this enables future process improvement.
+**Quick reference:**
+- **Zineb:** Doing (clicking, collecting) vs Deciding (drafting, judging) - see full doc
+- **David/Mohamed:** Execute maker/spec-implement issues against DoD + AC
 
 ---
 
