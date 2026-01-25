@@ -2,7 +2,7 @@
 publish: true
 ---
 
-# YouTube Marketing Proposal - Meeting Agenda
+# Social Media Marketing Proposal - Meeting Agenda
 [[client-archibus]]
 
 **Attendees:** Kaia, Ali, Mujahid, Marius
@@ -11,7 +11,7 @@ publish: true
 
 ## Meeting Goal
 
-**Core question:** Do we want to pursue YouTube content marketing for Bruce BEM?
+**Core question:** Do we want to pursue social media content marketing (YouTube/LinkedIn) for Bruce BEM?
 
 If yes, we should also align on:
 1. Content approach (shorts + long-form)
@@ -32,11 +32,11 @@ Please review this document before the meeting:
 
 ### 1. The Opportunity
 
-No established FM + AI thought leader on YouTube. Market is ready for modern solutions. Social media can build credibility and generate leads.
+No established FM + AI thought leader on social media (YouTube/LinkedIn). Market is ready for modern solutions. Social media can build credibility and generate leads.
 
 ### 2. The Proposal
 
-YouTube content strategy:
+Social media content strategy (YouTube/LinkedIn):
 - **Shorts:** Before/after demos (pain point → solution)
 - **Long-form:** FM thought leadership, brief Bruce BEM mention at end
 - **Funnel:** Content builds trust → leads flow to Ian

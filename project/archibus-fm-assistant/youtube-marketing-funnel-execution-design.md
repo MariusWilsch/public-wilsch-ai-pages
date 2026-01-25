@@ -2,7 +2,7 @@
 publish: true
 ---
 
-# YouTube Marketing Funnel - Execution Design
+# Social Media Marketing Funnel - Execution Design
 [[client-archibus]]
 
 ## Problem Statement
@@ -13,7 +13,7 @@ Ian's traditional approach works and delivers results, but scaling it requires m
 
 Kaia's insight: "1 out of 20 is not bad... which shows us that social media is important."
 
-**The opportunity:** No established "AI + BIM guru" on YouTube. Social media can build thought leadership and funnel leads to Ian for conversion. Both paths run in parallel.
+**The opportunity:** No established FM + AI thought leader on social media (YouTube/LinkedIn). Social media can build thought leadership and funnel leads to Ian for conversion. Both paths run in parallel.
 
 ---
 
@@ -27,7 +27,7 @@ Two approaches exist in the team:
 - **Miguel:** Educational seminars to change mindset, sell knowledge
 - **Ian:** Targeted sales to decision makers, need clear metrics
 
-**YouTube content bridges both:**
+**Social media content (YouTube/LinkedIn) bridges both:**
 - Educational like Miguel wants (thought leadership)
 - Feeds leads to Ian with clear funnel
 
@@ -57,7 +57,7 @@ Two approaches exist in the team:
 
 2. **Passive credibility:** Prospect researches company → finds content library → thinks "these guys know their stuff"
 
-**Key:** We're not trying to monetize YouTube. The content IS the credibility.
+**Key:** We're not trying to monetize social media. The content IS the credibility.
 
 ---
 
@@ -76,7 +76,7 @@ Two approaches exist in the team:
 - **Ian:** Sales conversion (unchanged)
 
 ### Open Question
-Execution capacity beyond Marius - who handles YouTube management, video editing, admin coordination?
+Execution capacity beyond Marius - who handles social media management (YouTube/LinkedIn), video editing, admin coordination?
 
 ---
 
@@ -96,7 +96,7 @@ Execution capacity beyond Marius - who handles YouTube management, video editing
 
 - The funnel endpoint (what do they sign up for?)
 - The CTA mechanism (website form? Booking link?)
-- How to track YouTube → lead attribution
+- How to track social media → lead attribution
 - Execution capacity / role assignments
 - Timeline for first content
 
