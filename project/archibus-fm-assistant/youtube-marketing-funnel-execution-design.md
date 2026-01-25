@@ -9,7 +9,7 @@ publish: true
 
 **Need a scalable path alongside direct sales.**
 
-Ian's traditional approach works but is labor-intensive (high cost per acquisition). Bruce BEM is a new product; the market is in transition (Archibus becoming legacy).
+Ian's traditional approach works but is labor-intensive (high cost per acquisition). Bruce BEM is the next-generation platform; the market is ready for modern solutions.
 
 Kaia's insight: "1 out of 20 is not bad... which shows us that social media is important."
 
@@ -35,14 +35,19 @@ Two approaches exist in the team:
 
 **Shorts (Before/After Demos)**
 - 15 seconds to 2 minutes
-- Pain point → AI solution
+- Pain point → Solution (multiple angles):
+  - AI solution (Claude Cowork, SDK agents)
+  - Bruce BEM feature
+  - Smart process improvement
 - Examples: Equipment codes, ticket creation, SSID entry
-- Powered by: Claude Cowork, SDK agents (#591, #605)
+- *Content angles to be brainstormed with team*
 
 **Long-form (Thought Leadership)**
 - 10-15 minutes, FM best practices
 - Ali/Mujahid explaining good CAFM management
-- "Here's how we implement it in Bruce BEM"
+- Non-salesy educational content throughout
+- Brief mention at the end: "This is how we implement it in Bruce BEM"
+- Viewers who stay to the end learn about us - that's the reward for attention
 
 ### How This Serves Sales
 
@@ -98,11 +103,6 @@ Execution capacity beyond Marius - who handles YouTube management, video editing
 *These gaps are expected. Get buy-in first, define details as we go.*
 
 ---
-
-## Related Documents
-
-- [ADR: Parallel Paths for AI FM Automation](adr-parallel-paths-ai-fm-automation)
-- [AI Agent Automation Service](../WILSCH-AI-INTERNAL/adr-ai-agent-automation-service)
 
 ## Source
 
