@@ -117,24 +117,19 @@ with raw data            2. Transform each segment          Equipment Codes
 
 ### Uncertainty #3: Transformation Rules
 
-**Core question:** Are transformation rules standardized or client-specific?
+**Core question:** Can we agree on one set of rules, or will each client need different rules?
 
-| Segment | Transformation | Question |
-|---------|---------------|----------|
-| Building | Strip prefix? | Why strip `A-` from `A-DUP`? Universal rule? |
-| Floor | Use as-is? | Or does it need transformation? |
-| Room | Truncate to 4? | Always 4 chars? Pad if shorter? |
-| Type | Abbreviate | Who defines the abbreviation table? |
-| Sequence | Continuous? | Or reset per combo? |
+**Example transformations (from the sample file):**
 
-**Impact:**
+| Segment | Example | What happened |
+|---------|---------|---------------|
+| Building | `A-DUP` → `DUP` | Stripped the `A-` prefix |
+| Floor | `GF` → `GF` | Used as-is |
+| Room | `LRBAL` → `LRBA` | Truncated to 4 characters |
+| Type | `AIR-CON` → `ACO` | Abbreviated |
+| Sequence | → `0001` | Added counter |
 
-| If... | Then... |
-|-------|---------|
-| Rules are universal | Encode once, use everywhere |
-| Rules are client-specific | Need configuration per project |
-
-**Question:** Are these transformation rules used EVERYWHERE, or did this client just happen to use these rules?
+**Question:** Are these rules standard across all clients, or does each client have their own conventions?
 
 ---
 
