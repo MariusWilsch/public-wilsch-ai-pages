@@ -49,8 +49,6 @@ Which CCI tables are used? How detailed do codes need to be?
 
 ## Outcome
 
-No decisions - this is a discovery session.
-
 Next step: Create a design document based on this discussion.
 
 ---
