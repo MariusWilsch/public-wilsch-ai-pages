@@ -113,8 +113,15 @@ materials[].Ebenen["01"].percentage     → number   % contributed from this V
 | **M7** | Optional | `Ebenen` omitted when material added directly |
 | **M8** | Source | `Ebenen[].article_number` = Vormischung ID (V-xxx) |
 
+## Visualization
+
+![Schema visualization](agreed-schema-visualization.png)
+
+*Generated with [JSON Viewer Tools](https://jsonviewer.tools/editor)*
+
 ## Source
 
 - Meeting: Jan 15, 2026 with Mattis (AVO)
 - Transcript: [Fireflies](https://app.fireflies.ai/view/01KEXRBAF5495NKTGZ5N6FHFVE)
 - Screenshot evidence: Mattis screen share showing Ebenen structure
+- Visualization tool: [jsonviewer.tools/editor](https://jsonviewer.tools/editor)
