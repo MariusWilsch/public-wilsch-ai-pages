@@ -115,7 +115,7 @@ materials[].Ebenen["01"].percentage     → number   % contributed from this V
 
 ## Visualization
 
-![Schema visualization](agreed-schema-visualization.png)
+<img src="agreed-schema-visualization.png" width="600" alt="Schema visualization">
 
 *Generated with [JSON Viewer Tools](https://jsonviewer.tools/editor)*
 
