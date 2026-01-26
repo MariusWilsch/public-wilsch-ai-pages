@@ -161,7 +161,7 @@ materials[].Ebenen["01"].percentage     → number   % contributed from this V
 
 | Agreed (with Ebenen) | Delivered (with structure) |
 |:--------------------:|:--------------------------:|
-| <img src="agreed-schema-viz.png" width="400" alt="Agreed"> | <img src="delivered-schema-viz.png" width="400" alt="Delivered"> |
+| <img src="agreed-schema-viz.png" width="50%" alt="Agreed"> | <img src="delivered-schema-viz.png" width="50%" alt="Delivered"> |
 
 ### Key Difference
 
