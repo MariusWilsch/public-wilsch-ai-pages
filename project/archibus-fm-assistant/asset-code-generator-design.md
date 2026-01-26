@@ -187,5 +187,3 @@ Before building, one core question: **How standardized is the data we'll receive
 ## Source
 
 - Mujahid <> Marius meeting (2026-01-22)
-- Transcript: [Fireflies 01KFJY8NN704JPPSY8TK405S1B](https://app.fireflies.ai/view/01KFJY8NN704JPPSY8TK405S1B)
-- Issue: [#605 - AI-Assisted Asset Code Generation](https://github.com/DaveX2001/deliverable-tracking/issues/605)
