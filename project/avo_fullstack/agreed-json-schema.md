@@ -113,6 +113,66 @@ materials[].Ebenen["01"].percentage     → number   % contributed from this V
 | **M7** | Optional | `Ebenen` omitted when material added directly |
 | **M8** | Source | `Ebenen[].article_number` = Vormischung ID (V-xxx) |
 
+## Gap Analysis: Agreed vs Delivered
+
+### Agreed (with Ebenen)
+
+```json
+{
+  "article_number": "M1358900",
+  "materials": [
+    {
+      "article_number": "00033",
+      "percentage": 0.109,
+      "Ebenen": {
+        "01": { "article_number": "V2863", "percentage": 0.109 }
+      }
+    },
+    {
+      "article_number": "02041",
+      "percentage": 0.371,
+      "Ebenen": {
+        "01": { "article_number": "V0025", "percentage": 0.05 },
+        "03": { "article_number": "V0033", "percentage": 0.321 }
+      }
+    }
+  ]
+}
+```
+
+### Delivered (with structure instead)
+
+```json
+{
+  "article_number": "M1358900",
+  "materials": [
+    { "article_number": "00033", "percentage": 0.109 },
+    { "article_number": "02041", "percentage": 0.371 }
+  ],
+  "structure": [
+    { "component": "V2863", "percentage": 0.071 },
+    { "component": "V0025", "percentage": 0.053 },
+    { "component": "V0033", "percentage": 0.191 }
+  ]
+}
+```
+
+### Visual Comparison
+
+| Agreed (with Ebenen) | Delivered (with structure) |
+|:--------------------:|:--------------------------:|
+| <img src="agreed-schema-viz.png" width="400" alt="Agreed"> | <img src="delivered-schema-viz.png" width="400" alt="Delivered"> |
+
+### Key Difference
+
+| Aspect | Agreed | Delivered |
+|--------|--------|-----------|
+| Provenance location | `Ebenen` **inside** each material | `structure` at **root** level |
+| Links material to source | ✅ Yes | ❌ No |
+| Shows which V contributed to which material | ✅ Yes | ❌ No |
+
+**Impact:** Cannot trace which Vormischung contributed to which specific material.
+
 ## Visualization
 
 <img src="agreed-schema-visualization.png" width="100%" alt="Schema visualization">
