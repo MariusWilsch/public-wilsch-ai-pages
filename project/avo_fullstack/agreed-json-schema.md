@@ -9,7 +9,7 @@ Schema agreed in Jan 15, 2026 meeting with Mattis (AVO), Thomas Erhard, Heiko Sc
 
 ## Part 1: JSON with Semantic Comments
 
-```json
+```jsonc
 // FORMAT: JSONL (one recipe per line, no wrapper array)
 {
   "article_number": "RZ6001",           // Recipe ID - unique identifier for this sauce
