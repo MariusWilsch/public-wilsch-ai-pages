@@ -31,10 +31,7 @@ Kundenanfrage    →    Gelbe Felder    →    Preiskalkulation
 
 **Ziel Workshop 2:** Reverse-Engineering - verstehen, wie diese Felder heute befüllt werden.
 
-> "Wenn ich diese gelben Zahlen habe, dann drücken wir nur noch auf den Knopf und haben einen Gesamtpreis."
-> — Reiner Sasse, Workshop 1
-
-Sobald die gelben Felder ausgefüllt sind, berechnet das System automatisch. Die Frage ist: Woher kommen die Werte?
+Sobald die gelben Felder ausgefüllt sind, berechnet das ERP-System automatisch den Gesamtpreis - ein Knopfdruck genügt. Die Frage ist: Woher kommen die Werte?
 
 ## Quelle
 
