@@ -10,6 +10,8 @@ publish: true
 
 Eingabefelder in der Stückliste, die aus Kundenanfragen befüllt werden.
 
+*Beispiele aus Workshop 1 (nicht vollständig):*
+
 | Feld | Beschreibung | Beispiel |
 |------|--------------|----------|
 | Betongüte | Festigkeitsklasse | C 50/60 |
