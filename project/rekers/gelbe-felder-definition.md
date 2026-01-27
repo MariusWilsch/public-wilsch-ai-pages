@@ -6,6 +6,12 @@ publish: true
 
 [[client-rekers]]
 
+## Kontext
+
+**Ziel Workshop 2:** Reverse-Engineering - verstehen, wie diese Felder heute befüllt werden.
+
+Sobald die gelben Felder ausgefüllt sind, berechnet das ERP-System automatisch den Gesamtpreis - ein Knopfdruck genügt. Die Frage ist: Woher kommen die Werte?
+
 ## Was sind die Gelben Felder?
 
 Eingabefelder in der Stückliste, die aus Kundenanfragen befüllt werden.
@@ -26,12 +32,6 @@ Eingabefelder in der Stückliste, die aus Kundenanfragen befüllt werden.
 Kundenanfrage    →    Gelbe Felder    →    Preiskalkulation
 (Text/Zeichnung)      (Eingabe)            (automatisch)
 ```
-
-## Kontext
-
-**Ziel Workshop 2:** Reverse-Engineering - verstehen, wie diese Felder heute befüllt werden.
-
-Sobald die gelben Felder ausgefüllt sind, berechnet das ERP-System automatisch den Gesamtpreis - ein Knopfdruck genügt. Die Frage ist: Woher kommen die Werte?
 
 ## Quelle
 
