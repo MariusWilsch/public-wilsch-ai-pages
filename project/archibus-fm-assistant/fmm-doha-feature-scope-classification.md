@@ -13,6 +13,8 @@ publish: true
 
 **Related:** [Original MoSCoW Doc](https://mariuswilsch.github.io/public-wilsch-ai-pages/project/archibus-fm-assistant/mujahid-ai-requirements-moscow)
 
+**Legend:** MH = Must Have, SH = Should Have, CH = Could Have (MoSCoW priority from Mujahid's original doc)
+
 ---
 
 ## IMPLEMENTED
