@@ -95,7 +95,7 @@ Map client column names to Bruce BEM schema fields. AI infers semantically, impl
 - Pattern reusable across 12+ tables
 
 **What we don't know:**
-- Ryan hasn't marked AI-filled vs API-filled fields yet
+- Rein hasn't marked AI-filled vs API-filled fields yet
 - #605 mapping pattern pending
 
 ---
@@ -112,7 +112,7 @@ With hierarchy and mapping established, AI processes all rows top-down. Schema p
 - Thousands of rows — this is the bulk value step
 
 **What we don't know:**
-- Insertion API doesn't exist yet — Ryan needs to build it
+- Insertion API doesn't exist yet — Rein needs to build it
 - Checkpoint/revert mechanism not yet designed
 
 ## Target Audience
@@ -147,7 +147,7 @@ Campus → Site → Complex → Property → Building → Floor → Storewell �
 - Contacts: `main_contact_name`, `main_contact_phone`, `main_contact_email`
 
 **Field responsibility:**
-- **Required vs optional:** marked by Ryan
+- **Required vs optional:** marked by Rein
 - **AI-filled vs API-filled:** process of elimination (API fills context fields like `owner_id`, AI fills rest). Exact split is iterative.
 
 **Background data tables (12+):**
@@ -201,7 +201,7 @@ Assets, resources_employees, resources_workteams, workteam_members, business_uni
 
 **Key update:** Validation rules emerge from the **insert mechanism**. The API will forward database-level errors and business-level errors. We need to design this mechanism to understand exact validation behavior.
 
-**What we don't know:** Insert mechanism doesn't exist yet — Ryan needs to build it. Validation rules will become clear once we see it in practice.
+**What we don't know:** Insert mechanism doesn't exist yet — Rein needs to build it. Validation rules will become clear once we see it in practice.
 
 ### Component 5: Context Engineering
 
@@ -213,7 +213,7 @@ Assets, resources_employees, resources_workteams, workteam_members, business_uni
 - Full asset schema: 35 fields with data types and required/optional markings
 - Hierarchy enum: 9 levels (Campus → Room)
 - Real sample data for testing (CAFM, FMM samples)
-- Ryan's import template showing target format
+- Rein's import template showing target format
 
 **Approach:** Pre-load schema knowledge into AI context. AI doesn't discover the schema through trial and error — it knows the target structure upfront.
 
