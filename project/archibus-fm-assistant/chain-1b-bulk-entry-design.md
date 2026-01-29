@@ -161,14 +161,16 @@ Campus → Site → Complex → Property → Building → Floor → Storewell �
 
 *Target schema mapping is a processing step (Step 2), not an input.*
 
-**Available samples (dated 2026-01-28 in hippocampus):**
-- `cafm-asset-upload-sample-2026-01-28.xlsx`
-- `fmm-asset-data-sample-2026-01-28.xlsx`
-- `asset-import-schema-2026-01-28.csv`
+**Available samples (dated 2026-01-28):**
+- [CAFM Asset Upload Sample](https://github.com/veloxforce/claude-user-configs/raw/main/hippocampus/project/archibus-fm-assistant/cafm-asset-upload-sample-2026-01-28.xlsx) — generic CAFM format
+- [FMM Asset Data Sample](https://github.com/veloxforce/claude-user-configs/raw/main/hippocampus/project/archibus-fm-assistant/fmm-asset-data-sample-2026-01-28.xlsx) — real FMM client data
+- [Asset Import Schema (CSV)](https://github.com/veloxforce/claude-user-configs/raw/main/hippocampus/project/archibus-fm-assistant/asset-import-schema-2026-01-28.csv) — Rein's import template
 
 ### Component 3: AI-Powered Mapping
 
-**What it is:** Step 2 — mapping client data columns to the Bruce BEM schema.
+**What it is:** Step 2 — mapping happens at two levels:
+1. **Hierarchy level** — which of the 9 levels does the client's data represent?
+2. **Schema level** — input data column schema → background table schema
 
 **The goal:** Client column names and values → matching Bruce BEM asset table fields. Human-in-the-loop for confirmation.
 
