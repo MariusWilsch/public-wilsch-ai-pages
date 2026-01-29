@@ -138,13 +138,7 @@ Campus → Site → Complex → Property → Building → Floor → Storewell �
 
 *Each client uses a different subset. Hierarchy is flexible but always from this finite list.*
 
-**Asset schema:** 35 fields including:
-- Core: `name`, `asset_type`, `parent_id`
-- Identification: `other_code`, `serial_number`, `barcode`, `qr_code`
-- Location: `address`, `city`, `state`, `postal_code`, `country`, `location_description`
-- Dates: `date_manufacture`, `date_purchased`, `date_active_service`, `warranty_from`, `warranty_to`
-- Areas: `area_interior_m2`, `area_total_m2`, `area_rentable_m2`
-- Contacts: `main_contact_name`, `main_contact_phone`, `main_contact_email`
+**Asset schema:** 35 fields — see [Asset Import Description (SharePoint)](https://aschs-my.sharepoint.com/:x:/g/personal/rein_suurvali_asc-hs_com/IQCZWnERRmHxRb3r4bb3BZzRAfjwreav4FEP85btLlaVWNI?e=OLeVgd), sheet "Field Assets"
 
 **Field responsibility:**
 - **Required vs optional:** marked by Rein
