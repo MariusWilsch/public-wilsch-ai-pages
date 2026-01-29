@@ -11,12 +11,9 @@ publish: true
 
 ## Meeting Goal
 
-**Core question:** For each AI work track, do we kill, pivot, or continue?
-
-If continue, we should also align on:
-1. Resource assignment (who works on what)
-2. Timeline commitments (when)
-3. Next steps per track
+**Core questions:**
+1. For each AI work track: kill, pivot, or continue?
+2. Prioritization: what order should we tackle them? (1st, 2nd, 3rd, 4th)
 
 ---
 
