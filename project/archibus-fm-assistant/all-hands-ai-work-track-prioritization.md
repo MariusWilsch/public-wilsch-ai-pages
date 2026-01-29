@@ -33,23 +33,7 @@ Please review these documents before the meeting:
 
 ## Discussion Topics
 
-### 1. NoVNC Hybrid Environment (#628)
-
-**Stage:** Prototype ready (8/8 ACs passed, deployable)
-
-AI navigates Chrome visually so users see actions happen. Split-screen wrapper combines chat + VNC view.
-
-**Discussion:** Kill / Pivot / Continue?
-
-### 2. Asset Code Generation (#605)
-
-**Stage:** Early design (idea validation)
-
-AI generates equipment codes from client data (Building-Floor-Room-Type-Sequence pattern). Discussed with Mujahid, needs buy-in from Miguel.
-
-**Discussion:** Kill / Pivot / Continue? Do we want to offer this as a product?
-
-### 3. AI Bulk Data Entry (#373)
+### 1. AI Bulk Data Entry (#373)
 
 **Stage:** Design progressing (core work)
 
@@ -60,13 +44,29 @@ AI generates equipment codes from client data (Building-Floor-Room-Type-Sequence
 - Step 2 (Mapping): Who provides input data + validates AI's work?
 - Step 3 (Fill): When can the insertion API be built?
 
-### 4. Standalone Authentication
+### 2. Asset Code Generation (#605)
+
+**Stage:** Early design (idea validation)
+
+AI generates equipment codes from client data (Building-Floor-Room-Type-Sequence pattern). Discussed with Mujahid, needs buy-in from Miguel.
+
+**Discussion:** Kill / Pivot / Continue? Do we want to offer this as a product?
+
+### 3. Standalone Authentication
 
 **Stage:** Iframe works, standalone blocked
 
 Current iframe approach works (Bruce BEM passes tokens). Standalone OAuth blocked by Code on Time framework. Approach C (Tiny Auth App) proposed as workaround.
 
 **Discussion:** Continue with Approach C / Stay with iframe for now / Kill standalone effort?
+
+### 4. NoVNC Hybrid Environment (#628)
+
+**Stage:** Prototype ready (8/8 ACs passed, deployable)
+
+AI navigates Chrome visually so users see actions happen. Split-screen wrapper combines chat + VNC view.
+
+**Discussion:** Kill / Pivot / Continue?
 
 ---
 
