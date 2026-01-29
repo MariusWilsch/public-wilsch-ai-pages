@@ -13,7 +13,7 @@ Populating Bruce BEM's background data requires understanding the client's hiera
 
 **The process requires three steps:**
 1. **Understand the hierarchy** — which levels does this client use? (subset of 9 possible)
-2. **Map the input** — client column names → Bruce BEM schema fields
+2. **Map the input column schema to the background table schema** — client column names → Bruce BEM schema fields
 3. **Fill level-by-level** — parents must exist before children, resolving gaps row by row
 
 An **importer** already exists — it inserts data when the input matches the schema perfectly. But client data is never perfect: inconsistent columns, missing values, varying formats.
@@ -85,7 +85,7 @@ Determine which of the 9 possible levels (Campus → Site → Complex → Proper
 
 ---
 
-### Step 2: Map the input
+### Step 2: Map the input column schema to the background table schema
 
 Map client column names to Bruce BEM schema fields. AI infers semantically, implementer confirms. This mapping pattern is reusable across all 12+ background data tables.
 
