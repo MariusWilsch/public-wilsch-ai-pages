@@ -186,9 +186,10 @@ publish: true
 
 ---
 
-## Next Steps
+## Phases
 
-1. **Clarify with Mujahid:** Resolve the 3 unclear items (MH3, SH1, CH1)
-2. **API team discussion:** Confirm API fields for SH6 (Smart Work Order Classification)
-3. **Quotation positioning:** Lead with implemented (MH8) + tangent items as 2-month deliverables
-4. **AI Hosting Costs:** Once feature scope is concrete, calculate infrastructure costs
+**Phase 1:** Align on feature scope with Mujahid
+
+**Phase 2:** Get buy-in from Rein (API feasibility) and Miguel (business alignment)
+
+**Phase 3:** Figure out the work and cost
