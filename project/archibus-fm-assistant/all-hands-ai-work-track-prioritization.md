@@ -32,12 +32,12 @@ publish: true
 
 **Stage:** Design progressing (core work)
 
-3-step process: understand hierarchy → map input schema → fill level-by-level. Design doc updated with concrete schema from Rein.
+3-step process: understand hierarchy → map input schema → fill level-by-level. Design doc updated with concrete schema.
 
 **Missing:**
 - Step 1 (Hierarchy): Methodology for defining client hierarchy + who should I talk to
 - Step 2 (Mapping): Real input data samples + FM expert to validate AI's mapping
-- Step 3 (Fill): Insertion API from Rein
+- Step 3 (Fill): Insertion API
 
 **Decision:** Assign resources for each missing item
 
