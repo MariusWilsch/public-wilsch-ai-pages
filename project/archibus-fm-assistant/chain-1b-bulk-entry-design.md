@@ -112,7 +112,7 @@ With hierarchy and mapping established, AI processes all rows top-down. Schema p
 - Thousands of rows — this is the bulk value step
 
 **What we don't know:**
-- Insertion API doesn't exist yet — Rein needs to build it
+- Insertion API doesn't exist yet
 - Checkpoint/revert mechanism not yet designed
 
 ## Target Audience
@@ -196,13 +196,13 @@ Campus → Site → Complex → Property → Building → Floor → Storewell �
 
 **Key update:** Validation rules emerge from the **insert mechanism**. The API will forward database-level errors and business-level errors. We need to design this mechanism to understand exact validation behavior.
 
-**What we don't know:** Insert mechanism doesn't exist yet — Rein needs to build it. Validation rules will become clear once we see it in practice.
+**What we don't know:** Insert mechanism doesn't exist yet. Validation rules will become clear once we see it in practice.
 
 ### Component 5: Context Engineering
 
 **What it is:** How to encode the schema into AI context so it can reason about mapping and validation.
 
-**Hypothesis confirmed:** Background data tables are KNOWN and STABLE → encode into AI context.
+Background data tables are KNOWN and STABLE → encode into AI context.
 
 **We now have:**
 - Full asset schema: 35 fields with data types and required/optional markings
