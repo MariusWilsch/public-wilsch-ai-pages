@@ -7,16 +7,25 @@ publish: true
 
 ## Problem Statement
 
-**Low margin + high effort at database inception.**
+**The gap between client data and system schema is the implementer's burden.**
 
-Partners spend excessive time formatting client data for onboarding. Current process:
-1. Client gives raw Excel (inconsistent columns, minimal data)
-2. Partner manually reformats into multi-tabbed spreadsheet
-3. Manual validation via macros (data types, required fields)
-4. Upload in correct hierarchy order (site → building → floor → room → asset)
-5. Exception handling when foreign keys missing
+Populating Bruce BEM's background data requires understanding the client's hierarchy, mapping their columns to 35 schema fields, and filling data level-by-level — fixing validation errors at each step. Today the implementer carries this end-to-end. AI takes over the process; the implementer only resolves what AI cannot.
 
-This is low-margin, repetitive work that holds up implementations.
+**The process requires three steps:**
+1. **Understand the hierarchy** — which levels does this client use? (subset of 9 possible)
+2. **Map the input** — client column names → Bruce BEM schema fields
+3. **Fill level-by-level** — parents must exist before children, resolving gaps row by row
+
+An **importer** already exists — it inserts data when the input matches the schema perfectly. But client data is never perfect: inconsistent columns, missing values, varying formats.
+
+**The gap:** imperfect client data needs to become perfect importer input. Today, the implementer fills this gap manually.
+
+**Roles of responsibility with AI:**
+- **Schema** provides backpressure — automated feedback on what's valid and why it's rejected
+- **AI** carries the 3-step process and the correction loop
+- **Implementer** intervenes only where AI cannot proceed — missing data or business context
+
+**Scope:** Phase 1 focuses on the asset table with hierarchical location data (the hardest case). If this pattern is solved, the remaining 12+ background data tables are simpler variants.
 
 ## Mental Model: Backpressure
 
@@ -30,24 +39,81 @@ From [Don't Waste Your Backpressure](https://banay.me/dont-waste-your-backpressu
 
 **In this project:**
 - **Schema = the backpressure mechanism** (accepts/rejects with actionable reason)
-- **Mapping = connecting input TO the backpressure mechanism**
-- **Validation = executing the backpressure** (the actual accept/reject loop)
+- **Mapping = connecting input TO the backpressure mechanism** (Step 2)
+- **Validation = executing the backpressure** (Step 3: insert → reject → fix → retry)
+
+**Insertion order options:**
+
+| Mode | Description | Trade-off |
+|------|-------------|-----------|
+| Level-by-level | Insert all Properties → all Buildings → all Floors → all Rooms | Parallelizable, but partial progress across entire tree |
+| Tree-walk per branch | Insert one full branch (Property → Building → Floor → Room) then next branch | Completion feeling per branch, sequential |
+
+*Open: Which mode fits better depends on input data structure. Design decision pending.*
 
 <img src="chain-1b-flow.png" width="600" alt="Chain 1B Flow">
 
 ## Success Definition
 
-> "An AI-powered feedback loop that fills background data schema as much as possible from client inputs, asks where uncertain, flags what it cannot fill, thereby freeing partner time."
+> "AI carries the 3-step process (understand hierarchy, map input, fill level-by-level) for populating Bruce BEM background data. The implementer's role shifts from executor to collaborator."
 
 | Element | Definition |
 |---------|------------|
 | Goal | Fill schema as much as possible (not perfection) |
-| Success | Background data tables populated |
-| Failure mode | Actionable - AI knows WHY data was rejected |
-| Human role | Resolve what AI cannot (decision authority) |
+| Success | Asset hierarchy populated following the client's hierarchy structure from the input data |
+| Failure mode | Actionable — schema rejects with reason, AI self-corrects |
+| AI role | Setup (Steps 1-2) + Processing (Step 3) + backpressure loop |
+| Implementer role | Confirms hierarchy, validates mappings, answers genuine gaps |
 
 **Key insight from Ian:**
 > "It doesn't mean that the data has to be 100% complete. The principle is if we can speed up that data entry and validation process..."
+
+## The 3-Step Process
+
+**Setup Phase** (one-time per client)
+
+### Step 1: Understand the hierarchy
+
+Determine which of the 9 possible levels (Campus → Site → Complex → Property → Building → Floor → Storewell → Suite → Room) the client uses. Each client has a different hierarchy, but always from this finite list. AI proposes, implementer confirms.
+
+**What we know:**
+- 9 levels, flexible per client (subset)
+- AI proposes, implementer confirms
+
+**What we don't know:**
+- Exact interaction pattern for hierarchy confirmation
+
+---
+
+### Step 2: Map the input
+
+Map client column names to Bruce BEM schema fields. AI infers semantically, implementer confirms. This mapping pattern is reusable across all 12+ background data tables.
+
+**What we know:**
+- 35 schema fields, required/optional marked
+- AI infers mapping, implementer confirms
+- Pattern reusable across 12+ tables
+
+**What we don't know:**
+- Ryan hasn't marked AI-filled vs API-filled fields yet
+- #605 mapping pattern pending
+
+---
+
+**Processing Phase** (bulk — where the real value lives)
+
+### Step 3: Fill level-by-level
+
+With hierarchy and mapping established, AI processes all rows top-down. Schema provides backpressure for autonomous self-correction. Implementer only intervenes on genuine gaps.
+
+**What we know:**
+- Insert top-down: parents before children (parent_id linking)
+- Schema backpressure enables autonomous self-correction
+- Thousands of rows — this is the bulk value step
+
+**What we don't know:**
+- Insertion API doesn't exist yet — Ryan needs to build it
+- Checkpoint/revert mechanism not yet designed
 
 ## Target Audience
 
@@ -65,71 +131,93 @@ From [Don't Waste Your Backpressure](https://banay.me/dont-waste-your-backpressu
 
 ### Component 1: Schema
 
-**What it is:** Bruce BEM background data tables
+**What it is:** Bruce BEM background data tables — starting with the asset table for location-based assets.
 
-**Characteristics:**
-- "Background data" = spatial drill down + assets + people
-- Spatial hierarchy: site → building → floor → room → desk
-- Bruce BEM has different structure than Archibus (hierarchy in same table vs separate)
+**Hierarchy (9 levels):**
+Campus → Site → Complex → Property → Building → Floor → Storewell → Suite → Room
 
-**Requirements:**
-- List of Bruce BEM background data tables
-- Insertion mechanisms Bruce BEM supports
+*Each client uses a different subset. Hierarchy is flexible but always from this finite list.*
 
-**Why this matters:** Schema IS the backpressure mechanism. Without it, the loop has nothing to validate against.
+**Asset schema:** 35 fields including:
+- Core: `name`, `asset_type`, `parent_id`
+- Identification: `other_code`, `serial_number`, `barcode`, `qr_code`
+- Location: `address`, `city`, `state`, `postal_code`, `country`, `location_description`
+- Dates: `date_manufacture`, `date_purchased`, `date_active_service`, `warranty_from`, `warranty_to`
+- Areas: `area_interior_m2`, `area_total_m2`, `area_rentable_m2`
+- Contacts: `main_contact_name`, `main_contact_phone`, `main_contact_email`
+
+**Field responsibility:**
+- **Required vs optional:** marked by Ryan
+- **AI-filled vs API-filled:** process of elimination (API fills context fields like `owner_id`, AI fills rest). Exact split is iterative.
+
+**Background data tables (12+):**
+Assets, resources_employees, resources_workteams, workteam_members, business_units, departments, pm_procedures, pm_steps, bruce_members, spare_parts, spare_part_categories, service_catalogue
+
+**Phase 1 scope:** Location-based assets only. Equipment (facility-based assets) = Phase 2.
+
+**Why this matters:** Schema IS the backpressure mechanism.
 
 ### Component 2: Inputs
 
-**What it is:** Sample client Excel files
+**What it is:** The data needed to start the process.
 
-**Characteristics:**
-- Clients give Excel (inconsistent formats)
-- Column names vary (equipment_code vs eq_id vs asset_id)
-- Data often incomplete
-- Format unpredictable
+**Two required inputs:**
 
-**Requirements:** Real client data OR synthetic test data
+1. **Client data file** — Excel/CSV with the actual data to import
+2. **Client's requested hierarchy** — which of the 9 levels they want
+
+*Target schema mapping is a processing step (Step 2), not an input.*
+
+**Available samples (dated 2026-01-28 in hippocampus):**
+- `cafm-asset-upload-sample-2026-01-28.xlsx`
+- `fmm-asset-data-sample-2026-01-28.xlsx`
+- `asset-import-schema-2026-01-28.csv`
 
 ### Component 3: AI-Powered Mapping
 
-**What it is:** AI reasons about messy input to find the right schema destination - not just column matching, but understanding what the data *means*
+**What it is:** Step 2 — mapping client data columns to the Bruce BEM schema.
 
-**This is the core problem:**
-- Fuzzy matching (equipment_code ≈ eq_id)
-- Semantic understanding (description → name/desc field)
-- When uncertain → ASK human
+**The goal:** Client column names and values → matching Bruce BEM asset table fields. Human-in-the-loop for confirmation.
 
-**Sub-layers:**
-1. Column name matching
-2. Data type matching
-3. Semantic matching
-4. Hierarchy detection (is this a Site or Building?)
-5. Missing field handling
+**Process:**
+- AI reads client columns + values, proposes semantic mapping
+- Implementer confirms or corrects
+- Finalized mapping used in Step 3
 
-**Dependencies:** Requires schema + input
+**Dependencies:** #605 (Asset Code Generation) may provide the mapping pattern.
+
+**What we don't know:** Exact mapping mechanics pending #605.
 
 ### Component 4: Validation Rules
 
+**What it is:** The backpressure loop — schema rejects with reason, AI self-corrects.
+
 **Two types of correctness:**
 
-| Type | Question | Can automate? |
-|------|----------|---------------|
-| STRUCTURE | Is format right? | Yes (schema tells us) |
-| VALUE | Is content right? | Harder (needs domain knowledge) |
+| Type | Question | Mechanism |
+|------|----------|-----------|
+| STRUCTURE | Is format right? | Schema rejects → AI self-corrects |
+| VALUE | Is content right? | Business logic or human judgment |
 
-**Structure validation:** Derive from schema (types, required fields)
+**Key update:** Validation rules emerge from the **insert mechanism**. The API will forward database-level errors and business-level errors. We need to design this mechanism to understand exact validation behavior.
 
-**Value validation:** Lookup existing data, ask human, contextual inference
+**What we don't know:** Insert mechanism doesn't exist yet — Ryan needs to build it. Validation rules will become clear once we see it in practice.
 
 ### Component 5: Context Engineering
 
-How to encode schema into AI context. ([Read more](https://www.anthropic.com/engineering/effective-context-engineering-for-ai-agents))
+**What it is:** How to encode the schema into AI context so it can reason about mapping and validation.
 
-**Two approaches:**
-- A: Let AI try (trial and error)
-- B: Encode schema into AI context (pre-load knowledge)
+**Hypothesis confirmed:** Background data tables are KNOWN and STABLE → encode into AI context.
 
-**Hypothesis:** Background data tables are KNOWN and STABLE → encode into AI context
+**We now have:**
+- Full asset schema: 35 fields with data types and required/optional markings
+- Hierarchy enum: 9 levels (Campus → Room)
+- Real sample data for testing (CAFM, FMM samples)
+- Ryan's import template showing target format
+
+**Approach:** Pre-load schema knowledge into AI context. AI doesn't discover the schema through trial and error — it knows the target structure upfront.
+
+**Open:** Exact encoding format (JSON schema? Natural language description? Both?). Design decision pending implementation.
 
 ### Components 6-9: Design Decisions
 
