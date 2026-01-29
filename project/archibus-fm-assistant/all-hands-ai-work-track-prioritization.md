@@ -59,7 +59,7 @@ Current iframe approach works (Bruce BEM passes tokens). Standalone OAuth blocke
 
 ### 4. NoVNC Hybrid Environment (#628)
 
-**Stage:** Prototype ready (8/8 ACs passed, deployable)
+**Stage:** Prototype ready
 
 AI navigates Chrome visually so users see actions happen. Split-screen wrapper combines chat + VNC view.
 
