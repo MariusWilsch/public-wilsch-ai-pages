@@ -144,8 +144,7 @@ Campus → Site → Complex → Property → Building → Floor → Storewell �
 - **Required vs optional:** marked by Rein
 - **AI-filled vs API-filled:** process of elimination (API fills context fields like `owner_id`, AI fills rest). Exact split is iterative.
 
-**Background data tables (12+):**
-Assets, resources_employees, resources_workteams, workteam_members, business_units, departments, pm_procedures, pm_steps, bruce_members, spare_parts, spare_part_categories, service_catalogue
+**Background data tables (12+):** See [Most Relevant Tables (Teams)](https://teams.microsoft.com/l/message/19:083a225f-2719-459d-80d1-8e5d59236d51_233f190a-77c2-4054-bc4c-0fdfda1fe04f@unq.gbl.spaces/1769438021194?context=%7B%22contextType%22%3A%22chat%22%7D)
 
 **Proof of concept scope:** Location-based assets only. Equipment (facility-based assets) comes later.
 
