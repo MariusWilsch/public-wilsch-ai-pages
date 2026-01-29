@@ -57,13 +57,13 @@ publish: true
 
 **What it does:** When creating a work request, AI auto-assigns trade, category, priority, and SLA from the description. Operator says "AHU not cooling" → AI infers: trade=HVAC, priority=high, SLA=4hr.
 
-**Status:** Extension of implemented MH8. The LLM already understands context. Needs Ryan to expose additional API fields (trade, category, priority, SLA) on the CreateWorkRequest endpoint.
+**Status:** Extension of implemented MH8. The LLM already understands context. Needs API team to expose additional API fields (trade, category, priority, SLA) on the CreateWorkRequest endpoint.
 
 ---
 
 ## SMART INSIGHT UMBRELLA
 
-*Planned product direction. All require the same foundation: historical data access (Ryan) + analytics definition (what patterns to detect, what "good" looks like).*
+*Planned product direction. All require the same foundation: historical data access (API team) + analytics definition (what patterns to detect, what "good" looks like).*
 
 ### MH5: Predictive Maintenance
 
@@ -189,6 +189,6 @@ publish: true
 ## Next Steps
 
 1. **Clarify with Mujahid:** Resolve the 3 unclear items (MH3, SH1, CH1)
-2. **Ryan discussion:** Confirm API fields for SH6 (Smart Work Order Classification)
+2. **API team discussion:** Confirm API fields for SH6 (Smart Work Order Classification)
 3. **Quotation positioning:** Lead with implemented (MH8) + tangent items as 2-month deliverables
 4. **AI Hosting Costs:** Once feature scope is concrete, calculate infrastructure costs
