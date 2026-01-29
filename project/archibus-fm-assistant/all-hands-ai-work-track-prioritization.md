@@ -46,11 +46,11 @@ Please review these documents before the meeting:
 
 ### 2. Asset Code Generation (#605)
 
-**Stage:** Early design (idea validation)
+**Stage:** Design defined, meeting held
 
-AI generates equipment codes from client data (Building-Floor-Room-Type-Sequence pattern). Discussed with Mujahid, needs buy-in from Miguel.
+AI generates equipment codes from client data. Tangent to #373 — if we continue with bulk entry, #605 becomes a subset of that work.
 
-**Discussion:** Kill / Pivot / Continue? Do we want to offer this as a product?
+**Discussion:** Kill / Pivot / Continue?
 
 ### 3. Standalone Authentication
 
