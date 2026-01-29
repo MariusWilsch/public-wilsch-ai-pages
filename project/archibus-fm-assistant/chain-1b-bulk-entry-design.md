@@ -9,7 +9,7 @@ publish: true
 
 **The gap between client data and system schema is the implementer's burden.**
 
-Populating Bruce BEM's background data requires understanding the client's hierarchy, mapping their columns to 35 schema fields, and filling data level-by-level — fixing validation errors at each step. Today the implementer carries this end-to-end. AI takes over the process; the implementer only resolves what AI cannot.
+Populating Bruce BEM's background data requires understanding the client's hierarchy, mapping their columns to schema fields (35 fields for the asset table alone), and filling data level-by-level — fixing validation errors at each step. Today the implementer carries this end-to-end. AI takes over the process; the implementer only resolves what AI cannot.
 
 **The process requires three steps:**
 1. **Understand the hierarchy** — which levels does this client use? (subset of 9 possible)
