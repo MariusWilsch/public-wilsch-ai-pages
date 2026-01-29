@@ -20,9 +20,7 @@ If continue, we should also align on:
 
 ---
 
-## Pre-Read
-
-Please review these documents before the meeting:
+## Read More
 
 - [Bulk Entry Design](https://mariuswilsch.github.io/public-wilsch-ai-pages/project/archibus-fm-assistant/chain-1b-bulk-entry-design)
 - [Auth Approaches](https://mariuswilsch.github.io/public-wilsch-ai-pages/project/archibus-fm-assistant/auth-approaches-comparison)
@@ -39,10 +37,10 @@ Please review these documents before the meeting:
 
 3-step process: understand hierarchy → map input schema → fill level-by-level. Design doc updated with concrete schema from Rein.
 
-**Discussion:** Crystallize next steps:
-- Step 1 (Hierarchy): Who should I talk to about the real-world process?
-- Step 2 (Mapping): Who provides input data + validates AI's work?
-- Step 3 (Fill): When can the insertion API be built?
+**Missing:**
+- Step 1 (Hierarchy): FM expert for real-world process
+- Step 2 (Mapping): Input data samples + validation partner
+- Step 3 (Fill): Insertion API
 
 ### 2. Asset Code Generation (#605)
 
@@ -50,7 +48,7 @@ Please review these documents before the meeting:
 
 AI generates equipment codes from client data. Tangent to #373 — if we continue with bulk entry, #605 becomes a subset of that work.
 
-**Discussion:** Kill / Pivot / Continue?
+**Ask:** Kill / Pivot / Continue
 
 ### 3. Standalone Authentication
 
@@ -58,7 +56,7 @@ AI generates equipment codes from client data. Tangent to #373 — if we continu
 
 Current iframe approach works (Bruce BEM passes tokens). Standalone OAuth blocked by Code on Time framework. Approach C (Tiny Auth App) proposed as workaround.
 
-**Discussion:** Continue with Approach C / Stay with iframe for now / Kill standalone effort?
+**Ask:** Continue with Approach C / Stay with iframe / Kill standalone
 
 ### 4. NoVNC Hybrid Environment (#628)
 
@@ -66,19 +64,15 @@ Current iframe approach works (Bruce BEM passes tokens). Standalone OAuth blocke
 
 AI navigates Chrome visually so users see actions happen. Split-screen wrapper combines chat + VNC view.
 
-**Discussion:** Kill / Pivot / Continue?
+**Ask:** Kill / Pivot / Continue
 
 ---
 
 ## Decisions Needed
 
-- [ ] Kill/Pivot/Continue verdict for each track
-- [ ] Resource assignment (who works on what)
-- [ ] Timeline commitments (when)
-
----
-
-## Meeting Format
-
-- **Type:** Prioritization / decision meeting
-- **Expectation:** Come having read the pre-read docs. We present status, discuss, then decide.
+| Track | Decision |
+|-------|----------|
+| #373 Bulk Entry | FM expert + data partner + API timeline |
+| #605 Asset Code | Kill / Pivot / Continue |
+| Auth | Approach C / Iframe / Kill |
+| #628 NoVNC | Kill / Pivot / Continue |
