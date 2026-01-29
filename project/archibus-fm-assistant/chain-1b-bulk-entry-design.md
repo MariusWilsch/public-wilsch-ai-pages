@@ -70,7 +70,7 @@ From [Don't Waste Your Backpressure](https://banay.me/dont-waste-your-backpressu
 
 ## The 3-Step Process
 
-**Setup Phase** (one-time per client)
+**Setup Phase** (one-time per import job)
 
 ### Step 1: Understand the hierarchy
 
