@@ -25,7 +25,7 @@ An **importer** already exists — it inserts data when the input matches the sc
 - **AI** carries the 3-step process and the correction loop
 - **Implementer** intervenes only where AI cannot proceed — missing data or business context
 
-**Scope:** Phase 1 focuses on the asset table with hierarchical location data (the hardest case). If this pattern is solved, the remaining 12+ background data tables are simpler variants.
+**Scope:** The proof of concept focuses on the asset table with hierarchical location data (the hardest case). If this pattern is solved, the remaining 12+ background data tables are simpler variants.
 
 ## Mental Model: Backpressure
 
@@ -153,7 +153,7 @@ Campus → Site → Complex → Property → Building → Floor → Storewell �
 **Background data tables (12+):**
 Assets, resources_employees, resources_workteams, workteam_members, business_units, departments, pm_procedures, pm_steps, bruce_members, spare_parts, spare_part_categories, service_catalogue
 
-**Phase 1 scope:** Location-based assets only. Equipment (facility-based assets) = Phase 2.
+**Proof of concept scope:** Location-based assets only. Equipment (facility-based assets) comes later.
 
 **Why this matters:** Schema IS the backpressure mechanism.
 
