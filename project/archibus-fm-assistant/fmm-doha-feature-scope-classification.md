@@ -6,8 +6,11 @@ publish: true
 [[client-archibus]]
 
 **Source:** Mujahid's MoSCoW Requirements (2026-01-26)
+
 **Timeline:** End of March 2026 (~2 months)
+
 **Purpose:** Determine what can be offered in the FMM quotation
+
 **Related:** [Original MoSCoW Doc](https://mariuswilsch.github.io/public-wilsch-ai-pages/project/archibus-fm-assistant/mujahid-ai-requirements-moscow)
 
 ---
