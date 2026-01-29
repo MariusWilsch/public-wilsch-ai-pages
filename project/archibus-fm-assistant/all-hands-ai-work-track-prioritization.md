@@ -38,9 +38,9 @@ If continue, we should also align on:
 3-step process: understand hierarchy → map input schema → fill level-by-level. Design doc updated with concrete schema from Rein.
 
 **Missing:**
-- Step 1 (Hierarchy): FM expert for real-world process
-- Step 2 (Mapping): Input data samples + validation partner
-- Step 3 (Fill): Insertion API
+- Step 1 (Hierarchy): Methodology for defining client hierarchy + who should I talk to
+- Step 2 (Mapping): Real input data samples + FM expert to validate AI's mapping
+- Step 3 (Fill): Insertion API from Rein
 
 **Decision:** Assign resources for each missing item
 
