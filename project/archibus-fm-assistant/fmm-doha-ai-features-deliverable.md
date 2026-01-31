@@ -47,7 +47,7 @@ publish: true
 
 ### Future Direction (Not in March Scope)
 
-Smart Insight umbrella (10 features including Predictive Maintenance, AI Dashboards, SLA Breach Prediction) - requires historical data foundation first.
+Smart Insight umbrella (10 features including Predictive Maintenance, AI Dashboards, SLA Breach Prediction) - current capacity focused on AI Bulk Data Entry. Smart Insight requires additional design work.
 
 ---
 
