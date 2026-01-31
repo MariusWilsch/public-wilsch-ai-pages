@@ -78,11 +78,11 @@ All AI features priced through the quotation calculator.
 
 ### Required: Short Call to Finalize Pricing
 
-Tech inputs are known. FM Domain inputs require a 15-20 minute call to determine FMM-specific values. Some inputs may require escalation to Miguel for clarification.
+Tech inputs are known. FM Domain inputs require a 30 minute call to determine FMM-specific values. Some inputs may require escalation to Miguel for clarification.
 
 ---
 
 ## Next Steps
 
-1. **Schedule pricing call** - 15-20 min to finalize costs
+1. **Schedule pricing call** - 30 min to finalize costs
 2. **Demo MH8** - Work Requests via Chat available for demonstration
