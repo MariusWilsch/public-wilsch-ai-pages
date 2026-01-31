@@ -11,9 +11,9 @@ publish: true
 
 ## Summary
 
-- **7 AI features** deliverable by end of March 2026
+- **6 AI features** deliverable by end of March 2026
 - **1 feature ready now** - Work Requests via Chat (demo available)
-- **6 features in development** - AI Bulk Data Entry (Asset Classification, Hierarchy Creation, Legacy Data Mapping, Duplicate Detection, Naming Standardization)
+- **5 features in development** - AI Bulk Data Entry (Asset Classification, Hierarchy Creation, Legacy Data Mapping, Duplicate Detection, Naming Standardization)
 - **Pricing** - Requires FMM-specific inputs:
   - Number of users by role (Self-Service, FM-Professional, Manager, Corporate)
   - Expected AI usage frequency per role
@@ -39,7 +39,6 @@ publish: true
 |----|---------|-------------|
 | **MH1** | Asset Classification | Normalize messy asset names to standard codes. |
 | **MH2** | Asset Hierarchy Creation | Auto-build Building → Floor → Room → Asset relationships from flat data. |
-| **MH3** | Auto-Population of Mandatory Fields | AI infers trade, criticality, PM procedure during import. |
 | **MH4** | Intelligent Legacy Data Mapping | AI proposes column-to-column mapping between source and Bruce BEM schema. |
 | **SH1** | Duplicate Asset Detection | Identify same asset under different names during import. |
 | **SH2** | Inconsistent Naming Detection | Flag spelling variations and abbreviations in asset data. |
@@ -58,7 +57,7 @@ Smart Insight umbrella (10 features including Predictive Maintenance, AI Dashboa
 |-----------|-------------|
 | **Now (Jan 2026)** | Work Requests via Chat (MH8) - ready for demonstration |
 | **End of February 2026** | AI Bulk Data Entry prototype - demo-ready for review |
-| **End of March 2026** | Full production deployment - all 7 AI features live |
+| **End of March 2026** | Full production deployment - all 6 AI features live |
 
 ---
 
