@@ -74,6 +74,8 @@ All AI features priced through the quotation calculator.
 
 **Needed from FMM:**
 
+These are the standard input variables for the quotation tool to calculate pricing:
+
 | Variable | Description |
 |----------|-------------|
 | User Type Mix | How many Self-Service, FM-Pro, Manager, Corporate users? |
