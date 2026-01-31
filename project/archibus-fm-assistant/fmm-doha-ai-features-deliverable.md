@@ -63,18 +63,11 @@ Smart Insight umbrella (10 features including Predictive Maintenance, AI Dashboa
 
 ## Pricing
 
-### Pricing Status
-
-**MH8 (Work Requests via Chat)**
-- Ready to price: Per-resolution model available
-- Cost basis: Cloud API usage (predictable, scalable)
-
-**AI Bulk Data Entry (MH1-4, SH1-2)**
-- Requires input variables to calculate accurately using our quotation tool
+All AI features priced through the quotation calculator.
 
 ### Required: Short Call to Finalize Pricing
 
-The quotation calculator needs FMM-specific usage inputs:
+The calculator needs FMM-specific usage inputs:
 - User counts by role
 - Expected AI usage frequency
 - Deployment model
