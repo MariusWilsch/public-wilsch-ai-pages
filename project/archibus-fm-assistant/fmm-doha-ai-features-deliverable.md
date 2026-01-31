@@ -65,16 +65,20 @@ Smart Insight umbrella (10 features including Predictive Maintenance, AI Dashboa
 
 All AI features priced through the quotation calculator.
 
+### Input Variables (What drives the price)
+
+| Variable | Description | Example Values | Who knows this? |
+|----------|-------------|----------------|-----------------|
+| **Concurrent Sessions** | Max simultaneous users | 20 | Tech (Marius/Rein) |
+| **Cost per Second** | GPU compute rate | $0.0024/sec | Tech (RunPod pricing) |
+| **User Type Mix** | Self-Service, FM-Pro, Manager, Corporate | varies by client | **FM Domain (Mujahid/Ali)** |
+| **Days/Month Active** | Working days per user type | 10-30 | **FM Domain** |
+| **Consumptions/Hour** | How often each user type uses AI | 0.125 - 8 | **FM Domain** |
+| **Interaction Duration** | Seconds per AI interaction | 60 - 300 sec | Tech (measurable) |
+
 ### Required: Short Call to Finalize Pricing
 
-The calculator needs FMM-specific usage inputs:
-- User counts by role
-- Expected AI usage frequency
-- Deployment model
-
-Some inputs may require escalation to Miguel for clarification.
-
-**Estimated duration:** 15-20 minutes
+Tech inputs are known. FM Domain inputs require a 15-20 minute call to determine FMM-specific values. Some inputs may require escalation to Miguel for clarification.
 
 ---
 
