@@ -62,6 +62,8 @@ Smart Insight umbrella (10 features including Predictive Maintenance, AI Dashboa
 
 All AI features priced through the quotation calculator.
 
+Technical inputs (concurrent sessions, cost per second, interaction duration) are already defined.
+
 ### Needed from FMM
 
 These are the standard input variables for the quotation tool to calculate pricing:
