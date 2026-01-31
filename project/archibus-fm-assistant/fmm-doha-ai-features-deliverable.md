@@ -62,17 +62,7 @@ Smart Insight umbrella (10 features including Predictive Maintenance, AI Dashboa
 
 All AI features priced through the quotation calculator.
 
-### Input Variables (What drives the price)
-
-**Given:**
-
-| Variable | Description | Value |
-|----------|-------------|-------|
-| Concurrent Sessions | Max simultaneous users | 20 |
-| Cost per Second | GPU compute rate | $0.0024/sec |
-| Interaction Duration | Seconds per AI interaction | 60 - 300 sec |
-
-**Needed from FMM:**
+### Needed from FMM
 
 These are the standard input variables for the quotation tool to calculate pricing:
 
