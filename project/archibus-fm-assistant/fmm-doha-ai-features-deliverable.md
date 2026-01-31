@@ -67,18 +67,25 @@ All AI features priced through the quotation calculator.
 
 ### Input Variables (What drives the price)
 
-| Variable | Description | Example Values | Who knows this? |
-|----------|-------------|----------------|-----------------|
-| **Concurrent Sessions** | Max simultaneous users | 20 | Tech (Marius/Rein) |
-| **Cost per Second** | GPU compute rate | $0.0024/sec | Tech (RunPod pricing) |
-| **User Type Mix** | Self-Service, FM-Pro, Manager, Corporate | varies by client | **FM Domain (Mujahid/Ali)** |
-| **Days/Month Active** | Working days per user type | 10-30 | **FM Domain** |
-| **Consumptions/Hour** | How often each user type uses AI | 0.125 - 8 | **FM Domain** |
-| **Interaction Duration** | Seconds per AI interaction | 60 - 300 sec | Tech (measurable) |
+**Given:**
 
-### Required: Short Call to Finalize Pricing
+| Variable | Description | Value |
+|----------|-------------|-------|
+| Concurrent Sessions | Max simultaneous users | 20 |
+| Cost per Second | GPU compute rate | $0.0024/sec |
+| Interaction Duration | Seconds per AI interaction | 60 - 300 sec |
 
-Tech inputs are known. FM Domain inputs require a 30 minute call to determine FMM-specific values. Some inputs may require escalation to Miguel for clarification.
+**Needed from FMM:**
+
+| Variable | Description |
+|----------|-------------|
+| User Type Mix | How many Self-Service, FM-Pro, Manager, Corporate users? |
+| Days/Month Active | Working days per month for each user type |
+| Consumptions/Hour | How often each user type uses AI |
+
+### Required: 30 Minute Call to Finalize Pricing
+
+Clarify the FMM-specific inputs above. Some may require escalation to Miguel.
 
 ---
 
