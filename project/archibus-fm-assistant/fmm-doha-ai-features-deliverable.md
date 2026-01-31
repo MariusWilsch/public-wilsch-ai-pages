@@ -14,10 +14,7 @@ publish: true
 - **6 AI features** deliverable by end of March 2026
 - **1 feature ready now** - Work Requests via Chat (demo available)
 - **5 features in development** - AI Bulk Data Entry (Asset Classification, Hierarchy Creation, Legacy Data Mapping, Duplicate Detection, Naming Standardization)
-- **Pricing** - Requires FMM-specific inputs:
-  - Number of users by role (Self-Service, FM-Professional, Manager, Corporate)
-  - Expected AI usage frequency per role
-  - Deployment model (Landlord/OSP/Tenant)
+- **Pricing** - Requires 30 min call to clarify FMM usage profile
 
 ---
 
