@@ -14,7 +14,7 @@ publish: true
 
 Also:
 1. Subscription Revenue Participation (Section 2.2)
-2. FMM process (learn from the confusion)
+2. FMM process (AI pricing quotation workflow)
 3. Renewal terms
 
 ---
@@ -31,7 +31,7 @@ Retainer Services Agreement (Section 2.2 - Variable Revenue Components)
 How the last 3 months have gone
 
 ### 2. FMM Process
-The FMM lead handling (pricing, feature scope, communication)
+The AI pricing quotation workflow (feature scope vs general pricing)
 
 ### 3. Renewal
 Continuing the partnership beyond the initial 3 months
