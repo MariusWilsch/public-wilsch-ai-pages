@@ -13,7 +13,7 @@ publish: true
 **Core question:** How have the last 3 months gone from your perspective?
 
 Also:
-1. Abo-Percentage (subscription revenue share from contract)
+1. Subscription Revenue Participation (Section 2.2)
 2. FMM process (learn from the confusion)
 3. Renewal terms
 
@@ -36,8 +36,8 @@ The FMM lead handling (pricing, feature scope, communication)
 ### 3. Renewal
 Continuing the partnership beyond the initial 3 months
 
-### 4. Abo-Percentage
-Subscription revenue share (Section 2.2)
+### 4. Subscription Revenue Participation
+Revenue share structure (Section 2.2)
 
 ---
 
