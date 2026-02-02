@@ -11,7 +11,7 @@ Facilitated discovery session to understand how implementers determine client hi
 
 1. **Process clarity** - How hierarchy is determined today (manual process)
 2. **Variation handling** - How to choose between hierarchy options
-3. **Challenge awareness** - Potential issues AI will face
+3. **Challenge awareness** - Potential issues in this process
 
 ## Pre-Read
 
@@ -51,9 +51,9 @@ The hierarchy options are defined (9-level max: Campus → Site → Complex → 
 
 ### 4. Potential Challenges
 
-What challenges do you anticipate AI will face when determining hierarchy?
+What challenges exist in determining hierarchy?
 
-*Note: Human challenges are likely AI challenges. Better to surface them now than during execution.*
+*Note: Better to surface challenges now than during execution.*
 
 ### 5. Next Steps
 
