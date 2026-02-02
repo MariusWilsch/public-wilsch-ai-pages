@@ -34,30 +34,21 @@ Step 3 populates background data level-by-level (parents before children).
 
 ### 2. Insertion API
 
-We want to understand:
-- What the API accepts as input
-- What the API returns on success (IDs needed for parent_id linking)
-- Batch vs single-row insertion approach
+How the insertion endpoint works.
 
 ### 3. Error Responses (Backpressure)
 
 From [Don't Waste Your Backpressure](https://banay.me/dont-waste-your-backpressure/): good error messages enable automated self-correction.
 
-We want to understand:
-- What information the API provides on failure
-- Whether it's enough to understand WHY it failed and WHAT to fix
-- Database-level errors vs business-logic errors
+How error information supports self-correction.
 
 ### 4. Checkpoint/Rollback
 
-We want to understand:
-- How failures mid-import are handled
-- Whether we can revert to a previous state
-- Transaction boundaries
+How to handle failures mid-import.
 
 ### 5. Challenges
 
-Challenges that exist in building this insertion flow.
+Challenges in building this insertion flow.
 
 ---
 
