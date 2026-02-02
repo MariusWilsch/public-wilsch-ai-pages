@@ -134,10 +134,19 @@ Not digital nomad (too much novelty, constant setup). Not fixed in one place (st
 
 ## What's Missing (To Be Built)
 
-1. **Handoff mechanism** — Documentation, training, operators. The infrastructure to leave properly.
-2. **Early warning awareness** — Signals that detect "interest waning, prepare for handoff" before checking out.
-3. **Rhythm cadence** — Defined phases with triggers. When to build, when to stabilize, when to hand off, when to rest.
-4. **Operator bench** — People who can receive what you create. Always be cultivating receivers.
+1. **Cycle awareness** — Know the phases. Walk through them consciously. When you're in a defined cycle, you know where you are—no separate "early warning" needed.
+
+2. **Handoff mechanism** — Documentation, training, operators. The infrastructure to leave properly.
+
+3. **Operator bench** — People who can receive what you create. Always be cultivating receivers.
+
+### The Hotel Model
+
+In *The E-Myth Revisited* (Chapter 15), a hotel owner built an entire Management System—Operations Manual, color-coded checklists, automated lighting synchronized with seasons, every detail orchestrated. Then he handed it to a 29-year-old former short-order cook who had never worked in hotels. The manager runs the system; the owner designed it.
+
+> "Everything I know about the hotel business I've learned here."
+
+That's the model. Build the system. Document it so completely that anyone can run it. Hand it off. Move on.
 
 ---
 
