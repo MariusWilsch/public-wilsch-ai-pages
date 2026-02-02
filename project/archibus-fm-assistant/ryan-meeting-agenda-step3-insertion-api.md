@@ -26,11 +26,11 @@ Please review the design document before the meeting:
 ### 1. Context Recap
 
 Step 3 in the 3-step bulk data entry process:
-1. Understand hierarchy ← Done (Step 1)
-2. Map input schema ← Done (Step 2)
-3. **Fill level-by-level** ← This meeting
+1. Understand hierarchy (Step 1)
+2. Map input schema (Step 2)
+3. **Fill level-by-level** (Step 3) ← This meeting
 
-With hierarchy and mapping established, we populate background data level-by-level (parents before children).
+Step 3 populates background data level-by-level (parents before children).
 
 ### 2. Insertion API
 
