@@ -42,9 +42,10 @@ How have you determined hierarchy in past implementations?
 
 The hierarchy options are defined (9-level max: Campus → Site → Complex → Property → Building → Floor → Stairwell → Suite → Room), but clients use different subsets.
 
-- How should AI present this choice?
-- What makes one hierarchy option "right" for a client vs another?
-- What signals indicate which levels a client actually uses?
+We want to understand:
+- How AI should present hierarchy choices
+- What makes one option "right" for a client vs another
+- What signals indicate which levels a client uses
 
 ### 4. Potential Challenges
 
