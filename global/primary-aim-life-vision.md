@@ -42,7 +42,17 @@ The missing piece was never discipline or focus. It was the handoff mechanism. T
 | **4. Hand off** | Transfer to an operator. Document. Train. Let go. |
 | **5. Observe** | Watch the operator's friction points. Learn from their use. |
 | **6. Improve** | Feed observations back into the system. |
-| **7. Rest / Begin again** | Pause. Then return to Phase 1. |
+| **7. Rest / Branch** | Pause. Then choose: improve existing OR begin new unknown. |
+
+### Two Paths Forward
+
+After Phase 6, two loops are valid:
+
+1. **Improvement loop** — Operator friction reveals new questions. Improving the existing system IS exploration. Stay in Phases 5-6-7 as long as it pulls you.
+
+2. **New cycle loop** — Improvement stabilizes. A new unknown calls. Return to Phase 1 with something different.
+
+Both serve the same purpose: keeping exploration alive. The choice depends on what pulls you. As mastery develops, multiple cycles can run in parallel.
 
 **Key insight:** Decay happens when you skip Phase 4-7. You build, you use it yourself, interest wanes, you check out. Things rot. The handoff mechanism is what transforms "scattered" into "rhythmic."
 
