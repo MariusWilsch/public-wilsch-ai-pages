@@ -34,11 +34,9 @@ This meeting focuses on Step 1: how does AI understand which hierarchy a client 
 
 ### 2. Current Process
 
-*Conversation prompt:*
+> "Create in a kind of screen all these cards and you put there the cards floor, building, room, suite - all the ones that exist in our type of assets - and you invite the user first to organize their own hierarchy." — Miguel
 
-> Miguel suggested something like draggable cards to capture hierarchy - how do you see this working? How have you determined hierarchy manually in past implementations?
-
-**Goal:** Let participants express how they think about hierarchy determination. Not looking for "the answer" - looking for how they articulate the process.
+How have you determined hierarchy manually in past implementations?
 
 ### 3. Handling Variations
 
