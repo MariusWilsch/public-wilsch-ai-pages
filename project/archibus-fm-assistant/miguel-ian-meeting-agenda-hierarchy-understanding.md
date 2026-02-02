@@ -51,11 +51,6 @@ We want to understand:
 
 What challenges exist in determining hierarchy?
 
-### 5. Next Steps
-
-- What follow-up is needed after this conversation?
-- Any documentation or examples that would help?
-
 ---
 
 ## Meeting Format
