@@ -34,7 +34,7 @@ This meeting focuses on Step 1: how does AI understand which hierarchy a client 
 
 ### 2. Current Process
 
-> "Create in a kind of screen all these cards and you put there the cards floor, building, room, suite - all the ones that exist in our type of assets - and you invite the user first to organize their own hierarchy." — Miguel
+> "Create in a kind of screen all these cards and you put there the cards floor, building, room, suite - all the ones that exist in our type of assets - and you invite the user first to organize their own hierarchy."
 
 How have you determined hierarchy in past implementations?
 
