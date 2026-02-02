@@ -16,7 +16,7 @@ publish: true
 
 ## Core Vision
 
-**A life lived in conscious rhythm.**
+**A life lived in conscious system.**
 
 Finding unknowns, exploring them, building them into systems, handing them off to operators, resting, learning from their use, and beginning again.
 
@@ -80,7 +80,7 @@ Both serve the same purpose: keeping exploration alive. The choice depends on wh
 
 - First complete cycle finished
 - Company operable by others (sold ~€360k or generating equivalent revenue through operations)
-- Life rhythm documented and understood
+- Life system documented and understood
 - Ready to start the next cycle
 
 ---
@@ -116,7 +116,7 @@ Not digital nomad (too much novelty, constant setup). Not fixed in one place (st
 
 **Tribe:** Builders. People who do work and build stuff.
 
-**How to show up:** Reliable and present. Follow through on commitments. Clear about patterns and limits.
+**How to show up:** Reliable and present. Follow through on commitments. Sure about my stuff—sure about the life system.
 
 **Operators:** The people who receive the handoff become part of the cycle. They run what you build. The company sale means they continue operating it.
 
