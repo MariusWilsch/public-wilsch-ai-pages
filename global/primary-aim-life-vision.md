@@ -155,6 +155,3 @@ That's the model. Build the system. Document it so completely that anyone can ru
 - E-Myth Primary Aim interview (2026-02-02)
 - Framework: Michael Gerber, *The E-Myth Revisited*, Chapter 12
 
----
-
-WILSCH AI SERVICES OÜ | Harju maakond, Tallinn, Sepapaja tn 6, 15551
