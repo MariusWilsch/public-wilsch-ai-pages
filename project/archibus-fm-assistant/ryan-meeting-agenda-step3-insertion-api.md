@@ -23,6 +23,8 @@ Please review the design document before the meeting:
 
 ## Discussion Topics
 
+Starting points for discussion, not limited to these:
+
 ### 1. Context Recap
 
 Step 3 in the 3-step bulk data entry process:
