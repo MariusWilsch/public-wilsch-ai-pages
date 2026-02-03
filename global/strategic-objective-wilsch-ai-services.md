@@ -49,7 +49,7 @@ The business itself is interchangeable. What matters: it serves as a reliable me
 
 **2. Improvement Loop** — Programming wrong AI behavior → deterministically right
 
-**3. Knowledge Extraction (Phase 0)** — Client meetings → transcripts → design docs → issues
+**3. Knowledge Extraction (Phase 0)** — Meeting → transcript → design doc → uncertainties? → repeat until design doc complete → create issues
 
 **Test for Alignment:** "Does this make the system run without me?"
 
