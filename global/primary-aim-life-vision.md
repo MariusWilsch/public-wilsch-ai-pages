@@ -108,7 +108,7 @@ Caring also fades when you're **stuck executing** a stable system but can't hand
 | 2-6 PM | Maker work |
 | Evening | Free-form |
 
-**Critical dependency:** This structure only works when you care about something. Caring follows from being in an active exploration phase. When the cycle breaks (stuck in operations, no handoff, no next unknown), the structure collapses.
+**Critical dependency:** This structure only works when you care about something. Caring, schedule, and body share the same energy source—being in the BDP loop. When the loop stops, you lose will for all of it: work becomes operation, schedule collapses, body slides. It's not three separate failures. It's one: caring stopped.
 
 ---
 
