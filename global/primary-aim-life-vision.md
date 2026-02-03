@@ -130,7 +130,9 @@ Two-loop feedback system, clarity phases, ship-with-confidence workflow, session
 
 ### Why Caring Faded
 
-The curiosity is satisfied—I understand the mechanics. The power is achieved—I have control. The pride is felt—it's built. What remains is execution. Execution doesn't provide curiosity, power, or pride. Just operation.
+The curiosity is satisfied—I understand the mechanics. The power is achieved—I have control. The pride is felt—it's built. The stakes are fulfilled—client projects have reliable output now.
+
+What remains is execution. Execution doesn't provide curiosity, power, pride, or stakes. Just operation.
 
 ### Current State (Early 2026)
 
