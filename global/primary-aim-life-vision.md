@@ -73,7 +73,9 @@ Both serve the same purpose: keeping exploration alive. The choice depends on wh
 
 **Caring = being actively engaged in the BDP loop.**
 
-When you're **Innovating**, you care because you're exploring unknowns. When you're **Quantifying**, you care because you're getting feedback. When you're **Orchestrating**, caring starts to fade because you're stabilizing knowns.
+When you're **Innovating**, you care because you're exploring. When you're **Quantifying**, you care because you're getting feedback. When you're **Orchestrating**, you care because you're making it predictable—creating the Franchise Prototype.
+
+All three are part of the loop. Caring is active throughout: I → Q → O → (friction) → I → Q → O → ...
 
 ### What Produces Caring
 
@@ -84,11 +86,13 @@ When you're **Innovating**, you care because you're exploring unknowns. When you
 
 ### When Caring Fades
 
-1. **BDP loop completes:** Orchestration stable, no new friction triggers Innovation. The unknown became a known. The system works.
+**The BDP loop stops.** Orchestration completes and no new friction triggers Innovation. The unknown became a known. The system works. Nothing left to improve.
 
-2. **Stuck executing:** You're operating a stable system but can't hand off and explore new unknowns. The decay trap.
+This isn't failure—it's success. You built the Franchise Prototype: a system predictable enough to hand off.
 
-Caring isn't something you maintain—it emerges from having unknowns to explore. When the unknown resolves, caring fades. That's not failure. That's the signal that handoff is possible.
+### The Decay Trap
+
+Caring also fades when you're **stuck executing** a stable system but can't hand off and explore new unknowns. The system works, but you're trapped operating it instead of moving to Phase 4-5.
 
 ---
 
