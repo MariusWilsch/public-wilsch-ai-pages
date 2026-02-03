@@ -16,7 +16,7 @@ A life lived in conscious system. Finding unknowns, exploring them, building the
 
 **First Cycle Deadline:** End of February 2027
 
-**Financial Target:** €360,000 principal → €3,000/month interest → freedom to do cycles without financial pressure
+**Financial Target:** €360,000 principal in interest-bearing assets at 10% → €3,000/month → freedom to do cycles without financial pressure
 
 Full document: [Primary Aim - Life Vision](https://mariuswilsch.github.io/public-wilsch-ai-pages/global/primary-aim-life-vision)
 
