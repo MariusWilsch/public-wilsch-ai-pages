@@ -117,7 +117,7 @@ Phase 3: Full Independence
 
 | What | Description |
 |------|-------------|
-| **Input** | Design doc (created by founder from client knowledge) |
+| **Input** | Design doc (output of Knowledge Extraction loop) |
 | **Process** | Full Issue Lifecycle: Creation → Design → Execution → Review → Closing |
 | **Output** | Finished product deployed to production |
 | **Founder role** | Available on Google Meet, but doesn't touch anything |
