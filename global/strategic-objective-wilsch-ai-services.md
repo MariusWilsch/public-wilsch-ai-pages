@@ -43,15 +43,16 @@ The business itself is interchangeable. What matters: it serves as a reliable me
 
 **What makes it possible (proprietary method):** The Claude Code Operating System—an internal methodology for producing deterministically correct AI behavior. Clients don't see or learn this system. They just experience the result: reliable delivery.
 
-### The System Components
+### The System Components (Handoff Sequence)
 
-| Component | Status | Purpose |
-|-----------|--------|---------|
-| **Issue Lifecycle Router** | Documented | Design doc → finished product execution |
-| **Improvement Loop** | Partially documented | Programming wrong AI behavior → deterministically right |
-| **Knowledge Extraction** | Ad-hoc (Phase 0) | Client meetings → transcripts → design docs → issues |
+**1. Issue Lifecycle Router** — Design doc → finished product execution
+
+**2. Improvement Loop** — Programming wrong AI behavior → deterministically right
+
+**3. Knowledge Extraction (Phase 0)** — Client meetings → transcripts → design docs → issues
 
 **Test for Alignment:** "Does this make the system run without me?"
+
 **Extended Test:** "Can he improve the behavior of the system without me?"
 
 ---
