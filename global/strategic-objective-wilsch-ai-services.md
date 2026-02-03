@@ -83,7 +83,27 @@ Any of these paths completes the first cycle:
 
 **Phase 1 Mindset:** Use the system to trial-and-error extremely quickly. Learn on the job. The system makes feedback loops fast — your job is to iterate, not to already know.
 
-**Not required:** Prior AI knowledge (RAG, embeddings, etc.). The system teaches AI concepts when relevant. Requiring AI expertise would create a bottleneck.
+### How Learning Works
+
+**The system is a trial-and-error machine.**
+
+The Claude Code Operating System doesn't teach you AI concepts — it makes trial and error so fast that you learn any concept you need on the job.
+
+**How everyone learns:** Try something → doesn't work → try again → works → learned something. This is universal. The question isn't whether to eliminate trial and error (you can't), but how to minimize cycle time.
+
+**What the system does:** Makes feedback loops extremely fast. Code either runs or doesn't. Behavior is correct or isn't. Output meets requirements or doesn't. Each cycle takes minutes, not days.
+
+**What this means for operators:**
+- No prior AI knowledge required (RAG, embeddings, local deployment, etc.)
+- You learn these concepts when you hit an issue that needs them
+- The fast feedback loop means you learn quickly
+- Requiring AI expertise upfront would create a bottleneck
+
+**The distinction:**
+- AI **behavior** should be deterministically correct (the system ensures this)
+- AI **output** will have errors (expected, like any developer's code)
+
+Your job is not to already know. Your job is to iterate.
 
 ### Training Method
 
