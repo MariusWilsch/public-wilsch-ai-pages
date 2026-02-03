@@ -7,7 +7,7 @@ publish: true
 
 **Purpose:** Apply Pattern Encoding methodology to Assets block
 **Duration:** ~65 minutes
-**Attendees:** Marius (facilitator), Ryan, Ian, Ali, Mujahid
+**Attendees:** Marius (facilitator), Rein, Ian, Ali, Mujahid
 
 **Related:** <img src="pattern-encoding-methodology.png" width="100%" alt="Pattern Encoding Infographic">
 
@@ -152,7 +152,7 @@ publish: true
 
 **6.2 Confirm encoding scope (2 min)**
 - *"These patterns will be encoded into the AI."*
-- *"Ryan will build the APIs, I'll build the AI logic."*
+- *"Rein will build the APIs, I'll build the AI logic."*
 - *"Any concerns before we proceed?"*
 
 **6.3 Next meeting preview (1 min)**
@@ -163,7 +163,7 @@ publish: true
 
 - Have clear action items ready:
   - You: Translate patterns to AI tool specs
-  - Ryan: API requirements for each workflow
+  - Rein: API requirements for each workflow
   - FM experts: Available for clarification if needed
 - This meeting is about WHAT to encode, not HOW to implement
 

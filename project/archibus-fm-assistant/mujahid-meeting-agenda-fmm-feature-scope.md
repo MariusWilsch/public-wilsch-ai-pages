@@ -16,7 +16,7 @@ Align on what AI features to include in the FMM Doha quotation AND clarify the 3
 By the end of this session, we should agree on:
 1. Which features go in the FMM proposal
 2. Resolution of the 3 ambiguous requirements
-3. Next step (Ryan meeting for API feasibility)
+3. Next step (Rein meeting for API feasibility)
 
 ---
 
@@ -78,7 +78,7 @@ Based on classification and clarifications:
 
 1. **Scope:** Which items are included in the FMM quotation?
 2. **Unclear items:** Bulk vs ongoing for MH3, SH1, CH1?
-3. **Next step:** Confirm Ryan meeting for API feasibility
+3. **Next step:** Confirm Rein meeting for API feasibility
 
 ---
 

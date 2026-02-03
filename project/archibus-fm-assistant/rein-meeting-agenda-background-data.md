@@ -66,7 +66,7 @@ What should we dive deeper into in a follow-up session?
 
 **Context:** We've deployed a noVNC container where AI navigates Chrome to show work requests to users. When Chrome restarts or sessions timeout, users see the BEM login page instead of the work request.
 
-**Question for Ryan:**
+**Question for Rein:**
 - How does BEM session persistence work?
 - Can we maintain login state across Chrome restarts?
 - Is there a token/cookie approach that would work?

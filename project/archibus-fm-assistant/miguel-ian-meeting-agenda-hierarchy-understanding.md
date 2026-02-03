@@ -56,7 +56,7 @@ What challenges exist in determining hierarchy?
 ## Meeting Format
 
 - **Type:** Discovery session
-- **Expectation:** One-off — we gather your input, then proceed independently with Ryan
+- **Expectation:** One-off — we gather your input, then proceed independently with Rein
 - **Outcome:** Enough understanding to design AI's hierarchy capture flow
 
 ---

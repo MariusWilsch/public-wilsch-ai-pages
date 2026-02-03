@@ -10,7 +10,7 @@ publish: true
 
 ## Context
 - AI-assisted FM automation spans both broad framework capabilities and specific quick wins
-- Framework work (#373) depends on external schema understanding (Ryan meeting)
+- Framework work (#373) depends on external schema understanding (Rein meeting)
 - Marketing needs demo content for client engagement now
 - Quick wins (#591 CCI codes, #605 Equipment codes) have no schema dependency
 - Different stakeholders drive different tracks (capability vs marketing)
