@@ -87,7 +87,7 @@ Any of these paths completes the first cycle:
 
 **If you don't get this, you will not succeed with the system.**
 
-The Claude Code Operating System doesn't teach you AI concepts — it makes trial and error so fast that you learn any concept you need on the job. But YOU must drive the learning. If the operator cannot learn independently through the system, the entire handoff fails — the founder becomes the bottleneck again.
+The Claude Code Operating System doesn't teach you — it makes trial and error so fast that you learn any concept you need on the job. AI concepts, Git, debugging, architecture, whatever comes up. But YOU must drive the learning. If the operator cannot learn independently through the system, the entire handoff fails — the founder becomes the bottleneck again because they have to teach you concepts.
 
 **How everyone learns:** Try something → doesn't work → try again → works → learned something. This is universal. The question isn't whether to eliminate trial and error (you can't), but how to minimize cycle time.
 
@@ -96,10 +96,10 @@ The Claude Code Operating System doesn't teach you AI concepts — it makes tria
 **What the system does NOT do:** Teach you. The system won't respond to "help me learn this." You must be in the driver's seat — "I want to try this," "I want to learn this." The system executes what you want extremely quickly. That's why "has will" is a requirement.
 
 **What this means for operators:**
-- No prior AI knowledge required (RAG, embeddings, local deployment, etc.)
-- You learn these concepts when you hit an issue that needs them
+- No prior knowledge required (AI, specific tools, frameworks, etc.)
+- You learn concepts when you hit an issue that needs them
 - The fast feedback loop means you learn quickly
-- Requiring AI expertise upfront would create a bottleneck
+- Requiring expertise upfront would create a bottleneck
 
 **The distinction:**
 - AI **behavior** should be deterministically correct (the system ensures this)
