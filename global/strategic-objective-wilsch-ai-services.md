@@ -95,6 +95,8 @@ The Claude Code Operating System doesn't teach you — it makes trial and error 
 
 **What the system does NOT do:** Teach you. The system won't respond to "help me learn this." You must be in the driver's seat — "I want to try this," "I want to learn this." The system executes what you want extremely quickly. That's why "has will" is a requirement.
 
+**Asking questions is allowed.** You can ask the founder "how would you do this?" But even the founder's knowledge becomes stale if they haven't done something recently. The system (trial and error) is always the ultimate source of truth — for everyone.
+
 **What this means for operators:**
 - No prior knowledge required (AI, specific tools, frameworks, etc.)
 - You learn concepts when you hit an issue that needs them
