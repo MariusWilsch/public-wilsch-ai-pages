@@ -90,7 +90,7 @@ Any of these paths completes the first cycle:
 | **Mode** | Google Meet together, camera off, voice off by default |
 | **Interaction** | Operator unmutes/shares screen when questions arise |
 | **Duration** | As many issues as needed until fully independent |
-| **Hard cap** | If no progress after threshold, exit |
+| **Hard cap** | 25 issues — should get it by 10, but 25 max before exit |
 | **Principle** | Teaching is more important than founder focus during training period |
 
 ### Handoff Sequence
