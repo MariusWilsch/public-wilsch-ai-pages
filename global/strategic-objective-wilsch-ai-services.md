@@ -15,6 +15,7 @@ The Strategic Objective defines what the business must do to achieve the Primary
 A life lived in conscious system. Finding unknowns, exploring them, building them into systems, handing them off to operators, resting, learning from their use, and beginning again.
 
 **First Cycle Deadline:** End of February 2027
+
 **Financial Target:** €360,000 principal → €3,000/month interest → freedom to do cycles without financial pressure
 
 Full document: [Primary Aim - Life Vision](https://mariuswilsch.github.io/public-wilsch-ai-pages/global/primary-aim-life-vision)
