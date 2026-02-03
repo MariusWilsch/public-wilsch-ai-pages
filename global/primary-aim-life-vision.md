@@ -71,6 +71,10 @@ Both serve the same purpose: keeping exploration alive. The choice depends on wh
 
 ## Caring
 
+**Caring is the root. Everything else is downstream.**
+
+Schedule, body, relationships, follow-through—all products of caring, not separate disciplines to maintain. The fix is never "try harder." The fix is: find the next unknown, restart the loop, caring returns.
+
 **Caring = being actively engaged in the BDP loop.**
 
 When you're **Innovating**, you care because you're exploring. When you're **Quantifying**, you care because you're getting feedback. When you're **Orchestrating**, you care because you're making it predictable—creating consistent value.
