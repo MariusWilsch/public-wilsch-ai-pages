@@ -38,9 +38,10 @@ The missing piece was never discipline or focus. It was the handoff mechanism. T
 |-------|----------|-------------|
 | **1. Unknown appears** | — | Something pulls attention. An idea, a problem, a possibility. |
 | **2-3. Explore → Build** | I → Q → O (iterative) | The BDP loop runs. Ask questions, try approaches, test, stabilize. Repeat until system works. |
-| **4. Hand off** | Exit condition | Orchestration complete enough for others to operate. Transfer to operator. |
-| **5-6. Observe → Improve** | Secondary I → Q → O | Operator friction may trigger new Innovation. Optional depth. |
-| **7. Rest / Branch** | — | Pause. Then choose: deepen existing OR begin new unknown. |
+| **4. Prepare to hand off** | Documentation | System works, but can't be transferred yet. Write manuals, create training, build infrastructure for others to operate. |
+| **5. Hand off** | Exit condition | Transfer to operator. They run the system; you step back. |
+| **6-7. Observe → Improve** | Secondary I → Q → O | Operator friction may trigger new Innovation. Optional depth. |
+| **8. Rest / Branch** | — | Pause. Then choose: deepen existing OR begin new unknown. |
 
 ### The Business Development Loop
 
@@ -56,9 +57,9 @@ Each Orchestration creates stability that reveals new friction. New friction tri
 
 ### Two Paths Forward
 
-After Phase 6, two loops are valid:
+After Phase 7, two loops are valid:
 
-1. **Improvement loop** — Operator friction reveals new questions. Improving the existing system IS exploration. Stay in Phases 5-6-7 as long as it pulls you.
+1. **Improvement loop** — Operator friction reveals new questions. Improving the existing system IS exploration. Stay in Phases 6-7-8 as long as it pulls you.
 
 2. **New cycle loop** — Improvement stabilizes. A new unknown calls. Return to Phase 1 with something different.
 
@@ -136,7 +137,9 @@ What remains is execution. Execution doesn't provide curiosity, power, pride, or
 
 ### Current State (Early 2026)
 
-System stable. Projects flow through. BDP loop has gone quiet—Orchestration complete, no new Innovation triggered. Ready for handoff.
+System stable. Projects flow through. BDP loop has gone quiet—Orchestration complete, no new Innovation triggered.
+
+**Currently in Phase 4: Prepare to hand off.** Writing manuals, creating training, building infrastructure for Mohamed and Ralph to operate independently.
 
 ### Handoff Target
 
