@@ -81,7 +81,9 @@ Any of these paths completes the first cycle:
 | **Has will** | Interested in building, wants to do it |
 | **Junior or mid-level dev** | Follows documented processes, learns through repetition |
 
-**Not required:** Prior Claude Code experience (may actually be counterproductive—brings existing habits).
+**Phase 1 Mindset:** Use the system to trial-and-error extremely quickly. Learn on the job. The system makes feedback loops fast — your job is to iterate, not to already know.
+
+**Not required:** Prior AI knowledge (RAG, embeddings, etc.). The system teaches AI concepts when relevant. Requiring AI expertise would create a bottleneck.
 
 ### Training Method
 
