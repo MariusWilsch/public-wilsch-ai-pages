@@ -156,6 +156,10 @@ Phase 3: Full Independence
 
 **Success criteria:** Mohamed can take a design doc and deliver a finished product without founder intervention.
 
+**Why full cycle matters:** Just giving spec-implement issues doesn't work — the operator never learns the full cycle, never has to figure things out on the job. The core requirement (learning through the system) can't be met with partial handoff.
+
+**Expected trajectory:** Operator will be slower at first. That time is learning. They'll get fast quickly because they don't have to build the system, just operate it.
+
 **Why this matters:** If Mohamed works, the model is proven. A second operator can be trained the same way. The constraint (founder as bottleneck) is removed.
 
 ---
