@@ -79,7 +79,7 @@ Any of these paths completes the first cycle:
 |-------------|-------------|
 | **Thinks like a software engineer** | Can architect systems, not just write code |
 | **Has will** | Interested in building, wants to do it |
-| **Junior dev with guidance** | Follows documented processes, learns through repetition |
+| **Junior or mid-level dev** | Follows documented processes, learns through repetition |
 
 **Not required:** Prior Claude Code experience (may actually be counterproductive—brings existing habits).
 
