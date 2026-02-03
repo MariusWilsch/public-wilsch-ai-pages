@@ -83,11 +83,11 @@ Any of these paths completes the first cycle:
 
 **Phase 1 Mindset:** Use the system to trial-and-error extremely quickly. Learn on the job. The system makes feedback loops fast — your job is to iterate, not to already know.
 
-### How Learning Works
+### How Learning Works (Core Requirement)
 
-**The system is a trial-and-error machine.**
+**If you don't get this, you will not succeed with the system.**
 
-The Claude Code Operating System doesn't teach you AI concepts — it makes trial and error so fast that you learn any concept you need on the job.
+The Claude Code Operating System doesn't teach you AI concepts — it makes trial and error so fast that you learn any concept you need on the job. But YOU must drive the learning. If the operator cannot learn independently through the system, the entire handoff fails — the founder becomes the bottleneck again.
 
 **How everyone learns:** Try something → doesn't work → try again → works → learned something. This is universal. The question isn't whether to eliminate trial and error (you can't), but how to minimize cycle time.
 
