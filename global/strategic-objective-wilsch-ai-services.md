@@ -130,15 +130,22 @@ Phase 3: Full Independence
 
 ## What the Founder Works ON (Not IN)
 
-Once handoff is complete, founder time goes to:
+Once Issue Lifecycle Router is handed off, founder time goes to:
 
-| Activity | Category |
-|----------|----------|
-| Building/improving the system | Working ON |
-| Scheduling client meetings | Working ON |
-| Creating design docs from client knowledge | Working ON (Phase 0) |
-| Training new operators | Working ON |
-| Executing issues | ~~Working IN~~ (handed off) |
+**Knowledge Extraction (until handed off):**
+- Scheduling client meetings
+- Creating design docs from Knowledge Extraction loop
+
+**Scaling:**
+- Training new operators
+- Building out systems for future phase handoffs
+
+**Exit path activities:**
+- Building asset worth ~€360k (sellable business)
+- Building out the OS product (productized methodology)
+
+**No longer doing:**
+- ~~Executing issues~~ (handed off)
 
 ---
 
