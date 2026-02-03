@@ -73,7 +73,7 @@ Both serve the same purpose: keeping exploration alive. The choice depends on wh
 
 **Caring = being actively engaged in the BDP loop.**
 
-When you're **Innovating**, you care because you're exploring. When you're **Quantifying**, you care because you're getting feedback. When you're **Orchestrating**, you care because you're making it predictable—creating the Franchise Prototype.
+When you're **Innovating**, you care because you're exploring. When you're **Quantifying**, you care because you're getting feedback. When you're **Orchestrating**, you care because you're making it predictable—creating consistent value.
 
 All three are part of the loop. Caring is active throughout: I → Q → O → (friction) → I → Q → O → ...
 
@@ -88,7 +88,7 @@ All three are part of the loop. Caring is active throughout: I → Q → O → (
 
 **The BDP loop stops.** Orchestration completes and no new friction triggers Innovation. The unknown became a known. The system works. Nothing left to improve.
 
-This isn't failure—it's success. You built the Franchise Prototype: a system predictable enough to hand off.
+This isn't failure—it's success. You built a system predictable enough to hand off.
 
 ### The Decay Trap
 
