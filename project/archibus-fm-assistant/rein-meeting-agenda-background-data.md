@@ -75,6 +75,22 @@ What should we dive deeper into in a follow-up session?
 
 ---
 
+## Additional Topic: API-Filled vs AI-Filled Fields
+
+**Context:** For the schema mapping step (Step 2), we need to understand which fields AI should map from client data versus which fields the API fills automatically.
+
+**Examples:**
+- **API-filled:** `owner_id`, timestamps, system-generated IDs — context the API knows
+- **AI-filled:** `Name`, `SerialNumber`, `Address` — derived from client Excel data
+
+**Question for Rein:**
+- Which of the 35 asset schema fields does the import API fill automatically?
+- Which fields should AI map from client input?
+
+**Why this matters:** Scopes the AI mapping problem — AI doesn't need to handle all 35 columns.
+
+---
+
 ## Meeting Format
 
 - **Type:** Orientation and terminology alignment
