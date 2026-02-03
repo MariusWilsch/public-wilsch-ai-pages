@@ -39,9 +39,9 @@ The business itself is interchangeable. What matters: it serves as a reliable me
 
 **What we sell (commodity):** Finished AI projects—local deployment, legal automation, whatever the client needs.
 
-**What clients walk away with (product):** Confidence that AI can produce consistent, reliable output. Not magic. Not hype. Deterministically correct behavior.
+**What clients walk away with (product):** Confidence that Wilsch AI Services delivers. Not AI hype. Not vaporware. Projects that actually work, on time, as promised. The feeling: "These guys know what they're doing."
 
-**What makes it proprietary:** The Claude Code Operating System—a methodology for getting AI to do what you want, predictably, without requiring domain expertise.
+**What makes it possible (proprietary method):** The Claude Code Operating System—an internal methodology for producing deterministically correct AI behavior. Clients don't see or learn this system. They just experience the result: reliable delivery.
 
 ### The System Components
 
