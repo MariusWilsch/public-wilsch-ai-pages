@@ -93,6 +93,8 @@ The Claude Code Operating System doesn't teach you AI concepts — it makes tria
 
 **What the system does:** Makes feedback loops extremely fast. Code either runs or doesn't. Behavior is correct or isn't. Output meets requirements or doesn't. Each cycle takes minutes, not days.
 
+**What the system does NOT do:** Teach you. The system won't respond to "help me learn this." You must be in the driver's seat — "I want to try this," "I want to learn this." The system executes what you want extremely quickly. That's why "has will" is a requirement.
+
 **What this means for operators:**
 - No prior AI knowledge required (RAG, embeddings, local deployment, etc.)
 - You learn these concepts when you hit an issue that needs them
