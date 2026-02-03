@@ -97,6 +97,12 @@ The Claude Code Operating System doesn't teach you — it makes trial and error 
 
 **Asking questions is allowed.** You can ask the founder "how would you do this?" But even the founder's knowledge becomes stale if they haven't done something recently. The system (trial and error) is always the ultimate source of truth — for everyone.
 
+**Two types of learning (taught in sequence):**
+
+1. **Learning to deliver** — Concepts needed to complete projects. This is Phase 1 (Issue Lifecycle Router).
+
+2. **Learning to improve** — How to program AI behavior, fix wrong behavior. This is Phase 2 (Improvement Loop). Taught after Phase 1 is solid.
+
 **What this means for operators:**
 - No prior knowledge required (AI, specific tools, frameworks, etc.)
 - You learn concepts when you hit an issue that needs them
