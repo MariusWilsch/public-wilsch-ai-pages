@@ -39,9 +39,9 @@ The business itself is interchangeable. What matters: it serves as a reliable me
 
 **What we sell (commodity):** Finished AI projects—local deployment, legal automation, whatever the client needs.
 
-**What clients walk away with (product):** Confidence that Wilsch AI Services delivers. Not AI hype. Not vaporware. Projects that actually work, on time, as promised. The feeling: "These guys know what they're doing."
+**What clients walk away with (product):** Possibility space made tangible. Clients know they have problems but have no idea whether or how AI could solve them. The product is opening that possibility space—showing what's technically feasible before they even think about AI. Translating between business problems and AI capabilities. Making abstract potentials concrete.
 
-**What makes it possible (proprietary method):** The Claude Code Operating System—an internal methodology for producing deterministically correct AI behavior. Clients don't see or learn this system. They just experience the result: reliable delivery.
+**What makes it possible (proprietary method):** The Claude Code Operating System—an internal methodology for producing deterministically correct AI behavior. Clients don't see or learn this system. They experience the result: reliable delivery that proves the possibility space is real.
 
 ### The System Components (Handoff Sequence)
 
