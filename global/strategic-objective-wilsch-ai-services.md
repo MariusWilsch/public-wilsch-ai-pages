@@ -121,9 +121,12 @@ Your job is not to already know. Your job is to iterate.
 |---------|-------------|
 | **Mode** | Google Meet together, camera off, voice off by default |
 | **Interaction** | Operator unmutes/shares screen when questions arise |
+| **Grooming** | Daily sync (15-30 min) — review designs before implementation, discuss failed implementations |
 | **Duration** | As many issues as needed until fully independent |
 | **Hard cap** | 25 issues — should get it by 10, but 25 max before exit |
 | **Principle** | Teaching is more important than founder focus during training period |
+
+**Why grooming matters:** Cheap to change a design doc, expensive to change implementation. Daily checkpoint catches issues early. Also the structured moment for discussing failures — which is where learning happens.
 
 ### Handoff Sequence
 
