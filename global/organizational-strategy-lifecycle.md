@@ -186,6 +186,28 @@ Position Contracts (accountability documents)
 
 ---
 
+## Transition Lifecycle (Example: Developer Position)
+
+This example uses "Developer" as the position being prototyped and handed off:
+
+```
+Before Hire:
+  Position: Developer
+  You: Tactical (coding) + Strategic (documenting process)
+
+During Transition:
+  Position: Developer → Hire doing tactical, you training
+  Position: Dev Lead → You now doing tactical + strategic HERE
+
+Fully Transitioned:
+  Position: Developer → Hire owns it (tactical + suggests improvements)
+  Position: Dev Lead → You own tactical + strategic, prototyping THIS
+```
+
+The pattern repeats up the chart until you're only **Shareholder** - outside the business, owning no tactical work.
+
+---
+
 ## Example Organization Chart Structure
 
 ```
