@@ -102,6 +102,26 @@ A document that transfers accountability from company to person. **Not a job des
 
 ---
 
+## Tactical vs Strategic Work
+
+- **Tactical:** Doing the work IN a position (making sales calls, writing code)
+- **Strategic:** Working ON a position (prototyping the process, improving the system)
+
+Each position has BOTH tactical and strategic work. Moving up doesn't eliminate strategic work - it shifts to the new level.
+
+---
+
+## Process Summary
+
+| Process | Chapter | Runs When |
+|---------|---------|-----------|
+| BDP Loop | Ch 10 (Foundational) | Continuous while prototyping |
+| Training Method | Strategic Objective | During transition (before → after hire) |
+
+**Note:** BDP Loop (Innovate → Quantify → Orchestrate) is foundational - referenced across all components but not defined here.
+
+---
+
 ## Conceptual Relationships
 
 ```
