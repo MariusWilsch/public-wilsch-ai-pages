@@ -1,17 +1,104 @@
-# Organizational Strategy Lifecycle
+# Organizational Strategy (Component #3)
 [[life-vision]]
 
 ---
 publish: true
 ---
 
-The lifecycle for building organizational structure that runs without the founder. Based on Michael Gerber's *The E-Myth Revisited*, Chapter 14.
+E-Myth Business Development Framework, Chapter 14. Defines the structural foundation for a business that runs without the founder.
+
+**Scope:** Organization Chart, Position, Position Contract. Operations Manual belongs to Component #4 (Management Strategy).
+
+---
 
 ## Core Principle
 
-**Organize around positions, not personalities.**
+**Organize around functions, not personalities.**
 
-When everybody's accountable for everything, nobody's accountable for anything. The Organization Chart defines positions (boxes) with clear accountability, regardless of who fills them.
+> "Most companies organize around personalities rather than around functions. That is, around people rather than accountabilities or responsibilities. The result is almost always chaos."
+
+---
+
+## Artifact 1: Organization Chart
+
+**PDF:** [EMyth Organizational Chart Guide.pdf](https://github.com/MariusWilsch/soloforce/blob/main/.claude/tracking/issue-668/artifacts/EMyth%20Organizational%20Chart%20Guide.pdf)
+
+**Definition:**
+A visual structure showing all positions and reporting relationships for the business *when it's done*.
+
+**Key elements:**
+
+1. **Horizontal line** - Shareholders above (outside business), Employees below (inside)
+
+2. **Shareholder = end state** - Where you climb TO. Outside the business. No Position Contract needed.
+
+3. **Design top-down, execute bottom-up:**
+   - Design: Shareholder → COO → VPs → Managers → Workers
+   - Execute: Start at bottom, prototype, hire, climb UP
+
+4. **All positions when COMPLETE** - Not current state.
+
+5. **Design around functions, not personalities**
+
+**Design question:**
+"What functions must exist to deliver the Strategic Objective?"
+
+**Derivation chain:**
+```
+Strategic Objective
+      ↓
+FUNCTIONS (categories of work: sales, delivery, finance)
+      ↓
+RESULTS (what each function must produce)
+      ↓
+POSITIONS (accountable for those results)
+```
+
+**Definitions:**
+- **Function** = A category of work the business needs
+- **Result** = What that function must produce
+
+**Completeness principle:**
+"If position not explicit, results won't come." The org chart describes ALL the work. Nothing in limbo.
+
+---
+
+## Artifact 2: Position
+
+**PDF:** [EMyth Organizational Chart Guide.pdf](https://github.com/MariusWilsch/soloforce/blob/main/.claude/tracking/issue-668/artifacts/EMyth%20Organizational%20Chart%20Guide.pdf) (positions are boxes on the chart)
+
+**Definition:**
+A box on the Organization Chart.
+
+**What defines a position:**
+
+1. **Accountability** - What results this position must produce
+2. **Reporting** - Which position it reports to
+3. **Authority** - What decisions it can/cannot make
+
+**Test question:**
+"If this position is empty, what results stop being produced?"
+
+---
+
+## Artifact 3: Position Contract
+
+**PDF:** [EMyth Writing Position Agreements.pdf](https://github.com/MariusWilsch/soloforce/blob/main/.claude/tracking/issue-668/artifacts/EMyth%20Writing%20Position%20Agreements.pdf)
+
+**Definition:**
+A document that transfers accountability from company to person. **Not a job description** - a contract.
+
+**What it contains:**
+
+1. **Results to be achieved** - What outcomes must this position produce?
+2. **Work accountable for** - What activities is this position responsible for?
+3. **Standards for evaluation** - How do we measure if results are achieved?
+4. **Signature line** - Person signs, accepting accountability
+
+**Key quote:**
+> "A Position Contract is not a job description. It is a contract between the company and an employee, a summary of the rules of the company's game."
+
+**Position Contracts are long-lived** because they define *results*, not tasks.
 
 ---
 
@@ -27,18 +114,13 @@ Organization Chart (1 per company)
         │ each has (1:1)
         ▼
 Position Contracts (accountability documents)
-        │
-        │ references (1:1)
-        ▼
-Operations Manuals (documented systems)
 ```
 
-| Relationship | Cardinality | Description |
-|--------------|-------------|-------------|
-| Org Chart → Positions | 1 : N | One chart contains many boxes |
-| Position → Contract | 1 : 1 | Each position has one contract |
-| Position → Manual | 1 : 1 | Each position has one how-to guide |
-| Person → Positions | 1 : N | One person can fill many boxes (initially) |
+| Relationship | Cardinality |
+|--------------|-------------|
+| Org Chart → Positions | 1 : N |
+| Position → Contract | 1 : 1 |
+| Person → Positions | 1 : N (initially) |
 
 ---
 
@@ -50,7 +132,7 @@ Operations Manuals (documented systems)
 ║                    (One Position at a Time)                                  ║
 ╠══════════════════════════════════════════════════════════════════════════════╣
 ║                                                                              ║
-║  STAGE 1: STRUCTURE                                                          ║
+║  STAGE 1: STRUCTURE (Chapter 14 - this document)                             ║
 ║  ┌────────────────────────────────────────────────────────────┐              ║
 ║  │ Activity: Design the organization when "done"              │              ║
 ║  │ Output:   ORGANIZATION CHART (1 per company)               │ ◄── Artifact║
@@ -63,18 +145,11 @@ Operations Manuals (documented systems)
 ║                              │                                               ║
 ║                              │ You sign the contract (take the position)     ║
 ║                              ▼                                               ║
-║  STAGE 2: PROTOTYPE THE POSITION                                             ║
+║  STAGE 2: PROTOTYPE THE POSITION (Chapter 15+)                               ║
 ║  ┌────────────────────────────────────────────────────────────┐              ║
 ║  │ Activity: Work IN the position while working ON it         │              ║
-║  │ Process:  BDP LOOP (ongoing, not a one-time event)         │ ◄── Process ║
-║  │           ┌──────────────────────────────────────┐         │              ║
-║  │           │  Innovate → Quantify → Orchestrate   │         │              ║
-║  │           │       ▲                    │         │         │              ║
-║  │           │       └────────────────────┘         │         │              ║
-║  │           │       (loop until system stable)     │         │              ║
-║  │           └──────────────────────────────────────┘         │              ║
-║  │                                                            │              ║
-║  │ Output:   OPERATIONS MANUAL (1 per position)               │ ◄── Artifact║
+║  │ Process:  BDP LOOP (Innovate → Quantify → Orchestrate)     │              ║
+║  │ Output:   OPERATIONS MANUAL (1 per position)               │              ║
 ║  │           └── Documented system: "how we do it here"       │              ║
 ║  └────────────────────────────────────────────────────────────┘              ║
 ║                              │                                               ║
@@ -89,8 +164,6 @@ Operations Manuals (documented systems)
 ║  │ - Hire signs Position Contract                             │              ║
 ║  │ - Hire learns Operations Manual                            │              ║
 ║  │ - You: Training, oversight, ensuring system works          │              ║
-║  │ - Process: TRAINING METHOD                                 │ ◄── Process ║
-║  │   └── Daily syncs, issues, hard cap for independence       │              ║
 ║  │                                                            │              ║
 ║  │ PHASE C: Fully Transitioned                                │              ║
 ║  │ - Hire owns tactical work + can suggest improvements       │              ║
@@ -101,13 +174,6 @@ Operations Manuals (documented systems)
 ║                              ▼                                               ║
 ║  STAGE 4: REPEAT (Meta-Pattern)                                              ║
 ║  ┌────────────────────────────────────────────────────────────┐              ║
-║  │ You now hold the position ABOVE the one you just filled    │              ║
-║  │                                                            │              ║
-║  │ Go back to Stage 2: Prototype THIS new position            │              ║
-║  │ - New tactical work (managing vs doing)                    │              ║
-║  │ - New strategic work (prototyping THIS role)               │              ║
-║  │ - New Operations Manual for THIS position                  │              ║
-║  │                                                            │              ║
 ║  │ Continue until you reach: SHAREHOLDER (outside business)   │              ║
 ║  │ - No tactical work                                         │              ║
 ║  │ - Strategic oversight only (is COO hitting objectives?)    │              ║
@@ -116,74 +182,7 @@ Operations Manuals (documented systems)
 ╚══════════════════════════════════════════════════════════════════════════════╝
 ```
 
----
-
-## Key Definitions
-
-### Position
-A box on the Organization Chart. Defined by:
-- **Accountability:** What results this position must produce
-- **Reporting:** Which position it reports to
-- **Authority:** What decisions can be made
-
-**Test:** "If this position is empty, what results stop being produced?"
-
-### Position Contract
-Not a job description (tasks). A **contract** (results):
-- Summary of results to be achieved
-- Standards by which results are evaluated
-- Signature line for accountability commitment
-
-Position Contracts are long-lived because they define *results*, not tasks.
-
-### Tactical vs Strategic Work
-- **Tactical:** Doing the work IN a position (making sales calls)
-- **Strategic:** Working ON a position (prototyping the process, improving the system)
-
-Each position has BOTH tactical and strategic work. Moving up doesn't eliminate strategic work - it shifts to the new level.
-
-### Operations Manual
-The documented system for HOW to achieve position results:
-- Created through BDP loop (Innovate → Quantify → Orchestrate)
-- "This is how we do it here"
-- Enables replacement: hand manual to new hire, they run the system
-
----
-
-## Artifact Summary
-
-| Artifact | Cardinality | Description |
-|----------|-------------|-------------|
-| Organization Chart | 1 per company | Visual structure: positions + reporting lines |
-| Position Contract | 1 per position | Results, standards, accountability |
-| Operations Manual | 1 per position | Documented system for the position |
-
-## Process Summary
-
-| Process | Runs When | Description |
-|---------|-----------|-------------|
-| BDP Loop | Continuous while prototyping | Innovate → Quantify → Orchestrate |
-| Training Method | During transition | Daily syncs, issues, independence criteria |
-
----
-
-## Transition Lifecycle
-
-```
-Before Hire:
-  Position: Developer
-  You: Tactical (coding) + Strategic (documenting process)
-
-During Transition:
-  Position: Developer → Hire doing tactical, you training
-  Position: Dev Lead → You now doing tactical + strategic HERE
-
-Fully Transitioned:
-  Position: Developer → Hire owns it (tactical + suggests improvements)
-  Position: Dev Lead → You own tactical + strategic, prototyping THIS
-```
-
-The pattern repeats up the chart until you're only **Shareholder** - outside the business, owning no tactical work.
+**Note:** This document covers Stage 1 (Structure). Stages 2-4 involve Operations Manual (Component #4+).
 
 ---
 
@@ -192,37 +191,38 @@ The pattern repeats up the chart until you're only **Shareholder** - outside the
 ```
 ═══════════════════════════════════════════════════════════════
                     SHAREHOLDERS
-                      (Owner)
+                      (Owner - outside)
 ═══════════════════════════════════════════════════════════════
                          │
                          ▼
                  ┌───────────────┐
                  │      COO      │
-                 │   (President) │
                  └───────┬───────┘
                          │
          ┌───────────────┼───────────────┐
-         │               │               │
          ▼               ▼               ▼
-┌─────────────┐  ┌─────────────┐  ┌─────────────┐
-│ VP/Product  │  │VP/Operations│  │ VP/Finance  │
-└──────┬──────┘  └──────┬──────┘  └─────────────┘
-       │                │
-       ▼                ▼
-┌─────────────┐  ┌─────────────┐
-│Client Mgmt  │  │  Dev Lead   │
-└─────────────┘  └──────┬──────┘
+   ┌───────────┐  ┌───────────┐  ┌───────────┐
+   │VP/Product │  │VP/Operations│ │VP/Finance │
+   └─────┬─────┘  └─────┬─────┘  └───────────┘
+         │              │
+         ▼              ▼
+   ┌───────────┐  ┌───────────┐
+   │Client Mgmt│  │ Dev Lead  │
+   └───────────┘  └─────┬─────┘
                         │
                         ▼
-                ┌─────────────┐
-                │  Developer  │
-                └─────────────┘
+                 ┌───────────┐
+                 │ Developer │
+                 └───────────┘
 ```
 
-**Reading the chart:**
-- Shareholders sit ABOVE the business (outside)
-- COO is the first position INSIDE - accountable to shareholders
-- You START at the bottom, prototype each position, and climb UP
+---
+
+## Next Steps
+
+1. **Read the PDFs** - Review EMyth Organizational Chart Guide and Position Agreements PDFs
+2. **Validate definitions** - Update this document if PDFs reveal additional structure
+3. **Create Wilsch AI Org Chart** - Apply framework to define actual positions
 
 ---
 
@@ -230,7 +230,17 @@ The pattern repeats up the chart until you're only **Shareholder** - outside the
 
 - [Primary Aim - Life Vision](https://mariuswilsch.github.io/public-wilsch-ai-pages/global/primary-aim-life-vision)
 - [Strategic Objective - Wilsch AI Services](https://mariuswilsch.github.io/public-wilsch-ai-pages/global/strategic-objective-wilsch-ai-services)
-- [Ship with Confidence](https://mariuswilsch.github.io/public-wilsch-ai-pages/global/ship-with-confidence)
+
+---
+
+## Reference Materials
+
+| Resource | Purpose | Link |
+|----------|---------|------|
+| EMyth Organizational Chart Guide | Org Chart + Position templates | [PDF](https://github.com/MariusWilsch/soloforce/blob/main/.claude/tracking/issue-668/artifacts/EMyth%20Organizational%20Chart%20Guide.pdf) |
+| EMyth Writing Position Agreements | Position Contract template | [PDF](https://github.com/MariusWilsch/soloforce/blob/main/.claude/tracking/issue-668/artifacts/EMyth%20Writing%20Position%20Agreements.pdf) |
+| EMyth Systems Guide | For Component #4+ | [PDF](https://github.com/MariusWilsch/soloforce/blob/main/.claude/tracking/issue-668/artifacts/EMyth%20Systems%20Guide.pdf) |
+| EMyth Business Owners Guide | Roadmap (all systems) | [PDF](https://github.com/MariusWilsch/soloforce/blob/main/.claude/tracking/issue-668/artifacts/EMyth%20Business%20Owners%20Guide.pdf) |
 
 ---
 
