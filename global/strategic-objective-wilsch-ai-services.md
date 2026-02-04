@@ -57,6 +57,69 @@ The business itself is interchangeable. What matters: it serves as a reliable me
 
 ---
 
+## For Whom (The Customer)
+
+### Central Demographic Model
+
+**German Mittelstand** — the enterprise middle layer.
+
+| Characteristic | Description |
+|----------------|-------------|
+| **Industries** | Law firms, building/facility management, industrial manufacturing, construction |
+| **Company size** | Enterprise level — enough complexity to need AI, enough structure to implement |
+| **NOT** | Marketing agencies, generative companies, small businesses, startups |
+
+### Psychographic (Why They Buy)
+
+> "AI is a color they've never seen — they can't imagine what it could do for them."
+
+**The frustration:** Management pushes "focus on AI" but can't answer "why" or "where." The middle layer (ops/IT lead) is pressured to act but has no clear direction. AI is everywhere in the news, nowhere in their understanding.
+
+**The product:** Make the possible visible — before they invest. Show them the color they've never seen.
+
+**The relief:** Finally, something concrete to propose upward. Finally, an answer to "what should we do with AI?"
+
+**The buyer:** Middle layer (operations lead, IT lead, department head) who needs to translate vague "AI!" mandates into actionable proposals. C-suite approves budget, but middle layer finds and evaluates you.
+
+### Territory
+
+| Element | Current State |
+|---------|---------------|
+| **Geographic** | Europe/DACH region |
+| **Sales channel** | In-person only (no digital funnel) |
+| **Expansion path** | Digital sales channel would expand territory |
+
+---
+
+## Standards
+
+How we operate. What we promise. What we will never compromise.
+
+### Integrity Standards
+
+| Standard | Description |
+|----------|-------------|
+| **Data sovereignty** | Client data stays under their control. On-premise possible. German/EU data centers for cloud. |
+| **Honesty over sale** | Will tell a client "AI won't help here" even if it loses the deal. No overselling. |
+
+### Process Standards
+
+| Standard | Description |
+|----------|-------------|
+| **Pflichtenheft before POC** | Specification document before any code is written. Always. No exceptions. |
+| **Workshop → Spec → Build** | Free scoping (Workshop 1) → paid requirements (Workshop 2) → Pflichtenheft → POC |
+
+### Quality Standards
+
+| Standard | Description |
+|----------|-------------|
+| **Evaluation-based** | Build test infrastructure first. Define success metrics in the eval. AI measures against it. |
+| **Project-specific metrics** | Each engagement defines its own success thresholds in the Pflichtenheft |
+
+**Competitive differentiator:** Most AI vendors say "it works." We say "here's the eval, watch it pass."
+
+---
+
 ## Exit Criteria (First Cycle Complete)
 
 Any of these paths completes the first cycle:
@@ -200,4 +263,5 @@ Once Issue Lifecycle Router is handed off, founder time goes to:
 ## Source
 
 - E-Myth Strategic Objective interview (2026-02-03)
+- E-Myth Strategic Objective completion session (2026-02-04) — added For Whom, Territory, Standards
 - Framework: Michael Gerber, *The E-Myth Revisited*, Chapter 13
