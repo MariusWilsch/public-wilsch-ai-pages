@@ -185,8 +185,20 @@ Prototype from the **bottom up**, hand off, climb the chart:
 ```
 
 ### Current State (2026-02)
-- **Mohamed** being trained as Developer
-- **Founder** holds: Solution Architect, Dev Lead, Developer, VP/Delivery, COO, Shareholder
+
+**Mohamed** being trained as: Developer
+
+**Founder (Marius) holds ALL other positions:**
+
+| Function | Positions Held |
+|----------|----------------|
+| **Executive** | Shareholder, COO/President |
+| **Marketing** | VP/Marketing, Partner Manager |
+| **Delivery** | VP/Delivery, Solution Architect, Dev Lead |
+| **Finance** | VP/Finance, Bookkeeper (Xolo interface), Investment Manager |
+| **System** | System Engineer |
+
+**First handoff in progress:** Developer → Mohamed
 
 ---
 
