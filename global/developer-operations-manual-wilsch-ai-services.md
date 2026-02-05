@@ -12,7 +12,7 @@ Operations Manual for the Developer position at Wilsch AI Services. Framework: M
 
 **Reports To:** Dev Lead
 
-**Version:** v1 (Draft - 2026-02-05)
+**Version:** v2 (Draft - 2026-02-05)
 
 ---
 
@@ -50,51 +50,138 @@ For now, reference:
 
 **Your "package in the mailbox":** GitHub Projects → Deliverable Tracking → Mohamed view
 
+**Purpose:** Start each day with clear direction — no guessing what to work on.
+
+---
+
+#### Flow
+
 1. **Open your view:** [Deliverable Tracking Board](https://github.com/orgs/DaveX2001/projects/1/views/7)
    - Filter: `assignee:mo-adel007 -status:Backlog,Done`
    - You see: To-Do, In Progress, Review
 
 2. **Pick work:**
    - IF In Progress has items → **Continue and finish** (get things done)
-   - ELSE pick from **To-Do by priority** (priority set in grooming)
-   - IF nothing available → Flag to Marius
+   - ELSE pick **TOP item from To-Do** (grooming already sorted it)
+   - IF nothing in To-Do → Flag to Marius
 
 3. **Check issue type:**
    - `maker/spec-design` → Path A
    - `maker/spec-implement` → Path B
 
-**Why this order:** Finishing In Progress work prevents context switching waste. Priority comes from grooming discussions.
+4. **(Optional) Reference yesterday's grooming transcript** if you need context on why this item is priority
+
+---
+
+#### Logic
+
+**Why finish In Progress first:** Context switching is expensive. Completing work > starting new work.
+
+**Why To-Do is already sorted:** Grooming physically reorders items — top = highest priority. You don't need to guess or ask. The system delivers the priority.
+
+**Why transcripts are available:** If you forget what was discussed in grooming, the Fireflies transcript is your reference. You shouldn't need it often, but it's there.
 
 ---
 
 ### Path A: Spec-Design Issue
 
-**Purpose:** Transform an unclear requirement into a clear, implementable spec.
+**Purpose:** Transform unclear requirements into clear, implementable specification.
 
-**Closing criteria:** DoD + AC created (or documented failure with learning).
+**Closing criteria:** DoD + AC created in a new spec-implement issue.
 
-**Flow:**
+**Why this exists:** You can't build what you don't understand. Spec-design forces thinking BEFORE building — cheap to change a design doc, expensive to change implementation.
 
+---
+
+#### Flow
+
+**Step 1: Pick and Onboard**
 ```
-1. /onboarding → choose spec-design issue
-2. /rubber-duck → externalize thinking, resolve ambiguities
-   └─ Goal: Shared understanding between you and AI
-   └─ Output: Confidence ✓ → proceed to ac-create
-            OR Keep thinking → stay in rubber-duck
-3. IF Confidence: /ac-create → define DoD + AC
-   └─ Skill guides you through 7-step pipeline
-   └─ 4 Refinement Gate checks (user judgment on each)
-4. Output: NEW spec-implement issue (via deliverable-tracking)
-5. Close spec-design issue
+/onboarding → select spec-design issue
+```
+AI loads issue context. You see: What, Why, Notes.
+
+---
+
+**Step 2: Externalize Thinking**
+```
+/rubber-duck
+```
+- Think out loud — AI asks questions to clarify your understanding
+- Goal: Shared understanding between you and AI
+- AI signals **Confidence ✓** when ambiguities resolved
+- If stuck → ask Marius during office hours
+
+---
+
+**Step 3: Define ACs**
+```
+/ac-create (when Confidence ✓)
 ```
 
-**Key skills to read (understand WHY):**
-- `/rubber-duck` - Externalization methodology
-- `/ac-create` - DoD/AC framework, Given-When-Then format
+**Two concepts you need to understand:**
 
-**Your responsibility:** Think out loud. Answer when AI asks. Flag when you can't reach shared understanding.
+| Concept | Question | What it means |
+|---------|----------|---------------|
+| **DoD (Definition of Done)** | "Does it exist?" | What to build — the deliverables |
+| **AC (Acceptance Criteria)** | "Does it work?" | How to verify behavior — Given-When-Then tests |
 
-**AI responsibility:** Guide through methodology, resolve technical ambiguities via research, present options for your judgment.
+**Key insight:** Parallel gates, not traced. Both must pass independently.
+
+**DoD Example:**
+```
+- [ ] API endpoint returns user data
+- [ ] UI displays user profile
+```
+
+**AC Example:**
+```
+Given: I am logged in
+When: I visit /profile
+Then: I see my name and email
+```
+
+**Your job:** Judge the 4 Refinement Gate checks:
+1. Observable Output — "Can I actually SEE this work?"
+2. Test Data — "Do we have what we need to test it?"
+3. Design Questions — "Are there decisions not documented?"
+4. Blocking Dependencies — "What needs to happen before verification?"
+
+The skill guides you through. You judge.
+
+---
+
+**Step 4: Read and Confirm**
+- New spec-implement issue is created
+- **READ THE ENTIRE ISSUE + ACs**
+- 💡 **Tip:** Use Speechify extension to read it aloud — hearing + reading helps catch gaps
+- Ask: "Do I understand this? Is this stable?"
+- ACs are now LOCKED — changes = new spec-design session
+
+---
+
+**Step 5: Review (Training Phase)**
+- Flag during office hours or add `review` label
+- Marius reviews ACs
+- If approved → close spec-design, proceed to spec-implement
+- If changes needed → back to Step 2
+
+**Office Hours (Training Phase):** During the 10-25 issue training period, Marius is available on Google Meet (camera off, voice off by default). Unmute/share screen when questions arise. Reference: [Strategic Objective - Training Method](https://mariuswilsch.github.io/public-wilsch-ai-pages/global/strategic-objective-wilsch-ai-services#training-method)
+
+---
+
+#### Logic
+
+**Why DoD and AC are separate:**
+- DoD tells you what to BUILD
+- AC tells you what SUCCESS looks like
+- You can build something (DoD ✓) that doesn't work correctly (AC ✗)
+
+**Why Refinement Gate exists:**
+Last opportunity to catch problems before implementation. Cheap to fix here, expensive during implementation.
+
+**Why training review exists:**
+During 10-25 issues, Marius reviews ACs before implementation to catch misunderstandings early. Later, this moves to grooming. Eventually, trust is established and only finished work is reviewed.
 
 ---
 
@@ -192,7 +279,7 @@ For now, reference:
 | [Ship with Confidence](https://mariuswilsch.github.io/public-wilsch-ai-pages/global/ship-with-confidence) | Testing pyramid - AC → Smoke → Human Witness |
 | [AC DoD Framework](https://mariuswilsch.github.io/public-wilsch-ai-pages/global/ac-dod-framework) | Acceptance criteria methodology |
 | [Three-Session Model](https://mariuswilsch.github.io/public-wilsch-ai-pages/global/three-session-model) | Design / Implementation / Verification separation |
-| [GROOMING.md](https://github.com/DaveX2001/deliverable-tracking/blob/main/docs/GROOMING.md) | Daily sync process |
+| [GROOMING.md](https://github.com/DaveX2001/deliverable-tracking/blob/main/GROOMING.md) | Daily sync process |
 
 ---
 
