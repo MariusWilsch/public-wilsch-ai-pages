@@ -21,7 +21,7 @@ Also:
 
 ## Pre-Read
 
-[Retainer Services Agreement](https://docs.google.com/document/d/1ECl4GvgGJhjUO5l_FAq1grFUtYzV-6ksxx5vo2pQEr0/edit?usp=sharing) (Section 2.2 - Variable Revenue Components)
+[Retainer Services Agreement](https://drive.google.com/drive/folders/1zNfYZRCuwVOWVL87i2gBV8hDXaI4POSU) (Section 2.2 - Variable Revenue Components)
 
 ---
 
@@ -45,4 +45,3 @@ Revenue share structure (Section 2.2)
 
 - **Type:** Review + discussion
 - **Duration:** ~30 minutes
-- **Expectation:** Just show up
