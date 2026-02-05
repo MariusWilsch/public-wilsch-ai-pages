@@ -31,13 +31,16 @@ Also:
 How the last 3 months have gone
 
 ### 2. FMM Process
-The AI pricing quotation workflow (feature scope vs general pricing)
+AI pricing quotation workflow
+- Expectation when AI costs were requested
+- FMM proposal outcome
+- Process for future requests
 
 ### 3. Renewal
 Continuing the partnership beyond the initial 3 months
 
 ### 4. Subscription Revenue Participation
-Revenue share structure (Section 2.2)
+Revenue share structure (Section 2.2) - schedule follow-up to define mechanics
 
 ---
 
