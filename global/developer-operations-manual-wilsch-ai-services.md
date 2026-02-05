@@ -132,6 +132,11 @@ For now, reference:
 
 **Reference:** [Three-Session Model](https://mariuswilsch.github.io/public-wilsch-ai-pages/global/three-session-model)
 
+**TBD (needs deep-dive):**
+- Clarity Workflow detail (req-clarity → impl-clarity → eval-clarity)
+- Execute phase mechanics (one pass at a time)
+- Commit phase / task complete protocol
+
 ---
 
 ### End of Day
@@ -149,7 +154,9 @@ For now, reference:
    - Commit + push current state
    - No special action needed (stays In Progress)
 
-**Why this matters:** Marius can start reviewing your completed work without waiting for a sync. Spec-design is reviewed before spec-implement starts. Spec-implement is reviewed before merge to main.
+**Why this matters:** Marius can start reviewing your completed work without waiting for a sync.
+
+*(TBD: Review section needed — spec-design reviewed before spec-implement starts, spec-implement reviewed before merge to main)*
 
 ---
 
@@ -165,6 +172,7 @@ For now, reference:
 
 ## Gaps to Fill (Future Sessions)
 
+- [ ] Review section (spec-design review, spec-implement review)
 - [ ] Worktree workflow detail
 - [ ] Deploy to staging procedure
 - [ ] Smoke test checklist (project-specific)
