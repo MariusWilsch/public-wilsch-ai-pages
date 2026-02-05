@@ -9,7 +9,9 @@ publish: true
 Operations Manual for the Developer position at Wilsch AI Services. Framework: Michael Gerber, *The E-Myth Revisited*, Chapter 15 (Management Strategy) + E-Myth Operations Manual Guide (MG-0080).
 
 **Position:** Developer
+
 **Reports To:** Dev Lead
+
 **Version:** v1 (Draft - 2026-02-05)
 
 ---
