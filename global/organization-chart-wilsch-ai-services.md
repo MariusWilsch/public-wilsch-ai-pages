@@ -169,6 +169,27 @@ Partner Marketer Architect   │     Agent × N
 
 **Model:** Partners find and close deals. Wilsch AI delivers.
 
+### Xolo (External Service Provider)
+
+**What Xolo is:** All-in-one platform for Estonian e-Residency businesses. External service provider, not an employee.
+
+**What Xolo does:**
+- Monthly accounting and bookkeeping
+- VAT reporting
+- Salary tax reporting
+- Annual reporting
+- Legal address (contact person provider)
+- Statistics Estonia submissions
+
+**What Xolo does NOT do:**
+- Investment management
+- Cash flow strategy
+- Financial decision-making
+
+**Interface:** Bookkeeper (internal) provides Xolo with documents, invoices, receipts. Xolo processes and reports.
+
+**Model:** Operational finance outsourced to Xolo. Strategic finance (investment, asset allocation) stays internal.
+
 ---
 
 ## Handoff Sequence
