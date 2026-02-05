@@ -174,8 +174,9 @@ For now, reference:
 
 - [ ] Review section (spec-design review, spec-implement review)
 - [ ] Worktree workflow detail
-- [ ] Deploy to staging procedure
-- [ ] Smoke test checklist (project-specific)
+- [ ] Deploy to staging procedure *(partial: see Ship with Confidence)*
+- [ ] Smoke test checklist *(partial: see Ship with Confidence, project-specific)*
+- [ ] **Staging environment setup** (prerequisite per project — containers, configs, so Mohamed can deploy without Marius)
 - [ ] Blocked/Stuck escalation protocol
 - [ ] Priority visibility in GitHub
 - [ ] Company sections (1-3): Story, Products & Services, Policies
