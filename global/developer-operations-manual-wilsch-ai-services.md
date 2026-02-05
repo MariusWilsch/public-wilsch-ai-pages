@@ -79,8 +79,9 @@ For now, reference:
 1. /onboarding → choose spec-design issue
 2. /rubber-duck → externalize thinking, resolve ambiguities
    └─ Goal: Shared understanding between you and AI
-   └─ Output: Confidence ✓ OR flagged friction point
-3. /ac-create → define DoD + AC
+   └─ Output: Confidence ✓ → proceed to ac-create
+            OR Keep thinking → stay in rubber-duck
+3. IF Confidence: /ac-create → define DoD + AC
    └─ Skill guides you through 7-step pipeline
    └─ 4 Refinement Gate checks (user judgment on each)
 4. Output: NEW spec-implement issue (via deliverable-tracking)
