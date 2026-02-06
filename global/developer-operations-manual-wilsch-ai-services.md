@@ -204,7 +204,16 @@ Reference: [Three-Session Model](https://mariuswilsch.github.io/public-wilsch-ai
 - **verification.jsonl** — what's been verified (pass/fail/pending/nothing)
 - Last 20 comments (temporal context)
 
-**What you see:** AI suggests a **next step** based on all context: DoD checkboxes (what's built), AC traces (what's verified), comments (what happened), and issue body (original requirement). Together, you always know where you are in a task.
+**What you see:** AI suggests a **next step** based on all context. Together, these sources always tell you where you are in a task:
+
+| Source | What it tells you | How to read it |
+|--------|-------------------|----------------|
+| **DoD checkboxes** | What's built | `[x]` = built, `[ ]` = not built |
+| **verification.jsonl** | What's verified | `passed`/`failed`/`pending` = tested, **no entry = never tested** |
+| **Comments** | What happened, what's next | Newest = current state |
+| **Issue body** | Original requirement | Static context |
+
+**Key:** If verification.jsonl has no line for an AC, that AC has never been verified — the file simply has no entry for it. This is different from `pending` (which means verification was *attempted* but blocked).
 
 **Options during onboarding:**
 
