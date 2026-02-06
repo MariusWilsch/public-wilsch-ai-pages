@@ -154,13 +154,13 @@ The "scripted presentation" — self-service, not a speech.
 
 ### Step 3: Questions Meeting (THE Test)
 
-Individual meeting to discuss what they read.
+Individual meeting to discuss what they read. This is the single most important step.
 
-**What we're looking for:**
-- Do they ask questions? (curiosity signal)
-- Do they challenge assumptions? (critical thinking signal)
-- Do they light up about engineering AI behavior? (game interest signal)
-- Or do they just want to know when they start writing code? (wrong fit signal)
+**The test is simple:** Did they come with questions? Not polite questions. Real questions — about the design docs, about the principles, about how things work and why. How they assessed these documents and what they ask about them tells you everything.
+
+**Pass:** They probe, challenge, wonder aloud. They say things like "Why does this work this way?" or "Could I do this too?" or "What if we tried...?" They engaged with the material and formed their own view.
+
+**Fail:** They read it, accepted it, and have nothing to say. No intrigue. No friction with the ideas. They're waiting to be told what to do.
 
 **The framing:** *"You don't engineer code here. You engineer the behavior of AI systems. Building the machine that builds the machine. If that's interesting to you, you're in the right place."*
 
