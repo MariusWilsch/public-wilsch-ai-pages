@@ -34,60 +34,42 @@ publish: true
 
 ### 6. Teaser + Abschluss (~10s)
 - Gleich zeigen wir Ihnen live, was damit möglich ist
-- Aber zuerst: die Grundlagen
 
 ---
 
 ## Live Demo: Chat2DB auf IBM POWER (~10 Min.)
 
-### Choreografie
-- **Ulrich** rahmt das Geschäftsszenario ("Stellen Sie sich vor, ein Kunde ruft an...")
-- **Marius** tippt die Frage in OpenWebUI
-- **Marius** erklärt die Antwort mit **Vorher/Nachher-Kontrast**
+### Die Geschichte
 
-### Erklärungswinkel
-Jede Antwort: "Das hat vorher X gedauert — jetzt ist es eine Frage auf Deutsch."
-- Nicht die Technik erklären (Vogelperspektive)
-- Den Zeitvorteil betonen
-- SQL ist ausgeblendet, auf Wunsch zeigbar
+Bisher: Ulrich braucht einen Geschäftsbericht — ruft Marius an — Marius schreibt SQL — schickt Ergebnis zurück. **Abhängigkeit vom Techniker.**
 
-### Wow-Faktor
-Deutsche natürliche Sprache → korrekte Ergebnisse aus strukturierten Daten.
-Das Publikum kennt die kryptischen Spaltennamen (FABR40, KLAS40, AUSR40) — NL-Abfragen sind der Kontrast.
+Jetzt: Ulrich stellt die Frage selbst, auf Deutsch, direkt an die Datenbank. **So einfach wie den Nachbarn fragen.**
+
+### Ablauf
+
+1. **Ulrich** stellt die Frage laut ("Ich will wissen: ...")
+2. **Marius** tippt sie in OpenWebUI
+3. Antwort erscheint
+4. **Marius** erklärt kurz: "Das hätte vorher X gedauert — jetzt eine Frage"
 
 ### 3 Fragen (validiert 2026-02-06)
 
-**Frage 1 — Nachschlagen (Utility)**
 > An welchen Maschinen (MA) kann der Adapter EC2U angeschlossen werden?
 
-- Ergebnis: 9009 und 9105
-- Vorher/Nachher: "Normalerweise durchsucht man Tabellen manuell — jetzt eine Frage"
+→ 9009 und 9105. "Statt manuell Tabellen durchsuchen — eine Frage."
 
-**Frage 2 — Auflisten (Exploration)**
 > Zeige mir alle Maschinen (MA) in der Prozessorklasse P05?
 
-- Ergebnis: 9028 (Power10 S1012, 4 Kerne)
-- Vorher/Nachher: "Statt SQL-Kenntnisse braucht man nur die richtige Frage"
+→ 9028 (Power10 S1012, 4 Kerne). "Kein SQL nötig — nur die richtige Frage."
 
-**Frage 3 — Vergleich & Aggregation (Intelligenz)**
 > Welche Maschine hat in der Prozessorklasse P10 die meisten Kerne?
 
-- Ergebnis: 9824 (Power11 S1122, 2x30 = 60 Kerne)
-- Vorher/Nachher: "Das Modell vergleicht, rechnet, und gibt eine klare Antwort"
-- Stärkstes Demo-Moment: zeigt Reasoning, nicht nur Lookup
+→ 9824 (Power11, 2x30 = 60 Kerne). "Das Modell vergleicht und rechnet selbst."
 
-### Narrative Steigerung
-`Nachschlagen → Auflisten → Vergleichen + Rechnen`
-Jede Frage zeigt eine anspruchsvollere Fähigkeit.
+### Danach: Publikum fragt
+Ulrich: "Hat jemand eine Frage an die Datenbank?"
 
-### Nach den 3 Fragen
-- Live-Fragen aus dem Publikum zulassen
-- Zeigt Vertrauen in das System
-- Ulrich moderiert: "Hat jemand eine Frage an die Datenbank?"
-
-### Technische Vorbereitung
-- `make tunnels` vor der Präsentation (SSH-Tunnel zu IBM POWER)
-- `make remote-test` zur Validierung der Chain
-- mcpo ist instabil — bei Fehler: `ssh IBM-POWER 'make mcpo-stop && sleep 2 && make mcpo-start'`
+### Technik-Checkliste
+- `make tunnels` + `make remote-test` vor der Präsentation
+- mcpo instabil → bei Fehler: `ssh IBM-POWER 'make mcpo-stop && sleep 2 && make mcpo-start'`
 - OpenWebUI: http://localhost:3000
-- Bandbreite: VPN minimieren, andere Downloads stoppen
