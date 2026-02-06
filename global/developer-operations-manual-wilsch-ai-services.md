@@ -104,12 +104,29 @@ AI loads issue context. You see: What, Why, Notes.
 
 ---
 
+**Step 1b: Find the Source Material**
+
+The issue body is a **summary**, not the requirement. Before rubber-duck, find the original source:
+
+| Source Type | Where to Look |
+|-------------|---------------|
+| **Fireflies transcript** | Meeting where the requirement was discussed — search by date or topic |
+| **Email / Ticket** | Client email or TANSS ticket linked in issue Notes |
+| **Design doc** | Parent spec-design issue or hippocampus document |
+
+**Why this matters:** ACs need context. A bullet point like "add 2FA" doesn't tell you WHY (GDPR compliance, customer data sensitivity) or HOW the client expects it (Google Authenticator specifically). The transcript does. Skipping this step = writing ACs from summaries = missing context = rework.
+
+**Rule:** If the issue has a transcript or email reference, read it before `/rubber-duck`.
+
+---
+
 **Step 2: Externalize Thinking**
 ```
 /rubber-duck
 ```
 [`/rubber-duck` source](https://github.com/MariusWilsch/claude-code-team-plugin/blob/main/plugins/claude-code-team-plugin/commands/rubber-duck.md)
 - Think out loud — AI asks questions to clarify your understanding
+- Source material from Step 1b feeds your thinking
 - Goal: Shared understanding between you and AI
 - AI signals **Confidence ✓** when ambiguities resolved
 - If stuck → ask Marius during office hours
