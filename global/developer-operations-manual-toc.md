@@ -19,7 +19,6 @@ Structure follows [MG-0080 Operations Manuals](https://www.emyth.com) (E-Myth Ma
 | Document | Status | Link |
 |----------|--------|------|
 | Strategic Objective | Draft | [strategic-objective-wilsch-ai-services](https://mariuswilsch.github.io/public-wilsch-ai-pages/global/strategic-objective-wilsch-ai-services) |
-| Strategic Objective (DE) | Draft | [strategisches-ziel](https://mariuswilsch.github.io/public-wilsch-ai-pages/global/strategic-objective-wilsch-ai-services-de) |
 | Organization Chart | Draft | [organization-chart-wilsch-ai-services](https://mariuswilsch.github.io/public-wilsch-ai-pages/global/organization-chart-wilsch-ai-services) |
 | Company Story | TBD | — |
 | Company History | TBD | — |
@@ -77,17 +76,3 @@ Structure follows [MG-0080 Operations Manuals](https://www.emyth.com) (E-Myth Ma
 
 **Logic:** MG-0080 Operations Manuals guide. Systems section is the "tool kit" — all processes and procedures for running the position.
 
----
-
-## Reference Materials
-
-E-Myth Mastery Program guides used to build this manual:
-
-| Guide | Code | Location |
-|-------|------|----------|
-| Foundations of E-Myth Management | MG-0001 | `issue-668/artifacts/` |
-| Operations Manuals | MG-0080 | `~/Downloads/` |
-| Organizational Chart Guide | — | `issue-668/artifacts/` |
-| Writing Position Agreements | — | `issue-668/artifacts/` |
-| Systems Guide | — | `issue-668/artifacts/` |
-| Business Owners Guide | — | `issue-668/artifacts/` |
