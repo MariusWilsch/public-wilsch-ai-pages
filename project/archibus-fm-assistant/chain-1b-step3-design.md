@@ -133,7 +133,7 @@ columns)                 3. Extract unique values          ↓
 
 | Category | Item | Status |
 |----------|------|--------|
-| **Step 1 UX** | Hierarchy input method | Pending FM meeting |
+| **Step 1 UX** | Hierarchy input method | Decided: AI infers → user confirms, drag-drop card UI |
 | **Step 1 UX** | Who defines UX | Kaya/Mujahid/Ali |
 | **Implementation** | "Floor All" handling | Open |
 | **Implementation** | Missing hierarchy columns | Open |
@@ -159,7 +159,7 @@ columns)                 3. Extract unique values          ↓
 **Transcripts:**
 - Feb 3 - Rein meeting (hierarchy validation, JSON schema)
 - Feb 3 - Miguel/Ian meeting (bulk data entry prototype)
-- Feb 5 - Ryan & Miguel meeting (key design decisions)
+- [Feb 5 - Ryan & Miguel meeting](https://github.com/DaveX2001/deliverable-tracking/issues/373#issuecomment-3854408140) (Step 1 UX decisions, key design decisions)
 
 **Artifacts:**
 - [CAFM Asset Upload Sample](https://github.com/veloxforce/claude-user-configs/raw/main/hippocampus/project/archibus-fm-assistant/cafm-asset-upload-sample-2026-01-28.xlsx)
