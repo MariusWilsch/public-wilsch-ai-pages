@@ -658,7 +658,6 @@ If approved → merge to production. Marius is the final gatekeeper.
 - [ ] **Sub-issue board management** — when sub-issue completes review: remove parent link → add to board → move to review status (automation via GitHub Action or agent)
 
 ### Process Gaps
-- [x] Review section (spec-design review, spec-implement review)
 - [ ] Blocked/Stuck escalation protocol
 - [ ] Grooming from Mohamed's perspective
 - [ ] Priority visibility in GitHub
