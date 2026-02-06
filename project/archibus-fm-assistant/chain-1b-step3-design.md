@@ -15,6 +15,7 @@ Populating Bruce BEM's background data requires understanding the client's hiera
 - Input is typically an **equipment table** (rows represent equipment, not locations)
 - **Hierarchy is embedded in columns** (Building, Floor, Room as text values)
 - **Location-based assets must be created** from these column values (they don't exist as rows)
+- **Input has the hierarchy** - if implementer needs different hierarchy, they modify Excel themselves (AI proposes/processes, doesn't edit)
 
 ---
 
@@ -70,6 +71,7 @@ columns)                 3. Extract unique values          ↓
 | **Sequential first** | No parallel processing in PoC | Simplicity |
 | **AI creates JSON** | With Bruce BEM field names | Step 2 mapping = transformation rule |
 | **Quality over minimum** | Recommended fields for location assets | Better data at onboarding |
+| **No interactive Excel editing** | AI proposes/processes hierarchy from input, doesn't modify Excel | Scope: processing only, not data prep |
 
 ---
 
