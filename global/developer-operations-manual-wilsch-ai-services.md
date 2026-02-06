@@ -585,7 +585,59 @@ If approved → merge to production. Marius is the final gatekeeper.
 
 **Why this matters:** Marius can start reviewing your completed work without waiting for a sync.
 
-*(TBD: Review section needed — spec-design reviewed before spec-implement starts, spec-implement reviewed before merge to main)*
+---
+
+### Review
+
+**Purpose:** Quality gates that catch problems at different levels before code reaches production.
+
+**Two review types, two hats:**
+
+---
+
+#### Review Type 1: Spec-Design Quality (Dev Lead)
+
+**When:** After Path A Step 4 (Read and Confirm) — you add `review` label to the spec-design issue.
+
+**What happens (async):**
+1. Dev Lead reads your DoD + AC
+2. "Does this design make sense?"
+3. Checks process: "Was the machine (rubber-duck → ac-create) smooth?"
+4. Discussion in grooming or async — designs are cheap to change
+
+**Outcomes:**
+- Approved → spec-design issue closes, spec-implement proceeds
+- Not approved → back to Step 2 (rubber-duck), iterate
+
+**Training phase (10-25 issues):** Every spec-design reviewed.
+**Post-training:** Moves to grooming spot checks, eventually trust-based.
+
+---
+
+#### Review Type 2: Business Witness (VP/Delivery)
+
+**When:** After Verification Session Step 10 — you add `review` label to the spec-implement issue.
+
+**What happens (async):**
+1. VP/Delivery opens feature on staging
+2. Human witness (business): "Is this what I wanted?"
+3. Freeform discovery — no checklist
+
+**Outcomes:**
+- Issues found → comment on issue → back to Implementation Session
+- Approved → merge to production
+
+**This never goes away** — it IS the accountability mechanism.
+
+---
+
+#### Logic
+
+**Why two review types:** Type 1 catches design misunderstandings BEFORE expensive implementation (cheap to fix). Type 2 ensures the built thing serves business intent AFTER implementation (expensive to fix, but necessary).
+
+**Why async:** Developer doesn't wait for review. Pick up next work. Review happens on Dev Lead's / VP's schedule.
+
+**Why review exists even when trust is established:** Spec-quality review (Type 1) can eventually become trust-based. Business witness (Type 2) never goes away — it catches what specs can't anticipate.
 
 ---
 
@@ -606,7 +658,7 @@ If approved → merge to production. Marius is the final gatekeeper.
 - [ ] **Sub-issue board management** — when sub-issue completes review: remove parent link → add to board → move to review status (automation via GitHub Action or agent)
 
 ### Process Gaps
-- [ ] Review section (spec-design review, spec-implement review)
+- [x] Review section (spec-design review, spec-implement review)
 - [ ] Blocked/Stuck escalation protocol
 - [ ] Grooming from Mohamed's perspective
 - [ ] Priority visibility in GitHub
