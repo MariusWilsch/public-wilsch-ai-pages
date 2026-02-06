@@ -60,7 +60,12 @@ The improvement loop is more important than any single issue. The system's progr
 
 ### 2. Never create a game you're unwilling to play yourself.
 
-The founder plays this game daily. Built the system by playing it. Currently in Phase 4 (handoff) of the first cycle — having run the full BDP loop from unknown to orchestrated system.
+The founder plays all three games simultaneously:
+- **Execution Game:** Delivers client work through the system daily
+- **Improvement Game:** Flags friction, improves the system, releases better versions
+- **Handoff (meta-game):** Building the infrastructure for others to play both games independently — the current cycle's focus
+
+This isn't historical. It's present tense. The system was built by playing it, and it continues to be played. The goal is for others to play all three games too — not just the execution game. That's the whole point of the People Strategy: find people who want to play, not people who want to work.
 
 ### 3. Specific ways of winning without ending the game.
 
