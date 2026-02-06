@@ -30,7 +30,7 @@ publish: true
 ### 5. Team-Brücke (~20s)
 - Ich bringe die KI-Tiefe mit
 - Thomas Erhard bringt die Systemkompetenz – IBM Power, Infrastruktur
-- Ulrich Wilsch bringt 66 Jahre Geschäftserfahrung und Kundenbeziehungen
+- Ulrich Wilsch bringt 40 Jahre Geschäftserfahrung und Kundenbeziehungen
 
 ### 6. Teaser + Abschluss (~10s)
 - Gleich zeigen wir Ihnen live, was damit möglich ist
