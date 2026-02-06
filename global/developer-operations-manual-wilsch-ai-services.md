@@ -99,6 +99,7 @@ For now, reference:
 ```
 /onboarding → select spec-design issue
 ```
+[`/onboarding` source](https://github.com/MariusWilsch/claude-code-team-plugin/blob/main/plugins/claude-code-team-plugin/commands/onboarding.md)
 AI loads issue context. You see: What, Why, Notes.
 
 ---
@@ -107,6 +108,7 @@ AI loads issue context. You see: What, Why, Notes.
 ```
 /rubber-duck
 ```
+[`/rubber-duck` source](https://github.com/MariusWilsch/claude-code-team-plugin/blob/main/plugins/claude-code-team-plugin/commands/rubber-duck.md)
 - Think out loud — AI asks questions to clarify your understanding
 - Goal: Shared understanding between you and AI
 - AI signals **Confidence ✓** when ambiguities resolved
@@ -118,6 +120,7 @@ AI loads issue context. You see: What, Why, Notes.
 ```
 /ac-create (when Confidence ✓)
 ```
+[`/ac-create` source](https://github.com/MariusWilsch/claude-code-team-plugin/blob/main/plugins/claude-code-team-plugin/skills/ac-create/SKILL.md)
 
 **Two concepts:**
 
@@ -197,6 +200,7 @@ Reference: [Three-Session Model](https://mariuswilsch.github.io/public-wilsch-ai
 ```
 /onboarding → select spec-implement issue
 ```
+[`/onboarding` source](https://github.com/MariusWilsch/claude-code-team-plugin/blob/main/plugins/claude-code-team-plugin/commands/onboarding.md)
 
 **What AI loads:**
 - Issue body (What, Why, Notes)
@@ -232,6 +236,7 @@ Reference: [Three-Session Model](https://mariuswilsch.github.io/public-wilsch-ai
 ```
 /rubber-duck (if needed)
 ```
+[`/rubber-duck` source](https://github.com/MariusWilsch/claude-code-team-plugin/blob/main/plugins/claude-code-team-plugin/commands/rubber-duck.md)
 
 **When to use (including but not limited to):**
 - Picking up after a while — need to reconnect
@@ -260,9 +265,9 @@ Reference: [Three-Session Model](https://mariuswilsch.github.io/public-wilsch-ai
 
 | Phase | Command | Question |
 |-------|---------|----------|
-| **Requirements-Clarity** | `/requirements-clarity` | "Is the WHAT clear?" |
-| **Implementation-Clarity** | `/implementation-clarity` | "Is the HOW clear?" |
-| **Evaluation-Clarity** | `/evaluation-clarity` | "How do we VERIFY?" |
+| **Requirements-Clarity** | [`/requirements-clarity`](https://github.com/MariusWilsch/claude-code-team-plugin/blob/main/plugins/claude-code-team-plugin/commands/requirements-clarity.md) | "Is the WHAT clear?" |
+| **Implementation-Clarity** | [`/implementation-clarity`](https://github.com/MariusWilsch/claude-code-team-plugin/blob/main/plugins/claude-code-team-plugin/commands/implementation-clarity.md) | "Is the HOW clear?" |
+| **Evaluation-Clarity** | [`/evaluation-clarity`](https://github.com/MariusWilsch/claude-code-team-plugin/blob/main/plugins/claude-code-team-plugin/commands/evaluation-clarity.md) | "How do we VERIFY?" |
 
 **Skills vs Commands — important distinction:**
 
@@ -320,7 +325,7 @@ AI creates a [worktree via GTR](https://github.com/coderabbitai/git-worktree-run
 
 **Task Complete:** AI signals when plan is complete and sanity checks pass.
 
-**Valid outputs:**
+**Valid outcomes:**
 - ✅ Pass implemented, sanity checks pass
 - ✅ "This approach doesn't work" — documented learning is valid
 - ❌ Confusion without documentation
@@ -331,6 +336,7 @@ AI creates a [worktree via GTR](https://github.com/coderabbitai/git-worktree-run
 ```
 /issue-comment
 ```
+[`/issue-comment` source](https://github.com/MariusWilsch/claude-code-team-plugin/blob/main/plugins/claude-code-team-plugin/commands/issue-comment.md)
 
 After Task Complete, leave an actionable note on the issue. The [issue-comment command](https://github.com/MariusWilsch/claude-code-team-plugin) collects:
 1. **Context** (2-3 sentences — what happened)
@@ -370,6 +376,7 @@ After Task Complete, leave an actionable note on the issue. The [issue-comment c
 ```
 /onboarding → select same spec-implement issue
 ```
+[`/onboarding` source](https://github.com/MariusWilsch/claude-code-team-plugin/blob/main/plugins/claude-code-team-plugin/commands/onboarding.md)
 
 Same as Implementation Session. AI loads all context sources (DoD, ACs, verification.jsonl, comments, issue body) and suggests next step.
 
@@ -379,6 +386,7 @@ Same as Implementation Session. AI loads all context sources (DoD, ACs, verifica
 ```
 /rubber-duck (if needed)
 ```
+[`/rubber-duck` source](https://github.com/MariusWilsch/claude-code-team-plugin/blob/main/plugins/claude-code-team-plugin/commands/rubber-duck.md)
 
 **When to use (including but not limited to):**
 - Unsure about what was built (long gap since implementation)
@@ -409,6 +417,7 @@ git fetch origin staging && git rebase origin/staging
 ```
 /ac-verify
 ```
+[`/ac-verify` source](https://github.com/MariusWilsch/claude-code-team-plugin/blob/main/plugins/claude-code-team-plugin/commands/ac-verify.md)
 
 The core of the Verify Session. AC Verify is **behavioral testing against the spec** — not a code review.
 
@@ -458,6 +467,7 @@ AI proposes fixes. **You decide** which are worth fixing — not everything need
 ```
 /merge
 ```
+[`/merge` source](https://github.com/MariusWilsch/claude-code-team-plugin/blob/main/plugins/claude-code-team-plugin/commands/merge.md)
 
 Merge to staging branch. The worktree's draft PR (created during Implementation Session) is used.
 
@@ -518,6 +528,7 @@ Click through the feature on staging. Freeform discovery — no checklist, no sc
 ```
 /issue-comment
 ```
+[`/issue-comment` source](https://github.com/MariusWilsch/claude-code-team-plugin/blob/main/plugins/claude-code-team-plugin/commands/issue-comment.md)
 
 Add `review` label to the issue. This is the handoff signal — Marius is notified.
 
@@ -625,14 +636,16 @@ If approved → merge to production. Marius is the final gatekeeper.
 
 | Tool | Type | Used in |
 |------|------|---------|
-| [Worktree (GTR)](https://github.com/coderabbitai/git-worktree-runner) | AI-invoked skill | Implementation Step 4 |
-| `/ac-verify` | User-invoked command | Verification Step 4 |
-| `/issue-comment` | User-invoked command | Implementation Step 5, Verification Step 10 |
-| `/requirements-clarity` | User-invoked command | Implementation Step 3 |
-| `/implementation-clarity` | User-invoked command | Implementation Step 3 |
-| `/evaluation-clarity` | User-invoked command | Implementation Step 3 |
-| `/merge` | User-invoked command | Verification Step 6 |
-| `/rubber-duck` | User-invoked command | Implementation Step 2, Verification Step 2 |
+| [Worktree (GTR)](https://github.com/MariusWilsch/claude-code-team-plugin/blob/main/plugins/claude-code-team-plugin/skills/worktree/SKILL.md) | AI-invoked skill | Implementation Step 4 |
+| [`/ac-verify`](https://github.com/MariusWilsch/claude-code-team-plugin/blob/main/plugins/claude-code-team-plugin/commands/ac-verify.md) | User-invoked command | Verification Step 4 |
+| [`/ac-create`](https://github.com/MariusWilsch/claude-code-team-plugin/blob/main/plugins/claude-code-team-plugin/skills/ac-create/SKILL.md) | AI-invoked skill | Path A Step 3 |
+| [`/issue-comment`](https://github.com/MariusWilsch/claude-code-team-plugin/blob/main/plugins/claude-code-team-plugin/commands/issue-comment.md) | User-invoked command | Implementation Step 5, Verification Step 10 |
+| [`/requirements-clarity`](https://github.com/MariusWilsch/claude-code-team-plugin/blob/main/plugins/claude-code-team-plugin/commands/requirements-clarity.md) | User-invoked command | Implementation Step 3 |
+| [`/implementation-clarity`](https://github.com/MariusWilsch/claude-code-team-plugin/blob/main/plugins/claude-code-team-plugin/commands/implementation-clarity.md) | User-invoked command | Implementation Step 3 |
+| [`/evaluation-clarity`](https://github.com/MariusWilsch/claude-code-team-plugin/blob/main/plugins/claude-code-team-plugin/commands/evaluation-clarity.md) | User-invoked command | Implementation Step 3 |
+| [`/merge`](https://github.com/MariusWilsch/claude-code-team-plugin/blob/main/plugins/claude-code-team-plugin/commands/merge.md) | User-invoked command | Verification Step 6 |
+| [`/rubber-duck`](https://github.com/MariusWilsch/claude-code-team-plugin/blob/main/plugins/claude-code-team-plugin/commands/rubber-duck.md) | User-invoked command | Implementation Step 2, Verification Step 2 |
+| [`/onboarding`](https://github.com/MariusWilsch/claude-code-team-plugin/blob/main/plugins/claude-code-team-plugin/commands/onboarding.md) | User-invoked command | Implementation Step 1, Verification Step 1 |
 
 ---
 
