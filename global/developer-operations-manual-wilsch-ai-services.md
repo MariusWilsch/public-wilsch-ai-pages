@@ -161,9 +161,9 @@ The skill guides you through. You judge.
 ---
 
 **Step 5: Review (Training Phase)**
-- Flag during office hours or add `review` label
-- Marius reviews ACs
-- If approved → close spec-design, proceed to spec-implement
+- Add `review` label to the **spec-design** issue (spec-implement issue already exists from Step 3)
+- Marius reviews the ACs on the new spec-implement issue
+- If approved → close spec-design issue ✅
 - If changes needed → back to Step 2
 
 **Office Hours (Training Phase):** During the 10-25 issue training period, Marius is available on Google Meet (camera off, voice off by default). Unmute/share screen when questions arise. Reference: [Strategic Objective - Training Method](https://mariuswilsch.github.io/public-wilsch-ai-pages/global/strategic-objective-wilsch-ai-services#training-method)
