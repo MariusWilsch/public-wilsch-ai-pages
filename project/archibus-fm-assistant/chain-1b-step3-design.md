@@ -162,8 +162,9 @@ columns)                 3. Extract unique values          ↓
 - Feb 5 - Ryan & Miguel meeting (key design decisions)
 
 **Artifacts:**
-- Rein's processed Excel (ExcelTableAfterProcessingByAI.xlsx)
-- CAFM Asset Sample
+- [CAFM Asset Upload Sample](https://github.com/veloxforce/claude-user-configs/raw/main/hippocampus/project/archibus-fm-assistant/cafm-asset-upload-sample-2026-01-28.xlsx)
+- Rein's processed Excel (ExcelTableAfterProcessingByAI.xlsx) - Teams
+- Rein's Hierarchical Body JSON (Hierarchical Body.json) - Teams
 - [Asset Import Schema (SharePoint)](https://aschs-my.sharepoint.com/:x:/g/personal/rein_suurvali_asc-hs_com/IQCZWnERRmHxRb3r4bb3BZzRAfjwreav4FEP85btLlaVWNI)
 
 **Session:**
