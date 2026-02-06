@@ -164,7 +164,7 @@ The skill guides you through. You judge.
 
 **Why DoD and AC are separate:**
 - DoD tells you what to BUILD
-- AC tells you what SUCCESS looks like
+- AC gives you behavioral automated testing — backpressure so AI can self-verify
 - You can build something (DoD ✓) that doesn't work correctly (AC ✗)
 
 **Why Refinement Gate exists:**
