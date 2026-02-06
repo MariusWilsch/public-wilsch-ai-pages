@@ -12,7 +12,7 @@ Operations Manual for the Developer position at Wilsch AI Services. Framework: M
 
 **Reports To:** Dev Lead
 
-**Version:** v2 (Draft - 2026-02-05)
+**Version:** v3 (Draft - 2026-02-06)
 
 ---
 
@@ -119,27 +119,14 @@ AI loads issue context. You see: What, Why, Notes.
 /ac-create (when Confidence ✓)
 ```
 
-**Two concepts you need to understand:**
+**Two concepts:**
 
-| Concept | Question | What it means |
-|---------|----------|---------------|
-| **DoD (Definition of Done)** | "Does it exist?" | What to build — the deliverables |
-| **AC (Acceptance Criteria)** | "Does it work?" | How to verify behavior — Given-When-Then tests |
+| Concept | Question |
+|---------|----------|
+| **DoD (Definition of Done)** | "Does it exist?" — what to build |
+| **AC (Acceptance Criteria)** | "Does it work?" — behavioral automated testing |
 
-**Key insight:** Parallel gates, not traced. Both must pass independently.
-
-**DoD Example:**
-```
-- [ ] API endpoint returns user data
-- [ ] UI displays user profile
-```
-
-**AC Example:**
-```
-Given: I am logged in
-When: I visit /profile
-Then: I see my name and email
-```
+Parallel gates, not traced. Both must pass independently. Full methodology: [Ship with Confidence](https://mariuswilsch.github.io/public-wilsch-ai-pages/global/ship-with-confidence) + [AC DoD Framework](https://mariuswilsch.github.io/public-wilsch-ai-pages/global/ac-dod-framework)
 
 **Your job:** Judge the 4 Refinement Gate checks:
 1. Observable Output — "Can I actually SEE this work?"
@@ -187,11 +174,20 @@ During 10-25 issues, Marius reviews ACs before implementation to catch misunders
 
 ### Path B: Spec-Implement Issue
 
-**Purpose:** Build what was specified in DoD + AC.
+**Purpose:** Build what was specified in DoD + AC, then verify it works.
 
-**This documents Part 1: Implementation Session.** Part 2 (Verify Session) is separate — see [Ship with Confidence](https://mariuswilsch.github.io/public-wilsch-ai-pages/global/ship-with-confidence).
+**Two sessions** (fresh context between them prevents bias):
 
-**Session ends at:** Task Complete (sanity checks pass)
+| Session | Purpose | Ends at |
+|---------|---------|---------|
+| **Implementation** | Build the thing | Task Complete (code pushed) |
+| **Verification** | Prove it works | `review` label added |
+
+Reference: [Three-Session Model](https://mariuswilsch.github.io/public-wilsch-ai-pages/global/three-session-model)
+
+---
+
+#### Implementation Session
 
 ---
 
@@ -205,9 +201,10 @@ During 10-25 issues, Marius reviews ACs before implementation to catch misunders
 **What AI loads:**
 - Issue body (What, Why, Notes)
 - **DoD + ACs from tracking file** — primes AI's understanding
-- Last 20 comments
+- **verification.jsonl** — what's been verified (pass/fail/pending/nothing)
+- Last 20 comments (temporal context)
 
-**What you see:** AI suggests a **next step** based on DoD + ACs. Use this to prime your thinking.
+**What you see:** AI suggests a **next step** based on all context: DoD checkboxes (what's built), AC traces (what's verified), comments (what happened), and issue body (original requirement). Together, you always know where you are in a task.
 
 **Options during onboarding:**
 
@@ -227,9 +224,10 @@ During 10-25 issues, Marius reviews ACs before implementation to catch misunders
 /rubber-duck (if needed)
 ```
 
-**When to use:**
+**When to use (including but not limited to):**
 - Picking up after a while — need to reconnect
 - Unsure about implementation approach
+- Assumptions feel shaky — need to externalize thinking
 
 **When to skip:**
 - Moving from spec-design right away — context is fresh
@@ -249,13 +247,22 @@ During 10-25 issues, Marius reviews ACs before implementation to catch misunders
 | Free-form externalized thinking | Takes your thinking → outputs a plan |
 | You drive | AI drives, resolves ambiguities |
 
-AI runs three phases:
+**You invoke** three phases (these are user-invoked commands — AI won't start them on its own):
 
-| Phase | Question |
-|-------|----------|
-| **Requirements-Clarity** | "Is the WHAT clear?" |
-| **Implementation-Clarity** | "Is the HOW clear?" |
-| **Evaluation-Clarity** | "How do we VERIFY?" |
+| Phase | Command | Question |
+|-------|---------|----------|
+| **Requirements-Clarity** | `/requirements-clarity` | "Is the WHAT clear?" |
+| **Implementation-Clarity** | `/implementation-clarity` | "Is the HOW clear?" |
+| **Evaluation-Clarity** | `/evaluation-clarity` | "How do we VERIFY?" |
+
+**Skills vs Commands — important distinction:**
+
+| Type | Invoked by | Example |
+|------|-----------|---------|
+| **Command** (user-invoked) | You type it | `/requirements-clarity`, `/rubber-duck` |
+| **Skill** (AI-invoked) | AI discovers during clarity phases | [Worktree (GTR)](https://github.com/MariusWilsch/claude-code-team-plugin) |
+
+Skills are discovered via a [discovery script](https://github.com/MariusWilsch/claude-code-team-plugin) that runs during clarity phases. Skills discovered during clarity are executed during Execute.
 
 **Who AI asks for what:**
 
@@ -286,13 +293,23 @@ After Evaluation-Clarity, AI calls ExitPlanMode. Before approving, ask:
 - **Yes** → Approve, let Claude execute
 - **No** → Don't approve, clarify first
 
+**First action after approval — Worktree setup:**
+
+AI creates a [worktree via GTR](https://github.com/coderabbitai/git-worktree-runner) (AI-invoked skill, discovered during implementation-clarity). This:
+- Creates an isolated branch (`issue-{N}`) in a sibling directory
+- Copies `.env*` files automatically
+- Creates a draft PR with issue linking
+- Enables parallel development (multiple issues = multiple worktrees)
+
+**Why worktree:** Don't develop on main. Each issue gets its own isolated environment. Parallel sessions can run simultaneously because each works in its own worktree. Skill reference: [Worktree Skill](https://github.com/MariusWilsch/claude-code-team-plugin)
+
 **During Execute:**
 - Execute is autonomous — let Claude work
 - Work in **passes** (from DoD dependency analysis)
 - Sanity checks happen before Task Complete
 - If sanity fails → backpressure → AI tries to fix
 
-**Task Complete:** AI signals when plan is complete and sanity checks pass. Implementation session ends here.
+**Task Complete:** AI signals when plan is complete and sanity checks pass.
 
 **Valid outputs:**
 - ✅ Pass implemented, sanity checks pass
@@ -301,13 +318,233 @@ After Evaluation-Clarity, AI calls ExitPlanMode. Before approving, ask:
 
 ---
 
-#### Concepts
+**Step 5: Leave Handoff (optional but recommended)**
+```
+/issue-comment
+```
+
+After Task Complete, leave an actionable note on the issue. The [issue-comment command](https://github.com/MariusWilsch/claude-code-team-plugin) collects:
+1. **Context** (2-3 sentences — what happened)
+2. **Source** (conversation path — required)
+
+**Philosophy:** Keep comments short and actionable. Focus on "what's the next step," not stateful dumps. The issue-commit-linker already links commits to the issue timeline, but those aren't proper comments. `/issue-comment` gives you a free-form, human-readable handoff.
+
+**Why source links matter:** Future sessions read the source to get full depth. The comment is a pointer, not a copy. Short comment + deep source > long comment with stale context.
+
+---
+
+#### Logic
 
 **Why Clarity Workflow:** AI resolves its OWN ambiguities before executing. You don't think for AI — AI investigates and asks when stuck.
 
+**Why commands are user-invoked:** Clarity phases require human judgment about when to start each phase. AI is aware of them from CLAUDE.md but won't initiate them — you drive the timing.
+
+**Why worktree is AI-invoked:** Worktree creation is mechanical (no judgment needed) and always happens right after ExitPlanMode. The discovery script surfaces it during implementation-clarity so AI knows to use it.
+
 **Why sanity checks are backpressure:** Task isn't complete unless sanity passes. This gives AI feedback to self-correct.
 
-**Reference:** [Three-Session Model](https://mariuswilsch.github.io/public-wilsch-ai-pages/global/three-session-model)
+**Why issue-comment at end:** The issue-commit-linker captures commit-level context automatically. `/issue-comment` captures your thinking about what comes next — something commits can't express.
+
+---
+
+#### Verification Session
+
+**Purpose:** Prove that what was built actually works against the spec. Then deploy, test, and hand off.
+
+**Why a separate session:** Fresh context prevents confirmation bias. The AI that built the code shouldn't verify it with that implementation context still loaded. Research shows 40-60% quality improvement from separate implementation/verification agents. Reference: [Three-Session Model](https://mariuswilsch.github.io/public-wilsch-ai-pages/global/three-session-model)
+
+**Session ends at:** `review` label added (or at 60-70% context — continue in new session)
+
+---
+
+**Step 1: Pick and Onboard**
+```
+/onboarding → select same spec-implement issue
+```
+
+Same as Implementation Session. AI loads all context sources (DoD, ACs, verification.jsonl, comments, issue body) and suggests next step.
+
+---
+
+**Step 2: (Optional) Clarify**
+```
+/rubber-duck (if needed)
+```
+
+**When to use (including but not limited to):**
+- Unsure about what was built (long gap since implementation)
+- Need to reconnect with the intent behind the ACs
+
+**When to skip:**
+- Coming right from implementation — context is fresh
+- ACs are clear and straightforward
+
+**Note:** Without `/rubber-duck`, AI behaves more like a standard chat model — it responds but doesn't proactively probe for ambiguities. Rubber-duck mode continuously asks questions and drives toward confidence.
+
+---
+
+**Step 3: Rebase Staging (best practice)**
+
+Before verifying, rebase staging into the worktree to test against fresh state:
+```bash
+git fetch origin staging && git rebase origin/staging
+```
+
+**Why:** Your worktree may have branched off days ago. Other work may have merged to staging since then. Rebasing ensures AC verification tests against reality — not a stale snapshot. Especially critical with parallel worktrees.
+
+*(Gap: Not yet integrated into AC Verify skill — manual step for now)*
+
+---
+
+**Step 4: AC Verify**
+```
+/ac-verify
+```
+
+The core of the Verify Session. AC Verify is **behavioral testing against the spec** — not a code review.
+
+**What it does:**
+1. **Code review as INPUT** — reads code to know what to test (not the output)
+2. **Layer detection** — parses each AC's Given-When-Then to determine tool:
+
+| Layer | Tool | Trigger keywords |
+|-------|------|------------------|
+| **UI** | Chrome DevTools | click, see, display, button, form |
+| **API** | curl / Bash | endpoint, request, response, POST |
+| **Database** | Supabase MCP | record, stored, query, persisted |
+
+3. **Executes GWT steps** — runs each Given-When-Then against the running system
+4. **7 Principles** — always check console + network, verify negatives, capture preconditions
+5. **Records traces** — writes structured observations to `verification.jsonl`
+
+**Result handling:**
+
+| Result | Action |
+|--------|--------|
+| **Passed** | Record to verification.jsonl |
+| **Failed (quick fix)** | Fix in-session (container down, config missing), retry |
+| **Failed (major)** | Record failure → back to Implementation Session |
+| **Pending** | Blocker documented (missing API keys, env not configured) |
+
+**What AC Verify does NOT do:**
+- Can't catch things outside the spec (specs have blind spots)
+- Can't judge subjective quality ("Does this look nice?" isn't a Given-When-Then)
+- Can't replace human witness — even if all ACs pass, human still needs to see it
+
+**The `verification.jsonl` is precedent, not proof.** It captures not just what happened but *why* (the `interpretation` field). Future sessions read these traces to understand baseline behavior and catch regressions. Full schema: [AC Verification Decision Trace](https://mariuswilsch.github.io/public-wilsch-ai-pages/global/ac-verification-decision-trace)
+
+---
+
+**Step 5: PR Review**
+
+After AC Verify passes, run PR review (currently PR Toolkit or code review from Anthropic plugins — may change).
+
+AI proposes fixes. **You decide** which are worth fixing — not everything needs to be addressed.
+
+**(Optional) Fix critical issues:** If PR review surfaces critical problems and context allows, run another clarity phase to fix them in-session.
+
+---
+
+**Step 6: Merge**
+```
+/merge
+```
+
+Merge to staging branch. The worktree's draft PR (created during Implementation Session) is used.
+
+**If at 60-70% context:** Stop here. Deploy + smoke + human witness in a new session.
+
+---
+
+**Step 7: Deploy to Staging**
+
+```bash
+ssh WILSCH-AI-SERVER
+cd ~/projects/billable/{project}/ && git pull && make staging
+```
+
+*(Gap: Staging environment setup is a prerequisite per project — containers, configs, so Developer can deploy without Marius)*
+
+---
+
+**Step 8: Smoke Test**
+
+Run the project's `SMOKE-TEST.md` checklist.
+
+**What a smoke test is:** Every application has a core flow. The smoke test checks: "Does the critical path still work?"
+
+| Project | Core Flow |
+|---------|-----------|
+| Paul Faceless YT | Video generation |
+| IITR | RAG retrieval |
+
+**Not comprehensive** — just "did we break the thing that matters most?" Keep under 5 minutes.
+
+**Why mandatory:** Code breaks in unexpected ways. Smoke test is cheap insurance. The spec tested individual ACs; smoke test tests the integrated system.
+
+PASS → continue. FAIL → investigate before proceeding.
+
+---
+
+**Step 9: Human Witness — Technical (Developer)**
+
+Click through the feature on staging. Freeform discovery — no checklist, no script.
+
+**What you're looking for:**
+- Things that don't feel right (UX, timing, layout)
+- Behaviors the spec didn't anticipate
+- Edge cases nobody thought to specify
+- "It works but something's off" moments
+
+**If issues found:** Comment on GitHub issue → fix in new Implementation Session.
+
+**If nothing wrong:** Proceed.
+
+**Why human witness exists:** ACs test what was specified. Humans catch what wasn't. "Does this look nice?" can't be a Given-When-Then. You seeing it and having accountability for it is the point.
+
+---
+
+**Step 10: Add `review` Label + Handoff**
+
+```
+/issue-comment
+```
+
+Add `review` label to the issue. This is the handoff signal — Marius is notified.
+
+Leave an issue comment with context and source (same as Implementation Session Step 5).
+
+*(Gap: For sub-issues in epics — remove parent link, add to board, move to review status. Not yet automated.)*
+
+---
+
+**Step 11: Human Witness — Business (Marius, async)**
+
+Marius reviews on staging with a business perspective: "Is this what I wanted?"
+
+Same freeform process, different eyes. Issues found → comment on issue → fix in new session.
+
+If approved → merge to production. Marius is the final gatekeeper.
+
+---
+
+#### Logic
+
+**Why separate sessions (Implementation vs Verification):** Confirmation bias. The AI that built code will seek confirmation it works, not genuine evidence. Fresh context = honest testing.
+
+**Why rebase before AC Verify:** Test against reality. Parallel worktrees mean your branch may be days old. Rebasing catches integration conflicts before they surprise you at merge time.
+
+**Why AC Verify before PR review:** Behavioral evidence first, code style second. Knowing something *works* is more valuable than knowing it's *clean*.
+
+**Why smoke test after deploy:** ACs test individual features. Smoke test tests the integrated system. A feature can pass all ACs but break the core flow through unexpected side effects.
+
+**Why human witness is NOT backpressure:** ACs and smoke tests are automated feedback (backpressure) — agents can self-correct. Human witness is fundamentally different — it catches what automation *can't anticipate*. This layer can never be fully automated.
+
+**Why sequential testing:** Human attention is the bottleneck — by design. Testing grabs the Developer's attention, forcing them to witness their own work. That's the accountability mechanism.
+
+**Why `verification.jsonl` exists:** Born from the context graph idea. Structured traces become institutional memory. Future sessions know: what was tested, how it was interpreted, what the baseline behavior looks like. When something breaks, you can compare against historical traces.
+
+**The bigger vision:** This entire framework (separate sessions, structured verification, decision traces) builds toward autonomous coding. The human witness layer is what keeps it honest as AI does more of the work.
 
 ---
 
@@ -344,15 +581,23 @@ After Evaluation-Clarity, AI calls ExitPlanMode. Before approving, ask:
 
 ## Gaps to Fill (Future Sessions)
 
+### Skill/Tool Gaps
+- [ ] **Rebase before AC Verify** — integrate into AC Verify skill (currently manual step)
+- [ ] **Sub-issue board management** — when sub-issue completes review: remove parent link → add to board → move to review status (automation via GitHub Action or agent)
+
+### Process Gaps
 - [ ] Review section (spec-design review, spec-implement review)
-- [ ] Worktree workflow detail
-- [ ] Deploy to staging procedure *(partial: see Ship with Confidence)*
-- [ ] Smoke test checklist *(partial: see Ship with Confidence, project-specific)*
-- [ ] **Staging environment setup** (prerequisite per project — containers, configs, so Mohamed can deploy without Marius)
 - [ ] Blocked/Stuck escalation protocol
-- [ ] Priority visibility in GitHub
-- [ ] Company sections (1-3): Story, Products & Services, Policies
 - [ ] Grooming from Mohamed's perspective
+- [ ] Priority visibility in GitHub
+
+### Infrastructure Gaps
+- [ ] **Staging environment setup** (prerequisite per project — containers, configs, so Developer can deploy without Marius)
+- [ ] Deploy to staging procedure (project-specific Makefile targets)
+- [ ] Smoke test checklists (project-specific, per core flow)
+
+### Company-Wide Gaps
+- [ ] Company sections (1-3): Story, Products & Services, Policies
 
 ---
 
@@ -360,16 +605,31 @@ After Evaluation-Clarity, AI calls ExitPlanMode. Before approving, ask:
 
 | Document | Purpose |
 |----------|---------|
-| [Issue Lifecycle Router](https://mariuswilsch.github.io/public-wilsch-ai-pages/global/issue-lifecycle-router) | Master routing - which path, which stage |
-| [Ship with Confidence](https://mariuswilsch.github.io/public-wilsch-ai-pages/global/ship-with-confidence) | Testing pyramid - AC → Smoke → Human Witness |
+| [Issue Lifecycle Router](https://mariuswilsch.github.io/public-wilsch-ai-pages/global/issue-lifecycle-router) | Master routing — which path, which stage |
+| [Ship with Confidence](https://mariuswilsch.github.io/public-wilsch-ai-pages/global/ship-with-confidence) | Testing pyramid — AC → Smoke → Human Witness |
 | [AC DoD Framework](https://mariuswilsch.github.io/public-wilsch-ai-pages/global/ac-dod-framework) | Acceptance criteria methodology |
+| [AC Verification Decision Trace](https://mariuswilsch.github.io/public-wilsch-ai-pages/global/ac-verification-decision-trace) | verification.jsonl schema and design rationale |
 | [Three-Session Model](https://mariuswilsch.github.io/public-wilsch-ai-pages/global/three-session-model) | Design / Implementation / Verification separation |
 | [GROOMING.md](https://github.com/DaveX2001/deliverable-tracking/blob/main/GROOMING.md) | Daily sync process |
+
+### Skills and Commands (Source: [claude-code-team-plugin](https://github.com/MariusWilsch/claude-code-team-plugin))
+
+| Tool | Type | Used in |
+|------|------|---------|
+| [Worktree (GTR)](https://github.com/coderabbitai/git-worktree-runner) | AI-invoked skill | Implementation Step 4 |
+| `/ac-verify` | User-invoked command | Verification Step 4 |
+| `/issue-comment` | User-invoked command | Implementation Step 5, Verification Step 10 |
+| `/requirements-clarity` | User-invoked command | Implementation Step 3 |
+| `/implementation-clarity` | User-invoked command | Implementation Step 3 |
+| `/evaluation-clarity` | User-invoked command | Implementation Step 3 |
+| `/merge` | User-invoked command | Verification Step 6 |
+| `/rubber-duck` | User-invoked command | Implementation Step 2, Verification Step 2 |
 
 ---
 
 ## Source
 
-- E-Myth Management Strategy interview (2026-02-05)
+- E-Myth Management Strategy interview (2026-02-05) — Morning Start, Path A, Path B Implementation Session
+- E-Myth Management Strategy interview (2026-02-06) — Path B Implementation Session corrections + Verification Session
 - Framework: Michael Gerber, *The E-Myth Revisited*, Chapter 15
 - Template: E-Myth Operations Manual Guide (MG-0080)
