@@ -189,40 +189,125 @@ During 10-25 issues, Marius reviews ACs before implementation to catch misunders
 
 **Purpose:** Build what was specified in DoD + AC.
 
-**Closing criteria:** All DoD checkboxes complete, deployed to staging, review label added.
+**This documents Part 1: Implementation Session.** Part 2 (Verify Session) is separate — see [Ship with Confidence](https://mariuswilsch.github.io/public-wilsch-ai-pages/global/ship-with-confidence).
 
-**Flow:**
+**Session ends at:** Task Complete (sanity checks pass)
 
+---
+
+#### Flow
+
+**Step 1: Pick and Onboard**
 ```
-1. /onboarding → choose spec-implement issue
-2. (optional) /rubber-duck → if you want to think through implementation
-3. Clarity Workflow (system guides automatically):
-   ├─ Requirements-Clarity → resolve WHAT ambiguities
-   ├─ Implementation-Clarity → resolve HOW ambiguities
-   │   └─ Worktree skill discovered here
-   └─ Evaluation-Clarity → resolve VERIFICATION approach (sanity checks)
-4. Execute (one pass at a time from DoD)
-5. Commit → issue-commit-linker auto-creates comment
-6. Sanity check (page renders? API responds? DB exists?)
-7. Human witness (technical) → click through, verify it works
-8. Add `review` label
+/onboarding → select spec-implement issue
 ```
 
-**Key concept - Clarity Workflow:** AI resolves its own ambiguities before executing:
-- User preference? → AskUserQuestion
-- Technical ambiguity? → Online research via sub-agent
-- Codebase question? → Search via grep/glob
+**What AI loads:**
+- Issue body (What, Why, Notes)
+- **DoD + ACs from tracking file** — primes AI's understanding
+- Last 20 comments
 
-**Your responsibility:** Respond to AskUserQuestion prompts. Approve/deny skill invocations. Do human witness.
+**What you see:** AI suggests a **next step** based on DoD + ACs. Use this to prime your thinking.
 
-**AI responsibility:** Run clarity phases, discover needed skills, execute against DoD + AC, commit with descriptive messages.
+**Options during onboarding:**
+
+| Option | When to use |
+|--------|-------------|
+| **React Frontend README** | Working on React frontend — provides best practices |
+| **FastAPI Backend README** | Working on Python backend — provides best practices |
+| **Full investigation** | Compare DoDs against codebase — use if you don't remember what's implemented |
+| **Skip** | Context is fresh, want to move fast |
+
+**Trade-off:** Latency vs Precision.
+
+---
+
+**Step 2: (Optional) Clarify**
+```
+/rubber-duck (if needed)
+```
+
+**When to use:**
+- Picking up after a while — need to reconnect
+- Unsure about implementation approach
+
+**When to skip:**
+- Moving from spec-design right away — context is fresh
+- Path forward is obvious
+
+**Key principle:**
+> Don't build on UNCLARIFIED assumptions. If you can't judge whether something is right or wrong, there's no point building it.
+
+---
+
+**Step 3: Clarity Workflow**
+
+**What it is:** The structured opposite of rubber-duck.
+
+| Rubber-duck | Clarity Workflow |
+|-------------|------------------|
+| Free-form externalized thinking | Takes your thinking → outputs a plan |
+| You drive | AI drives, resolves ambiguities |
+
+AI runs three phases:
+
+| Phase | Question |
+|-------|----------|
+| **Requirements-Clarity** | "Is the WHAT clear?" |
+| **Implementation-Clarity** | "Is the HOW clear?" |
+| **Evaluation-Clarity** | "How do we VERIFY?" |
+
+**Who AI asks for what:**
+
+| Ambiguity type | Who AI asks |
+|----------------|-------------|
+| Code structure | Codebase (grep/glob) |
+| User preference | You (AskUserQuestion) |
+| API docs / external | Internet / MCP |
+
+**Why sub-agent for research:** Avoids polluting context with 78-90k tokens of search results. Returns focused summary.
+
+**Positional arguments:**
+```
+/requirements-clarity let's do pass one
+```
+Focuses AI on specific pass. Optional — context from rubber-duck is usually sufficient.
+
+---
+
+**Step 4: Execute**
+
+**Before Execute — ExitPlanMode judgment:**
+
+After Evaluation-Clarity, AI calls ExitPlanMode. Before approving, ask:
+
+> "Do I feel confident this plan will give us an answer to move this issue forward?"
+
+- **Yes** → Approve, let Claude execute
+- **No** → Don't approve, clarify first
+
+**During Execute:**
+- Execute is autonomous — let Claude work
+- Work in **passes** (from DoD dependency analysis)
+- Sanity checks happen before Task Complete
+- If sanity fails → backpressure → AI tries to fix
+
+**Task Complete:** AI signals when plan is complete and sanity checks pass. Implementation session ends here.
+
+**Valid outputs:**
+- ✅ Pass implemented, sanity checks pass
+- ✅ "This approach doesn't work" — documented learning is valid
+- ❌ Confusion without documentation
+
+---
+
+#### Concepts
+
+**Why Clarity Workflow:** AI resolves its OWN ambiguities before executing. You don't think for AI — AI investigates and asks when stuck.
+
+**Why sanity checks are backpressure:** Task isn't complete unless sanity passes. This gives AI feedback to self-correct.
 
 **Reference:** [Three-Session Model](https://mariuswilsch.github.io/public-wilsch-ai-pages/global/three-session-model)
-
-**TBD (needs deep-dive):**
-- Clarity Workflow detail (req-clarity → impl-clarity → eval-clarity)
-- Execute phase mechanics (one pass at a time)
-- Commit phase / task complete protocol
 
 ---
 
