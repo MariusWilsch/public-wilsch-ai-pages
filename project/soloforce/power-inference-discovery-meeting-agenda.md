@@ -44,16 +44,16 @@ We have two clients who want AI deployed on their Power 10 infrastructure, a dat
 
 ---
 
-## Technologies to Explore
+## Inspiration — What Already Exists on Other Architectures
 
-| Technology | What It Does | Why It's Relevant |
-|-----------|-------------|-------------------|
-| [BitNet.cpp](https://github.com/microsoft/BitNet) | 1-bit quantization, CPU-optimized. 2-6x speedup on x86/ARM | Needs porting to ppc64le |
-| [vllm-spyre](https://github.com/vllm-project/vllm-spyre) | vLLM plugin for IBM Spyre accelerators | Future track — requires Spyre hardware |
-| [MIT Recursive LM](https://arxiv.org/html/2512.24601v1) | Processes 10M+ tokens via selective context access | Addresses our large-data workloads |
-| [Ollama on ppc64le](https://www.linkedin.com/pulse/compiling-ollama-openwebui-ibm-power-ppc64le-andre-lutz) | Already compiled for Power (Andre Lutz, SVA) | Existing baseline, unoptimized |
+These aren't a roadmap. They're proof that fast inference on non-GPU hardware is possible. If it works on x86/ARM, we should be able to make it work on Power.
 
-These are inspiration, not prescriptions. The approach is yours to propose.
+| Technology | What It Does | What It Proves |
+|-----------|-------------|----------------|
+| [BitNet.cpp](https://github.com/microsoft/BitNet) | 1-bit quantization, CPU-optimized. 2-6x speedup on x86/ARM | Fast LLM inference on CPUs is solved elsewhere |
+| [vllm-spyre](https://github.com/vllm-project/vllm-spyre) | vLLM plugin for IBM Spyre accelerators | IBM is investing in AI acceleration for Power |
+| [MIT Recursive LM](https://arxiv.org/html/2512.24601v1) | Processes 10M+ tokens via selective context access | Massive data volumes are solvable at the architecture level |
+| [Ollama on ppc64le](https://www.linkedin.com/pulse/compiling-ollama-openwebui-ibm-power-ppc64le-andre-lutz) | Already compiled for Power (Andre Lutz, SVA) | The basics already run — now we need to make them fast |
 
 ---
 
