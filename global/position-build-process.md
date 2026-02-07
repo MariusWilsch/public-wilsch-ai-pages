@@ -17,7 +17,7 @@ How to build any position from scratch. Cross-component process spanning Organiz
 Every position traces back to the Strategic Objective through this chain:
 
 ```mermaid
-flowchart TD
+flowchart LR
     SO[Strategic Objective] --> F[Functions - categories of work]
     F --> R[Results - what each function must produce]
     R --> P[Positions - who is accountable]
