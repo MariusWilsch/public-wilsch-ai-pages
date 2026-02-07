@@ -270,6 +270,7 @@ The pattern repeats up the chart until you're only **Shareholder** - outside the
 
 ## Related Documents
 
+- [Position Build Process](https://mariuswilsch.github.io/public-wilsch-ai-pages/global/position-build-process) — Full lifecycle: Stage 1 (Structure) → Stage 2 (Prototype) → Stage 3 (Replace) → Stage 4 (Repeat). Cross-component process spanning this document + Management Strategy.
 - [Primary Aim - Life Vision](https://mariuswilsch.github.io/public-wilsch-ai-pages/global/primary-aim-life-vision)
 - [Strategic Objective - Wilsch AI Services](https://mariuswilsch.github.io/public-wilsch-ai-pages/global/strategic-objective-wilsch-ai-services)
 
