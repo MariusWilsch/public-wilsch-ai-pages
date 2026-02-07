@@ -79,6 +79,8 @@ If the SO can't answer → revisit SO and Org Chart first.
 
 > "A Position Contract is not a job description. It is a contract between the company and an employee, a summary of the rules of the company's game."
 
+**You sign it first.** The founder signs every Position Contract before anyone else does. You're committing to produce those results NOW. Accountability starts with you. At Stage 3, the hire signs the same contract — accountability transfers.
+
 Position Contracts are **long-lived** because they define results, not tasks.
 
 **Reference:** [EMyth Writing Position Agreements](https://mariuswilsch.github.io/public-wilsch-ai-pages/project/soloforce/emyth-chapters/emyth-writing-position-agreements)
