@@ -7,7 +7,9 @@ publish: true
 [[wilsch-ai-internal]]
 
 **Attendees:** Marius Wilsch, [Name]
+
 **Format:** ~60 minutes, informal discussion
+
 **Context:** First meeting to explore collaboration on IBM Power AI inference optimization
 
 ---
@@ -16,9 +18,10 @@ publish: true
 
 Nobody is optimizing AI inference for IBM Power. The market is 100% focused on Nvidia GPUs and x86. This is a greenfield architecture — a chance to make a name on a processor architecture that's hungry for AI.
 
-We have two clients who want AI deployed on their Power 10 infrastructure, a datacenter with hardware available for development, and AI applications in active development (delivery in 2-3 weeks). What we need is fast inference on Power.
+We have two clients who want AI deployed on their Power 10 infrastructure, a datacenter with hardware available for development, and AI applications in active development (initial results in 2-3 weeks, multi-month engagements). What we need is fast inference on Power.
 
 **What we've measured so far** (not optimized — just what we've gotten to):
+
 - ~55 prompt eval tok/s on Power 10 (5 CPUs)
 - TTFT and TPS both need improvement
 - For reference: x86 does 100-300 tok/s, Apple Silicon 200-400+ for comparable models
@@ -30,6 +33,7 @@ We have two clients who want AI deployed on their Power 10 infrastructure, a dat
 ## The Objective
 
 1. **Baseline**: Install and benchmark existing tools on our Power 10. Measure TTFT + TPS for **Qwen3 8B**.
+
 2. **10x**: Achieve 10x improvement over that baseline within 30 days.
 
 **Target**: Qwen3 8B on Power 10. Power 10 is what we have right now — we start there.
@@ -94,6 +98,7 @@ Two clients, both on IBM Power 10, both with massive structured datasets:
 ## Outcome
 
 Walk out of this meeting with:
+
 1. A shared direction we're both committed to
 2. A concrete 30-day plan with the first action defined
 3. A fair compensation structure
