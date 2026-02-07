@@ -124,7 +124,8 @@ flowchart LR
 
 | Step | Personal Definition | Tool |
 |------|-------------------|------|
-| **Innovation** | Flag friction: "How can we do this differently?" Not the commodity, the process. | `/flag-for-improvement` |
+| **Innovation (identify)** | Flag friction: "What's the problem? Why did this go wrong?" | `/flag-for-improvement` (Session A) |
+| **Innovation (solve)** | "How can we do this differently?" Not the commodity, the process. | `/improve-system` (Session B) |
 | **Quantification** | Verify the fix: "Is the behavior working or not?" Redo, observe, measure. | Session C verification |
 | **Orchestration** | Merge into the toolkit. No more choice — AI follows the new rule. | `git push` to main |
 
