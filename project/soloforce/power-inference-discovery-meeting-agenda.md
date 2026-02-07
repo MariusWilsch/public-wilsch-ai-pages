@@ -90,7 +90,7 @@ Two clients, both on IBM Power 10, both with massive structured datasets:
 1. **Your take** — What's your initial read on Power's inference limitations? Where would you start?
 2. **The benchmark** — Here's what I propose: you own the baseline. Install, measure, report on our Power 10. Then we 10x it. What do you think?
 3. **30-day plan** — What would you need to make this happen? Hardware access, documentation, support from Thomas?
-4. **Compensation** — What do you think is fair for this kind of work? How do you think about it?
+4. **Compensation** — How do you want to get paid? Upfront per deliverable? Monthly retainer? Revenue share from client deployments? What model works for you?
 5. **Working style** — How do you want to collaborate day-to-day?
 
 ---
