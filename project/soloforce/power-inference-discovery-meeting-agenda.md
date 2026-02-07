@@ -6,7 +6,7 @@ publish: true
 
 [[wilsch-ai-internal]]
 
-**Attendees:** Marius Wilsch, [Name]
+**Attendees:** Marius Wilsch, Nwyin
 
 **Format:** ~60 minutes, informal discussion
 
@@ -61,7 +61,7 @@ These aren't a roadmap. They're proof that fast inference on non-GPU hardware is
 
 This is an exploratory collaboration, not a job description. Here's who's involved:
 
-**[Name]** — Inference optimization. You own how AI runs fast on Power. The benchmark is your first move. Where you take it from there is yours to define — that's the point. Make a name for yourself on this architecture.
+**Nwyin** — Inference optimization. You own how AI runs fast on Power. The benchmark is your first move. Where you take it from there is yours to define — that's the point. Make a name for yourself on this architecture.
 
 **Marius** — Application + data architecture. I build what the clients use (RAG, similarity search, text-to-SQL). I handle the client relationships and delivery.
 
