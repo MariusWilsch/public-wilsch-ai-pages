@@ -21,7 +21,7 @@ E-Myth Business Development Framework, Chapter 14. Defines the structural founda
 
 ## Artifact 1: Organization Chart
 
-**PDF:** [EMyth Organizational Chart Guide.pdf](https://github.com/MariusWilsch/soloforce/blob/main/.claude/tracking/issue-668/artifacts/EMyth%20Organizational%20Chart%20Guide.pdf)
+**Reference:** [EMyth Organizational Chart Guide](https://mariuswilsch.github.io/public-wilsch-ai-pages/global/emyth-organizational-chart-guide)
 
 **Definition:**
 A visual structure showing all positions and reporting relationships for the business *when it's done*.
@@ -65,7 +65,7 @@ POSITIONS (accountable for those results)
 
 ## Artifact 2: Position
 
-**PDF:** [EMyth Organizational Chart Guide.pdf](https://github.com/MariusWilsch/soloforce/blob/main/.claude/tracking/issue-668/artifacts/EMyth%20Organizational%20Chart%20Guide.pdf) (positions are boxes on the chart)
+**Reference:** [EMyth Organizational Chart Guide](https://mariuswilsch.github.io/public-wilsch-ai-pages/global/emyth-organizational-chart-guide) (positions are boxes on the chart)
 
 **Definition:**
 A box on the Organization Chart.
@@ -83,7 +83,7 @@ A box on the Organization Chart.
 
 ## Artifact 3: Position Contract
 
-**PDF:** [EMyth Writing Position Agreements.pdf](https://github.com/MariusWilsch/soloforce/blob/main/.claude/tracking/issue-668/artifacts/EMyth%20Writing%20Position%20Agreements.pdf)
+**Reference:** [EMyth Writing Position Agreements](https://mariuswilsch.github.io/public-wilsch-ai-pages/global/emyth-writing-position-agreements)
 
 **Definition:**
 A document that transfers accountability from company to person. **Not a job description** - a contract.
@@ -279,10 +279,10 @@ The pattern repeats up the chart until you're only **Shareholder** - outside the
 
 | Resource | Purpose | Link |
 |----------|---------|------|
-| EMyth Organizational Chart Guide | Org Chart + Position templates | [PDF](https://github.com/MariusWilsch/soloforce/blob/main/.claude/tracking/issue-668/artifacts/EMyth%20Organizational%20Chart%20Guide.pdf) |
-| EMyth Writing Position Agreements | Position Contract template | [PDF](https://github.com/MariusWilsch/soloforce/blob/main/.claude/tracking/issue-668/artifacts/EMyth%20Writing%20Position%20Agreements.pdf) |
-| EMyth Systems Guide | For Component #4+ | [PDF](https://github.com/MariusWilsch/soloforce/blob/main/.claude/tracking/issue-668/artifacts/EMyth%20Systems%20Guide.pdf) |
-| EMyth Business Owners Guide | Roadmap (all systems) | [PDF](https://github.com/MariusWilsch/soloforce/blob/main/.claude/tracking/issue-668/artifacts/EMyth%20Business%20Owners%20Guide.pdf) |
+| EMyth Organizational Chart Guide | Org Chart + Position templates | [Markdown](https://mariuswilsch.github.io/public-wilsch-ai-pages/global/emyth-organizational-chart-guide) |
+| EMyth Writing Position Agreements | Position Contract template | [Markdown](https://mariuswilsch.github.io/public-wilsch-ai-pages/global/emyth-writing-position-agreements) |
+| EMyth Systems Guide | For Component #4+ | [Markdown](https://mariuswilsch.github.io/public-wilsch-ai-pages/global/emyth-systems-guide) |
+| EMyth Business Owners Guide | Roadmap (all systems) | [Markdown](https://mariuswilsch.github.io/public-wilsch-ai-pages/global/emyth-business-owners-guide) |
 
 ---
 
