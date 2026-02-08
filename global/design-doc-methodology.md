@@ -92,8 +92,8 @@ The gap between conceptual and explicit knowledge widens from Problem → Approa
 
 ### Component-by-Component Rhythm
 
-1. AI drafts ONE component
-2. User reviews — "✅ or adjust?"
+1. AI drafts ONE component AND asks questions about its own uncertainties within that component
+2. User validates the draft AND resolves AI's questions
 3. Next component
 4. Repeat until all four are done
 
