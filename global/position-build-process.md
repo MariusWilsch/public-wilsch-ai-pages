@@ -219,6 +219,7 @@ Fully Transitioned:
 | [EMyth Organizational Chart Guide](https://mariuswilsch.github.io/public-wilsch-ai-pages/project/soloforce/emyth-chapters/emyth-organizational-chart-guide) | Stage 1: Org Chart + Position templates |
 | [EMyth Writing Position Agreements](https://mariuswilsch.github.io/public-wilsch-ai-pages/project/soloforce/emyth-chapters/emyth-writing-position-agreements) | Stage 1: Position Contract template |
 | [EMyth Systems Guide](https://mariuswilsch.github.io/public-wilsch-ai-pages/project/soloforce/emyth-chapters/emyth-systems-guide) | Stage 2: 9-step system documentation |
+| [EMyth Operations Manual Guide (MG-0080)](https://mariuswilsch.github.io/public-wilsch-ai-pages/project/soloforce/emyth-chapters/emyth-operations-manual-guide) | Stage 2: Building and maintaining the Operations Manual |
 
 ---
 
