@@ -171,6 +171,8 @@ Similar to Anfragen.csv, this file contains denormalized joins with repeating "I
 
 ### 2.2 Folder-by-Folder Breakdown
 
+> **Note:** Counts below are pre-ZIP-extraction. See section 2.3 for updated totals after extracting 17 ZIP archives.
+
 | Folder ID | Size | Total Files | PDF | EML | Other | Subfolders |
 |-----------|------|-------------|-----|-----|-------|------------|
 | 35764 | 135M | 30 | 3 | 22 | 5 | 10593, 11239 |
@@ -265,7 +267,7 @@ Anfragen (Project Requests)
 
 1. **Multiline CSV parsing** — BEMERKUNG field spans multiple lines
 2. **HTML embedded in CSV** — VORTEXT column in 247MB Angebote file
-3. **No technical drawings** — IFC/DWG absent (may be in unopened ZIPs)
+3. **No IFC files** — 3D building models absent even after ZIP extraction. DWG (5), DXF (3), and XLSX (2) were found inside ZIPs.
 4. **14 folders vs 10 expected** — More data than specified
 
 ---
@@ -275,9 +277,9 @@ Anfragen (Project Requests)
 ### Immediate Actions
 
 1. **Request Missing Tables:** Kunden.csv and Protokolle.csv from REKERS
-2. **Extract ZIP Archives:** 18 unopened ZIPs may contain IFC/DWG
+2. **Clarify IFC absence:** Ask REKERS if 3D building models exist (none found even after ZIP extraction)
 3. **Normalize Anfragen.csv:** Split into 3 separate tables
-4. **Parse EML Files:** Extract metadata + bodies from 504 emails
+4. **Parse EML Files:** Extract metadata + bodies from 482 emails
 
 ---
 
