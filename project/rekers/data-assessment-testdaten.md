@@ -15,7 +15,7 @@ The delivered test data differs significantly from Workshop 2 specifications. In
 
 **Key Findings:**
 - **Anfragen.csv**: Denormalized structure merging 3 entity types (111 data rows, 30 columns)
-- **Angebote ohne Material.csv**: Massive quotation dataset (1.77M rows, 141 columns, 247MB)
+- **Angebote ohne Material.csv**: Quotation dataset (4,307 rows, 141 columns, 247MB — file size inflated by HTML content in VORTEXT column)
 - **14 Numbered Folders**: 566 total files (mostly EML emails + PDF documents)
 - **Missing Tables**: Kunden and Protokolle tables not delivered as separate files
 - **Perfect ID Matching**: Folder structure maps directly to Anfragen.csv hierarchy
@@ -96,7 +96,7 @@ The CSV contains a denormalized join of three entity types, identified by repeat
 
 **File Statistics:**
 - **Size:** 247MB (258,631,171 bytes)
-- **Rows:** 1,771,945 (1.77 million data rows)
+- **Rows:** 4,307 data rows (file has ~1.77M raw lines due to multiline HTML in VORTEXT column)
 - **Columns:** 141
 - **Delimiter:** Comma
 - **Encoding:** UTF-8
@@ -144,7 +144,7 @@ Similar to Anfragen.csv, this file contains denormalized joins with repeating "I
 - **HTML Content:** VORTEXT column contains HTML-formatted preamble text with inline styles
 - **Hierarchical Structure:** PARENT_ID suggests tree structure for quotation items
 - **Comprehensive Costing:** Extensive cost breakdown columns (90+ calculation fields)
-- **Massive Dataset:** 1.77M rows suggests granular line-item detail for all quotations
+- **Dataset Size:** 4,307 rows of quotation line items (247MB due to HTML bloat in VORTEXT)
 
 ---
 
@@ -236,7 +236,7 @@ Anfragen (Project Requests)
 | Kunden Table | Separate CSV | Not delivered | **MISSING** |
 | Protokolle Table | Separate CSV | Not delivered | **MISSING** |
 | File Folders per Anfragen_ID | Expected | Delivered (14 folders) | **MATCH** |
-| Angebote ohne Material CSV | Not specified | Delivered (1.77M rows) | **BONUS** |
+| Angebote ohne Material CSV | Not specified | Delivered (4,307 rows) | **BONUS** |
 
 ### 4.2 Missing Tables
 
