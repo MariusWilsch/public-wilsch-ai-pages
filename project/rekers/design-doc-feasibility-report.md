@@ -40,9 +40,13 @@ The problem is NOT building a full AI quotation system. The problem IS determini
 
 Evaluate the 10 test projects REKERS delivers: CSV table structure (Anfragen, Kunden, Protokolle), file folder contents (PDF, EML, IFC, DWG, XLSX), data quality, completeness, and format distribution.
 
+**Transcript:** [Wed AM — Datenexport & Ranking-System](https://app.fireflies.ai/view/01KG1V9Y791YHSAVP7GJABEJAA) (data export structure, CSV format, folder organization defined here)
+
 ### Part 2: File Processing Feasibility [UNDEFINED — needs data]
 
 Determine which file formats can be processed for semantic content extraction. PDFs and EMLs are straightforward. IFC models depend on whether they're architecture vs structural (different metadata richness). DWG is binary — needs specialized tooling.
+
+**Transcript:** [Wed AM — Datenexport & Ranking-System](https://app.fireflies.ai/view/01KG1V9Y791YHSAVP7GJABEJAA) (file format discussion: IFC architecture vs structural, DWG, EML, XLSX)
 
 ### Part 3: Similarity Matching Approach [DEFINED]
 
@@ -50,21 +54,27 @@ Project-level matching: given a new request, find the most similar historical pr
 
 **Background — abandoned approach:** Workshop 2 initially explored component-level matching (individual beams, columns matched by dimensions + loads). This was abandoned due to complexity of cross-location load normalization (wind, snow, earthquake). Project-level matching pre-filters the search space before any component analysis.
 
+**Transcripts:** [Tue AM](https://app.fireflies.ai/view/01KFZ9MSE9WZ179TAYYC30C6JC) (component-level parameters, yellow fields) + [Tue PM](https://app.fireflies.ai/view/01KFZR74V0N0P1S589KBKZCBYH) (search/return parameters, variance tolerances 3-10%)
+
 ### Part 4: Validation Design [UNDEFINED — discussed but not designed]
 
 Direction from Workshop 2 follow-up: known-answer test with ranking thresholds (80%/70%/60%), red herring projects, parameter weighting by component type. Needs formal design before POC execution.
 
-Source: [Wed Follow-up transcript](https://app.fireflies.ai/view/01KG25S4S0MVB8Q8F3CEXG60N4)
+**Transcript:** [Wed Follow-up — Priorisierung & UI](https://app.fireflies.ai/view/01KG25S4S0MVB8Q8F3CEXG60N4) (ranking thresholds, parameter weighting, test case design)
 
 ### Part 5: Infrastructure Assessment [UNDEFINED — secondary priority]
 
 Target: IBM Power 10 (~20 TOPS per chip). Alternative: hybrid approach (external GPU training, local Power 10 inference). Only relevant after Go/No-Go decision — does not affect feasibility assessment itself.
+
+**Transcripts:** [Wed AM](https://app.fireflies.ai/view/01KG1V9Y791YHSAVP7GJABEJAA) (Power 10 performance, ~20 TOPS) + [Tue AM](https://app.fireflies.ai/view/01KFZ9MSE9WZ179TAYYC30C6JC) (hybrid GPU/Power approach)
 
 ### Part 6: POC Scope Definition [PARTIALLY DEFINED]
 
 **Known:** 10 historical projects, project-level matching only. Component-level matching deferred. Batch processing model (overnight AI, morning review).
 
 **Unknown:** Contract terms, effort estimate, timeline — derived from feasibility assessment results. Next step after Go: create POC contract based on findings.
+
+**Transcript:** [Wed AM](https://app.fireflies.ai/view/01KG1V9Y791YHSAVP7GJABEJAA) (10-project scope, project-level first, batch processing model)
 
 ---
 
