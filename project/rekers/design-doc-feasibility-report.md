@@ -36,7 +36,7 @@ The problem is NOT building a full AI quotation system. The problem IS determini
 
 ## Approach
 
-### Part 1: Data Assessment [DEFINED]
+### Part 1: Data Assessment [TOUCHED]
 
 **What we have:** REKERS delivered test data on 2026-01-28 (14 projects vs 10 agreed). Two CSVs + 14 project folders:
 - **Level 1 — Anfragen.csv** (111 rows, 30 cols): Project requests with metadata (name, location, dates, amounts). Denormalized with AnfrageKunde and Angebot tables.
@@ -62,7 +62,7 @@ Determine which file formats can be processed for semantic content extraction. P
 
 **Transcript:** [Wed AM — Datenexport & Ranking-System](https://app.fireflies.ai/view/01KG1V9Y791YHSAVP7GJABEJAA) (file format discussion: IFC architecture vs structural, DWG, EML, XLSX)
 
-### Part 3: Similarity Matching Approach [DEFINED]
+### Part 3: Similarity Matching Approach [TOUCHED]
 
 Project-level matching: given a new Anfrage (request), find the most similar historical Anfragen from the reference set. The matched Anfragen's Angebote (offers) provide the pricing reference value.
 
