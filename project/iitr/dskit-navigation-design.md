@@ -2,107 +2,91 @@
 publish: true
 ---
 
-# DS-Kit Navigation RAG - Design Document
+# DS-Kit Navigation — Production Readiness Design
 [[client-iitr]]
 
-*Implementation decisions (2026-01-11)*
+Taking the DS-Kit Navigation RAG system from prototype (17/29 accuracy) to production-ready (28/31 target) through data expansion, re-indexing, and dual-answer formatting.
 
 ---
 
-## Stack Decisions
+## Problem Statement
 
-| Component | Choice | Rationale |
-|-----------|--------|-----------|
-| **Vector DB** | Typesense | Native conversational RAG, streaming responses |
-| **Chat UI** | OpenWebUI | Standard interface, no custom frontend |
-| **Orchestration** | OpenWebUI Pipelines | Connects UI to Typesense, avoids custom proxy |
-| **Chunking** | Docling | Local execution, M-series GPU support, handles PDF/CSV/Word |
+IITR's DS-Kit product serves ~3,500 customers who regularly contact support with recurring questions (27-28/day per Stellmacher). A navigation system reduces this support load by answering common questions automatically.
 
-### Why Docling over Chunkr
-- Simpler setup (`pip install docling`)
-- Runs locally on MacBook M-series with Metal acceleration
-- Hierarchical + hybrid chunking optimized for RAG
-- 97.9% table extraction accuracy
-- Supports all input formats (PDF, DOCX, XLSX)
+A prototype exists (Phases 1-4 complete): working RAG pipeline on IITR-STAGING scoring 17/29 on the test harness. All tuning levers have been exhausted — the gap is data and answer design, not infrastructure.
 
----
+This project takes the navigation system from prototype to production-ready by:
+- Expanding the knowledge base (website extraction + expanded Masterfragen)
+- Implementing the dual-answer format (general info + navigation guidance)
+- Deploying observability for continuous improvement
 
-## Data Architecture
-
-### Input Sources
-
-| Source | Processing | Status |
-|--------|------------|--------|
-| PDF Leitfaden | Docling chunking → Typesense | ✅ Phase 2 |
-| Q&A CSV (14 pairs) | Direct ingest | ✅ Phase 3 |
-| 56 Templates | ~~Docling chunking~~ | ❌ Skipped |
-
-### Phase 4 Skip Decision (2026-01-13)
-
-Templates provide **0-2/29 question coverage**. Analysis showed:
-- Test questions ask "where to find" documents, not template content
-- PDF + CSV already cover 24/29 answerable questions
-- Vision AI for forms/diagrams adds complexity without accuracy improvement
-
-**Decision:** Skip Phase 4, proceed directly to Phase 5 (Iteration).
-
-### Data Gap Analysis (Updated 2026-01-13)
-
-**Original assumption:** 5 questions unanswerable (Q4, Q16, Q17, Q27, Q28) → 24/29 ceiling
-
-**Revised after rubber-duck investigation:**
-
-| Question | Original | Actual | Evidence |
-|----------|----------|--------|----------|
-| Q4 (Datenschutzerklärung templates) | Gap | **Retrieval failure** | PDF 2.8 + CSV Q1 |
-| Q16 (Schulungen dokumentieren) | Gap | Partial | PDF 1.5 + 2.11 |
-| Q17 (AVV templates) | Gap | **Retrieval failure** | PDF 2.5 + CSV Q11 |
-| Q27 (Verschlüsselung) | Gap | **True gap** | Not in sources |
-| Q28 (Aufsichtsbehörde) | Gap | Partial | Only "Meldung DSB" |
-
-**Root cause:** Vocabulary mismatch
-- Test questions use "Templates" (English loan word)
-- Content uses "Vorlage", "Mustervorlagen", "Texte" (German)
-- Current `all-MiniLM-L12-v2` embedding doesn't recognize German synonyms
-
-**Example:** CSV Q11 = "Wo finde ich Mustervorlagen für AV-Verträge?" → Kapitel 05
-Test Q17 = "Wo finde ich Templates für Auftragsverarbeitungsverträge?" (same question!)
-
-**Revised ceiling:** 27-28/29 (93-97%)
-
-**Solution:** Switch to `multilingual-e5-large-instruct` (MIT, MTEB German rank 6)
+**Preconditions:**
+- Prototype pipeline operational on IITR-STAGING (Typesense + TEI + OpenWebUI + Pipelines, 70 chunks indexed)
+- Expanded data delivered by Stellmacher (Jan 27): 22 Masterfragen (up from 14), 31 test questions with source references, pricing abstracted
+- Website extraction approved by Stellmacher (core.iitr.de chapters 1-12)
+- Dual-answer format decided in client meeting (2026-01-15): every answer = general info + "find this in Chapter X" navigation guidance
+- Developer (Mohamed) implements from this design doc
 
 ---
 
-## Content Quality Analysis (2026-01-13)
+## Success Definition
 
-PDF structure analysis:
-- **Pages 1-2:** Title + TOC (noise)
-- **Pages 3-10:** UI instructions - 50% of PDF (useless for Q&A)
-- **Pages 11-16:** Leitfaden chapters (actual useful content)
+| Element | Definition |
+|---------|-----------|
+| **Goal** | Navigation system is production-ready: accurate answers with navigation guidance on the expanded test set |
+| **Success** | Test harness scores 28/31 (97%) with expanded corpus. Answers include dual format (general answer + navigation guidance). Stellmacher/Kraska validate answer quality via sample review. |
+| **Done test** | "Can I write a meeting agenda with open design questions?" → If NO → design is complete |
 
-**Recommendation:** Index Section 2 only (pages 11-16) to remove ~60% noise
-
----
-
-## Test Harness Design
-
-```
-Questions → RAG → LLM-as-Judge → Score
-```
-
-- **Semantic matching** (not exact string)
-- LLM evaluates if answer contains correct key info
-- Run after each data ingestion phase
+**Test harness mechanism:** Sends each question to RAG (OpenWebUI → qwen3:14B), receives response, then Claude Sonnet 4.5 (via OpenRouter) judges semantic correctness against expected answers. PASS/FAIL per question with German-language reasoning.
 
 ---
 
-## Deployment
+## Approach
 
-- **Target:** IITR-STAGING (136.243.71.58)
-- **GPU work:** Staging OR MacBook M-series
-- **Method:** Docker Compose
+Three workstreams, executed sequentially with test harness validation between each. Sequential execution enables attribution of accuracy gains to specific data sources.
+
+### 1. Masterfragen Expansion
+
+- Convert `Fragen Navigationssystem.xlsx` → CSV (22 entries, up from 14)
+- Index into Typesense with TEI embeddings (multilingual-e5-large-instruct)
+- Fix Q14 VLM data loss with targeted Q&A entry (standard Docling header chunk)
+- Convert `KI Testfragen (1).xlsx` → CSV for test harness (updated expected answers + source references)
+- Run test harness → measure accuracy delta
+- **Expected gain:** +7 questions (directly filling known data gaps: Q6, Q12, Q16, Q17, Q18, Q27, Q28)
+
+### 2. Website Extraction
+
+- Extract core.iitr.de chapters 1-12 as Markdown (SA credentials for portal access)
+- Index website chapters into Typesense with TEI embeddings
+- Run test harness → measure accuracy delta
+- **Expected gain:** +2-3 questions (Q13, Q14, Q24 — content exists in DS-Kit Oberfläche)
+
+### 3. Dual-Answer Format
+
+- Implement dual-answer prompting in pipeline filter: general response + navigation guidance ("find this in Chapter X")
+- Run test harness → measure impact on accuracy
+- Iterate if format changes affect scoring
+- Present results + sample answers to Stellmacher for review
 
 ---
 
-*Created: 2026-01-11 | Updated: 2026-01-13*
+## Source
+
+**Data Files:**
+- [`KI Testfragen (1).xlsx`](https://mail.google.com/mail/u/0/#all/19bfebdff5dcbf33) — 31 test questions with source references (Stellmacher, 2026-01-27)
+- [`Fragen Navigationssystem.xlsx`](https://mail.google.com/mail/u/0/#all/19bfebdff5dcbf33) — 22 Masterfragen (Stellmacher, 2026-01-27)
+- Portal: `https://core.iitr.de/tenant/3520/page/82173` — DS-Kit web interface chapters 1-12
+
+**Codebase:**
+- Pipeline: `infrastructure/dskit-rag/` (chunking, indexing, pipelines, test harness)
+- Deployment: IITR-STAGING `/opt/dskit-rag/`
+
+**Reference Documents:**
+- [Test Analysis](https://mariuswilsch.github.io/public-wilsch-ai-pages/project/iitr/dskit-rag-test-analysis) — question-by-question verification
+- [IITR Materials Index](https://mariuswilsch.github.io/public-wilsch-ai-pages/project/iitr/index)
+
+**Transcripts:**
+- [2026-01-15 Client Meeting](https://app.fireflies.ai/view/01KF0N6JDANZB4JGW9WEP4GNMC) — data gap discussion + dual-answer decision with Stellmacher/Kraska
+
+**Design Session:**
+- /Users/verdant/.claude/projects/-Users-verdant-Documents-projects-billable-IITR--IITR-NAVIGATION/46a000cb-3044-40d7-adaf-e30987553859.jsonl
