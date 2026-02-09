@@ -10,16 +10,15 @@ publish: true
 
 Den inhaltlichen und gestalterischen Kontext für zwei Vereinswebsites extrahieren — Klimafolgen Schutzverein und Renovierungsverein — damit die Entwicklung direkt im Anschluss beginnen kann.
 
-1. **Vertrag abgeschlossen** — Rahmenvertrag gegengezeichnet, Zusammenarbeit offiziell gestartet
+1. **Vertrag bestätigt** — Rahmenvertrag unterschrieben, Zusammenarbeit beginnt
 2. **Klimafolgen-Kontext erfasst** — Projektthemen, Branding-Richtung, Mitgliedsmodell, CMS-Bedarf
 3. **Renovierungsverein-Kontext erfasst** — Vereinszweck, Website-Umfang, gewünschte Funktionen
 4. **Infrastruktur geklärt** — Domains, DNS-Zugang, Zeitplan
 
 ## Vorab-Material
 
-- [signNow: Rahmenvertrag](https://mail.google.com/mail/u/0/#all/19bf94c9672b6bed) — Michael unterschrieben am 26.01. Gegenzeichnung ggf. ausstehend.
-- [Rahmenvertrag-Text](https://mariuswilsch.github.io/public-wilsch-ai-pages/project/abtmayr-reichert/rahmenvertrag-tm-2025-12-16)
-- GenSpark-Prototypen von Michael:
+- [Rahmenvertrag](https://mariuswilsch.github.io/public-wilsch-ai-pages/project/abtmayr-reichert/rahmenvertrag-tm-2025-12-16)
+- Deine GenSpark-Prototypen:
   - [Website Verein (Nov 17)](https://www.genspark.ai/agents?id=c280078e-fc27-4a81-a359-2abf859b2b4b)
   - [Förderung-Seite (Dez 10)](https://www.genspark.ai/api/code_sandbox_light/preview/71fefb28-2d3f-405f-b45e-ad9515477e3e/foerderung.html)
 
@@ -29,25 +28,25 @@ Den inhaltlichen und gestalterischen Kontext für zwei Vereinswebsites extrahier
 
 *Ausgangspunkte für die Diskussion, nicht darauf beschränkt.*
 
-### 1. Vertragsunterzeichnung
+### 1. Vertrag und Projektstart
 
-Der Rahmenvertrag wurde am 26. Januar per signNow zugestellt und von Michael unterschrieben. Die Gegenzeichnung durch Wilsch AI steht ggf. noch aus. Damit die Zusammenarbeit offiziell beginnen kann, klären wir den Vertragsstatus als erstes.
+Der Rahmenvertrag ist unterschrieben. Damit können wir direkt loslegen.
 
-- Gegenzeichnung Wilsch AI bestätigen
-- Erste Projektbeauftragung (Websites) mündlich vereinbaren
+- Kurze Bestätigung, dass alles passt
+- Erste Projektbeauftragung (Websites) vereinbaren
 
 ### 2. Klimafolgen Schutzverein — Vereinszweck und Projekte
 
-Im Gespräch am 23.01. wurden mehrere Projektthemen erwähnt. Für die Website brauchen wir Klarheit über den Inhalt.
+In unserem Gespräch am 23.01. hast du mehrere Projektthemen erwähnt. Für die Website brauche ich Klarheit über den Inhalt.
 
-- Vereinszweck und Mission in eigenen Worten
+- Vereinszweck und Mission in deinen eigenen Worten
 - Welche Projekte zum Launch bereit sind (Hitze/Begrünung, Gewässerschutz, Starkregen, E-Ladestation)
 - Zielgruppen: Gemeinden und/oder Versicherungswirtschaft — wie sollen beide angesprochen werden?
 - Wie detailliert sollen einzelne Projektseiten sein?
 
 ### 3. Klimafolgen Schutzverein — Branding und visuelle Richtung
 
-Michael hat GenSpark-Prototypen erstellt, die als Ausgangspunkt dienen.
+Du hast GenSpark-Prototypen erstellt, die als Ausgangspunkt dienen.
 
 - Bestehendes Material: Logo, Farben, Schriften vorhanden?
 - GenSpark-Prototypen als Diskussionsgrundlage durchgehen
@@ -68,7 +67,7 @@ Michael hat GenSpark-Prototypen erstellt, die als Ausgangspunkt dienen.
 Veranstaltungen und Projektaktualisierungen sollen laufend gepflegt werden.
 
 - Wie oft werden Inhalte aktualisiert? (wöchentlich, monatlich, bei Events)
-- Wer pflegt die Inhalte — Michael selbst oder über Wilsch AI?
+- Wer pflegt die Inhalte — du selbst oder über mich?
 - Wenn Selbstpflege: welche Art von Änderungen? (Texte, Bilder, neue Projektseiten)
 - Technische Affinität: Erfahrung mit Content-Systemen?
 
@@ -83,20 +82,20 @@ Zertifizierung für Mitgliedsgemeinden und technische Infrastruktur.
 
 ### 7. Renovierungsverein — Ausgangslage und Website-Umfang
 
-Domain renovierungsverein.de wurde am 26.01. bei IONOS registriert. Über den Verein und seine Website-Anforderungen ist noch wenig bekannt.
+Die Domain renovierungsverein.de ist bei IONOS registriert. Über den Verein und die Website-Anforderungen brauche ich noch mehr Kontext.
 
 - Was ist der Renovierungsverein? Zweck, Zielgruppe, Angebot
 - Gewünschter Website-Umfang: reine Visitenkarte oder mit Funktionen?
 - Soll die Seite statisch bleiben oder auch CMS-fähig sein?
 - Branding: eigene Identität oder ähnlich wie Klimafolgen?
-- DNS-Zugang für renovierungsverein.de bereitstellen (IONOS-Konto Ira Reichert)
+- DNS-Zugang für renovierungsverein.de bereitstellen (IONOS)
 - Vereinsregister-Nummer, Vorstand, Adresse für Impressum bereitstellen
 
 ## Meeting-Format
 
 - **Typ:** Discovery / Kontext-Extraktion
 - **Dauer:** ca. 60 Minuten
-- **Erwartung:** Michael bringt bestehendes Material mit (Logo-Entwürfe, Texte, Formulare, GenSpark-Prototypen)
+- **Erwartung:** Bitte bestehendes Material mitbringen (Logo-Entwürfe, Texte, Formulare, GenSpark-Prototypen)
 - **Ergebnis:** Aufgezeichnetes Transkript mit dem Kontext für beide Websites → Grundlage für Design-Dokument und Stundenabschätzung
 - **Timeline klären:** Wann sollen die Seiten live gehen?
 
