@@ -59,6 +59,8 @@ The CSV contains a denormalized join of three entity types, identified by repeat
 | STATUS | "E" | String | Status code |
 | PRIORITAET | "" | String | Priority (often empty) |
 
+---
+
 **Group 2: AnfrageKunde (Request-Customer Link) — Columns 14-21**
 | Column | Sample Value | Type | Description |
 |--------|--------------|------|-------------|
@@ -70,6 +72,8 @@ The CSV contains a denormalized join of three entity types, identified by repeat
 | ANGEBOTSSUMME | 344002.7 | Decimal | Quotation amount |
 | STATUS | "E" | String | Status code |
 | ABSAGEGRUND | 0 | Integer | Rejection reason code |
+
+---
 
 **Group 3: Angebot (Quotations) — Columns 22-30**
 | Column | Sample Value | Type | Description |
@@ -128,6 +132,8 @@ Similar to Anfragen.csv, this file contains denormalized joins with repeating "I
 | 35-42. BETRIEBSBEREICH, ENTFERNUNG, etc. | Operational parameters | Various |
 | 43. STATUS | Status code | String |
 
+---
+
 **Group 2: Angebot Gliederung (Quotation Structure) — Columns 44-53**
 | Column | Description |
 |--------|-------------|
@@ -138,7 +144,9 @@ Similar to Anfragen.csv, this file contains denormalized joins with repeating "I
 | 48. BEZEICHNUNG | Description |
 | 49. SORTIERFOLGE | Sort order |
 
-**Columns 51-141:** Additional detail columns for quotation line items (91 more columns) including costs, materials, labor hours, weights, and calculated sums.
+---
+
+**Group 3: Quotation Line Items (Columns 51-141):** Additional detail columns for quotation line items (91 more columns) including costs, materials, labor hours, weights, and calculated sums.
 
 **Data Quality Observations:**
 - **HTML Content:** VORTEXT column contains HTML-formatted preamble text with inline styles
