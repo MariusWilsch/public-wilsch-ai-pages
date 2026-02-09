@@ -63,10 +63,12 @@ Three workstreams, executed sequentially with test harness validation between ea
 
 ### 3. Dual-Answer Format
 
-- Implement dual-answer prompting in pipeline filter: general response + navigation guidance ("find this in Chapter X")
+- Implement dual-answer prompting in pipeline filter: general response + chapter reference navigation ("Finden Sie in Kapitel X")
 - Run test harness → measure impact on accuracy
 - Iterate if format changes affect scoring
 - Present results + sample answers to Stellmacher for review
+
+**⚠️ Undefined:** When to include navigation guidance — every answer, or only when a specific chapter applies? Requires discussion with Stellmacher. See meeting agenda.
 
 ---
 
