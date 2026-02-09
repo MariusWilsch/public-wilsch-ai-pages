@@ -5,167 +5,107 @@ publish: true
 # Chain 1B: Step 3 Fill Level-by-Level - Design Document
 [[client-archibus]]
 
+Transform a mapped equipment table into nested JSON that Bruce BEM's insertion API can accept, processing one top-level hierarchy element at a time with self-correction on errors.
+
+---
+
 ## Problem Statement
 
 **The gap between client data and system schema is the implementer's burden.**
 
-Populating Bruce BEM's background data requires understanding the client's hierarchy, mapping their columns to schema fields, and filling data level-by-level. AI takes over this process; the implementer only resolves what AI cannot.
+Populating Bruce BEM's background data requires understanding the client's hierarchy, mapping their columns to schema fields, and filling data level-by-level. Step 3 handles the final phase: given a mapped schema (Step 2 output) and a confirmed hierarchy (Step 1 output), transform the client's equipment table into nested JSON that Bruce BEM's insertion API can accept directly.
 
-**Key Assumptions:**
-- Input is typically an **equipment table** (rows represent equipment, not locations)
-- **Hierarchy is embedded in columns** (Building, Floor, Room as text values)
-- **Location-based assets must be created** from these column values (they don't exist as rows)
-- **Input has the hierarchy** - if implementer needs different hierarchy, they modify Excel themselves (AI proposes/processes, doesn't edit)
-
----
-
-## High-Level Overview
-
-```
-INPUT                    PROCESS                           OUTPUT
-─────                    ───────                           ──────
-Equipment Excel    →     1. Pick highest level        →    Hierarchical JSON
-(hierarchy in            2. Group children                 (id: null)
-columns)                 3. Extract unique values          ↓
-                         4. Create parent assets      →    Bruce BEM
-                         5. Build JSON                     (PKs assigned)
-```
+**Preconditions:**
+- Step 1 complete: hierarchy detected and confirmed by implementer (e.g., Building → Floor → Room)
+- Step 2 complete: column mapping from client schema to Bruce BEM ImportTemplate fields established
+- Input is an equipment table with hierarchy embedded in columns (not location rows)
+- Location-based assets (buildings, floors, rooms) must be created from column values — they don't exist as rows in the input
 
 ---
 
 ## Success Definition
 
 | Element | Definition |
-|---------|------------|
-| Goal | Fill Bruce BEM schema from client Excel |
-| Success | Hierarchical assets populated correctly |
-| Failure mode | Actionable - API returns error, AI fixes |
-| AI role | Structure + transformation + error handling |
-| Implementer role | Confirms hierarchy, validates mappings |
+|---------|-----------|
+| **Goal** | Equipment table transformed into hierarchical JSON that Bruce BEM can insert, with self-correction on API errors |
+| **Success** | For each top-level hierarchy element (e.g., 4 buildings = 4 JSONs): generate nested JSON → insert via API → if error, AI corrects and retries → move to next element. All elements populated. |
+| **Done test** | "Can I write a meeting agenda with open design questions about Step 3?" → If NO → design complete |
 
 ---
 
-## Step 3 Process (Detailed)
+## Approach
 
-**For EACH highest-level element** (e.g., Building A, B, C, D) **and all its children**:
+### 1. Filter by Top-Level Element — ✅ Defined
 
-| Phase | Action | Example |
-|-------|--------|---------|
-| **Filter** | Find all rows where column = highest value | 49 rows have "Building A" in Col D |
-| **Extract hierarchy** | Each row contains full parent chain | Row: Building A → Floor 3 → Room 333 |
-| **Deduplicate** | Extract unique values per level | 6 unique floors, 47 unique rooms |
-| **Handle multi-parent** | Same room on different floors = separate assets | Room 381 on Floor G ≠ Room 381 on Floor 3 |
-| **Create parents** | Generate location-based asset rows | 1 Building + 6 Floors + 47 Rooms = 54 assets |
-| **Build JSON** | Nested structure, Bruce BEM field names, all IDs null | 1-to-N at each level |
-| **Insert** | API traverses top-down, assigns PKs | Stop at first error |
-| **Repeat** | Next highest-level element | Building B, C, D... |
+For each unique value at the highest hierarchy level (e.g., Building A, B, C, D), process one element and all its children at a time. 4 buildings = 4 sequential processing runs.
 
----
+*Source: [Feb 3 — Rein meeting](https://app.fireflies.ai/view/01KGHJWSXV7Y7FP822SKS9VBHW), [Feb 6 — Rein/Marius meeting](https://app.fireflies.ai/view/01KGSBJE39AW3259QVNCQHCBDQ)*
 
-## Decisions Made (Feb 3)
+### 2. Extract Hierarchy Chain — ✅ Defined
 
-| Decision | What | Rationale |
-|----------|------|-----------|
-| **Tree-walk** | Process one highest-level element and all its children at a time | API handles PKs, AI doesn't track |
-| **Stop at first error** | API halts, returns error | AI focuses on one issue |
-| **Sequential first** | No parallel processing in PoC | Simplicity |
-| **AI creates JSON** | With Bruce BEM field names | Step 2 mapping = transformation rule |
-| **Quality over minimum** | Recommended fields for location assets | Better data at onboarding |
-| **No interactive Excel editing** | AI proposes/processes hierarchy from input, doesn't modify Excel | Scope: processing only, not data prep |
+Each equipment row contains its full parent chain embedded in columns (Building A → Floor 3 → Room 333). Extract this chain per row.
 
----
+*Source: [Feb 3 — Rein meeting](https://app.fireflies.ai/view/01KGHJWSXV7Y7FP822SKS9VBHW)*
 
-## Data Transformation
+### 3. Deduplicate Per Level — ✅ Defined
 
-| Level | What | Example |
-|-------|------|---------|
-| **Column-level** (Step 2) | Map input column → Bruce BEM field | "Asset Name" → `Name` |
-| **Cell-level** (Step 3) | Transform values | "Air Con" → `"HVAC"`, dates → ISO |
+Extract unique values at each hierarchy level. 49 equipment rows might yield 1 building, 6 unique floors, 47 unique rooms. Same room name on different floors = separate assets — identity is by parent relationship, not by name alone (Room 308 on Floor G ≠ Room 308 on Floor 3).
 
-**Transformation types:**
-- Enum normalization
-- Date formatting
-- Type coercion
-- Null handling
-- Hierarchy resolution → ParentId
+*Source: [Feb 6 — Rein/Marius meeting](https://app.fireflies.ai/view/01KGSBJE39AW3259QVNCQHCBDQ)*
 
----
+### 4. Create Location-Based Assets — ⚠️ Partially Defined
 
-## JSON Output
+Location assets (buildings, floors, rooms) don't exist as rows in the input — they must be created from column values. Equipment attaches to the lowest known hierarchy level. If a level is empty (no room), equipment attaches one level up (floor).
 
-**Core AI value:** JSON follows Bruce BEM's asset data schema exactly. API can insert directly without transformation.
+**Undefined:** Floor All handling — where does building-wide equipment (elevators, fire systems) attach in the hierarchy? → *[Meeting agenda](https://mariuswilsch.github.io/public-wilsch-ai-pages/project/archibus-fm-assistant/rein-meeting-agenda-step3-field-alignment)*
 
-```json
-{
-  "building": {
-    "id": null, "parent_id": null,
-    "Name": "Building A",
-    "AssetType": "Building",
-    "floors": [{
-      "id": null, "parent_id": null,
-      "Name": "Floor 3",
-      "AssetType": "Floor",
-      "rooms": [{
-        "id": null, "parent_id": null,
-        "Name": "Room 333",
-        "AssetType": "Room",
-        "equipment": [{
-          "id": null, "parent_id": null,
-          "Name": "HVAC-001",
-          "AssetType": "HVAC",
-          "SerialNumber": "SN000001"
-        }]
-      }]
-    }]
-  }
-}
-```
+*Source: [Feb 3 — Rein meeting](https://app.fireflies.ai/view/01KGHJWSXV7Y7FP822SKS9VBHW) (Rein: "equipment parent is the room... when the room is empty, it goes to the next level")*
 
-**Why this matters:**
-- Step 2 mapping → AI knows target schema
-- JSON uses exact Bruce BEM field names
-- API inserts without additional work
-- All IDs null → API assigns PKs on insert
+### 5. Build Nested JSON — ⚠️ Partially Defined
+
+Required fields per asset: `Name`, `AssetType`, `ParentId`. All IDs null — API assigns PKs on insert. Asset codes optional. Full field specification available (37 fields with types, lengths, requirements — see [AssetImportDescription on SharePoint](https://aschs-my.sharepoint.com/:x:/g/personal/rein_suurvali_asc-hs_com/IQCZWnERRmHxRb3r4bb3BZzRAfjwreav4FEP85btLlaVWNI)).
+
+**Undefined:** Field naming — ImportTemplate uses PascalCase (`Name`, `AssetType`), Rein's Hierarchical Body.json uses lowercase (`name`, `type`). Which does the insertion API expect? → *[Meeting agenda](https://mariuswilsch.github.io/public-wilsch-ai-pages/project/archibus-fm-assistant/rein-meeting-agenda-step3-field-alignment)*
+
+**Undefined:** Country name → Country ID mapping — Bruce BEM stores country IDs, Excel has country names. Who resolves? → *[Meeting agenda](https://mariuswilsch.github.io/public-wilsch-ai-pages/project/archibus-fm-assistant/rein-meeting-agenda-step3-field-alignment)*
+
+*Source: [Feb 6 — Rein/Marius meeting](https://app.fireflies.ai/view/01KGSBJE39AW3259QVNCQHCBDQ), [AssetImportDescription.xlsx](https://aschs-my.sharepoint.com/:x:/g/personal/rein_suurvali_asc-hs_com/IQCZWnERRmHxRb3r4bb3BZzRAfjwreav4FEP85btLlaVWNI)*
+
+### 6. Insert via API + Backpressure — ⚠️ Partially Defined
+
+Send JSON for one top-level element. API traverses top-down (parents before children). Stop at first error. AI reads error response, corrects JSON, retries. Sequential processing — no parallel in PoC.
+
+**Dependent on:** Rein's insertion API (does not exist yet). Error response format undefined until API is built.
+
+*Source: [Feb 3 — Rein meeting](https://app.fireflies.ai/view/01KGHJWSXV7Y7FP822SKS9VBHW) (decisions: tree-walk, stop at first error, sequential)*
+
+### 7. Repeat — ✅ Defined
+
+Move to next top-level element. Continue until all elements processed.
 
 ---
 
-## Open Items
+## Decisions
 
-| Category | Item | Status |
-|----------|------|--------|
-| **Step 1 UX** | Hierarchy input method | Decided: AI infers → user confirms, drag-drop card UI |
-| **Step 1 UX** | Who defines UX | Kaya/Mujahid/Ali |
-| **Implementation** | "Floor All" handling | Open |
-| **Implementation** | Missing hierarchy columns | Open |
-| **Implementation** | Empty cells in hierarchy | Open |
-| **Implementation** | Property level above Building | Open |
-
----
-
-## API Assumptions
-
-| Assumption | Description |
-|------------|-------------|
-| Accepts nested JSON | Or flat variant |
-| Top-down traversal | Parents before children |
-| Returns meaningful errors | Which item, why |
-| Stop at first error | No batch errors |
-| **Doesn't exist yet** | Rein builds this |
+| Decision | What | Date | Source |
+|----------|------|------|--------|
+| **Tree-walk** | Process one top-level element and all children at a time | Feb 3 | Rein meeting |
+| **Stop at first error** | API halts, returns error for AI to correct | Feb 3 | Rein meeting |
+| **Sequential first** | No parallel processing in PoC | Feb 3 | Rein meeting |
+| **AI creates JSON** | With Bruce BEM field names from Step 2 mapping | Feb 3 | Rein meeting |
+| **No interactive editing** | AI proposes/processes hierarchy, doesn't modify Excel | Feb 3 | Rein meeting |
+| **Asset codes optional** | Not required by API. Don't generate unless client wants. | Feb 6 | Rein: "for me they are not important" |
+| **All IDs null** | API assigns PKs on insert. Confirmed explicitly. | Feb 6 | Rein: "I don't need these IDs at all" |
+| **Lowest level attachment** | Equipment attaches to lowest known hierarchy level. Empty = fallback up. | Feb 3 | Rein: "equipment parent is the room... when empty, goes to next level" |
 
 ---
 
 ## Source
 
-**Transcripts:**
-- Feb 3 - Rein meeting (hierarchy validation, JSON schema)
-- Feb 3 - Miguel/Ian meeting (bulk data entry prototype)
-- [Feb 5 - Ryan & Miguel meeting](https://github.com/DaveX2001/deliverable-tracking/issues/373#issuecomment-3854408140) (Step 1 UX decisions, key design decisions)
-
 **Artifacts:**
+- [Asset Import Schema (SharePoint)](https://aschs-my.sharepoint.com/:x:/g/personal/rein_suurvali_asc-hs_com/IQCZWnERRmHxRb3r4bb3BZzRAfjwreav4FEP85btLlaVWNI) — field names, types, requirements
+- `.claude/tracking/issue-373/` — reference files (AssetImportDescription.xlsx, asset_types, Hierarchical Body.json, Processed Excel Table)
 - [CAFM Asset Upload Sample](https://github.com/veloxforce/claude-user-configs/raw/main/hippocampus/project/archibus-fm-assistant/cafm-asset-upload-sample-2026-01-28.xlsx)
-- Rein's processed Excel (ExcelTableAfterProcessingByAI.xlsx) - Teams
-- Rein's Hierarchical Body JSON (Hierarchical Body.json) - Teams
-- [Asset Import Schema (SharePoint)](https://aschs-my.sharepoint.com/:x:/g/personal/rein_suurvali_asc-hs_com/IQCZWnERRmHxRb3r4bb3BZzRAfjwreav4FEP85btLlaVWNI)
 
 **Session:**
-- Rubber-duck: `/Users/verdant/.claude/projects/-Users-verdant-Documents-projects-billable-ARCHIBUS--archibus-fm-assistant/39c514f1-a97f-4d30-b04c-17d8592d2992.jsonl`
+- `/Users/verdant/.claude/projects/-Users-verdant-Documents-projects-billable-ARCHIBUS--archibus-fm-assistant/1443f1aa-f108-4e27-94ba-d2954cc26dc5.jsonl`
