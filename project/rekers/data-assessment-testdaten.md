@@ -243,25 +243,29 @@ Anfragen (Project Requests)
 
 ## 4. Data Quality Summary
 
-### 4.1 Present vs. Expected (Workshop 2 Specification)
+### 4.1 Present vs. Expected
 
-| Item | Workshop 2 Expected | Actually Delivered | Status |
-|------|---------------------|-------------------|--------|
+> **Note:** The "expected" column is based on issue comment summaries, not verified against the original transcript. Transcript is on Google Drive (not Fireflies) — needs verification.
+
+| Item | Expected (from issue notes) | Actually Delivered | Status |
+|------|----------------------------|-------------------|--------|
 | Anfragen Table | Separate CSV | Delivered (denormalized) | Modified |
-| Kunden Table | Separate CSV | Not delivered | **MISSING** |
-| Protokolle Table | Separate CSV | Not delivered | **MISSING** |
+| Kunden Table | Separate CSV | Not delivered | **UNVERIFIED** |
+| Protokolle Table | Separate CSV | Not delivered | **UNVERIFIED** |
 | File Folders per Anfragen_ID | Expected | Delivered (14 folders) | **MATCH** |
-| Angebote ohne Material CSV | Not specified | Delivered (4,307 rows) | **BONUS** |
+| Angebote ohne Material CSV | Not mentioned | Delivered (4,307 rows) | **BONUS** |
 
-### 4.2 Missing Tables
+### 4.2 Absent Tables
 
 **Kunden (Customers):**
 - Customer IDs present (e.g., 108636, 529) but no customer details (name, address, contact)
 - **Impact:** Cannot resolve customer names or demographics
 
 **Protokolle (Meeting Protocols):**
-- 504 EML email files may serve as protocol substitutes (unstructured)
+- 482 EML email files may serve as protocol substitutes (unstructured)
 - **Impact:** No structured meeting/protocol data
+
+**Verification needed:** Confirm with transcript whether Kunden and Protokolle were explicitly agreed as deliverables or if these were inferred from the issue summary.
 
 ### 4.3 Concerns
 
@@ -269,17 +273,6 @@ Anfragen (Project Requests)
 2. **HTML embedded in CSV** — VORTEXT column in 247MB Angebote file
 3. **No IFC files** — 3D building models absent even after ZIP extraction. DWG (5), DXF (3), and XLSX (2) were found inside ZIPs.
 4. **14 folders vs 10 expected** — More data than specified
-
----
-
-## 5. Recommendations
-
-### Immediate Actions
-
-1. **Request Missing Tables:** Kunden.csv and Protokolle.csv from REKERS
-2. **Clarify IFC absence:** Ask REKERS if 3D building models exist (none found even after ZIP extraction)
-3. **Normalize Anfragen.csv:** Split into 3 separate tables
-4. **Parse EML Files:** Extract metadata + bodies from 482 emails
 
 ---
 
