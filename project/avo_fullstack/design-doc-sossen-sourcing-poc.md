@@ -40,15 +40,39 @@ AVO-Werke has ~8000 sauce recipes accumulated over years. Duplicates and near-du
 
 ## Approach
 
-### Part 1: Data Loading — Touched
+### Part 1: Data Loading — Deepened
 
-Load `alle.jsonl` → each recipe becomes a map: `{material_id: percentage}`. All entries have exploded materials summing to 100%.
+Load `alle.jsonl` → filter to **R-prefix entries only** (62 final products) → each recipe becomes a map: `{material_id: percentage}`. Materials are already exploded (flattened across all Vormischung levels), summing to ~100%.
 
-**Uncertainty:** Compare all 197 entries or filter to ~90 LEAF (final) recipes only. Resolve during validation.
+**Input:** `alle.jsonl` (197 total entries, now in `data/` directory)
+
+**Output:** 62 recipe maps (`R`-prefix), each `{material_id: percentage}` — this is the frame of reference for all similarity scoring.
+
+**Entry type breakdown (from data analysis):**
+
+| Prefix | Count | Used in POC? |
+|--------|-------|-------------|
+| R | 62 | Yes — final products |
+| V | 54 | No — Vormischungen (pre-mixes, Phase 2) |
+| RV | 18 | Unknown — verify with Mattis |
+| RZ | 9 | Unknown — verify with Mattis |
+| (none) | 47 | No — raw materials / intermediates |
+| B | 6 | Unknown — B-variants |
+
+**What we ignore:** The `structure` field (Vormischung traceability — deferred to Phase 2 per WS2-Session1 agreement).
+
+**Basisvariante filter:** WS2-Session3a agreed only Variant 0 (base recipe) enters comparison, filtering ~80% packaging/customer duplicates. May already be applied in test dataset (197 vs 8000 total).
+
+**Open uncertainties (verify with Mattis or transcripts):**
+- What are RV, RZ, and no-prefix entries? Some may be final products.
+- Is Basisvariante filtering already applied in `alle.jsonl`?
 
 **Source:**
-- [Jan 29 transcript](https://app.fireflies.ai/view/01KG3DKZHD0EVFK4620C86B873) — Mattis confirms structure, materials summing to 1.0
-- Data analysis: 197 entries, 90 LEAFs, 134 unique raw materials, median 7 materials per recipe
+- [WS2-Session1](https://docs.google.com/document/d/1KRF-IktLEuM8wlyGnXjg-yfK3KoQR-zqwzDlHyqqXGs) (44:47) — "Auflösung der Rezepturen auf Zutatsebene ohne Vormischungen" (resolve to ingredient level without premixes)
+- [WS2-Session1](https://docs.google.com/document/d/1KRF-IktLEuM8wlyGnXjg-yfK3KoQR-zqwzDlHyqqXGs) (25:26) — "Vormischungen sollten separat verglichen werden" (premixes compared separately = Phase 2)
+- [WS2-Session3a](https://docs.google.com/document/d/1Y6dz78yEu1E1LG4-YFqruj5gxSsJqil8vvU6tbOu_cw) — Basisvariante (Variant 0) only, filters ~80% duplicates
+- [Jan 29 transcript](https://app.fireflies.ai/view/01KG3DKZHD0EVFK4620C86B873) — Mattis confirms exploded materials structure, summing to 1.0
+- Data analysis (2026-02-09): 197 entries, 62 R-prefix, 54 V-prefix, 134 unique raw materials
 
 ### Part 2: Similarity Scoring — Touched
 
@@ -108,6 +132,8 @@ For each of Behrens's 5 known pairs: query recipe A → check if B appears in To
 | 2 | **Stammdaten CSV** | Mattis | "When can we expect the CSV with Rohstoffkategorie + certifications (VLOG, Bio, Halal, Kosher, Vegan, Vegetarisch) per material?" |
 | 3 | **Percentage similarity formula** | Self (after receiving pairs) | Reverse-engineer from known pairs |
 | 4 | **Combined score weighting** | Self (after receiving pairs) | Calibrate from known pairs |
+| 5 | **RV/RZ prefix meaning** | Mattis | "What do RV (18 entries) and RZ (9 entries) prefixes represent? Are any of these final products?" |
+| 6 | **Basisvariante in test data** | Mattis | "Is the test dataset (alle.jsonl) already filtered to Variant 0, or does it contain packaging variants?" |
 
 ---
 
@@ -116,7 +142,7 @@ For each of Behrens's 5 known pairs: query recipe A → check if B appears in To
 - **Transcripts:** [WS2-S1](https://docs.google.com/document/d/1KRF-IktLEuM8wlyGnXjg-yfK3KoQR-zqwzDlHyqqXGs), [WS2-S3a](https://docs.google.com/document/d/1Y6dz78yEu1E1LG4-YFqruj5gxSsJqil8vvU6tbOu_cw), [WS2-S3b](https://docs.google.com/document/d/1NhjxZnugaiWLg415HbC7nB_ybDPOCaCbfM0zF3L_n0I), [Jan 15 Fireflies](https://app.fireflies.ai/view/01KEXRBAF5495NKTGZ5N6FHFVE), [Jan 29 Fireflies](https://app.fireflies.ai/view/01KG3DKZHD0EVFK4620C86B873)
 - **Pflichtenheft:** [Published](https://mariuswilsch.github.io/public-wilsch-ai-pages/project/avo_fullstack/pflichtenheft-ki-projekt-sossen-sourcing)
 - **Agreed Schema:** [Published](https://mariuswilsch.github.io/public-wilsch-ai-pages/project/avo_fullstack/agreed-json-schema)
-- **Data:** `alle.jsonl` (90 LEAF recipes, 197 total entries, 134 unique materials)
+- **Data:** `alle.jsonl` (62 R-prefix final products, 197 total entries, 134 unique materials)
 - **Output Template:** Übersicht.xlsx (AVO Seafile)
 - **Certification Criteria:** Email from Johannes von Schultz (Oct 30, 2025) — VLOG, Bio, Halal, Kosher, Vegan, Vegetarisch
 - **Rohstoffkriterien:** Rohstoffkriterien zur Vergleichbarkeit.pdf (AVO Seafile)
