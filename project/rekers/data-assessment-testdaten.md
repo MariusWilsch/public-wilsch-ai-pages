@@ -43,6 +43,7 @@ The delivered test data differs significantly from Workshop 2 specifications. In
 The CSV contains a denormalized join of three entity types, identified by repeating "ID" columns at positions 1, 14, and 22:
 
 **Group 1: Anfragen (Project Requests) — Columns 1-13**
+
 | Column | Sample Value | Type | Description |
 |--------|--------------|------|-------------|
 | ID | 35764 | Integer | Request ID (matches folder names) |
@@ -62,6 +63,7 @@ The CSV contains a denormalized join of three entity types, identified by repeat
 ---
 
 **Group 2: AnfrageKunde (Request-Customer Link) — Columns 14-21**
+
 | Column | Sample Value | Type | Description |
 |--------|--------------|------|-------------|
 | ID | 10593 | Integer | Request-Customer link ID (matches subfolder names) |
@@ -76,6 +78,7 @@ The CSV contains a denormalized join of three entity types, identified by repeat
 ---
 
 **Group 3: Angebot (Quotations) — Columns 22-30**
+
 | Column | Sample Value | Type | Description |
 |--------|--------------|------|-------------|
 | ID | 8182 | Integer | Quotation ID |
@@ -110,6 +113,7 @@ The CSV contains a denormalized join of three entity types, identified by repeat
 Similar to Anfragen.csv, this file contains denormalized joins with repeating "ID" columns at positions 1, 44, and 51.
 
 **Group 1: Angebot Header (Columns 1-43)**
+
 | Column | Description | Type |
 |--------|-------------|------|
 | 1. ID | Quotation ID | Integer |
@@ -135,6 +139,7 @@ Similar to Anfragen.csv, this file contains denormalized joins with repeating "I
 ---
 
 **Group 2: Angebot Gliederung (Quotation Structure) — Columns 44-53**
+
 | Column | Description |
 |--------|-------------|
 | 44. ID | Structure item ID |
