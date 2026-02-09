@@ -243,29 +243,30 @@ Anfragen (Project Requests)
 
 ## 4. Data Quality Summary
 
-### 4.1 Present vs. Expected
+### 4.1 Present vs. Expected (Verified Against Transcript)
 
-> **Note:** The "expected" column is based on issue comment summaries, not verified against the original transcript. Transcript is on Google Drive (not Fireflies) — needs verification.
+> **Source:** Wed AM transcript (Datenexport & Ranking-System, Fireflies ID: 01KG1V9Y791YHSAVP7GJABEJAA)
 
-| Item | Expected (from issue notes) | Actually Delivered | Status |
-|------|----------------------------|-------------------|--------|
-| Anfragen Table | Separate CSV | Delivered (denormalized) | Modified |
-| Kunden Table | Separate CSV | Not delivered | **UNVERIFIED** |
-| Protokolle Table | Separate CSV | Not delivered | **UNVERIFIED** |
-| File Folders per Anfragen_ID | Expected | Delivered (14 folders) | **MATCH** |
-| Angebote ohne Material CSV | Not mentioned | Delivered (4,307 rows) | **BONUS** |
+| Item | Transcript Evidence | Actually Delivered | Status |
+|------|--------------------|--------------------|--------|
+| Anfragen Table | Explicitly agreed as CSV | Delivered (denormalized with Kunden) | **MATCH** |
+| Kunden Table | Ambiguous — two options discussed (separate vs. flattened into Anfragen) | Flattened into Anfragen.csv (KUNDE ID column, no details) | **AMBIGUOUS** |
+| Protokolle Table | Discussed as potential 3rd table but delivery NOT confirmed ("are you checking that?") | Not delivered | **NEVER AGREED** |
+| File Folders per Anfragen_ID | Agreed | Delivered (14 folders vs 10 agreed) | **EXCEEDED** |
+| Angebote ohne Material CSV | Not mentioned in transcript | Delivered (4,307 rows) | **SURPRISE** |
+| File Types (IFC, DWG, PDF, EML) | All discussed as expected formats | DWG/PDF/EML present, IFC absent | **PARTIAL** |
 
-### 4.2 Absent Tables
+### 4.2 Absent Data
 
-**Kunden (Customers):**
+**Kunden Details (Customers):**
 - Customer IDs present (e.g., 108636, 529) but no customer details (name, address, contact)
-- **Impact:** Cannot resolve customer names or demographics
+- Transcript shows ambiguity: Marius proposed separate table OR flattened into Anfragen — REKERS delivered flattened
+- **Impact:** Cannot resolve customer names or demographics without separate Kunden export
 
 **Protokolle (Meeting Protocols):**
-- 482 EML email files may serve as protocol substitutes (unstructured)
-- **Impact:** No structured meeting/protocol data
-
-**Verification needed:** Confirm with transcript whether Kunden and Protokolle were explicitly agreed as deliverables or if these were inferred from the issue summary.
+- Transcript shows this was left as "we'll check" — not a committed deliverable
+- 482 EML email files may serve as unstructured substitutes
+- **Impact:** No structured meeting/protocol data (but this was never firmly agreed)
 
 ### 4.3 Concerns
 
