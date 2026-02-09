@@ -167,7 +167,7 @@ Similar to Anfragen.csv, this file contains denormalized joins with repeating "I
 
 **14 Top-Level Folders:** Each named with Anfragen ID
 **32 Subfolders:** Each named with AnfrageKunde ID
-**566 Total Files:** Across all folders
+**~740 Total Files:** Across all folders (566 original + ~174 extracted from ZIPs)
 
 ### 2.2 Folder-by-Folder Breakdown
 
@@ -189,21 +189,21 @@ Similar to Anfragen.csv, this file contains denormalized joins with repeating "I
 | 41807 | 139M | 23 | 2 | 21 | 0 | 18297 |
 | **TOTAL** | **2.88GB** | **566** | **44** | **504** | **18** | **32 subfolders** |
 
-### 2.3 File Type Distribution
+### 2.3 File Type Distribution (after ZIP extraction)
 
-| Format | Count | Percentage |
-|--------|-------|------------|
-| EML | 504 | 89.0% |
-| PDF | 44 | 7.8% |
-| ZIP/Other | 18 | 3.2% |
-| IFC | 0 | 0.0% |
-| DWG | 0 | 0.0% |
-| XLSX | 0 | 0.0% |
+| Format | Count | Notes |
+|--------|-------|-------|
+| EML | 482 | Email correspondence |
+| PDF | 210 | Technical documents, quotations, permits (most were inside ZIPs) |
+| DWG | 5 | AutoCAD drawings — floor plans, elevations, site plans |
+| DXF | 3 | CAD exchange — building specifications (wall, deck, facade) |
+| XLSX | 2 | Including **Kranliste.xlsx** (crane list — relevant to Kran similarity criterion) |
+| ZIP | 21 | Original archives (3 corrupted) |
+| IFC | 0 | Still absent — no Building Information Modeling files |
 
-**Notable Absences:**
-- **No IFC files** (Building Information Modeling)
-- **No DWG files** (AutoCAD drawings)
-- **No XLSX files** (Excel spreadsheets)
+**Key finding:** 17 ZIP files were extracted, revealing 210 PDFs, 5 DWG, 3 DXF, and 2 XLSX files that were previously hidden. The `Kranliste.xlsx` (crane list, 2.3MB) in project 38043 contains structured crane data directly relevant to the Workshop 2 similarity criterion "Kran".
+
+**Remaining absence:** IFC files (3D building models) were not found anywhere in the dataset.
 
 ---
 
