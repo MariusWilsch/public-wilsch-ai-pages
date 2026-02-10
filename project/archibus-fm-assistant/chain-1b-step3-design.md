@@ -29,7 +29,6 @@ Populating Bruce BEM's background data requires understanding the client's hiera
 |---------|-----------|
 | **Goal** | Equipment table transformed into hierarchical JSON that Bruce BEM can insert, with self-correction on API errors |
 | **Success** | For each top-level hierarchy element (e.g., 4 buildings = 4 JSONs): generate nested JSON → insert via API → if error, AI corrects and retries → move to next element. All elements populated. |
-| **Done test** | "Can I write a meeting agenda with open design questions about Step 3?" → If NO → design complete |
 
 ---
 
