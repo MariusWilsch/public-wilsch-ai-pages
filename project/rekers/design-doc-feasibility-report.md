@@ -92,17 +92,43 @@ Result: 5/6 extraction criteria found per project. Historical project files are 
 
 **Transcript:** [Wed AM — Datenexport & Ranking-System](https://app.fireflies.ai/view/01KG1V9Y791YHSAVP7GJABEJAA) + [Wed Follow-up](https://app.fireflies.ai/view/01KG25S4S0MVB8Q8F3CEXG60N4)
 
-### Part 2: File Processing Feasibility [UNDEFINED — needs data]
+### Part 2: File Processing Feasibility [TOUCHED]
 
-Determine which file formats can be processed for semantic content extraction. PDFs and EMLs are straightforward. IFC models depend on whether they're architecture vs structural (different metadata richness). DWG is binary — needs specialized tooling.
+Prerequisite for Part 3: 6 of 9 matching criteria require information extraction from project files (see Part 1 criteria mapping).
 
-**Transcript:** [Wed AM — Datenexport & Ranking-System](https://app.fireflies.ai/view/01KG1V9Y791YHSAVP7GJABEJAA) (file format discussion: IFC architecture vs structural, DWG, EML, XLSX)
+**File types in test data (post-ZIP extraction):**
+
+| Type | Count | Processable? |
+|------|-------|-------------|
+| EML | 482 | ✅ Text-based — straightforward |
+| PDF | 210 | ✅ Text-based — straightforward |
+| DWG | 5 | ❌ Binary CAD — needs specialized tooling |
+| DXF | 3 | ⚠️ Text-based CAD — parseable but complex |
+| XLSX | 2 | ✅ Structured — includes Kranliste.xlsx |
+| IFC | 0 | N/A — absent from test data |
+
+**Criteria extraction evidence** (from 3 sampled projects — actual file references):
+
+| Criterion | Source File | Evidence |
+|-----------|------------|---------|
+| **Gebäudetyp** | 35764/Baugenehmigung.pdf | "Neubau einer Werkhalle mit Büro- und Sozialtrakt" |
+| **Höhe** | 35764/Angebot Nr. 28273.20.pdf | "OK-Stütze = ca. +13,35 m" |
+| **Kran** | 35764/Angebot Nr. 28273.20.pdf | "Ausführung der Halle mit einer Kranbahnanlage" |
+| **Kran** | 38043/Kranliste.xlsx | 10t crane specification |
+| **Dachlasten** | 35764/Angebot Nr. 28273.30.pdf | "Windlastzone WZ2, Schneelastzone 2" |
+| **Baustoff** | 35764/Angebot Nr. 28273.20.pdf | "Beton und Stahlbeton" |
+| **Baustoff** | 38043/technical docs | "Spannbeton + Holz" |
+| **Dachbegrünung** | 41634/contract PDF | "Dachbegrünung = 0,00 kN/m² — kommt nicht zur Ausführung" |
+
+**Key observation:** Most criteria found in **Angebot PDFs** (Level 2 quotation documents), not initial customer docs. Historical project files are rich because they contain REKERS's own output — this data exists for the reference set but not for new requests.
+
+**Transcript:** [Wed AM — Datenexport & Ranking-System](https://app.fireflies.ai/view/01KG1V9Y791YHSAVP7GJABEJAA) (file format discussion, data source for criteria)
 
 ### Part 3: Similarity Matching Approach [TOUCHED]
 
-Project-level matching: given a new Anfrage (Level 1 only, sparse — see Part 1), find the most similar historical Anfragen from the reference set (Level 1, rich). The matched Anfragen's Angebote (Level 2) provide the pricing reference value.
+Project-level matching: given a new Anfrage (Level 1 only), find the most similar historical **projects** from the reference set. Historical projects have Level 1 + Level 2 + files — all available data contributes to similarity. The matched projects' Angebote (Level 2) provide the pricing reference value.
 
-**Asymmetry constraint:** New requests have 1-5 files (mostly email). Historical projects have 20-150+ files. Matching must handle partial input against complete references. Not all 9 criteria will be available for every new request.
+**Asymmetry constraint:** New requests have limited data (Level 1 only). Historical projects have full lifecycle data. Matching must handle sparse input against rich references. **What a new request contains at arrival time is undefined** — this is a meeting agenda item (→ Part 4, → meeting agenda).
 
 **Three modes of acquiring criteria:**
 
@@ -155,8 +181,8 @@ Project-level matching: given a new Anfrage (Level 1 only, sparse — see Part 1
 6. Compare AI ranking vs expected ranking
 
 **Two-phase validation:**
-- **Phase 1 (binary):** "Hier ist die Anfrage, das muss das Ergebnis sein" — correct match yes/no
-- **Phase 2 (ranking):** "Jetzt musst du mir drei mit Ranking 80, 70, 60 Prozent ausliefern" — ranked quality
+- **Phase 1 (binary):** "Hier ist die Anfrage, das muss das Ergebnis sein." Given a test query, does the system return the expected project? Pass/fail per query. Goal: prove the AI can find correct matches at all.
+- **Phase 2 (ranking quality):** "Jetzt musst du mir drei mit Ranking 80, 70, 60 Prozent ausliefern." Given a test query, does the system return matches in the expected order with meaningful scores? Top-K ranked list, 0-100% scores, 60% cutoff below which results aren't useful. Goal: prove the AI can distinguish between strong and weak matches.
 
 **Evaluierungsliste template** (must-have columns):
 
@@ -174,6 +200,8 @@ Project-level matching: given a new Anfrage (Level 1 only, sparse — see Part 1
 - Results = Top-K ranked list with 0-100% scores, 60% cutoff
 - AI must handle "nothing found" case
 - REKERS should provide conscious test queries (not timestamp reconstruction)
+
+**Open question (→ meeting agenda):** What does a new request actually contain at arrival time? Determines which criteria are available for matching input.
 
 **Client dependency:** Evaluierungsliste content from REKERS (→ meeting agenda).
 
