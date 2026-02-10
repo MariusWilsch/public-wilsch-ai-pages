@@ -74,66 +74,95 @@ Load `alle.jsonl` → filter to **R-prefix entries only** (62 final products) �
 - [Jan 29 transcript](https://app.fireflies.ai/view/01KG3DKZHD0EVFK4620C86B873) — Mattis confirms exploded materials structure, summing to 1.0
 - Data analysis (2026-02-09): 197 entries, 62 R-prefix, 54 V-prefix, 134 unique raw materials
 
-### Part 2: Similarity Scoring — Touched
+### Part 2: Similarity Scoring — Deepened
 
-For each recipe pair, compute three scores:
+For each recipe pair, compute three independent scores. Each handles a different aspect of "similar":
 
-**Overlap ratio:** |shared materials| / |union of materials|. Understood conceptually but exact formula not deep-dived.
+**Criterion 1 — Overlap (Jaccard similarity):** "Do they share the same ingredients?"
 
-**Percentage similarity:** For shared materials, quantify how close the amounts are. Multiple possible formulas — undefined until reverse-engineered from known pairs.
+Binary set comparison: `|A ∩ B| / |A ∪ B|` where A and B are sets of material IDs. Score 0–1, where 1.0 = identical ingredient lists. Client-facing label: **Overlap**.
 
-**Category match:** Match unmatched ingredients by Rohstoffkategorie (761 Einkaufsgruppen). Blocked until Stammdaten CSV from Mattis.
+**Criterion 2 — Proportion (Bray-Curtis similarity):** "For shared ingredients, how close are the amounts?"
 
-**Combined weighting:** How to combine three scores into one ranking. Calibrate from known pairs.
+For shared materials, measure proportional distance: similarity = `1 - sum|a_i - b_i| / sum(a_i + b_i)`. Score 0–1, where 1.0 = identical proportions. Naturally weights high-percentage ingredients more than trace ingredients. Client-facing label: **Proportion**.
+
+**Criterion 3 — Category (Einkaufsgruppen matching):** "For UN-shared ingredients, are they substitutable?"
+
+For materials NOT in the intersection, check if they belong to the same Rohstoffkategorie (761 Einkaufsgruppen). Ratio of categorically-matched unshared materials to total unshared. Client-facing label: **Category**. Blocked on Stammdaten CSV from Mattis; data quality currently poor.
+
+**Combined weighting:** Empirical — start equal weights (33/33/33), let Behrens's validation pairs reveal which criterion matters most. Transcripts emphasize "quantity-based similarity" (WS2-S3a), suggesting Proportion may ultimately dominate — hypothesis to test, not pre-commit.
+
+**Design context:** Algorithmic approach chosen over vector/embedding because similarity is quantity-based, not semantic — client needs explainable, per-criterion scores, not opaque numbers.
 
 **Source:**
 - [Pflichtenheft §3](https://mariuswilsch.github.io/public-wilsch-ai-pages/project/avo_fullstack/pflichtenheft-ki-projekt-sossen-sourcing) — FR-02 (Material_ID matching), FR-02a (overlap ratio), FR-04 (percentage similarity), FR-08 (category matching)
-- WS2-Session1 — "Ähnlichkeitsschwellen flexibel: 2%, 5%, 10%", 3% fluctuation acceptable
-- [WS2-Session3a](https://docs.google.com/document/d/1Y6dz78yEu1E1LG4-YFqruj5gxSsJqil8vvU6tbOu_cw) — algorithmic > vector approach, 761 Einkaufsgruppen
-- [WS2-Session3b](https://docs.google.com/document/d/1NhjxZnugaiWLg415HbC7nB_ybDPOCaCbfM0zF3L_n0I) — 98% similarity target
+- [WS2-Session1](https://docs.google.com/document/d/1KRF-IktLEuM8wlyGnXjg-yfK3KoQR-zqwzDlHyqqXGs) (49:53) — "Ähnlichkeitsschwellen flexibel: 2%, 5%, 10%", 3% fluctuation acceptable
+- [WS2-Session1](https://docs.google.com/document/d/1KRF-IktLEuM8wlyGnXjg-yfK3KoQR-zqwzDlHyqqXGs) (12:45) — "nicht nur auf Namen, sondern auf die tatsächliche Zusammensetzung" (actual composition, not names)
+- [WS2-Session3a](https://docs.google.com/document/d/1Y6dz78yEu1E1LG4-YFqruj5gxSsJqil8vvU6tbOu_cw) — algorithmic > vector ("keine semantische, sondern mengenbasierte Ähnlichkeit"), 761 Einkaufsgruppen, data quality poor
+- [WS2-Session3b](https://docs.google.com/document/d/1NhjxZnugaiWLg415HbC7nB_ybDPOCaCbfM0zF3L_n0I) — 98% similarity target, user-adjustable tolerance sliders
 
-### Part 3: Ranking + Output — Touched
+### Part 3: Ranking + Output — Deepened
 
-Rank all recipes by combined similarity score for a given query. Return Top 5 with per-criterion scores.
+Rank all 62 R-prefix recipes by combined similarity score for a given query. Return **Top 5** (configurable N) with per-criterion scores using client-facing labels.
 
-Example output:
+**POC output format** (plain scores — ingredient drill-down is next iteration):
+
 ```
 Query: R261800
-  #1  R261700  score: 0.96  (overlap: 0.85, pct_sim: 0.97, cat: N/A)
-  #2  R482000  score: 0.82  (overlap: 0.62, pct_sim: 0.78, cat: N/A)
-  #3  R954700  score: 0.71  ...
+
+Rank  Recipe    Overlap  Proportion  Category  Combined
+#1    R261700   85%      97%         N/A       92%
+#2    R482000   62%      78%         N/A       71%
+#3    R954700   58%      82%         N/A       68%
+#4    R445100   51%      65%         N/A       57%
+#5    R887200   48%      71%         N/A       55%
 ```
 
-**Uncertainty:** Plain scores list vs Übersicht-style Excel (side-by-side ingredients). Plain scores first, ingredient drill-down next iteration.
+**Client-facing labels:** Overlap, Proportion, Category, Combined — no algorithm names (Jaccard, Bray-Curtis) exposed to client.
+
+**Top N:** Default 5, configurable. Workshop discussed "five to ten" (WS2-S3a), but Top 5 is the stated POC criterion.
+
+**Decided:** Plain scores for POC. Full vision (post-POC): Übersicht-style Excel with ingredients, quantity differences, percentage matches, and color-coded deviation markers per WS2-S3b. The POC validates the algorithm; the Excel output is a presentation layer added after validation passes.
 
 **Source:**
 - [Pflichtenheft §9](https://mariuswilsch.github.io/public-wilsch-ai-pages/project/avo_fullstack/pflichtenheft-ki-projekt-sossen-sourcing) — Top 5 output, three criteria separately
+- [WS2-Session3a](https://docs.google.com/document/d/1Y6dz78yEu1E1LG4-YFqruj5gxSsJqil8vvU6tbOu_cw) — "fünf bis zehn ähnlichsten Rezepturen" (five to ten)
 - [WS2-Session3b](https://docs.google.com/document/d/1NhjxZnugaiWLg415HbC7nB_ybDPOCaCbfM0zF3L_n0I) — Excel output with color-coded deviations (full vision)
 - Übersicht.xlsx — AVO's existing recipe comparison format (from AVO Seafile)
 
-### Part 4: Validation — Touched (Blocked)
+### Part 4: Validation — Deepened (Blocked on Behrens pairs)
 
-For each of Behrens's 5 known pairs: query recipe A → check if B appears in Top 5 (and vice versa). Analyze which criterion drives the match → adjust weights.
+**POC scope:** Validate the algorithm against Behrens's 5 known pairs. This is algorithm validation ("does it find expected pairs?"), not discovery ("find new duplicates"). New discoveries during POC are observed but not formally validated — discovery becomes the production goal.
 
-**Blocked by:** 5 known duplicate pairs from Herr Behrens.
+**Similarity type:** Near-duplicates with flexible thresholds (2%, 5%, 10% per WS2-Session1), not exact matches. Quantity-based, not semantic. The specific similarity band that matters will emerge empirically from the data and Behrens's pairs.
+
+**Evaluation table (Behrens fills in):**
+
+| Recipe_A | K1 (required) | K2–K5 (optional) | Confidence | Why? (if "definitely") |
+|----------|---------------|-------------------|------------|------------------------|
+| R...     | R...          | R..., R...        | Definitely / Probably / Unsure | Free-text domain reasoning |
+
+- **K1:** Primary similar recipe (required). K2–K5 optional if Behrens knows additional similar recipes.
+- **Confidence:** Quick checkbox — low burden. "Definitely" pairs are calibration anchors; "probably/unsure" are bonus exploration data.
+- **Why?:** Free-text reasoning only for "definitely" pairs. Enables calibration conversation when algorithm disagrees with domain expert.
+
+**Guided pair selection:** Request a diverse mix — 2 obvious duplicates, 2 similar-but-different, 1 edge case. Diverse pairs maximize informative value for weight calibration (homogeneous pairs all score high on the same criteria, revealing nothing about relative weights).
+
+**Negative examples (if possible):** Ask Behrens for 1–2 pairs that share many ingredients but are NOT similar. These test false positive rejection. If not provided, the 62-recipe dataset (1,891 possible pairs) provides implicit negatives.
+
+**Success criterion:** K1 partner appears in query recipe's Top 5 (configurable N). Test bidirectionally — query A→check B in Top 5 AND query B→check A in Top 5 — as sanity check (all three criteria are mathematically symmetric, so results should match).
+
+**Calibration workflow:** Run algorithm with equal weights → compare output to Behrens's table → for "definitely" pairs where algorithm disagrees, use the "why?" reasoning to understand which criterion the domain expert values → adjust weights empirically. This is iterative, not one-shot.
+
+**Blocked by:** 5 known duplicate pairs from Herr Behrens (meeting agenda item).
 
 **Source:**
 - [Pflichtenheft §9](https://mariuswilsch.github.io/public-wilsch-ai-pages/project/avo_fullstack/pflichtenheft-ki-projekt-sossen-sourcing) — evaluation methodology, success criteria
-- Nov 8 transcript — 3→5 pairs negotiation (Thomas pushed for 5)
+- [Nov 8 transcript](https://app.fireflies.ai/view/01K9J1PK1YHP4HXC5VD0NJGWT2) — 3→5 pairs negotiation (Thomas pushed for 5, customer compliance concern)
 - [Jan 29 transcript](https://app.fireflies.ai/view/01KG3DKZHD0EVFK4620C86B873) — evaluation table action item for Behrens
-
----
-
-## Uncertainties → Meeting Agenda
-
-| # | Uncertainty | Who Resolves | Ask |
-|---|------------|-------------|-----|
-| 1 | **5 known duplicate pairs** | Herr Behrens | "From the test dataset, identify 5 pairs you know are duplicates/similar. Which of the three criteria matters most?" |
-| 2 | **Stammdaten CSV** | Mattis | "When can we expect the CSV with Rohstoffkategorie + certifications (VLOG, Bio, Halal, Kosher, Vegan, Vegetarisch) per material?" |
-| 3 | **Percentage similarity formula** | Self (after receiving pairs) | Reverse-engineer from known pairs |
-| 4 | **Combined score weighting** | Self (after receiving pairs) | Calibrate from known pairs |
-| 5 | **RV/RZ prefix meaning** | Mattis | "What do RV (18 entries) and RZ (9 entries) prefixes represent? Are any of these final products?" |
-| 6 | **Basisvariante in test data** | Mattis | "Is the test dataset (alle.jsonl) already filtered to Variant 0, or does it contain packaging variants?" |
+- [WS2-Session1](https://docs.google.com/document/d/1KRF-IktLEuM8wlyGnXjg-yfK3KoQR-zqwzDlHyqqXGs) (49:53) — flexible thresholds 2%, 5%, 10%
+- [WS2-Session3a](https://docs.google.com/document/d/1Y6dz78yEu1E1LG4-YFqruj5gxSsJqil8vvU6tbOu_cw) — "automatisierte Qualitätskontrollen finden Dubletten" (system expected to discover unknown duplicates)
+- [WS2-Session1](https://docs.google.com/document/d/1KRF-IktLEuM8wlyGnXjg-yfK3KoQR-zqwzDlHyqqXGs) (54:09) — "lebendes System" with user feedback loop
 
 ---
 
@@ -146,4 +175,5 @@ For each of Behrens's 5 known pairs: query recipe A → check if B appears in To
 - **Output Template:** Übersicht.xlsx (AVO Seafile)
 - **Certification Criteria:** Email from Johannes von Schultz (Oct 30, 2025) — VLOG, Bio, Halal, Kosher, Vegan, Vegetarisch
 - **Rohstoffkriterien:** Rohstoffkriterien zur Vergleichbarkeit.pdf (AVO Seafile)
-- **Session:** `/Users/verdant/.claude/projects/-Users-verdant-Documents-projects-billable-AVO--poc/451ac158-4b2b-4501-8dca-bd9645888e7d.jsonl`
+- **Session (Part 1 deepening):** `/Users/verdant/.claude/projects/-Users-verdant-Documents-projects-billable-AVO--poc/451ac158-4b2b-4501-8dca-bd9645888e7d.jsonl`
+- **Session (Parts 2–4 deepening):** `/Users/verdant/.claude/projects/-Users-verdant-Documents-projects-billable-AVO--poc/ed3ed7d2-a582-4987-b15b-d59a0f7763de.jsonl`
