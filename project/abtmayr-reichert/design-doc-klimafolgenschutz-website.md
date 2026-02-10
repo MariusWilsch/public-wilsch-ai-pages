@@ -70,13 +70,17 @@ Michael Reichert's Klimafolgenschutz association needs a web presence to acquire
 
 **[Stripe](https://stripe.com/resources/more/membership-fees-associations-germany)** as primary processor:
 
-| Method | Use Case | Fee |
-|--------|----------|-----|
-| **SEPA Lastschrift** | Individual memberships (€60/year, recurring) | 0.8% + €0.25 (max €6) |
-| **Stripe Invoicing** | Municipality fees (€490-5000, via Überweisung) | ~0.4% per invoice |
-| **Card (Visa/MC)** | One-off donations | 1.5% + €0.25 |
+| Method | Use Case | Example Fee (subject to change) |
+|--------|----------|---------------------------------|
+| **SEPA Lastschrift** | Individual memberships (recurring) | ~0.8% + €0.25 (max €6) |
+| **Stripe Invoicing** | Municipality fees (via Überweisung) | ~0.4% per invoice |
+| **Card (Visa/MC)** | One-off donations | ~1.5% + €0.25 |
 
-**[PayPal](https://www.paypal.com/de/)** as secondary option (2.49% + €0.35).
+*Fees are illustrative based on current Stripe pricing. Actual rates may vary and are managed in Stripe dashboard.*
+
+**[PayPal](https://www.paypal.com/de/)** as secondary option (~2.49% + €0.35).
+
+**Donor/Förderer flow:** Generic for all audiences — municipality, individual, or company. No membership required, no separate form. Visitor selects amount → chooses payment method (card/PayPal) → done. Same flow regardless of who the donor is.
 
 **Stripe setup requires from Michael:** Vereinssatzung, Vereinsregister certificate, Gläubiger-ID from Bundesbank, Steuernummer, IBAN, board member ID.
 
@@ -129,9 +133,11 @@ Single-scroll landing page with anchor navigation. No sub-pages except legal.
 
 - Name, Adresse, Telefon, Email
 
-**Pricing:**
+**Pricing (CMS-managed, examples as of Feb 2026):**
 - Individual: €60/year
-- Municipality: starting at €490/year for ≤5,000-7,500 residents, tiered upward (exact brackets TBD — see meeting agenda)
+- Municipality: starting at ~€490/year for ≤5,000-7,500 residents, tiered upward (exact brackets TBD — see meeting agenda)
+
+*All pricing is managed via Payload CMS. Michael can adjust amounts and tier brackets without developer involvement.*
 
 #### Process Flow (Klimafolgenmanager Matching)
 
