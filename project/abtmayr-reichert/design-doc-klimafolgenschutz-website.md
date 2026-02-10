@@ -82,7 +82,11 @@ Michael Reichert's Klimafolgenschutz association needs a web presence to acquire
 
 **Donor/Förderer flow:** Generic for all audiences — municipality, individual, or company. No membership required, no separate form. Visitor selects amount → chooses payment method (card/PayPal) → done. Same flow regardless of who the donor is.
 
-**Stripe setup requires from Michael:** Vereinssatzung, Vereinsregister certificate, Gläubiger-ID from Bundesbank, Steuernummer, IBAN, board member ID.
+**Stripe setup requires from Michael:** Vereinssatzung, Vereinsregister certificate, Gläubiger-ID from Bundesbank (allow 2-4 weeks if not obtained), Steuernummer, IBAN, board member ID.
+
+**Terms & conditions summary** (Stripe + PayPal key terms for client review — [full details in session transcript](https://github.com/veloxforce/claude-user-configs/blob/main/.claude/projects/-Users-verdant-Documents-projects-WILSCH-AI-INTERNAL--soloforce/bdb2cfed-1005-4068-8543-a2cde2bc4c3e.jsonl)):
+- **Stripe:** No monthly fee, pay-as-you-go. Payouts 3-5 business days. €15 chargeback fee. Cancel anytime. GDPR compliant (EU/Ireland).
+- **PayPal:** No monthly fee, pay-as-you-go. Payouts 1-3 business days. Cancel anytime. Donations NOT covered by buyer/seller protection.
 
 **Donation receipts (Zuwendungsbestätigung):** Dependent on Gemeinnützigkeit confirmation. If confirmed, Michael handles manually via Stripe transaction records.
 
