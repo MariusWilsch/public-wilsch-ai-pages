@@ -49,7 +49,7 @@ Michael Reichert's Klimafolgenschutz association needs a web presence to acquire
 - Interactive sections (forms, payment) → SPA mode
 - **Frontend deployed to Vercel**
 
-**Why Vike catch-all:** Preserves react-router patterns from existing guidelines. Adds SEO where it matters (public content pages) without rewriting the app architecture. ~80% SEO benefit with ~20% of full-framework effort.
+**Why Vike catch-all:** Preserves react-router patterns from existing guidelines. Adds SEO where it matters (public content pages) without rewriting the app architecture. ~80% SEO benefit with ~20% of full-framework effort. ([Decision rationale — session transcript](https://github.com/veloxforce/claude-user-configs/blob/main/.claude/projects/-Users-verdant-Documents-projects-WILSCH-AI-INTERNAL--soloforce/bdb2cfed-1005-4068-8543-a2cde2bc4c3e.jsonl))
 
 ### Part 2: Content Management — Payload CMS
 
