@@ -38,19 +38,55 @@ The problem is NOT building a full AI quotation system. The problem IS determini
 
 ### Part 1: Data Assessment [TOUCHED]
 
-**What we have:** REKERS delivered test data on 2026-01-28 (14 projects vs 10 agreed). Two CSVs + 14 project folders:
-- **Level 1 — Anfragen.csv** (111 rows, 30 cols): Project requests with metadata (name, location, dates, amounts). Denormalized with AnfrageKunde and Angebot tables.
-- **Level 2 — Angebote ohne Material.csv** (4,307 rows, 141 cols): Quotation line items with detailed cost breakdowns, component types, labor hours. Not mentioned in transcript — surprise delivery.
-- **File folders** (~740 files after ZIP extraction): 482 EML, 210 PDF, 5 DWG, 3 DXF, 2 XLSX. No IFC files.
+**Three-level model:** A project progresses through three levels. Level determines data richness.
+
+| Level | Entity | Rule | Data Available |
+|-------|--------|------|----------------|
+| **Level 1** | Anfragen (requests) | Customer's world — what they want | CSV row + files (EMLs, PDFs, plans) |
+| **Level 2** | Angebote (offers) | REKERS's response — how they price it | Detailed cost breakdowns, component specs |
+| **Level 3** | Kommissionen (commissions) | Execution — what was built | NOT delivered |
+
+**What we have:** REKERS delivered test data on 2026-01-28 (14 projects vs 10 agreed):
+- **Level 1 — Anfragen.csv** (111 rows, 30 cols): Denormalized with AnfrageKunde and Angebot tables.
+- **Level 2 — Angebote ohne Material.csv** (4,307 rows, 141 cols): Quotation line items. Not mentioned in transcript — surprise delivery.
+- **File folders** (~740 files after ZIP extraction): 482 EML, 210 PDF, 5 DWG, 3 DXF, 2 XLSX. No IFC. Files live at Level 1, linked by Anfragen_ID folder structure.
 
 **What we don't have:**
-- **Level 3 — Kommissionen** (actual executed projects): Not delivered. Transcript acknowledges: "Am Anfang haben wir leider nicht die Kommissionsebene."
-- **Evaluierungsliste** (expected results table from Herr Sasse): Not delivered. This is needed for testing (→ Part 4 blocker).
-- **Kunden details**: Customer IDs present but no customer master data. Transcript ambiguous on whether this was agreed.
+- **Level 3 — Kommissionen**: Not delivered. "Am Anfang haben wir leider nicht die Kommissionsebene."
+- **Evaluierungsliste** from Herr Sasse: Not delivered (→ Part 4 blocker, → meeting agenda item).
 
-**Similarity search operates at Level 1:** Input = new Anfrage → Output = similar historical Anfragen with their Angebote (pricing reference). Transcript evidence: "hier ist die Anfrage, das muss das Ergebnis sein."
+**Criteria-to-data mapping** (verified against actual CSV columns):
 
-**Core feasibility question:** The 9 similarity criteria (see Part 3) are NOT stored as structured fields in either CSV. They must be EXTRACTED from unstructured content (EMLs, PDFs, DWGs) per project. Whether this extraction is feasible = Part 2.
+| Criterion | Source | Always available? |
+|-----------|--------|-------------------|
+| Bauort | CSV: `BAUVORHABEN_ORT, PLZ, NATION` | ✅ Yes |
+| Kundenreferenz | CSV: `KUNDE` column | ✅ Yes |
+| Kalkulatorenwissen | CSV: `KALKULATOR` column | ✅ Yes |
+| Gebäudetyp | File extraction (PDFs, EMLs) | ⚠️ Requires extraction |
+| Höhe | File extraction (specs, cross-sections) | ⚠️ Requires extraction |
+| Kran | File extraction + Kranliste.xlsx | ⚠️ Requires extraction |
+| Dachlasten | File extraction + derivable from location norms | ⚠️ Requires extraction |
+| Baustoff | File extraction (specifications) | ⚠️ Requires extraction |
+| Dachbegrünung | File extraction | ⚠️ Requires extraction |
+
+3 criteria guaranteed in CSV. 6 require document extraction.
+
+**File extraction verification** (3 projects sampled, documents read):
+
+| Criterion | 35764 (Werkhalle, 47 files) | 38043 (Nokera Werk, 178 files) | 41634 (VGP Halle C, 23 files) |
+|-----------|:---:|:---:|:---:|
+| **Gebäudetyp** | ✅ "Werkhalle mit Büro- und Sozialtrakt" | ✅ Produktionshallen | ✅ Halle |
+| **Höhe** | ✅ 13.35m (OK-Stütze) | ✅ 10m | ✅ 11-14m |
+| **Kran** | ✅ Kranbahnanlage, 7.5m Abstand | ✅ Kranliste.xlsx, 10t | ❌ Not present |
+| **Dachlasten** | ✅ DIN EN 1991, WZ2, Schneezone 2 | ✅ 0.5-0.75 kN/lfm | ✅ WZ2, Schneezone 2 |
+| **Baustoff** | ✅ Beton + Stahl | ✅ Spannbeton + Holz | ✅ Stahlbeton B500 |
+| **Dachbegrünung** | ❌ Not mentioned | ❌ Not mentioned | ✅ "0,00 kN/m² — kommt nicht zur Ausführung" |
+
+Result: 5/6 extraction criteria found per project. Historical project files are richer than transcript suggested — they contain both customer docs AND REKERS quotation docs.
+
+**New request vs historical:** A new Anfrage (no Level 2 data yet) contains 1-5 files at arrival time (mostly the initial customer email). Historical projects accumulate 20-150+ files over weeks to years. Timestamp-based reconstruction is feasible but REKERS should provide conscious test queries instead (→ Part 4).
+
+**Matching mechanism:** Input = new Anfrage (Level 1 only, sparse) → Search against historical Anfragen (Level 1, rich) → Output = similar project IDs → Pull Level 2 chain (Angebote) for pricing reference.
 
 **Detailed inventory:** [Data Assessment Report](https://mariuswilsch.github.io/public-wilsch-ai-pages/project/rekers/data-assessment-testdaten)
 
@@ -64,7 +100,17 @@ Determine which file formats can be processed for semantic content extraction. P
 
 ### Part 3: Similarity Matching Approach [TOUCHED]
 
-Project-level matching: given a new Anfrage (request), find the most similar historical Anfragen from the reference set. The matched Anfragen's Angebote (offers) provide the pricing reference value.
+Project-level matching: given a new Anfrage (Level 1 only, sparse — see Part 1), find the most similar historical Anfragen from the reference set (Level 1, rich). The matched Anfragen's Angebote (Level 2) provide the pricing reference value.
+
+**Asymmetry constraint:** New requests have 1-5 files (mostly email). Historical projects have 20-150+ files. Matching must handle partial input against complete references. Not all 9 criteria will be available for every new request.
+
+**Three modes of acquiring criteria:**
+
+| Mode | Criteria | How |
+|------|----------|-----|
+| **Structured** (CSV) | Bauort, Kundenreferenz, Kalkulatorenwissen | Direct column comparison — always available |
+| **Extracted** (documents) | Gebäudetyp, Höhe, Kran, Baustoff, Dachbegrünung | Text mining PDFs/EMLs — inconsistent availability |
+| **Derived** (norms) | Dachlasten | Location → wind/snow load norms (DIN EN 1991) |
 
 **Verified similarity criteria** (from Wed Follow-up transcript + handwritten notes, confirmed against each other):
 
@@ -82,17 +128,56 @@ Project-level matching: given a new Anfrage (request), find the most similar his
 
 **Not in transcript:** Achsraster, Zwischenebene (these were in the previous AI session's interpretation but are NOT verified)
 
+**Dynamic weighting:** Criteria importance is context-dependent. "Wenn ich kalkuliere, ist die Dachbegrünung maßgeblich, wenn ich die Stütze kalkuliere, ist ja Höhe maßgeblich." Users may specify via chat what matters for a specific query.
+
 **Ranking approach:** Partial matching — not all criteria will match. AI ranks by how many criteria match (3 of 5 > 1 of 5). Three-tier thresholds (80%/70%/60%), 60% cutoff. Top-K results (configurable, e.g., top 10 or 15).
+
+**Three business outcomes from matching:**
+- **High match (~100%):** "Angebot morgen bis 10 Uhr" — quote by tomorrow morning
+- **Partial match:** Baukastensystem — combine parts from different reference projects
+- **No match:** "Komplett neu entwickeln, dauert vier Wochen" — build from scratch
+
+**UNDEFINED — similarity computation approach:** How to combine structured + extracted + derived criteria into one similarity score. Needs deep dive (→ next session).
 
 **Background — abandoned approach:** Workshop 2 initially explored component-level matching (individual beams, columns matched by dimensions + loads). This was abandoned due to complexity of cross-location load normalization (wind, snow, earthquake). Project-level matching pre-filters the search space before any component analysis.
 
 **Transcripts:** [Tue AM](https://app.fireflies.ai/view/01KFZ9MSE9WZ179TAYYC30C6JC) (component-level parameters, yellow fields) + [Tue PM](https://app.fireflies.ai/view/01KFZR74V0N0P1S589KBKZCBYH) (search/return parameters, variance tolerances 3-10%) + [Wed Follow-up](https://app.fireflies.ai/view/01KG25S4S0MVB8Q8F3CEXG60N4) (verified criteria list, ranking approach)
 
-### Part 4: Validation Design [UNDEFINED — discussed but not designed]
+### Part 4: Validation Design [TOUCHED]
 
-Direction from Workshop 2 follow-up: known-answer test with ranking thresholds (80%/70%/60%), red herring projects, parameter weighting by component type. Needs formal design before POC execution.
+**Validation process** (agreed in Workshop 2):
 
-**Transcript:** [Wed Follow-up — Priorisierung & UI](https://app.fireflies.ai/view/01KG25S4S0MVB8Q8F3CEXG60N4) (ranking thresholds, parameter weighting, test case design)
+1. REKERS provides 10 reference projects (Anfragen + Angebote + files) — ✅ delivered (14 actually)
+2. Similarity criteria defined with Herr Sasse — ✅ done (9 criteria from Workshop 2)
+3. REKERS provides **Evaluierungsliste** (test queries + expected matches) — ❌ not delivered
+4. Marius provides CSV template for Evaluierungsliste — ❌ not created (→ meeting agenda deliverable)
+5. AI processes test queries → returns ranked list
+6. Compare AI ranking vs expected ranking
+
+**Two-phase validation:**
+- **Phase 1 (binary):** "Hier ist die Anfrage, das muss das Ergebnis sein" — correct match yes/no
+- **Phase 2 (ranking):** "Jetzt musst du mir drei mit Ranking 80, 70, 60 Prozent ausliefern" — ranked quality
+
+**Evaluierungsliste template** (must-have columns):
+
+| Column | Type | Description |
+|--------|------|-------------|
+| `Test_Anfrage_ID` | ID/text | The query being tested |
+| `Expected_Match_1` | ID | Best expected match (Anfrage ID) |
+| `Red_Herring` | Boolean | TRUE = "nothing found" is the correct answer |
+| `Match_Reason` | Text | Which criteria drive the similarity (or why no match) |
+
+**Red herrings** [TOUCHED — needs deep dive]: Test queries where the correct answer is "nothing found." The system must be able to say "tut mir leid, nichts gefunden" instead of forcing irrelevant matches. "Ist schlecht programmiert, wenn die KI nicht sagen kann, tut mir leid, nichts gefunden." How to design and select red herrings needs further exploration.
+
+**Key assumptions:**
+- Leave-one-out valid (use 9 as reference, query the 10th)
+- Results = Top-K ranked list with 0-100% scores, 60% cutoff
+- AI must handle "nothing found" case
+- REKERS should provide conscious test queries (not timestamp reconstruction)
+
+**Client dependency:** Evaluierungsliste content from REKERS (→ meeting agenda).
+
+**Transcript:** [Wed Follow-up — Priorisierung & UI](https://app.fireflies.ai/view/01KG25S4S0MVB8Q8F3CEXG60N4) (ranking thresholds, parameter weighting, test case design) + [Wed AM](https://app.fireflies.ai/view/01KG1V9Y791YHSAVP7GJABEJAA) (Evaluierungstabelle concept, Herr Sasse's role)
 
 ### Part 5: Infrastructure Assessment [UNDEFINED — secondary priority]
 
@@ -127,4 +212,7 @@ Target: IBM Power 10 (~20 TOPS per chip). Alternative: hybrid approach (external
 
 **Issue:** [#629 — REKERS: KI-gestütztes Angebotssystem - Workshop 2](https://github.com/DaveX2001/deliverable-tracking/issues/629)
 
-**Session:** `/Users/verdant/.claude/projects/-Users-verdant-Documents-projects/fc9f193e-2d54-4ea9-bcc1-5dfd2dd35f2d.jsonl`
+**Sessions:**
+
+- `/Users/verdant/.claude/projects/-Users-verdant-Documents-projects/fc9f193e-2d54-4ea9-bcc1-5dfd2dd35f2d.jsonl` (initial design doc creation)
+- `/Users/verdant/.claude/projects/-Users-verdant-Documents-projects-WILSCH-AI-INTERNAL--soloforce/00e6a51f-cd0d-432f-b5f4-f2a41dd07a4d.jsonl` (data deep dive, criteria mapping, validation design)
