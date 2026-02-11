@@ -136,26 +136,6 @@ Data completeness (what's verified vs claimed?)
 
 *Uncertainties come from reading the part text. Transcripts are not read during SURFACE.*
 
-**RESOLVE output example** *(from Archibus Element 4, session 6b1217f1):*
-
-```
-Element 4: Create Location-Based Assets
-
-#1 "Floor All" placement
-   → Flagged for meeting: neither user nor transcripts define where
-     building-wide equipment attaches. → Meeting agenda item.
-
-#2 Multi-level emptiness fallback
-   → Resolved from transcript (Feb 3, Rein): "equipment parent is the
-     room… when the room is empty, it goes to the next level" — implies
-     recursive fallback. User validates: "yes, keep going up."
-
-#3 Creation trigger
-   → Resolved from user: "one asset per unique value at each hierarchy
-     level. 4 buildings = 4 building assets."
-```
-
-*Each uncertainty gets a disposition (resolved with source, or flagged for meeting) before moving to the next.*
 
 ---
 
