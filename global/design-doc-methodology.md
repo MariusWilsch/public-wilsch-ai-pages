@@ -13,11 +13,14 @@ How design docs and meeting agendas are created at Wilsch AI Services. Two halve
 
 Design docs produced by AI are structurally inconsistent — different section headers, different organization, different depth each time. The user has to re-read and re-orient every new document because there's no predictable structure. Additionally, without a structured component list, AI proposes everything at once, making validation overwhelming rather than focused.
 
+The creation problem (structural inconsistency) was solved by stable components and component-by-component rhythm. A sequential problem emerged: once a design doc exists with Approach parts at various states, there is no formalized process for iteratively deepening each part toward full definition. Without systematic extraction, sessions can degrade into correction loops — AI produces outputs reactively, errors are caught mid-execution, and session time is spent on corrections instead of progression. More fundamentally, there is no reliable way to extract knowledge from the user, transcripts, or data sources into the design doc. Without a repeatable extraction process, each session spends energy figuring out HOW to deepen instead of focusing on the project content itself. Additionally, without a mechanism to present unknowns one at a time, the user is overwhelmed by parallel information — unable to focus questions through transcripts or data when facing a wall of undifferentiated ambiguity.
+
 **Preconditions:**
 - AI-assisted knowledge extraction from meeting transcripts
 - User has conceptual (not explicit) recall of meeting content
 - Output must be a publishable hippocampus document
 - Multiple stakeholders need alignment (user, client, developer)
+- Transcripts exist as source material for iterative extraction
 
 ---
 
@@ -25,9 +28,9 @@ Design docs produced by AI are structurally inconsistent — different section h
 
 | Element | Definition |
 |---------|-----------|
-| **Goal** | A repeatable design doc structure that works across all projects — stable components with project-specific content |
-| **Success** | User gives AI the component list. AI proposes understanding per component. User validates one-by-one. Each component is either Defined (write it) or Undefined (meeting agenda topic). When all Defined → design is done |
-| **Done test** | "Can I write a meeting agenda with open design questions?" → If NO → design doc is complete |
+| **Goal** | A repeatable design doc structure that works across all projects — stable components with project-specific content. A repeatable extraction process that deepens Approach parts session by session. |
+| **Success** | *Creation:* All four components exist with content. The Approach has concrete named parts with conceptual ordering — this is the structure that extraction deepens. Problem Statement and Success Definition may evolve, but the Approach parts are the primary working surface. *Extraction:* AI surfaces numbered uncertainties from one Approach part. User and AI resolve one-by-one against transcripts, data, and user knowledge. One part, fully processed, one session. |
+| **Done test** | *Doc-level:* "Can I write a meeting agenda with open design questions?" → If NO → design doc is complete. *Creation:* Four components exist, Approach has named parts. *Extraction:* SCOPE through ASSESS completes in one session for one part — session-atomic. |
 
 ---
 
@@ -64,17 +67,11 @@ No optional components by default. Only added if user explicitly requests them.
 Every component serves three functions beyond its unique thinking purpose:
 
 1. **AI proposal format** — gives AI a structure to embody its understanding. AI always drafts first.
-2. **Validation surface** — user sees AI's articulation and can immediately say "yes" or "not like that." Without seeing it written, validation is impossible.
-3. **Defined/undefined test** — binary state per component. Can this be written? If not → Undefined → becomes a meeting agenda topic.
+2. **Validation surface** — user sees AI's articulation and can judge: "this feels right" or "not yet." Without seeing it written, validation is impossible. No formal state labels — user judgment is the mechanism.
 
 ### Component States
 
-Each component has a binary state: **Defined** or **Undefined**.
-
-- **Defined:** Content is clear, no remaining questions. Written in full.
-- **Undefined:** Content cannot be defined with current understanding. The uncertainty description lives in the **meeting agenda**, NOT in the design doc.
-
-The design doc only contains what IS defined. Clean separation of responsibilities.
+No formal state tracking. Stateful labels get stale quickly and cause more harm than help. The user judges whether a component or part feels sufficiently defined — this is the irreplaceable human contribution. AI structures and presents; the human looks at it and knows "this feels right" or "not yet." This division is the methodology's core: AI's value is recall and structure, the human's value is judgment. No state machine needed — the human IS the state machine. Multiple passes are normal. The user decides when to stop.
 
 ### Trust Gradient
 
@@ -96,6 +93,31 @@ The gap between conceptual and explicit knowledge widens from Problem → Approa
 4. Repeat until all four are done
 
 User controls pace. Small compressed drafts in chat → expanded in published document. User reads published doc via Speechify (sees + hears simultaneously). Multiple review rounds are normal and expected.
+
+### Extraction Pass
+
+The component-by-component rhythm creates the design doc. The extraction pass deepens it. One Approach part per session. Session-atomic — the full cycle completes before the session ends.
+
+**Process:**
+
+| Step | Name | Definition | Output |
+|------|------|-----------|--------|
+| 1 | **SCOPE** | Pick one Approach part. User judgment. That part is the session boundary. | "I am working on Part X" |
+| 2 | **SURFACE** | AI produces numbered uncertainties (questions + hypotheses) from the scoped part text. No transcript reading at this stage. User validates the list. | Numbered list. List = SURFACE done. |
+| 3 | **RESOLVE** | Chisel ambiguity one item at a time. AI self-routes each uncertainty before asking the user. User controls pacing — do not advance without explicit "next." Lightweight dependency ordering (conceptual building). Source attribution per resolution: Fireflies link + search anchor words. | Each item gets a disposition + source |
+| 4 | **UPDATE** | Write resolved findings into the design doc part. Flagged items assembled into meeting agenda (batch, after RESOLVE). Per-element source attribution. *(To be refined with more evidence.)* | Updated design doc part + meeting agenda if needed |
+| 5 | **ASSESS** | User judges: ready or not. No formal state levels. Multiple extraction passes are normal. *(To be refined with more evidence.)* | User decision |
+
+**Self-Routing in RESOLVE:**
+
+| Before asking user | AI checks | If found |
+|---|---|---|
+| Is this in **transcripts**? | Mine transcripts (chunked read) | Present for validation: "transcript says X — still valid?" |
+| Is this in **data artifacts**? | Read data files | Present for validation |
+| Neither → **user decision** | — | AskUserQuestion (now evidence-informed) |
+| User says "I don't know either" | — | Flag → meeting agenda |
+
+**Design constraint:** Session-atomic. If the full cycle can't complete in one session, the scope was too broad or SURFACE produced too many uncertainties. The answer is tighter scoping, not carry-forward.
 
 ---
 
@@ -145,13 +167,29 @@ The attendee reads the design doc before the meeting. The discussion topics are 
 
 ## Source
 
+**Creation methodology:**
 - **Design doc session:** /Users/verdant/.claude/projects/-Users-verdant-Documents-projects-WILSCH-AI-INTERNAL--soloforce/f819eaff-5acf-4089-9b47-c6966afc3766.jsonl
 - **Meeting agenda session:** /Users/verdant/.claude/projects/-Users-verdant-Documents-projects-WILSCH-AI-INTERNAL--soloforce/456f6c80-6ae1-47de-ac09-d8cb75772042.jsonl
 - **Evidence conversations:**
   - `39c514f1` — Chain 1B Step 3 design doc (strongest component-by-component evidence: "Let's decide on the component structure, then rock through each one")
   - `038e99d2` — YouTube Marketing Funnel (design doc + meeting agenda workflow: "Let's go through each section one by one again")
   - `77fa2cc5` — Meeting agenda friction points (perspective, verification, format preferences)
+
+**Extraction pass methodology:**
+- **Rubber-duck session:** /Users/verdant/.claude/projects/-Users-verdant-Documents-projects-WILSCH-AI-INTERNAL--soloforce/6269c598-82a4-49fe-892d-52ba74662ea8.jsonl
+- **SURFACE in practice:** `cb7381c0` — REKERS extraction attempt (failure points: probe-first vs list-first, pacing control, 16 uncertainties surfaced)
+- **Evidence conversations (7 analyzed via parallel agents):**
+  - `87720057` — REKERS failure case (correction loops, no rhythm, 60%+ session on corrections)
+  - `451ac158` — AVO creation pass (blank → parts decomposed)
+  - `39bd95d4` — Abtmayr-Reichert extraction → meeting agenda (14 uncertainties, one-by-one)
+  - `1443f1aa` — Archibus extraction → design doc (10 uncertainties, per-element sources — cleanest)
+  - `ed3ed7d2` — AVO reverse extraction (questions first, then transcripts — adaptive variant)
+  - `00e6a51f` — Soloforce implicit success (Socratic dialogue as extraction, transcript mining pattern)
+  - `b9e0c145` — AVO additional evidence
+- **Design docs demonstrating extraction output:** [Chain 1B Step 3](https://mariuswilsch.github.io/public-wilsch-ai-pages/project/archibus-fm-assistant/chain-1b-step3-design) (per-element source attribution, Defined/Partially Defined/Undefined per part)
+
+**Shared references:**
 - **Meeting agendas analyzed:** [Mujahid - Asset Code](https://mariuswilsch.github.io/public-wilsch-ai-pages/project/archibus-fm-assistant/mujahid-meeting-agenda-asset-code-hosting), [Miguel/Ian - Hierarchy](https://mariuswilsch.github.io/public-wilsch-ai-pages/project/archibus-fm-assistant/miguel-ian-meeting-agenda-hierarchy-understanding), [Rein - Background Data](https://mariuswilsch.github.io/public-wilsch-ai-pages/project/archibus-fm-assistant/rein-meeting-agenda-background-data), [Rein - Step 3 API](https://mariuswilsch.github.io/public-wilsch-ai-pages/project/archibus-fm-assistant/ryan-meeting-agenda-step3-insertion-api), [All-Hands Prioritization](https://mariuswilsch.github.io/public-wilsch-ai-pages/project/archibus-fm-assistant/all-hands-ai-work-track-prioritization), [Bulk Entry Spike](https://mariuswilsch.github.io/public-wilsch-ai-pages/project/archibus-fm-assistant/bulk-entry-spike-agenda)
-- **CCI:** [#395](https://github.com/DaveX2001/claude-code-improvements/issues/395) — Design doc workflow (consolidates hippocampus improvements)
+- **CCI:** [#395](https://github.com/DaveX2001/claude-code-improvements/issues/395) — Design doc workflow, [#468](https://github.com/DaveX2001/claude-code-improvements/issues/468) — Extraction pass methodology
 - **Design docs analyzed:** [Asset Code Generator](https://mariuswilsch.github.io/public-wilsch-ai-pages/project/archibus-fm-assistant/asset-code-generator-design), [Chain 1B Bulk Entry](https://mariuswilsch.github.io/public-wilsch-ai-pages/project/archibus-fm-assistant/chain-1b-bulk-entry-design), [Chain 1B Step 3](https://mariuswilsch.github.io/public-wilsch-ai-pages/project/archibus-fm-assistant/chain-1b-step3-design), [Step 2 Schema Mapping](https://mariuswilsch.github.io/public-wilsch-ai-pages/project/archibus-fm-assistant/step-2-schema-mapping-design), [YouTube Marketing Funnel](https://mariuswilsch.github.io/public-wilsch-ai-pages/project/archibus-fm-assistant/youtube-marketing-funnel-execution-design)
 - **Framework:** Michael Gerber, *The E-Myth Revisited*, Chapters 10, 15; [MG-0080 Operations Manual Guide](https://mariuswilsch.github.io/public-wilsch-ai-pages/project/soloforce/emyth-chapters/emyth-operations-manual-guide)
