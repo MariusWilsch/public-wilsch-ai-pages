@@ -110,12 +110,12 @@ The component-by-component rhythm creates the design doc. The extraction pass de
 
 **Self-Routing in RESOLVE:**
 
-| Before asking user | AI checks | If found |
-|---|---|---|
-| Is this in **transcripts**? | Mine transcripts (chunked read) | Present for validation: "transcript says X — still valid?" |
-| Is this in **data artifacts**? | Read data files | Present for validation |
-| Neither → **user decision** | — | AskUserQuestion (now evidence-informed) |
-| User says "I don't know either" | — | Flag → meeting agenda |
+| Before asking user | AI checks | Tool | If found |
+|---|---|---|---|
+| Is this in **transcripts**? | Mine transcripts (chunked read) | Transcript mining skill *(TBD — `context: fork`, reads JSONL in chunks)* | Present for validation: "transcript says X — still valid?" |
+| Is this in **data artifacts**? | Read data files | Standard file read / agents | Present for validation |
+| Neither → **user decision** | — | AskUserQuestion | Evidence-informed question |
+| User says "I don't know either" | — | — | Flag → meeting agenda |
 
 **Design constraint:** Session-atomic. If the full cycle can't complete in one session, the scope was too broad or SURFACE produced too many uncertainties. The answer is tighter scoping, not carry-forward.
 
