@@ -58,7 +58,7 @@ Prototype is live on IITR-STAGING. These are the DS-Kit containers:
 - Health check: `curl -s http://localhost:8109/health`
 - Test harness: `cd /opt/dskit-rag/test-harness && uv run run_test_harness.py --api-key $(grep OPENWEBUI_API_KEY .env | cut -d= -f2)`
 
-**Manual testing:** Open [dskit.iitr-cloud.de](https://dskit.iitr-cloud.de), pick a question from [`KI Testfragen (1).xlsx`](https://github.com/veloxforce/IITR__IITR-NAVIGATION/tree/main/.claude/tracking/issue-720) (31 test questions with expected answers), ask it, and compare the response.
+**Manual testing:** Open [dskit.iitr-cloud.de](https://dskit.iitr-cloud.de), pick a question from [`testfragen-mit-antworten.csv`](https://github.com/veloxforce/IITR__IITR-NAVIGATION/blob/main/infrastructure/dskit-rag/test-harness/testfragen-mit-antworten.csv) (test questions with expected answers), ask it, and compare the response.
 
 **Not DS-Kit (ignore these):**
 
