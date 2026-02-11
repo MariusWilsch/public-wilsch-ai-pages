@@ -37,15 +37,15 @@ Populating Bruce BEM's background data requires understanding the client's hiera
 
 ### 1. Filter by Top-Level Element
 
-For each unique value at the highest hierarchy level, process one element and all its children at a time. This scopes the work: instead of transforming 201 rows at once, AI handles one building's worth (~18-80 rows) per run.
+For each unique value at the highest hierarchy level, process one element and all its children at a time. This scopes the work: instead of transforming the entire table at once, AI handles one building at a time.
 
 ```
-201 equipment rows (4 buildings)
+Equipment table (N buildings)
     │
-    ├─→ Run 1: Building A (18 rows) ← process this first
-    ├─→ Run 2: Building B (~50 rows)
-    ├─→ Run 3: Building C (~50 rows)
-    └─→ Run 4: Building D (~80 rows)
+    ├─→ Run 1: Building A ← process this first
+    ├─→ Run 2: Building B
+    ├─→ Run 3: Building C
+    └─→ Run N: ...
 ```
 
 **Example — Building A selected (3 of 18 equipment rows, all columns):**
