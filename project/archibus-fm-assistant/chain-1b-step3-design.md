@@ -25,11 +25,9 @@ Populating Bruce BEM's background data requires understanding the client's hiera
 
 ## Success Definition
 
-| Element | Definition |
-|---------|-----------|
-| **Goal** | Equipment table transformed into AI-generated hierarchical JSON that Bruce BEM can insert, with self-correction on validation errors |
-| **Success** | For each top-level hierarchy element (e.g., 4 buildings = 4 JSONs): generate nested JSON → validate via API → if error, AI corrects and resubmits → insert when clean → move to next element. All elements populated. |
-| **Done test** | "Can I produce a valid JSON for one building that the API accepts without errors?" → If YES for all buildings → Step 3 is complete |
+- **Goal:** Equipment table transformed into AI-generated hierarchical JSON that Bruce BEM can insert, with self-correction on validation errors
+- **Success:** For each top-level hierarchy element (e.g., 4 buildings = 4 JSONs): generate nested JSON → validate via API → if error, AI corrects and resubmits → insert when clean → move to next element. All elements populated.
+- **Done test:** "Can I produce a valid JSON for one building that the API accepts without errors?" → If YES for all buildings → Step 3 is complete
 
 ---
 
