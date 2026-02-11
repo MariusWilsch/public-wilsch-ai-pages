@@ -18,7 +18,7 @@ The problem is NOT building a full AI quotation system. The problem IS determini
 **Preconditions:**
 
 - Workshop 2 completed (Jan 27-28, 2026) — scope and approach defined
-- REKERS committed to delivering test data (10 projects as CSV + file folders)
+- REKERS committed to delivering test data (10 projects as CSV + file folders) — 14 delivered
 - Project-level matching adopted over component-level matching (complexity reduction)
 - V006 contract covers this feasibility assessment (1.5 days analysis work)
 
@@ -36,65 +36,61 @@ The problem is NOT building a full AI quotation system. The problem IS determini
 
 ## Approach
 
-### Part 1: Data Assessment [TOUCHED]
+### Part 1: Data Assessment — Does the data exist?
 
-**Three-level model:** A project progresses through three levels. Level determines data richness.
+**Three-level model** (our synthesis, based on REKERS database entities Anfragen/Angebote/Kommissionen):
 
 | Level | Entity | Rule | Data Available |
 |-------|--------|------|----------------|
 | **Level 1** | Anfragen (requests) | Customer's world — what they want | CSV row + files (EMLs, PDFs, plans) |
 | **Level 2** | Angebote (offers) | REKERS's response — how they price it | Detailed cost breakdowns, component specs |
-| **Level 3** | Kommissionen (commissions) | Execution — what was built | NOT delivered |
+| **Level 3** | Kommissionen (commissions) | Execution — what was built | NOT delivered — deferred to POC (live system access required) |
 
-**What we have:** REKERS delivered test data on 2026-01-28 (14 projects vs 10 agreed):
-- **Level 1 — Anfragen.csv** (111 rows, 30 cols): Denormalized with AnfrageKunde and Angebot tables.
-- **Level 2 — Angebote ohne Material.csv** (4,307 rows, 141 cols): Quotation line items. Not mentioned in transcript — surprise delivery.
-- **File folders** (~740 files after ZIP extraction): 482 EML, 210 PDF, 5 DWG, 3 DXF, 2 XLSX. No IFC. Files live at Level 1, linked by Anfragen_ID folder structure.
+**What we have:** REKERS delivered test data on 2026-01-28 (14 projects, all historical):
+
+- **Level 1 — Anfragen.csv** (111 rows, 30 cols): Denormalized join of three entities (Anfragen × AnfrageKunde × Angebot). 14 unique projects, 32 customer links. All projects are completed quotations (dates 2019–2025, €1.2M–€15.3M). STATUS codes E/V — exact meanings unknown but don't affect data assessment.
+- **Level 2 — Angebote ohne Material.csv** (4,307 rows, 141 cols): Quotation line items with cost breakdowns. Surprise delivery — not mentioned in transcript. Assessed: contains no criteria-relevant data beyond what Anfragen.csv already provides (KRANKOSTEN = universal installation crane cost for precast elements, not building crane indicator; material weights = universal REKERS product, not building material classification). → Meeting agenda: why was this included?
+- **File folders** (~740 files after ZIP extraction): 482 EML, 210 PDF, 5 DWG, 3 DXF, 2 XLSX. No IFC. Folders contain full project lifecycle — mixed-level content (customer emails + REKERS quotation PDFs + external docs like building permits and architect plans).
+
+**Folder structure** (Anfrage ID = project, subfolders = customer links, verified 1:1 match with CSV):
+
+```
+REKERS Test Data/
+├── Anfragen.csv                (14 Anfragen × AnfrageKunde × Angebot = 111 rows)
+├── Angebote ohne Material.csv  (4,307 quotation line items)
+├── 35764/ — Neubau Werkhalle van Eckendonk (2019, €491K)
+│   ├── 10593/ (2 files)
+│   └── 11239/ (23 files — customer emails, REKERS quotations, permits)
+├── 36185/ — Lagergebäude GGM Gastro (2019, €3.9M, 4 subfolders)
+├── 37369/ — Kühl- und Lagerhalle Schütte (2020, €2.0M, EML-only)
+├── 38043/ — Neubau Nokera Werk Stegelitz (2021, €15.3M, 178 files)
+├── 38882/ — VGP Park Erfurt 3 (2022, €3.5M)
+├── 39381/ — VGP Park Magdeburg Halle D (2022, €11.8M)
+├── 40138/ — Hillwood (2023, €1.7M)
+├── 40593/ — Neubau Logistikzentrum (2023, €6.1M)
+├── 40758/ — Pfenning Neubau Halle (2024, €4.7M, 4 subfolders)
+├── 40856/ — Neubau Logistikhalle (2024, €1.8M)
+├── 41634/ — VGP Park Leipzig Halle C (2024, €5.6M)
+├── 41740/ — VGP Park Bernau Halle B (2024, €2.3M)
+├── 41793/ — Lager- und Logistikhalle Roy Böhlke (2025, €2.1M)
+└── 41807/ — NB Logistikhalle Spedition Neukirchen (2025, €1.3M)
+```
 
 **What we don't have:**
-- **Level 3 — Kommissionen**: Not delivered. "Am Anfang haben wir leider nicht die Kommissionsebene."
-- **Evaluierungsliste** from Herr Sasse: Not delivered (→ Part 4 blocker, → meeting agenda item).
 
-**Criteria-to-data mapping** (verified against actual CSV columns):
+- **Level 3 — Kommissionen**: Deferred to POC — extraction from IBM i is complex, requires live system access.
+- **Evaluierungsliste** from Herr Sasse: Not delivered (→ Part 4 blocker).
+- **New request examples**: All 14 projects are historical. No example of what a new request looks like at arrival time — the trigger/input for the matching system is undefined (→ meeting agenda).
 
-| Criterion | Source | Always available? |
-|-----------|--------|-------------------|
-| Bauort | CSV: `BAUVORHABEN_ORT, PLZ, NATION` | ✅ Yes |
-| Kundenreferenz | CSV: `KUNDE` column | ✅ Yes |
-| Kalkulatorenwissen | CSV: `KALKULATOR` column | ✅ Yes |
-| Gebäudetyp | File extraction (PDFs, EMLs) | ⚠️ Requires extraction |
-| Höhe | File extraction (specs, cross-sections) | ⚠️ Requires extraction |
-| Kran | File extraction + Kranliste.xlsx | ⚠️ Requires extraction |
-| Dachlasten | File extraction + derivable from location norms | ⚠️ Requires extraction |
-| Baustoff | File extraction (specifications) | ⚠️ Requires extraction |
-| Dachbegrünung | File extraction | ⚠️ Requires extraction |
-
-3 criteria guaranteed in CSV. 6 require document extraction.
-
-**File extraction verification** (3 projects sampled, documents read):
-
-| Criterion | 35764 (Werkhalle, 47 files) | 38043 (Nokera Werk, 178 files) | 41634 (VGP Halle C, 23 files) |
-|-----------|:---:|:---:|:---:|
-| **Gebäudetyp** | ✅ "Werkhalle mit Büro- und Sozialtrakt" | ✅ Produktionshallen | ✅ Halle |
-| **Höhe** | ✅ 13.35m (OK-Stütze) | ✅ 10m | ✅ 11-14m |
-| **Kran** | ✅ Kranbahnanlage, 7.5m Abstand | ✅ Kranliste.xlsx, 10t | ❌ Not present |
-| **Dachlasten** | ✅ DIN EN 1991, WZ2, Schneezone 2 | ✅ 0.5-0.75 kN/lfm | ✅ WZ2, Schneezone 2 |
-| **Baustoff** | ✅ Beton + Stahl | ✅ Spannbeton + Holz | ✅ Stahlbeton B500 |
-| **Dachbegrünung** | ❌ Not mentioned | ❌ Not mentioned | ✅ "0,00 kN/m² — kommt nicht zur Ausführung" |
-
-Result: 5/6 extraction criteria found per project. Historical project files are richer than transcript suggested — they contain both customer docs AND REKERS quotation docs.
-
-**New request vs historical:** A new Anfrage (no Level 2 data yet) contains 1-5 files at arrival time (mostly the initial customer email). Historical projects accumulate 20-150+ files over weeks to years. Timestamp-based reconstruction is feasible but REKERS should provide conscious test queries instead (→ Part 4).
-
-**Matching mechanism:** Input = new Anfrage (Level 1 only, sparse) → Search against historical Anfragen (Level 1, rich) → Output = similar project IDs → Pull Level 2 chain (Angebote) for pricing reference.
+**Observation — absent ≠ no:** For criteria extracted from files, absence of information doesn't mean the criterion value is "no" — it means "undocumented." This applies to all extraction criteria. Whether any criteria are must-haves vs nice-to-haves requires both client input (meeting agenda) and empirical testing (POC).
 
 **Detailed inventory:** [Data Assessment Report](https://mariuswilsch.github.io/public-wilsch-ai-pages/project/rekers/data-assessment-testdaten)
 
 **Transcript:** [Wed AM — Datenexport & Ranking-System](https://app.fireflies.ai/view/01KG1V9Y791YHSAVP7GJABEJAA) + [Wed Follow-up](https://app.fireflies.ai/view/01KG25S4S0MVB8Q8F3CEXG60N4)
 
-### Part 2: File Processing Feasibility [TOUCHED]
+### Part 2: File Processing Feasibility — Can we extract it?
 
-Prerequisite for Part 3: 6 of 9 matching criteria require information extraction from project files (see Part 1 criteria mapping).
+Prerequisite for Part 3: 6 of 9 matching criteria require information extraction from project files (see Part 3 criteria mapping).
 
 **File types in test data (post-ZIP extraction):**
 
@@ -107,24 +103,23 @@ Prerequisite for Part 3: 6 of 9 matching criteria require information extraction
 | XLSX | 2 | ✅ Structured — includes Kranliste.xlsx |
 | IFC | 0 | N/A — absent from test data |
 
-**Criteria extraction evidence** (from 3 sampled projects — actual file references):
+**Criteria extraction evidence** (5/14 projects sampled — first-pass findings):
 
-| Criterion | Source File | Evidence |
-|-----------|------------|---------|
-| **Gebäudetyp** | 35764/Baugenehmigung.pdf | "Neubau einer Werkhalle mit Büro- und Sozialtrakt" |
-| **Höhe** | 35764/Angebot Nr. 28273.20.pdf | "OK-Stütze = ca. +13,35 m" |
-| **Kran** | 35764/Angebot Nr. 28273.20.pdf | "Ausführung der Halle mit einer Kranbahnanlage" |
-| **Kran** | 38043/Kranliste.xlsx | 10t crane specification |
-| **Dachlasten** | 35764/Angebot Nr. 28273.30.pdf | "Windlastzone WZ2, Schneelastzone 2" |
-| **Baustoff** | 35764/Angebot Nr. 28273.20.pdf | "Beton und Stahlbeton" |
-| **Baustoff** | 38043/technical docs | "Spannbeton + Holz" |
-| **Dachbegrünung** | 41634/contract PDF | "Dachbegrünung = 0,00 kN/m² — kommt nicht zur Ausführung" |
+| Project | Files | PDFs? | Criteria Found | Notes |
+|---------|-------|-------|----------------|-------|
+| 35764 — Werkhalle | 47 | Yes (3) | 5/6 | Gebäudetyp, Höhe, Kran, Dachlasten, Baustoff |
+| 38043 — Nokera Werk | 178 | Yes (via ZIP) | 5/6 | Gebäudetyp, Höhe, Kran, Dachlasten, Baustoff |
+| 41634 — VGP Halle C | 23 | Yes (1) | 5/6 | Gebäudetyp, Höhe, Dachlasten, Baustoff, Dachbegrünung (explicit "0,00 kN/m²") |
+| 37369 — Kühl/Lagerhalle | 19 | **No (EML-only)** | **2/6** | Only Gebäudetyp + Baustoff from email subjects |
+| 40856 — Logistikhalle | 19 | Yes (5 from ZIP) | 5/6 | Gebäudetyp, Höhe, Dachlasten, Baustoff, Dachbegrünung (explicit "0,00 kN/m²") |
+
+**Key pattern:** Technical PDFs drive extraction. Projects with PDFs → 5/6 criteria. The one EML-only project (37369) → 2/6. 13/14 test projects have PDFs.
 
 **Key observation:** Most criteria found in **Angebot PDFs** (Level 2 quotation documents), not initial customer docs. Historical project files are rich because they contain REKERS's own output — this data exists for the reference set but not for new requests.
 
 **Transcript:** [Wed AM — Datenexport & Ranking-System](https://app.fireflies.ai/view/01KG1V9Y791YHSAVP7GJABEJAA) (file format discussion, data source for criteria)
 
-### Part 3: Similarity Matching Approach [TOUCHED]
+### Part 3: Similarity Matching Approach — Can we match it?
 
 Project-level matching: given a new Anfrage (Level 1 only), find the most similar historical **projects** from the reference set. Historical projects have Level 1 + Level 2 + files — all available data contributes to similarity. The matched projects' Angebote (Level 2) provide the pricing reference value.
 
@@ -137,6 +132,22 @@ Project-level matching: given a new Anfrage (Level 1 only), find the most simila
 | **Structured** (CSV) | Bauort, Kundenreferenz, Kalkulatorenwissen | Direct column comparison — always available |
 | **Extracted** (documents) | Gebäudetyp, Höhe, Kran, Baustoff, Dachbegrünung | Text mining PDFs/EMLs — inconsistent availability |
 | **Derived** (norms) | Dachlasten | Location → wind/snow load norms (DIN EN 1991) |
+
+**Criteria-to-data mapping** (verified against actual CSV columns):
+
+| Criterion | Source | Always available? |
+|-----------|--------|-------------------|
+| Bauort | CSV: `BAUVORHABEN_ORT, PLZ, NATION` | ✅ Yes |
+| Kundenreferenz | CSV: `KUNDE` column | ✅ Yes |
+| Kalkulatorenwissen | CSV: `KALKULATOR` column (ID only — who, not what they know) | ⚠️ ID available, knowledge requires extraction |
+| Gebäudetyp | File extraction (PDFs, EMLs) | ⚠️ Requires extraction |
+| Höhe | File extraction (specs, cross-sections) | ⚠️ Requires extraction |
+| Kran | File extraction + Kranliste.xlsx | ⚠️ Requires extraction |
+| Dachlasten | File extraction + derivable from location norms | ⚠️ Requires extraction |
+| Baustoff | File extraction (specifications) | ⚠️ Requires extraction |
+| Dachbegrünung | File extraction | ⚠️ Requires extraction |
+
+3 criteria guaranteed in CSV. 6 require document extraction (see Part 2 for extraction evidence).
 
 **Verified similarity criteria** (from Wed Follow-up transcript + handwritten notes, confirmed against each other):
 
@@ -154,7 +165,7 @@ Project-level matching: given a new Anfrage (Level 1 only), find the most simila
 
 **Not in transcript:** Achsraster, Zwischenebene (these were in the previous AI session's interpretation but are NOT verified)
 
-**Dynamic weighting:** Criteria importance is context-dependent. "Wenn ich kalkuliere, ist die Dachbegrünung maßgeblich, wenn ich die Stütze kalkuliere, ist ja Höhe maßgeblich." Users may specify via chat what matters for a specific query.
+**Dynamic weighting** [later]: "Wenn ich kalkuliere, ist die Dachbegrünung maßgeblich, wenn ich die Stütze kalkuliere, ist ja Höhe maßgeblich." Explicitly discussed — first prove matching works at all, then optimize weighting. Could be added later via chat interface.
 
 **Ranking approach:** Partial matching — not all criteria will match. AI ranks by how many criteria match (3 of 5 > 1 of 5). Three-tier thresholds (80%/70%/60%), 60% cutoff. Top-K results (configurable, e.g., top 10 or 15).
 
@@ -169,7 +180,7 @@ Project-level matching: given a new Anfrage (Level 1 only), find the most simila
 
 **Transcripts:** [Tue AM](https://app.fireflies.ai/view/01KFZ9MSE9WZ179TAYYC30C6JC) (component-level parameters, yellow fields) + [Tue PM](https://app.fireflies.ai/view/01KFZR74V0N0P1S589KBKZCBYH) (search/return parameters, variance tolerances 3-10%) + [Wed Follow-up](https://app.fireflies.ai/view/01KG25S4S0MVB8Q8F3CEXG60N4) (verified criteria list, ranking approach)
 
-### Part 4: Validation Design [TOUCHED]
+### Part 4: Validation Design — Can we validate it?
 
 **Validation process** (agreed in Workshop 2):
 
@@ -207,13 +218,13 @@ Project-level matching: given a new Anfrage (Level 1 only), find the most simila
 
 **Transcript:** [Wed Follow-up — Priorisierung & UI](https://app.fireflies.ai/view/01KG25S4S0MVB8Q8F3CEXG60N4) (ranking thresholds, parameter weighting, test case design) + [Wed AM](https://app.fireflies.ai/view/01KG1V9Y791YHSAVP7GJABEJAA) (Evaluierungstabelle concept, Herr Sasse's role)
 
-### Part 5: Infrastructure Assessment [UNDEFINED — secondary priority]
+### Part 5: Infrastructure Assessment — Where does it run?
 
 Target: IBM Power 10 (~20 TOPS per chip). Alternative: hybrid approach (external GPU training, local Power 10 inference). Only relevant after Go/No-Go decision — does not affect feasibility assessment itself.
 
 **Transcripts:** [Wed AM](https://app.fireflies.ai/view/01KG1V9Y791YHSAVP7GJABEJAA) (Power 10 performance, ~20 TOPS) + [Tue AM](https://app.fireflies.ai/view/01KFZ9MSE9WZ179TAYYC30C6JC) (hybrid GPU/Power approach)
 
-### Part 6: POC Scope Definition [PARTIALLY DEFINED]
+### Part 6: POC Scope Definition — What does the POC look like?
 
 **Known:** 10 historical projects, project-level matching only. Component-level matching deferred. Batch processing model (overnight AI, morning review).
 
@@ -244,3 +255,4 @@ Target: IBM Power 10 (~20 TOPS per chip). Alternative: hybrid approach (external
 
 - `/Users/verdant/.claude/projects/-Users-verdant-Documents-projects/fc9f193e-2d54-4ea9-bcc1-5dfd2dd35f2d.jsonl` (initial design doc creation)
 - `/Users/verdant/.claude/projects/-Users-verdant-Documents-projects-WILSCH-AI-INTERNAL--soloforce/00e6a51f-cd0d-432f-b5f4-f2a41dd07a4d.jsonl` (data deep dive, criteria mapping, validation design)
+- `/Users/verdant/.claude/projects/-Users-verdant-Documents-projects-WILSCH-AI-INTERNAL--soloforce/cb7381c0-65f8-42cd-bf0a-a6a09bbfe357.jsonl` (Part 1 extraction pass — 16 uncertainties resolved)
