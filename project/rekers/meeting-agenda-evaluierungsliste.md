@@ -26,32 +26,31 @@ Validierungsdesign für den V006 Machbarkeitsbericht klären, damit die POC-Test
 
 ### 1. Testanfragen aus den 14 gelieferten Projekten
 
-Ansatz: 10 Projekte als Referenz, die 11. als Testanfrage — findet das System die richtigen ähnlichen Projekte?
+Ansatz: 10 Projekte als Referenz, die 11. als Testanfrage. CSV-Vorlage mit 4 Spalten steht bereit: Testanfrage, Erwarteter Treffer, Fehlfährte (ja/nein), Begründung. Ausschlussverfahren (Leave-one-out): 9 Projekte als Datenbestand, das 10. abfragen, Ergebnis mit Erwartung vergleichen.
 
-- Wir brauchen vorab die erwarteten Treffer pro Testanfrage
-- Konkret: "Für Testanfrage X erwarten wir Projekt Y — weil Gebäudetyp und Höhe übereinstimmen"
-- CSV-Vorlage mit 4 Spalten steht bereit: Testanfrage, Erwarteter Treffer, Fehlfährte (ja/nein), Begründung
-- Ausschlussverfahren (Leave-one-out): 9 Projekte als Datenbestand, das 10. abfragen, Ergebnis mit Erwartung vergleichen
+- Für jede Testanfrage liegt der erwartete Treffer vor — z.B. "Testanfrage X → Projekt Y, weil Gebäudetyp und Höhe übereinstimmen"
+- Ausgefüllte CSV-Vorlage durch Herrn Sasse
 
 ### 2. "Nichts gefunden" als gültiges Ergebnis
 
-Nicht jede Anfrage hat einen Treffer. Das System muss auch sagen können: "Dafür haben wir kein vergleichbares Projekt."
+Nicht jede Anfrage hat einen Treffer. Das System muss auch sagen können: "Dafür haben wir kein vergleichbares Projekt." Ein Gebäudetyp den REKERS noch nie gebaut hat, oder ein Kunde ohne Referenzhistorie — solche Fälle gehören in die Evaluierungsliste.
 
-- Wir brauchen Testfälle, bei denen kein Treffer die richtige Antwort ist
-- Z.B. ein Gebäudetyp den wir noch nie gebaut haben, oder ein Kunde ohne Referenzhistorie
-- Ob diese aus den bestehenden 14 Projekten kommen oder als neue Szenarien konstruiert werden, ist offen
+- Einigung auf Testfälle, bei denen kein Treffer die richtige Antwort ist
+- Klärung ob diese aus den bestehenden 14 Projekten kommen oder als neue Szenarien konstruiert werden
 
 ### 3. Der Anfrageprozess — vom Kundenkontakt zur Anfrage im System
 
-Wir wissen wie die historischen Projekte aussehen (14 geliefert), aber nicht wie eine neue Anfrage bei Eingang aussieht. Das System braucht einen definierten Startpunkt: Was liegt vor, wenn ein neues Projekt hereinkommt? E-Mail vom Architekten mit Plänen? Anruf vom Bauherrn? Strukturiertes Formular?
+Wir wissen wie die historischen Projekte aussehen (14 geliefert), aber nicht wie eine neue Anfrage bei Eingang aussieht. Das System braucht einen definierten Startpunkt. Projekt 35764 zeigt: 9 Dokumente vom Architekten (bbarchitektur.de), 12 von REKERS, 22 von Dritten (Baugenehmigungen, Gutachten). Die Trennung zwischen "was bei Erstanfrage vorliegt" und "was REKERS im Laufe der Bearbeitung hinzufügt" ist in den Daten nicht sichtbar.
 
-- Welche Informationen sind bei der ersten Kontaktaufnahme typischerweise verfügbar?
-- Unterscheiden sich die Anfragen je nach Kontaktweg (Architekt vs. Bauherr vs. Generalunternehmer)?
-- Welche der 9 Ähnlichkeitskriterien können wir realistisch aus der Erstanfrage ableiten?
+- Beschreibung eines typischen Eingangs — was liegt vor, bevor REKERS anfängt zu arbeiten
+- Einschätzung ob Kontaktweg (Architekt, Bauherr, Generalunternehmer) die verfügbaren Informationen beeinflusst
+- Zuordnung der 9 Ähnlichkeitskriterien zu dem, was realistisch aus der Erstanfrage ableitbar ist
 
 ### 4. Zweck der "Angebote ohne Material" CSV
 
-Die Datenlieferung enthielt eine CSV mit 4.307 Angebotszeilen (141 Spalten), die im Workshop nicht besprochen wurde. Unsere Analyse zeigt: die CSV enthält keine zusätzlichen Daten für den Ähnlichkeitsabgleich über die Anfragen.csv hinaus (Krankosten = universelle Montagekosten für Fertigteile, Materialgewichte = REKERS-Standardprodukt). War diese CSV für einen anderen Zweck gedacht?
+Die Datenlieferung enthielt eine CSV mit 4.307 Angebotszeilen (141 Spalten), die im Workshop nicht besprochen wurde. Unsere Analyse zeigt: die CSV enthält keine zusätzlichen Daten für den Ähnlichkeitsabgleich über die Anfragen.csv hinaus (Krankosten = universelle Montagekosten für Fertigteile, Materialgewichte = REKERS-Standardprodukt).
+
+- Klärung ob diese CSV für einen anderen Zweck vorgesehen war, der über den Ähnlichkeitsabgleich hinausgeht
 
 ## Besprechungsformat
 
