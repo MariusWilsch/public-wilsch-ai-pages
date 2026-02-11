@@ -119,20 +119,26 @@ The component-by-component rhythm creates the design doc. The extraction pass de
 
 **Design constraint:** Session-atomic. If the full cycle can't complete in one session, the scope was too broad or SURFACE produced too many uncertainties. The answer is tighter scoping, not carry-forward.
 
-**SURFACE output example** *(from REKERS Part 1, session cb7381c0):*
+**SURFACE output example** *(from Archibus #373, elements 4-5-6):*
 
 ```
-Uncertainties — Part 1: Data Assessment
+Part 4: Create Location-Based Assets
+1. Floor All placement — where does building-wide equipment attach?
+2. Multi-level emptiness — what if both room AND floor are empty?
+3. Creation trigger — one asset per unique value at each level?
+[...]
 
-1. Matching mechanism scope — does matching logic belong in Part 1 or Part 3?
-2. New request vs historical asymmetry — doc says "1-5 files" but this is unverified
-3. Criteria-to-data mapping — which criteria map to which data columns?
-4. 3/14 projects sampled — is this sufficient for the PoC?
-5. Dachbegrünung evidence — claimed in doc but not confirmed in data
+Part 5: Build Nested JSON
+1. Field naming — PascalCase (ImportTemplate) vs lowercase (Rein's example)?
+2. Country name → ID mapping — who resolves this?
+[...]
+
+Part 6: Insert via API + Backpressure
+1. Error response format — undefined until API is built
 [...]
 ```
 
-*Uncertainties come from reading the part text. Transcripts are not read during SURFACE.*
+*The part IS the categorization. Uncertainties come from reading the part text. Transcripts are not read during SURFACE.*
 
 
 ---
