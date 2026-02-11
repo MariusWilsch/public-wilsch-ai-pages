@@ -46,33 +46,11 @@ The problem is NOT building a full AI quotation system. The problem IS determini
 | **Level 2** | Angebote (offers) | REKERS's response — how they price it | Detailed cost breakdowns, component specs |
 | **Level 3** | Kommissionen (commissions) | Execution — what was built | NOT delivered — deferred to POC (live system access required) |
 
-**What we have:** REKERS delivered test data on 2026-01-28 (14 projects, all historical). All files live in the same folder per project — levels are logical, physical storage is mixed.
+**What we have:** REKERS delivered test data on 2026-01-28 (14 projects, all historical):
 
-*Example: Anfrage 35764 — Neubau Werkhalle van Eckendonk, Gescher (including but not limited to):*
-
-**Level 1 — Customer input** (what arrives):
-```
-35764/10593/  Angebotsaufforderung Stahlbau.eml     ← architect's initial request
-35764/11239/  van Eckendonk_Planunterlagen.eml       ← plans from architect
-              van Eckendonk_Projektunterlagen.eml    ← project specs
-              van Eckendonk_Stützen.eml              ← column specifications
-              Baugenehmigung.pdf                     ← building permit (external)
-              Bodengutachten Schleicher.pdf           ← soil survey (external)
-              BA-1000d_Grundrisse+Schnitt.dwg        ← floor plans (architect)
-```
-
-**Level 2 — REKERS response** (what REKERS creates):
-```
-35764/11239/  Angebot Nr. 28273.20.pdf               ← quotation document
-              Angebot Nr. 28273.30.pdf               ← quotation document
-              BV. Neubau Werkhalle van Eckendonk.eml ← REKERS internal emails
-```
-
-**Angebote ohne Material.csv** (Level 2 structured data, 4,307 rows, 141 cols): Quotation line items with cost breakdowns per component — weights, crane costs, material costs, crew sizes. Surprise delivery (not discussed in transcript). Assessed: contains no criteria-relevant data beyond Anfragen.csv (KRANKOSTEN = universal installation crane cost for precast, not building crane; material weights = REKERS product, not building material type). → Meeting agenda: why was this included?
-
-**Level 3 — Execution** (what was built): Not delivered — deferred to POC.
-
-**Across all 14 projects:** ~740 files (482 EML, 210 PDF, 5 DWG, 3 DXF, 2 XLSX, no IFC). Dates 2019–2025, €1.2M–€15.3M.
+- **Level 1 — Anfragen.csv** (111 rows, 30 cols): Denormalized join of three entities (Anfragen × AnfrageKunde × Angebot). 14 unique projects, 32 customer links. All projects are completed quotations (dates 2019–2025, €1.2M–€15.3M). STATUS codes E/V — exact meanings unknown but don't affect data assessment.
+- **Level 2 — Angebote ohne Material.csv** (4,307 rows, 141 cols): Quotation line items with cost breakdowns. Surprise delivery — not mentioned in transcript. Assessed: contains no criteria-relevant data beyond what Anfragen.csv already provides (KRANKOSTEN = universal installation crane cost for precast elements, not building crane indicator; material weights = universal REKERS product, not building material classification). → Meeting agenda: why was this included?
+- **File folders** (~740 files after ZIP extraction): 482 EML, 210 PDF, 5 DWG, 3 DXF, 2 XLSX. No IFC. Folders contain full project lifecycle — mixed-level content (customer emails + REKERS quotation PDFs + external docs like building permits and architect plans).
 
 **Folder structure** (Anfrage ID = project, subfolders = customer links, verified 1:1 match with CSV):
 
@@ -132,10 +110,10 @@ Prerequisite for Part 3: 6 of 9 matching criteria require information extraction
 | 35764 — Werkhalle | 47 | Yes (3) | 5/6 | Gebäudetyp, Höhe, Kran, Dachlasten, Baustoff |
 | 38043 — Nokera Werk | 178 | Yes (via ZIP) | 5/6 | Gebäudetyp, Höhe, Kran, Dachlasten, Baustoff |
 | 41634 — VGP Halle C | 23 | Yes (1) | 5/6 | Gebäudetyp, Höhe, Dachlasten, Baustoff, Dachbegrünung (explicit "0,00 kN/m²") |
-| 37369 — Kühl/Lagerhalle | 19 | **No (EML-only)** | **2/6** | Only Gebäudetyp + Baustoff from email subjects |
+| [37369 — Kühl/Lagerhalle](https://mariuswilsch.github.io/public-wilsch-ai-pages/project/rekers/criteria-evidence-37369) | 19 EML (24 PDFs embedded) | Yes (in EML attachments) | **4/6** | Gebäudetyp, Höhe, Dachlasten, Baustoff. [Evidence](https://mariuswilsch.github.io/public-wilsch-ai-pages/project/rekers/criteria-evidence-37369) |
 | 40856 — Logistikhalle | 19 | Yes (5 from ZIP) | 5/6 | Gebäudetyp, Höhe, Dachlasten, Baustoff, Dachbegrünung (explicit "0,00 kN/m²") |
 
-**Key pattern:** Technical PDFs drive extraction. Projects with PDFs → 5/6 criteria. The one EML-only project (37369) → 2/6. 13/14 test projects have PDFs.
+**Key pattern:** Technical PDFs drive extraction — but PDFs are often embedded as EML attachments, not standalone files. Project 37369 appeared "EML-only" but contained 24 PDF attachments (architectural drawings, REKERS quotations, contracts). With proper extraction: 4/6 criteria found (up from 2/6 via text-only parsing). All 14 test projects contain PDFs (standalone or embedded).
 
 **Key observation:** Most criteria found in **Angebot PDFs** (Level 2 quotation documents), not initial customer docs. Historical project files are rich because they contain REKERS's own output — this data exists for the reference set but not for new requests.
 
