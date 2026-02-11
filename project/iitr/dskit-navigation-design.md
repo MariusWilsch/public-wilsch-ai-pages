@@ -41,6 +41,34 @@ This project takes the navigation system from prototype to production-ready by:
 
 ---
 
+## Current Deployment
+
+Prototype is live on IITR-STAGING. These are the DS-Kit containers:
+
+| Container | Port | URL |
+|-----------|------|-----|
+| dskit-openwebui | 3007 | [dskit.iitr-cloud.de](https://dskit.iitr-cloud.de) |
+| dskit-typesense | 8109 | — |
+| dskit-pipelines | 9299 | — |
+| TEI (embeddings) | 8110 | — |
+
+**Access:**
+- SSH: `ssh mohamed@IITR-STAGING`
+- Deployment path: `/opt/dskit-rag/`
+- Health check: `curl -s http://localhost:8109/health`
+- Test harness: `cd /opt/dskit-rag/test-harness && uv run run_test_harness.py --api-key $(grep OPENWEBUI_API_KEY .env | cut -d= -f2)`
+
+**Not DS-Kit (ignore these):**
+
+| Service | Port | What it is |
+|---------|------|------------|
+| rag-dev.iitr-cloud.de | 3001 | Separate RAG project |
+| rag-staging.iitr-cloud.de | 3002 | Separate RAG project |
+| typesense-api.iitr-cloud.de | 8108 | Legacy Typesense (unhealthy) |
+| typesense-dashboard.iitr-cloud.de | 3005 | Dashboard for legacy Typesense |
+
+---
+
 ## Approach
 
 Three workstreams, executed sequentially with test harness validation between each. Sequential execution enables attribution of accuracy gains to specific data sources.
