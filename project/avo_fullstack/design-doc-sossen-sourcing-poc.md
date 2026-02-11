@@ -65,15 +65,20 @@ Load `alle.jsonl` → filter to **R-prefix entries only** (62 final products) �
 
 **What we ignore:** The `structure` field (Vormischung traceability — deferred to Phase 2 per WS2-Session1 agreement).
 
-**Basisvariante filter:** [WS2-S3a](https://docs.google.com/document/d/1Y6dz78yEu1E1LG4-YFqruj5gxSsJqil8vvU6tbOu_cw) agreed only Variant 0 (base recipe) enters comparison. Basisvariante = the original base recipe before packaging variants are created; the same recipe can have multiple article numbers for different packaging sizes or customer-specific labels, all sharing identical ingredients and percentages. Filtering to Variant 0 keeps one entry per actual recipe, removing ~80% packaging/customer duplicates. Data analysis confirms no variant duplicates among 62 R-prefix entries (confirm with Mattis).
+**Basisvariante filter:**
+- [WS2-S3a](https://docs.google.com/document/d/1Y6dz78yEu1E1LG4-YFqruj5gxSsJqil8vvU6tbOu_cw) agreed: only Variant 0 (base recipe) enters comparison
+- **Definition:** Same recipe can have multiple article numbers for different packaging sizes or customer-specific labels — all sharing identical ingredients and percentages
+- Filtering to Variant 0 keeps one entry per actual recipe, removing ~80% packaging/customer duplicates
+- Data analysis confirms no variant duplicates among 62 R-prefix entries (confirm with Mattis)
 
-**Material ID consistency:** Material IDs are globally consistent — same ID = same ingredient across all recipes (134 unique materials, 84% shared across multiple recipes). Suffix variations (e.g., 00004 vs 00004B) indicate different quality grades of the same base substance and are treated as distinct materials in POC comparison — both exist in the pool but do NOT match each other in Jaccard/Bray-Curtis (per [WS2-S1](https://docs.google.com/document/d/1KRF-IktLEuM8wlyGnXjg-yfK3KoQR-zqwzDlHyqqXGs): "dürfen nicht automatisch zusammengeführt werden"). Confirm treatment with client.
+**Material ID consistency:**
+- Material IDs are globally consistent — same ID = same ingredient across all recipes
+- 134 unique materials, 84% shared across multiple recipes
+- Suffix variations (e.g., 00004 vs 00004B) = different quality grades of same base substance
+- POC treats suffix variants as **distinct** — both exist in pool but do NOT match each other in Jaccard/Bray-Curtis
+- Per [WS2-S1](https://docs.google.com/document/d/1KRF-IktLEuM8wlyGnXjg-yfK3KoQR-zqwzDlHyqqXGs): "dürfen nicht automatisch zusammengeführt werden"
+- Confirm treatment with client
 
-**Meeting confirmation items:**
-- Confirm matching pool is 62 R-prefix entries (set expectation for matching pool size)
-- Confirm Basisvariante (Variant 0) filtering was applied to test data
-- Confirm suffix variants (e.g., 00004 vs 00004B) should be treated as distinct in comparison
-- Confirm RV (premix) and RZ (intermediate) classification; clarify B-prefix entries
 
 **Source:**
 - [WS2-Session1](https://docs.google.com/document/d/1KRF-IktLEuM8wlyGnXjg-yfK3KoQR-zqwzDlHyqqXGs) (44:47) — "Auflösung der Rezepturen auf Zutatsebene ohne Vormischungen" (resolve to ingredient level without premixes)
