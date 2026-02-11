@@ -48,9 +48,7 @@ Wir wissen wie die historischen Projekte aussehen (14 geliefert), aber nicht wie
 
 ### 4. Zweck der "Angebote ohne Material" CSV
 
-Die Datenlieferung enthielt eine CSV mit 4.307 Angebotszeilen (141 Spalten), die im Workshop nicht besprochen wurde. Unsere Analyse zeigt: die CSV enthält keine zusätzlichen Daten für den Ähnlichkeitsabgleich über die Anfragen.csv hinaus (Krankosten = universelle Montagekosten für Fertigteile, Materialgewichte = REKERS-Standardprodukt).
-
-- Klärung ob diese CSV für einen anderen Zweck vorgesehen war, der über den Ähnlichkeitsabgleich hinausgeht
+Die Datenlieferung enthielt eine CSV mit 4.307 Angebotszeilen (141 Spalten), die im Workshop nicht besprochen wurde. Ich konnte den Zweck dieser Datei nicht zuordnen — wofür war sie gedacht?
 
 ## Besprechungsformat
 
