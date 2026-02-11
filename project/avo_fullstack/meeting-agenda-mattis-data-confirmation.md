@@ -2,63 +2,63 @@
 publish: true
 ---
 
-# Meeting Agenda: Data Confirmation for Soßen Sourcing POC
+# Meeting Agenda: Datenbestätigung für Soßen Sourcing POC
 [[client-avo]]
 
-## Meeting Goal
+## Ziel des Meetings
 
-By the end of this session, we should have:
+Am Ende dieses Meetings sollten wir haben:
 
-1. **Data scope confirmed** — which entries from alle.jsonl are final products for comparison
-2. **Material treatment agreed** — how ingredient variants (e.g., 00004 vs 00004B) behave in the similarity comparison
-3. **Data preparation clarity** — whether Basisvariante filtering was applied to the test data
-
----
-
-## Discussion Topics
-
-*Starting points for discussion, not limited to these.*
-
-### 1. The matching pool contains 62 R-prefix entries
-
-From alle.jsonl (197 entries), 62 have R-prefix (final products), 18 RV (premix recipes), 9 RZ (intermediate mixes), 6 B-prefix (unclassified).
-
-We want to confirm:
-- Are these 62 the complete set of final products in the test data?
-- What are B-prefix entries — should any be in the comparison pool?
-
-### 2. Basisvariante filtering in the test data
-
-The design agreed only Variant 0 (base recipe) enters comparison. Our analysis found no variant duplicates among the 62 R-entries.
-
-We want to confirm:
-- Was Variant 0 filtering applied when preparing alle.jsonl?
-
-### 3. Materials with suffix variants
-
-00004 and 00004B appear as separate material IDs. The POC treats them as distinct ingredients — they don't match each other in the similarity comparison.
-
-We want to understand:
-- Is this the correct treatment?
-- Are suffix variants always the same base substance in different quality grades?
-
-### 4. Stammdaten CSV for future category comparison
-
-Category-level grouping (Einkaufsgruppen) is not needed for POC launch but would enable testing whether recognizing substitutable ingredients improves results.
-
-- When can the Stammdaten CSV be delivered?
+1. **Datenumfang bestätigt** — welche Einträge aus alle.jsonl sind Fertigprodukte für den Vergleich
+2. **Materialbehandlung vereinbart** — wie Zutatenvarianten (z.B. 00004 vs 00004B) im Ähnlichkeitsvergleich behandelt werden
+3. **Datenaufbereitung geklärt** — ob Basisvariante-Filterung auf die Testdaten angewendet wurde
 
 ---
 
-## Meeting Format
+## Diskussionsthemen
 
-- **Type:** Confirmation session
-- **Expectation:** Mattis reviews data preparation decisions
-- **Outcome:** Green light on data assumptions for POC implementation
+*Ausgangspunkte für die Diskussion, nicht darauf beschränkt.*
+
+### 1. Der Vergleichspool enthält 62 R-Präfix-Einträge
+
+Aus alle.jsonl (197 Einträge) haben 62 ein R-Präfix (Fertigprodukte), 18 RV (Vormischungsrezepte), 9 RZ (Zwischenmischungen), 6 B-Präfix (nicht klassifiziert).
+
+Wir möchten bestätigen:
+- Sind diese 62 die vollständige Menge der Fertigprodukte in den Testdaten?
+- Was sind B-Präfix-Einträge — sollten welche davon im Vergleichspool sein?
+
+### 2. Basisvariante-Filterung in den Testdaten
+
+Das Design sieht vor, dass nur Variante 0 (Grundrezeptur) in den Vergleich eingeht. Unsere Analyse hat keine Variantenduplikate unter den 62 R-Einträgen gefunden.
+
+Wir möchten bestätigen:
+- Wurde Variante-0-Filterung bei der Erstellung von alle.jsonl angewendet?
+
+### 3. Materialien mit Suffixvarianten
+
+00004 und 00004B erscheinen als separate Material-IDs. Der POC behandelt sie als unterschiedliche Zutaten — sie matchen nicht miteinander im Ähnlichkeitsvergleich.
+
+Wir möchten verstehen:
+- Ist diese Behandlung korrekt?
+- Sind Suffixvarianten immer derselbe Grundstoff in unterschiedlichen Qualitätsstufen?
+
+### 4. Stammdaten-CSV für zukünftigen Kategorievergleich
+
+Kategorie-Gruppierung (Einkaufsgruppen) wird für den POC-Start nicht benötigt, würde aber ermöglichen zu testen, ob das Erkennen austauschbarer Zutaten die Ergebnisse verbessert.
+
+- Wann kann die Stammdaten-CSV geliefert werden?
 
 ---
 
-## Related
+## Meeting-Format
+
+- **Art:** Bestätigungssession
+- **Erwartung:** Mattis prüft Datenaufbereitungsentscheidungen
+- **Ergebnis:** Freigabe der Datenannahmen für die POC-Implementierung
+
+---
+
+## Verknüpft
 
 - **Issue:** [#513 - AVO: KI_PROJEKT_SOSSEN_SOURCING POC](https://github.com/DaveX2001/deliverable-tracking/issues/513)
 - **Design Doc:** [Soßen Sourcing POC](https://mariuswilsch.github.io/public-wilsch-ai-pages/project/avo_fullstack/design-doc-sossen-sourcing-poc)
