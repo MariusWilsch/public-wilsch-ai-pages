@@ -30,13 +30,17 @@ AVO-Werke has ~8000 sauce recipes accumulated over years. Duplicates and near-du
 
 ## Success Definition
 
-| Element | Definition |
-|---------|-----------|
-| **Goal** | For 62 test recipes: query any recipe → receive Top 5 most similar recipes with similarity scores |
-| **Success** | (1) Behrens's 5 known duplicate pairs each appear in their partner's Top 5 results. (2) Two criteria (overlap ratio, percentage similarity) scored per pair — weights calibrated from known pairs. (3) Output: ranked list per query (recipe ID + score). Ingredient drill-down is next iteration. |
-| **Done test** | Query each recipe from Behrens's 5 known pairs → partner appears in Top 5. If yes for all 5 → baseline validated. |
+**Goal:** For 62 test recipes: query any recipe → receive Top 5 most similar recipes with similarity scores. POC validates or refutes the hypothesis that ingredient overlap + proportion similarity is a proxy for taste similarity.
 
-**Blocked by:** 5 known duplicate pairs from Herr Behrens (meeting agenda item).
+**Success:**
+1. Behrens's 5 known duplicate pairs each appear in their partner's Top 5 results
+2. Two criteria (overlap ratio, percentage similarity) scored per pair — weights calibrated from known pairs
+3. Output: ranked list per query (recipe ID + score). Ingredient drill-down is next iteration
+4. The evaluation chain itself is demonstrated as reusable — adding a future criterion follows the same validate-against-pairs workflow
+
+**Done test:** Query each recipe from Behrens's 5 known pairs → partner appears in Top 5. If yes for all 5 → baseline validated. Otherwise → adjust weights and iterate. A negative finding (no weight combination achieves this) is also a valid POC result — it means the current criteria don't capture taste similarity.
+
+**Blocked by:** 5 known duplicate pairs from Herr Behrens ([meeting agenda](https://mariuswilsch.github.io/public-wilsch-ai-pages/project/avo_fullstack/meeting-agenda-behrens-validation)).
 
 ---
 
@@ -156,23 +160,40 @@ Rank  Recipe    Overlap  Proportion  Combined
 
 **Similarity type:** Near-duplicates with flexible thresholds (2%, 5%, 10% per WS2-Session1), not exact matches. Quantity-based, not semantic. The specific similarity band that matters will emerge empirically from the data and Behrens's pairs.
 
+**Core hypothesis:** Overlap (Jaccard) + Proportion (Bray-Curtis) is a sufficient proxy for taste similarity.
+
+**Back-pressure mechanism:** Behrens's 5 known pairs function as the POC's automated feedback loop. Each algorithm iteration (weight change, threshold adjustment) can be validated against these pairs without human-in-the-loop review. The evaluation chain is stable — proxies change (currently Overlap + Proportion, later Category, future TBD), the validation loop stays the same.
+
 **Evaluation table (Behrens fills in):**
 
-| Recipe_A | K1 (required) | K2–K5 (optional) | Confidence | Why? (if "definitely") |
-|----------|---------------|-------------------|------------|------------------------|
-| R...     | R...          | R..., R...        | Definitely / Probably / Unsure | Free-text domain reasoning |
+| Rezeptur_A | Ähnlichste (Pflicht) | Weitere (optional) | Anmerkung |
+|------------|---------------------|-------------------|-----------|
+| R...       | R...                | R..., R...        | Freitext  |
 
-- **K1:** Primary similar recipe (required). K2–K5 optional if Behrens knows additional similar recipes.
-- **Confidence:** Quick checkbox — low burden. "Definitely" pairs are calibration anchors; "probably/unsure" are bonus exploration data.
-- **Why?:** Free-text reasoning only for "definitely" pairs. Enables calibration conversation when algorithm disagrees with domain expert.
+- **Ähnlichste:** Primary similar recipe (required). Weitere optional if Behrens knows additional similar recipes.
+- **Anmerkung:** Free-form text — Behrens writes whatever reasoning he has. No structured confidence levels.
+- **Living document:** Not static ground truth. After algorithm runs, revisit results with Behrens. His updated reasoning when seeing algorithm output informs which proxy to explore next.
 
-**Guided pair selection:** Request a diverse mix — 2 obvious duplicates, 2 similar-but-different, 1 edge case. Diverse pairs maximize informative value for weight calibration (homogeneous pairs all score high on the same criteria, revealing nothing about relative weights).
+**Pair selection:** Only constraint — pairs must come from the 62 R-prefix pool. No diversity requirement. If pairs are homogeneous (all obvious duplicates), that's back-pressure signal: algorithm passes trivially → harder test cases needed in next iteration.
 
-**Negative examples (if possible):** Ask Behrens for 1–2 pairs that share many ingredients but are NOT similar. These test false positive rejection. If not provided, the 62-recipe dataset (1,891 possible pairs) provides implicit negatives.
+**XLSX artifact (2 sheets):**
+1. **Rezeptpool:** 62 R-prefix recipes listed by ID + name — Behrens selects pairs from this
+2. **Bewertungstabelle:** Evaluation table template with example data showing the format
 
 **Success criterion:** K1 partner appears in query recipe's Top 5 (configurable N). Test bidirectionally — query A→check B in Top 5 AND query B→check A in Top 5 — as sanity check (both criteria are mathematically symmetric, so results should match).
 
-**Calibration workflow:** Run algorithm with equal weights (50/50) → compare output to Behrens's table → for "definitely" pairs where algorithm disagrees, use the "why?" reasoning to understand which criterion the domain expert values → adjust weights empirically. This is iterative, not one-shot.
+**Calibration workflow:** Run algorithm → sweep weight combinations → find which combo best ranks Behrens's pairs → his free-text reasoning provides post-hoc explanatory context for why the winning weights capture taste. Search strategy is an implementation detail.
+
+**Outcomes:**
+- **Hypothesis confirmed:** A weight combination exists where all 5 K1 partners appear in their query's Top 5. POC result = the algorithm + winning weights.
+- **Hypothesis weakened:** Best combo achieves 3–4/5. Investigate failing pairs — may indicate edge cases or missing criterion (e.g., Category needed sooner than expected).
+- **Hypothesis refuted:** No weight combination achieves majority match. Overlap + Proportion don't capture taste similarity. POC result = negative finding + analysis of what the criteria *do* capture vs. what Behrens means by "similar."
+
+All three outcomes are valid POC results. A negative finding is still a finding.
+
+**Two Behrens interactions:**
+1. **Interaction 1 (meeting):** Build shared understanding of the validation process. Present XLSX as visual stimulus. Agree on format together. Behrens fills initial pairs.
+2. **Interaction 2 (async email):** Send results XLSX with multiple result sets (internally from different weight combos). Behrens sees ranked lists with per-criterion scores (Überlappung, Anteil, Gesamt), annotates which results match his intuition. False positives emerge organically — Behrens flags unexpected entries in Top 5.
 
 **Blocked by:** 5 known duplicate pairs from Herr Behrens (meeting agenda item).
 
@@ -198,3 +219,4 @@ Rank  Recipe    Overlap  Proportion  Combined
 - **Session (Part 1 deepening):** `/Users/verdant/.claude/projects/-Users-verdant-Documents-projects-billable-AVO--poc/451ac158-4b2b-4501-8dca-bd9645888e7d.jsonl`
 - **Session (Parts 2–4 deepening):** `/Users/verdant/.claude/projects/-Users-verdant-Documents-projects-billable-AVO--poc/ed3ed7d2-a582-4987-b15b-d59a0f7763de.jsonl`
 - **Session (Part 1 extraction + Part 2 simplification):** `/Users/verdant/.claude/projects/-Users-verdant-Documents-projects-billable-AVO--poc/953e038a-ae96-4265-a20b-b7d9d1763d87.jsonl`
+- **Session (Part 4 extraction):** `/Users/verdant/.claude/projects/-Users-verdant-Documents-projects-billable-AVO__poc/67641e8a-a998-4c2c-b7b6-67f7191bc2f4.jsonl`

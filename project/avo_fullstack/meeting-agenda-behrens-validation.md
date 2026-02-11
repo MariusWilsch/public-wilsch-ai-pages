@@ -7,10 +7,11 @@ publish: true
 
 ## Meetingziel
 
-Validierungsdaten von Herrn Behrens erhalten, um den Rezeptähnlichkeits-Algorithmus zu kalibrieren und zu testen.
+Wir bauen ein gemeinsames Verständnis auf, wie der Validierungsprozess für den Rezeptähnlichkeits-Algorithmus funktioniert, und erheben erste Bewertungspaare.
 
-1. **Bewertungspaare erhalten** — 5 bekannte ähnliche Rezeptpaare mit Konfidenzangabe und Begründung bei Ankerpaaren
-2. **Negativbeispiele identifiziert** — 1–2 Paare, die Zutaten teilen, aber NICHT ähnlich sind (falls vorhanden)
+1. **Gemeinsames Verständnis** — Wir besprechen, warum wir Ihre Einschätzung brauchen und wie der Rückkanal funktioniert (Sie geben Paare → wir zeigen Ergebnisse → Sie geben Feedback)
+2. **Bewertungspaare** — 5 bekannte ähnliche Rezeptpaare aus dem 62-Rezeptpool mit Ihren Anmerkungen
+3. **Format vereinbart** — Wir besprechen die XLSX-Vorlage gemeinsam und passen sie bei Bedarf an
 
 ## Diskussionsthemen
 
@@ -18,46 +19,49 @@ Validierungsdaten von Herrn Behrens erhalten, um den Rezeptähnlichkeits-Algorit
 
 ### 1. Das zeigt unser Algorithmus Ihnen zurück
 
-Wir haben ein Rezeptvergleichssystem entwickelt, das für jede Rezeptur die 5 ähnlichsten findet und zeigt, warum sie ähnlich sind. Hier ein Beispiel der Ausgabe:
+Wir entwickeln ein Rezeptvergleichssystem — für jede Rezeptur die 5 ähnlichsten mit Begründung. So wird die Ausgabe aussehen:
 
 ```
 Abfrage: R261800
 
-Rang  Rezeptur  Überlappung  Anteil   Kategorie  Gesamt
-#1    R261700   85%          97%      N/A        92%
-#2    R482000   62%          78%      N/A        71%
-#3    R954700   58%          82%      N/A        68%
-#4    R445100   51%          65%      N/A        57%
-#5    R887200   48%          71%      N/A        55%
+Rang  Rezeptur  Bezeichnung           Überlappung  Anteil  Gesamt
+#1    R261700   Tomatensoße Mild      85%          97%     92%
+#2    R482000   Paprikasoße Basis     62%          78%     71%
+#3    R954700   Tomatensoße Scharf    58%          82%     68%
+#4    R445100   Chilisoße Rot         51%          65%     57%
+#5    R887200   Kräutersoße           48%          71%     55%
 ```
 
 - **Überlappung:** Wie viele Zutaten beide Rezepturen gemeinsam haben
 - **Anteil:** Wie nah die Mengen bei gemeinsamen Zutaten beieinander liegen
-- **Kategorie:** Ob nicht-gemeinsame Zutaten zur selben Einkaufsgruppe gehören
+- **Gesamt:** Gewichtete Kombination aus Überlappung und Anteil
 
 ### 2. Zur Kalibrierung benötigen wir bekannte Rezeptpaare von Ihnen
 
-Um zu testen, ob der Algorithmus die richtigen Ergebnisse liefert, benötigen wir bekannte ähnliche Paare aus Ihrer Erfahrung. Wir haben eine einfache Tabelle vorbereitet:
+- Wir testen, ob der Algorithmus die richtigen Ergebnisse liefert
+- Dazu benötigen wir bekannte ähnliche Paare aus Ihrer Erfahrung
+- In der XLSX-Vorlage finden Sie die Liste aller 62 Rezepturen aus dem Testpool
 
-| Rezeptur_A | Ähnlichste (Pflicht) | Weitere (optional) | Konfidenz | Warum? (bei „Definitiv") |
-|------------|---------------------|-------------------|-----------|--------------------------|
-| R...       | R...                | R..., R...        | Definitiv / Wahrscheinlich / Unsicher | Kurze Notiz |
+| Rezeptur_A | Ähnlichste (Pflicht) | Weitere (optional) | Anmerkung |
+|------------|---------------------|-------------------|-----------|
+| R...       | R...                | R..., R...        | Freitext  |
 
-Für jedes Paar benötigen wir die Rezeptur-IDs und Ihre Einschätzung, wie sicher Sie sich sind. Bei Paaren, bei denen Sie sich am sichersten sind, hilft uns eine kurze Begründung zu verstehen, was „ähnlich" aus fachlicher Sicht bedeutet.
+- **Rezeptur-IDs** aus dem Testpool auswählen
+- **Anmerkung:** Frei notieren, warum diese Rezepturen ähnlich sind — hilft uns, „ähnlich" aus fachlicher Sicht zu verstehen
 
-### 3. Eine Mischung verschiedener Paartypen hilft bei der Kalibrierung
+### 3. So funktioniert der Rückkanal
 
-Wir erhalten den größten Kalibrierungswert aus einer Mischung von Paaren — nicht nur aus den offensichtlichsten Duplikaten. Wenn manche Paare sehr ähnlich und andere eher grenzwertig sind, hilft uns diese Bandbreite, den Algorithmus über das gesamte Spektrum abzustimmen.
-
-### 4. Paare, die auf dem Papier ähnlich aussehen, es aber nicht sind
-
-Falls Sie Rezeptpaare kennen, die viele Zutaten teilen, die Sie aber nicht als ähnlich betrachten würden — zum Beispiel Rezepturen, die dieselbe Grundsoße für völlig unterschiedliche Produktlinien verwenden — würden uns auch 1–2 solcher Beispiele helfen zu testen, ob der Algorithmus falsche Treffer korrekt ablehnt.
+- Sie geben uns Paare → wir lassen den Algorithmus laufen
+- Wir schicken Ihnen die Ergebnisse per E-Mail als XLSX zurück
+- Sie sehen für jede Rezeptur die 5 ähnlichsten — mit Rezeptname, Überlappung, Anteil, Gesamtwert
+- Sie können direkt in der Datei anmerken, ob die Ergebnisse Sinn ergeben
+- So verbessern wir den Algorithmus schrittweise, ohne jedes Mal ein Meeting zu brauchen
 
 ## Meetingformat
 
-- **Art:** Discovery — Erhebung von Validierungsdaten
-- **Erwartung:** Herr Behrens kommt mit Wissen darüber, welche Rezepturen er als ähnlich betrachtet
-- **Ergebnis:** Ausgefüllte Bewertungstabelle + optionale Negativbeispiele
+- **Art:** Erkundung — gemeinsames Verständnis + Erhebung von Bewertungspaaren
+- **Erwartung:** Wissen darüber, welche Rezepturen als ähnlich gelten
+- **Ergebnis:** Vereinbarte XLSX-Vorlage + 5 ausgefüllte Bewertungspaare
 
 ## Verknüpfungen
 
