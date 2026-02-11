@@ -5,7 +5,7 @@ publish: true
 # Design Doc: Soßen Sourcing POC — Recipe Similarity Algorithm
 [[client-avo]]
 
-Design for the recipe similarity POC: compare ~90 test recipes, find Top 5 most similar per query, validate against known duplicate pairs.
+Design for the recipe similarity POC: compare 62 test recipes, find Top 5 most similar per query, validate against known duplicate pairs.
 
 ---
 
@@ -13,16 +13,18 @@ Design for the recipe similarity POC: compare ~90 test recipes, find Top 5 most 
 
 AVO-Werke has ~8000 sauce recipes accumulated over years. Duplicates and near-duplicates are invisible — no system compares recipes systematically. Manual comparison takes 2+ person-days just to display the data. Redundant recipes mean redundant production runs, inventory, and QA.
 
+**Core proxy:** The underlying question is whether two recipes taste similar enough to consolidate. Taste cannot be measured algorithmically — ingredient composition (which ingredients, in what proportions) serves as the computable proxy. All similarity criteria are different lenses on this same proxy.
+
 **Preconditions:**
-- ~90 test recipes available for POC development
-- Three comparison criteria agreed: ingredient overlap, percentage similarity, category matching
-- Category matching and certification filtering require additional data not yet delivered
+- 62 R-prefix test recipes available for POC development (from 197 total entries in `alle.jsonl`)
+- Two comparison criteria agreed: ingredient overlap, percentage similarity
 - Process-based similarity (manufacturing timing) is out of scope — deferred by agreement
 
 **NOT the problem:**
 - Production optimization / batch sizing (post-POC)
 - Preventive duplicate detection from product requests (post-POC)
 - Process-based similarity (deferred — data not in SAP, agreed in WS2-Session3a + Jan 15 meeting)
+- Category-level matching (future enhancement, blocked on Stammdaten CSV)
 
 ---
 
@@ -30,8 +32,8 @@ AVO-Werke has ~8000 sauce recipes accumulated over years. Duplicates and near-du
 
 | Element | Definition |
 |---------|-----------|
-| **Goal** | For ~90 test recipes: query any recipe → receive Top 5 most similar recipes with similarity scores |
-| **Success** | (1) Behrens's 5 known duplicate pairs each appear in their partner's Top 5 results. (2) Three criteria (overlap ratio, percentage similarity, category match) scored per pair — weights calibrated from known pairs. (3) Output: ranked list per query (recipe ID + score). Ingredient drill-down is next iteration. |
+| **Goal** | For 62 test recipes: query any recipe → receive Top 5 most similar recipes with similarity scores |
+| **Success** | (1) Behrens's 5 known duplicate pairs each appear in their partner's Top 5 results. (2) Two criteria (overlap ratio, percentage similarity) scored per pair — weights calibrated from known pairs. (3) Output: ranked list per query (recipe ID + score). Ingredient drill-down is next iteration. |
 | **Done test** | Query each recipe from Behrens's 5 known pairs → partner appears in Top 5. If yes for all 5 → baseline validated. |
 
 **Blocked by:** 5 known duplicate pairs from Herr Behrens (meeting agenda item).
@@ -42,11 +44,13 @@ AVO-Werke has ~8000 sauce recipes accumulated over years. Duplicates and near-du
 
 ### Part 1: Data Loading — Deepened
 
-Load `alle.jsonl` → filter to **R-prefix entries only** (62 final products) → each recipe becomes a map: `{material_id: percentage}`. Materials are already exploded (flattened across all Vormischung levels), summing to ~100%.
+Load `alle.jsonl` → filter to **R-prefix entries only** (62 final products) → each recipe becomes a map: `{material_id: percentage}`. Materials are already exploded (flattened across all Vormischung levels), summing to exactly 100% (within floating-point precision, verified).
 
 **Input:** `alle.jsonl` (197 total entries, now in `data/` directory)
 
 **Output:** 62 recipe maps (`R`-prefix), each `{material_id: percentage}` — this is the frame of reference for all similarity scoring.
+
+**Data format:** Raw JSONL entries contain `materials[]` array with `{article_number, percentage}` objects — trivially transformable to flat `{material_id: percentage}` maps.
 
 **Entry type breakdown (from data analysis):**
 
@@ -54,18 +58,22 @@ Load `alle.jsonl` → filter to **R-prefix entries only** (62 final products) �
 |--------|-------|-------------|
 | R | 62 | Yes — final products |
 | V | 54 | No — Vormischungen (pre-mixes, Phase 2) |
-| RV | 18 | Unknown — verify with Mattis |
-| RZ | 9 | Unknown — verify with Mattis |
+| RV | 18 | No — Rezept Vormischung (premix recipes, Phase 2) |
+| RZ | 9 | No — Rezept Zwischenmischung (intermediate mixes, Phase 2) |
 | (none) | 47 | No — raw materials / intermediates |
-| B | 6 | Unknown — B-variants |
+| B | 6 | Unknown — verify with Mattis |
 
 **What we ignore:** The `structure` field (Vormischung traceability — deferred to Phase 2 per WS2-Session1 agreement).
 
-**Basisvariante filter:** WS2-Session3a agreed only Variant 0 (base recipe) enters comparison, filtering ~80% packaging/customer duplicates. May already be applied in test dataset (197 vs 8000 total).
+**Basisvariante filter:** [WS2-S3a](https://docs.google.com/document/d/1Y6dz78yEu1E1LG4-YFqruj5gxSsJqil8vvU6tbOu_cw) agreed only Variant 0 (base recipe) enters comparison. Basisvariante = the original base recipe before packaging variants are created; the same recipe can have multiple article numbers for different packaging sizes or customer-specific labels, all sharing identical ingredients and percentages. Filtering to Variant 0 keeps one entry per actual recipe, removing ~80% packaging/customer duplicates. Data analysis confirms no variant duplicates among 62 R-prefix entries (confirm with Mattis).
 
-**Open uncertainties (verify with Mattis or transcripts):**
-- What are RV, RZ, and no-prefix entries? Some may be final products.
-- Is Basisvariante filtering already applied in `alle.jsonl`?
+**Material ID consistency:** Material IDs are globally consistent — same ID = same ingredient across all recipes (134 unique materials, 84% shared across multiple recipes). Suffix variations (e.g., 00004 vs 00004B) indicate different quality grades of the same base substance and are treated as distinct materials in POC comparison — both exist in the pool but do NOT match each other in Jaccard/Bray-Curtis (per [WS2-S1](https://docs.google.com/document/d/1KRF-IktLEuM8wlyGnXjg-yfK3KoQR-zqwzDlHyqqXGs): "dürfen nicht automatisch zusammengeführt werden"). Confirm treatment with client.
+
+**Meeting confirmation items:**
+- Confirm matching pool is 62 R-prefix entries (set expectation for matching pool size)
+- Confirm Basisvariante (Variant 0) filtering was applied to test data
+- Confirm suffix variants (e.g., 00004 vs 00004B) should be treated as distinct in comparison
+- Confirm RV (premix) and RZ (intermediate) classification; clarify B-prefix entries
 
 **Source:**
 - [WS2-Session1](https://docs.google.com/document/d/1KRF-IktLEuM8wlyGnXjg-yfK3KoQR-zqwzDlHyqqXGs) (44:47) — "Auflösung der Rezepturen auf Zutatsebene ohne Vormischungen" (resolve to ingredient level without premixes)
@@ -73,10 +81,11 @@ Load `alle.jsonl` → filter to **R-prefix entries only** (62 final products) �
 - [WS2-Session3a](https://docs.google.com/document/d/1Y6dz78yEu1E1LG4-YFqruj5gxSsJqil8vvU6tbOu_cw) — Basisvariante (Variant 0) only, filters ~80% duplicates
 - [Jan 29 transcript](https://app.fireflies.ai/view/01KG3DKZHD0EVFK4620C86B873) — Mattis confirms exploded materials structure, summing to 1.0
 - Data analysis (2026-02-09): 197 entries, 62 R-prefix, 54 V-prefix, 134 unique raw materials
+- Data verification (2026-02-11): all R-prefix entries sum to 1.0, no variant duplicates detected, 134 unique material IDs globally consistent, 84% shared across recipes
 
 ### Part 2: Similarity Scoring — Deepened
 
-For each recipe pair, compute three independent scores. Each handles a different aspect of "similar":
+For each recipe pair, compute two scores. Each is a proxy lens on the core question: "do these recipes taste similar enough to consolidate?"
 
 **Criterion 1 — Overlap (Jaccard similarity):** "Do they share the same ingredients?"
 
@@ -86,20 +95,26 @@ Binary set comparison: `|A ∩ B| / |A ∪ B|` where A and B are sets of materia
 
 For shared materials, measure proportional distance: similarity = `1 - sum|a_i - b_i| / sum(a_i + b_i)`. Score 0–1, where 1.0 = identical proportions. Naturally weights high-percentage ingredients more than trace ingredients. Client-facing label: **Proportion**.
 
-**Criterion 3 — Category (Einkaufsgruppen matching):** "For UN-shared ingredients, are they substitutable?"
-
-For materials NOT in the intersection, check if they belong to the same Rohstoffkategorie (761 Einkaufsgruppen). Ratio of categorically-matched unshared materials to total unshared. Client-facing label: **Category**. Blocked on Stammdaten CSV from Mattis; data quality currently poor.
-
-**Combined weighting:** Empirical — start equal weights (33/33/33), let Behrens's validation pairs reveal which criterion matters most. Transcripts emphasize "quantity-based similarity" (WS2-S3a), suggesting Proportion may ultimately dominate — hypothesis to test, not pre-commit.
+**Combined weighting:** Empirical — start equal weights (50/50), let Behrens's validation pairs reveal which criterion matters most. Transcripts emphasize "quantity-based similarity" ([WS2-S3a](https://docs.google.com/document/d/1Y6dz78yEu1E1LG4-YFqruj5gxSsJqil8vvU6tbOu_cw)), suggesting Proportion may ultimately dominate — hypothesis to test, not pre-commit.
 
 **Design context:** Algorithmic approach chosen over vector/embedding because similarity is quantity-based, not semantic — client needs explainable, per-criterion scores, not opaque numbers.
 
+**Future enhancement — Category-level comparison (blocked on Stammdaten CSV):**
+
+**Motivation:** "Does this recipe taste similar?" can't be measured directly. Einkaufsgruppen (purchasing groups, 761 categories) serve as proxy — materials in the same group are assumed to produce similar sensory results. If Recipe A uses 00004 and Recipe B uses 00004B, and both are in the same Einkaufsgruppe, the recipes likely taste similar despite having technically different ingredient IDs. Two sub-approaches to test empirically:
+
+**(a) Count-based:** Of the unshared materials between two recipes, what fraction have a partner in the same Rohstoffkategorie? Simple ratio — tells you differences are "soft" (substitutable) vs "hard" (genuinely different ingredients).
+
+**(b) Algorithm-based:** Group all materials by category, sum percentages within each group, then re-run Jaccard + Bray-Curtis on the category-aggregated data. Gives richer information — not just "shared category" but "how close are the category-level amounts?"
+
+**Assumption:** Suffix variants (e.g., 00004 vs 00004B) likely belong to the same Einkaufsgruppe — to be verified once Stammdaten CSV is available. If confirmed, category-level comparison would recognize them as substitutable despite being treated as distinct at the exact-ID level. Value of either sub-approach to be determined empirically. Neither is POC scope.
+
 **Source:**
 - [Pflichtenheft §3](https://mariuswilsch.github.io/public-wilsch-ai-pages/project/avo_fullstack/pflichtenheft-ki-projekt-sossen-sourcing) — FR-02 (Material_ID matching), FR-02a (overlap ratio), FR-04 (percentage similarity), FR-08 (category matching)
-- [WS2-Session1](https://docs.google.com/document/d/1KRF-IktLEuM8wlyGnXjg-yfK3KoQR-zqwzDlHyqqXGs) (49:53) — "Ähnlichkeitsschwellen flexibel: 2%, 5%, 10%", 3% fluctuation acceptable
-- [WS2-Session1](https://docs.google.com/document/d/1KRF-IktLEuM8wlyGnXjg-yfK3KoQR-zqwzDlHyqqXGs) (12:45) — "nicht nur auf Namen, sondern auf die tatsächliche Zusammensetzung" (actual composition, not names)
-- [WS2-Session3a](https://docs.google.com/document/d/1Y6dz78yEu1E1LG4-YFqruj5gxSsJqil8vvU6tbOu_cw) — algorithmic > vector ("keine semantische, sondern mengenbasierte Ähnlichkeit"), 761 Einkaufsgruppen, data quality poor
-- [WS2-Session3b](https://docs.google.com/document/d/1NhjxZnugaiWLg415HbC7nB_ybDPOCaCbfM0zF3L_n0I) — 98% similarity target, user-adjustable tolerance sliders
+- [WS2-S1](https://docs.google.com/document/d/1KRF-IktLEuM8wlyGnXjg-yfK3KoQR-zqwzDlHyqqXGs) (49:53) — "Ähnlichkeitsschwellen flexibel: 2%, 5%, 10%", 3% fluctuation acceptable
+- [WS2-S1](https://docs.google.com/document/d/1KRF-IktLEuM8wlyGnXjg-yfK3KoQR-zqwzDlHyqqXGs) (12:45) — "nicht nur auf Namen, sondern auf die tatsächliche Zusammensetzung" (actual composition, not names)
+- [WS2-S3a](https://docs.google.com/document/d/1Y6dz78yEu1E1LG4-YFqruj5gxSsJqil8vvU6tbOu_cw) — algorithmic > vector ("keine semantische, sondern mengenbasierte Ähnlichkeit"), 761 Einkaufsgruppen, data quality poor
+- [WS2-S3b](https://docs.google.com/document/d/1NhjxZnugaiWLg415HbC7nB_ybDPOCaCbfM0zF3L_n0I) — 98% similarity target, user-adjustable tolerance sliders
 
 ### Part 3: Ranking + Output — Deepened
 
@@ -110,15 +125,15 @@ Rank all 62 R-prefix recipes by combined similarity score for a given query. Ret
 ```
 Query: R261800
 
-Rank  Recipe    Overlap  Proportion  Category  Combined
-#1    R261700   85%      97%         N/A       92%
-#2    R482000   62%      78%         N/A       71%
-#3    R954700   58%      82%         N/A       68%
-#4    R445100   51%      65%         N/A       57%
-#5    R887200   48%      71%         N/A       55%
+Rank  Recipe    Overlap  Proportion  Combined
+#1    R261700   85%      97%         91%
+#2    R482000   62%      78%         70%
+#3    R954700   58%      82%         70%
+#4    R445100   51%      65%         58%
+#5    R887200   48%      71%         60%
 ```
 
-**Client-facing labels:** Overlap, Proportion, Category, Combined — no algorithm names (Jaccard, Bray-Curtis) exposed to client.
+**Client-facing labels:** Overlap, Proportion, Combined — no algorithm names (Jaccard, Bray-Curtis) exposed to client.
 
 **Top N:** Default 5, configurable. Workshop discussed "five to ten" (WS2-S3a), but Top 5 is the stated POC criterion.
 
@@ -150,9 +165,9 @@ Rank  Recipe    Overlap  Proportion  Category  Combined
 
 **Negative examples (if possible):** Ask Behrens for 1–2 pairs that share many ingredients but are NOT similar. These test false positive rejection. If not provided, the 62-recipe dataset (1,891 possible pairs) provides implicit negatives.
 
-**Success criterion:** K1 partner appears in query recipe's Top 5 (configurable N). Test bidirectionally — query A→check B in Top 5 AND query B→check A in Top 5 — as sanity check (all three criteria are mathematically symmetric, so results should match).
+**Success criterion:** K1 partner appears in query recipe's Top 5 (configurable N). Test bidirectionally — query A→check B in Top 5 AND query B→check A in Top 5 — as sanity check (both criteria are mathematically symmetric, so results should match).
 
-**Calibration workflow:** Run algorithm with equal weights → compare output to Behrens's table → for "definitely" pairs where algorithm disagrees, use the "why?" reasoning to understand which criterion the domain expert values → adjust weights empirically. This is iterative, not one-shot.
+**Calibration workflow:** Run algorithm with equal weights (50/50) → compare output to Behrens's table → for "definitely" pairs where algorithm disagrees, use the "why?" reasoning to understand which criterion the domain expert values → adjust weights empirically. This is iterative, not one-shot.
 
 **Blocked by:** 5 known duplicate pairs from Herr Behrens (meeting agenda item).
 
@@ -177,3 +192,4 @@ Rank  Recipe    Overlap  Proportion  Category  Combined
 - **Rohstoffkriterien:** Rohstoffkriterien zur Vergleichbarkeit.pdf (AVO Seafile)
 - **Session (Part 1 deepening):** `/Users/verdant/.claude/projects/-Users-verdant-Documents-projects-billable-AVO--poc/451ac158-4b2b-4501-8dca-bd9645888e7d.jsonl`
 - **Session (Parts 2–4 deepening):** `/Users/verdant/.claude/projects/-Users-verdant-Documents-projects-billable-AVO--poc/ed3ed7d2-a582-4987-b15b-d59a0f7763de.jsonl`
+- **Session (Part 1 extraction + Part 2 simplification):** `/Users/verdant/.claude/projects/-Users-verdant-Documents-projects-billable-AVO--poc/953e038a-ae96-4265-a20b-b7d9d1763d87.jsonl`
