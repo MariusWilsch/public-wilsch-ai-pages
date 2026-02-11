@@ -124,14 +124,12 @@ The component-by-component rhythm creates the design doc. The extraction pass de
 ```
 Uncertainties — Part 1: Data Assessment
 
-Boundary (what belongs here?)
 1. Matching mechanism scope — does matching logic belong in Part 1 or Part 3?
 2. New request vs historical asymmetry — doc says "1-5 files" but this is unverified
 3. Criteria-to-data mapping — which criteria map to which data columns?
-
-Data completeness (what's verified vs claimed?)
 4. 3/14 projects sampled — is this sufficient for the PoC?
 5. Dachbegrünung evidence — claimed in doc but not confirmed in data
+[...]
 ```
 
 *Uncertainties come from reading the part text. Transcripts are not read during SURFACE.*
