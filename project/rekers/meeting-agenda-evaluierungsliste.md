@@ -11,6 +11,7 @@ Validierungsdesign für den V006 Feasibility Report klären, damit die POC-Tests
 
 1. **Evaluierungsliste abgestimmt** — Einigung auf Testanfragen, erwartete Treffer, und CSV-Vorlage (4 Spalten)
 2. **Umgang mit "nichts gefunden" geklärt** — Einigung auf Testfälle, bei denen kein Treffer die richtige Antwort ist
+3. **Input-Definition abgestimmt** — Einigung auf was eine neue Anfrage bei Ankunft enthält (Auslöser für das Matching-System)
 
 ## Pre-Read
 
@@ -39,6 +40,18 @@ Nicht jede Anfrage hat einen Treffer. Das System muss auch sagen können: "Dafü
 - Wir brauchen Testfälle, bei denen kein Treffer die richtige Antwort ist
 - Z.B. ein Gebäudetyp den wir noch nie gebaut haben, oder ein Kunde ohne Referenzhistorie
 - Ob diese aus den bestehenden 14 Projekten kommen oder als neue Szenarien konstruiert werden, ist offen
+
+### 3. Der Anfrageprozess — vom Kundenkontakt zur Anfrage im System
+
+Wir wissen wie die historischen Projekte aussehen (14 geliefert), aber nicht wie eine neue Anfrage bei Eingang aussieht. Das System braucht einen definierten Startpunkt: Was liegt vor, wenn ein neues Projekt hereinkommt? E-Mail vom Architekten mit Plänen? Anruf vom Bauherrn? Strukturiertes Formular?
+
+- Welche Informationen sind bei der ersten Kontaktaufnahme typischerweise verfügbar?
+- Unterscheiden sich die Anfragen je nach Kontaktweg (Architekt vs. Bauherr vs. Generalunternehmer)?
+- Welche der 9 Ähnlichkeitskriterien können wir realistisch aus der Erstanfrage ableiten?
+
+### 4. Zweck der "Angebote ohne Material" CSV
+
+Die Datenlieferung enthielt eine CSV mit 4.307 Angebotszeilen (141 Spalten), die im Workshop nicht besprochen wurde. Unsere Analyse zeigt: die CSV enthält keine zusätzlichen Daten für das Ähnlichkeitsmatching über die Anfragen.csv hinaus (Krankosten = universelle Montagekosten für Fertigteile, Materialgewichte = REKERS-Standardprodukt). War diese CSV für einen anderen Zweck gedacht?
 
 ## Meeting Format
 
