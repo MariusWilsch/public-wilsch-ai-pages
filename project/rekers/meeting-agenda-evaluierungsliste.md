@@ -50,14 +50,6 @@ Wir wissen wie die historischen Projekte aussehen (14 geliefert), aber nicht wie
 
 Die Datenlieferung enthielt eine CSV mit 4.307 Angebotszeilen (141 Spalten), die im Workshop nicht besprochen wurde. Ich konnte den Zweck dieser Datei nicht zuordnen — wofür war sie gedacht?
 
-### 5. Drei Ergebnistypen beim Abgleich
-
-Im Workshop wurden drei Szenarien besprochen, die je nach Trefferqualität unterschiedliche Bearbeitungszeiten bedeuten:
-
-- **Volltreffer:** "Angebot morgen bis 10 Uhr"
-- **Teiltreffer:** Baukastensystem — Teile aus verschiedenen Referenzprojekten kombinieren (ca. eine Woche)
-- **Kein Treffer:** "Komplett neu entwickeln, dauert vier Wochen"
-
 ## Besprechungsformat
 
 - **Typ:** Arbeitssitzung
