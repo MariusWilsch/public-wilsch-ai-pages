@@ -23,7 +23,7 @@ AVO-Werke has ~8000 sauce recipes accumulated over years. Duplicates and near-du
 **NOT the problem:**
 - Production optimization / batch sizing (post-POC)
 - Preventive duplicate detection from product requests (post-POC)
-- Process-based similarity (deferred — data not in SAP, agreed in WS2-Session3a + Jan 15 meeting)
+- Process-based similarity (deferred — data not in ERP, agreed in WS2-Session3a + Jan 15 meeting)
 - Category-level matching (future enhancement, blocked on Stammdaten CSV)
 
 ---
@@ -42,7 +42,7 @@ AVO-Werke has ~8000 sauce recipes accumulated over years. Duplicates and near-du
 
 ## Approach
 
-### Part 1: Data Loading — Deepened
+### Part 1: Data Loading
 
 Load `alle.jsonl` → filter to **R-prefix entries only** (62 final products) → each recipe becomes a map: `{material_id: percentage}`. Materials are already exploded (flattened across all Vormischung levels), summing to exactly 100% (within floating-point precision, verified).
 
@@ -83,7 +83,7 @@ Load `alle.jsonl` → filter to **R-prefix entries only** (62 final products) �
 - Data analysis (2026-02-09): 197 entries, 62 R-prefix, 54 V-prefix, 134 unique raw materials
 - Data verification (2026-02-11): all R-prefix entries sum to 1.0, no variant duplicates detected, 134 unique material IDs globally consistent, 84% shared across recipes
 
-### Part 2: Similarity Scoring — Deepened
+### Part 2: Similarity Scoring
 
 For each recipe pair, compute two scores. Each is a proxy lens on the core question: "do these recipes taste similar enough to consolidate?"
 
@@ -116,7 +116,7 @@ For shared materials, measure proportional distance: similarity = `1 - sum|a_i -
 - [WS2-S3a](https://docs.google.com/document/d/1Y6dz78yEu1E1LG4-YFqruj5gxSsJqil8vvU6tbOu_cw) — algorithmic > vector ("keine semantische, sondern mengenbasierte Ähnlichkeit"), 761 Einkaufsgruppen, data quality poor
 - [WS2-S3b](https://docs.google.com/document/d/1NhjxZnugaiWLg415HbC7nB_ybDPOCaCbfM0zF3L_n0I) — 98% similarity target, user-adjustable tolerance sliders
 
-### Part 3: Ranking + Output — Deepened
+### Part 3: Ranking + Output
 
 Rank all 62 R-prefix recipes by combined similarity score for a given query. Return **Top 5** (configurable N) with per-criterion scores using client-facing labels.
 
@@ -145,7 +145,7 @@ Rank  Recipe    Overlap  Proportion  Combined
 - [WS2-Session3b](https://docs.google.com/document/d/1NhjxZnugaiWLg415HbC7nB_ybDPOCaCbfM0zF3L_n0I) — Excel output with color-coded deviations (full vision)
 - Übersicht.xlsx — AVO's existing recipe comparison format (from AVO Seafile)
 
-### Part 4: Validation — Deepened (Blocked on Behrens pairs)
+### Part 4: Validation (Blocked on Behrens pairs)
 
 **POC scope:** Validate the algorithm against Behrens's 5 known pairs. This is algorithm validation ("does it find expected pairs?"), not discovery ("find new duplicates"). New discoveries during POC are observed but not formally validated — discovery becomes the production goal.
 
