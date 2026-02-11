@@ -97,7 +97,7 @@ Extract unique values at each hierarchy level. Multiple equipment rows sharing t
 | Room (Floor All) | 116, 175, 232, 377, 379, 473 | 6 |
 | **Total location assets to create** | | **24** |
 
-**Identity rule:** Room identity = parent + name. Room 333 under Floor 3 is a different asset than a hypothetical Room 333 under Floor 2.
+**Identity rule:** Room identity = parent floor + room number. Room 333 under Floor 3 is a different asset than a hypothetical Room 333 under Floor 2.
 
 **Reference:** [Processed Excel Table.xlsx](https://github.com/MariusWilsch/ARCHIBUS__archibus-poc/blob/staging/.claude/tracking/issue-373/Processed%20Excel%20Table.xlsx) — the data after Step 2 column mapping.
 
