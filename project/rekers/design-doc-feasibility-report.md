@@ -46,11 +46,33 @@ The problem is NOT building a full AI quotation system. The problem IS determini
 | **Level 2** | Angebote (offers) | REKERS's response — how they price it | Detailed cost breakdowns, component specs |
 | **Level 3** | Kommissionen (commissions) | Execution — what was built | NOT delivered — deferred to POC (live system access required) |
 
-**What we have:** REKERS delivered test data on 2026-01-28 (14 projects, all historical):
+**What we have:** REKERS delivered test data on 2026-01-28 (14 projects, all historical). All files live in the same folder per project — levels are logical, physical storage is mixed.
 
-- **Level 1 — Anfragen.csv** (111 rows, 30 cols): Denormalized join of three entities (Anfragen × AnfrageKunde × Angebot). 14 unique projects, 32 customer links. All projects are completed quotations (dates 2019–2025, €1.2M–€15.3M). STATUS codes E/V — exact meanings unknown but don't affect data assessment.
-- **Level 2 — Angebote ohne Material.csv** (4,307 rows, 141 cols): Quotation line items with cost breakdowns. Surprise delivery — not mentioned in transcript. Assessed: contains no criteria-relevant data beyond what Anfragen.csv already provides (KRANKOSTEN = universal installation crane cost for precast elements, not building crane indicator; material weights = universal REKERS product, not building material classification). → Meeting agenda: why was this included?
-- **File folders** (~740 files after ZIP extraction): 482 EML, 210 PDF, 5 DWG, 3 DXF, 2 XLSX. No IFC. Folders contain full project lifecycle — mixed-level content (customer emails + REKERS quotation PDFs + external docs like building permits and architect plans).
+*Example: Anfrage 35764 — Neubau Werkhalle van Eckendonk, Gescher (including but not limited to):*
+
+**Level 1 — Customer input** (what arrives):
+```
+35764/10593/  Angebotsaufforderung Stahlbau.eml     ← architect's initial request
+35764/11239/  van Eckendonk_Planunterlagen.eml       ← plans from architect
+              van Eckendonk_Projektunterlagen.eml    ← project specs
+              van Eckendonk_Stützen.eml              ← column specifications
+              Baugenehmigung.pdf                     ← building permit (external)
+              Bodengutachten Schleicher.pdf           ← soil survey (external)
+              BA-1000d_Grundrisse+Schnitt.dwg        ← floor plans (architect)
+```
+
+**Level 2 — REKERS response** (what REKERS creates):
+```
+35764/11239/  Angebot Nr. 28273.20.pdf               ← quotation document
+              Angebot Nr. 28273.30.pdf               ← quotation document
+              BV. Neubau Werkhalle van Eckendonk.eml ← REKERS internal emails
+```
+
+**Angebote ohne Material.csv** (Level 2 structured data, 4,307 rows, 141 cols): Quotation line items with cost breakdowns per component — weights, crane costs, material costs, crew sizes. Surprise delivery (not discussed in transcript). Assessed: contains no criteria-relevant data beyond Anfragen.csv (KRANKOSTEN = universal installation crane cost for precast, not building crane; material weights = REKERS product, not building material type). → Meeting agenda: why was this included?
+
+**Level 3 — Execution** (what was built): Not delivered — deferred to POC.
+
+**Across all 14 projects:** ~740 files (482 EML, 210 PDF, 5 DWG, 3 DXF, 2 XLSX, no IFC). Dates 2019–2025, €1.2M–€15.3M.
 
 **Folder structure** (Anfrage ID = project, subfolders = customer links, verified 1:1 match with CSV):
 
