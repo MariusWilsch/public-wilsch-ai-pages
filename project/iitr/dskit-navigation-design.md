@@ -58,6 +58,8 @@ Prototype is live on IITR-STAGING. These are the DS-Kit containers:
 - Health check: `curl -s http://localhost:8109/health`
 - Test harness: `cd /opt/dskit-rag/test-harness && uv run run_test_harness.py --api-key $(grep OPENWEBUI_API_KEY .env | cut -d= -f2)`
 
+**Manual testing:** Open [dskit.iitr-cloud.de](https://dskit.iitr-cloud.de), pick a question from the [Test Analysis](https://mariuswilsch.github.io/public-wilsch-ai-pages/project/iitr/dskit-rag-test-analysis) (Section 4 has all 29 questions with expected answers), ask it, and compare the response.
+
 **Not DS-Kit (ignore these):**
 
 | Service | Port | What it is |
