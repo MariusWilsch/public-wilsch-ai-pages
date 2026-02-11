@@ -50,10 +50,18 @@ Wir wissen wie die historischen Projekte aussehen (14 geliefert), aber nicht wie
 
 Die Datenlieferung enthielt eine CSV mit 4.307 Angebotszeilen (141 Spalten), die im Workshop nicht besprochen wurde. Ich konnte den Zweck dieser Datei nicht zuordnen — wofür war sie gedacht?
 
+### 5. Drei Ergebnistypen beim Abgleich
+
+Im Workshop wurden drei Szenarien besprochen, die je nach Trefferqualität unterschiedliche Bearbeitungszeiten bedeuten:
+
+- **Volltreffer:** "Angebot morgen bis 10 Uhr"
+- **Teiltreffer:** Baukastensystem — Teile aus verschiedenen Referenzprojekten kombinieren (ca. eine Woche)
+- **Kein Treffer:** "Komplett neu entwickeln, dauert vier Wochen"
+
 ## Besprechungsformat
 
 - **Typ:** Arbeitssitzung
-- **Teilnehmer:** Herr Sasse + Marius (ggf. Kalkulator)
+- **Teilnehmer:** Herr Sasse + Marius + Thomas Erhard (ggf. Kalkulator)
 - **Erwartung:** Herr Sasse kommt mit Kenntnis der 14 gelieferten Projekte und einer Einschätzung, welche davon "ähnlich" zueinander sind
 - **Ergebnis:** Gemeinsames Verständnis der Evaluierungsmethode und Einigung auf den Inhalt der Evaluierungsliste. Die CSV wird anschließend von REKERS ausgefüllt.
 
