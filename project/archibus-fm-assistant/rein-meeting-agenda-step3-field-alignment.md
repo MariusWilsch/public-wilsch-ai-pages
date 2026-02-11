@@ -7,17 +7,17 @@ publish: true
 
 ## Meeting Goal
 
-Resolve three undefined areas in the Step 3 design to move them from Partially Defined → Defined.
+Resolve 8 undefined areas across Step 3 Elements 4, 5, and 6.
 
-1. **Field naming clarity** — which naming scheme the insertion API expects
-2. **Country mapping responsibility** — who resolves country name → country ID
-3. **Floor All placement** — where building-wide equipment attaches in the hierarchy
+1. **Hierarchy edge cases** — Floor All placement + multi-level emptiness (Element 4)
+2. **JSON field specification** — naming scheme, country mapping, new fields, missing values (Element 5)
+3. **API insertion model** — validate-then-insert proposal + error response format (Element 6)
 
 ## Pre-Read
 
 [Chain 1B: Step 3 Fill Level-by-Level — Design Document](https://mariuswilsch.github.io/public-wilsch-ai-pages/project/archibus-fm-assistant/chain-1b-step3-design)
 
-Focus on Approach sections 4 and 5 (marked ⚠️ Partially Defined).
+Focus on Approach sections 4, 5, and 6.
 
 ---
 
@@ -25,29 +25,92 @@ Focus on Approach sections 4 and 5 (marked ⚠️ Partially Defined).
 
 *Starting points for discussion, not limited to these.*
 
-### 1. Two naming schemes exist for the same fields
+### Element 4: Hierarchy Edge Cases
 
-The AssetImportDescription has ImportTemplate names in PascalCase (`Name`, `AssetType`, `ParentId`). The Hierarchical Body JSON example uses lowercase (`name`, `type`, `parent_id`). The current import app expects ImportTemplate names. The new insertion API may use different names since it's being built from scratch.
+#### 1. Building-wide equipment has no specific floor
 
-We need to align on which field names the JSON should use so AI generates the correct output.
+- 33% of Building A rows have Floor = "All" (elevators, fire systems, plumbing)
+- "All" is not a specific floor — current design attaches to lowest known level
+- Room number on these rows might be access point, not actual location
+- Where do these assets attach in the hierarchy?
 
-### 2. Country values in Excel are names, Bruce BEM stores IDs
+#### 2. The fallback rule has only been confirmed for one level
 
-Row 18 of the AssetImportDescription notes: "There is a problem, because Bruce has the country IDs, but in Excel normally Country Names." When AI encounters "Germany" in a client's Country column, something needs to translate that to Bruce BEM's internal country ID.
+- Confirmed: empty room → equipment attaches to floor
+- Not confirmed: empty room AND empty floor → does equipment go to building?
+- Is the fallback recursive (always climb up until a filled level)?
 
-The question is whether the insertion API handles this translation, or whether AI needs a lookup table.
+### Element 5: JSON Field Specification
 
-### 3. Some equipment serves an entire building, not a specific floor
+#### 3. Two naming schemes exist for the same fields
 
-In the CAFM sample data, 17% of equipment rows have Floor = "All" (elevators, fire systems, plumbing). These are building-wide assets. The current design attaches equipment to the lowest known hierarchy level — but "All" is not a specific floor.
+- AssetImportDescription uses PascalCase — current import app standard
+- Hierarchical Body JSON uses lowercase — Rein's example for new API
+- Conflict fields:
 
-The equipment still has a Room number, which might represent the access point or control room rather than the equipment's actual location.
+| Field Concept | AssetImportDescription | Hierarchical Body JSON |
+|---------------|----------------------|----------------------|
+| Asset type | `AssetType` | `type` |
+| Serial number | `SerialNumber` | `serial_no` |
+| Purchase date | `DatePurchased` | `purchase_date` |
+| Manufacturer | **not in schema** | `manufacturer` |
+| Model | **not in schema** | `model` |
+| Country | `Country` | **not in JSON** |
+| Model specific | `ModelSpecific` | **not in JSON** |
+
+- Everything else is just PascalCase vs snake_case — mechanical translation
+
+#### 4. Country values in Excel are names, Bruce BEM stores IDs
+
+- AssetImportDescription Row 18: "Bruce has country IDs, but in Excel normally Country Names"
+- Does the insertion API handle the translation internally?
+- If not, does a lookup endpoint or table exist?
+
+#### 5. The Hierarchical Body JSON has fields not in the ImportTemplate
+
+- `manufacturer` and `model` appear in Rein's JSON but not in the 36-field schema
+- Both fields exist in client source data (CAFM sample has Manufacturer/Model columns)
+- Does the new API accept these fields?
+
+#### 6. Empty cells in client data have no defined behavior
+
+- Optional fields may be empty in the client's Excel
+- AI-generated JSON needs a rule: omit the field, send null, or use a default?
+- Does the API handle missing vs null differently?
+
+### Element 6: API Insertion Model
+
+#### 7. The proposed insertion model is validate-then-insert
+
+- Send full building JSON → API validates → returns first error
+- AI corrects → resubmits → repeat until clean → then insert everything
+- Nothing inserted until entire payload validates — no partial state
+- Proposed error response:
+
+```json
+{
+  "error": {
+    "field": "AssetType",
+    "value": "HVAC",
+    "reason": "Invalid value. Must match predefined type.",
+    "valid_values": ["HVAC equipment", "Air Cooling", "..."]
+  }
+}
+```
+
+*Example — actual format to be defined during API development.*
+
+#### 8. A validation-only endpoint would help development
+
+- Dry-run mode: validate JSON without inserting
+- Enables rapid iteration on JSON structure during development
+- Nice-to-have, not a requirement
 
 ## Meeting Format
 
 - **Type:** Technical review
-- **Expectation:** Rein brings clarity on the insertion API's expected field format
-- **Outcome:** All three topics resolved → Step 3 design doc updated to Defined
+- **Expectation:** Rein brings clarity on API field format and insertion behavior
+- **Outcome:** 8 topics resolved → Step 3 design doc updated → undefined items removed
 
 ## Related
 
