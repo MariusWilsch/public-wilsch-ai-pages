@@ -194,7 +194,7 @@ ASSESS is not a separate judgment — it's the validation surface shift from in-
 3. User reads via Speechify (hear + see simultaneously)
 4. User gives feedback on wording/writing → AI adjusts → re-publish → repeat
 5. When satisfied: AI asks "Another extraction pass needed on any part?"
-   - **Yes** → note which part, scope in next session
+   - **Yes** → post `/issue-comment` capturing which part + context for next session → session complete
    - **No** → session complete
 
 Multiple extraction passes on the same part are normal. Re-entry happens naturally when the user revisits the doc and feels "this part needs more work." The explicit question makes the decision visible rather than implicit.
