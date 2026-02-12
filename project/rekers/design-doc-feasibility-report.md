@@ -72,7 +72,14 @@ The problem is NOT building a full AI quotation system. The problem IS determini
 
 **Level 3 — Execution** (what was built): Not delivered — deferred to POC.
 
-**Across all 14 projects:** ~740 files (482 EML, 210 PDF, 5 DWG, 3 DXF, 2 XLSX, no IFC). Dates 2019–2025, €1.2M–€15.3M.
+**Across all 14 projects:** Dates 2019–2025, €1.2M–€15.3M. File inventory has two layers:
+
+| Layer | Total | Key types |
+|-------|-------|-----------|
+| **L0: Visible** (folder files) | 565 | 504 EML, 44 PDF, 17 ZIP |
+| **L2: Hidden** (EML attachments) | 1,322 | 660 PDF, 26 XLSX, 12 DWG, 435 images |
+
+The ~740 files previously reported counted L0 + pre-extracted ZIPs. EML attachments (L2) were uncounted — yet contain the majority of criteria-rich PDFs. Every project is 2.2x–3.2x richer than the file system shows. ZIPs are containers at any level (in folders or inside EML attachments) — extract wherever found, then all rules apply to contents.
 
 **Folder structure** (Anfrage ID = project, subfolders = customer links, verified 1:1 match with CSV):
 
@@ -136,16 +143,18 @@ REKERS Test Data/
 
 Prerequisite for Part 3: 6 of 9 matching criteria require information extraction from project files (see Part 3 criteria mapping).
 
-**File types in test data (post-ZIP extraction):**
+**File types and extraction approach:**
 
-| Type | Count | Processable? |
-|------|-------|-------------|
-| EML | 482 | ✅ Text-based — straightforward |
-| PDF | 210 | ✅ Text-based — straightforward |
-| DWG | 5 | ❌ Binary CAD — needs specialized tooling |
-| DXF | 3 | ⚠️ Text-based CAD — parseable but complex |
-| XLSX | 2 | ✅ Structured — includes Kranliste.xlsx |
-| IFC | 0 | N/A — absent from test data |
+| Type | L0 | L2 (in EMLs) | How to read | Notes |
+|------|----|-------------|-------------|-------|
+| EML | 504 | — | Body: text parsing. Attachments: extract to disk first. | Containers — not files. 660 PDFs + 26 XLSX + 12 DWG hidden inside. |
+| PDF | 44 | 660 | Read tool (renders as images natively). NOT text extraction. | 5x more criteria found via visual read vs text parse. |
+| ZIP | 17 | 8 | Extract wherever found (on disk or inside EMLs), then apply all rules to contents. | Pre-extracted to `_extracted/` dirs for L0 ZIPs. |
+| XLSX | 2 | 26 | openpyxl via bash. | Includes Kranliste.xlsx (crane specs), Abfallbilanz.xlsx (DGNB). |
+| DWG | 5 | 12 | ❌ Out of scope — binary CAD, needs specialized tooling. | |
+| DXF | 3 | — | ⚠️ Out of scope — parseable but complex. | |
+
+**All file types are equal criteria sources** — no hierarchy. Extraction technique varies by type, but email body text, XLSX cells, and PDF pages all contribute to criteria discovery equally.
 
 **Criteria extraction evidence** (5/14 projects sampled — first-pass findings):
 
@@ -157,11 +166,13 @@ Prerequisite for Part 3: 6 of 9 matching criteria require information extraction
 | [37369 — Kühl/Lagerhalle](https://mariuswilsch.github.io/public-wilsch-ai-pages/project/rekers/criteria-evidence-37369) | 19 EML (24 PDFs embedded) | Yes (in EML attachments) | **4/6** | Gebäudetyp, Höhe, Dachlasten, Baustoff. [Evidence](https://mariuswilsch.github.io/public-wilsch-ai-pages/project/rekers/criteria-evidence-37369) |
 | 40856 — Logistikhalle | 19 | Yes (5 from ZIP) | 5/6 | Gebäudetyp, Höhe, Dachlasten, Baustoff, Dachbegrünung (explicit "0,00 kN/m²") |
 
-**Key pattern:** Technical PDFs drive extraction — but PDFs are often embedded as EML attachments, not standalone files. Project 37369 appeared "EML-only" but contained 24 PDF attachments (architectural drawings, REKERS quotations, contracts). With proper extraction: 4/6 criteria found (up from 2/6 via text-only parsing). All 14 test projects contain PDFs (standalone or embedded).
+**Key pattern:** EMLs are containers, not files. The 504 EMLs hold 1,322 attachments (660 PDFs, 26 XLSX, 12 DWG). 4/14 projects have zero standalone PDFs — all criteria-rich data is inside EML attachments. Reading PDFs visually (image rendering) yields 5x more criteria than text extraction. This pattern is structural to how REKERS stores project data.
 
-**Key observation:** Most criteria found in **Angebot PDFs** (Level 2 quotation documents), not initial customer docs. Historical project files are rich because they contain REKERS's own output — this data exists for the reference set but not for new requests.
+**Key observation — L1/L2 source split:** Contrary to initial assessment, criteria are split roughly 50/50 between Level 1 (customer/architect documents: Gebäudetyp, Höhe) and Level 2 (REKERS quotations: Dachlasten, Baustoff). Not "mostly Level 2." 3 CSV criteria (Bauort, Kundenreferenz, Kalkulatorenwissen) are 2 L1 + 1 L2. Implications for new request matching depend on what data arrives at request time (→ meeting agenda, Thomas → Wittag).
 
-**Transcript:** [Wed AM — Datenexport & Ranking-System](https://app.fireflies.ai/view/01KG1V9Y791YHSAVP7GJABEJAA) (file format discussion, data source for criteria)
+**Transcripts:**
+- [Wed AM — Datenexport & Ranking-System](https://app.fireflies.ai/view/01KG1V9Y791YHSAVP7GJABEJAA) (file format discussion, data source for criteria)
+- [Thomas-Marius Sync 2026-02-11](https://drive.google.com/file/d/11Ttr1zcWoVSZccolGwJkCsWLZ2A-3G2g/view) (Part 2 is core deliverable, criteria extraction evidence for all 14 projects, deadline alignment)
 
 ### Part 3: Similarity Matching Approach — Can we match it?
 
@@ -300,3 +311,4 @@ Target: IBM Power 10 (~20 TOPS per chip). Alternative: hybrid approach (external
 - `/Users/verdant/.claude/projects/-Users-verdant-Documents-projects/fc9f193e-2d54-4ea9-bcc1-5dfd2dd35f2d.jsonl` (initial design doc creation)
 - `/Users/verdant/.claude/projects/-Users-verdant-Documents-projects-WILSCH-AI-INTERNAL--soloforce/00e6a51f-cd0d-432f-b5f4-f2a41dd07a4d.jsonl` (data deep dive, criteria mapping, validation design)
 - `/Users/verdant/.claude/projects/-Users-verdant-Documents-projects-WILSCH-AI-INTERNAL--soloforce/cb7381c0-65f8-42cd-bf0a-a6a09bbfe357.jsonl` (Part 1 extraction pass — 16 uncertainties resolved)
+- `/Users/verdant/.claude/projects/-Users-verdant-Documents-projects-billable-REKERS--poc/772b96f8-d646-428c-bde6-9eeddf0418b5.jsonl` (Part 2 extraction pass — 12 uncertainties resolved, evidence template formalized)
