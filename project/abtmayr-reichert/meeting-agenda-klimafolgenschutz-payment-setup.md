@@ -10,7 +10,7 @@ publish: true
 Die offenen Vereins-Voraussetzungen für die Zahlungsintegration klären und zwei offene Design-Entscheidungen abstimmen. Nach diesem Meeting sollte der gesamte Zahlungsbereich im Design Doc von Undefined auf Defined stehen.
 
 1. **Vereinsstatus klären** — aktueller Stand von Vereinsregister, Gemeinnützigkeit und Bankkonto
-2. **Zahlungs-Designentscheidungen** — Spendenquittungs-Logistik, PayPal-Risiko-Hinweis
+2. **Zahlungs-Designentscheidungen** — Spendenquittungs-Logistik
 
 ## Vorab-Lektüre
 
@@ -48,12 +48,6 @@ Die offenen Vereins-Voraussetzungen für die Zahlungsintegration klären und zwe
 - Spendenbescheinigung (≥€100) erfordert vollständigen Namen + Adresse
 - Optionen: Felder vor Zahlung abfragen ODER per E-Mail nachfassen
 - **Benötigt:** Michaels Präferenz für den Checkout-Flow
-
-### 5. PayPal-Spenden ohne Käufer-/Verkäuferschutz
-
-- Angefochtene Spenden → PayPal entscheidet nicht zugunsten des Vereins
-- Standard-Verhalten bei Spenden, geringes Risiko
-- **Benötigt:** Kenntnisnahme vor PayPal-Aktivierung
 
 ## Meetingformat
 

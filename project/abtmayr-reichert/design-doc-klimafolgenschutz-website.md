@@ -23,7 +23,7 @@ Michael Reichert's Klimafolgenschutz association needs a web presence to acquire
 - Framework contract signed (Jan 26 via SignNow) — [Rahmenvertrag](https://mariuswilsch.github.io/public-wilsch-ai-pages/project/abtmayr-reichert/rahmenvertrag-tm-2025-12-16)
 - Vereinsregister entry: **pending** (applied July 2025, still under review as of Feb 2026 — blocks bank account, Impressum, payment setup)
 - Domain klimafolgenschutz.com registered at Ionos (DNS access pending from Michael)
-- GenSpark prototypes exist as design inspiration — Michael: *"Das ist ja einfach nur so ein erster Entwurf. Als Anregung oder so als Basis kann das ja vielleicht schon dienen."*
+- GenSpark prototypes exist as design inspiration (basis/starting point, not blueprint)
 - Gemeinnützigkeit status: **unconfirmed** (pending verification with Michael — affects donation receipt capability)
 
 ---
@@ -33,7 +33,7 @@ Michael Reichert's Klimafolgenschutz association needs a web presence to acquire
 | Element | Definition |
 |---------|-----------|
 | **Goal** | A live website at klimafolgenschutz.com where municipalities and individuals can understand the association's projects, apply for membership, and pay — enabling Michael to operate the association digitally. |
-| **Success** | **Municipality flow:** Michael sends a link → municipality independently understands the 5 projects, applies via online form, pays via SEPA/invoice. **Individual flow:** person visits site → understands mission, applies as member (€60/year), pays via SEPA/card/PayPal. **Donor flow:** visitor makes one-off donation via card/PayPal. Michael can edit all content via CMS without developer assistance. |
+| **Success** | **Municipality flow:** Michael sends a link → municipality independently understands the 5 projects, applies via online form, pays via SEPA/invoice. **Individual flow:** person visits site → understands mission, applies as member (€60/year), pays via SEPA/card. **Donor flow:** visitor makes one-off donation via card. Michael can edit all content via CMS without developer assistance. |
 | **Done test** | "Can I write a meeting agenda with open design questions?" → If NO → design is complete. For the website: a test municipality and a test individual complete the membership flow end-to-end without asking Michael for help. |
 
 ---
@@ -64,11 +64,11 @@ Michael Reichert's Klimafolgenschutz association needs a web presence to acquire
 
 **What requires developer:** structural changes, new sections, payment configuration.
 
-### Part 3: Payment — Stripe + PayPal
+### Part 3: Payment — Stripe
 
-> *"Wir sollten eigentlich alle Wege offen haben, alles was geht."* — Michael
+Michael wants all payment options open — maximize accessibility for members and donors.
 
-**[Stripe](https://stripe.com/resources/more/membership-fees-associations-germany)** as primary processor:
+**[Stripe](https://stripe.com/resources/more/membership-fees-associations-germany)** as sole payment processor. PayPal can be added later on request.
 
 | Method | Use Case | Example Fee (subject to change) |
 |--------|----------|---------------------------------|
@@ -78,17 +78,15 @@ Michael Reichert's Klimafolgenschutz association needs a web presence to acquire
 
 *Fees are illustrative based on current Stripe pricing. Actual rates may vary and are managed in Stripe dashboard.*
 
-**[PayPal](https://www.paypal.com/de/)** as secondary option (~2.49% + €0.35).
-
 #### Payment Flows (all self-service)
 
 | Action | User Experience | Technical Mechanism | Michael's Role |
 |--------|----------------|-------------------|----------------|
 | **Join as individual** | Form (personal info) → Stripe Checkout (recurring SEPA/card) | Stripe Checkout Session, mode: subscription | Notified |
 | **Join as municipality** | Form (municipality info) → auto Stripe Invoice (tiered by population) | Stripe Invoicing, municipality pays via Überweisung | Notified, can audit |
-| **Donate** | Floating button (bottom-right, persistent on scroll) → amount selector (presets + custom) → Stripe Checkout (one-off card/PayPal) | Stripe Checkout Session, mode: payment | Notified |
+| **Donate** | Floating button (bottom-right, persistent on scroll) → amount selector (presets + custom) → Stripe Checkout (one-off card) | Stripe Checkout Session, mode: payment | Notified |
 
-No membership required for donations. No separate donor form — *"Zum Spenden muss man ja auch nicht unbedingt Mitglied sein."* Floating donate button is always accessible without competing with membership CTAs.
+No membership required for donations. No separate donor form — anyone can donate without joining. Floating donate button is always accessible without competing with membership CTAs.
 
 #### Stripe Onboarding Requirements (German Verein)
 
@@ -105,9 +103,8 @@ No membership required for donations. No separate donor form — *"Zum Spenden m
 
 Gläubiger-ID timeline: contact person activation within 10 days, then ID issued via email. Account activation: ~2-5 business days after all docs submitted.
 
-**Terms & conditions summary** (Stripe + PayPal key terms for client review — [full details in session transcript](https://github.com/veloxforce/claude-user-configs/blob/main/.claude/projects/-Users-verdant-Documents-projects-WILSCH-AI-INTERNAL--soloforce/bdb2cfed-1005-4068-8543-a2cde2bc4c3e.jsonl)):
-- **Stripe:** No monthly fee, pay-as-you-go. Payouts 3-5 business days. €15 chargeback fee. Cancel anytime. GDPR compliant (EU/Ireland).
-- **PayPal:** No monthly fee, pay-as-you-go. Payouts 1-3 business days. Cancel anytime. Donations NOT covered by buyer/seller protection.
+**Terms & conditions summary** ([Stripe Services Agreement](https://stripe.com/de/legal/ssa) | [Stripe Pricing](https://stripe.com/de/pricing) | [SEPA Direct Debit Terms](https://stripe.com/de/legal/sepa-direct-debit)):
+- No monthly fee, pay-as-you-go. Payouts 3-5 business days. €15 chargeback fee. Cancel anytime. GDPR compliant (EU/Ireland).
 
 **Donation receipts (Zuwendungsbestätigung):** Dependent on Gemeinnützigkeit confirmation. If confirmed, Michael handles manually via Stripe transaction records. For donations ≥€100, donor name and address required for Spendenbescheinigung — collection method TBD (see meeting agenda).
 
@@ -115,7 +112,7 @@ Gläubiger-ID timeline: contact person activation within 10 days, then ID issued
 
 Website can launch **before payment is ready.** Fallback: membership sections show "Kontaktieren Sie uns" or "Demnächst verfügbar" until Stripe prerequisites clear. Payment activated independently when Verein legal prerequisites are resolved.
 
-**Undefined:** Verein legal prerequisites — Vereinsregister completion, Gemeinnützigkeit (Freistellungsbescheid), bank account → Gläubiger-ID, Kleinunternehmer vs VAT-registered status, Steuernummer. Spendenbescheinigung field collection method for donations ≥€100. PayPal limitation: donations not covered by buyer/seller protection — Michael to acknowledge. See [Meetingagenda: Zahlungseinrichtung](https://mariuswilsch.github.io/public-wilsch-ai-pages/project/abtmayr-reichert/meeting-agenda-klimafolgenschutz-payment-setup).
+**Undefined:** Verein legal prerequisites — Vereinsregister completion, Gemeinnützigkeit (Freistellungsbescheid), bank account → Gläubiger-ID, Kleinunternehmer vs VAT-registered status, Steuernummer. Spendenbescheinigung field collection method for donations ≥€100. See [Meetingagenda: Zahlungseinrichtung](https://mariuswilsch.github.io/public-wilsch-ai-pages/project/abtmayr-reichert/meeting-agenda-klimafolgenschutz-payment-setup).
 
 ### Part 4: Content Structure — Single Scroll
 
@@ -146,7 +143,7 @@ Single-scroll landing page with anchor navigation. No sub-pages except legal.
 
 #### Membership Forms
 
-> *"Wir werden einfach nur unterscheiden beim Mitgliedsantrag: Einzelperson oder Mitgliedgemeinden. Das reicht."* — Michael
+Michael wants only two membership categories — individuals and municipalities. No separate Förderer category.
 
 **Two forms only.** No separate Förderer form.
 
@@ -154,13 +151,13 @@ Single-scroll landing page with anchor navigation. No sub-pages except legal.
 - Name, Anschrift/Adresse, Telefon
 - Abteilung (department), Bereich (division)
 - Gemeindegröße / Bewohneranzahl (population → determines price tier)
-- Vorgesetzte Behörde (supervising authority — *"Wem ist diese Gemeinde untergeordnet?"*)
+- Vorgesetzte Behörde (supervising authority)
 - Ansprechpartner für Umweltschutz und Klima
 - Geschäftsführer der Gemeinde
 
 **Einzelperson (individual) form fields:**
 
-> *"Keine besonderen, die ganz normalen."* — Michael
+Standard personal fields only:
 
 - Name, Adresse, Telefon, Email
 
@@ -172,7 +169,7 @@ Single-scroll landing page with anchor navigation. No sub-pages except legal.
 
 #### Process Flow (Klimafolgenmanager Matching)
 
-> *"Die Gemeinden müssen halt Mitglied werden, wenn sie die Zertifizierung haben wollen."* — Michael
+Municipalities must become members to qualify for certification.
 
 1. Gemeinden werden Vereinsmitglieder
 2. Studenten aus relevanten Fachschaften werden als Klimafolgenmanager rekrutiert
@@ -182,13 +179,13 @@ Single-scroll landing page with anchor navigation. No sub-pages except legal.
 
 ### Part 5: Branding & Design
 
-> *"Da bin ich noch völlig offen."* — Michael on design direction
+Michael is open on design direction — developer proposes, Michael selects.
 
 - **Color/theme:** Developer proposes 3 theme variations via [tweakcn.com](https://tweakcn.com/) → Michael picks
 - **Font:** Century Gothic direction — clean, readable, no script fonts
 - **Images:** Developer creative latitude (Unsplash stock or AI-generated, nature/municipality theme)
 - **Logo:** Placeholder text ("Klimafolgenschutz e.V.") until Michael delivers real logo
-- **Design reference:** [PIK Potsdam](https://www.pik-potsdam.de/) — *"Da kann man vielleicht noch mal sich inspirieren lassen."* Extract copywriting language and design tone for a credible German climate institution.
+- **Design reference:** [PIK Potsdam](https://www.pik-potsdam.de/) — extract copywriting language and design tone for a credible German climate institution.
 - **Prototype reference:** GenSpark homepage (inspiration, not blueprint) — screenshots captured in session
 
 ### Part 6: Infrastructure & Legal
@@ -196,7 +193,7 @@ Single-scroll landing page with anchor navigation. No sub-pages except legal.
 - **Domain:** klimafolgenschutz.com (Ionos) — DNS credentials pending from Michael
 - **Impressum:** Michael generates via [e-Recht24](https://www.e-recht24.de/)
 - **Datenschutzerklärung + Cookie consent:** Michael generates via e-Recht24, developer integrates snippet
-- **GDPR:** Forms collect personal data → privacy policy required, cookie consent for Stripe/PayPal
+- **GDPR:** Forms collect personal data → privacy policy required, cookie consent for Stripe
 
 ---
 
