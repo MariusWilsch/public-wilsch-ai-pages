@@ -105,7 +105,7 @@ The component-by-component rhythm creates the design doc. The extraction pass de
 | 1 | **SCOPE** | Pick one Approach part. User judgment. That part is the session boundary. | "I am working on Part X" |
 | 2 | **SURFACE** | AI produces numbered uncertainties (questions + hypotheses) from the scoped part text. No transcript reading at this stage. User validates the list. | Numbered list. List = SURFACE done. |
 | 3 | **RESOLVE** | Chisel ambiguity one item at a time. AI self-routes each uncertainty before asking the user. User controls pacing — do not advance without explicit "next." Lightweight dependency ordering (conceptual building). Source attribution per resolution: Fireflies link + search anchor words. | Each item gets a disposition + source |
-| 4 | **UPDATE** | Write resolved findings into the design doc part. Flagged items assembled into meeting agenda (batch, after RESOLVE). Per-element source attribution. *(To be refined with more evidence.)* | Updated design doc part + meeting agenda if needed |
+| 4 | **UPDATE** | AI proposes transition ("All items resolved. Ready to write?"), user confirms. Then: diff-based, section-by-section, approval-gated writing into the design doc — scoped part and any other components improved by the resolutions. Inline **Undefined** markers for flagged items link to meeting agenda. Meeting agenda created/updated after design doc changes, also component-by-component. Per-element source attribution inline (ideal) + session reference in Source section (minimum). Secondary validation surface: diff shows AI's understanding, user skims for instinctive judgment, new micro-decisions emerge from seeing text in context. | Updated design doc + meeting agenda if flagged items exist |
 | 5 | **ASSESS** | User judges: ready or not. No formal state levels. Multiple extraction passes are normal. *(To be refined with more evidence.)* | User decision |
 
 **Self-Routing in RESOLVE:**
@@ -140,6 +140,49 @@ Part 6: Insert via API + Backpressure
 
 *The part IS the categorization. Uncertainties come from reading the part text. Transcripts are not read during SURFACE.*
 
+**UPDATE in practice** *(from AVO Soßen Sourcing #513, Part 4 extraction):*
+
+UPDATE is not transcription — it's a secondary validation surface. The diff shows AI's understanding of the resolutions; the user skims and reacts instinctively ("makes sense" / "doesn't"). New micro-decisions about wording and formatting emerge from seeing the text in context — these cannot surface during RESOLVE because the document text doesn't exist yet during RESOLVE.
+
+**Rhythm:**
+1. AI proposes transition: "All items resolved. Ready to write into the doc?"
+2. User confirms → AI loads hippocampus skill with design doc workflow
+3. AI presents diff for ONE section (component or approach part)
+4. User skims: `Apply` / `Adjust` / provides feedback
+5. If feedback → AI revises diff → re-proposes
+6. If Apply → AI writes the edit
+7. Next section — repeat until all changes written
+8. Inline **Undefined:** markers placed at end of sections for flagged items, linked to meeting agenda
+9. Meeting agenda created/updated (also component-by-component with approval gates)
+10. Source section updated with current session reference
+
+**Diff format covers both modes:**
+- **Edit existing content** → `-` (removed) and `+` (added) — shows what changed
+- **Add new content** → all `+` — shows what's new, still skimmable
+
+**Dual value of the diff:**
+1. Shows the change — what's being written into the doc
+2. Shows AI's understanding — how AI interpreted the resolutions. If AI understood correctly, the diff feels right. If not, user catches it. Mismatches become learning signals.
+
+**Live example — Success Definition update (AVO, 3 review rounds):**
+
+Round 1: AI proposed table-format diff → user asked about line breaks in tables.
+Round 2: AI revised to list format → user added "otherwise adjust" to Done test.
+Round 3: AI incorporated addition → user said "Apply."
+
+```
+# Before (table):
+-| **Done test** | Query each recipe → partner appears in Top 5. If yes → validated. |
+
+# After (list, with user addition):
++**Done test:** Query each recipe → partner appears in Top 5.
++If yes → baseline validated. Otherwise → adjust weights and iterate.
++A negative finding is also a valid POC result.
+```
+
+Three rounds on one section is normal. The format change (table → list) and content addition ("otherwise adjust") both emerged during UPDATE — neither existed during RESOLVE.
+
+*Source: `/Users/verdant/.claude/projects/-Users-verdant-Documents-projects-billable-AVO__poc/67641e8a-a998-4c2c-b7b6-67f7191bc2f4.jsonl`*
 
 ---
 
@@ -208,6 +251,8 @@ The attendee reads the design doc before the meeting. The discussion topics are 
   - `ed3ed7d2` — AVO reverse extraction (questions first, then transcripts — adaptive variant)
   - `00e6a51f` — Soloforce implicit success (Socratic dialogue as extraction, transcript mining pattern)
   - `b9e0c145` — AVO additional evidence
+  - `67641e8a` — AVO UPDATE in practice (diff-based rhythm, dual validation, 3 review rounds on Success Definition)
+- **UPDATE extraction pass session:** /Users/verdant/.claude/projects/-Users-verdant-Documents-projects-WILSCH-AI-INTERNAL--soloforce/3bb274e9-cbb9-4bc3-b474-23e2f85b505f.jsonl
 - **Design docs demonstrating extraction output:** [Chain 1B Step 3](https://mariuswilsch.github.io/public-wilsch-ai-pages/project/archibus-fm-assistant/chain-1b-step3-design) (per-element source attribution, Defined/Partially Defined/Undefined per part)
 
 **Shared references:**
