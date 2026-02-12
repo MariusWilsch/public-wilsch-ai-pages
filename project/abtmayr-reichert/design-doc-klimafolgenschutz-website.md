@@ -21,7 +21,7 @@ Michael Reichert's Klimafolgenschutz association needs a web presence to acquire
 
 **Preconditions:**
 - Framework contract signed (Jan 26 via SignNow) — [Rahmenvertrag](https://mariuswilsch.github.io/public-wilsch-ai-pages/project/abtmayr-reichert/rahmenvertrag-tm-2025-12-16)
-- Association registered (Vereinsregister complete)
+- Vereinsregister entry: **pending** (applied July 2025, still under review as of Feb 2026 — blocks bank account, Impressum, payment setup)
 - Domain klimafolgenschutz.com registered at Ionos (DNS access pending from Michael)
 - GenSpark prototypes exist as design inspiration — Michael: *"Das ist ja einfach nur so ein erster Entwurf. Als Anregung oder so als Basis kann das ja vielleicht schon dienen."*
 - Gemeinnützigkeit status: **unconfirmed** (pending verification with Michael — affects donation receipt capability)
@@ -80,15 +80,42 @@ Michael Reichert's Klimafolgenschutz association needs a web presence to acquire
 
 **[PayPal](https://www.paypal.com/de/)** as secondary option (~2.49% + €0.35).
 
-**Donor/Förderer flow:** Generic for all audiences — municipality, individual, or company. No membership required, no separate form. Visitor selects amount → chooses payment method (card/PayPal) → done. Same flow regardless of who the donor is.
+#### Payment Flows (all self-service)
 
-**Stripe setup requires from Michael:** Vereinssatzung, Vereinsregister certificate, Gläubiger-ID from Bundesbank (allow 2-4 weeks if not obtained), Steuernummer, IBAN, board member ID.
+| Action | User Experience | Technical Mechanism | Michael's Role |
+|--------|----------------|-------------------|----------------|
+| **Join as individual** | Form (personal info) → Stripe Checkout (recurring SEPA/card) | Stripe Checkout Session, mode: subscription | Notified |
+| **Join as municipality** | Form (municipality info) → auto Stripe Invoice (tiered by population) | Stripe Invoicing, municipality pays via Überweisung | Notified, can audit |
+| **Donate** | Floating button (bottom-right, persistent on scroll) → amount selector (presets + custom) → Stripe Checkout (one-off card/PayPal) | Stripe Checkout Session, mode: payment | Notified |
+
+No membership required for donations. No separate donor form — *"Zum Spenden muss man ja auch nicht unbedingt Mitglied sein."* Floating donate button is always accessible without competing with membership CTAs.
+
+#### Stripe Onboarding Requirements (German Verein)
+
+| Requirement | Source | Status |
+|------------|--------|--------|
+| Business type: `non_profit` | Stripe signup | Developer handles |
+| Vereinsregister extract (< 3 months old) | Michael | **Blocked** — registration pending |
+| Vereinssatzung | Michael | Exists |
+| Steuernummer | Michael / Finanzamt | **Pending confirmation** |
+| Kleinunternehmer status (yes/no) | Steuerberater | **Undefined** — see meeting agenda |
+| IBAN (payout account) | Michael | **Blocked** — requires Vereinsregister |
+| Board member ID (government-issued) | Michael | Available |
+| Gläubiger-ID (for SEPA Lastschrift) | Bundesbank | **Blocked** — requires bank account |
+
+Gläubiger-ID timeline: contact person activation within 10 days, then ID issued via email. Account activation: ~2-5 business days after all docs submitted.
 
 **Terms & conditions summary** (Stripe + PayPal key terms for client review — [full details in session transcript](https://github.com/veloxforce/claude-user-configs/blob/main/.claude/projects/-Users-verdant-Documents-projects-WILSCH-AI-INTERNAL--soloforce/bdb2cfed-1005-4068-8543-a2cde2bc4c3e.jsonl)):
 - **Stripe:** No monthly fee, pay-as-you-go. Payouts 3-5 business days. €15 chargeback fee. Cancel anytime. GDPR compliant (EU/Ireland).
 - **PayPal:** No monthly fee, pay-as-you-go. Payouts 1-3 business days. Cancel anytime. Donations NOT covered by buyer/seller protection.
 
-**Donation receipts (Zuwendungsbestätigung):** Dependent on Gemeinnützigkeit confirmation. If confirmed, Michael handles manually via Stripe transaction records.
+**Donation receipts (Zuwendungsbestätigung):** Dependent on Gemeinnützigkeit confirmation. If confirmed, Michael handles manually via Stripe transaction records. For donations ≥€100, donor name and address required for Spendenbescheinigung — collection method TBD (see meeting agenda).
+
+#### Go-Live Sequencing
+
+Website can launch **before payment is ready.** Fallback: membership sections show "Kontaktieren Sie uns" or "Demnächst verfügbar" until Stripe prerequisites clear. Payment activated independently when Verein legal prerequisites are resolved.
+
+**Undefined:** Verein legal prerequisites — Vereinsregister completion, Gemeinnützigkeit (Freistellungsbescheid), bank account → Gläubiger-ID, Kleinunternehmer vs VAT-registered status, Steuernummer. Spendenbescheinigung field collection method for donations ≥€100. PayPal limitation: donations not covered by buyer/seller protection — Michael to acknowledge. See [Meetingagenda: Zahlungseinrichtung](https://mariuswilsch.github.io/public-wilsch-ai-pages/project/abtmayr-reichert/meeting-agenda-klimafolgenschutz-payment-setup).
 
 ### Part 4: Content Structure — Single Scroll
 
@@ -183,3 +210,4 @@ Single-scroll landing page with anchor navigation. No sub-pages except legal.
 - **GenSpark prototype:** [Homepage](https://genspark.genspark.site/api/code_sandbox_light/preview/71fefb28-2d3f-405f-b45e-ad9515477e3e/index.html?canvas_history_id=49ffc6f6-b858-47be-8824-190f8a5c20ee)
 - **Design doc session:** `/Users/verdant/.claude/projects/-Users-verdant-Documents-projects-WILSCH-AI-INTERNAL__soloforce/bdb2cfed-1005-4068-8543-a2cde2bc4c3e.jsonl`
 - **Tech references:** [Vike](https://vike.dev/), [Payload CMS](https://payloadcms.com/docs), [Stripe for German Associations](https://stripe.com/resources/more/membership-fees-associations-germany), [PIK Potsdam](https://www.pik-potsdam.de/)
+- **Payment extraction pass session (Feb 12, 2026):** `/Users/verdant/.claude/projects/-Users-verdant-Documents-projects-WILSCH-AI-INTERNAL__soloforce/e84a8954-8792-49d9-a061-dfd0b75a353c.jsonl`
