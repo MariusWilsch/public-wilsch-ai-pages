@@ -4,7 +4,7 @@
 publish: true
 ---
 
-Ballpark estimate (Richtpreisangebot) for the Klimafolgenschutz website build. Non-binding indicative pricing within the T&M Rahmenvertrag (€120/hr). All 7 sub-issues scoped via SURFACE/RESOLVE methodology.
+Ballpark estimate (Richtpreisangebot) for the Klimafolgenschutz website build. Non-binding indicative pricing within the T&M Rahmenvertrag (€120/hr). All 7 sub-issues scoped via SURFACE/RESOLVE methodology. Estimates assume AI-assisted development (Claude Code).
 
 ---
 
@@ -12,16 +12,16 @@ Ballpark estimate (Richtpreisangebot) for the Klimafolgenschutz website build. N
 
 | Sub-Issue | Description | Estimate (hrs) | Status |
 |-----------|-------------|---------------|--------|
-| #757 | Foundation + CMS + Deploy Pipeline | 8-14 | Buildable |
-| #758 | Design System + Branding | 4-8 | Buildable |
-| #759 | Static Sections + Legal Pages | 4-6 | Buildable |
-| #760 | Projekte Section (CMS-Connected) | 4-6 | Buildable |
-| #761 | Mitgliedschaft Section (Forms + Pricing) | 6-10 | Buildable |
-| #762 | Stripe Payment Integration | 8-12 | BLOCKED (Vereinsregister) |
-| #763 | Zertifizierung Section | 4-6 | DEFERRED (content from Michael) |
-| — | Cross-cutting (QA, responsive, cookies, analytics, revisions) | 8-12 | — |
-| **Total** | | **~46-74 hrs** | |
-| **At €120/hr** | | **~€5.520 - €8.880** | |
+| #757 | Foundation + CMS + Deploy Pipeline | 5-6 | Buildable |
+| #758 | Design System + Branding | 1-2 | Buildable |
+| #759 | Static Sections + Legal Pages | 2-3 | Buildable |
+| #760 | Projekte Section (CMS-Connected) | 2-3 | Buildable |
+| #761 | Mitgliedschaft Section (Forms + Pricing) | 2-4 | Buildable |
+| #762 | Stripe Payment Integration | 4-6 | BLOCKED (Vereinsregister) |
+| #763 | Zertifizierung Section | 2-3 | DEFERRED (content from Michael) |
+| — | Cross-cutting (QA, responsive, revisions) | 3-5 | — |
+| **Total** | | **~21-32 hrs** | |
+| **At €120/hr** | | **~€2.520 - €3.840** | |
 
 Design work already invested: ~3,5 hrs (alignment value).
 
@@ -29,56 +29,47 @@ Design work already invested: ~3,5 hrs (alignment value).
 
 ## Resolved Uncertainties
 
-### #757 Foundation + CMS + Deploy Pipeline (8-14 hrs)
+### #757 Foundation + CMS + Deploy Pipeline (~5-6 hrs)
 
 **Server state (verified Feb 13):** WILSCH-AI-SERVER has Docker v29, Caddy (systemd), PostgreSQL (native), Node v25.3. Disk at 27% after cleanup (318GB free). 27 containers running, all healthy.
 
-**Payload CMS v3:** First deployment. Full Next.js application running in Docker container. PostgreSQL adapter. Caddy reverse proxy for admin subdomain. Collection schemas (projects, memberships, content, legal) = significant design effort (3-5 hrs within this estimate).
+**Payload CMS v3:** First deployment. Scaffold + Docker Compose + Caddy site block + Vercel pipeline = heavily AI-assisted (~2 hrs). Collection schema design (projects, memberships, content, legal) requires human data modeling decisions (~2-3 hrs) — AI implements the TypeScript configs once decisions are made.
 
-**Vike (React + Vite SSR/SSG):** First time for team. Learning buffer ~4-6 hrs across all frontend sub-issues. WHY Vike was chosen:
-1. React has no native SEO — Google sees empty div
-2. Klimafolgenschutz needs discoverability — municipalities search for climate solutions
-3. Vike adds SSG where SEO matters, keeps react-router for interactive sections
-4. Preserves existing React frontend guidelines — no Next.js rewrite needed
+**Vike (React + Vite SSR/SSG):** First time for team. Learning buffer accounted in frontend sub-issues.
 
-**Vercel:** Standard deployment pipeline (~1-2 hrs). **DNS:** Client dependency (Michael provides Ionos credentials, ~0.5 hr setup).
+**DNS:** Client dependency (Michael provides Ionos credentials, ~0.5 hr setup).
 
-### #758 Design System + Branding (4-8 hrs)
+### #758 Design System + Branding (~1-2 hrs)
 
-tweakcn setup trivial (npx install). CSS variables convention added to [React frontend guidelines](https://github.com/veloxforce/velox-global-adrs/commit/ba5e956). Century Gothic = not a free web font, substitute needed. Component library: 5-8 core components. Michael approval gate for color selection.
+tweakcn color config + shadcn/ui component install (trivial — npx commands). CSS variables convention in [React frontend guidelines](https://github.com/veloxforce/velox-global-adrs/commit/ba5e956). Century Gothic substitute (web font, ~0.5 hr). Michael picks from 3 color variants = client dependency. Project-specific component wrappers emerge during page builds (#759-#763), not upfront.
 
-### #759 Static Sections + Legal Pages (4-6 hrs)
+### #759 Static Sections + Legal Pages (~2-3 hrs)
 
-- Hero with 2 CTAs (Mitglied werden + Beratung anfragen)
-- "Beratung anfragen" = mailto link (simplest, no backend)
-- Prozess 5-step visualization = implementation decision (David)
-- e-Recht24 templates (Impressum, Datenschutz) = standard integration
-- Copywriting: GenSpark prototype + AI generation
-- Newsletter: **OUT of scope**
+AI generates all sections from design doc spec — David reviews and tweaks visuals. Hero (2 CTAs, Beratung anfragen = mailto), Prozess (5-step visualization), Footer (contact + legal links). Impressum + Datenschutz = e-Recht24 paste + style match. Copywriting from GenSpark prototype + AI rewrite. Newsletter: **OUT of scope**.
 
-### #760 Projekte Section (4-6 hrs)
+### #760 Projekte Section (~2-3 hrs)
 
-5 CMS-connected tiles. Images: Unsplash + AI (OpenRouter). Initial content seeded from design doc descriptions. Summary-only tiles in v1 (no detail pages).
+AI generates tile components + Payload API integration (~1 hr). Image sourcing: Unsplash + AI via OpenRouter (~0.5 hr). Content seeding from design doc into CMS (~0.5 hr). Summary-only tiles in v1.
 
-### #761 Mitgliedschaft Forms + Pricing (6-10 hrs)
+### #761 Mitgliedschaft Forms + Pricing (~2-4 hrs)
 
-Pre-Stripe: email notification to Michael on form submit. 3-4 placeholder municipality tiers (CMS-managed, Michael confirms brackets later). Form validation = standard. Pricing display = implementation decision.
+AI generates both forms (Gemeinde + Einzelperson) from field spec + validation (~1-2 hrs). Pricing display from CMS data (~0.5-1 hr). Email notification on submit via Payload webhook (~0.5-1 hr). 3-4 placeholder municipality tiers (CMS-managed, Michael confirms brackets later).
 
-### #762 Stripe Payment Integration (8-12 hrs) — BLOCKED
+### #762 Stripe Payment Integration (~4-6 hrs) — BLOCKED
 
-3 payment flows: SEPA Lastschrift (individual recurring), Stripe Invoicing (municipality), Card (donations). Webhook handling: ~3-4 hrs for 3 handlers. Spendenbescheinigung: 2 extra fields for donations ≥€100 (~1 hr). Build in test mode first, production cutover when Vereinsregister clears.
+AI follows Stripe docs for 3 checkout integrations (SEPA, Invoicing, Card donations) — but payment logic needs careful human verification (~2-3 hrs). 3 webhook handlers: AI generates boilerplate, David verifies business logic (~1-2 hrs). Spendenbescheinigung: 2 extra fields (~0.5 hr). Test mode first, production cutover when Vereinsregister clears.
 
-### #763 Zertifizierung Section (4-6 hrs) — DEFERRED
+### #763 Zertifizierung Section (~2-3 hrs) — DEFERRED
 
-Content undefined — waiting on Michael. Estimated as equivalent to Projekte section (text + visualization). Flagged as uncertain.
+Content undefined — waiting on Michael. Estimated as equivalent to Projekte section (text + visualization, AI-generated). Flagged as uncertain.
 
-### Cross-Cutting (8-12 hrs)
+### Cross-Cutting (~3-5 hrs)
 
-- Responsive/mobile-first: assumed for single-scroll site
-- Cookie consent: ~1-2 hrs (library-based)
-- Analytics: ~1 hr
+- Responsive/mobile-first: real work — visual iteration on breakpoints across all sections
+- Cookie consent: evaluate at launch — may not be needed if no analytics and Stripe redirects off-site
+- Analytics: **OUT of scope** (add later if Michael requests)
 - QA/testing: 10% buffer on total
-- **Revision rounds:** 2 rounds for whole site, additional rounds = T&M
+- **Revision rounds:** 2 rounds for whole site, AI applies revisions faster. Additional rounds = T&M.
 
 ---
 
