@@ -256,10 +256,7 @@ All three outcomes are valid POC results. A negative finding is still a finding.
 - **Transcripts:** [WS2-S1](https://docs.google.com/document/d/1KRF-IktLEuM8wlyGnXjg-yfK3KoQR-zqwzDlHyqqXGs), [WS2-S3a](https://docs.google.com/document/d/1Y6dz78yEu1E1LG4-YFqruj5gxSsJqil8vvU6tbOu_cw), [WS2-S3b](https://docs.google.com/document/d/1NhjxZnugaiWLg415HbC7nB_ybDPOCaCbfM0zF3L_n0I), [Jan 15 Fireflies](https://app.fireflies.ai/view/01KEXRBAF5495NKTGZ5N6FHFVE), [Jan 29 Fireflies](https://app.fireflies.ai/view/01KG3DKZHD0EVFK4620C86B873)
 - **Pflichtenheft:** [Published](https://mariuswilsch.github.io/public-wilsch-ai-pages/project/avo_fullstack/pflichtenheft-ki-projekt-sossen-sourcing)
 - **Agreed Schema:** [Published](https://mariuswilsch.github.io/public-wilsch-ai-pages/project/avo_fullstack/agreed-json-schema)
-- **Data:** `alle.jsonl` (62 R-prefix final products, 197 total entries, 134 unique materials)
-- **Output Template:** Übersicht.xlsx (AVO Seafile)
-- **Certification Criteria:** Email from Johannes von Schultz (Oct 30, 2025) — VLOG, Bio, Naturland, Halal, Kosher, Vegan, Vegetarisch + country exclusions (Non-China, Non-Russland, Non-Ukraine). PDF: Rohstoffkriterien zur Vergleichbarkeit.pdf
-- **Tabellenstruktur:** [AVO_WS2_Tabellenstruktur_Metadatei_20251108.xlsx](https://docs.google.com/spreadsheets/d/1GEXqdkFxCtA4xSUjFpZTBUBPk6O_Jx8G) — Stammdaten CSV schema (16 columns, selection criteria)
+- **Data artifacts:** [`data/`](https://github.com/MariusWilsch/AVO__poc/tree/main/data) — all recipe data, workshop documents, evaluation templates
 - **Session (Part 1 deepening):** `/Users/verdant/.claude/projects/-Users-verdant-Documents-projects-billable-AVO--poc/451ac158-4b2b-4501-8dca-bd9645888e7d.jsonl`
 - **Session (Parts 2–4 deepening):** `/Users/verdant/.claude/projects/-Users-verdant-Documents-projects-billable-AVO--poc/ed3ed7d2-a582-4987-b15b-d59a0f7763de.jsonl`
 - **Session (Part 1 extraction + Part 2 simplification):** `/Users/verdant/.claude/projects/-Users-verdant-Documents-projects-billable-AVO--poc/953e038a-ae96-4265-a20b-b7d9d1763d87.jsonl`
