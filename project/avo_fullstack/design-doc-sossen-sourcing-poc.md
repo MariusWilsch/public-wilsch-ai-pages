@@ -67,6 +67,8 @@ Load `alle.jsonl` → filter to **R-prefix entries only** (62 final products) �
 | (none) | 47 | No — raw materials / intermediates |
 | B | 6 | Unknown — verify with Mattis |
 
+> **⚠️ Undefined:** B-prefix classification unresolved — may change pool size. → [Mattis agenda, Topic 1](https://mariuswilsch.github.io/public-wilsch-ai-pages/project/avo_fullstack/meeting-agenda-mattis-data-confirmation)
+
 **What we ignore:** The `structure` field (Vormischung traceability — deferred to Phase 2 per WS2-Session1 agreement).
 
 **Basisvariante filter:**
@@ -74,6 +76,8 @@ Load `alle.jsonl` → filter to **R-prefix entries only** (62 final products) �
 - **Definition:** Same recipe can have multiple article numbers for different packaging sizes or customer-specific labels — all sharing identical ingredients and percentages
 - Filtering to Variant 0 keeps one entry per actual recipe, removing ~80% packaging/customer duplicates
 - Data analysis confirms no variant duplicates among 62 R-prefix entries (confirm with Mattis)
+
+> **⚠️ Undefined:** Basisvariante filtering status in test data unconfirmed. → [Mattis agenda, Topic 2](https://mariuswilsch.github.io/public-wilsch-ai-pages/project/avo_fullstack/meeting-agenda-mattis-data-confirmation)
 
 **Material ID consistency:**
 - Material IDs are globally consistent — same ID = same ingredient across all recipes
@@ -83,6 +87,7 @@ Load `alle.jsonl` → filter to **R-prefix entries only** (62 final products) �
 - Per [WS2-S1](https://docs.google.com/document/d/1KRF-IktLEuM8wlyGnXjg-yfK3KoQR-zqwzDlHyqqXGs): "dürfen nicht automatisch zusammengeführt werden"
 - Confirm treatment with client
 
+> **⚠️ Undefined:** Suffix variant treatment (distinct vs grouped) unconfirmed. → [Mattis agenda, Topic 3](https://mariuswilsch.github.io/public-wilsch-ai-pages/project/avo_fullstack/meeting-agenda-mattis-data-confirmation)
 
 **Source:**
 - [WS2-Session1](https://docs.google.com/document/d/1KRF-IktLEuM8wlyGnXjg-yfK3KoQR-zqwzDlHyqqXGs) (44:47) — "Auflösung der Rezepturen auf Zutatsebene ohne Vormischungen" (resolve to ingredient level without premixes)
@@ -117,6 +122,8 @@ For shared materials, measure proportional distance: similarity = `1 - sum|a_i -
 **(b) Algorithm-based:** Group all materials by category, sum percentages within each group, then re-run Jaccard + Bray-Curtis on the category-aggregated data. Gives richer information — not just "shared category" but "how close are the category-level amounts?"
 
 **Assumption:** Suffix variants (e.g., 00004 vs 00004B) likely belong to the same Einkaufsgruppe — to be verified once Stammdaten CSV is available. If confirmed, category-level comparison would recognize them as substitutable despite being treated as distinct at the exact-ID level. Value of either sub-approach to be determined empirically. Neither is POC scope.
+
+> **⚠️ Undefined:** Stammdaten CSV availability blocks Category criterion. → [Mattis agenda, Topic 4](https://mariuswilsch.github.io/public-wilsch-ai-pages/project/avo_fullstack/meeting-agenda-mattis-data-confirmation)
 
 **Source:**
 - [Pflichtenheft §3](https://mariuswilsch.github.io/public-wilsch-ai-pages/project/avo_fullstack/pflichtenheft-ki-projekt-sossen-sourcing) — FR-02 (Material_ID matching), FR-02a (overlap ratio), FR-04 (percentage similarity), FR-08 (category matching)
@@ -200,6 +207,8 @@ All three outcomes are valid POC results. A negative finding is still a finding.
 2. **Interaction 2 (async email):** Send results XLSX with multiple result sets (internally from different weight combos). Behrens sees ranked lists with per-criterion scores (Überlappung, Anteil, Gesamt), annotates which results match his intuition. False positives emerge organically — Behrens flags unexpected entries in Top 5.
 
 **Blocked by:** 5 known duplicate pairs from Herr Behrens (meeting agenda item).
+
+> **⚠️ Undefined:** Evaluation table format + pair selection pending Behrens meeting. → [Behrens agenda](https://mariuswilsch.github.io/public-wilsch-ai-pages/project/avo_fullstack/meeting-agenda-behrens-validation)
 
 **Source:**
 - [Pflichtenheft §9](https://mariuswilsch.github.io/public-wilsch-ai-pages/project/avo_fullstack/pflichtenheft-ki-projekt-sossen-sourcing) — evaluation methodology, success criteria
