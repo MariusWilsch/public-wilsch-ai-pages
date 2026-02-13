@@ -67,6 +67,8 @@ Load `alle.jsonl` → filter to **R-prefix entries only** (62 final products) �
 | (none) | 47 | No — raw materials / intermediates |
 | B | 6 | Unknown — verify with Mattis |
 
+**Why only R-prefix?** Each R entry's `materials[]` array is already fully exploded — all Vormischungen (V), premix recipes (RV), and intermediate mixes (RZ) have been resolved down to their base raw material IDs with final percentages summing to 100%. The non-R entries are already contained within the R entries. The `structure[]` field on R entries records which Vormischungen were exploded (traceability only, not used for similarity).
+
 > **⚠️ Undefined:** B-prefix classification unresolved — may change pool size. → [Mattis agenda, Topic 1](https://mariuswilsch.github.io/public-wilsch-ai-pages/project/avo_fullstack/meeting-agenda-mattis-data-confirmation)
 
 **What we ignore:** The `structure` field (Vormischung traceability — deferred to Phase 2 per WS2-Session1 agreement).
