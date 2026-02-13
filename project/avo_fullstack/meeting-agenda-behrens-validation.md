@@ -41,6 +41,7 @@ Rang  Rezeptur  Bezeichnung           Überlappung  Anteil  Gesamt
 - Wir testen, ob der Algorithmus die richtigen Ergebnisse liefert
 - Dazu benötigen wir bekannte ähnliche Paare aus Ihrer Erfahrung
 - In der XLSX-Vorlage finden Sie die Liste aller 62 Rezepturen aus dem Testpool
+- → [XLSX-Vorlage öffnen (Google Drive)](https://docs.google.com/spreadsheets/d/1yQyUYYF_cPZRsjUIE9ZUv-AHl2-74k4N)
 
 | Rezeptur_A | Ähnlichste (Pflicht) | Weitere (optional) | Anmerkung |
 |------------|---------------------|-------------------|-----------|
