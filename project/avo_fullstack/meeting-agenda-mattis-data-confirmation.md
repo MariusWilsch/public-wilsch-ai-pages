@@ -57,6 +57,7 @@ Kategorie-Gruppierung (Einkaufsgruppen) wird für den POC-Start nicht benötigt,
 ## Meeting-Format
 
 - **Art:** Bestätigungssession
+- **Teilnehmer:** Mattis, Thomas Erhard, Marius Wilsch
 - **Erwartung:** Mattis prüft Datenaufbereitungsentscheidungen
 - **Ergebnis:** Freigabe der Datenannahmen für die POC-Implementierung
 

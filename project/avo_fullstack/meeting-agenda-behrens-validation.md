@@ -61,6 +61,7 @@ Rang  Rezeptur  Bezeichnung           Überlappung  Anteil  Gesamt
 ## Meetingformat
 
 - **Art:** Erkundung — gemeinsames Verständnis + Erhebung von Bewertungspaaren
+- **Teilnehmer:** Herr Behrens, Thomas Erhard, Marius Wilsch
 - **Erwartung:** Wissen darüber, welche Rezepturen als ähnlich gelten
 - **Ergebnis:** Vereinbarte XLSX-Vorlage + 5 ausgefüllte Bewertungspaare
 
