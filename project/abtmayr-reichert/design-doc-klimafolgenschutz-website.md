@@ -49,7 +49,14 @@ Michael Reichert's Klimafolgenschutz association needs a web presence to acquire
 - Interactive sections (forms, payment) → SPA mode
 - **Frontend deployed to Vercel**
 
-**Why Vike catch-all:** Preserves react-router patterns from existing guidelines. Adds SEO where it matters (public content pages) without rewriting the app architecture. ~80% SEO benefit with ~20% of full-framework effort. ([Decision rationale — session transcript](https://github.com/veloxforce/claude-user-configs/blob/main/.claude/projects/-Users-verdant-Documents-projects-WILSCH-AI-INTERNAL--soloforce/bdb2cfed-1005-4068-8543-a2cde2bc4c3e.jsonl))
+**Why Vike catch-all:**
+1. React has no native SEO — Google sees an empty `<div id="root">`, public content is invisible to search engines
+2. Klimafolgenschutz needs discoverability — municipalities search for climate protection solutions, the website must be crawlable
+3. Next.js would solve SEO but requires rewriting to app router, server components, and new patterns — high effort, breaks existing guidelines
+4. Vike adds SSG only where SEO matters (public content pages) while keeping react-router for interactive sections (forms, payment)
+5. Existing [React frontend guidelines](https://github.com/veloxforce/velox-global-adrs/blob/main/README-REACT-FRONTEND.md) stay intact — no guideline rewrite needed
+
+Result: ~80% SEO benefit with ~20% of full-framework effort. ([Decision rationale — session transcript](https://github.com/veloxforce/claude-user-configs/blob/main/.claude/projects/-Users-verdant-Documents-projects-WILSCH-AI-INTERNAL--soloforce/bdb2cfed-1005-4068-8543-a2cde2bc4c3e.jsonl))
 
 ### Part 2: Content Management — Payload CMS
 
@@ -120,12 +127,12 @@ Single-scroll landing page with anchor navigation. No sub-pages except legal.
 
 **Sections in scroll order:**
 
-1. **Hero** — Association mission + 2 CTAs (Mitglied werden, Beratung anfragen)
+1. **Hero** — Association mission + 2 CTAs (Mitglied werden, Beratung anfragen → `mailto:` link)
 2. **Projekte** — 5 tiles (see below)
 3. **Prozess** — How municipalities get matched with Klimafolgenmanager (5-step flow)
 4. **Mitgliedschaft** — Two forms + payment integration (see below)
 5. **Zertifizierung** — Shell with process flow visualization (criteria pending from Michael)
-6. **Footer** — Contact, legal links, newsletter signup
+6. **Footer** — Contact, legal links
 
 **Legal sub-pages:** `/impressum`, `/datenschutz` (generated via [e-Recht24](https://www.e-recht24.de/))
 
@@ -208,3 +215,5 @@ Michael is open on design direction — developer proposes, Michael selects.
 - **Design doc session:** `/Users/verdant/.claude/projects/-Users-verdant-Documents-projects-WILSCH-AI-INTERNAL__soloforce/bdb2cfed-1005-4068-8543-a2cde2bc4c3e.jsonl`
 - **Tech references:** [Vike](https://vike.dev/), [Payload CMS](https://payloadcms.com/docs), [Stripe for German Associations](https://stripe.com/resources/more/membership-fees-associations-germany), [PIK Potsdam](https://www.pik-potsdam.de/)
 - **Payment extraction pass session (Feb 12, 2026):** `/Users/verdant/.claude/projects/-Users-verdant-Documents-projects-WILSCH-AI-INTERNAL__soloforce/e84a8954-8792-49d9-a061-dfd0b75a353c.jsonl`
+- **Scoping estimate:** [Ballpark](https://mariuswilsch.github.io/public-wilsch-ai-pages/project/abtmayr-reichert/scoping-estimate-klimafolgenschutz-website)
+- **Scoping session (Feb 13, 2026):** `/Users/verdant/.claude/projects/-Users-verdant-Documents-projects-WILSCH-AI-INTERNAL__soloforce/5b5fc3d1-06ae-4f97-a8c4-945ade6484b6.jsonl`
