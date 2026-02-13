@@ -113,15 +113,33 @@ For shared materials, measure proportional distance: similarity = `1 - sum|a_i -
 
 **Design context:** Algorithmic approach chosen over vector/embedding because similarity is quantity-based, not semantic — client needs explainable, per-criterion scores, not opaque numbers.
 
-**Future enhancement — Category-level comparison (blocked on Stammdaten CSV):**
+**Proxy Architecture (future enhancement — all blocked on Stammdaten CSV):**
 
-**Motivation:** "Does this recipe taste similar?" can't be measured directly. Einkaufsgruppen (purchasing groups, 761 categories) serve as proxy — materials in the same group are assumed to produce similar sensory results. If Recipe A uses 00004 and Recipe B uses 00004B, and both are in the same Einkaufsgruppe, the recipes likely taste similar despite having technically different ingredient IDs. Two sub-approaches to test empirically:
+Beyond the two POC criteria, the Stammdaten CSV defines additional proxy dimensions for taste similarity. The [Tabellenstruktur XLSX](AVO_WS2_Tabellenstruktur_Metadatei_20251108.xlsx) (WS2, 2025-11-08) specifies the exact schema — three separate axes, each a different lens on comparability:
 
-**(a) Count-based:** Of the unshared materials between two recipes, what fraction have a partner in the same Rohstoffkategorie? Simple ratio — tells you differences are "soft" (substitutable) vs "hard" (genuinely different ingredients).
+**Axis 1 — Einkaufsgruppen (column 6, 761 categories):** Compositional substitutability. Materials in the same purchasing group are assumed functionally equivalent — if Recipe A uses 00004 and Recipe B uses 00004B, and both share an Einkaufsgruppe, the recipes are substitutable despite different IDs. Two sub-approaches to test empirically:
 
-**(b) Algorithm-based:** Group all materials by category, sum percentages within each group, then re-run Jaccard + Bray-Curtis on the category-aggregated data. Gives richer information — not just "shared category" but "how close are the category-level amounts?"
+**(a) Count-based:** Of unshared materials, what fraction have a partner in the same Rohstoffkategorie? Tells you differences are "soft" (substitutable) vs "hard" (genuinely different).
 
-**Assumption:** Suffix variants (e.g., 00004 vs 00004B) likely belong to the same Einkaufsgruppe — to be verified once Stammdaten CSV is available. If confirmed, category-level comparison would recognize them as substitutable despite being treated as distinct at the exact-ID level. Value of either sub-approach to be determined empirically. Neither is POC scope.
+**(b) Algorithm-based:** Group materials by category, sum percentages within each group, re-run Jaccard + Bray-Curtis on category-aggregated data.
+
+**Axis 2 — Certification Flags (columns 7–13, boolean 0/1 per material):** Regulatory and dietary compatibility. Seven flags in the Tabellenstruktur:
+
+| Flag | Column | Type |
+|------|--------|------|
+| Bio | Bio-Klassifizierung | Organic |
+| Halal | KZ. HALAL | Islamic dietary |
+| Naturland | Kz. Naturland | Stricter organic |
+| Kosher | Kz. Kosher | Jewish dietary |
+| Vegan | Kz Vegan | No animal products |
+| Vegetarisch | KZ. Vegetarisch | No meat products |
+| TK | KZ. TK | Frozen handling |
+
+VLOG (non-GMO) is derived from article text, not a dedicated flag — different extraction mechanism.
+
+**Axis 3 — Country Exclusions (not yet in schema):** Pre-filters, not scoring criteria. Recipes must NOT contain materials from specific countries (Non-China, Non-Russland, Non-Ukraine per [von Schultz email, Oct 30 2025](Rohstoffkriterien zur Vergleichbarkeit.pdf)). Tabellenstruktur notes "still needs discussion" — unclear if material numbers have 1:n relationship to suppliers/countries.
+
+**Assumption:** Suffix variants (e.g., 00004 vs 00004B) likely share Einkaufsgruppe — B-suffix likely indicates Bio-certified variant (data pattern: wrapper articles contain 100% of B-suffix counterpart). To be verified once Stammdaten CSV available. None are POC scope.
 
 > **⚠️ Undefined:** Stammdaten CSV availability blocks Category criterion. → [Mattis agenda, Topic 4](https://mariuswilsch.github.io/public-wilsch-ai-pages/project/avo_fullstack/meeting-agenda-mattis-data-confirmation)
 
@@ -141,7 +159,7 @@ Rank all 62 R-prefix recipes by combined similarity score for a given query. Ret
 ```
 Query: R261800
 
-Rank  Recipe    Overlap  Proportion  Combined
+Rang  Rezept    Überlappung  Anteil  Gesamt
 #1    R261700   85%      97%         91%
 #2    R482000   62%      78%         70%
 #3    R954700   58%      82%         70%
@@ -149,7 +167,7 @@ Rank  Recipe    Overlap  Proportion  Combined
 #5    R887200   48%      71%         60%
 ```
 
-**Client-facing labels:** Overlap, Proportion, Combined — no algorithm names (Jaccard, Bray-Curtis) exposed to client.
+**Client-facing labels:** Überlappung, Anteil, Gesamt (German) — no algorithm names (Jaccard, Bray-Curtis) exposed to client.
 
 **Top N:** Default 5, configurable. Workshop discussed "five to ten" (WS2-S3a), but Top 5 is the stated POC criterion.
 
@@ -194,9 +212,12 @@ Rank  Recipe    Overlap  Proportion  Combined
 **Calibration workflow:** Run algorithm → sweep weight combinations → find which combo best ranks Behrens's pairs → his free-text reasoning provides post-hoc explanatory context for why the winning weights capture taste. Search strategy is an implementation detail.
 
 **Outcomes:**
+
+The POC is a bounded experiment: test two proxies, deliver a verdict, done. We expect Overlap + Proportion to produce meaningful results — they are established similarity measures applied to compositional data. If the results show these two proxies aren't sufficient, the POC delivers a clear direction for which additional proxies to explore — proxies already discussed in Workshop 2 (Einkaufsgruppen, certification flags) that need to be designed and scoped as a follow-up phase in discussion with the client.
+
 - **Hypothesis confirmed:** A weight combination exists where all 5 K1 partners appear in their query's Top 5. POC result = the algorithm + winning weights.
 - **Hypothesis weakened:** Best combo achieves 3–4/5. Investigate failing pairs — may indicate edge cases or missing criterion (e.g., Category needed sooner than expected).
-- **Hypothesis refuted:** No weight combination achieves majority match. Overlap + Proportion don't capture taste similarity. POC result = negative finding + analysis of what the criteria *do* capture vs. what Behrens means by "similar."
+- **Hypothesis refuted:** No weight combination achieves majority match. Overlap + Proportion alone don't capture taste similarity — more proxies needed. POC result = analysis of which proxy axis to explore next (informed by Behrens's reasoning), taken into a follow-up design discussion with the client.
 
 All three outcomes are valid POC results. A negative finding is still a finding.
 
@@ -227,9 +248,10 @@ All three outcomes are valid POC results. A negative finding is still a finding.
 - **Agreed Schema:** [Published](https://mariuswilsch.github.io/public-wilsch-ai-pages/project/avo_fullstack/agreed-json-schema)
 - **Data:** `alle.jsonl` (62 R-prefix final products, 197 total entries, 134 unique materials)
 - **Output Template:** Übersicht.xlsx (AVO Seafile)
-- **Certification Criteria:** Email from Johannes von Schultz (Oct 30, 2025) — VLOG, Bio, Halal, Kosher, Vegan, Vegetarisch
-- **Rohstoffkriterien:** Rohstoffkriterien zur Vergleichbarkeit.pdf (AVO Seafile)
+- **Certification Criteria:** Email from Johannes von Schultz (Oct 30, 2025) — VLOG, Bio, Naturland, Halal, Kosher, Vegan, Vegetarisch + country exclusions (Non-China, Non-Russland, Non-Ukraine). PDF: Rohstoffkriterien zur Vergleichbarkeit.pdf
+- **Tabellenstruktur:** AVO_WS2_Tabellenstruktur_Metadatei_20251108.xlsx — Stammdaten CSV schema (16 columns, selection criteria)
 - **Session (Part 1 deepening):** `/Users/verdant/.claude/projects/-Users-verdant-Documents-projects-billable-AVO--poc/451ac158-4b2b-4501-8dca-bd9645888e7d.jsonl`
 - **Session (Parts 2–4 deepening):** `/Users/verdant/.claude/projects/-Users-verdant-Documents-projects-billable-AVO--poc/ed3ed7d2-a582-4987-b15b-d59a0f7763de.jsonl`
 - **Session (Part 1 extraction + Part 2 simplification):** `/Users/verdant/.claude/projects/-Users-verdant-Documents-projects-billable-AVO--poc/953e038a-ae96-4265-a20b-b7d9d1763d87.jsonl`
 - **Session (Part 4 extraction):** `/Users/verdant/.claude/projects/-Users-verdant-Documents-projects-billable-AVO__poc/67641e8a-a998-4c2c-b7b6-67f7191bc2f4.jsonl`
+- **Session (Extraction pass — all parts, proxy architecture):** `/Users/verdant/.claude/projects/-Users-verdant-Documents-projects-billable-AVO__poc/883714f4-7ce5-43be-8a46-a238f9feb2e8.jsonl`
