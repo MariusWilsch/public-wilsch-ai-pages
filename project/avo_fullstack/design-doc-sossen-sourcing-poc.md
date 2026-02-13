@@ -193,6 +193,8 @@ Rank  Recipe    Overlap  Proportion  Combined
 
 All three outcomes are valid POC results. A negative finding is still a finding.
 
+> **⚠️ Undefined:** The implications of "hypothesis refuted" need further discussion — a negative result doesn't mean failure, it means exploring additional proxies for taste. See [Feb 9 transcript](https://drive.google.com/file/d/1qZFdhyr9D_VWjH5YqqdcghFMAfU9i0ZS/view) (end of conversation). → [Behrens meeting agenda](https://mariuswilsch.github.io/public-wilsch-ai-pages/project/avo_fullstack/meeting-agenda-behrens-validation)
+
 **Two Behrens interactions:**
 1. **Interaction 1 (meeting):** Build shared understanding of the validation process. Present XLSX as visual stimulus. Agree on format together. Behrens fills initial pairs.
 2. **Interaction 2 (async email):** Send results XLSX with multiple result sets (internally from different weight combos). Behrens sees ranked lists with per-criterion scores (Überlappung, Anteil, Gesamt), annotates which results match his intuition. False positives emerge organically — Behrens flags unexpected entries in Top 5.
