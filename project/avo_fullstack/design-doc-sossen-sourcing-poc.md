@@ -141,7 +141,7 @@ VLOG (non-GMO) is derived from article text, not a dedicated flag — different 
 
 **Assumption:** Suffix variants (e.g., 00004 vs 00004B) likely share Einkaufsgruppe — B-suffix likely indicates Bio-certified variant (data pattern: wrapper articles contain 100% of B-suffix counterpart). To be verified once Stammdaten CSV available. None are POC scope.
 
-> **⚠️ Undefined:** Stammdaten CSV availability blocks Category criterion. → [Mattis agenda, Topic 4](https://mariuswilsch.github.io/public-wilsch-ai-pages/project/avo_fullstack/meeting-agenda-mattis-data-confirmation)
+> **⚠️ Undefined:** Stammdaten CSV availability blocks all three future axes. Currently 1 of 4 proxy axes delivered (composition → Jaccard + Bray-Curtis). Missing: Einkaufsgruppen (col 6), 7 certification flags (cols 7–13), 2 LIMS categories (cols 14–15) = 10 of 16 Tabellenstruktur columns. → [Mattis agenda, Topic 4 + Topic 5](https://mariuswilsch.github.io/public-wilsch-ai-pages/project/avo_fullstack/meeting-agenda-mattis-data-confirmation)
 
 **Source:**
 - [Pflichtenheft §3](https://mariuswilsch.github.io/public-wilsch-ai-pages/project/avo_fullstack/pflichtenheft-ki-projekt-sossen-sourcing) — FR-02 (Material_ID matching), FR-02a (overlap ratio), FR-04 (percentage similarity), FR-08 (category matching)

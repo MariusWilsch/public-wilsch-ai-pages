@@ -52,6 +52,20 @@ Kategorie-Gruppierung (Einkaufsgruppen) wird für den POC-Start nicht benötigt,
 
 - Wann kann die Stammdaten-CSV geliefert werden?
 
+### 5. Abdeckung der Tabellenstruktur — was fehlt noch?
+→ *Design Doc: Part 2 — Proxy Architecture*
+
+Die [Tabellenstruktur](https://docs.google.com/spreadsheets/d/1GEXqdkFxCtA4xSUjFpZTBUBPk6O_Jx8G) definiert 16 Spalten für die Analyse-Metadatei. Aktuell sind 3 Spalten durch `alle.jsonl` abgedeckt (Artikelnummer, Herstellvorschrift, Mengenanteil) — diese ermöglichen den POC mit zwei Ähnlichkeitskriterien.
+
+Die verbleibenden 10 Spalten bilden drei zusätzliche Vergleichsachsen:
+- **Einkaufsgruppe** (Spalte 6) — Austauschbarkeit von Zutaten
+- **7 Zertifizierungskennzeichen** (Spalten 7–13) — Bio, Halal, Naturland, Kosher, Vegan, Vegetarisch, TK
+- **2 DIA-LIMS Kategorien** (Spalten 14–15) — Artikelgruppe und Rohstoffkategorie
+
+Wir möchten verstehen:
+- Welche dieser Spalten sind in der Stammdaten-CSV enthalten, die geliefert werden kann?
+- Gibt es Spalten, die aktuell nicht befüllt sind oder deren Datenquelle noch unklar ist (im XLSX mit `??.??` markiert)?
+
 ---
 
 ## Meeting-Format
