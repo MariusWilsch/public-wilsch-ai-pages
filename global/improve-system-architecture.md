@@ -80,13 +80,13 @@ No FIFO queue - user knows which issue to work on.
 
 ### Fix Workflow
 
-| Step | Action | Notes |
-|------|--------|-------|
-| 4 | `/requirements-clarity` | WHAT to fix |
-| 5 | `/implementation-clarity` | HOW to fix → `manage-artifact` skill discovered |
-| 6 | `/evaluation-clarity` | Success criteria |
-| 7 | Execute fix | `manage-artifact` skill loads relevant reference |
-| 8 | `git push` | Direct to main (non-code artifacts) |
+| Step | Action                    | Notes                                            |
+| ---- | ------------------------- | ------------------------------------------------ |
+| 4    | `/requirements-clarity`   | WHAT to fix                                      |
+| 5    | `/implementation-clarity` | HOW to fix → `manage-artifact` skill discovered  |
+| 6    | `/evaluation-clarity`     | Success criteria                                 |
+| 7    | Execute fix               | `manage-artifact` skill loads relevant reference |
+| 8    | `git push`                | Direct to main (non-code artifacts)              |
 
 ### Verification & Iteration
 
