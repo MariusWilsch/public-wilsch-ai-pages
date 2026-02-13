@@ -156,15 +156,26 @@ Prerequisite for Part 3: 6 of 9 matching criteria require information extraction
 
 **All file types are equal criteria sources** — no hierarchy. Extraction technique varies by type, but email body text, XLSX cells, and PDF pages all contribute to criteria discovery equally.
 
-**Criteria extraction evidence** (5/14 projects sampled — first-pass findings):
+**Criteria extraction evidence** (all 14 projects — complete findings):
 
-| Project | Files | PDFs? | Criteria Found | Notes |
-|---------|-------|-------|----------------|-------|
-| 35764 — Werkhalle | 47 | Yes (3) | 5/6 | Gebäudetyp, Höhe, Kran, Dachlasten, Baustoff |
-| 38043 — Nokera Werk | 178 | Yes (via ZIP) | 5/6 | Gebäudetyp, Höhe, Kran, Dachlasten, Baustoff |
-| 41634 — VGP Halle C | 23 | Yes (1) | 5/6 | Gebäudetyp, Höhe, Dachlasten, Baustoff, Dachbegrünung (explicit "0,00 kN/m²") |
-| [37369 — Kühl/Lagerhalle](https://mariuswilsch.github.io/public-wilsch-ai-pages/project/rekers/criteria-evidence-37369) | 19 EML (24 PDFs embedded) | Yes (in EML attachments) | **4/6** | Gebäudetyp, Höhe, Dachlasten, Baustoff. [Evidence](https://mariuswilsch.github.io/public-wilsch-ai-pages/project/rekers/criteria-evidence-37369) |
-| 40856 — Logistikhalle | 19 | Yes (5 from ZIP) | 5/6 | Gebäudetyp, Höhe, Dachlasten, Baustoff, Dachbegrünung (explicit "0,00 kN/m²") |
+| Project | L0 | L2 | Extracted | Notes |
+|---------|----|----|-----------|-------|
+| [35764 — Werkhalle van Eckendonk](https://mariuswilsch.github.io/public-wilsch-ai-pages/project/rekers/criteria-evidence-35764) | 25 | 65 | 5/6 | Kran 2×ABUS 40t/10t; Dachbegrünung ❌ |
+| [36185 — Lagergebäude GGM Gastro](https://mariuswilsch.github.io/public-wilsch-ai-pages/project/rekers/criteria-evidence-36185) | 67 | 217 | 4/6 | Kran ❌, Dachbegrünung ❌ |
+| [37369 — Kühl/Lagerhalle Schütte](https://mariuswilsch.github.io/public-wilsch-ai-pages/project/rekers/criteria-evidence-37369) | 19 | 74 | 4/6 | 40m Satteldachbinder; Kran ❌, Dachbegrünung ❌ |
+| [38043 — Nokera Werk](https://mariuswilsch.github.io/public-wilsch-ai-pages/project/rekers/criteria-evidence-38043) | 104 | 556 | 5/6 | Fertigteilwerk; Kranbahnrahmen 3/4 Hallen; Dachbegrünung ❌ |
+| [38882 — VGP Park Erfurt 3](https://mariuswilsch.github.io/public-wilsch-ai-pages/project/rekers/criteria-evidence-38882) | 42 | 47 | 4/6 | Kran ❌; Dachbegrünung explizit ausgeschlossen |
+| [39381 — VGP Park Magdeburg D](https://mariuswilsch.github.io/public-wilsch-ai-pages/project/rekers/criteria-evidence-39381) | 50 | 96 | 5/6 | 20t Kran Sonderbereich; Dachbegrünung ❌ |
+| [40138 — Hillwood](https://mariuswilsch.github.io/public-wilsch-ai-pages/project/rekers/criteria-evidence-40138) | 6 | 80 | 3/6 | Holz-Fischbauchbinder; Kran ❌, Dachlasten ❌, Dachbegrünung ❌ |
+| [40593 — Logistikzentrum](https://mariuswilsch.github.io/public-wilsch-ai-pages/project/rekers/criteria-evidence-40593) | 39 | 91 | 3/6 | 4 Hallen + Mezzanine; Kran ❌, Dachlasten ❌, Dachbegrünung ❌ |
+| [40758 — Pfenning Neubau Halle](https://mariuswilsch.github.io/public-wilsch-ai-pages/project/rekers/criteria-evidence-40758) | 69 | 282 | 5/6 | DGNB Gold; Gründach 1,200 kN/m²; Kran ❌ |
+| [40856 — Neubau Logistikhalle](https://mariuswilsch.github.io/public-wilsch-ai-pages/project/rekers/criteria-evidence-40856) | 19 | 63 | 4/6 | Kran ❌, Dachbegrünung ❌ |
+| [41634 — VGP Park Leipzig Halle C](https://mariuswilsch.github.io/public-wilsch-ai-pages/project/rekers/criteria-evidence-41634) | 23 | 142 | 4/6 | Kran ❌; Dachbegrünung explizit ausgeschlossen |
+| [41740 — VGP Park Bernau B](https://mariuswilsch.github.io/public-wilsch-ai-pages/project/rekers/criteria-evidence-41740) | 24 | ~152 | **6/6** | Einziges 9/9 Projekt; 2×10t Kran + Dachbegrünung 1,00 kN/m² |
+| [41793 — Lager/Logistikhalle Böhlke](https://mariuswilsch.github.io/public-wilsch-ai-pages/project/rekers/criteria-evidence-41793) | 27 | 75 | 5/6 | 2×20t Koppelkran; Dachbegrünung explizit ausgeschlossen |
+| [41807 — NB Logistikhalle Neukirchen](https://mariuswilsch.github.io/public-wilsch-ai-pages/project/rekers/criteria-evidence-41807) | 23 | 48 | 4/6 | F90 Brandschutz; Kran ❌, Dachbegrünung ❌ |
+
+L0 = visible folder files, L2 = extracted EML attachments. Average multiplier: 4.7× (range 3.0–18.5×). Gebäudetyp, Höhe, Baustoff found in all 14 projects. Dachlasten found in 12/14. Kran documented in 5/14. Dachbegrünung documented in 2/14 (explicit exclusion recorded in 3 more).
 
 **Key pattern:** EMLs are containers, not files. The 504 EMLs hold 1,322 attachments (660 PDFs, 26 XLSX, 12 DWG). 4/14 projects have zero standalone PDFs — all criteria-rich data is inside EML attachments. Reading PDFs visually (image rendering) yields 5x more criteria than text extraction. This pattern is structural to how REKERS stores project data.
 
