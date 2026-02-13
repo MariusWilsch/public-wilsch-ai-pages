@@ -115,7 +115,7 @@ For shared materials, measure proportional distance: similarity = `1 - sum|a_i -
 
 **Proxy Architecture (future enhancement — all blocked on Stammdaten CSV):**
 
-Beyond the two POC criteria, the Stammdaten CSV defines additional proxy dimensions for taste similarity. The [Tabellenstruktur XLSX](AVO_WS2_Tabellenstruktur_Metadatei_20251108.xlsx) (WS2, 2025-11-08) specifies the exact schema — three separate axes, each a different lens on comparability:
+Beyond the two POC criteria, the Stammdaten CSV defines additional proxy dimensions for taste similarity. The [Tabellenstruktur XLSX](https://docs.google.com/spreadsheets/d/1GEXqdkFxCtA4xSUjFpZTBUBPk6O_Jx8G) (WS2, 2025-11-08) specifies the exact schema — three separate axes, each a different lens on comparability:
 
 **Axis 1 — Einkaufsgruppen (column 6, 761 categories):** Compositional substitutability. Materials in the same purchasing group are assumed functionally equivalent — if Recipe A uses 00004 and Recipe B uses 00004B, and both share an Einkaufsgruppe, the recipes are substitutable despite different IDs. Two sub-approaches to test empirically:
 
@@ -249,7 +249,7 @@ All three outcomes are valid POC results. A negative finding is still a finding.
 - **Data:** `alle.jsonl` (62 R-prefix final products, 197 total entries, 134 unique materials)
 - **Output Template:** Übersicht.xlsx (AVO Seafile)
 - **Certification Criteria:** Email from Johannes von Schultz (Oct 30, 2025) — VLOG, Bio, Naturland, Halal, Kosher, Vegan, Vegetarisch + country exclusions (Non-China, Non-Russland, Non-Ukraine). PDF: Rohstoffkriterien zur Vergleichbarkeit.pdf
-- **Tabellenstruktur:** AVO_WS2_Tabellenstruktur_Metadatei_20251108.xlsx — Stammdaten CSV schema (16 columns, selection criteria)
+- **Tabellenstruktur:** [AVO_WS2_Tabellenstruktur_Metadatei_20251108.xlsx](https://docs.google.com/spreadsheets/d/1GEXqdkFxCtA4xSUjFpZTBUBPk6O_Jx8G) — Stammdaten CSV schema (16 columns, selection criteria)
 - **Session (Part 1 deepening):** `/Users/verdant/.claude/projects/-Users-verdant-Documents-projects-billable-AVO--poc/451ac158-4b2b-4501-8dca-bd9645888e7d.jsonl`
 - **Session (Parts 2–4 deepening):** `/Users/verdant/.claude/projects/-Users-verdant-Documents-projects-billable-AVO--poc/ed3ed7d2-a582-4987-b15b-d59a0f7763de.jsonl`
 - **Session (Part 1 extraction + Part 2 simplification):** `/Users/verdant/.claude/projects/-Users-verdant-Documents-projects-billable-AVO--poc/953e038a-ae96-4265-a20b-b7d9d1763d87.jsonl`
