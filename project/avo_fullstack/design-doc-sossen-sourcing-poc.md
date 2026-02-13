@@ -209,13 +209,13 @@ Rang  Rezept    Überlappung  Anteil  Gesamt
 - **Anmerkung:** Free-form text — Behrens writes whatever reasoning he has. No structured confidence levels.
 - **Living document:** Not static ground truth. After algorithm runs, revisit results with Behrens. His updated reasoning when seeing algorithm output informs which proxy to explore next.
 
-**Pair selection:** Only constraint — pairs must come from the 62 R-prefix pool. No diversity requirement. If pairs are homogeneous (all obvious duplicates), that's back-pressure signal: algorithm passes trivially → harder test cases needed in next iteration.
-
 **XLSX artifact (2 sheets):**
 1. **Rezeptpool:** 62 R-prefix recipes listed by ID + ingredient count — Behrens selects pairs from this
 2. **Bewertungstabelle:** Evaluation table template with example data showing the format
 
 → [XLSX-Vorlage (Google Drive)](https://docs.google.com/spreadsheets/d/1yQyUYYF_cPZRsjUIE9ZUv-AHl2-74k4N)
+
+**Pair selection:** Only constraint — pairs must come from the 62 R-prefix pool. No diversity requirement. If pairs are homogeneous (all obvious duplicates), that's back-pressure signal: algorithm passes trivially → harder test cases needed in next iteration.
 
 **Success criterion:** K1 partner appears in query recipe's Top 5 (configurable N). Test bidirectionally — query A→check B in Top 5 AND query B→check A in Top 5 — as sanity check (both criteria are mathematically symmetric, so results should match).
 
