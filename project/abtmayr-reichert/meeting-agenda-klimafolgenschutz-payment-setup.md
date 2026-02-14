@@ -10,9 +10,9 @@ publish: true
 Zuerst das Design Doc gemeinsam durchgehen — gibt es etwas, das nicht gefällt oder fehlt? Danach die offenen Punkte klären, damit wir mit der Umsetzung starten können.
 
 1. **Design Doc Review** — gemeinsam durchgehen, Feedback und Korrekturen
-2. **Vereinsstatus + Zahlungs-Voraussetzungen** — offene Punkte klären (Punkte 1-5)
-3. **Projektumfang abstimmen** — Phasen, Aufwand und Meilensteine (Punkt 6)
-4. **Offene Zulieferungen + Ideen** — was Sie liefern und was Sie sich zusätzlich vorstellen (Punkte 7-8)
+2. **Vereinsstatus + Zahlungs-Voraussetzungen** — offene Punkte klären (Punkte 1-4)
+3. **Projektumfang abstimmen** — Phasen, Aufwand und Meilensteine (Punkt 5)
+4. **Offene Zulieferungen + Ideen** — was Sie liefern und was Sie sich zusätzlich vorstellen (Punkte 6-7)
 
 ## Vorab-Lektüre
 
@@ -25,34 +25,37 @@ Zuerst das Design Doc gemeinsam durchgehen — gibt es etwas, das nicht gefällt
 
 *Ausgangspunkte für die Diskussion, nicht darauf beschränkt.*
 
-### 1. Vereinsregistereintrag seit Juli 2025 ausstehend
+### 1. Vereinsstatus — zwei offene Fragen
 
-- Stand 9. Feb: Eintrag noch in Prüfung
-- Ohne Registrierung: kein Bankkonto, keine Gläubiger-ID, kein Impressum
-- Website kann ohne Zahlung starten — Zahlungsaktivierung erfolgt separat
-- **Benötigt:** Aktueller Zeitplan der Registrierung
+Zwei getrennte Vorgänge bestimmen, was die Website beim Launch anbieten kann:
 
-### 2. Gemeinnützigkeitsstatus beeinflusst Spenden-Messaging
+**Vereinsregister (Amtsgericht):**
+- Antrag seit Juli 2025, Stand 9. Feb: noch in Prüfung
+- Ohne Eintrag: kein Bankkonto, keine Gläubiger-ID, kein Impressum, keine Zahlung
+- Website kann trotzdem ohne Zahlung starten — Zahlungsaktivierung erfolgt separat
+- **→ Wann rechnen Sie mit dem Eintrag?**
 
-- Mit Freistellungsbescheid → Spenden ab €100 steuerlich absetzbar
-- Ohne → Spendenbutton funktioniert trotzdem, aber keine Steuervorteile bewerben
-- CMS-Textumschaltung, kein technischer Blocker
-- **Benötigt:** Aktueller Status Gemeinnützigkeit
+**Gemeinnützigkeit (Finanzamt):**
+- Mit Freistellungsbescheid → Spenden ab €100 als "steuerlich absetzbar" bewerben
+- Ohne → Spendenbutton funktioniert trotzdem, nur ohne Steuer-Hinweis
+- Kein technischer Blocker — nur ein Textunterschied auf der Website
+- **→ Haben Sie einen Freistellungsbescheid, ja oder nein?**
 
-### 3. Stripe-Setup: Kleinunternehmer oder umsatzsteuerpflichtig?
+### 2. Stripe-Setup: Kleinunternehmer oder umsatzsteuerpflichtig?
 
-- Stripe fragt §19 UStG Kleinunternehmerregelung ab
-- Bestimmt: Rechnungen an Gemeinden mit/ohne USt
-- **Benötigt:** Bestätigung vom Steuerberater
+- Stripe fragt bei der Einrichtung nach §19 UStG Kleinunternehmerregelung
+- Bestimmt, ob Rechnungen an Gemeinden mit oder ohne Umsatzsteuer gestellt werden
+- **→ Was sagt Ihr Steuerberater: Kleinunternehmer oder regelbesteuert?**
 
-### 4. Spendenbescheinigung braucht Name + Adresse
+### 3. Spendenbescheinigung — Daten vor oder nach der Zahlung?
 
 - Stripe Checkout erfasst nur E-Mail + Zahlungsdaten
-- Spendenbescheinigung (≥€100) erfordert vollständigen Namen + Adresse
-- Optionen: Felder vor Zahlung abfragen ODER per E-Mail nachfassen
-- **Benötigt:** Ihre Präferenz für den Checkout-Flow
+- Für eine Spendenbescheinigung (≥€100) brauchen wir vollständigen Namen + Adresse
+- Option A: Felder direkt vor der Zahlung abfragen
+- Option B: Per E-Mail nachfassen
+- **→ Welche Variante bevorzugen Sie?**
 
-### 5. Stripe-Onboarding: Dokumente und Daten
+### 4. Stripe-Onboarding: Dokumente und Daten
 
 Für die Zahlungsaktivierung braucht Stripe folgende Unterlagen. Auch wenn nicht alles sofort verfügbar ist — hier eine Übersicht, was zu sammeln ist.
 
@@ -84,7 +87,7 @@ _Gebühren sind Richtwerte basierend auf aktueller Stripe-Preisliste._
 
 - **Benötigt:** Prüfen Sie, welche Punkte Sie jetzt schon vorbereiten können, und lesen Sie die Stripe-Konditionen
 
-### 6. Projektumfang in fünf Phasen mit Meilenstein-Preisen
+### 5. Projektumfang in fünf Phasen mit Meilenstein-Preisen
 
 Die Website ist in fünf aufeinander aufbauende Phasen gegliedert. Jede Phase liefert ein eigenständiges Ergebnis. Abrechnung erfolgt nach tatsächlichem Aufwand (T&M, €120/Std.).
 
@@ -101,7 +104,7 @@ Die Website ist in fünf aufeinander aufbauende Phasen gegliedert. Jede Phase li
 - Phase 5 ist optional — ohne CMS werden Inhaltsänderungen vom Entwickler umgesetzt
 - Richtpreisangebot innerhalb des bestehenden Rahmenvertrags
 
-### 7. Ihre zusätzlichen Ideen
+### 6. Ihre zusätzlichen Ideen
 
 Sie haben zwei Erweiterungen vorgeschlagen, die nicht im aktuellen Umfang enthalten sind:
 
@@ -110,7 +113,7 @@ Sie haben zwei Erweiterungen vorgeschlagen, die nicht im aktuellen Umfang enthal
 
 Beide Ideen brauchen eine Beschreibung dessen, was Sie sich konkret vorstellen, bevor eine Aufwandsschätzung möglich ist.
 
-### 8. Offene Zulieferungen von Ihnen
+### 7. Offene Zulieferungen von Ihnen
 
 Folgende Punkte werden von Ihnen benötigt, um mit der Umsetzung beginnen zu können:
 
@@ -129,7 +132,7 @@ Folgende Punkte werden von Ihnen benötigt, um mit der Umsetzung beginnen zu kö
 ## Meetingformat
 
 - **Typ:** Review (45-60 Min)
-- **Vorbereitung:** Punkte 2-3 vorab mit Steuerberater prüfen falls möglich
+- **Vorbereitung:** Punkt 1 (Gemeinnützigkeit) und Punkt 2 (Kleinunternehmer) vorab mit Steuerberater prüfen falls möglich
 - **Ergebnis:** Aktualisiertes Design Doc (Zahlungspunkte Defined) + abgestimmter Projektumfang für Umsetzungsstart
 
 ## Verknüpfungen
