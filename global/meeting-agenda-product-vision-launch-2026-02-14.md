@@ -65,7 +65,7 @@ Mohamed proves the Developer position works internally. The gap between "works f
 - **Onboarding:** How do we train an external customer's operator on the system?
 - **De-hardcoding:** The system runs on GitHub with Marius's specific setup — needs to be portable
 - **Naming/branding idea (from Roland):** "Traceline" — every decision traced from requirement to deployment. Developers get it immediately (traces, stack traces, git history). Enterprise compliance angle: "complete traceline auditability for AI development." Code breaks → follow the traceline. Something works → replicate the traceline. People leave → their tracelines stay. `traceline.dev` likely available.
-- Starting points — the team should surface more
+- Including but not limited to these — the team should surface more
 
 ### 5. E-Myth community as natural audience when we have a demo
 
