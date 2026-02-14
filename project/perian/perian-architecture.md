@@ -3,7 +3,7 @@ publish: true
 ---
 
 # PERIAN Architecture
-[[client-perian]]
+[[traceline]]
 
 Living architecture document for the PERIAN product. Consolidates strategic decisions from Dec 21 session and Dec 23 rubber duck refinement.
 
