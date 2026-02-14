@@ -199,6 +199,44 @@ ASSESS is not a separate judgment — it's the validation surface shift from in-
 
 Multiple extraction passes on the same part are normal. Re-entry happens naturally when the user revisits the doc and feels "this part needs more work." The explicit question makes the decision visible rather than implicit.
 
+### Extraction Pass Behavioral Principles
+
+The extraction pass workflow (SCOPE→SURFACE→RESOLVE→UPDATE→ASSESS) defines the sequential steps. These principles define the behavioral patterns that govern HOW AI operates during those steps — the WHEN/WHY layer on top of the workflow.
+
+**Core purpose:** Make knowledge extraction deterministic. The extraction pass is to implicit knowledge → design doc what the Developer's task lifecycle is to issue → code.
+
+**Interaction model:** AI is a thinking partner, not a passive recorder. The interaction rhythm IS the extraction mechanism — AI presents, user responds with knowledge they didn't know they had, AI structures it. The pacing ensures each stimulus has time to trigger a response.
+
+**Principles:**
+
+| # | Principle | Behavioral Pattern |
+|---|-----------|-------------------|
+| 1 | **AI owns probing depth, user owns transitions** | AI probes as long as it sees value. When satisfied, asks "probe deeper or move on?" User controls progression — AI never advances autonomously. |
+| 2 | **Calibrate to audience understanding** | Probe until someone who wasn't in the extraction session would understand the design decision. During development: calibrate to Solution Architect. At completion: client (alignment) + Developer (handoff). |
+| 3 | **Conceptual scope, not data-point granularity** | One ambiguity per conceptual question, not per data point. One discussion per conceptual question. One diff per section. 36 column changes = one "field review" item. |
+| 4 | **Verbatim in RESOLVE, instructional in UPDATE** | RESOLVE recordings preserve user's exact words (recall + authority). UPDATE writing is instructional prose adapted to audience (evidence of comprehension). Verbatim fallback in the design doc = ambiguity not truly resolved. |
+| 5 | **Push-back extracts reasoning, not gates decisions** | AI challenges to make implicit reasoning explicit — not to be right. Once reasoning is articulated, AI accepts. The extracted reasoning feeds the Decisions section. |
+| 6 | **Face ambiguity first-class, route to right source** | AI self-routes to the most likely source of resolution. Not everything goes to the user. Three resolution categories: resolve-now, meeting-agenda, empirical (only testing will show). |
+| 7 | **Phase discipline: SURFACE lists, RESOLVE discusses** | SURFACE produces a numbered list — no discussion, no resolution attempts. Even interesting findings become list items, not conversations. RESOLVE is where discussion happens. |
+| 8 | **Source authority belongs to the user** | SURFACE reads part text (always) + user-provided strategic sources. AI never autonomously selects which transcripts to read during SURFACE. Historic transcripts are RESOLVE resources, mined when directed. |
+| 9 | **Not resolving is a valid outcome** | No pressure toward false resolution. Unresolved → meeting agenda (external info needed), next extraction pass (more thinking), or backtrack (wrong path). |
+
+**Decisions section (V1):**
+
+Design docs may include a Decisions table capturing extracted reasoning:
+
+| Decision | What | Why | Date | Source |
+|----------|------|-----|------|--------|
+
+The WHY column captures reasoning surfaced during RESOLVE — the part that push-back makes explicit. See [Chain 1B Step 3](https://mariuswilsch.github.io/public-wilsch-ai-pages/project/archibus-fm-assistant/chain-1b-step3-design) for V1 example (without WHY column). V2: structured decision traces via [AC Verification Decision Trace](https://mariuswilsch.github.io/public-wilsch-ai-pages/global/ac-verification-decision-trace) schema pattern.
+
+**Inline markers:**
+
+| Marker | Routes To | Meaning |
+|--------|----------|---------|
+| **Undefined** | Meeting agenda | Requires external stakeholder input |
+| **Tooling** | Epic/implementation | Requires tooling or implementation work |
+
 ---
 
 ## Meeting Agenda
@@ -269,6 +307,7 @@ The attendee reads the design doc before the meeting. The discussion topics are 
   - `67641e8a` — AVO UPDATE in practice (diff-based rhythm, dual validation, 3 review rounds on Success Definition)
 - **UPDATE extraction pass session:** /Users/verdant/.claude/projects/-Users-verdant-Documents-projects-WILSCH-AI-INTERNAL--soloforce/3bb274e9-cbb9-4bc3-b474-23e2f85b505f.jsonl
 - **ASSESS extraction pass session:** /Users/verdant/.claude/projects/-Users-verdant-Documents-projects-WILSCH-AI-INTERNAL--soloforce/f880f009-fe13-4c26-8bac-b2c2cd6a1773.jsonl
+- **Behavioral principles session (9 principles from 6 evidence conversations):** /Users/verdant/.claude/projects/-Users-verdant-Documents-projects-WILSCH-AI-INTERNAL--soloforce/abdb1c11-e71c-40db-8c8e-ab05acdc9d20.jsonl
 - **Design docs demonstrating extraction output:** [Chain 1B Step 3](https://mariuswilsch.github.io/public-wilsch-ai-pages/project/archibus-fm-assistant/chain-1b-step3-design) (per-element source attribution, Defined/Partially Defined/Undefined per part)
 
 **Shared references:**
