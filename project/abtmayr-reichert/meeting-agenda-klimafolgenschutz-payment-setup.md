@@ -41,11 +41,11 @@ Zwei getrennte Vorgänge bestimmen, was die Website beim Launch anbieten kann:
 - Ohne: Spenden möglich, aber ohne Steuer-Hinweis
 - **→ Liegt ein Freistellungsbescheid vor?**
 
-### 2. Stripe-Setup: Kleinunternehmer oder umsatzsteuerpflichtig?
+### 2. Stripe-Konto einrichten
 
-- Stripe fragt bei der Einrichtung nach §19 UStG Kleinunternehmerregelung
-- Bestimmt, ob Rechnungen an Gemeinden mit oder ohne Umsatzsteuer gestellt werden
-- **→ Was sagt Ihr Steuerberater: Kleinunternehmer oder regelbesteuert?**
+- Sie richten ein Stripe-Konto für den Verein ein — Stripe führt durch die Einrichtung (inkl. Kleinunternehmer-Frage, Bankdaten, etc.)
+- Wir integrieren Ihr Stripe-Konto in die Website
+- **→ Bitte Stripe-Konto einrichten und uns die API-Zugangsdaten bereitstellen**
 
 ### 3. Spendenbescheinigung — Daten vor oder nach der Zahlung?
 
