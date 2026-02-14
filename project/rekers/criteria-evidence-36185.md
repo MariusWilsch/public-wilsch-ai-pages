@@ -61,19 +61,19 @@ Multiplikator: 4,4x (L0 vs. L0+L2+ZIP)
 
 ### Gebäudetyp ✅
 - **Wert:** Lagerhallen Q-S (Logistik-/Lagergebäude) mit 29 Überladebrücken und Blocklager-Bereichen, je Halle ca. 10.000 m²
-- **Quelle:** [`04_03_A   06.12.2021_GrundrissEG_M_200.pdf`](https://github.com/MariusWilsch/REKERS__poc/blob/main/data/2026-01-28_testdaten/36185/11167/_extracted/04_03_A%20%20%2006.12.2021_GrundrissEG_M_200.pdf) (Bauantragsplanung M. 1:200)
+- **Quelle:** [`04_03_A   06.12.2021_GrundrissEG_M_200.pdf`](https://drive.google.com/file/d/10iWuIgrHoRbKFkyIWmu0j6n_MkmbYU3-/view) (Bauantragsplanung M. 1:200)
 - **Textstelle:** Grundriss zeigt drei Lagerhallen Q, R und S mit jeweils ca. 10.000 m² Grundfläche. Die Hallen enthalten Blocklager-Bereiche und werden über Sektionaltore an der Südseite erschlossen. Plankopf: „Neubau der Lagerhallen Q - V für ggmgastro.com, Weinerpark 16, 48607 Ochtrup".
 - **Bestätigt durch:**
-  - [`04_05   06.12.2021_Ansichten_M_200.pdf`](https://github.com/MariusWilsch/REKERS__poc/blob/main/data/2026-01-28_testdaten/36185/11167/_extracted/04_05%20%20%2006.12.2021_Ansichten_M_200.pdf): Vier Ansichten (Norden, Süden, Osten, Westen) zeigen eingeschossige Hallenkonstruktionen mit Satteldach, vorgelagertem Rampenbereich und ggmgastro.com-Branding. Sektionaltore auf Südseite durchgehend sichtbar.
-  - [`Angebot 28388.11 d.pdf`](https://github.com/MariusWilsch/REKERS__poc/blob/main/data/2026-01-28_testdaten/36185/11167/_extracted/Angebot%2028388.11%20d.pdf) Anschreiben: „Neubau der Lagerhallen Q-S für GGM-Gastro, Weinerpark 16 in 48607 Ochtrup". Pos. 1.160 beschreibt 29 Stück Stb.-Überladebrücken in der Achse A/5-27.
+  - [`04_05   06.12.2021_Ansichten_M_200.pdf`](https://drive.google.com/file/d/11xbGmEWAAA1r0DZE9-HLGey7zQOe4Jl0/view): Vier Ansichten (Norden, Süden, Osten, Westen) zeigen eingeschossige Hallenkonstruktionen mit Satteldach, vorgelagertem Rampenbereich und ggmgastro.com-Branding. Sektionaltore auf Südseite durchgehend sichtbar.
+  - [`Angebot 28388.11 d.pdf`](https://drive.google.com/file/d/1JHU_vPWaII-fT4Dae4sjfgmo2R_zqnDy/view) Anschreiben: „Neubau der Lagerhallen Q-S für GGM-Gastro, Weinerpark 16 in 48607 Ochtrup". Pos. 1.160 beschreibt 29 Stück Stb.-Überladebrücken in der Achse A/5-27.
 - **Hinweis:** Die Lagerhallen dienen der Logistik für GGM Gastro International GmbH (Gastronomiebedarf-Großhändler). Gabelstaplerverkehr ist das primäre Transportmittel (Anpralllast 4,8 to lt. Vorstatik Lastannahmen). Es handelt sich um Erweiterungsbauten zu bestehenden Hallen auf dem Firmengelände.
 
 ### Höhe ✅
 - **Wert:** Gebäudehöhe H = 10,00 m (Flachdach); Bezugshöhe ze = 10,50 m (inkl. Attika hp = 0,50 m); Brandwand-Oberkante max. +15,25 m
-- **Quelle:** [`2019.12.17 Vorstatik.pdf`](https://github.com/MariusWilsch/REKERS__poc/blob/main/data/2026-01-28_testdaten/36185/11167/_extracted/2019.12.17%20Vorstatik.pdf), Seite 5 (Pos. SW — Schnee- und Windlasten)
+- **Quelle:** [`2019.12.17 Vorstatik.pdf`](https://drive.google.com/file/d/1eCWnJthTOyUD9zQGkAcheCWOFAEn1I97/view), Seite 5 (Pos. SW — Schnee- und Windlasten)
 - **Textstelle:** Pos. SW listet: „Gebäudehöhe (Höhe Flachdach) H = 10.00 m", „Traufbereich mit Attika, Attikaüberstand hp = 0.50 m", Bezugshöhe ze = 10.50 m. Die Berechnung bezieht sich auf „ein exemplarisches Standardmodul am Beispiel Halle A" mit B = 50,00 m und L = 90,50 m.
 - **Bestätigt durch:**
-  - [`04_04   06.12.2021_Schnitte_M_200.pdf`](https://github.com/MariusWilsch/REKERS__poc/blob/main/data/2026-01-28_testdaten/36185/11167/_extracted/04_04%20%20%2006.12.2021_Schnitte_M_200.pdf): Drei Schnitte (A-A, B-B, C-C) durch Lagerhallen Q, R, S zeigen konsistente Hallenhöhen. Rampenbereich auf der Südseite sichtbar.
+  - [`04_04   06.12.2021_Schnitte_M_200.pdf`](https://drive.google.com/file/d/15I5AKhaNr_aICvDw3MVbCoZnEPbUwcj8/view): Drei Schnitte (A-A, B-B, C-C) durch Lagerhallen Q, R, S zeigen konsistente Hallenhöhen. Rampenbereich auf der Südseite sichtbar.
   - Angebot 28388.11d Pos. 1.200 (Brandwände): Unterkante -0,47 m, Oberkante max. +15,25 m (Brandwand reicht über First hinaus). Pos. 1.340 (Innenstützen): Stütze b/d = 60/60 cm, Länge = 14,55 m inkl. angeformtem Fundament, C50/60 F90.
   - Angebot 28388.11d Pos. 1.170 (Sandwichwände): Oberkante Tragschale max. +5,65 m (niedrigere Wandbereiche im Dockbereich).
 - **Hinweis:** Die Vorstatik (17.12.2019) bezieht sich auf das Standardmodul „Halle A". Die Lagerhallen Q-S (Angebot 28388.11d, Mai 2023) verwenden das gleiche Satteldachbinder-System (L = 24,00 m, Achsmaß 7,00 m), daher ist die Gebäudehöhe vergleichbar. Stützenlängen im Rampenbereich (15,75 m) sind höher aufgrund der tieferliegenden Rampe (Überladebrücken-Oberkante -0,20 m, Unterkante -1,70 m).
@@ -86,7 +86,7 @@ Multiplikator: 4,4x (L0 vs. L0+L2+ZIP)
   - Wind: Windzone WZ 2 (vb,0 = 25,00 m/s; qb,0 = 0,39 kN/m²)
   - Schnee: Schneelastzone SLZ 1, Binnenland (sk = 0,65 kN/m²)
   - Geschwindigkeitsdruck qp = 0,68 kN/m²
-- **Quelle:** [`2019.12.17 Vorstatik.pdf`](https://github.com/MariusWilsch/REKERS__poc/blob/main/data/2026-01-28_testdaten/36185/11167/_extracted/2019.12.17%20Vorstatik.pdf), Seite 4 (Pos. Z — Wind- und Schneelastzonen) und Seite 35 (Pos. L — Lastannahmen)
+- **Quelle:** [`2019.12.17 Vorstatik.pdf`](https://drive.google.com/file/d/1eCWnJthTOyUD9zQGkAcheCWOFAEn1I97/view), Seite 4 (Pos. Z — Wind- und Schneelastzonen) und Seite 35 (Pos. L — Lastannahmen)
 - **Textstelle:**
   - Pos. Z: „Windzone WZ = 2", „Schneelastzone SLZ = 1", „char. Schneelast sk = 0.65 kN/m²", „Geländehöhe ü. NN Hs = 64.00 m"
   - Pos. L (Lastannahmen): „Flächenlasten Dachdecke: gk_DA Dämmung und Abdichtung = 0,15 kN/m²; qk_DA1 Install Installationen = 0,15 kN/m²; qk_DA2 PV optionale PV-Anlage = 0,25 kN/m²"
@@ -98,7 +98,7 @@ Multiplikator: 4,4x (L0 vs. L0+L2+ZIP)
 
 ### Baustoff ✅
 - **Wert:** Spannbeton-Satteldachbinder (C50/60 - F90, l = 24,00 m); Spannbeton-Parallelgurtbinder (C50/60 - F90, l = 12,00 m); Stahlbeton-Fertigteile (Stb.-Fertigteile); Stb.-Stützen C50/60 F90; Stb.-Sandwichwände und Brandwände C35/45 - F90
-- **Quelle:** [`Angebot 28388.11 d.pdf`](https://github.com/MariusWilsch/REKERS__poc/blob/main/data/2026-01-28_testdaten/36185/11167/_extracted/Angebot%2028388.11%20d.pdf), Vorbemerkungen und Positionen (18 Seiten)
+- **Quelle:** [`Angebot 28388.11 d.pdf`](https://drive.google.com/file/d/1JHU_vPWaII-fT4Dae4sjfgmo2R_zqnDy/view), Vorbemerkungen und Positionen (18 Seiten)
 - **Textstelle:**
   - Anschreiben: „Herstellung, Lieferung und Montage von Stb.-Fertigteilen für das Bauvorhaben: Neubau der Lagerhallen Q-S"
   - Pos. 1.10: „Spannbeton-Satteldachbinder Stat. Pos. BI1 [...] L=24,00m Achsmass im Abstand von 7,00m, Höhe = ca. 88-124-88 cm, C50/60 - F90, incl. HTU-Schiene für die Dachtrapezbleche"

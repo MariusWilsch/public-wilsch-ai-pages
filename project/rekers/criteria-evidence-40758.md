@@ -60,21 +60,21 @@ Multiplikator: 5,1x (L0 vs. L0+L2)
 
 ### Gebäudetyp ✅
 - **Wert:** Logistikhalle (Neubau) mit zwei Hallentrakte (Halle A und Halle B), integriertem Mezzanin, Bürobereich, Sprinklertechnik und Ladebrücken
-- **Quelle:** [`414-25a_4_1_A-B_AN_--_Ansichten-Original.pdf`](https://github.com/MariusWilsch/REKERS__poc/blob/main/data/2026-01-28_testdaten/40758/17013/_extracted/414-25a_4_1_A-B_AN_--_Ansichten-Original.pdf)
+- **Quelle:** [`414-25a_4_1_A-B_AN_--_Ansichten-Original.pdf`](https://drive.google.com/file/d/1_TQ6nRbWI27IJ3tJFE2vOfK3429yy8yR/view)
 - **Textstelle:** Bauantragsplanung (Ansichten, M. 1:200, Stand 08.01.2024) zeigt „Neubau Halle Ladbergen" mit Nord-, Süd-, Ost- und Westansichten. Hallentrakt A und Hallentrakt B klar beschriftet. Westansicht zeigt „Pfenning"-Branding mit farbigen Sandwichfassaden. Sprinklertechnik-Bereiche an beiden Hallenstirnseiten.
 - **Bestätigt durch:**
-  - [`414-24a_4_1_A-B_SC_--_Schnitte-Original.pdf`](https://github.com/MariusWilsch/REKERS__poc/blob/main/data/2026-01-28_testdaten/40758/17013/_extracted/414-24a_4_1_A-B_SC_--_Schnitte-Original.pdf) (Schnitte A, B, C): Schnitt A zeigt Gesamtquerschnitt Halle A-B, Schnitt B zeigt Halle A mit Mezzanin, Palettenübergabeplätzen und Lastauffzug, Schnitt C zeigt Halle B.
-  - [`2024-01-24 Unterlagen für die stat. Vorbemessung..pdf`](https://github.com/MariusWilsch/REKERS__poc/blob/main/data/2026-01-28_testdaten/40758/2024-01-24%20Unterlagen%20f%C3%BCr%20die%20%20stat.%20Vorbemessung..pdf) (Grundriss Erdgeschoss Halle A-B): Zeigt Speditionsgebäude Bestand (Büro), Bestandshalle, Sprinklertank (SP-00-01, NRF 107,51 m²), Ladebrücken (Nr. 15–18).
+  - [`414-24a_4_1_A-B_SC_--_Schnitte-Original.pdf`](https://drive.google.com/file/d/1zNf3tXhW_5qZjPJXsaTvPpTL48Cj_qE-/view) (Schnitte A, B, C): Schnitt A zeigt Gesamtquerschnitt Halle A-B, Schnitt B zeigt Halle A mit Mezzanin, Palettenübergabeplätzen und Lastauffzug, Schnitt C zeigt Halle B.
+  - [`2024-01-24 Unterlagen für die stat. Vorbemessung..pdf`](https://drive.google.com/file/d/1PvyP5T6VOs6TwUOu5_weVfVJqS0w_aLg/view) (Grundriss Erdgeschoss Halle A-B): Zeigt Speditionsgebäude Bestand (Büro), Bestandshalle, Sprinklertank (SP-00-01, NRF 107,51 m²), Ladebrücken (Nr. 15–18).
   - Angebot 40758.60 Vorbemerkungen: Aufteilung „Klasse 1: Halle A, Klasse 2: Halle B". Hinweis „SW-Fassaden: alle weiß dargestellten Flächen sind als Beton-Sandwichfassaden angeboten".
 - **Hinweis:** Das Projekt ist als DGNB-Logistikgebäude (NLO 23) klassifiziert mit Ziel DGNB Gold. Bauherr ist LOG Cube I S.a r.l. (Luxemburg), Architekt Krüger Consult GmbH, Generalunternehmer Köster GmbH (Projekt-Nr. 24-0040-1-46). Neben dem Neubau existiert eine Bestandshalle auf dem Grundstück.
 
 ### Höhe ✅
 - **Wert:** OK Attika +17,00 m (Lastzusammenstellung) / +17,000 m (Bauantragsplanung); UK Binder Tiefpunkt +14,20 m; UK Binder Hochpunkt +14,88 m; OK-Stütze Hochpunkt +16,05 m; OK-Stütze Tiefpunkt +15,55 m; OK-Stütze Giebel/Eck +15,80 m; ±0,000 = 49,85 m üNN
-- **Quelle:** [`2024-01-26 kommentierte Lastzusammenstellung - Fundamentlasten V2.02.pdf`](https://github.com/MariusWilsch/REKERS__poc/blob/main/data/2026-01-28_testdaten/40758/16946/_extracted/2024-01-26%20kommentierte%20Lastzusammenstellung%20-%20Fundamentlasten%20V2.02.pdf)
+- **Quelle:** [`2024-01-26 kommentierte Lastzusammenstellung - Fundamentlasten V2.02.pdf`](https://drive.google.com/file/d/1aob6FMDCY3f-4tm5MzAd5S6zRoPLwWUn/view)
 - **Textstelle:** Lastzusammenstellung (Köster, 18.01.2024, mit handschriftlichen Eintragungen von Dipl.-Ing. Tim Kammermann, REKERS, vom 26.01.2024): „Attikahöhe h = 17,00 m". Gebäudehöhe „10 m < H < 18 m" für Windlastberechnung bestätigt.
 - **Bestätigt durch:**
-  - [`414-24a_4_1_A-B_SC_--_Schnitte-Original.pdf`](https://github.com/MariusWilsch/REKERS__poc/blob/main/data/2026-01-28_testdaten/40758/17013/_extracted/414-24a_4_1_A-B_SC_--_Schnitte-Original.pdf) (Schnitt B – Halle A): Höhenangaben „+17,000 OK Attika Halle", „+14,200 UK Binder Tiefpunkt", „+14,880 UK Binder Hochpunkt", „+2,200 OK FB Mezzanin", „±0,000".
-  - [`Angebot Nr. 40758.60.pdf`](https://github.com/MariusWilsch/REKERS__poc/blob/main/data/2026-01-28_testdaten/40758/17146/_extracted/Angebot%20Nr.%2040758.60.pdf) Positionen: Pos. 1.2.01 „Binderaußenstütze im Hochpunkt, OK-Stütze = +16,05 m"; Pos. 1.2.07 „Innenstütze unter Abfangträger im Tiefpunkt, OK-Stütze = +15,55 m"; Pos. 1.2.13 „Giebel- und Eckstütze, OK-Stütze = +15,80 m im Mittel".
+  - [`414-24a_4_1_A-B_SC_--_Schnitte-Original.pdf`](https://drive.google.com/file/d/1zNf3tXhW_5qZjPJXsaTvPpTL48Cj_qE-/view) (Schnitt B – Halle A): Höhenangaben „+17,000 OK Attika Halle", „+14,200 UK Binder Tiefpunkt", „+14,880 UK Binder Hochpunkt", „+2,200 OK FB Mezzanin", „±0,000".
+  - [`Angebot Nr. 40758.60.pdf`](https://drive.google.com/file/d/1FTYurRqIVqsy-YtSOPYiD6ZPClWAT_kL/view) Positionen: Pos. 1.2.01 „Binderaußenstütze im Hochpunkt, OK-Stütze = +16,05 m"; Pos. 1.2.07 „Innenstütze unter Abfangträger im Tiefpunkt, OK-Stütze = +15,55 m"; Pos. 1.2.13 „Giebel- und Eckstütze, OK-Stütze = +15,80 m im Mittel".
 - **Hinweis:** Das Gebäude liegt am oberen Rand der Windlastkategorie „10 m < H < 18 m" mit exakt 17,00 m Attikahöhe. Die Differenz zwischen UK Binder Hochpunkt (+14,88 m) und Tiefpunkt (+14,20 m) beträgt 0,68 m und entspricht der Dachneigung von ca. 3,0% (1,718°) laut Lastzusammenstellung.
 
 ### Kran ❌
@@ -92,14 +92,14 @@ Multiplikator: 5,1x (L0 vs. L0+L2)
   - Schnee: Schneelastzone 1 (SLZ1), sk = 0,650 kN/m², sl = 0,544 kN/m²
   - Wind: Windlastzone 2 (WLZ2), Binnenland, wd = 0,160 kN/m²
   - Σ Dachlast Halle gesamt = 2,724 kN/m² (inkl. Klima)
-- **Quelle:** [`2024-01-26 kommentierte Lastzusammenstellung - Fundamentlasten V2.02.pdf`](https://github.com/MariusWilsch/REKERS__poc/blob/main/data/2026-01-28_testdaten/40758/16946/_extracted/2024-01-26%20kommentierte%20Lastzusammenstellung%20-%20Fundamentlasten%20V2.02.pdf)
+- **Quelle:** [`2024-01-26 kommentierte Lastzusammenstellung - Fundamentlasten V2.02.pdf`](https://drive.google.com/file/d/1aob6FMDCY3f-4tm5MzAd5S6zRoPLwWUn/view)
 - **Textstelle:** Standardisiertes Lastzusammenstellungsformular (Köster GmbH, Projekt-Nr. 24-0040-1-46, 18.01.2024) mit detaillierter Aufschlüsselung aller Dach-Eigengewichte, Nutzlasten und Klimalasten. Abschnitt „Dachlasten / Halle" listet: „Installation a: Sehr Schwer → 0,200 KN/m²", „PV-Anlage: Mittel → 0,200 KN/m²", „Gründach: Schwer → 1,200 KN/m²". REKERS-Kommentar: „Lt. FLB, S. 14: 0,30 kN/m²" bei PV-Anlage und „Gründach auf ca. 50% der Dachfläche".
 - **Bestätigt durch:** Separate Dachlasten-Bereiche für „Technik/SPZ" (1,300 kN/m²) und „Bürovorbau" (0,100 kN/m²) im selben Dokument. Die REKERS-Eintragungen (handschriftlich, T. Backs, 26.01.2024) zeigen aktive Prüfung der Köster-Vorgaben mit Kommentaren wie „Last ist zu gering (vgl. BV Rossmann, Burgwedel)" bei der Dämmungslast.
 - **Hinweis:** Die Dachlastwerte sind ungewöhnlich hoch (2,724 kN/m² gesamt) aufgrund des schweren Gründachs (1,200 kN/m²). SLZ1 statt SLZ2 — Ladbergen liegt im Norddeutschen Tiefland mit geringerer Schneelast. Die REKERS-Kommentare deuten auf eine kritische Prüfung der Lastannahmen hin, insbesondere bei der Dämmungslast und PV-Anlagenlast.
 
 ### Baustoff ✅
 - **Wert:** Spannbeton-Parallelbinder (L=24,00 m, h=1,10 m / L=16,00 m, h=1,10 m); Spannbeton-Abfangträger (l ca. 16,00 m); Stb.-Fertigteile Betongüte C50/60 (Stützen) und C35/45 (Fundamentplatten); Betonstahl B500(A); Spannstahl ST1660/1860 nach DIN 488; Beton nach DIN EN 206-1/DIN 1045-2 unter Verwendung von Portlandzement CEM I
-- **Quelle:** [`Angebot Nr. 40758.60.pdf`](https://github.com/MariusWilsch/REKERS__poc/blob/main/data/2026-01-28_testdaten/40758/17146/_extracted/Angebot%20Nr.%2040758.60.pdf), Vorbemerkungen Seite 2 (Abschnitte Beton, Bewehrung)
+- **Quelle:** [`Angebot Nr. 40758.60.pdf`](https://drive.google.com/file/d/1FTYurRqIVqsy-YtSOPYiD6ZPClWAT_kL/view), Vorbemerkungen Seite 2 (Abschnitte Beton, Bewehrung)
 - **Textstelle:**
   - Beton: „Die Ausführung der Betonarbeiten erfolgt nach DIN EN 206-1/ DIN 1045-2 unter Verwendung von Portlandzement."
   - Bewehrung: „Betonstahl B500(A), Spannstahl ST1660/1860 nach DIN 488."
@@ -107,15 +107,15 @@ Multiplikator: 5,1x (L0 vs. L0+L2)
   - Pos. 1.1.5: „Spannbeton-Abfangträger, l ca. 16,00 m" (24 Stück)
   - Stützen: durchgehend „Betongüte: C50/60" (Pos. 1.2.01–1.2.20)
 - **Bestätigt durch:**
-  - [`Angebot Nr. 40758.51.pdf`](https://github.com/MariusWilsch/REKERS__poc/blob/main/data/2026-01-28_testdaten/40758/17013/_extracted/Angebot%20Nr.%2040758.51.pdf) (Vorgängerversion): identische Beton- und Bewehrungsspezifikationen. Pos. 8–18 zeigen „Betongüte: C50/60" für Stützen, Pos. 11 „Betongüte: C35/45" für Stütze mit Fundamentplatte. Pos. 1-1: Spannbeton-Parallelbinder h=1,35 m (spätere Version 40758.60 reduziert auf h=1,10 m).
+  - [`Angebot Nr. 40758.51.pdf`](https://drive.google.com/file/d/1nRiFVEKurcZMXhAMICzqWBflPWnxI2sI/view) (Vorgängerversion): identische Beton- und Bewehrungsspezifikationen. Pos. 8–18 zeigen „Betongüte: C50/60" für Stützen, Pos. 11 „Betongüte: C35/45" für Stütze mit Fundamentplatte. Pos. 1-1: Spannbeton-Parallelbinder h=1,35 m (spätere Version 40758.60 reduziert auf h=1,10 m).
   - Feuerwiderstandsklassen: Binder/Riegel/Abfangträger F90; Stützen/Unterzüge/Deckenplatten F90; Brandwandplatten F90 (beide Angebote identisch).
 - **Hinweis:** Zwischen den Angebotsversionen 40758.51 (23.02.2024) und 40758.60 (08.03.2024) wurde die Binderhöhe von h=1,35 m auf h=1,10 m reduziert, was auf eine Optimierung der Dachkonstruktion hindeutet. Die Stützenbetongüte C50/60 ist konsistent durch alle Positionen beider Angebote. Halbmontage-Pi-Plattendecke (Pos. 19 in 40758.51) mit 120 kg Spannstahl bestätigt den Einsatz vorgespannter Elemente.
 
 ### Dachbegrünung ✅
 - **Wert:** Gründach, schwer (1,200 kN/m²), auf ca. 50% der Dachfläche der Halle; auch auf Technik/SPZ-Bereich (1,200 kN/m²); nicht auf Bürovorbau
-- **Quelle:** [`2024-01-26 kommentierte Lastzusammenstellung - Fundamentlasten V2.02.pdf`](https://github.com/MariusWilsch/REKERS__poc/blob/main/data/2026-01-28_testdaten/40758/16946/_extracted/2024-01-26%20kommentierte%20Lastzusammenstellung%20-%20Fundamentlasten%20V2.02.pdf)
+- **Quelle:** [`2024-01-26 kommentierte Lastzusammenstellung - Fundamentlasten V2.02.pdf`](https://drive.google.com/file/d/1aob6FMDCY3f-4tm5MzAd5S6zRoPLwWUn/view)
 - **Textstelle:** Abschnitt „Dachlasten / Halle": „Gründach: Schwer → 1,200 KN/m²". REKERS-Kommentar (handschriftlich): „Gründach auf ca. 50 % der Dachfläche". Abschnitt „Dachlasten / Technik/SPZ": ebenfalls „Gründach: Schwer → 1,200 KN/m²". Abschnitt „Dachlasten / Bürovorbau": „Gründach: keine → 0,000 KN/m²".
-- **Bestätigt durch:** [`DGNB Pfenning Ladbergen.pdf`](https://github.com/MariusWilsch/REKERS__poc/blob/main/data/2026-01-28_testdaten/40758/17013/_extracted/DGNB%20Pfenning%20Ladbergen.pdf) (Baubeschreibung/Ausschreibung Los 2): DGNB-Zertifizierung „Neubau Industriebauten Logistikgebäude Version 2023 (NLO 23)" mit Ziel DGNB Gold. Die Nachhaltigkeitsanforderungen umfassen ENV 1.2 (Risiken für die lokale Umwelt) und ENV 1.3 (Umweltverträgliche Materialgewinnung) — DGNB Gold erfordert typischerweise extensive Dachbegrünung.
+- **Bestätigt durch:** [`DGNB Pfenning Ladbergen.pdf`](https://drive.google.com/file/d/1xCY3JMijxR0Nwsr0KgvQ48NITUeyMD5K/view) (Baubeschreibung/Ausschreibung Los 2): DGNB-Zertifizierung „Neubau Industriebauten Logistikgebäude Version 2023 (NLO 23)" mit Ziel DGNB Gold. Die Nachhaltigkeitsanforderungen umfassen ENV 1.2 (Risiken für die lokale Umwelt) und ENV 1.3 (Umweltverträgliche Materialgewinnung) — DGNB Gold erfordert typischerweise extensive Dachbegrünung.
 - **Hinweis:** Die Gründachlast von 1,200 kN/m² entspricht einem schweren extensiven Gründach (typisch: 12–15 cm Substratschicht). Dies ist ein signifikanter Kostenfaktor für die Tragwerksplanung — die Gründachlast macht 44% der Gesamt-Nutzlasten auf dem Dach aus (1,200 von 2,724 kN/m²). Die Beschränkung auf 50% der Dachfläche deutet auf eine wirtschaftliche Optimierung hin, bei der die verbleibenden 50% für PV-Anlagen und unbelastete Bereiche vorgesehen sind.
 
 ---

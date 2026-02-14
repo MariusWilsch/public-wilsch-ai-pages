@@ -61,21 +61,21 @@ Multiplikator: 3,4x (L0 vs. L0+L2+root)
 
 ### Gebäudetyp ✅
 - **Wert:** Logistikzentrum mit 4 Halleneinheiten (Unit 1–4) und Mezzanine-Geschoss, Überladebrücken, Treppenhäuser und Büro-/Sozialbereich
-- **Quelle:** [`23-23_BA-2000_Schnitte_VA 07.12.2023.pdf`](https://github.com/MariusWilsch/REKERS__poc/blob/main/data/2026-01-28_testdaten/40593/16743/_extracted/23-23_BA-2000_Schnitte_VA%2007.12.2023.pdf)
+- **Quelle:** [`23-23_BA-2000_Schnitte_VA 07.12.2023.pdf`](https://drive.google.com/file/d/1SY00tKKWuSVkY1zjYFZMhxqqB789srJv/view)
 - **Textstelle:** Schnitt A-A zeigt die 4 Halleneinheiten (Halle 1–4 bzw. Unit 1–4) mit jeweils 24,00 m Spannweite und 8,00 m Achsraster. OK Mezzanine = +6,06 m in jeder Halle. Plankopf: „Neubau eines Logistikzentrum", Bauherr „Logistikzentrum Niederlangen GmbH".
 - **Bestätigt durch:**
-  - [`23-23_BA-3000_Ansichten_VA 07.12.2023.pdf`](https://github.com/MariusWilsch/REKERS__poc/blob/main/data/2026-01-28_testdaten/40593/16743/_extracted/23-23_BA-3000_Ansichten_VA%2007.12.2023.pdf): Ansichten West, Nord, Süd, Ost zeigen ein langes eingeschossiges Logistikgebäude mit Bürotrakt (verglaster Bereich links in Ansicht West) und „Landguth premium partner"-Branding. Mehrere Andockstationen (Laderampen) an der Südseite sichtbar.
-  - [`23-23_E-2100_VA-21-11-2023_Schnitt A-A Halle1.pdf`](https://github.com/MariusWilsch/REKERS__poc/blob/main/data/2026-01-28_testdaten/40593/16743/_extracted/23-23_E-2100_VA-21-11-2023_Schnitt%20A-A%20Halle1.pdf): Entwurfsplanung bestätigt identische Hallenstruktur mit Mezzanine, RWA-Kuppeln und Abhangdecken.
+  - [`23-23_BA-3000_Ansichten_VA 07.12.2023.pdf`](https://drive.google.com/file/d/1riEYKz9WmACUB6dvOaSM1WuExxB8_6Js/view): Ansichten West, Nord, Süd, Ost zeigen ein langes eingeschossiges Logistikgebäude mit Bürotrakt (verglaster Bereich links in Ansicht West) und „Landguth premium partner"-Branding. Mehrere Andockstationen (Laderampen) an der Südseite sichtbar.
+  - [`23-23_E-2100_VA-21-11-2023_Schnitt A-A Halle1.pdf`](https://drive.google.com/file/d/1ss8iu2xKrmtLT_I2Po_ZRY6RyvfS9ONd/view): Entwurfsplanung bestätigt identische Hallenstruktur mit Mezzanine, RWA-Kuppeln und Abhangdecken.
   - Neutrale Anfrage (LV Stb.-Fertigteile, 84 Seiten): Pos. 1.56–1.62 beschreiben Sandwich-Pfeilerelemente, Sturzelemente und Überladebrücken-Deckenplatten — bestätigt Logistikzentrum-Funktion mit Lkw-Andockzone.
 - **Hinweis:** Bauherr ist „Logistikzentrum Niederlangen GmbH" (Vertreter: Herr Alfred Saathoff, Benzstraße 1, 26632 Ihlow/Riepe). Endnutzer ist Landguth (Tiernahrungshersteller), erkennbar am Fassadenbranding.
 
 ### Höhe ✅
 - **Wert:** OK Attika +14,00 m; OK Stütze +13,50 m (HP) / +13,02 m (TP); OK-Binder +13,38 m (Sattel, HP) / +13,50 m (Parallel, HP); UK-Binder +12,18 m (Sattel) / +12,02 m (Parallel, TP); OK Mezzanine +6,06 m; OK Sockel +0,30 m
-- **Quelle:** [`23-23_BA-2000_Schnitte_VA 07.12.2023.pdf`](https://github.com/MariusWilsch/REKERS__poc/blob/main/data/2026-01-28_testdaten/40593/16743/_extracted/23-23_BA-2000_Schnitte_VA%2007.12.2023.pdf)
+- **Quelle:** [`23-23_BA-2000_Schnitte_VA 07.12.2023.pdf`](https://drive.google.com/file/d/1SY00tKKWuSVkY1zjYFZMhxqqB789srJv/view)
 - **Textstelle:** Schnitt A-A (M. 1:200) zeigt konsistente Höhenangaben über alle 4 Hallen: ±0,00 (Hallensohle), +0,30 (OK Sockel), +6,06 (OK Mezzanine), +9,16 (Treppenhausdecke), +12,108 bis +12,175 (UK Dachbinder), +14,00 (OK Attika).
 - **Bestätigt durch:**
-  - [`23-23_E-2100_VA-21-11-2023_Schnitt A-A Halle1.pdf`](https://github.com/MariusWilsch/REKERS__poc/blob/main/data/2026-01-28_testdaten/40593/16743/_extracted/23-23_E-2100_VA-21-11-2023_Schnitt%20A-A%20Halle1.pdf): Entwurfsplanung bestätigt identische Höhenwerte: +14,00, +12,175, +12,108, +6,06, +5,36, +3,50/+3,60 (Abhangdecken).
-  - [`23-23 LV Stb.-Fertigteile.pdf`](https://github.com/MariusWilsch/REKERS__poc/blob/main/data/2026-01-28_testdaten/40593/16743/_extracted/23-23%20LV%20Stb.-Fertigteile.pdf) (REKERS-LV): Pos. 1.01 Spannbeton-Satteldachbinder OK +13,38 m, UK +12,18 m; Pos. 1.02 Paralleldachbinder OK +13,50 m, UK +12,02 m; Pos. 1.11 Traufstütze OK +13,50 m (HP), L=15,05 m; Pos. 1.16 Innenstütze OK +13,02 m (TP), L=14,57 m.
+  - [`23-23_E-2100_VA-21-11-2023_Schnitt A-A Halle1.pdf`](https://drive.google.com/file/d/1ss8iu2xKrmtLT_I2Po_ZRY6RyvfS9ONd/view): Entwurfsplanung bestätigt identische Höhenwerte: +14,00, +12,175, +12,108, +6,06, +5,36, +3,50/+3,60 (Abhangdecken).
+  - [`23-23 LV Stb.-Fertigteile.pdf`](https://drive.google.com/file/d/1LgflBh8DxdqKYGRmMxrqeWLXpvNjIkfq/view) (REKERS-LV): Pos. 1.01 Spannbeton-Satteldachbinder OK +13,38 m, UK +12,18 m; Pos. 1.02 Paralleldachbinder OK +13,50 m, UK +12,02 m; Pos. 1.11 Traufstütze OK +13,50 m (HP), L=15,05 m; Pos. 1.16 Innenstütze OK +13,02 m (TP), L=14,57 m.
   - Angebot 40593.14 (Brandwandtore): Brandwandplatten OK = +14,40 m — Wandhöhe übersteigt Attika für Brandschutz-Anforderung.
 - **Hinweis:** Zwei Bindertypen: Satteldachbinder (3,0% Obergurtneigung, First bei +13,38 m) und Paralleldachbinder (2,0% Gefälle, HP +13,50 m). Die differierenden UK-Werte (+12,18 m vs. +12,02 m) ergeben sich aus der unterschiedlichen Binderbauform. Die Abhangdecken in den Bürobereichen liegen bei +3,50/+3,60 m.
 
@@ -91,7 +91,7 @@ Multiplikator: 3,4x (L0 vs. L0+L2+root)
 
 ### Baustoff ✅
 - **Wert:** Spannbeton-Dachbinder (C50/60, XC1); Stahlbeton-Fertigteile (C45/55, C35/45); Betonstahl BSt 500S+M; Spannstahl St1660/1860; Köcherverguß C25/30; Sandwich-Fassadenelemente (C35/45 Tragschale + C30/37 Vorsatzschale + EPS 035)
-- **Quelle:** [`23-23 LV Stb.-Fertigteile.pdf`](https://github.com/MariusWilsch/REKERS__poc/blob/main/data/2026-01-28_testdaten/40593/16743/_extracted/23-23%20LV%20Stb.-Fertigteile.pdf) (REKERS-LV, 54 Seiten)
+- **Quelle:** [`23-23 LV Stb.-Fertigteile.pdf`](https://drive.google.com/file/d/1LgflBh8DxdqKYGRmMxrqeWLXpvNjIkfq/view) (REKERS-LV, 54 Seiten)
 - **Textstelle:**
   - Pos. 1.01 Spannbeton-Satteldachbinder: „Betongüte C50/60; Expositionsklasse XC1", L=24,00 m, „Betonstahl und Spannstahl gesondert"
   - Pos. 1.02 Spannbeton-Paralleldachbinder: „Betongüte C50/60; Expositionsklasse XC1", L=24,00 m
@@ -103,8 +103,8 @@ Multiplikator: 3,4x (L0 vs. L0+L2+root)
   - Pos. 1.65 Spannstahl St1660/1860: 27,00 to
   - Pos. 1.56 Sandwich-Sturzelemente: „Betongüte C35/45 bzw. C30/37 (Vorsatzschale)", „Aufbau: 16 cm Tragschale + 8 cm EPS 035 + 8 cm Vorsatzschale", Gesamtstärke d = 32 cm
 - **Bestätigt durch:**
-  - [`Angebot Nr. 40593.16`](https://github.com/MariusWilsch/REKERS__poc/blob/main/data/2026-01-28_testdaten/40593/16743/_extracted/Angebot.pdf) (Mezzanine-Veränderungen): Pos. 1.1.6 „Betonstahl BSt 500S+M" (13 to), Pos. 1.1.7 „Spannstahl St1660/1860" (4 to), Pos. 1.1.2 Spannbeton-TT-Deckenplatte „Betongüte C45/55; Expositionsklasse XC1, W0"
-  - [`LGZ Dörpen LV Stand 21.12.2023.pdf`](https://github.com/MariusWilsch/REKERS__poc/blob/main/data/2026-01-28_testdaten/40593/16743/_extracted/LGZ%20D%C3%B6rpen%20LV%20Stand%2021.12.2023.pdf) (55 Seiten): Identische Positionsbeschreibungen und Betongüten bestätigt.
+  - [`Angebot Nr. 40593.16`](https://drive.google.com/file/d/1M4WBcFkPDlbVg2kH-tFpXrQYO6fpIn_M/view) (Mezzanine-Veränderungen): Pos. 1.1.6 „Betonstahl BSt 500S+M" (13 to), Pos. 1.1.7 „Spannstahl St1660/1860" (4 to), Pos. 1.1.2 Spannbeton-TT-Deckenplatte „Betongüte C45/55; Expositionsklasse XC1, W0"
+  - [`LGZ Dörpen LV Stand 21.12.2023.pdf`](https://drive.google.com/file/d/1qc9ppi7alwHPJhwddtWJHJ1QtFFpqIVQ/view) (55 Seiten): Identische Positionsbeschreibungen und Betongüten bestätigt.
 - **Hinweis:** Die Betongüte wird positionsabhängig differenziert: C50/60 für alle Spannbetonbauteile (Dachbinder, Abfangträger, Halbmontagebalken), C45/55 für Stützen und TT-Deckenplatten, C35/45 für Wandplatten/Riegel und Sandwich-Tragschalen, C30/37 für Sandwich-Vorsatzschalen, C25/30 für Köcherverguß. Die Expositionsklasse XC4/XF1 wird nur für Brandwandplatten mit Außenkontakt verwendet (Pos. 1.36). Die Spannstahl-Menge von 27 to für Unit 1 allein (bei 4 Units) deutet auf ca. 100+ to Spannstahl für das Gesamtprojekt — konsistent mit der Gebäudegröße.
 
 ### Dachbegrünung ❌

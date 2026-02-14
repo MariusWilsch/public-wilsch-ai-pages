@@ -60,21 +60,21 @@ Multiplikator: 3,1x (L0 vs. L0+L2)
 
 ### Gebäudetyp ✅
 - **Wert:** Logistikhalle (Speditionsgebäude) mit integriertem 2-geschossigem Büroeinbau, 4 Hallenbereiche (Brandabschnitte in Achsen 6, 11 und I)
-- **Quelle:** [`Anlage 4.5_2306_NZ_IS_GU-Vergabe_Anlage_05_Bauantrag_Schnitte.pdf`](https://github.com/MariusWilsch/REKERS__poc/blob/main/data/2026-01-28_testdaten/41807/18297/_extracted/Anlage%204.5_2306_NZ_IS_GU-Vergabe_Anlage_05_Bauantrag_Schnitte.pdf)
+- **Quelle:** [`Anlage 4.5_2306_NZ_IS_GU-Vergabe_Anlage_05_Bauantrag_Schnitte.pdf`](https://drive.google.com/file/d/1hmcHNwpmTcGl-XRVw0lbZN_Nn5MfxPup/view)
 - **Textstelle:** Bauantragsschnitte (GOLDBECK Südwest GmbH, Plan KO1149) zeigen Logistikhalle mit 4 Brandabschnitten, 2-geschossigem Büroeinbau (EG + OG) im Bereich Achse 8-11/P-Q. Schnitte 1-3 im Maßstab 1/100 mit Gesamtlänge 55,71 m (10 Felder à 5,48 m). Bauherr: Logistik und Lagerhaus, Gebrüder Neukirchen GmbH Co.KG, Bad Neuenahr-Ahrweiler.
 - **Bestätigt durch:**
-  - [`Leistungsbeschreibung_Kurzversion.pdf`](https://github.com/MariusWilsch/REKERS__poc/blob/main/data/2026-01-28_testdaten/41807/18297/_extracted/Leistungsbeschreibung_Kurzversion.pdf): „Stahlbetonfertigteile" als Gewerk bestätigt Fertigteilhalle.
-  - [`ANL01_24_0823_5422_Rekers_20250128.pdf`](https://github.com/MariusWilsch/REKERS__poc/blob/main/data/2026-01-28_testdaten/41807/18297/_extracted/ANL01_24_0823_5422_Rekers_20250128.pdf) (Anlage 1 zum VHP): „Dachbinder F90 in allen vier Hallenbereichen (Achsen A bis Q)" und „Sandwich-Wandelemente des Einbaus aus Stahlbeton mit Kerndämmung" bestätigen 4 Hallenbereiche mit Büroeinbau.
-  - [`56651 Niederzissen.pdf`](https://github.com/MariusWilsch/REKERS__poc/blob/main/data/2026-01-28_testdaten/41807/_extracted/56651%20Niederzissen.pdf) (Frachtanfrage): „Baustelle: 56651 Niederzissen, Im Schülert" mit 28 Bindern, 70 Stützen, Wände im Innenlader ca. 1000 to — Dimensionierung einer großen Logistikhalle.
+  - [`Leistungsbeschreibung_Kurzversion.pdf`](https://drive.google.com/file/d/1d7hHZ41hQUEZOVUyHBkDM4FIW54QJ5Lo/view): „Stahlbetonfertigteile" als Gewerk bestätigt Fertigteilhalle.
+  - [`ANL01_24_0823_5422_Rekers_20250128.pdf`](https://drive.google.com/file/d/13J6hUhmv2FiypMdg8JKBuKPaCEQ0h8Tl/view) (Anlage 1 zum VHP): „Dachbinder F90 in allen vier Hallenbereichen (Achsen A bis Q)" und „Sandwich-Wandelemente des Einbaus aus Stahlbeton mit Kerndämmung" bestätigen 4 Hallenbereiche mit Büroeinbau.
+  - [`56651 Niederzissen.pdf`](https://drive.google.com/file/d/1QMBCAf-uFrE6TJA41b5HqFgQMRJwdsf6/view) (Frachtanfrage): „Baustelle: 56651 Niederzissen, Im Schülert" mit 28 Bindern, 70 Stützen, Wände im Innenlader ca. 1000 to — Dimensionierung einer großen Logistikhalle.
 - **Hinweis:** Entwurfsverfasser ist GOLDBECK Südwest GmbH (Niederlassung Koblenz), GU ist Köster GmbH (Hochbau Bielefeld Logistikimmobilien). Bauvorhaben „NB Logistikhalle Spedition Neukirchen" ist eine Speditions-Logistikhalle für die Gebrüder Neukirchen in Niederzissen.
 
 ### Höhe ✅
 - **Wert:** OK Attika +10,26 m (299,485 m ü.NN); OK Brandwand +10,38 m (299,56 m ü.NN); UK Dachkonstruktion (Auflager) +8,50 m (297,70 m ü.NN); Büroeinbau OG +6,75 m; OF Gelände ±0,00 m (289,20 m ü.NN)
-- **Quelle:** [`Anlage 4.5_2306_NZ_IS_GU-Vergabe_Anlage_05_Bauantrag_Schnitte.pdf`](https://github.com/MariusWilsch/REKERS__poc/blob/main/data/2026-01-28_testdaten/41807/18297/_extracted/Anlage%204.5_2306_NZ_IS_GU-Vergabe_Anlage_05_Bauantrag_Schnitte.pdf)
+- **Quelle:** [`Anlage 4.5_2306_NZ_IS_GU-Vergabe_Anlage_05_Bauantrag_Schnitte.pdf`](https://drive.google.com/file/d/1hmcHNwpmTcGl-XRVw0lbZN_Nn5MfxPup/view)
 - **Textstelle:** Schnitt 2 und Schnitt 3 (1/100) zeigen konsistente Höhenangaben: „OK Attika +10,26 = 299,485 m ü.NN", „OK Brandwand +10,38 = 299,56 m ü.NN", „+8,50 = 297,70 m ü.NN" (Dachkonstruktionsebene am Auflager). Gesamtgebäudehöhe ca. 10,45 m ab OF Gelände.
 - **Bestätigt durch:**
-  - [`Anlage 4.8_2306_NZ_IS_GU-Vergabe_Anlage_08_Vorstatik.pdf`](https://github.com/MariusWilsch/REKERS__poc/blob/main/data/2026-01-28_testdaten/41807/18297/_extracted/Anlage%204.8_2306_NZ_IS_GU-Vergabe_Anlage_08_Vorstatik.pdf) (Vorstatik GOLDBECK): Spannbetonbinder mit h_First = 1,41 m und h_Auflager = 1,125 m. Schnittdarstellungen bestätigen die Ebenen aus dem Bauantrag.
-  - [`56651 Niederzissen.pdf`](https://github.com/MariusWilsch/REKERS__poc/blob/main/data/2026-01-28_testdaten/41807/_extracted/56651%20Niederzissen.pdf) (Frachtanfrage): „Stützen ohne Fundamentplatte, Länge bis ca. 12,50 m" — konsistent mit Stützenlänge von Fundamentsohle (-1,50 m) bis OK Stütze (+11,00 m).
+  - [`Anlage 4.8_2306_NZ_IS_GU-Vergabe_Anlage_08_Vorstatik.pdf`](https://drive.google.com/file/d/17iViQt1X8Hgj661kGTo52o81eCYv-_VT/view) (Vorstatik GOLDBECK): Spannbetonbinder mit h_First = 1,41 m und h_Auflager = 1,125 m. Schnittdarstellungen bestätigen die Ebenen aus dem Bauantrag.
+  - [`56651 Niederzissen.pdf`](https://drive.google.com/file/d/1QMBCAf-uFrE6TJA41b5HqFgQMRJwdsf6/view) (Frachtanfrage): „Stützen ohne Fundamentplatte, Länge bis ca. 12,50 m" — konsistent mit Stützenlänge von Fundamentsohle (-1,50 m) bis OK Stütze (+11,00 m).
 - **Hinweis:** Bezugshöhe 289,20 m ü.NN = ±0,00 (OF Gelände). Die OK Brandwand (+10,38 m) liegt 0,12 m über OK Attika — Brandwand ragt über Dachkante hinaus (baurechtlich erforderlich). Dachneigung 3 % (aus ANL01).
 
 ### Kran ❌
@@ -89,20 +89,20 @@ Multiplikator: 3,1x (L0 vs. L0+L2)
   - Wind: Windlastzone WLZ 2, w = 0,14 kN/m²
   - Schnee: Schneelastzone SLZ 1, s = 0,6 kN/m² (auf PV)
   - Erdbebenzone: 1
-- **Quelle:** [`ANL01_24_0823_5422_Rekers_20250128.pdf`](https://github.com/MariusWilsch/REKERS__poc/blob/main/data/2026-01-28_testdaten/41807/18297/_extracted/ANL01_24_0823_5422_Rekers_20250128.pdf) (Anlage 1 zum Verhandlungsprotokoll, Köster GmbH), Seite 3
+- **Quelle:** [`ANL01_24_0823_5422_Rekers_20250128.pdf`](https://drive.google.com/file/d/13J6hUhmv2FiypMdg8JKBuKPaCEQ0h8Tl/view) (Anlage 1 zum Verhandlungsprotokoll, Köster GmbH), Seite 3
 - **Textstelle:** „Lastannahmen: Eigenlasten: Dämmung/Abdichtung: 0,15 kN/m², Trapezblech: 0,20 kN/m². Nutzlasten: PV-Anlage: 0,25 kN/m², Installation: 0,15 kN/m². Schneelastzone: 1. Erdbebenzone: 1."
 - **Bestätigt durch:**
-  - [`Anlage 4.8_2306_NZ_IS_GU-Vergabe_Anlage_08_Vorstatik.pdf`](https://github.com/MariusWilsch/REKERS__poc/blob/main/data/2026-01-28_testdaten/41807/18297/_extracted/Anlage%204.8_2306_NZ_IS_GU-Vergabe_Anlage_08_Vorstatik.pdf) (Vorstatik GOLDBECK): Lastannahmen-Kasten im Plan: „Blech + Aufbau: g = 0,11+0,3 = 0,41 kN/m²", „PV: g = 0,25 kN/m²", „Wind WLZ 2: w = 0,14 kN/m²", „Schnee SLZ 1: s = 0,6 kN/m² (auf PV)", „Installation: p = 0,15 kN/m²". Detaillierter als ANL01 mit konkretem Wind- und Schneelastwert.
+  - [`Anlage 4.8_2306_NZ_IS_GU-Vergabe_Anlage_08_Vorstatik.pdf`](https://drive.google.com/file/d/17iViQt1X8Hgj661kGTo52o81eCYv-_VT/view) (Vorstatik GOLDBECK): Lastannahmen-Kasten im Plan: „Blech + Aufbau: g = 0,11+0,3 = 0,41 kN/m²", „PV: g = 0,25 kN/m²", „Wind WLZ 2: w = 0,14 kN/m²", „Schnee SLZ 1: s = 0,6 kN/m² (auf PV)", „Installation: p = 0,15 kN/m²". Detaillierter als ANL01 mit konkretem Wind- und Schneelastwert.
 - **Hinweis:** Schneelastzone 1 und Windlastzone 2 für Niederzissen (Rhein-Eifel-Region) plausibel. PV-Anlage auf dem gesamten Flachdach vorgesehen (aus Leistungsbeschreibung_Kurzversion: „einschl. Berücksichtigung der Photovoltaik-Anlage auf dem gesamten Flachdach"). Die Vorstatik liefert die präziseren Werte mit Wind 0,14 kN/m² und Schnee 0,6 kN/m².
 
 ### Baustoff ✅
 - **Wert:** Spannbeton-Dachbinder F90 (l ≈ 27,4–28,0 m, h_First = 1,41 m, h_Auflager = 1,125 m, I-Querschnitt); Stahlbeton-Fertigteile (Stützen F90, Brandwände F90, Sandwich-Wandelemente D=20 cm mit Kerndämmung); Spannbetonhohldiele SBHD d=200 mm (Decken Büroeinbau)
-- **Quelle:** [`ANL01_24_0823_5422_Rekers_20250128.pdf`](https://github.com/MariusWilsch/REKERS__poc/blob/main/data/2026-01-28_testdaten/41807/18297/_extracted/ANL01_24_0823_5422_Rekers_20250128.pdf) (Anlage 1 zum VHP), Seiten 2 und 5
+- **Quelle:** [`ANL01_24_0823_5422_Rekers_20250128.pdf`](https://drive.google.com/file/d/13J6hUhmv2FiypMdg8JKBuKPaCEQ0h8Tl/view) (Anlage 1 zum VHP), Seiten 2 und 5
 - **Textstelle:** „Dachbinder F90 in allen vier Hallenbereichen (Achsen A bis Q) als Spannbetonbinder" (S. 5). „Stützen F90 aus Stahlbetonfertigteilen in den Achsen 1, 6 und 11 sowie A, I und Q" (S. 2). „Sandwich-Wandelemente des Einbaus aus Stahlbeton mit Kerndämmung (D = 20 cm) in F90" (S. 4). „Brandwände F90 in ganzer Höhe aus Stahlbetonfertigteilen in den Achsen 6, 11 und I" (S. 3).
 - **Bestätigt durch:**
-  - [`Anlage 4.8_2306_NZ_IS_GU-Vergabe_Anlage_08_Vorstatik.pdf`](https://github.com/MariusWilsch/REKERS__poc/blob/main/data/2026-01-28_testdaten/41807/18297/_extracted/Anlage%204.8_2306_NZ_IS_GU-Vergabe_Anlage_08_Vorstatik.pdf): Querschnittszeichnung „Spannbetonbinder Pos. 300" mit I-Profil, b/h = 24/50 cm (Ortgang Pos. 301). Legende: „Stahlbeton- oder Spannbeton-Binder", „SBHD = Spannbetonhohldiele". Binder 27,4 m lang, 26 to (ACHTUNG-Vermerk im Plan).
-  - [`56651 Niederzissen.pdf`](https://github.com/MariusWilsch/REKERS__poc/blob/main/data/2026-01-28_testdaten/41807/_extracted/56651%20Niederzissen.pdf) (Frachtanfrage): „Binder, Länge bis ca. 28,00 m, Stückgewicht ca. 22-24 to, Anzahl ca. 28 Stk." — leichte Abweichung zur Vorstatik (27,4 m / 26 to), da Frachtanfrage konservative Transportmaße angibt.
-  - [`Leistungsbeschreibung_Kurzversion.pdf`](https://github.com/MariusWilsch/REKERS__poc/blob/main/data/2026-01-28_testdaten/41807/18297/_extracted/Leistungsbeschreibung_Kurzversion.pdf): „Stahlbetonfertigteile" als Gewerk, „prüffähige statische Berechnung unter Berücksichtigung von EC 8".
+  - [`Anlage 4.8_2306_NZ_IS_GU-Vergabe_Anlage_08_Vorstatik.pdf`](https://drive.google.com/file/d/17iViQt1X8Hgj661kGTo52o81eCYv-_VT/view): Querschnittszeichnung „Spannbetonbinder Pos. 300" mit I-Profil, b/h = 24/50 cm (Ortgang Pos. 301). Legende: „Stahlbeton- oder Spannbeton-Binder", „SBHD = Spannbetonhohldiele". Binder 27,4 m lang, 26 to (ACHTUNG-Vermerk im Plan).
+  - [`56651 Niederzissen.pdf`](https://drive.google.com/file/d/1QMBCAf-uFrE6TJA41b5HqFgQMRJwdsf6/view) (Frachtanfrage): „Binder, Länge bis ca. 28,00 m, Stückgewicht ca. 22-24 to, Anzahl ca. 28 Stk." — leichte Abweichung zur Vorstatik (27,4 m / 26 to), da Frachtanfrage konservative Transportmaße angibt.
+  - [`Leistungsbeschreibung_Kurzversion.pdf`](https://drive.google.com/file/d/1d7hHZ41hQUEZOVUyHBkDM4FIW54QJ5Lo/view): „Stahlbetonfertigteile" als Gewerk, „prüffähige statische Berechnung unter Berücksichtigung von EC 8".
 - **Hinweis:** Konkrete Betongüte (z.B. C50/60) und Stahlgüte (z.B. B500(A), ST1660/1860) sind in den verfügbaren Dokumenten nicht explizit angegeben. Die Bezeichnung „Spannbetonbinder" impliziert Spannstahl (typischerweise ST1660/1860 nach REKERS-Standard). Die Leistungsbeschreibung verweist auf „gemäß statischer Berechnung" für die Dimensionierung.
 
 ### Dachbegrünung ❌

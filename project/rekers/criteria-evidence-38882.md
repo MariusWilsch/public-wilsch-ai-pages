@@ -61,21 +61,21 @@ Multiplikator: 3,0x (L0 vs. L0+L2+ZIP)
 
 ### Gebäudetyp ✅
 - **Wert:** Logistikhalle (Gewerbehalle) mit Büro- und Sozialflächen, Sprinklertank und -zentrale; ca. 27.980 m² Neubaufläche
-- **Quelle:** [`04-Ansichten.pdf`](https://github.com/MariusWilsch/REKERS__poc/blob/main/data/2026-01-28_testdaten/38882/14578/OneDrive_1_16.3.2022_extracted/02_Planungsunterlagen/04-Ansichten.pdf)
+- **Quelle:** [`04-Ansichten.pdf`](https://drive.google.com/file/d/1VJm9zzBxtJjrE06Y7nG1wrILsUmjUUXE/view)
 - **Textstelle:** Plankopf: „Neubau einer Gewerbehalle mit Büro- und Sozialflächen, Sprinklertank und -zentrale, sowie PKW- und LKW Stellplätzen". Grundriss zeigt Hallenstruktur mit Achsraster 1–9 (A–J), 16,00 m Achsabstand in Querrichtung, 8,00 m in Längsrichtung. Gesamtfläche „27980 m² Neubau" im Planstempel. Lichtbänder 2,00 × 16,00 m mit RWA in regelmäßigem Raster über die gesamte Dachfläche. Drei Überladetor-Bereiche (TOR 1–3) mit Tiefhof -1,20 m. Brandwände „50cm übers Dach" unterteilen die Halle in Brandabschnitte.
-- **Bestätigt durch:** [`Angebot 38882.1`](https://github.com/MariusWilsch/REKERS__poc/blob/main/data/2026-01-28_testdaten/38882/14578/_extracted/Angebot.pdf) Leistungsumfang: „Herstellung, Lieferung und Montage der angebotenen Stb.-Fertigteile" für „VGP Park Erfurt 3". Abschnitt 1: „Stb.-Fertigteile Hallenkonstruktion Unit 1 - Unit 3". Grünflächenplan (Genehmigungsplanung) betitelt „Neubau einer Logistikhalle".
+- **Bestätigt durch:** [`Angebot 38882.1`](https://drive.google.com/file/d/1-maVSqRu6X6iiPgvujR5DbaDPxOLgrV3/view) Leistungsumfang: „Herstellung, Lieferung und Montage der angebotenen Stb.-Fertigteile" für „VGP Park Erfurt 3". Abschnitt 1: „Stb.-Fertigteile Hallenkonstruktion Unit 1 - Unit 3". Grünflächenplan (Genehmigungsplanung) betitelt „Neubau einer Logistikhalle".
 - **Hinweis:** Das Gebäude ist Teil des VGP Park Erfurt 3 (Gewerbepark). Der Bauherr ist VGP Industriebau GmbH / VGP Park Erfurt 3 S.à.r.l. Die Halle wird in Units (1–3) mit Brandabschnitten aufgeteilt. DGNB-Zertifizierung wird angestrebt.
 
 ### Höhe ✅
 - **Wert:** Attika OK +14,00 m (REKERS Angebot); Architektenplanung +14,50 m (190,00 m ü. NHN – OKFF 175,50 m ü. NHN); OK Satteldachbinder im First ca. +13,34 m; UK Satteldachbinder ca. +12,14 m; UK Abfangträger ca. +11,63 m; Büroeinbau OK Rohbeton Decke EG/1.OG: +3,87 m / +7,86 m
-- **Quelle:** [`Angebot 38882.1`](https://github.com/MariusWilsch/REKERS__poc/blob/main/data/2026-01-28_testdaten/38882/14578/_extracted/Angebot.pdf), Seite 1 und Seite 3 (Konstruktionshöhen)
+- **Quelle:** [`Angebot 38882.1`](https://drive.google.com/file/d/1-maVSqRu6X6iiPgvujR5DbaDPxOLgrV3/view), Seite 1 und Seite 3 (Konstruktionshöhen)
 - **Textstelle:** Seite 1: „Die Attikahöhe bleibt bei OK: +14,00 m". Seite 3 (Konstruktionshöhen): „UK Abfangträger: ca. +11,63 m im Tiefpunkt", „UK Paralleldachbinder im Tiefpunkt: ca. +11,88 m", „OK Paralleldachbinder im Hochpunkt: ca. +13,46 m", „OK Satteldachbinder im First: ca. +13,34 m", „UK Satteldachbinder: ca. +12,14 m", „OK Sohle: +0,00 m; OK Gelände = +0,00 m (Anlieferung = -1,20 m)".
-- **Bestätigt durch:** [`04-Ansichten.pdf`](https://github.com/MariusWilsch/REKERS__poc/blob/main/data/2026-01-28_testdaten/38882/14578/OneDrive_1_16.3.2022_extracted/02_Planungsunterlagen/04-Ansichten.pdf): „190,00m ü NN, Attika 14,50m" und „OKFF 175,50 m ü NN". Die VGP Standardleistungsbeschreibung (Index 6) nennt für Variante 2: „lichte Hallenhöhe ca. 11,80 m und Attika Höhe ca. 14,00 m" — konsistent mit dem REKERS-Angebot.
+- **Bestätigt durch:** [`04-Ansichten.pdf`](https://drive.google.com/file/d/1VJm9zzBxtJjrE06Y7nG1wrILsUmjUUXE/view): „190,00m ü NN, Attika 14,50m" und „OKFF 175,50 m ü NN". Die VGP Standardleistungsbeschreibung (Index 6) nennt für Variante 2: „lichte Hallenhöhe ca. 11,80 m und Attika Höhe ca. 14,00 m" — konsistent mit dem REKERS-Angebot.
 - **Hinweis:** Die Differenz von 0,50 m zwischen REKERS-Attika (+14,00 m) und Architekten-Attika (+14,50 m) erklärt sich durch den Unterschied zwischen OK Betonfertigteil und OK Attika inkl. Aufmauerung/Abdeckung. Das REKERS-Angebot bezieht sich auf die Fertigteil-Oberkante. Paralleldachbinder mit ca. 2,00 % Neigung, Satteldachbinder mit 3 % Obergurtneigung.
 
 ### Kran ❌
 - **Wert:** Nicht vorhanden
-- **Quelle:** [`Angebot 38882.1`](https://github.com/MariusWilsch/REKERS__poc/blob/main/data/2026-01-28_testdaten/38882/14578/_extracted/Angebot.pdf), vollständig durchsucht (16 Seiten)
+- **Quelle:** [`Angebot 38882.1`](https://drive.google.com/file/d/1-maVSqRu6X6iiPgvujR5DbaDPxOLgrV3/view), vollständig durchsucht (16 Seiten)
 - **Hinweis:** Keine Erwähnung von Kran, Laufkran, Kranbahn oder Kranlasten in Angebot, Vorbemerkungen oder Leistungspositionen. Die einzige Fahrzeug-Anprallast stammt von einem „Gabelstapler der Staplerklasse FL3 (zulässiges Gesamtgewicht = 6,9 to)". Dies ist konsistent mit dem Gebäudetyp Logistikhalle — Warenumschlag erfolgt per Gabelstapler, nicht per Hallenkran. Auch in den Architektenplanungen (Ansichten, Grundrisse) und der VGP Standardleistungsbeschreibung findet sich kein Hinweis auf Kranbahnen.
 
 ### Dachlasten ✅
@@ -87,14 +87,14 @@ Multiplikator: 3,0x (L0 vs. L0+L2+ZIP)
   - Schnee: Schneelastzone 2
   - Dachbegrünung = 0,00 kN/m² (kommt nicht zur Ausführung)
   - Dachtrapezbleche als 3- oder 4-Feldsystem, Durchlauffaktor = 1,10
-- **Quelle:** [`Angebot 38882.1`](https://github.com/MariusWilsch/REKERS__poc/blob/main/data/2026-01-28_testdaten/38882/14578/_extracted/Angebot.pdf), Seite 2 (Abschnitt „Dachbelastung" und „Wind- u. Schneelasten")
+- **Quelle:** [`Angebot 38882.1`](https://drive.google.com/file/d/1-maVSqRu6X6iiPgvujR5DbaDPxOLgrV3/view), Seite 2 (Abschnitt „Dachbelastung" und „Wind- u. Schneelasten")
 - **Textstelle:** „Wind- u. Schneelasten gemäß DIN EN 1991: Windlastzone WZ 2, Schneelastzone 2, Geländehöhe = 175,50 m ü. NHN". Dachbelastung: „Photovoltaikanlage = 0,20 kN/m² (Aufbauhöhe h < 0,35 m)", „Dachbegrünung = 0,00 kN/m² (kommt nicht zur Ausführung)", „Trapezblech, 100 mm PIR-Dämmung, Abdichtung = 0,35 kN/m²", „Installation = 0,15 kN/m²".
 - **Bestätigt durch:** Architektenplanungen (Ansichten) zeigen Dachaufbau: „FOLIENABDICHTUNG, WÄRMEDÄMMUNG 100mm, DAMPFSPERRE, TRAPEZBLECH 200mm, BETONBINDER 1100mm" — konsistent mit den Angebotswerten. Das Gebäude befindet sich außerhalb einer Erdbebenzone (Angebot Seite 2).
 - **Hinweis:** Im Vergleich zum Referenzprojekt 35764 (Gescher) ist die Dachlast ohne Abdichtung/Dämmung aufgeteilt: 35764 hatte 0,45 kN/m² Dachlast, während 38882 „0,35 kN/m² Trapezblech+Dämmung+Abdichtung" ausweist — möglicherweise geringere Dämmdicke oder anderes System. PV-Last identisch mit 0,20 kN/m². Installation identisch mit 0,15 kN/m². Wind- und Schneezonen identisch (WZ2, SLZ2).
 
 ### Baustoff ✅
 - **Wert:** Stahlbeton-Fertigteile; Portlandzement CEM I nach DIN EN 206-1/DIN 1045-2; Druckfestigkeitsklasse gemäß statischer Erfordernis; Betonstahl B500(A); Spannstahl ST1660/1860 nach DIN 488; FT-Parallelgurtbinder L=24,00 m (Trägerhöhe ca. 1,10 m)
-- **Quelle:** [`Angebot 38882.1`](https://github.com/MariusWilsch/REKERS__poc/blob/main/data/2026-01-28_testdaten/38882/14578/_extracted/Angebot.pdf), Seite 3–5 (Abschnitte „Beton", „Bewehrung", Pos. 1.01)
+- **Quelle:** [`Angebot 38882.1`](https://drive.google.com/file/d/1-maVSqRu6X6iiPgvujR5DbaDPxOLgrV3/view), Seite 3–5 (Abschnitte „Beton", „Bewehrung", Pos. 1.01)
 - **Textstelle:**
   - Beton: „Die Ausführung der Betonarbeiten erfolgt nach DIN EN 206-1/DIN 1045-2 unter Verwendung von Portlandzement CEM I. Druckfestigkeitsklasse/Betongüte gemäß statischer Erfordernis."
   - Bewehrung: „Betonstahl B500(A), Spannstahl ST1660/1860 nach DIN 488."
@@ -105,7 +105,7 @@ Multiplikator: 3,0x (L0 vs. L0+L2+ZIP)
 
 ### Dachbegrünung ❌
 - **Wert:** Nicht vorhanden — explizit ausgeschlossen
-- **Quelle:** [`Angebot 38882.1`](https://github.com/MariusWilsch/REKERS__poc/blob/main/data/2026-01-28_testdaten/38882/14578/_extracted/Angebot.pdf), Seite 2 (Abschnitt Dachbelastung)
+- **Quelle:** [`Angebot 38882.1`](https://drive.google.com/file/d/1-maVSqRu6X6iiPgvujR5DbaDPxOLgrV3/view), Seite 2 (Abschnitt Dachbelastung)
 - **Hinweis:** „Dachbegrünung = 0,00 kN/m² (kommt nicht zur Ausführung)" — die Dachbegrünung wird im Angebot explizit als Lastposition aufgeführt, aber mit 0,00 kN/m² und dem Vermerk „kommt nicht zur Ausführung". Dies ist ein eindeutiger Ausschluss, kein fehlendes Datum. Der Dachaufbau (Folienabdichtung, PIR-Dämmung, Dampfsperre, Trapezblech) ist ein standardmäßiges Industrieflachdach ohne Vegetationsschicht. Der Grünflächenplan (pkb consulting, 13.01.2021) zeigt ausschließlich bodengebundene Bepflanzung (Bodendecker, Sträucher, Bäume, Wiesenflächen) — keine Dachbegrünung.
 
 ---

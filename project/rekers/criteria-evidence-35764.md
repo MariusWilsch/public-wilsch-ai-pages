@@ -61,26 +61,26 @@ Multiplikator: 4,1x (L0 vs. L0+L2+ZIP)
 
 ### Gebäudetyp ✅
 - **Wert:** Werkhalle (Hallengebäude) mit angebundenem 2-geschossigem Bürotrakt
-- **Quelle:** [`19-02_2019-04-24_E-1000_Grundriss, Schnitt, Ansichten.pdf`](https://github.com/MariusWilsch/REKERS__poc/blob/main/data/2026-01-28_testdaten/35764/10593/_extracted/19-02_2019-04-24_E-1000_Grundriss%2C%20Schnitt%2C%20Ansichten.pdf)
+- **Quelle:** [`19-02_2019-04-24_E-1000_Grundriss, Schnitt, Ansichten.pdf`](https://drive.google.com/file/d/1UheOsMbK74MyCW5U4YukeAGGGA83jWdU/view)
 - **Textstelle:** Konzeptstudie von bb architekten zeigt „Werkhalle ~1850 m²" mit angeschlossenen „Sozialräume, Sekretariat, Büros ~150 m²". Plankopf: „Neubau einer Werkhalle". Haupthalle mit Spannweite 30,00 m × 67,50 m, 50t-Kranbahn und Sektionaltore.
-- **Bestätigt durch:** [`19-02_BA-1000d_Grundrisse+Schnitt.pdf`](https://github.com/MariusWilsch/REKERS__poc/blob/main/data/2026-01-28_testdaten/35764/11239/wetransfer-69a6f9/Planunterlagen_extracted/19-02_BA-1000d_Grundrisse%2BSchnitt.pdf) (Bauantragsplanung M. 1:100) zeigt „Werkhalle A= 1984,66 m²" mit Räumen für Büro, Besprechung, Umkleide, Aufenthalt, Kompressor, HA/Technik. Abschnitt 1.1.2 des Angebots 28273.30 ist explizit als „Bürotrakt: 2-geschossig" betitelt.
+- **Bestätigt durch:** [`19-02_BA-1000d_Grundrisse+Schnitt.pdf`](https://drive.google.com/file/d/16FGeRO1U9p1ayjKIWL77jwedUogXCKMG/view) (Bauantragsplanung M. 1:100) zeigt „Werkhalle A= 1984,66 m²" mit Räumen für Büro, Besprechung, Umkleide, Aufenthalt, Kompressor, HA/Technik. Abschnitt 1.1.2 des Angebots 28273.30 ist explizit als „Bürotrakt: 2-geschossig" betitelt.
 - **Hinweis:** Gebäudetyp ist eindeutig eine industrielle Werkhalle (Hallengebäude) mit integriertem 2-geschossigem Bürotrakt. Das Angebot trennt die Preise in „Hallenkonstruktion" und „Bürotrakt: 2-geschossig".
 
 ### Höhe ✅
 - **Wert:** Firsthöhe +14,35 m (Bauantragsplanung); OK-Stütze ca. +13,35 m; Unterkante Binder ca. +12,35 m; Hakenhöhe 8,70 m; Bürotrakt +7,25 m
-- **Quelle:** [`19-02_BA-3000d_Ansichten.pdf`](https://github.com/MariusWilsch/REKERS__poc/blob/main/data/2026-01-28_testdaten/35764/11239/wetransfer-69a6f9/Planunterlagen_extracted/19-02_BA-3000d_Ansichten.pdf)
+- **Quelle:** [`19-02_BA-3000d_Ansichten.pdf`](https://drive.google.com/file/d/1V21LC2EeEWtVWsrTWPTFDdFlE2ziuf54/view)
 - **Textstelle:** Alle vier Ansichten (Westen, Norden, Osten, Süden) zeigen konsistente Höhenangaben: Geländeoberkante ±0,00, Hallenfirst bei +14,35, Bürobereich bei +7,25. Der Schnitt in BA-1000d bestätigt: „14,35" Gesamthöhe, „+12,34" Unterkante Binder, „+0,30" Sockelelement OK.
 - **Bestätigt durch:** Konzeptstudie E-1000 (Vorgängerversion) zeigt +14,30 m; Angebot 28273.30 Pos. 1.1.1.1.01 nennt „Unterkante Binder: ca. +12,35 m" und „OK-Stütze = ca. +13,35 m"; ABUS-Krandatenblatt zeigt HG = 12340 mm und HS = 10390 mm.
 - **Hinweis:** Die frühe Konzeptstudie (E-1000, April 2019) zeigt 14,30 m; die Bauantragsplanung (BA-1000d/BA-3000d, Feb 2020) präzisiert auf 14,35 m. Die Angebotswerte bestätigen OK-Stütze bei +13,35 m. Hakenhöhe 8,70 m aus der Schnittdarstellung der Konzeptstudie.
 
 ### Kran ✅
 - **Wert:** Ja. 2x ABUS ZLK 40t/10t (Zweiträger-Laufkran, Tandembetrieb, max. Gesamttraglast 50t je Kranbahn); plus 2x optionale 20t-Kranbahnen
-- **Quelle:** [`19-02_2020-03-02_Krandatenblätter.pdf`](https://github.com/MariusWilsch/REKERS__poc/blob/main/data/2026-01-28_testdaten/35764/11239/_extracted/19-02_2020-03-02_Krandatenbl%C3%A4tter.pdf) (ABUS Kransysteme GmbH)
+- **Quelle:** [`19-02_2020-03-02_Krandatenblätter.pdf`](https://drive.google.com/file/d/1SDlnk2C1sQrx0bDpCnxNHemMDhcV7Aqk/view) (ABUS Kransysteme GmbH)
 - **Textstelle:** 6-seitiges ABUS-Dokument, Auftrag 16949810, vom 02.03.2020: „Kran: ZLK 40 t / 10 t x 28250 mm", „Berechnungsgrundlage: DIN 15018, H2/B3", „Gesamtgewicht: 29960 kg", „Kranfahren: 10/40 m/min", „Betriebsort: Hallenbetrieb", Kranklassifizierung S2. Lageplan zeigt zwei Kranbahnen (Pos. 1 und Pos. 2) jeweils mit ZLK 40t/10t im Tandembetrieb (Master-Master). Hallenschnitt A-A: Spannweite 28250 mm, HG=12340, HS=10390.
 - **Bestätigt durch:**
-  - [`19-02_2019-11-29_Anlage 1_optional 20t Kräne.pdf`](https://github.com/MariusWilsch/REKERS__poc/blob/main/data/2026-01-28_testdaten/35764/11239/_extracted/19-02_2019-11-29_Anlage%201_optional%2020t%20%20Kr%C3%A4ne.pdf): Grundriss mit handschriftlichen roten Anmerkungen „optional 20t Kran" für zwei zusätzliche 20t-Kranbahnen, datiert 29.11.19.
-  - [`Angebot Nr. 28273.20.pdf`](https://github.com/MariusWilsch/REKERS__poc/blob/main/data/2026-01-28_testdaten/35764/11239/Angebot%20Nr.%2028273.20.pdf) (Kranzuschlag): „Kosten für den Einsatz der Spezialkrane", „max. 2 Kranbahnen mit einer max. gesamten Traglast von je 50 to (40 to + 10to)", „Zusätzlich sind die Lasten aus 2 optionalen Kranbahnen mit einer max. Traglast von je 20 to" — Kranzuschlag gesamt €95.715,80 netto.
-  - [`Angebot Nr. 28273.11.pdf`](https://github.com/MariusWilsch/REKERS__poc/blob/main/data/2026-01-28_testdaten/35764/11239/_extracted/Angebot%20Nr.%2028273.11.pdf) Vorbemerkungen: „wir gehen von max. 2 Kranbahnen mit einer max. gesamten Traglast von je 50 to (40 to + 10to) aus."
+  - [`19-02_2019-11-29_Anlage 1_optional 20t Kräne.pdf`](https://drive.google.com/file/d/1fzQKc5KHR4gOwvvONq1KvQziI1APBise/view): Grundriss mit handschriftlichen roten Anmerkungen „optional 20t Kran" für zwei zusätzliche 20t-Kranbahnen, datiert 29.11.19.
+  - [`Angebot Nr. 28273.20.pdf`](https://drive.google.com/file/d/1xOrxWOP3l7bGOPqn_c_VkiAhz_IhHJEB/view) (Kranzuschlag): „Kosten für den Einsatz der Spezialkrane", „max. 2 Kranbahnen mit einer max. gesamten Traglast von je 50 to (40 to + 10to)", „Zusätzlich sind die Lasten aus 2 optionalen Kranbahnen mit einer max. Traglast von je 20 to" — Kranzuschlag gesamt €95.715,80 netto.
+  - [`Angebot Nr. 28273.11.pdf`](https://drive.google.com/file/d/1tRHIiPoYpxH_R9JMNAGA_-afIW2AjA1U/view) Vorbemerkungen: „wir gehen von max. 2 Kranbahnen mit einer max. gesamten Traglast von je 50 to (40 to + 10to) aus."
 - **Hinweis:** Krandaten außergewöhnlich umfassend dokumentiert mit vollständigen ABUS-Spezifikationen inkl. Radlasten, Seitenlasten und dynamischen Beiwerten nach DIN EN 1991-3. Kranbahnstützen mit Erweiterungsoption in Achsen 4-10/B (Angebot 28273.11) bzw. 5-10/B (Angebot 28273.30).
 
 ### Dachlasten ✅
@@ -91,18 +91,18 @@ Multiplikator: 4,1x (L0 vs. L0+L2+ZIP)
   - Wind: Windlastzone WZ2 (WLZ2)
   - Schnee: Schneelastzone 2 (SLZ2)
   - Dachtrapezbleche als 3- bzw. 4-Feldträger, Durchlauffaktor = 1,10
-- **Quelle:** [`Angebot Nr. 28273.30.pdf`](https://github.com/MariusWilsch/REKERS__poc/blob/main/data/2026-01-28_testdaten/35764/11239/Angebot%20Nr.%2028273.30.pdf), Seite 4 (Pos. 1.1.1.1.01 Spannbeton-Satteldachbinder)
+- **Quelle:** [`Angebot Nr. 28273.30.pdf`](https://drive.google.com/file/d/1RLlrQUZskZeOg9uXbguj8IUN_chiQYzV/view), Seite 4 (Pos. 1.1.1.1.01 Spannbeton-Satteldachbinder)
 - **Textstelle:** Unter „Lasten:" listet das Angebot explizit: „Dachlast = 0,45 kN/m² (Trapezbl., Dä., Abkl.)", „Installation = 0,15 kN/m²", „PV = 0,20 kN/m²", „Wind: WLZ2", „Schnee: SLZ2"
 - **Bestätigt durch:**
   - Angebot 28273.30 Vorbemerkungen (Seite 1): „Wind- u. Schneelasten gemäß DIN EN 1991: Windlastzone WZ2, Schneelastzone 2"
-  - [`Angebot Nr. 28273.0.pdf`](https://github.com/MariusWilsch/REKERS__poc/blob/main/data/2026-01-28_testdaten/35764/10593/_extracted/Angebot%20Nr.%2028273.0.pdf) (Richtpreis-Angebot, Aug 2019), Pos. 1.01: identische Lastwerte (Dachlast 0,45; Installation 0,15; PV 0,20; WLZ2; SLZ2)
+  - [`Angebot Nr. 28273.0.pdf`](https://drive.google.com/file/d/1ilaXJHgAi8NRNmqmLSD2ioWL0OtaMxii/view) (Richtpreis-Angebot, Aug 2019), Pos. 1.01: identische Lastwerte (Dachlast 0,45; Installation 0,15; PV 0,20; WLZ2; SLZ2)
   - Angebot 28273.11 Vorbemerkungen: gleiche Wind-/Schneezonen bestätigt
   - Bauantragsplanung BA-1000d Schnittdarstellung: „Dachaufbau Werkhalle: Foliendachabdichtung, Dämmung, Dampfsperre kalt selbstklebend, Trapezblech"
 - **Hinweis:** Alle drei Angebotsversionen (28273.0, 28273.11, 28273.30) nennen identische Dachlastwerte. PV-Last 0,20 kN/m² explizit enthalten. Erdbebenzone: „Der Bauort befindet sich nicht in einer Erdbebenzone." Sohlbelastung Lagerflächen = 50,0 kN/m² (Boden, nicht Dach).
 
 ### Baustoff ✅
 - **Wert:** Spannbeton-Satteldachbinder (l=30,00 m); Stahlbeton-Fertigteile; Betonstahl B500(A); Spannstahl ST1660/1860 nach DIN 488; Beton nach DIN EN 206-1/DIN 1045-2 mit Portlandzement CEM I; Druckfestigkeitsklasse/Betongüte gemäß statischer Erfordernis
-- **Quelle:** [`Angebot Nr. 28273.30.pdf`](https://github.com/MariusWilsch/REKERS__poc/blob/main/data/2026-01-28_testdaten/35764/11239/Angebot%20Nr.%2028273.30.pdf), Vorbemerkungen Seite 2 (Abschnitte Beton, Bewehrung)
+- **Quelle:** [`Angebot Nr. 28273.30.pdf`](https://drive.google.com/file/d/1RLlrQUZskZeOg9uXbguj8IUN_chiQYzV/view), Vorbemerkungen Seite 2 (Abschnitte Beton, Bewehrung)
 - **Textstelle:**
   - Beton: „Die Ausführung der Betonarbeiten erfolgt nach DIN EN 206-1/ DIN 1045-2 unter Verwendung von Portlandzement CEM I. Druckfestigkeitsklasse/Betongüte gemäß statischer Erfordernis."
   - Bewehrung: „Betonstahl B500(A), Spannstahl ST1660/1860 nach DIN 488."

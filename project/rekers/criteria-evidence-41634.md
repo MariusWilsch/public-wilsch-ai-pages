@@ -61,21 +61,21 @@ Multiplikator: 7,9x (L0 vs. L0+L2+ZIP)
 
 ### Gebäudetyp ✅
 - **Wert:** Logistikhalle mit 66 Überladegruben, integriertem 2-geschossigem Büroeinbau und Hausanschlussräumen
-- **Quelle:** [`Angebot.pdf`](https://github.com/MariusWilsch/REKERS__poc/blob/main/data/2026-01-28_testdaten/41634/18080/_extracted/Angebot.pdf) (= Angebot Nr. 41634.0, Seite 5–10)
+- **Quelle:** [`Angebot.pdf`](https://drive.google.com/file/d/14D5hVNuUFZJtq_N08tEoNoqHobHfkQhw/view) (= Angebot Nr. 41634.0, Seite 5–10)
 - **Textstelle:** LV-Titel „1 Stb.-Fertigteile Hallenkonstruktion" (€4.255.136,80) umfasst Paralleldachbinder, Satteldachbinder, Abfangeträger, Randriegel, Stützen, Sandwichelemente, Grubenwände und Überladebrücken. LV-Titel „2 Stb.-Fertigteile Hausanschlussraum" enthält Massivdeckenplatten und Innenwandplatten. Pos. 1.32 „FT-Grubenwand" und Pos. 1.33 „FT-HM-Deckenplatte zwischen den Überladebrücken" belegen die Überladegruben-Infrastruktur. Pos. 1.22 „Zulage zur FT-Stütze im Bereich 2-gesch. Büroeinbau" bestätigt den zweigeschossigen Bürobereich.
-- **Bestätigt durch:** [`Rekers-Plan R1.pdf`](https://github.com/MariusWilsch/REKERS__poc/blob/main/data/2026-01-28_testdaten/41634/18080/_extracted/Rekers-Plan%20R1.pdf) (Grundriss EG, M 1:250) zeigt Hallenstruktur mit regelmäßigem Achsraster (Achsen A–O × 1–19), Überladegruben an den Längsseiten und Büroeinbau an Achse 1/E-F. [`Anschreiben 41634.0.pdf`](https://github.com/MariusWilsch/REKERS__poc/blob/main/data/2026-01-28_testdaten/41634/18080/_extracted/Anschreiben%2041634.0.pdf): „Herstellung, Lieferung und Montage von Stb.-Fertigteilen für das Bauvorhaben: VGP Park Leipzig Flughafen 2 – Halle C".
+- **Bestätigt durch:** [`Rekers-Plan R1.pdf`](https://drive.google.com/file/d/1WqoKxNEEjBQwpr7R_IlTB8NNo4hxa2vF/view) (Grundriss EG, M 1:250) zeigt Hallenstruktur mit regelmäßigem Achsraster (Achsen A–O × 1–19), Überladegruben an den Längsseiten und Büroeinbau an Achse 1/E-F. [`Anschreiben 41634.0.pdf`](https://drive.google.com/file/d/1HX9q-TJ-14ih5h5zv6PsIuDISylBVwpK/view): „Herstellung, Lieferung und Montage von Stb.-Fertigteilen für das Bauvorhaben: VGP Park Leipzig Flughafen 2 – Halle C".
 - **Hinweis:** Analoges Bauvorhaben zu „VGP Park Leipzig Flughafen 2 – Halle B" — Angebot 41634.0 Vorbemerkungen: „Die Ausführung der angebotenen FT-Konstruktion (Lastannahmen, Konstruktionshöhen, Detailpunkte etc.) erfolgt prinzipiell analog der bereits ausgeführten Halle B im VGP Park Leipzig Flughafen 2." Staplerklasse FL3 (6,9 to Gesamtgewicht) bestätigt Logistiknutzung. Hallensohle Nutzlast 70,0 kN/m², Verladebereich 35,0 kN/m².
 
 ### Höhe ✅
 - **Wert:** OK Attika +14,00 m; UK Abfangeträger ca. +11,63 m; UK Paralleldachbinder Tiefpunkt ca. +11,88 m; OK Paralleldachbinder Hochpunkt ca. +13,46 m; UK Satteldachbinder ca. +12,14 m; OK Satteldachbinder First ca. +13,34 m; OK Sohle +0,00 m (Geländehöhe 125,76 m ü. NHN)
-- **Quelle:** [`Angebot.pdf`](https://github.com/MariusWilsch/REKERS__poc/blob/main/data/2026-01-28_testdaten/41634/18080/_extracted/Angebot.pdf) (Angebot Nr. 41634.0, Seite 3 — Konstruktionshöhen)
+- **Quelle:** [`Angebot.pdf`](https://drive.google.com/file/d/14D5hVNuUFZJtq_N08tEoNoqHobHfkQhw/view) (Angebot Nr. 41634.0, Seite 3 — Konstruktionshöhen)
 - **Textstelle:** „Konstruktionshöhen: OK Attika: +14,00 m / UK Abfangeträger: ca. +11,63 m im Tiefpunkt / UK Paralleldachbinder im Tiefpunkt: ca. +11,88 m / OK Paralleldachbinder im Hochpunkt: ca. +13,46 m / UK Satteldachbinder: ca. +12,14 m / OK Satteldachbinder im First: ca. +13,34 m / OK Sohle: +0,00 m; OK Gelände = +0,00 m (Überladegrubenbereich = -1,20 m)"
 - **Bestätigt durch:** Angebot 41634.0 Pos. 1.13 (Stb.-FT-Innenstütze): „Länge ca. 14,43 m, bei OK-Stütze ca. +12,98 m im Tiefpunkt" bzw. „Länge ca. 14,91 m, bei OK-Stütze ca. +13,46 m im Hochpunkt". Bürodecken: „OK Rohbeton Decke über EG/1.OG Büroeinbau: +3,87 m / +7,86 m". UK Decke über HA-Raum: +3,05 m.
 - **Hinweis:** Stützenlängen von 14,43–14,91 m (OK Köcherfundament -0,30 m bis OK Stütze +12,98/+13,46 m) repräsentieren die gesamte Konstruktionshöhe. Die Geländehöhe 125,76 m ü. NHN ist im Zusammenhang mit der Schneelastzone 2 relevant.
 
 ### Kran ❌
 - **Wert:** Kein Kran. Gabelstaplerbetrieb der Staplerklasse FL3 (zulässiges Gesamtgewicht = 6,9 to).
-- **Quelle:** [`Angebot.pdf`](https://github.com/MariusWilsch/REKERS__poc/blob/main/data/2026-01-28_testdaten/41634/18080/_extracted/Angebot.pdf) (Angebot Nr. 41634.0, Seite 2)
+- **Quelle:** [`Angebot.pdf`](https://drive.google.com/file/d/14D5hVNuUFZJtq_N08tEoNoqHobHfkQhw/view) (Angebot Nr. 41634.0, Seite 2)
 - **Textstelle:** Unter „Anprallasten": „Aus einem Gabelstapler der Staplerklasse FL3 (zulässiges Gesamtgewicht = 6,9 to) — Auf alle eingespannten Fertigteilstützen". Keine Erwähnung von Laufkran, Kranbahn oder Kranlasten in Vorbemerkungen oder LV-Positionen.
 - **Hinweis:** Konsistent mit Logistikhallentyp — Überladegruben + Gabelstapler statt Kran. Alle 14 Tore (BS-Schiebetore, 4,00/4,50 m, Pos. 1.31) bestätigen LKW-/Gabelstaplerbetrieb. Keine Kranbahnstützen, keine Kranlasten in der Lastaufstellung.
 
@@ -88,14 +88,14 @@ Multiplikator: 7,9x (L0 vs. L0+L2+ZIP)
   - Wind: Windlastzone WZ 2, Binnenland (DIN EN 1991)
   - Schnee: Schneelastzone 2, Geländehöhe = 125,76 m ü. NHN
   - Dachtrapezbleche als 3- oder 4-Feldsystem, Durchlauffaktor = 1,10
-- **Quelle:** [`Angebot.pdf`](https://github.com/MariusWilsch/REKERS__poc/blob/main/data/2026-01-28_testdaten/41634/18080/_extracted/Angebot.pdf) (Angebot Nr. 41634.0, Seiten 1–2)
+- **Quelle:** [`Angebot.pdf`](https://drive.google.com/file/d/14D5hVNuUFZJtq_N08tEoNoqHobHfkQhw/view) (Angebot Nr. 41634.0, Seiten 1–2)
 - **Textstelle:** „Dachbelastung Hallendach: Photovoltaikanlage = 0,15 kN/m² (Aufbauhöhe h < 0,34 m) / Dachbegrünung = 0,00 kN/m² (kommt nicht zur Ausführung) / Trapezblech, 100 mm PIR-Dämmung, Abdichtung = 0,35 kN/m² / Installation = 0,20 kN/m². Wind- u. Schneelasten gemäß DIN EN 1991: Windlastzone WZ 2, Binnenland / Schneelastzone 2, Geländehöhe = 125,76 m ü. NHN (= Hallensohle +-0,00 m)."
 - **Bestätigt durch:** Angebot 41634.0 Pos. 1.01 (Spannbeton-Parallelgurtbinder) und Pos. 1.02 (Spannbeton-Satteldachbinder) mit Systemachslänge L = 24,00 m im Gefälle verlegt. Dachform: „Paralleldachbinder mit ca. 2,00 % Neigung verlegt, bzw. Satteldachbinder mit 3 % Obergurtneigung".
 - **Hinweis:** Erdbeben nach DIN 4149-2005 bzw. EC 8: „Das Gebäude befindet sich nicht im Erdbebengebiet, bzw. es ist kein Erdbebennachweis erforderlich." Hallensohle Nutzlast = 70,0 kN/m², Verladebereich Nutzlast = 35,0 kN/m², Traglast Überladebrücken = 60 kN.
 
 ### Baustoff ✅
 - **Wert:** Spannbeton-Parallelgurtbinder (l = 24,00 m, Trägerhöhe ca. 1,10 m) + Spannbeton-Satteldachbinder (l = 24,00 m, Firsthöhe ca. 1,20 m) + Spannbeton-Abfangeträger (l = 16,00 m, Trägerhöhe ca. 1,35 m); Stahlbeton-Fertigteile (Stützen, Wände, Decken, Sockel); Betonstahl B500; Spannstahl ST1660/1860 nach DIN 488; Beton nach DIN EN 206-1/DIN 1045-2 mit Portlandzement
-- **Quelle:** [`Angebot.pdf`](https://github.com/MariusWilsch/REKERS__poc/blob/main/data/2026-01-28_testdaten/41634/18080/_extracted/Angebot.pdf) (Angebot Nr. 41634.0, Seiten 3 und 5)
+- **Quelle:** [`Angebot.pdf`](https://drive.google.com/file/d/14D5hVNuUFZJtq_N08tEoNoqHobHfkQhw/view) (Angebot Nr. 41634.0, Seiten 3 und 5)
 - **Textstelle:**
   - Beton: „Die Ausführung der Betonarbeiten erfolgt nach DIN EN 206-1/DIN 1045-2 unter Verwendung von Portlandzement. Druckfestigkeitsklasse/Betongüte gemäß statischer Erfordernis."
   - Bewehrung: „Betonstahl B500, Spannstahl ST1660/1860 nach DIN 488."
@@ -107,7 +107,7 @@ Multiplikator: 7,9x (L0 vs. L0+L2+ZIP)
 
 ### Dachbegrünung ❌
 - **Wert:** Explizit ausgeschlossen — „Dachbegrünung = 0,00 kN/m² (kommt nicht zur Ausführung)"
-- **Quelle:** [`Angebot.pdf`](https://github.com/MariusWilsch/REKERS__poc/blob/main/data/2026-01-28_testdaten/41634/18080/_extracted/Angebot.pdf) (Angebot Nr. 41634.0, Seite 1)
+- **Quelle:** [`Angebot.pdf`](https://drive.google.com/file/d/14D5hVNuUFZJtq_N08tEoNoqHobHfkQhw/view) (Angebot Nr. 41634.0, Seite 1)
 - **Textstelle:** Unter „Dachbelastung Hallendach" explizit aufgeführt: „Dachbegrünung = 0,00 kN/m² (kommt nicht zur Ausführung)".
 - **Hinweis:** Der Dachaufbau ist standardmäßiges Industrieflachdach: Trapezblech + 100 mm PIR-Dämmung + Abdichtung (0,35 kN/m²). Trotz angestrebter DGNB-Zertifizierung (VHP Abschnitt 23; EML „GERLFH2-C_Rekers_DGNB_BFT.eml") wird keine Dachbegrünung realisiert. PV-Anlage (0,15 kN/m²) kommt stattdessen zur Ausführung.
 
