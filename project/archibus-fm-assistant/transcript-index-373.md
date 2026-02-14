@@ -5,7 +5,7 @@ publish: true
 # Project Index — #373 AI Bulk Data Entry
 [[client-archibus]]
 
-Consolidated index for [Issue #373: AI Bulk Data Entry — Background Data Import](https://github.com/DaveX2001/deliverable-tracking/issues/373). Design documents, data artifacts, and meeting transcripts.
+Consolidated index for [Issue #373: AI Bulk Data Entry — Background Data Import](https://github.com/DaveX2001/deliverable-tracking/issues/373). Design documents, meeting agendas, data artifacts, and meeting transcripts.
 
 ---
 
@@ -13,8 +13,24 @@ Consolidated index for [Issue #373: AI Bulk Data Entry — Background Data Impor
 
 | Document | Link |
 |----------|------|
-| Step 3 Design Doc | [Chain 1B: Step 3 Fill Level-by-Level](https://mariuswilsch.github.io/public-wilsch-ai-pages/project/archibus-fm-assistant/chain-1b-step3-design) |
-| Meeting Agenda: Field Alignment | [Rein Meeting Agenda — Step 3](https://mariuswilsch.github.io/public-wilsch-ai-pages/project/archibus-fm-assistant/rein-meeting-agenda-step3-field-alignment) |
+| Chain 1B: Step 3 Fill Level-by-Level | [Step 3 Design](https://mariuswilsch.github.io/public-wilsch-ai-pages/project/archibus-fm-assistant/chain-1b-step3-design) |
+| Chain 1B: Bulk Entry Design | [Bulk Entry Design](https://mariuswilsch.github.io/public-wilsch-ai-pages/project/archibus-fm-assistant/chain-1b-bulk-entry-design) |
+| Step 2: Schema Mapping Design | [Schema Mapping](https://mariuswilsch.github.io/public-wilsch-ai-pages/project/archibus-fm-assistant/step-2-schema-mapping-design) |
+| Step 3: Field Tier Mapping | [Field Tiers](https://mariuswilsch.github.io/public-wilsch-ai-pages/project/archibus-fm-assistant/step3-field-tier-mapping) |
+
+---
+
+## Meeting Agendas
+
+| Agenda | Stakeholder | Link |
+|--------|-------------|------|
+| Step 3: Field Alignment | Rein | [Agenda](https://mariuswilsch.github.io/public-wilsch-ai-pages/project/archibus-fm-assistant/rein-meeting-agenda-step3-field-alignment) |
+| Step 3: Insertion API | Rein | [Agenda](https://mariuswilsch.github.io/public-wilsch-ai-pages/project/archibus-fm-assistant/rein-meeting-agenda-step3-insertion-api) |
+| Background Data | Rein | [Agenda](https://mariuswilsch.github.io/public-wilsch-ai-pages/project/archibus-fm-assistant/rein-meeting-agenda-background-data) |
+| Step 2: Schema Mapping | Rein | [Agenda](https://mariuswilsch.github.io/public-wilsch-ai-pages/project/archibus-fm-assistant/rein-meeting-agenda-step2-schema-mapping) |
+| Hierarchy Understanding | Miguel/Ian | [Agenda](https://mariuswilsch.github.io/public-wilsch-ai-pages/project/archibus-fm-assistant/miguel-ian-meeting-agenda-hierarchy-understanding) |
+| Bulk Entry Spike | Team | [Agenda](https://mariuswilsch.github.io/public-wilsch-ai-pages/project/archibus-fm-assistant/bulk-entry-spike-agenda) |
+| AI Work Track Prioritization | All-Hands | [Agenda](https://mariuswilsch.github.io/public-wilsch-ai-pages/project/archibus-fm-assistant/all-hands-ai-work-track-prioritization) |
 
 ---
 
