@@ -7,12 +7,12 @@ publish: true
 
 ## Meetingziel
 
-Zuerst das Design Doc gemeinsam durchgehen — sieht Michael etwas, das ihm nicht gefällt oder fehlt? Danach die offenen Punkte klären, damit wir mit der Umsetzung starten können.
+Zuerst das Design Doc gemeinsam durchgehen — gibt es etwas, das nicht gefällt oder fehlt? Danach die offenen Punkte klären, damit wir mit der Umsetzung starten können.
 
 1. **Design Doc Review** — gemeinsam durchgehen, Feedback und Korrekturen
 2. **Vereinsstatus + Zahlungs-Voraussetzungen** — offene Punkte klären (Punkte 1-5)
 3. **Projektumfang abstimmen** — Phasen, Aufwand und Meilensteine (Punkt 6)
-4. **Offene Zulieferungen + Ideen** — was Michael liefert und was er sich zusätzlich vorstellt (Punkte 7-8)
+4. **Offene Zulieferungen + Ideen** — was Sie liefern und was Sie sich zusätzlich vorstellen (Punkte 7-8)
 
 ## Vorab-Lektüre
 
@@ -50,11 +50,11 @@ Zuerst das Design Doc gemeinsam durchgehen — sieht Michael etwas, das ihm nich
 - Stripe Checkout erfasst nur E-Mail + Zahlungsdaten
 - Spendenbescheinigung (≥€100) erfordert vollständigen Namen + Adresse
 - Optionen: Felder vor Zahlung abfragen ODER per E-Mail nachfassen
-- **Benötigt:** Michaels Präferenz für den Checkout-Flow
+- **Benötigt:** Ihre Präferenz für den Checkout-Flow
 
-### 5. Stripe-Onboarding: Dokumente und Daten von Michael
+### 5. Stripe-Onboarding: Dokumente und Daten
 
-Für die Zahlungsaktivierung braucht Stripe folgende Unterlagen. Auch wenn nicht alles sofort verfügbar ist — Michael sollte wissen, was zu sammeln ist.
+Für die Zahlungsaktivierung braucht Stripe folgende Unterlagen. Auch wenn nicht alles sofort verfügbar ist — hier eine Übersicht, was zu sammeln ist.
 
 | Dokument / Information | Status |
 |------------------------|--------|
@@ -82,7 +82,7 @@ Für die Zahlungsaktivierung braucht Stripe folgende Unterlagen. Auch wenn nicht
 
 _Gebühren sind Richtwerte basierend auf aktueller Stripe-Preisliste._
 
-- **Benötigt:** Michael prüft, welche Punkte er jetzt schon vorbereiten kann, und liest die Stripe-Konditionen
+- **Benötigt:** Prüfen Sie, welche Punkte Sie jetzt schon vorbereiten können, und lesen Sie die Stripe-Konditionen
 
 ### 6. Projektumfang in fünf Phasen mit Meilenstein-Preisen
 
@@ -97,22 +97,22 @@ Die Website ist in fünf aufeinander aufbauende Phasen gegliedert. Jede Phase li
 | 5 | CMS — eigenständige Inhaltspflege | ~4-6 | ~€2.280-3.600 |
 
 - Phase 3 ist abhängig vom Vereinsregistereintrag (aktuell blockiert)
-- Phase 4 setzt voraus, dass Michael die Zertifizierungskriterien liefert
+- Phase 4 setzt voraus, dass Sie die Zertifizierungskriterien liefern
 - Phase 5 ist optional — ohne CMS werden Inhaltsänderungen vom Entwickler umgesetzt
 - Richtpreisangebot innerhalb des bestehenden Rahmenvertrags
 
-### 7. Zusätzliche Ideen von Michael
+### 7. Ihre zusätzlichen Ideen
 
-Michael hat zwei Erweiterungen vorgeschlagen, die nicht im aktuellen Umfang enthalten sind:
+Sie haben zwei Erweiterungen vorgeschlagen, die nicht im aktuellen Umfang enthalten sind:
 
 - **Interaktive Bedarfsanalyse-Seite** — Gemeinden prüfen vorhandene Infrastruktur (Hitzeschutz, Digitalisierung, Sensorik) über einen Fragebogen, der in den Mitgliedschafts-Flow mündet
 - **Spielerisches Engagement-Element ("Moorhuhn")** — Gamification-Ansatz auf der Website
 
-Beide Ideen brauchen eine Beschreibung dessen, was Michael sich konkret vorstellt, bevor eine Aufwandsschätzung möglich ist.
+Beide Ideen brauchen eine Beschreibung dessen, was Sie sich konkret vorstellen, bevor eine Aufwandsschätzung möglich ist.
 
-### 8. Offene Zulieferungen von Michael
+### 8. Offene Zulieferungen von Ihnen
 
-Folgende Punkte werden von Michael benötigt, um mit der Umsetzung beginnen zu können:
+Folgende Punkte werden von Ihnen benötigt, um mit der Umsetzung beginnen zu können:
 
 | Zulieferung | Wofür | Blockiert Phase |
 |-------------|-------|-----------------|
@@ -124,12 +124,12 @@ Folgende Punkte werden von Michael benötigt, um mit der Umsetzung beginnen zu k
 | GenSpark Prototyp-Link per E-Mail senden | Design-Referenz | Phase 1 |
 
 - Keine dieser Zulieferungen blockiert den Projektstart — Platzhalter werden eingesetzt
-- **Benötigt:** Michael bestätigt, was er bis wann liefern kann
+- **Benötigt:** Bestätigen Sie, was Sie bis wann liefern können
 
 ## Meetingformat
 
 - **Typ:** Review (45-60 Min)
-- **Vorbereitung:** Michael prüft Punkte 2-3 vorab mit Steuerberater falls möglich
+- **Vorbereitung:** Punkte 2-3 vorab mit Steuerberater prüfen falls möglich
 - **Ergebnis:** Aktualisiertes Design Doc (Zahlungspunkte Defined) + abgestimmter Projektumfang für Umsetzungsstart
 
 ## Verknüpfungen
