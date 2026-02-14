@@ -40,8 +40,8 @@ Consolidated index for [Issue #373: AI Bulk Data Entry — Background Data Impor
 
 | File | Description | Link |
 |------|-------------|------|
-| AssetImportDescription.xlsx | Full schema: 36 import fields, data types, AI/Bruce assignment, examples | [Google Drive](https://docs.google.com/spreadsheets/d/10h8P4dMlLDpkHikUK6enDFeYtRoCwMVm/edit) |
-| asset_types.xlsx | AssetType enum: 46 predefined types across 4 categories | [Google Drive](https://docs.google.com/spreadsheets/d/1Wc1BL18e5Vaxx7bAzsvxAeWojfvxRrWd/edit) |
+| AssetImportDescription | Full schema: 36 import fields, data types, AI/Bruce/Skip tiers, comments, examples | [Google Sheets](https://docs.google.com/spreadsheets/d/12xs98WKdpTLHz8U6mccOXo5clFwCqvOviuEch_VNMTw/edit) |
+| asset_types.xlsx | AssetType enum: 4 categories (23 facility types updated Feb 14, 9 employee, 6 IT, 9 location). Default = Equipment. | [Google Drive](https://docs.google.com/spreadsheets/d/1Wc1BL18e5Vaxx7bAzsvxAeWojfvxRrWd/edit) |
 | Processed_Excel_Table.xlsx | Sample data after Step 2 column mapping (equipment + generated location assets) | [Google Drive](https://docs.google.com/spreadsheets/d/13Q_P-zbFjbN7VIi4YUWi6bPYDuTxeziK/edit) |
 | cafm-asset-upload-sample.xlsx | Raw client input before transformation (201 rows) | [Google Drive](https://docs.google.com/spreadsheets/d/1CUaybsk8ZnvvKr3C37xn-md96hRLBKT4/edit) |
 | background-data-tables.xlsx | Bruce BEM background data reference tables | [Google Drive](https://docs.google.com/spreadsheets/d/1rNv4fDUMS7ve8ftbiZUiKbGebLesM54m/edit) |
@@ -51,7 +51,7 @@ Consolidated index for [Issue #373: AI Bulk Data Entry — Background Data Impor
 
 | File | Description | Link |
 |------|-------------|------|
-| asset-status-enum.csv | AssetStatus enum (25 predefined statuses) | [GitHub](https://github.com/MariusWilsch/ARCHIBUS__archibus-poc/blob/staging/.claude/tracking/issue-373/asset-status-enum.csv) |
+| asset-status-enum.csv | AssetStatus enum (26 predefined statuses) | [GitHub](https://github.com/MariusWilsch/ARCHIBUS__archibus-poc/blob/staging/.claude/tracking/issue-373/asset-status-enum.csv) |
 | asset-import-schema.csv | Import schema field reference | [GitHub](https://github.com/MariusWilsch/ARCHIBUS__archibus-poc/blob/staging/.claude/tracking/issue-373/asset-import-schema.csv) |
 | Hierarchical Body.json | Rein's example nesting structure | [GitHub](https://github.com/MariusWilsch/ARCHIBUS__archibus-poc/blob/staging/.claude/tracking/issue-373/Hierarchical%20Body.json) |
 
