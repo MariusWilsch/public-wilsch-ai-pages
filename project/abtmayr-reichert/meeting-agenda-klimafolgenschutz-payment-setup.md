@@ -7,14 +7,16 @@ publish: true
 
 ## Meetingziel
 
-Die offenen Vereins-Voraussetzungen für die Zahlungsintegration klären und zwei offene Design-Entscheidungen abstimmen. Nach diesem Meeting sollte der gesamte Zahlungsbereich im Design Doc von Undefined auf Defined stehen.
+Die offenen Vereins-Voraussetzungen für die Zahlungsintegration klären, den Projektumfang als Meilenstein-Übersicht besprechen und zwei zusätzliche Ideen von Michael einordnen.
 
 1. **Vereinsstatus klären** — aktueller Stand von Vereinsregister, Gemeinnützigkeit und Bankkonto
 2. **Zahlungs-Designentscheidungen** — Spendenquittungs-Logistik
+3. **Projektumfang abstimmen** — Phasen, Aufwand und Meilensteine für die Umsetzung
 
 ## Vorab-Lektüre
 
 - [Design Doc: Klimafolgenschutz Website](https://mariuswilsch.github.io/public-wilsch-ai-pages/project/abtmayr-reichert/design-doc-klimafolgenschutz-website) — insbesondere Teil 3 (Zahlung), aktualisiert am 12. Feb 2026
+- [Aufwandsschätzung: Klimafolgenschutz Website](https://mariuswilsch.github.io/public-wilsch-ai-pages/project/abtmayr-reichert/scoping-estimate-klimafolgenschutz-website) — Richtpreisangebot mit Phasen-Meilensteinen
 
 ---
 
@@ -49,11 +51,37 @@ Die offenen Vereins-Voraussetzungen für die Zahlungsintegration klären und zwe
 - Optionen: Felder vor Zahlung abfragen ODER per E-Mail nachfassen
 - **Benötigt:** Michaels Präferenz für den Checkout-Flow
 
+### 5. Projektumfang in fünf Phasen mit Meilenstein-Preisen
+
+Die Website ist in fünf aufeinander aufbauende Phasen gegliedert. Jede Phase liefert ein eigenständiges Ergebnis. Abrechnung erfolgt nach tatsächlichem Aufwand (T&M, €120/Std.).
+
+| Phase | Lieferergebnis | ~Stunden | Kumuliert (€120/Std.) |
+|-------|---------------|----------|----------------------|
+| 1 | Technische Basis + Design | ~3-5 | ~€360-600 |
+| 2 | Inhaltsseiten + Mitgliedschaftsformulare | ~6-10 | ~€1.080-1.800 |
+| 3 | Zahlungsintegration (Stripe) | ~4-6 | ~€1.560-2.520 |
+| 4 | Zertifizierung | ~2-3 | ~€1.800-2.880 |
+| 5 | CMS — eigenständige Inhaltspflege | ~4-6 | ~€2.280-3.600 |
+
+- Phase 3 ist abhängig vom Vereinsregistereintrag (aktuell blockiert)
+- Phase 4 setzt voraus, dass Michael die Zertifizierungskriterien liefert
+- Phase 5 ist optional — ohne CMS werden Inhaltsänderungen vom Entwickler umgesetzt
+- Richtpreisangebot innerhalb des bestehenden Rahmenvertrags
+
+### 6. Zusätzliche Ideen von Michael
+
+Michael hat zwei Erweiterungen vorgeschlagen, die nicht im aktuellen Umfang enthalten sind:
+
+- **Interaktive Bedarfsanalyse-Seite** — Gemeinden prüfen vorhandene Infrastruktur (Hitzeschutz, Digitalisierung, Sensorik) über einen Fragebogen, der in den Mitgliedschafts-Flow mündet
+- **Spielerisches Engagement-Element ("Moorhuhn")** — Gamification-Ansatz auf der Website
+
+Beide Ideen brauchen eine Beschreibung dessen, was Michael sich konkret vorstellt, bevor eine Aufwandsschätzung möglich ist.
+
 ## Meetingformat
 
-- **Typ:** Review (30 Min)
+- **Typ:** Review (45-60 Min)
 - **Vorbereitung:** Michael prüft Punkte 2-3 vorab mit Steuerberater falls möglich
-- **Ergebnis:** Aktualisiertes Design Doc — alle Zahlungspunkte Defined
+- **Ergebnis:** Aktualisiertes Design Doc (Zahlungspunkte Defined) + abgestimmter Projektumfang für Umsetzungsstart
 
 ## Verknüpfungen
 
