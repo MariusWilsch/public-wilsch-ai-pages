@@ -49,7 +49,10 @@ Zwei getrennte Vorgänge bestimmen, was die Website beim Launch anbieten kann:
 - Bei Spenden ab €100 erfasst der Checkout automatisch Name + Adresse — das ist gesetzlich vorgeschrieben für die Spendenbescheinigung
 
 **Referenzen:**
-- [Preise](https://stripe.com/de/pricing) · [SEPA-Lastschrift in Deutschland](https://stripe.com/resources/more/direct-debit-germany) · [Stripe für Vereine](https://stripe.com/resources/more/membership-fees-associations-germany) · [Rabatt für gemeinnützige Organisationen](https://support.stripe.com/questions/fee-discount-for-nonprofit-organizations)
+- [Preise](https://stripe.com/de/pricing)
+- [SEPA-Lastschrift in Deutschland](https://stripe.com/resources/more/direct-debit-germany)
+- [Stripe für Vereine](https://stripe.com/resources/more/membership-fees-associations-germany)
+- [Rabatt für gemeinnützige Organisationen](https://support.stripe.com/questions/fee-discount-for-nonprofit-organizations)
 
 - **→ Bitte Stripe-Konto einrichten und uns die API-Zugangsdaten bereitstellen**
 
