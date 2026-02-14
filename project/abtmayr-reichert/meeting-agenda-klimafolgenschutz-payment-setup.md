@@ -51,7 +51,39 @@ Die offenen Vereins-Voraussetzungen für die Zahlungsintegration klären, den Pr
 - Optionen: Felder vor Zahlung abfragen ODER per E-Mail nachfassen
 - **Benötigt:** Michaels Präferenz für den Checkout-Flow
 
-### 5. Projektumfang in fünf Phasen mit Meilenstein-Preisen
+### 5. Stripe-Onboarding: Dokumente und Daten von Michael
+
+Für die Zahlungsaktivierung braucht Stripe folgende Unterlagen. Auch wenn nicht alles sofort verfügbar ist — Michael sollte wissen, was zu sammeln ist.
+
+| Dokument / Information | Status |
+|------------------------|--------|
+| Vereinsregister-Auszug (< 3 Monate alt) | ⏳ Blockiert — Eintrag ausstehend |
+| Vereinssatzung | ✅ Vorhanden |
+| Steuernummer | ❓ Bestätigung ausstehend |
+| Kleinunternehmer-Status (§19 UStG) | ❓ Steuerberater klären (→ Punkt 3) |
+| IBAN (Vereinskonto) | ⏳ Blockiert — erst nach Vereinsregister |
+| Ausweis Vorstandsmitglied | ✅ Verfügbar |
+| Gläubiger-ID (für SEPA-Lastschrift) | ⏳ Blockiert — erst nach Bankkonto |
+
+**Stripe-Konditionen (Überblick):**
+- Keine monatliche Grundgebühr — Zahlung nur bei Nutzung
+- Auszahlung auf Vereinskonto: 3-5 Werktage
+- Chargeback-Gebühr: €15 pro Fall
+- Jederzeit kündbar, keine Vertragsbindung
+- DSGVO-konform (Stripe EU/Irland)
+- Vollständige Bedingungen: [Stripe Services Agreement](https://stripe.com/de/legal/ssa) · [Preise](https://stripe.com/de/pricing) · [SEPA-Lastschrift](https://stripe.com/de/legal/sepa-direct-debit)
+
+| Zahlungsart | Anwendungsfall | Beispielgebühr |
+|-------------|---------------|----------------|
+| SEPA-Lastschrift | Einzelmitgliedschaft (wiederkehrend) | ~0,8% + €0,25 (max €6) |
+| Stripe Invoicing | Gemeinde-Beiträge (per Überweisung) | ~0,4% pro Rechnung |
+| Karte (Visa/MC) | Einmalspenden | ~1,5% + €0,25 |
+
+_Gebühren sind Richtwerte basierend auf aktueller Stripe-Preisliste._
+
+- **Benötigt:** Michael prüft, welche Punkte er jetzt schon vorbereiten kann, und liest die Stripe-Konditionen
+
+### 6. Projektumfang in fünf Phasen mit Meilenstein-Preisen
 
 Die Website ist in fünf aufeinander aufbauende Phasen gegliedert. Jede Phase liefert ein eigenständiges Ergebnis. Abrechnung erfolgt nach tatsächlichem Aufwand (T&M, €120/Std.).
 
@@ -68,7 +100,7 @@ Die Website ist in fünf aufeinander aufbauende Phasen gegliedert. Jede Phase li
 - Phase 5 ist optional — ohne CMS werden Inhaltsänderungen vom Entwickler umgesetzt
 - Richtpreisangebot innerhalb des bestehenden Rahmenvertrags
 
-### 6. Zusätzliche Ideen von Michael
+### 7. Zusätzliche Ideen von Michael
 
 Michael hat zwei Erweiterungen vorgeschlagen, die nicht im aktuellen Umfang enthalten sind:
 
