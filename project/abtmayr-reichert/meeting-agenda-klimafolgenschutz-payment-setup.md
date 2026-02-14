@@ -7,11 +7,12 @@ publish: true
 
 ## Meetingziel
 
-Die offenen Vereins-Voraussetzungen für die Zahlungsintegration klären, den Projektumfang als Meilenstein-Übersicht besprechen und zwei zusätzliche Ideen von Michael einordnen.
+Zuerst das Design Doc gemeinsam durchgehen — sieht Michael etwas, das ihm nicht gefällt oder fehlt? Danach die offenen Punkte klären, damit wir mit der Umsetzung starten können.
 
-1. **Vereinsstatus klären** — aktueller Stand von Vereinsregister, Gemeinnützigkeit und Bankkonto
-2. **Zahlungs-Designentscheidungen** — Spendenquittungs-Logistik
-3. **Projektumfang abstimmen** — Phasen, Aufwand und Meilensteine für die Umsetzung
+1. **Design Doc Review** — gemeinsam durchgehen, Feedback und Korrekturen
+2. **Vereinsstatus + Zahlungs-Voraussetzungen** — offene Punkte klären (Punkte 1-5)
+3. **Projektumfang abstimmen** — Phasen, Aufwand und Meilensteine (Punkt 6)
+4. **Offene Zulieferungen + Ideen** — was Michael liefert und was er sich zusätzlich vorstellt (Punkte 7-8)
 
 ## Vorab-Lektüre
 
