@@ -109,6 +109,22 @@ Michael hat zwei Erweiterungen vorgeschlagen, die nicht im aktuellen Umfang enth
 
 Beide Ideen brauchen eine Beschreibung dessen, was Michael sich konkret vorstellt, bevor eine Aufwandsschätzung möglich ist.
 
+### 8. Offene Zulieferungen von Michael
+
+Folgende Punkte werden von Michael benötigt, um mit der Umsetzung beginnen zu können:
+
+| Zulieferung | Wofür | Blockiert Phase |
+|-------------|-------|-----------------|
+| Ionos DNS-Zugangsdaten | Domain klimafolgenschutz.com auf Server zeigen | Phase 1 |
+| Logo-Dateien | Branding, Header, Favicon | Phase 1 |
+| Impressum über [e-Recht24](https://www.e-recht24.de/) ausfüllen | Impressum + Datenschutzerklärung | Phase 2 |
+| Gemeinde-Preisstufen bestätigen (Staffelung nach Einwohnerzahl) | Mitgliedschaftsformular + Preisanzeige | Phase 2 |
+| Zertifizierungskriterien für "klimaresiliente Gemeinde" | Zertifizierungs-Sektion | Phase 4 |
+| GenSpark Prototyp-Link per E-Mail senden | Design-Referenz | Phase 1 |
+
+- Keine dieser Zulieferungen blockiert den Projektstart — Platzhalter werden eingesetzt
+- **Benötigt:** Michael bestätigt, was er bis wann liefern kann
+
 ## Meetingformat
 
 - **Typ:** Review (45-60 Min)
