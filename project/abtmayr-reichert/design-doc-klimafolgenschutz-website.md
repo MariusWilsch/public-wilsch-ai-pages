@@ -28,17 +28,17 @@ Michael Reichert's Klimafolgenschutz association needs a web presence to acquire
 
 ---
 
-## Erfolgsdefinition
+## Success Definition
 
-**Ziel:** Eine live Website unter klimafolgenschutz.com, über die Gemeinden und Einzelpersonen die Projekte des Vereins verstehen, Mitgliedschaft beantragen und bezahlen können — damit Michael den Verein digital betreiben kann.
+**Goal:** A live website at klimafolgenschutz.com where municipalities and individuals can understand the association's projects, apply for membership, and pay — enabling Michael to operate the association digitally.
 
-**Erfolg:**
-- **Gemeinde-Flow:** Michael schickt einen Link → Gemeinde versteht eigenständig die 5 Projekte, stellt online einen Mitgliedschaftsantrag und zahlt per SEPA/Überweisung
-- **Einzelperson-Flow:** Besucher kommt auf die Seite → versteht die Mission, wird Mitglied (€60/Jahr), zahlt per SEPA/Karte
-- **Spenden-Flow:** Besucher spendet einmalig per Karte
-- Michael kann alle Inhalte über das CMS selbst bearbeiten, ohne Entwickler
+**Success:**
+- **Municipality flow:** Michael sends a link → municipality independently understands the 5 projects, applies via online form, pays via SEPA/invoice
+- **Individual flow:** person visits site → understands mission, applies as member (€60/year), pays via SEPA/card
+- **Donor flow:** visitor makes one-off donation via card
+- Michael can edit all content via CMS without developer assistance
 
-**Done-Test:** Eine Test-Gemeinde und eine Test-Einzelperson durchlaufen den Mitgliedschafts-Flow vollständig, ohne Michael um Hilfe zu bitten.
+**Done test:** A test municipality and a test individual complete the membership flow end-to-end without asking Michael for help.
 
 ---
 
