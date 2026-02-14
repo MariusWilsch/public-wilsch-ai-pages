@@ -79,7 +79,7 @@ Result: ~80% SEO benefit with ~20% of full-framework effort. ([Decision rational
 
 Michael wants all payment options open — maximize accessibility for members and donors.
 
-**[Stripe](https://stripe.com/resources/more/membership-fees-associations-germany)** as sole payment processor. PayPal can be added later on request.
+**[Stripe](https://stripe.com/resources/more/membership-fees-associations-germany)** as sole payment processor.
 
 | Method | Use Case | Example Fee (subject to change) |
 |--------|----------|---------------------------------|
