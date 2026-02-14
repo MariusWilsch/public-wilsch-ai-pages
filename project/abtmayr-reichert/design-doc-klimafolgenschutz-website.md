@@ -99,6 +99,8 @@ Michael wants all payment options open — maximize accessibility for members an
 
 No membership required for donations. No separate donor form — anyone can donate without joining. Floating donate button is always accessible without competing with membership CTAs.
 
+For donations ≥€100, Stripe Checkout collects name + billing address automatically (`billing_address_collection: 'required'`). This is legally required for the Verein to issue a Spendenbescheinigung (Zuwendungsbestätigung).
+
 #### Stripe Onboarding Requirements (German Verein)
 
 | Requirement | Source | Status |

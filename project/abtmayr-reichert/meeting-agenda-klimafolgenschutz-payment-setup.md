@@ -90,7 +90,6 @@ Folgende Punkte werden von Ihnen benötigt, um mit der Umsetzung beginnen zu kö
 | Impressum über [e-Recht24](https://www.e-recht24.de/) ausfüllen | Impressum + Datenschutzerklärung | Phase 2 |
 | Gemeinde-Preisstufen bestätigen (Staffelung nach Einwohnerzahl) | Mitgliedschaftsformular + Preisanzeige | Phase 2 |
 | Zertifizierungskriterien für "klimaresiliente Gemeinde" | Zertifizierungs-Sektion | Phase 4 |
-| GenSpark Prototyp-Link per E-Mail senden | Design-Referenz | Phase 1 |
 
 - Keine dieser Zulieferungen blockiert den Projektstart — Platzhalter werden eingesetzt
 - **Benötigt:** Bestätigen Sie, was Sie bis wann liefern können
