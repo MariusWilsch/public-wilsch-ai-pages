@@ -10,9 +10,9 @@ publish: true
 Zuerst das Design Doc gemeinsam durchgehen — gibt es etwas, das nicht gefällt oder fehlt? Danach die offenen Punkte klären, damit wir mit der Umsetzung starten können.
 
 1. **Design Doc Review** — gemeinsam durchgehen, Feedback und Korrekturen
-2. **Vereinsstatus + Zahlungs-Voraussetzungen** — offene Punkte klären (Punkte 1-4)
-3. **Projektumfang abstimmen** — Phasen, Aufwand und Meilensteine (Punkt 5)
-4. **Offene Zulieferungen + Ideen** — was Sie liefern und was Sie sich zusätzlich vorstellen (Punkte 6-7)
+2. **Vereinsstatus + Stripe** — offene Punkte klären (Punkte 1-2)
+3. **Projektumfang abstimmen** — Phasen, Aufwand und Meilensteine (Punkt 3)
+4. **Zulieferungen + Ideen** — was Sie liefern und was Sie sich zusätzlich vorstellen (Punkte 4-5)
 
 ## Vorab-Lektüre
 
@@ -41,53 +41,19 @@ Zwei getrennte Vorgänge bestimmen, was die Website beim Launch anbieten kann:
 - Ohne: Spenden möglich, aber ohne Steuer-Hinweis
 - **→ Liegt ein Freistellungsbescheid vor?**
 
-### 2. Stripe-Konto einrichten
+### 2. Stripe-Konto einrichten und Zugangsdaten bereitstellen
 
-- Sie richten ein Stripe-Konto für den Verein ein — Stripe führt durch die Einrichtung (inkl. Kleinunternehmer-Frage, Bankdaten, etc.)
+- Stripe-Konto registrieren: [Stripe Registrierung](https://dashboard.stripe.com/register)
+- Stripe führt durch die Einrichtung — welche Dokumente benötigt werden, steht hier: [Verifikation für Vereine](https://support.stripe.com/questions/documents-for-business-verification-of-unincorporated-entities-partnerships-or-non-profits)
 - Wir integrieren Ihr Stripe-Konto in die Website
+- Bei Spenden ab €100 erfasst der Checkout automatisch Name + Adresse — das ist gesetzlich vorgeschrieben für die Spendenbescheinigung
+
+**Referenzen:**
+- [Preise](https://stripe.com/de/pricing) · [SEPA-Lastschrift in Deutschland](https://stripe.com/resources/more/direct-debit-germany) · [Stripe für Vereine](https://stripe.com/resources/more/membership-fees-associations-germany) · [Rabatt für gemeinnützige Organisationen](https://support.stripe.com/questions/fee-discount-for-nonprofit-organizations)
+
 - **→ Bitte Stripe-Konto einrichten und uns die API-Zugangsdaten bereitstellen**
 
-### 3. Spendenbescheinigung — Daten vor oder nach der Zahlung?
-
-- Stripe Checkout erfasst nur E-Mail + Zahlungsdaten
-- Für eine Spendenbescheinigung (≥€100) brauchen wir vollständigen Namen + Adresse
-- Option A: Felder direkt vor der Zahlung abfragen
-- Option B: Per E-Mail nachfassen
-- **→ Welche Variante bevorzugen Sie?**
-
-### 4. Stripe-Onboarding: Dokumente und Daten
-
-Für die Zahlungsaktivierung braucht Stripe folgende Unterlagen. Auch wenn nicht alles sofort verfügbar ist — hier eine Übersicht, was zu sammeln ist.
-
-| Dokument / Information | Status |
-|------------------------|--------|
-| Vereinsregister-Auszug (< 3 Monate alt) | ⏳ Blockiert — Eintrag ausstehend |
-| Vereinssatzung | ✅ Vorhanden |
-| Steuernummer | ❓ Bestätigung ausstehend |
-| Kleinunternehmer-Status (§19 UStG) | ❓ Steuerberater klären (→ Punkt 3) |
-| IBAN (Vereinskonto) | ⏳ Blockiert — erst nach Vereinsregister |
-| Ausweis Vorstandsmitglied | ✅ Verfügbar |
-| Gläubiger-ID (für SEPA-Lastschrift) | ⏳ Blockiert — erst nach Bankkonto |
-
-**Stripe-Konditionen (Überblick):**
-- Keine monatliche Grundgebühr — Zahlung nur bei Nutzung
-- Auszahlung auf Vereinskonto: 3-5 Werktage
-- Chargeback-Gebühr: €15 pro Fall
-- Jederzeit kündbar, keine Vertragsbindung
-- DSGVO-konform (Stripe EU/Irland)
-- Vollständige Bedingungen: [Stripe Services Agreement](https://stripe.com/de/legal/ssa) · [Preise](https://stripe.com/de/pricing) · [SEPA-Lastschrift](https://stripe.com/de/legal/sepa-direct-debit)
-
-| Zahlungsart | Anwendungsfall | Beispielgebühr |
-|-------------|---------------|----------------|
-| SEPA-Lastschrift | Einzelmitgliedschaft (wiederkehrend) | ~0,8% + €0,25 (max €6) |
-| Stripe Invoicing | Gemeinde-Beiträge (per Überweisung) | ~0,4% pro Rechnung |
-| Karte (Visa/MC) | Einmalspenden | ~1,5% + €0,25 |
-
-_Gebühren sind Richtwerte basierend auf aktueller Stripe-Preisliste._
-
-- **Benötigt:** Prüfen Sie, welche Punkte Sie jetzt schon vorbereiten können, und lesen Sie die Stripe-Konditionen
-
-### 5. Projektumfang in fünf Phasen mit Meilenstein-Preisen
+### 3. Projektumfang in fünf Phasen mit Meilenstein-Preisen
 
 Die Website ist in fünf aufeinander aufbauende Phasen gegliedert. Jede Phase liefert ein eigenständiges Ergebnis. Abrechnung erfolgt nach tatsächlichem Aufwand (T&M, €120/Std.).
 
@@ -104,7 +70,7 @@ Die Website ist in fünf aufeinander aufbauende Phasen gegliedert. Jede Phase li
 - Phase 5 ist optional — ohne CMS werden Inhaltsänderungen vom Entwickler umgesetzt
 - Richtpreisangebot innerhalb des bestehenden Rahmenvertrags
 
-### 6. Ihre zusätzlichen Ideen
+### 4. Ihre zusätzlichen Ideen
 
 Sie haben zwei Erweiterungen vorgeschlagen, die nicht im aktuellen Umfang enthalten sind:
 
@@ -113,7 +79,7 @@ Sie haben zwei Erweiterungen vorgeschlagen, die nicht im aktuellen Umfang enthal
 
 Beide Ideen brauchen eine Beschreibung dessen, was Sie sich konkret vorstellen, bevor eine Aufwandsschätzung möglich ist.
 
-### 7. Offene Zulieferungen von Ihnen
+### 5. Offene Zulieferungen von Ihnen
 
 Folgende Punkte werden von Ihnen benötigt, um mit der Umsetzung beginnen zu können:
 
@@ -132,7 +98,7 @@ Folgende Punkte werden von Ihnen benötigt, um mit der Umsetzung beginnen zu kö
 ## Meetingformat
 
 - **Typ:** Review (45-60 Min)
-- **Vorbereitung:** Punkt 1 (Gemeinnützigkeit) und Punkt 2 (Kleinunternehmer) vorab mit Steuerberater prüfen falls möglich
+- **Vorbereitung:** Punkt 1 (Gemeinnützigkeit) vorab mit Steuerberater prüfen falls möglich
 - **Ergebnis:** Aktualisiertes Design Doc (Zahlungspunkte Defined) + abgestimmter Projektumfang für Umsetzungsstart
 
 ## Verknüpfungen
