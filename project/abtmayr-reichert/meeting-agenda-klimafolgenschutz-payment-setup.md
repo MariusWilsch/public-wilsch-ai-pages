@@ -35,12 +35,11 @@ Zwei getrennte Vorgänge bestimmen, was die Website beim Launch anbieten kann:
 - Website kann trotzdem ohne Zahlung starten — Zahlungsaktivierung erfolgt separat
 - **→ Wann rechnen Sie mit dem Eintrag?**
 
-**Gemeinnützigkeit (Finanzamt):**
-- Der Spendenbutton funktioniert in jedem Fall — Spenden sind immer möglich
-- Ohne Freistellungsbescheid: kein "steuerlich absetzbar"-Hinweis auf der Website, keine Spendenbescheinigungen
-- Mit Freistellungsbescheid: "steuerlich absetzbar" bewerben + Spendenbescheinigungen ab €100 ausstellen (Name + Adresse erforderlich)
-- Das Dokument kommt vom Finanzamt (über Ihren Steuerberater)
-- **→ Haben Sie einen Freistellungsbescheid, ja oder nein? Falls nein: ist er beantragt?**
+**Gemeinnützigkeit:**
+- Spendenbutton funktioniert in jedem Fall
+- Mit Freistellungsbescheid: "steuerlich absetzbar" auf der Website + Spendenbescheinigungen ab €100
+- Ohne: Spenden möglich, aber ohne Steuer-Hinweis
+- **→ Liegt ein Freistellungsbescheid vor?**
 
 ### 2. Stripe-Setup: Kleinunternehmer oder umsatzsteuerpflichtig?
 
