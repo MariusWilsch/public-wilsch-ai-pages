@@ -11,8 +11,8 @@ Zuerst das Design Doc gemeinsam durchgehen — gibt es etwas, das nicht gefällt
 
 1. **Design Doc Review** — gemeinsam durchgehen, Feedback und Korrekturen
 2. **Vereinsstatus + Stripe** — offene Punkte klären (Punkte 1-2)
-3. **Projektumfang abstimmen** — Phasen, Aufwand und Meilensteine (Punkt 3)
-4. **Zulieferungen + Ideen** — was Sie liefern und was Sie sich zusätzlich vorstellen (Punkte 4-5)
+3. **Zulieferungen + Ideen** — was Sie liefern und was Sie sich zusätzlich vorstellen (Punkte 3-4)
+4. **Projektumfang abstimmen** — Phasen, Aufwand und Meilensteine (Punkt 5)
 
 ## Vorab-Lektüre
 
@@ -56,7 +56,31 @@ Zwei getrennte Vorgänge bestimmen, was die Website beim Launch anbieten kann:
 
 - **→ Bitte Stripe-Konto einrichten und uns die API-Zugangsdaten bereitstellen**
 
-### 3. Projektumfang in fünf Phasen mit Meilenstein-Preisen
+### 3. Ihre zusätzlichen Ideen
+
+Sie haben zwei Erweiterungen vorgeschlagen, die nicht im aktuellen Umfang enthalten sind:
+
+- **Interaktive Bedarfsanalyse-Seite** — Gemeinden prüfen vorhandene Infrastruktur (Hitzeschutz, Digitalisierung, Sensorik) über einen Fragebogen, der in den Mitgliedschafts-Flow mündet
+- **Spielerisches Engagement-Element ("Moorhuhn")** — Gamification-Ansatz auf der Website
+
+Beide Ideen brauchen eine Beschreibung dessen, was Sie sich konkret vorstellen, bevor eine Aufwandsschätzung möglich ist.
+
+### 4. Offene Zulieferungen von Ihnen
+
+Folgende Punkte werden von Ihnen benötigt, um mit der Umsetzung beginnen zu können:
+
+| Zulieferung | Wofür | Blockiert Phase |
+|-------------|-------|-----------------|
+| Ionos DNS-Zugangsdaten | Domain klimafolgenschutz.com auf Server zeigen | Phase 1 |
+| Logo-Dateien | Branding, Header, Favicon | Phase 1 |
+| Impressum über [e-Recht24](https://www.e-recht24.de/) ausfüllen | Impressum + Datenschutzerklärung | Phase 2 |
+| Gemeinde-Preisstufen bestätigen (Staffelung nach Einwohnerzahl) | Mitgliedschaftsformular + Preisanzeige | Phase 2 |
+| Zertifizierungskriterien für "klimaresiliente Gemeinde" | Zertifizierungs-Sektion | Phase 4 |
+
+- Keine dieser Zulieferungen blockiert den Projektstart — Platzhalter werden eingesetzt
+- **Benötigt:** Bestätigen Sie, was Sie bis wann liefern können
+
+### 5. Projektumfang in fünf Phasen mit Meilenstein-Preisen
 
 Die Website ist in fünf aufeinander aufbauende Phasen gegliedert. Jede Phase liefert ein eigenständiges Ergebnis. Abrechnung erfolgt nach tatsächlichem Aufwand (T&M, €120/Std.).
 
@@ -72,30 +96,6 @@ Die Website ist in fünf aufeinander aufbauende Phasen gegliedert. Jede Phase li
 - Phase 4 setzt voraus, dass Sie die Zertifizierungskriterien liefern
 - Phase 5 ist optional — ohne CMS werden Inhaltsänderungen vom Entwickler umgesetzt
 - Richtpreisangebot innerhalb des bestehenden Rahmenvertrags
-
-### 4. Ihre zusätzlichen Ideen
-
-Sie haben zwei Erweiterungen vorgeschlagen, die nicht im aktuellen Umfang enthalten sind:
-
-- **Interaktive Bedarfsanalyse-Seite** — Gemeinden prüfen vorhandene Infrastruktur (Hitzeschutz, Digitalisierung, Sensorik) über einen Fragebogen, der in den Mitgliedschafts-Flow mündet
-- **Spielerisches Engagement-Element ("Moorhuhn")** — Gamification-Ansatz auf der Website
-
-Beide Ideen brauchen eine Beschreibung dessen, was Sie sich konkret vorstellen, bevor eine Aufwandsschätzung möglich ist.
-
-### 5. Offene Zulieferungen von Ihnen
-
-Folgende Punkte werden von Ihnen benötigt, um mit der Umsetzung beginnen zu können:
-
-| Zulieferung | Wofür | Blockiert Phase |
-|-------------|-------|-----------------|
-| Ionos DNS-Zugangsdaten | Domain klimafolgenschutz.com auf Server zeigen | Phase 1 |
-| Logo-Dateien | Branding, Header, Favicon | Phase 1 |
-| Impressum über [e-Recht24](https://www.e-recht24.de/) ausfüllen | Impressum + Datenschutzerklärung | Phase 2 |
-| Gemeinde-Preisstufen bestätigen (Staffelung nach Einwohnerzahl) | Mitgliedschaftsformular + Preisanzeige | Phase 2 |
-| Zertifizierungskriterien für "klimaresiliente Gemeinde" | Zertifizierungs-Sektion | Phase 4 |
-
-- Keine dieser Zulieferungen blockiert den Projektstart — Platzhalter werden eingesetzt
-- **Benötigt:** Bestätigen Sie, was Sie bis wann liefern können
 
 ## Meetingformat
 
