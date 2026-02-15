@@ -26,53 +26,93 @@ _Starting points for discussion, not limited to these._
 
 ### 1. Yesterday's vision check — 5 minutes, then move on
 
-We aligned on: Developer position as first product, augment-not-replace narrative, interactive-first then autonomous, Traceline as product name (traceline.dev). Christoph wants to read E-Myth before fully buying into the "profitable businesses" framing. The "each position = sellable product" strategy needs more thinking.
+Aligned yesterday:
+- Developer position = first product ✓
+- Augment-not-replace narrative ✓
+- Interactive-first, then autonomous ✓
+- Traceline as product name (traceline.dev) ✓
 
-- This is a quick temperature check, not a re-discussion
-- If new thinking emerged overnight, capture it — otherwise move to Topic 2
+Open:
+- Christoph wants to read E-Myth before buying into "profitable businesses" framing
+- "Each position = sellable product" strategy needs more thinking
+- Quick temperature check, not a re-discussion — if no new thinking, move to Topic 2
 
 ### 2. The plugin ships as the beta delivery — what goes in, what stays out
 
-The Claude Code plugin is the only viable delivery method for speed. At face value, the current plugin is "too scary" for new users. Claude.md has hardcoded references (Auggie MCP, personal paths) that must be removed. The mechanism for copying Claude.md to user repos doesn't exist yet — the plugin doesn't do this.
+Current state:
+- Claude Code plugin = only viable delivery method for speed
+- At face value, current plugin is "too scary" for new users
+- Claude.md has hardcoded references (Auggie MCP, personal paths) — must be removed
+- Mechanism for copying Claude.md to user repos doesn't exist — plugin doesn't do this
 
+Decisions needed:
 - Walk through every file: yes / no / needs changes
 - For each "needs changes" — what specifically changes and who does it
 - What's the smallest file set that still delivers the Developer position experience
 
 ### 3. A new beta user's first 5 minutes determine whether they stay or leave
 
-Zero onboarding is the ideal — the system teaches by letting you ship. But beta users need some entry point. The idea: use Claude Code's `--sdk-url` flag to turn the terminal into a WebSocket connection, then build a scripted walkthrough that guides the user through Path A (spec-design: needs context outside the issue) and Path B (spec-implement: everything needed is in the issue) from the [Developer Operations Manual](https://mariuswilsch.github.io/public-wilsch-ai-pages/global/developer-operations-manual-wilsch-ai-services). The user experiences the full lifecycle without reading documentation — the script walks them through it. The question of whether to force GitHub Projects adds complexity — it's a prerequisite decision that shapes the entire onboarding experience.
+The vision: use Claude Code's `--sdk-url` flag to turn the terminal into a WebSocket connection. Build a scripted walkthrough that guides users through Path A and Path B from the [Developer Operations Manual](https://mariuswilsch.github.io/public-wilsch-ai-pages/global/developer-operations-manual-wilsch-ai-services). The user experiences the full lifecycle without reading documentation.
 
+- **Path A** (spec-design): needs context outside the issue → rubber-duck → clarity phases → execute
+- **Path B** (spec-implement): everything needed is in the issue → clarity phases → execute
 - What does install → first successful action look like?
-- `--sdk-url` scripted walkthrough: walk the user through one Path A issue and one Path B issue
-- What prerequisites must a user already have? (GitHub account, Claude API key, repo structure)
-- Reference: [The-Vibe-Company/companion](https://github.com/The-Vibe-Company/companion) — SDK-based delivery approach worth evaluating
+- `--sdk-url` scripted walkthrough: walk user through one Path A issue and one Path B issue
+- What prerequisites must a user have? (GitHub account, Claude API key, repo structure)
+- Reference: [The-Vibe-Company/companion](https://github.com/The-Vibe-Company/companion) — SDK-based delivery approach
 
 ### 4. Without GitHub, the context trickle system breaks
 
-GitHub Projects is not just a project board — it's the backbone of the context association system. The transcript agent ([#479](https://github.com/DaveX2001/claude-code-improvements/issues/479)) automatically matches meeting transcripts to issues when topics are discussed. The email agent matches incoming emails to relevant issues. Together they create a trickle system that keeps context continuously flowing into the right issues without manual effort. Design docs link back to issues. Commits reference issues. Everything stays associated.
+GitHub Projects is not just a project board — it's the backbone of the context association system.
 
-- What do beta users lose if they don't use GitHub Projects?
-- Is the trickle system (transcript agent, email agent, context association) a core differentiator or a nice-to-have for beta?
-- Force GitHub for beta (preserves full system value) vs make it optional (lowers barrier but loses the trickle effect)?
+What the trickle system does:
+- **Transcript agent** ([#479](https://github.com/DaveX2001/claude-code-improvements/issues/479)) — automatically matches meeting transcripts to issues
+- **Email agent** — matches incoming emails to relevant issues
+- **Design docs** link back to issues
+- **Commits** reference issues
+- Everything stays associated without manual effort
+
+Decisions needed:
+- What do beta users lose without GitHub Projects?
+- Is the trickle system a core differentiator or nice-to-have for beta?
+- Force GitHub for beta (preserves full value) vs optional (lower barrier, loses trickle)?
 - What's the minimum GitHub setup a beta user needs?
 
 ### 5. The launch todo list is the transcript's real output
 
-Yesterday ended with "I need this as a transcript so I can create an issue on Sunday and power through until Friday." The beta user database needs compiling (Name, Email, GitHub username) from multiple sources — father's company, Singapore contacts, existing waitlist. Task ownership is undefined. Christoph's warning: "I don't want us to hurry and do it poorly."
+Context:
+- Yesterday: "I need this as a transcript so I can create an issue and power through until Friday"
+- Beta user database needed: Name, Email, GitHub username
+- Sources: father's company, Singapore contacts, existing waitlist
+- Christoph's warning: "I don't want us to hurry and do it poorly"
 
-- What's the minimum viable beta? What can ship without and still validate the value prop?
+Decisions needed:
+- What's the minimum viable beta? What can ship without?
 - Who does what? Assign every todo to a name
-- What's the "done" signal for launch — users installed? Users shipped code? Users gave feedback?
+- What's the "done" signal — users installed? Users shipped code? Users gave feedback?
 - How many beta users? 5 is intimate, 20 is a real test, 50 is a distribution problem
 
 ### 6. We still don't have a word for what we're selling
 
-Yesterday surfaced the gap: "assistant" has no differentiation, "interaction patterns" is too academic, "behavioral scripts" is too clinical. The research turned up "organizational socialization" and "operant conditioning" — accurate but unsellable. "Pretty cool markdown files" and "Master of Markdown" emerged as playful angles. Christoph flagged the perception risk: at face value it looks like "we automate how you write markdown." The actual depth is the evolutionary cycle — each markdown artifact goes through iteration after iteration, getting refined until it's deterministic. The output looks simple. The process that produced it isn't.
+Yesterday's gap:
+- "Assistant" — no differentiation
+- "Interaction patterns" — too academic
+- "Behavioral scripts" — too clinical
+- "Organizational socialization" / "operant conditioning" — accurate but unsellable
+- "Pretty cool markdown files" / "Master of Markdown" — playful but risks underselling
 
-**Tweakability — the system grows toward whatever you want it to be.** Intent (Augment Code) is fixed: spec → agents → code. You can't reshape HOW it works. Traceline's behavioral triggers (skills, protocols, hooks) are all user-modifiable markdown. You can tweak the system "like crazy" — add skills, modify protocols, change interaction patterns. The system bends to your workflow, not the other way around. Intent gives you a product. Traceline gives you a platform you shape.
+The actual depth: each markdown artifact goes through iteration after iteration, refined until deterministic. The output looks simple. The process that produced it isn't.
 
-**The system teaches you by letting you fail fast.** The system doesn't teach you — it makes trial and error so fast that you learn any concept you need on the job. You can take on projects you have zero qualifications for because the confidence gates and fast feedback loops mean you learn through doing. Intent executes FOR you — you don't learn. Traceline executes WITH you — you learn.
+**Tweakability — the system grows toward whatever you want it to be.**
+- Intent (Augment Code) is fixed: spec → agents → code. Can't reshape HOW it works
+- Traceline's behavioral triggers (skills, protocols, hooks) are all user-modifiable markdown
+- The system bends to your workflow, not the other way around
+- Intent gives you a product. Traceline gives you a platform you shape
+
+**The system teaches you by letting you fail fast.**
+- The system makes trial and error so fast you learn any concept on the job
+- Confidence gates and fast feedback loops mean you learn through doing
+- Intent executes FOR you — you don't learn. Traceline executes WITH you — you learn
 
 | Layer | Intent (Augment Code) | Traceline |
 |-------|----------------------|-----------|
@@ -82,7 +122,7 @@ Yesterday surfaced the gap: "assistant" has no differentiation, "interaction pat
 | **Phase 2** | N/A | System improves itself (System Engineer position) |
 
 - What do developers actually buy? A plugin, a workflow, a system, a methodology?
-- The positioning must convey both simplicity (just markdown) and the evolutionary refinement cycle behind it
+- The positioning must convey both simplicity (just markdown) and the evolutionary refinement cycle
 - Roland's input on naming — what did he come back with?
 - Reference: [Augment Intent](https://docs.augmentcode.com/intent/overview) — closest competitor, spec-driven development
 
