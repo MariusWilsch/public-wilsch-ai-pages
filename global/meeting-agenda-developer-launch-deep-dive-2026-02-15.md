@@ -45,11 +45,19 @@ Zero onboarding is the ideal — the system teaches by letting you ship. But bet
 
 - What does install → first successful action look like?
 - `--sdk-url` scripted walkthrough: walk the user through one Path A issue and one Path B issue
-- GitHub Projects: force it for beta (simpler) or make it optional (more flexible)?
 - What prerequisites must a user already have? (GitHub account, Claude API key, repo structure)
 - Reference: [The-Vibe-Company/companion](https://github.com/The-Vibe-Company/companion) — SDK-based delivery approach worth evaluating
 
-### 4. The launch todo list is the transcript's real output
+### 4. Without GitHub, the context trickle system breaks
+
+GitHub Projects is not just a project board — it's the backbone of the context association system. The transcript agent ([#479](https://github.com/DaveX2001/claude-code-improvements/issues/479)) automatically matches meeting transcripts to issues when topics are discussed. The email agent matches incoming emails to relevant issues. Together they create a trickle system that keeps context continuously flowing into the right issues without manual effort. Design docs link back to issues. Commits reference issues. Everything stays associated.
+
+- What do beta users lose if they don't use GitHub Projects?
+- Is the trickle system (transcript agent, email agent, context association) a core differentiator or a nice-to-have for beta?
+- Force GitHub for beta (preserves full system value) vs make it optional (lowers barrier but loses the trickle effect)?
+- What's the minimum GitHub setup a beta user needs?
+
+### 5. The launch todo list is the transcript's real output
 
 Yesterday ended with "I need this as a transcript so I can create an issue on Sunday and power through until Friday." The beta user database needs compiling (Name, Email, GitHub username) from multiple sources — father's company, Singapore contacts, existing waitlist. Task ownership is undefined. Christoph's warning: "I don't want us to hurry and do it poorly."
 
@@ -58,7 +66,7 @@ Yesterday ended with "I need this as a transcript so I can create an issue on Su
 - What's the "done" signal for launch — users installed? Users shipped code? Users gave feedback?
 - How many beta users? 5 is intimate, 20 is a real test, 50 is a distribution problem
 
-### 5. We still don't have a word for what we're selling
+### 6. We still don't have a word for what we're selling
 
 Yesterday surfaced the gap: "assistant" has no differentiation, "interaction patterns" is too academic, "behavioral scripts" is too clinical. The research turned up "organizational socialization" and "operant conditioning" — accurate but unsellable. "Pretty cool markdown files" and "Master of Markdown" emerged as playful angles. Christoph flagged the perception risk: at face value it looks like "we automate how you write markdown." The actual depth is the evolutionary cycle — each markdown artifact goes through iteration after iteration, getting refined until it's deterministic. The output looks simple. The process that produced it isn't.
 
