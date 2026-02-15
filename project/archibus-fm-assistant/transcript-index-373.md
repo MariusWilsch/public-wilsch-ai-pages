@@ -28,6 +28,7 @@ Consolidated index for [Issue #373: AI Bulk Data Entry — Background Data Impor
 | Step 3: Insertion API | Rein | [Agenda](https://mariuswilsch.github.io/public-wilsch-ai-pages/project/archibus-fm-assistant/rein-meeting-agenda-step3-insertion-api) |
 | Background Data | Rein | [Agenda](https://mariuswilsch.github.io/public-wilsch-ai-pages/project/archibus-fm-assistant/rein-meeting-agenda-background-data) |
 | Step 2: Schema Mapping | Rein | [Agenda](https://mariuswilsch.github.io/public-wilsch-ai-pages/project/archibus-fm-assistant/rein-meeting-agenda-step2-schema-mapping) |
+| Step 3: Field Review & Undefined Items | Rein | [Agenda](https://mariuswilsch.github.io/public-wilsch-ai-pages/project/archibus-fm-assistant/rein-meeting-agenda-feb15-field-review) |
 | Hierarchy Understanding | Miguel/Ian | [Agenda](https://mariuswilsch.github.io/public-wilsch-ai-pages/project/archibus-fm-assistant/miguel-ian-meeting-agenda-hierarchy-understanding) |
 | Bulk Entry Spike | Team | [Agenda](https://mariuswilsch.github.io/public-wilsch-ai-pages/project/archibus-fm-assistant/bulk-entry-spike-agenda) |
 | AI Work Track Prioritization | All-Hands | [Agenda](https://mariuswilsch.github.io/public-wilsch-ai-pages/project/archibus-fm-assistant/all-hands-ai-work-track-prioritization) |
