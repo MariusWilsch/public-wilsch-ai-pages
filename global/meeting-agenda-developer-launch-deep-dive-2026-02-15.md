@@ -62,9 +62,21 @@ Yesterday ended with "I need this as a transcript so I can create an issue on Su
 
 Yesterday surfaced the gap: "assistant" has no differentiation, "interaction patterns" is too academic, "behavioral scripts" is too clinical. The research turned up "organizational socialization" and "operant conditioning" — accurate but unsellable. "Pretty cool markdown files" and "Master of Markdown" emerged as playful angles. Christoph flagged the perception risk: at face value it looks like "we automate how you write markdown." The actual depth is the evolutionary cycle — each markdown artifact goes through iteration after iteration, getting refined until it's deterministic. The output looks simple. The process that produced it isn't.
 
+**Tweakability — the system grows toward whatever you want it to be.** Intent (Augment Code) is fixed: spec → agents → code. You can't reshape HOW it works. Traceline's behavioral triggers (skills, protocols, hooks) are all user-modifiable markdown. You can tweak the system "like crazy" — add skills, modify protocols, change interaction patterns. The system bends to your workflow, not the other way around. Intent gives you a product. Traceline gives you a platform you shape.
+
+**The system teaches you by letting you fail fast.** The system doesn't teach you — it makes trial and error so fast that you learn any concept you need on the job. You can take on projects you have zero qualifications for because the confidence gates and fast feedback loops mean you learn through doing. Intent executes FOR you — you don't learn. Traceline executes WITH you — you learn.
+
+| Layer | Intent (Augment Code) | Traceline |
+|-------|----------------------|-----------|
+| **Flexibility** | Fixed product | Tweakable platform (behavioral triggers) |
+| **Learning** | Executes FOR you | Executes WITH you — you learn on the job |
+| **Knowledge** | Resets per project | Compounds across sessions (docstrings, hippocampus, tracking) |
+| **Phase 2** | N/A | System improves itself (System Engineer position) |
+
 - What do developers actually buy? A plugin, a workflow, a system, a methodology?
 - The positioning must convey both simplicity (just markdown) and the evolutionary refinement cycle behind it
 - Roland's input on naming — what did he come back with?
+- Reference: [Augment Intent](https://docs.augmentcode.com/intent/overview) — closest competitor, spec-driven development
 
 ## Meeting Format
 
