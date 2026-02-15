@@ -105,11 +105,11 @@ For each recipe pair, compute two scores. Each is a proxy lens on the core quest
 
 **Criterion 1 — Overlap (Jaccard similarity):** "Do they share the same ingredients?"
 
-Binary set comparison: `|A ∩ B| / |A ∪ B|` where A and B are sets of material IDs. Score 0–1, where 1.0 = identical ingredient lists. Client-facing label: **Overlap**.
+Binary set comparison: `|A ∩ B| / |A ∪ B|` where A and B are sets of material IDs. Score 0–1, where 1.0 = identical ingredient lists. Label: **Überlappung**.
 
 **Criterion 2 — Proportion (Bray-Curtis similarity):** "For shared ingredients, how close are the amounts?"
 
-For shared materials, measure proportional distance: similarity = `1 - sum|a_i - b_i| / sum(a_i + b_i)`. Score 0–1, where 1.0 = identical proportions. Naturally weights high-percentage ingredients more than trace ingredients. Client-facing label: **Proportion**.
+For shared materials, measure proportional distance: similarity = `1 - sum|a_i - b_i| / sum(a_i + b_i)`. Score 0–1, where 1.0 = identical proportions. Naturally weights high-percentage ingredients more than trace ingredients. Label: **Anteil**.
 
 **Combined weighting:** Empirical — start equal weights (50/50), let Behrens's validation pairs reveal which criterion matters most. Transcripts emphasize "quantity-based similarity" ([WS2-S3a](https://docs.google.com/document/d/1Y6dz78yEu1E1LG4-YFqruj5gxSsJqil8vvU6tbOu_cw)), suggesting Proportion may ultimately dominate — hypothesis to test, not pre-commit.
 
@@ -178,8 +178,6 @@ Rang  Rezept    Überlappung  Anteil  Gesamt
 #4    R445100   51%      65%         58%
 #5    R887200   48%      71%         60%
 ```
-
-**Client-facing labels:** Überlappung, Anteil, Gesamt (German) — no algorithm names (Jaccard, Bray-Curtis) exposed to client.
 
 **Top N:** Default 5, configurable. Workshop discussed "five to ten" (WS2-S3a), but Top 5 is the stated POC criterion.
 
