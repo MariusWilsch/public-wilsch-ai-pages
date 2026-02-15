@@ -49,7 +49,10 @@ Validate field-level decisions from the Feb 14 extraction pass. The design doc's
 - Current Excel comment just says "Asset address, if supplied" — too vague for consistent AI mapping
 - City and State are free-form strings — if client writes "Tallinn" vs "TALLINN" vs "tallinn", does Bruce care?
 
-**We need: (a) Address = street + house number only? (b) house number required or just street OK? (c) City/State validate against a list or accept any text?**
+**We need:**
+- (a) Address = street + house number only?
+- (b) House number required or just street OK?
+- (c) City/State validate against a list or accept any text?
 
 ### 4. Barcode and QrCode lack real-world examples and have unclear scope
 
@@ -58,7 +61,11 @@ Validate field-level decisions from the Feb 14 extraction pass. The design doc's
 - QrCode's comment is just "Make it longer"
 - SerialNumber comment says "If barcode reader in use, only numbers" — does scan go to SerialNumber or Barcode field?
 
-**We need: (a) real-world Barcode value, (b) real-world QrCode value, (c) when scanned barcode goes to SerialNumber vs Barcode field, (d) QrCode DB length extension beyond 50 chars.**
+**We need:**
+- (a) Real-world Barcode value
+- (b) Real-world QrCode value
+- (c) When scanned barcode goes to SerialNumber vs Barcode field
+- (d) QrCode DB length extension beyond 50 chars
 
 ### 5. Two status ENUM fields exist in the import template with no visible distinction
 
@@ -67,14 +74,19 @@ Validate field-level decisions from the Feb 14 extraction pass. The design doc's
 - No second list exists in artifacts
 - CAFM sample has "Status" column (Active/Inactive) and "Condition" column (Good/Fair/Poor) — unclear which maps where
 
-**We need: what is Status (row 24) for? Same ENUM as AssetStatus? Simplified active/inactive flag? If redundant, remove from import scope?**
+**We need:**
+- What is Status (row 24) for?
+- Same ENUM as AssetStatus? Simplified active/inactive flag? Something else?
+- If redundant, remove from import scope?
 
 ### 6. The updated AssetType facility list has one potential naming issue
 
 - New 23 Facility-Related types provided via chat (Feb 14): Cooling, Heating, Amenity, Decoration, Emergency, Equipment, Fire Safety, Furnishing, Good, HVAC, Lighting, Spare Part, Appliances, SHERQ equipment, Signing, Surveillance, Vertical Transport, Electrical, Other Equipment, Plumbing, Waste Water, Automation, Safety
 - One entry reads "Signing" (Labels, Screens) — old list had "Signage"
 
-**We need: (a) "Signing" intentional or should be "Signage"? (b) this list fully replaces old Facility-Related category while Employee Personal, Information Management, Location-Related remain unchanged?**
+**We need:**
+- (a) "Signing" intentional or should be "Signage"?
+- (b) This list fully replaces old Facility-Related category while Employee Personal, Information Management, Location-Related remain unchanged?
 
 ### 7. The API error response needs to include the failing node's Id for self-correction
 
