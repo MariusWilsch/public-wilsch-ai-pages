@@ -41,10 +41,10 @@ The Claude Code plugin is the only viable delivery method for speed. At face val
 
 ### 3. A new beta user's first 5 minutes determine whether they stay or leave
 
-Zero onboarding is the ideal — the system teaches by letting you ship. But beta users need some entry point. The scripted demo idea (SQL URL showing a full issue flow through Spec path A and path B) emerged yesterday but isn't designed. The question of whether to force GitHub Projects adds complexity — it's a prerequisite decision that shapes the entire onboarding experience.
+Zero onboarding is the ideal — the system teaches by letting you ship. But beta users need some entry point. The idea: use Claude Code's `--sdk-url` flag to turn the terminal into a WebSocket connection, then build a scripted walkthrough that guides the user through Path A (spec-design: needs context outside the issue) and Path B (spec-implement: everything needed is in the issue) from the [Developer Operations Manual](https://mariuswilsch.github.io/public-wilsch-ai-pages/global/developer-operations-manual-wilsch-ai-services). The user experiences the full lifecycle without reading documentation — the script walks them through it. The question of whether to force GitHub Projects adds complexity — it's a prerequisite decision that shapes the entire onboarding experience.
 
 - What does install → first successful action look like?
-- Scripted demo: is it a video, a guided walkthrough, or a live repo they clone?
+- `--sdk-url` scripted walkthrough: walk the user through one Path A issue and one Path B issue
 - GitHub Projects: force it for beta (simpler) or make it optional (more flexible)?
 - What prerequisites must a user already have? (GitHub account, Claude API key, repo structure)
 - Reference: [The-Vibe-Company/companion](https://github.com/The-Vibe-Company/companion) — SDK-based delivery approach worth evaluating
