@@ -153,7 +153,6 @@ Position Agreement for the System Engineer position at Wilsch AI Services. Frame
 
 ## Source
 
-- E-Myth Management Strategy interview (2026-02-16)
-- Framework: Michael Gerber, *The E-Myth Revisited*, Chapter 15
-- Template: E-Myth Writing Position Agreements guide
-- Conversation: /Users/verdant/.claude/projects/-Users-verdant-Documents-projects-00-WILSCH-AI-INTERNAL--soloforce/e836f995-00f3-4b6b-8e23-6e52a4cf6413.jsonl
+- [E-Myth Management Strategy interview (2026-02-16)](/Users/verdant/.claude/projects/-Users-verdant-Documents-projects-00-WILSCH-AI-INTERNAL--soloforce/e836f995-00f3-4b6b-8e23-6e52a4cf6413.jsonl)
+- [Framework: Michael Gerber, *The E-Myth Revisited*, Chapter 15](https://mariuswilsch.github.io/public-wilsch-ai-pages/project/soloforce/emyth-chapters/emyth-writing-position-agreements)
+- [Template: E-Myth Writing Position Agreements guide](https://mariuswilsch.github.io/public-wilsch-ai-pages/project/soloforce/emyth-chapters/emyth-writing-position-agreements)
