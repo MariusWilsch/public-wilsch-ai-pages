@@ -129,6 +129,7 @@ Each position has a distinct accountability toward the same epic. Ownership does
 
 | Position | Accountability | When |
 |----------|---------------|------|
+| **SA** | Routes work to JA (decides "this needs a design doc") | Before epic exists |
 | **JA** | Creates the epic via cascade when design doc is complete | Epic birth |
 | **Dev Lead** | Assigns epic to a Developer from the board | After epic enters Todo |
 | **Developer** | Creates starting-point sub-issues from the design doc | After assignment |
