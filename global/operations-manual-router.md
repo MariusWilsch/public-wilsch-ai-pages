@@ -61,7 +61,7 @@ Entry point for all position-specific Operations Manuals at Wilsch AI Services. 
 
 | Position | Position Agreement | Operations Manual TOC | Operations Manual |
 |----------|-------------------|----------------------|-------------------|
-| **System Engineer** | TBD | TBD | TBD |
+| **System Engineer** | [Draft](https://mariuswilsch.github.io/public-wilsch-ai-pages/global/system-engineer-position-agreement-wilsch-ai-services) | TBD | TBD |
 
 ### Executive Level
 
@@ -88,5 +88,5 @@ Entry point for all position-specific Operations Manuals at Wilsch AI Services. 
 
 ## Source
 
-- E-Myth Management Strategy interview (2026-02-15)
+- E-Myth Management Strategy interview (2026-02-15, 2026-02-16)
 - Framework: Michael Gerber, *The E-Myth Revisited*, Chapters 14, 15, 18
