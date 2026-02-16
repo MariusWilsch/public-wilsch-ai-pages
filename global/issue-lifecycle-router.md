@@ -243,7 +243,12 @@ Both happen asynchronously. Developer continues to next work.
 
 | Type | Closing Action |
 |------|----------------|
-| **maker/spec-design** | Artifact determines next: internal spec → create spec-implement issue (cascade). Client deliverable → send to client. |
+| **maker/spec-design** | Artifact determines next (SA decides): |
+
+**Spec-design cascade paths:**
+1. **→ Epic** — complex scope requiring decomposition. Create epic issue with design doc link. See [Epic Lifecycle](#epic-lifecycle).
+2. **→ Spec-implement issue** — simple scope, Developer can handle directly. Create spec-implement issue (cascade).
+3. **→ Client deliverable** — external output. Send to client. No cascade.
 | **maker/spec-implement** | Merge to production. Deploy. Issue closed. |
 
 *Currently implemented via:* `done` label, PR merge, deployment.
