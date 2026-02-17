@@ -79,7 +79,9 @@ Position Agreement for the System Engineer position at Wilsch AI Services. Frame
 
 3. All CCI issues must be labeled by affected position and linked to parent epic within 2 business days of creation.
 
-4. Infrastructure changes must be documented before deployment.
+4. **All artifact fixes must include an evidence path or equivalent.** Every artifact change (skill, command, hook, protocol/persona, plugin, external tool config) must link to the evidence that motivated the change — conversation path, transcript URL, or issue reference.
+
+5. Infrastructure changes must be documented before deployment.
 
 ### Company-Wide Standards
 
