@@ -75,7 +75,7 @@ Position Agreement for the System Engineer position at Wilsch AI Services. Frame
 
 1. **No fix ships without blind verification.** The same scenario must be triggered in a fresh session where the AI doesn't know it's being tested. Deployed ≠ Done. Blindly verified = Done.
 
-2. **Evidence must be captured and connected to an issue at flagging time.** Every flagged behavior issue must include the conversation path, linked to the CCI issue at the moment of discovery. Evidence that isn't connected to an issue is evidence that doesn't exist.
+2. **Evidence must be captured and connected to an issue at flagging time.** Every flagged behavior issue must include the conversation path, linked to the CCI issue at the moment of discovery. An issue without evidence is nearly impossible to fix — it is extremely hard for a human to explain what's going wrong. The AI needs to see the conversation to understand the problem.
 
 3. All CCI issues must be labeled by affected position and linked to parent epic within 2 business days of creation.
 
