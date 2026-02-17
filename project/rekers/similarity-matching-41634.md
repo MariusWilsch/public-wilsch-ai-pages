@@ -51,17 +51,17 @@ Projekt: Logistikhalle, ~27.000 m², Angebotssumme €5.569K, Datum 2024-11-11. 
 ❌ Keine Übereinstimmung (0,0)
 ➖ Nicht gefunden (0,5 — neutral)
 
-**Tiers:**
+**Stufen:**
 Hoch ≥80%
 Mittel ≥70%
 Schwach ≥60%
-Unter Cutoff <60% (nicht relevant)
+Unter Grenzwert <60% (nicht relevant)
 
 ---
 
 ## Ranking-Übersicht
 
-| Rang | Anfrage-ID | Projektname | Score | Tier |
+| Rang | Anfrage-ID | Projektname | Punktzahl | Stufe |
 |------|-----------|-------------|-------|------|
 | 1 | 38882 | VGP Park Erfurt 3 | 94% | Hoch |
 | 2 | 40856 | Neubau Logistikhalle | 81% | Hoch |
@@ -99,7 +99,7 @@ Unter Cutoff <60% (nicht relevant)
 
 **Kernaussage:** Nahezu identisches Bauprogramm — gleicher Auftraggeber (VGP), gleicher Kalkulator, identische Konstruktionshöhen, gleiches Tragwerkskonzept (Spannbeton-Paralleldachbinder L=24 m), identische Kranlosigkeit (Gabelstapler FL3), gleiche Wind-/Schneelastzonen. Der einzige relevante Unterschied ist der Bauort (Erfurt vs. Schkopau — beide Mitteldeutschland mit vergleichbaren Lastannahmen WZ2/SLZ2).
 
-**Score-Begründung:** 8 von 9 Kriterien zeigen starke bis identische Übereinstimmung. Bauort abweichend, aber in derselben Klimaregion mit identischen Lastzonen. Die strukturelle Übereinstimmung (Gebäudetyp + Baustoff + Höhe) ist faktisch perfekt.
+**Punktebegründung:** 8 von 9 Kriterien zeigen starke bis identische Übereinstimmung. Bauort abweichend, aber in derselben Klimaregion mit identischen Lastzonen. Die strukturelle Übereinstimmung (Gebäudetyp + Baustoff + Höhe) ist faktisch perfekt.
 
 ---
 
@@ -119,7 +119,7 @@ Unter Cutoff <60% (nicht relevant)
 
 **Kernaussage:** Sehr ähnliches Tragwerkskonzept — gleiche Spannbeton-Parallelgurtbinder (l=24 m, h=1,10 m), gleicher Kalkulator, gleiche Kranlosigkeit, identische Wind-/Schneelastzonen. Hauptunterschied: niedrigere Konstruktionshöhe (+12,50 m vs. +14,00 m = –1,50 m) und anderer Auftraggeber. Die strukturellen Parameter (Bindersystem, Spannweite, Bewehrung) sind nahezu identisch.
 
-**Score-Begründung:** Baustoffsystem und Gebäudetyp stimmen hervorragend überein. Die Höhendifferenz von 1,50 m liegt innerhalb ±2 m (starke Übereinstimmung nach Methodik). Gleicher Kalkulator (1014) = gleiche Erfahrungsbasis. Abzüge für abweichenden Bauort und anderen Kunden.
+**Punktebegründung:** Baustoffsystem und Gebäudetyp stimmen hervorragend überein. Die Höhendifferenz von 1,50 m liegt innerhalb ±2 m (starke Übereinstimmung nach Methodik). Gleicher Kalkulator (1014) = gleiche Erfahrungsbasis. Abzüge für abweichenden Bauort und anderen Kunden.
 
 ---
 
@@ -127,7 +127,7 @@ Unter Cutoff <60% (nicht relevant)
 
 | Kriterium | Anfrage 41634 | Referenz 40593 | Übereinstimmung |
 |-----------|---------------|----------------|-----------------|
-| Gebäudetyp | Logistikhalle + Überladegruben + 2-gesch. Büro | Logistikzentrum mit 4 Hallen und Mezzanine | ✅ |
+| Gebäudetyp | Logistikhalle + Überladegruben + 2-gesch. Büro | Logistikzentrum mit 4 Hallen und Mezzanin | ✅ |
 | Höhe | OK Attika +14,00 m | OK Attika +14,00 m; OK Stütze +13,50 m (HP) | ✅ |
 | Kran | Kein Kran (FL3) | Nicht gefunden — Gabelstaplerbetrieb | ✅ |
 | Dachlasten | PV 0,15; Inst. 0,20; Trapez+PIR 0,35; WZ2/SLZ2 | Nicht gefunden (Hauptangebot fehlt in Dateien) | ➖ |
@@ -139,7 +139,7 @@ Unter Cutoff <60% (nicht relevant)
 
 **Kernaussage:** Gleiche Konstruktionshöhe (+14,00 m), gleiches Bindersystem (Spannbeton Parallel+Satteldach L=24 m), gleicher Gebäudetyp (Logistikzentrum). Allerdings fehlen Dachlasten- und Dachbegrünungsdaten, anderer Bauort (Emsland vs. Sachsen-Anhalt), anderer Kunde und Kalkulator.
 
-**Score-Begründung:** Die strukturellen Kernparameter (Typ + Baustoff + Höhe) stimmen gut überein. Die fehlenden Daten (Dachlasten, Dachbegrünung) führen zu neutraler Bewertung — mit vollständigen Daten könnte dieser Score höher ausfallen. Die Einstufung „Mittel" reflektiert die Unsicherheit bei gleichzeitig vielversprechender Grundstruktur.
+**Punktebegründung:** Die strukturellen Kernparameter (Typ + Baustoff + Höhe) stimmen gut überein. Die fehlenden Daten (Dachlasten, Dachbegrünung) führen zu neutraler Bewertung — mit vollständigen Daten könnte diese Punktzahl höher ausfallen. Die Einstufung „Mittel" reflektiert die Unsicherheit bei gleichzeitig vielversprechender Grundstruktur.
 
 ---
 
@@ -147,7 +147,7 @@ Unter Cutoff <60% (nicht relevant)
 
 | Kriterium | Anfrage 41634 | Referenz 39381 | Übereinstimmung |
 |-----------|---------------|----------------|-----------------|
-| Gebäudetyp | Logistikhalle + Überladegruben + 2-gesch. Büro | Logistik-/Lagerhalle (6 Hallenabschnitte) + Büroanbau, Mezzanine | ✅ |
+| Gebäudetyp | Logistikhalle + Überladegruben + 2-gesch. Büro | Logistik-/Lagerhalle (6 Hallenabschnitte) + Büroanbau, Mezzanin | ✅ |
 | Höhe | OK Attika +14,00 m | Standard-Firsthöhe ~14 m; freie Hallenhöhe 11,80 m | ✅ |
 | Kran | Kein Kran (FL3) | Ja — 20 t Kran im Teilbereich 20 m Höhe | ⚠️ |
 | Dachlasten | PV 0,15; Inst. 0,20; Trapez+PIR 0,35; WZ2/SLZ2 | PV 0,20; Trapez+PIR+Abdicht. 0,35; Inst. 0,15 (WLZ/SLZ nicht angegeben) | ⚠️ |
@@ -159,7 +159,7 @@ Unter Cutoff <60% (nicht relevant)
 
 **Kernaussage:** Gleicher Auftraggeber (VGP 103166) und Kalkulator, ähnlicher Gebäudetyp und Höhe. Jedoch zwei wesentliche Abweichungen: (1) Binderspannweite nur 12 m statt 24 m — grundlegend anderes Tragwerksraster; (2) 20-t-Kran in einem Teilbereich mit 20 m Höhe, der die Hallenstruktur in diesem Abschnitt verändert.
 
-**Score-Begründung:** Die Organisationsübereinstimmung (VGP-Projekt, gleicher Kalkulator) ist hoch, aber die strukturellen Unterschiede (halbe Spannweite, Kranteilbereich) reduzieren die Vergleichbarkeit erheblich. Schwach statt Mittel wegen des fundamentalen Unterschieds in der Bindergeometrie.
+**Punktebegründung:** Die Organisationsübereinstimmung (VGP-Projekt, gleicher Kalkulator) ist hoch, aber die strukturellen Unterschiede (halbe Spannweite, Kranteilbereich) reduzieren die Vergleichbarkeit erheblich. Schwach statt Mittel wegen des fundamentalen Unterschieds in der Bindergeometrie.
 
 **Vergleich mit Rang 3 (40593):** 39381 hat denselben Kunden/Kalkulator wie die Abfrage (was 40593 nicht hat), wird aber durch die kürzere Binderspannweite (12 m vs. 24 m) strukturell stärker bestraft. Das Baustoffkriterium wiegt schwerer als die Organisationskriterien.
 
@@ -181,9 +181,9 @@ Unter Cutoff <60% (nicht relevant)
 
 **Kernaussage:** Auf den ersten Blick das naheliegendste VGP-Vergleichsprojekt — identischer Gebäudetyp (einziges Projekt mit perfekter Überladegruben + 2-gesch. Büro Kombination), gleicher Kunde, gleicher Kalkulator, identische Höhe. Jedoch zwei ingenieurstechnisch schwerwiegende Unterschiede: (1) 2×10 t Kranbahnsystem pro Hallenschiff — verändert Stützenauslegung und Hallenquerschnitt grundlegend; (2) Dachbegrünung 1,00 kN/m² — erhöht Dachlasten um ~100% gegenüber dem Standarddachaufbau der Abfrage.
 
-**Score-Begründung:** Der Gebäudetyp ist perfekt identisch (bestes Einzelkriterium aller Referenzen), aber Kran und Dachbegrünung führen zu erheblichen strukturellen Unterschieden in der Tragwerksauslegung. Ein Kran erfordert Kranbahnstützen, modifizierte Hallenbreiten und höhere Horizontallasten. Dachbegrünung mit 1,00 kN/m² erfordert stärkere Dachbinder. Das Baustoffsystem nutzt nur Satteldachbinder (kein Parallelgurtbinder), was ein anderes Dachtragwerk bedeutet.
+**Punktebegründung:** Der Gebäudetyp ist perfekt identisch (bestes Einzelkriterium aller Referenzen), aber Kran und Dachbegrünung führen zu erheblichen strukturellen Unterschieden in der Tragwerksauslegung. Ein Kran erfordert Kranbahnstützen, modifizierte Hallenbreiten und höhere Horizontallasten. Dachbegrünung mit 1,00 kN/m² erfordert stärkere Dachbinder. Das Baustoffsystem nutzt nur Satteldachbinder (kein Parallelgurtbinder), was ein anderes Dachtragwerk bedeutet.
 
-**Vergleich mit Rang 1 (38882):** 38882 erreicht 94% trotz weniger perfektem Gebäudetyp-Match, weil alle strukturellen Parameter (Kranlosigkeit, Dachlasten, Baustoff) identisch sind. 41740 zeigt: perfekte Gebäudetyp-Übereinstimmung allein reicht nicht aus — die Tragwerksauslegung wird durch Kran und Dachbegrünung stärker beeinflusst als durch die Nutzungsart.
+**Vergleich mit Rang 1 (38882):** 38882 erreicht 94% trotz weniger perfekter Gebäudetyp-Übereinstimmung, weil alle strukturellen Parameter (Kranlosigkeit, Dachlasten, Baustoff) identisch sind. 41740 zeigt: perfekte Gebäudetyp-Übereinstimmung allein reicht nicht aus — die Tragwerksauslegung wird durch Kran und Dachbegrünung stärker beeinflusst als durch die Nutzungsart.
 
 ---
 
@@ -203,7 +203,7 @@ Unter Cutoff <60% (nicht relevant)
 
 **Kernaussage:** Ähnlicher Gebäudetyp und gleiches Bindersystem (Spannbeton-Parallelgurtbinder, ähnliche Spannweite 25 vs. 24 m). Jedoch deutlich niedrigere Höhe (–2,80 m) und schwerer Kran (2×20 t ZLK) — die Krananlage dominiert die Hallenstruktur mit 25 m Spannweite und verändert die Stützenauslegung grundlegend.
 
-**Score-Begründung:** Baustoff gut vergleichbar, Gebäudetyp ähnlich, aber Kran und Höhenunterschied signifikant. Bauort in derselben Region (beide Sachsen-Anhalt) ist ein Pluspunkt für Lastzonen. Schwach aufgrund der Krankombination mit deutlich geringerer Höhe.
+**Punktebegründung:** Baustoff gut vergleichbar, Gebäudetyp ähnlich, aber Kran und Höhenunterschied signifikant. Bauort in derselben Region (beide Sachsen-Anhalt) ist ein Pluspunkt für Lastzonen. Schwach aufgrund der Krankombination mit deutlich geringerer Höhe.
 
 ---
 
@@ -223,7 +223,7 @@ Unter Cutoff <60% (nicht relevant)
 
 **Kernaussage:** Gleicher Gebäudetyp (Logistikhalle + Büro) und gleicher Kalkulator, kein Kran. Jedoch deutlich niedrigere Höhe (–3,74 m, jenseits der ±2 m Schwelle), andere Schneelastzone (SLZ1 vs. SLZ2) und weit entfernter Bauort (Rheinland-Pfalz vs. Sachsen-Anhalt). Das Baustoffsystem nutzt Spannbeton, aber die genaue Bindergeometrie ist weniger gut dokumentiert.
 
-**Score-Begründung:** An der Grenze zwischen Schwach und nicht relevant. Die Kombination aus Logistik-Gebäudetyp + Spannbeton + gleichem Kalkulator + Kranlosigkeit hält das Projekt knapp über dem 60%-Cutoff. Die erhebliche Höhendifferenz und der weit entfernte Bauort (andere Lastzonen) drücken den Score.
+**Punktebegründung:** An der Grenze zwischen Schwach und nicht relevant. Die Kombination aus Logistik-Gebäudetyp + Spannbeton + gleichem Kalkulator + Kranlosigkeit hält das Projekt knapp über dem 60%-Grenzwert. Die erhebliche Höhendifferenz und der weit entfernte Bauort (andere Lastzonen) drücken die Punktzahl.
 
 ---
 
@@ -259,7 +259,7 @@ Unter Cutoff <60% (nicht relevant)
 | Baustoff | Spannbeton-Parallel-/Satteldachbinder L=24 m; B500; ST1660/1860 | Spannbeton-Parallelbinder L=24 m h=1,10 m; C50/60; B500(A); ST1660/1860 | ✅ |
 | Dachbegrünung | Explizit ausgeschlossen (0,00 kN/m²) | Ja — Gründach schwer (1,200 kN/m²), ~50% der Dachfläche | ❌ |
 
-**Kernaussage:** Hervorragendes Baustoff-Match (identisches Parallelbindersystem L=24 m) und gleicher Gebäudetyp. Aber: (1) 3 m höher (+17,00 m vs. +14,00 m); (2) schwere Dachbegrünung (1,20 kN/m²) erfordert stärkere Binder; (3) SLZ1 statt SLZ2. Die Dachbegrünung verändert die Dachlasten massiv und macht die Binder trotz gleicher Geometrie nicht direkt übertragbar.
+**Kernaussage:** Hervorragende Baustoff-Übereinstimmung (identisches Parallelbindersystem L=24 m) und gleicher Gebäudetyp. Aber: (1) 3 m höher (+17,00 m vs. +14,00 m); (2) schwere Dachbegrünung (1,20 kN/m²) erfordert stärkere Binder; (3) SLZ1 statt SLZ2. Die Dachbegrünung verändert die Dachlasten massiv und macht die Binder trotz gleicher Geometrie nicht direkt übertragbar.
 
 ---
 
@@ -285,7 +285,7 @@ Unter Cutoff <60% (nicht relevant)
 
 | Kriterium | Anfrage 41634 | Referenz 40138 | Übereinstimmung |
 |-----------|---------------|----------------|-----------------|
-| Gebäudetyp | Logistikhalle + Überladegruben + 2-gesch. Büro | Logistikhalle mit 2 Units + Mezzanin + Büro | ✅ |
+| Gebäudetyp | Logistikhalle + Überladegruben + 2-gesch. Büro | Logistikhalle mit 2 Halleneinheiten + Mezzanin + Büro | ✅ |
 | Höhe | OK Attika +14,00 m | OK Attika 12,50 m; UK Träger 10,50 m; First +12,88 m | ⚠️ |
 | Kran | Kein Kran (FL3) | Nicht gefunden — Logistikhalle Gabelstaplerbetrieb | ✅ |
 | Dachlasten | PV 0,15; Inst. 0,20; Trapez+PIR 0,35; WZ2/SLZ2 | Nicht gefunden | ➖ |
@@ -331,45 +331,43 @@ Unter Cutoff <60% (nicht relevant)
 | Baustoff | Spannbeton-Parallel-/Satteldachbinder L=24 m; B500; ST1660/1860 | Spannbeton (Spannbinder, Spannabfangeträger); Hohlkörperdecken d=20 cm; Pi-Plattendecken | ⚠️ |
 | Dachbegrünung | Explizit ausgeschlossen (0,00 kN/m²) | Nicht gefunden (trotz DGNB Gold) | ➖ |
 
-**Kernaussage:** Fertigteilwerk für Produktion — fundamental anderer Gebäudetyp (industrielle Produktion mit Kranbahnen, nicht Logistik). Komplett anderes Tragwerkskonzept mit Kranbahnrahmen, Hohlkörperdecken und Pi-Platten. Einziger Pluspunkt: ähnliche Höhe und beide in Mitteldeutschland. Niedrigster Score im Ranking.
+**Kernaussage:** Fertigteilwerk für Produktion — fundamental anderer Gebäudetyp (industrielle Produktion mit Kranbahnen, nicht Logistik). Komplett anderes Tragwerkskonzept mit Kranbahnrahmen, Hohlkörperdecken und Pi-Platten. Einziger Pluspunkt: ähnliche Höhe und beide in Mitteldeutschland. Niedrigste Punktzahl im Ranking.
 
 ---
 
 ## Zusammenfassung
 
-### Stärkste Matches
+### Stärkste Treffer
 
-**VGP Park Erfurt 3 (38882, 94%)** ist der klare Top-Match — nahezu identisches Bauprogramm in fast allen Dimensionen. Dies ist das primäre Referenzprojekt für Kalkulationszwecke.
+**VGP Park Erfurt 3 (38882, 94%)** ist der klare beste Treffer — nahezu identisches Bauprogramm in fast allen Dimensionen. Dies ist das primäre Referenzprojekt für Kalkulationszwecke.
 
 **Neubau Logistikhalle (40856, 81%)** ist das zweitbeste Referenzprojekt mit identischem Bindersystem (Spannbeton-Parallelgurtbinder l=24 m), gleichem Kalkulator und gleicher Kranlosigkeit. Die 1,50 m geringere Höhe ist der Hauptunterschied.
 
 ### Kriterien-Einfluss
 
 Die Analyse zeigt, dass **Baustoff** und **Kran** die stärksten Differenzierungsfaktoren sind:
-- Alle Projekte mit Spannbeton-Binder L=24 m und ohne Kran clustern bei ≥70%
+- Alle Projekte mit Spannbeton-Binder L=24 m und ohne Kran liegen bei ≥70%
 - Projekte mit Kran fallen auf ≤69%, unabhängig von sonstiger Ähnlichkeit
-- Holz-Dachbinder (40138 Hillwood) oder fundamental anderer Gebäudetyp (38043 Nokera) führen zu Scores unter 55%
+- Holz-Dachbinder (40138 Hillwood) oder fundamental anderer Gebäudetyp (38043 Nokera) führen zu Punktzahlen unter 55%
 
-**Kundenreferenz und Kalkulatorenwissen** wirken als Booster: alle VGP-Projekte (103166/1014) clustern höher als Nicht-VGP-Projekte bei ähnlicher Struktur. Der Kalkulator-Match (1014) ist besonders wertvoll, da er signalisiert, dass dieselbe Person beide Projekte kennt und Erfahrungswerte übertragbar sind.
+**Kundenreferenz und Kalkulatorenwissen** wirken als Verstärker: alle VGP-Projekte (103166/1014) liegen höher als Nicht-VGP-Projekte bei ähnlicher Struktur. Die Kalkulator-Übereinstimmung (1014) ist besonders wertvoll, da er signalisiert, dass dieselbe Person beide Projekte kennt und Erfahrungswerte übertragbar sind.
 
 **Dachbegrünung** erwies sich als unterschätzter Faktor: Projekte mit schwerer Dachbegrünung (40758: 1,20 kN/m²; 41740: 1,00 kN/m²) haben fundamental höhere Dachlasten als die Abfrage (0,00 kN/m²), was die Binderauslegung beeinflusst.
 
 ### Verteilung
 
-| Tier | Anzahl | Projekte |
-|------|--------|----------|
+| Stufe | Anzahl | Projekte |
+|-------|--------|----------|
 | Hoch (≥80%) | 2 | 38882, 40856 |
 | Mittel (≥70%) | 1 | 40593 |
 | Schwach (≥60%) | 4 | 39381, 41740, 41793, 41807 |
-| Unter Cutoff (<60%) | 6 | 36185, 40758, 37369, 40138, 35764, 38043 |
+| Unter Grenzwert (<60%) | 6 | 36185, 40758, 37369, 40138, 35764, 38043 |
 
-7 von 13 Referenzprojekten (54%) liegen über dem 60%-Cutoff. Die hohe Trefferquote reflektiert, dass das Referenzportfolio überwiegend aus Logistikhallen mit Spannbetonbauweise besteht — dem Kerngeschäft von REKERS.
+7 von 13 Referenzprojekten (54%) liegen über dem 60%-Grenzwert. Die hohe Trefferquote reflektiert, dass das Referenzportfolio überwiegend aus Logistikhallen mit Spannbetonbauweise besteht — dem Kerngeschäft von REKERS.
 
 ---
 
 ## Quelle
 
-- **Evidence-Docs:** `~/.claude/hippocampus/project/rekers/criteria-evidence-{ID}.md` (14 Dateien)
-- **Strukturierte Daten:** `~/Documents/projects/billable/REKERS__poc/data/2026-01-28_testdaten/Anfragen.csv`
-- **Matching-Playbook:** `.claude/tracking/issue-818/matching-playbook.md`
-- **Session:** 8a4f80bf-bbf2-43b1-963a-d7c8897f3cf4
+- **Evidence-Docs:** 14 × Kriteriennachweis-Dokumente pro Anfrage-ID
+- **Strukturierte Daten:** Anfragen.csv (Testdaten 2026-01-28)
