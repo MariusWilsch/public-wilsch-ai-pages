@@ -9,7 +9,7 @@ publish: true
 
 Das Meeting klärt zwei Themen:
 
-1. **Vertragskonsolidierung** — Invoice Agent und Code-to-TANSS laufen aktuell als separate Projekte mit Stundenerfassung. Ziel: alle UWI-Arbeitsströme in einen einzigen Vertrag zusammenführen, mit ergebnisbasierter Berichterstattung statt Zeiterfassung
+1. **Vertragskonsolidierung** — Invoice Agent und Call2TANSS laufen aktuell als separate Projekte mit Stundenerfassung. Ziel: alle UWI-Arbeitsströme in einen einzigen Vertrag zusammenführen, mit ergebnisbasierter Berichterstattung statt Zeiterfassung
 2. **März-FSO planen** — Format, Fallstudien und strategisches Ziel für das Seminar am 6. März festlegen
 
 ## Pre-Read
@@ -29,7 +29,7 @@ Das Meeting klärt zwei Themen:
 Mehrere parallele Abrechnungen (Retainer, Stunden, Einzelprojekte) erzeugen unnötige Komplexität. Ein konsolidierter Vertrag vereinfacht die Zusammenarbeit.
 
 - Aktueller Supportvertrag: FSO, Use-Cases, Workshops, Demo-Umgebung, Sales-Support
-- Separat laufend: Invoice Agent, Code-to-TANSS, Infrastruktur-Backlog (#784, #779, #640, #636)
+- Separat laufend: Invoice Agent, Call2TANSS, Infrastruktur-Backlog (#784, #779, #640, #636)
 - Ebenfalls im Scope: Thomas' Softwarebedarf (WPH-Hosting, Angebotsautomatisierung)
 - Davids operative Zeit ist Teamkosten auf Marius' Seite
 
