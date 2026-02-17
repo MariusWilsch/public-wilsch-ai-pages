@@ -36,18 +36,16 @@ The creation problem (structural inconsistency) was solved by stable components 
 
 ## Approach
 
-### Two-Phase Workflow
+### Operationalized Commands
 
-Knowledge extraction happens in two phases with distinct cognitive functions:
+The extraction pass is operationalized through two commands:
 
-| Phase | Function | Mode | Trigger |
-|-------|----------|------|---------|
-| **Rubber duck** (prerequisite) | Discover understanding you didn't know you had | Divergent — free-form spitballing, follow threads | Session starts with transcript/topic |
-| **Design doc** (this system) | Capture and verify that understanding | Convergent — structure into components, fill gaps | User-initiated: "I want to get specific now" |
+| Command | Stages | Function |
+|---------|--------|----------|
+| `/probe` | SCOPE → SURFACE → RESOLVE | Investigate — surface uncertainties, probe for understanding |
+| `/capture` | UPDATE → ASSESS | Write — formalize resolutions into design doc and/or meeting agenda |
 
-**Why both phases are needed:** The rubber duck phase produces insights through following threads freely (e.g., "Step 2 mapping isn't just documentation — it's the transformation rule"). If you skip to components immediately, you only capture what you already know. The divergent phase discovers what you didn't know you knew.
-
-**Transition signal:** User feels ready to get specific. Not a rule or threshold — a judgment call when divergent thinking stops producing new territory.
+Commands absorb the extraction pass methodology mechanics. The JA protocol (`CLAUDE.md`) retains the principles (authority model, confidence philosophy, communication standards). Commands encode the HOW. Protocol encodes the WHEN/WHY.
 
 ### Stable Components
 
@@ -220,6 +218,7 @@ The extraction pass workflow (SCOPE→SURFACE→RESOLVE→UPDATE→ASSESS) defin
 | 7 | **Phase discipline: SURFACE lists, RESOLVE discusses** | SURFACE produces a numbered list — no discussion, no resolution attempts. Even interesting findings become list items, not conversations. RESOLVE is where discussion happens. |
 | 8 | **Source authority belongs to the user** | SURFACE reads part text (always) + user-provided strategic sources. AI never autonomously selects which transcripts to read during SURFACE. Historic transcripts are RESOLVE resources, mined when directed. |
 | 9 | **Not resolving is a valid outcome** | No pressure toward false resolution. Unresolved → meeting agenda (external info needed), next extraction pass (more thinking), or backtrack (wrong path). |
+| 10 | **Three-dimensional confidence** | Confidence = fact (sourced?) + mechanics (how?) + reasoning (why?). High across all three → present draft. Medium/low on any → probe deeper. Presenting without all three = premature. |
 
 **Decisions section (V1):**
 
@@ -243,6 +242,10 @@ The WHY column captures reasoning surfaced during RESOLVE — the part that push
 
 The other half of the system. When a design doc component is **Undefined**, its uncertainty moves to a meeting agenda. The meeting fills the gap. The design doc gets updated. The agenda is not a checklist — it's a container for facilitated discovery.
 
+**Creation rule:** Meeting agendas are born during the extraction pass UPDATE step, in the same commit that adds `**Undefined:**` markers to the design doc. They are not created as a standalone task. Every Undefined marker generates exactly one discussion topic — 1:1 mapping, no exceptions. The marker in the design doc links to the meeting agenda topic. The meeting agenda Pre-Read links back to the design doc.
+
+**Why 1:1 matters for extraction:** When a future AI processes the meeting transcript during RESOLVE, the 1:1 mapping lets it trace each discussed topic back to the specific Undefined marker in the design doc. The meeting agenda topic is the bridge between what was discussed (transcript) and where the resolution belongs (design doc section). Without this mapping, connecting transcript content to design doc updates is significantly harder.
+
 ### Stable Structure
 
 Every meeting agenda answers five questions:
@@ -261,13 +264,31 @@ Meeting Goal and Discussion Topics are always present. Pre-Read and Meeting Form
 
 | Principle | Rule |
 |-----------|------|
-| **Statements, not questions** | Don't interrogate — open space. Questions lead. Statements invite. |
+| **Statements, not questions** | Don't interrogate — open space. Questions lead participants toward a specific frame, narrowing the answer space before discussion begins. Statements present the uncertainty without directing how to enter it. The facilitator sees the statement as a visual stimulus and decides in-context which question to ask — the agenda is a trigger, not an interrogation script. |
 | **Starting points, not exhaustive** | "Starting points for discussion, not limited to these." Topics open the conversation, don't constrain it. |
 | **First-person perspective** | Write for the reader (participant), not third-person observation |
 | **No facilitation meta-commentary** | Direct quotes as starters, not "conversation prompt:" framing |
 | **Process-general framing** | "What challenges exist in determining hierarchy?" not "What challenges will AI face?" |
 | **Stimulus-based facilitation** | Present something concrete → let participants react → infer the process |
 | **No "Next Steps" section** | Implied by meeting format |
+| **One topic per Undefined marker** | Every `**Undefined:**` marker in a design doc generates exactly one discussion topic. 1:1 mapping. The marker links to the topic, the topic links back to the design doc section. |
+| **Single ask per topic** | Each topic ends with one `**To resolve:**` statement — a single sentence describing the resolution space. Not multiple asks, not questions. The context bullets above carry the specifics. |
+| **Time allocation** | Each topic gets a time estimate (⏱️ X min). Prevents meetings from running over and gives participants a visual cue of priority. |
+
+### Component-by-Component Rhythm
+
+Meeting agendas are created one section at a time, never all at once. AI drafts ONE component, user validates, then next. This is the same rhythm as design doc creation.
+
+**Order:**
+1. Meeting Goal
+2. Pre-Read
+3. Discussion Topics (one topic at a time, each with its own gate)
+4. Meeting Format
+5. Related
+
+**Turn rule:** Always complete the component draft AND surface any AI uncertainties in the same turn. Uncertainties are always AskUserQuestion — never plain text questions. The user sees: finished draft + structured question(s) in one response.
+
+**Gate:** Apply / Adjust via AskUserQuestion after each component. AI does not advance without explicit approval.
 
 ### The Design Doc ↔ Meeting Agenda Flow
 
@@ -294,6 +315,7 @@ The attendee reads the design doc before the meeting. The discussion topics are 
   - `77fa2cc5` — Meeting agenda friction points (perspective, verification, format preferences)
 
 **Extraction pass methodology:**
+- **Command creation session (extraction pass → /probe + /capture):** /Users/verdant/.claude/projects/-Users-verdant-Documents-projects-00-WILSCH-AI-INTERNAL--soloforce/a07710d3-59c0-4247-9581-dc1fdfe2b835.jsonl
 - **Rubber-duck session:** /Users/verdant/.claude/projects/-Users-verdant-Documents-projects-WILSCH-AI-INTERNAL--soloforce/6269c598-82a4-49fe-892d-52ba74662ea8.jsonl
 - **SURFACE in practice:** `cb7381c0` — REKERS extraction attempt (failure points: probe-first vs list-first, pacing control, 16 uncertainties surfaced)
 - **Evidence conversations (7 analyzed via parallel agents):**
