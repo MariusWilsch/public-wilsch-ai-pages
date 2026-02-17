@@ -45,9 +45,17 @@ Projekt: Logistikhalle, ~27.000 m², Angebotssumme €5.569K, Datum 2024-11-11. 
 | Kundenreferenz | 1,0× | Gleicher Bauherr = ähnliches Programm |
 | Kalkulatorenwissen | 1,0× | Gleicher Kalkulator kennt beide Projekte |
 
-**Bewertungsskala:** ✅ Starke Übereinstimmung (1,0) · ⚠️ Teilweise (0,3–0,7) · ❌ Keine Übereinstimmung (0,0) · ➖ Nicht gefunden (0,5 — neutral)
+**Bewertungsskala:**
+✅ Starke Übereinstimmung (1,0)
+⚠️ Teilweise (0,3–0,7)
+❌ Keine Übereinstimmung (0,0)
+➖ Nicht gefunden (0,5 — neutral)
 
-**Tiers:** Hoch ≥80% · Mittel ≥70% · Schwach ≥60% · Unter Cutoff <60% (nicht relevant)
+**Tiers:**
+Hoch ≥80%
+Mittel ≥70%
+Schwach ≥60%
+Unter Cutoff <60% (nicht relevant)
 
 ---
 
