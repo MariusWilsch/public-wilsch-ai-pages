@@ -61,7 +61,7 @@ The Developer Operations Manual is the inclusion filter. Every file that maps to
 | `/requirements-clarity` | Command | Required | Ship (remove discovery script) |
 | `/implementation-clarity` | Command | Required | Ship (keep discovery script — worktree) |
 | `/evaluation-clarity` | Command | Required | Ship (remove discovery script) |
-| `worktree` | Skill | Optional | Ship (ask in onboarding) |
+| `worktree` | Skill | Optional | Ship (ask in implementation-clarity) |
 
 **Path B — Verification Session:**
 
@@ -104,7 +104,7 @@ Discovery script kept in `/implementation-clarity` only (worktree). Removed from
 
 ### Part 5: Execute & Task Complete
 
-**Worktree:** Optional. Asked in onboarding. No worktree = no branch enforcement, no draft PR. User's responsibility.
+**Worktree:** Optional. Asked in implementation-clarity. No worktree = no branch enforcement, no draft PR. User's responsibility.
 
 **Task Complete protocol** extended:
 1. Push to remote (evidence checkpoint)
@@ -113,7 +113,7 @@ Discovery script kept in `/implementation-clarity` only (worktree). Removed from
 4. AskUserQuestion — "Post as issue comment? Yes / No"
 5. If yes → `/issue-comment` with proposed next step
 
-**Undefined: DoD update in tracking.md** — untested. Marius verifying this week. → See [Meeting Agenda](https://mariuswilsch.github.io/public-wilsch-ai-pages/project/traceline/meeting-agenda-beta-launch-scope-2026-02-16)
+**DoD update:** Task Complete updates DoD checkboxes after execution. Verified working — ships as-is.
 
 ### Part 6: GitHub Integration & Repo Architecture
 
@@ -131,6 +131,107 @@ Routes to CCI via GitHub Action workflow dispatch in plugin repo. PAT stored as 
 
 **Undefined: Voice note feedback mechanism** → See [Meeting Agenda](https://mariuswilsch.github.io/public-wilsch-ai-pages/project/traceline/meeting-agenda-beta-launch-scope-2026-02-16)
 
+### Part 8: Plan Mode Prevention
+
+Claude Code's native plan mode (read-only, triggered via Shift+Tab or EnterPlanMode tool) conflicts with the system's clarity workflow. Three layers prevent accidental activation:
+
+| Layer | Mechanism | Scope |
+|-------|-----------|-------|
+| Plugin `hooks.json` | PreToolUse deny on `EnterPlanMode` | Blocks AI from entering plan mode |
+| Setup script | `permissions.defaultMode: "default"` in settings.json | Session starts in normal mode |
+| Plugin `CLAUDE.md` | "Use clarity workflow, not native plan mode" | Instruction reinforcement |
+
+User-side gap: Shift+Tab still cycles through plan mode (no technical block available). README documents: "stay in normal or auto-accept mode."
+
+### Part 9: MCP & Tool Inventory
+
+Four MCP servers ship bundled in the plugin via `.mcp.json`. All are universal — every user benefits regardless of stack.
+
+| MCP | Purpose | Used By |
+|-----|---------|---------|
+| Sequential Thinking | Structured reasoning | Cross-cutting (onboarding, rubber-duck, clarity) |
+| Chrome DevTools | UI verification | AC Verify (UI layer) |
+| Context7 | Library documentation lookup | Cross-cutting |
+| Read Website Fast | Web content access | Cross-cutting |
+
+**Cut:** Fireflies (personal infrastructure), Supabase (personal database).
+
+**AC Verify routing** determines which tool verifies each acceptance criterion:
+
+| Verification Layer | Tool | Ships With Plugin? |
+|-------------------|------|--------------------|
+| UI | Chrome DevTools MCP | Yes |
+| API | curl / bash | Yes (built-in) |
+| Database | User's database MCP | No — stack-dependent |
+
+Database verification is the only stack-dependent element. README provides guidance: "AC Verify routes database checks through your database MCP" with links to MongoDB, Postgres, Supabase, and MySQL MCP servers. Users configure their own.
+
+**Delivery:** MCPs bundled directly in the plugin (not via meta-MCP layer). Experimental MCP CLI flag stays enabled — removal untested.
+
+### Part 10: Settings & Environment Configuration
+
+The plugin delivery splits between what the plugin handles natively and what a setup script configures.
+
+**Plugin native (no user action):**
+
+| Component | Plugin File | Purpose |
+|-----------|------------|---------|
+| Hooks | `hooks.json` | PreToolUse deny on EnterPlanMode |
+| MCP servers | `.mcp.json` | 4 bundled MCPs |
+| LSP config | `.lsp.json` | Language server connections (TypeScript, Python) |
+| Skills | `skills/` | Workflow skills (ac-create, worktree, etc.) |
+| Commands | `commands/` | Onboarding, clarity phases, etc. |
+| Instructions | `CLAUDE.md` | Protocol, workflow rules |
+
+**Setup script (runs once at install):**
+
+The script handles three categories: settings, protocol, and dependencies.
+
+*Settings:* Writes `settings.json` with `env.CLAUDE_CODE_DISABLE_AUTO_MEMORY`, `permissions.defaultMode`, empty allow-list.
+
+*Protocol:* Copies the CLAUDE.md protocol to the user's project. The plugin bundles CLAUDE.md for plugin-level instructions, but the setup script ensures the project-level protocol is in place.
+
+*Dependencies:*
+
+| Dependency | Install Method | Required For |
+|-----------|---------------|-------------|
+| Claude Code (pinned version) | `claude update` or native installer | Core runtime |
+| LSP binaries | `npm install -g typescript-language-server` | Back pressure loop (diagnostics) |
+| LSP plugins | `claude plugin install typescript-lsp@...` | LSP configuration |
+| gh (GitHub CLI) | `brew install gh` / system package | Issue integration, commit linker |
+| uv | `curl -LsSf https://astral.sh/uv/install.sh` | Bootstrap scripts |
+| GTA (opt-in) | Install if user enables worktrees | Git worktree automation |
+| Chrome DevTools | MCP server binary | UI verification in AC Verify |
+
+Draft inventory — validated with Christoph during tutorial building.
+
+**Undefined: Script trigger mechanism** — how the user discovers and runs the setup script (CLI command, GitHub URL, npm postinstall, manual download). → See [Meeting Agenda](https://mariuswilsch.github.io/public-wilsch-ai-pages/project/traceline/meeting-agenda-beta-launch-scope-2026-02-16)
+
+*Settings shipped:*
+
+| Setting | Delivery | Rationale |
+|---------|----------|-----------|
+| Disable auto memory | `env` key in settings.json | Auto memory conflicts with protocol-driven workflow |
+| Default permission mode | `permissions.defaultMode` | Session starts in normal mode, not plan mode |
+| Allow-list | Empty (not pre-configured) | Users configure their own permissions |
+| Auto-forward | Not shipped | Users should observe output before auto-approving |
+
+**LSP:** Plugin configures language server connections via `.lsp.json`. Setup script installs binaries. LSP creates a back pressure loop: AI edits → language server catches errors instantly → AI fixes in the same turn. No compiler run needed.
+
+**Version pinning:** Minimum version 2.1.32 (first to support Opus 4.6). Exact version pinned at launch after stability testing. Version pinning is a value proposition: "We test and determine the most stable version with the best prompt and feature compatibility."
+
+### Part 11: Tutorial & README
+
+**Tutorial:** The `--sdk-url` flag turns the Claude Code terminal into a WebSocket connection, powering a scripted walkthrough. The AI guides the user through Path A (spec-design) and Path B (spec-implement) using a fake issue. Dual purpose: Christoph learns the system while building the onboarding artifact. Litmus test: if Path B can't be scripted with a fake issue, the system isn't self-explanatory.
+
+**Owner:** Christoph. "Lass mich erstmal das Tutorial bauen."
+
+**README structure:**
+1. **Vision** — what way of thinking we're selling (long-term, not product description — "it's a beta, describing it as a product would be stupid")
+2. **Setup** — how to install and get running (setup script output)
+
+**Undefined: Positioning language** — what word describes what we're selling. "Assistant" has no differentiation, "interaction patterns" is too academic, "behavioral scripts" too clinical. Tweakability and compounding knowledge are differentiators, but the framing isn't locked. → See [Meeting Agenda](https://mariuswilsch.github.io/public-wilsch-ai-pages/project/traceline/meeting-agenda-beta-launch-scope-2026-02-16)
+
 ---
 
 ## Source
@@ -140,4 +241,7 @@ Routes to CCI via GitHub Action workflow dispatch in plugin repo. PAT stored as 
 - **Meeting Agendas:**
   - [Product Vision & Launch (2026-02-14)](https://mariuswilsch.github.io/public-wilsch-ai-pages/global/meeting-agenda-product-vision-launch-2026-02-14)
   - [Developer Launch Deep Dive (2026-02-15)](https://mariuswilsch.github.io/public-wilsch-ai-pages/global/meeting-agenda-developer-launch-deep-dive-2026-02-15)
-- **Session:** `/Users/verdant/.claude/projects/-Users-verdant-Documents-projects-00-WILSCH-AI-INTERNAL--soloforce/3cc5c4cd-ca43-45fc-962d-80081a8dd692.jsonl`
+- **Sessions:**
+  - `/Users/verdant/.claude/projects/-Users-verdant-Documents-projects-00-WILSCH-AI-INTERNAL--soloforce/3cc5c4cd-ca43-45fc-962d-80081a8dd692.jsonl` (Parts 1-7)
+  - `/Users/verdant/.claude/projects/-Users-verdant-Documents-projects-00-WILSCH-AI-INTERNAL--soloforce/3780c35e-84ce-4e34-a868-d5113ff12389.jsonl` (Parts 8-11)
+- **Beta User List:** [Traceline Beta User List](https://docs.google.com/spreadsheets/d/1NL6ZeNIE67t7jE9JJfwQXlneN4UYrcASvlNVcIu5n68/edit)
