@@ -77,7 +77,9 @@ Position Agreement for the System Engineer position at Wilsch AI Services. Frame
 
 2. **Evidence must be captured and connected to an issue at flagging time.** Every flagged behavior issue must include the conversation path, linked to the CCI issue at the moment of discovery. An issue without evidence is nearly impossible to fix — it is extremely hard for a human to explain what's going wrong. The AI needs to see the conversation to understand the problem.
 
-3. All CCI issues must be labeled by affected position and linked to parent epic within 2 business days of creation.
+3. **All CCI issues must have evidence at creation time** — conversation path, transcript link, or equivalent. Issues should preferably collect additional evidence over time as more instances of the behavior are observed.
+
+4. All CCI issues must be labeled by affected position and linked to parent epic within 2 business days of creation.
 
 4. **All artifact fixes must include an evidence path or equivalent.** Every artifact change (skill, command, hook, protocol/persona, plugin, external tool config) must link to the evidence that motivated the change — conversation path, transcript URL, or issue reference.
 
