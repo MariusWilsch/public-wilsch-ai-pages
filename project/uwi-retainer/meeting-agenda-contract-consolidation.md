@@ -7,14 +7,14 @@ publish: true
 
 ## Meeting-Ziel
 
-Das Meeting klärt zwei Themen, bevor der aktuelle Supportvertrag Ende Februar ausläuft:
+Das Meeting klärt zwei Themen:
 
-1. **Vertragskonsolidierung** — Alle UWI-Arbeitsströme (Retainer, Invoice Agent, Code-to-TANSS, Infrastruktur-Backlog) in einen einzigen Vertrag zusammenführen, mit ergebnisbasierter Berichterstattung statt Stundenerfassung
+1. **Vertragskonsolidierung** — Invoice Agent und Code-to-TANSS laufen aktuell als separate Projekte mit Stundenerfassung. Ziel: alle UWI-Arbeitsströme in einen einzigen Vertrag zusammenführen, mit ergebnisbasierter Berichterstattung statt Zeiterfassung
 2. **März-FSO planen** — Format, Fallstudien und strategisches Ziel für das Seminar am 6. März festlegen
 
 ## Pre-Read
 
-- [Supportvertrag Dezember 2025](https://mariuswilsch.github.io/public-wilsch-ai-pages/project/wilsch-group/supportvertrag-dezember-2025) — aktueller Vertrag (läuft 28. Februar aus)
+- [Supportvertrag Dezember 2025](https://mariuswilsch.github.io/public-wilsch-ai-pages/project/wilsch-group/supportvertrag-dezember-2025) — aktueller Vertrag (läuft Ende März aus)
 - [Backlog-Priorisierung](https://mariuswilsch.github.io/public-wilsch-ai-pages/project/uwi-retainer/meeting-agenda-backlog-prioritization) — Ergebnis des letzten Meetings mit David und Ulrich
 
 ---
