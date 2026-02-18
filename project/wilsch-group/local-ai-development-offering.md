@@ -18,7 +18,7 @@ Wichtig: Anonymisierte Daten (echte Schemastruktur, synthetische Werte) sind fü
 Heute fehlt uns eine glaubwürdige lokale Alternative für genau diese Kunden. Ohne eine solche Alternative verlieren wir Aufträge, bei denen Datensensibilität nicht verhandelbar ist.
 
 **Voraussetzungen:**
-- Open-Source-Frontier-Modelle (Qwen3.5-397B, GLM-5, Kimi K2.5) erreichen mittlerweile Cloud-Modell-Qualität für Code-Implementierungsaufgaben
+- Open-Source-Frontier-Modelle (Qwen3.5-397B, GLM-5, Kimi K2.5) erreichen mittlerweile Claude Code 4.5 (Sonnet/Opus)-Qualität für Code-Implementierungsaufgaben
 - Consumer-Hardware (Mac Studio 512GB) kann diese Modelle in produktionsreifer Präzision (FP8) für unter 10.000€ betreiben
 - Mindestens ein aktiver Kundenprospekt hat Datensensibilitätsanforderungen, die Anthropics Standard-DPA nicht vollständig abdecken kann
 
