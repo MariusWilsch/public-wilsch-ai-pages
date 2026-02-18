@@ -86,10 +86,10 @@ Die DPA (Datenverarbeitungsvereinbarung) bestimmt, welche Stufe ein Kunde benöt
 
 | System | GPU-Speicher | Bandbreite | Preis | Qwen3.5 FP8? | Formfaktor |
 |--------|-------------|-----------|-------|--------------|------------|
-| **Mac Studio M3 Ultra** | 512GB unified | 819 GB/s | ~9.500€ | ✅ | Desktop |
-| **Mac Studio M5 Ultra** *(erwartet)* | 512GB unified | ~1.100 GB/s | ~9.000€ | ✅ | Desktop |
-| **Tinybox Red v2** | 144GB diskret (6× 7900XTX) | ~1 TB/s | ~12.000€ | ✅ | 12U Rack |
-| **NVIDIA DGX Spark** | 128GB unified | 273 GB/s | ~4.000€ | ✅ | Desktop |
+| **[Mac Studio M3 Ultra](https://www.apple.com/mac-studio/specs/)** | 512GB unified | 819 GB/s | ~9.500€ | ✅ | Desktop |
+| **[Mac Studio M5 Ultra](https://www.macworld.com/article/2973459/2026-mac-studio-what-we-know-about-the-upcoming-m5-update.html)** *(erwartet)* | 512GB unified | ~1.100 GB/s | ~9.000€ | ✅ | Desktop |
+| **[Tinybox Red v2](https://tinycorp.myshopify.com/products/tinybox-red-v2)** | 144GB diskret (6× 7900XTX) | ~1 TB/s | ~12.000€ | ✅ | 12U Rack |
+| **[NVIDIA DGX Spark](https://www.nvidia.com/en-us/products/workstations/dgx-spark/)** | 128GB unified | 273 GB/s | ~4.000€ | ✅ | Desktop |
 
 **Warum Mac Studio:** 512GB Unified Memory (3,5× mehr als Tinybox), Desktop-Formfaktor, ~100W Stromverbrauch (vs. 3.200W bei Tinybox), Betriebssystemintegration für Entwicklungsworkflows. Höchste Speicherkapazität im Budget unter 10.000€.
 
