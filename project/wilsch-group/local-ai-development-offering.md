@@ -99,23 +99,27 @@ Die DPA (Datenverarbeitungsvereinbarung) bestimmt, welche Stufe ein Kunde benöt
 
 **Anthropic Commercial Terms — Kernfakten (Stand Februar 2026):**
 
-| Aspekt | Status | Quelle |
-|--------|--------|--------|
-| Kein Training auf API-Daten | ✅ Vertraglich verboten | [Commercial Terms §B](https://www.anthropic.com/legal/commercial-terms) |
-| 30 Tage Datenspeicherung (API) | ✅ Dann automatisch gelöscht | [Retention Policy](https://privacy.anthropic.com/en/articles/7996866-how-long-do-you-store-personal-data) |
-| DPA automatisch enthalten | ✅ Keine separate Verhandlung | [DPA](https://www.anthropic.com/legal/data-processing-addendum) |
-| EU-Vertragspartner | ✅ Anthropic Ireland, Limited | [Regional Compliance](https://claude.com/regional-compliance) |
-| SOC 2 Type 2, ISO 27001 | ✅ Zertifiziert | [Regional Compliance](https://claude.com/regional-compliance) |
+| Aspekt | Status | Gilt für | Quelle |
+|--------|--------|----------|--------|
+| Kein Training auf API-Daten | ✅ Vertraglich verboten | Nur Commercial API | [Commercial Terms §B](https://www.anthropic.com/legal/commercial-terms) |
+| Training auf Nutzerdaten | ⚠️ Standard aktiv, Opt-out möglich | Nur Consumer (claude.ai) | [Privacy Policy](https://www.anthropic.com/legal/privacy) |
+| 30 Tage Datenspeicherung | ✅ Dann automatisch gelöscht | Nur Commercial API | [Retention Policy](https://privacy.anthropic.com/en/articles/7996866-how-long-do-you-store-personal-data) |
+| Datenspeicherung solange Konto aktiv | ⚠️ Löschung erst auf Anfrage | Nur Consumer (claude.ai) | [Consumer Retention](https://privacy.anthropic.com/en/articles/10023548-how-long-do-you-store-personal-data) |
+| DPA automatisch enthalten | ✅ Keine separate Verhandlung | Nur Commercial API | [DPA](https://www.anthropic.com/legal/data-processing-addendum) |
+| EU-Vertragspartner (Anthropic Ireland) | ✅ | Beide | [Regional Compliance](https://claude.com/regional-compliance) |
+| SOC 2 Type 2, ISO 27001 | ✅ Zertifiziert | Beide | [Regional Compliance](https://claude.com/regional-compliance) |
+
+**⚠️ Wichtig:** Für Kundenarbeit ausschließlich die Commercial API (nicht claude.ai) verwenden. Bei Consumer-Nutzung ist Anthropic Datenverantwortlicher und trainiert standardmäßig auf Eingaben.
 
 **Bekannte Einwandspunkte für regulierte Kunden:**
 
-| Schwere | Problem |
-|---------|---------|
-| **Hoch** | US CLOUD Act — SCCs schützen nicht vor US-Behördenzugriff auf Anthropic PBC |
-| **Hoch** | Standard-API garantiert keine EU-Datenresidenz — erfordert Bedrock/Vertex EU |
-| **Hoch** | Vage „harmful use"-Löschausnahme — potenziell unbefristete Speicherung |
-| **Mittel** | Safety-Review kann Daten 2 Jahre speichern, wenn Classifier auslöst |
-| **Mittel** | Sub-Processor-Liste ist rollierend, 15-Tage-Einspruchsfrist |
+| Schwere | Problem | Gilt für |
+|---------|---------|----------|
+| **Hoch** | US CLOUD Act — SCCs schützen nicht vor US-Behördenzugriff auf Anthropic PBC | Beide |
+| **Hoch** | Standard-API garantiert keine EU-Datenresidenz — erfordert Bedrock/Vertex EU | Nur Commercial API |
+| **Hoch** | Vage „harmful use"-Löschausnahme — potenziell unbefristete Speicherung | Beide |
+| **Mittel** | Safety-Review kann Daten 2 Jahre speichern, wenn Classifier auslöst | Beide |
+| **Mittel** | Sub-Processor-Liste ist rollierend, 15-Tage-Einspruchsfrist | Nur Commercial API |
 
 **→ Kunden mit diesen Einwänden werden auf Stufe 2/3 (lokale Inferenz) geleitet.**
 
