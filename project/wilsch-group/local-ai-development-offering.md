@@ -59,11 +59,11 @@ Die DPA (Datenverarbeitungsvereinbarung) bestimmt, welche Stufe ein Kunde benöt
 
 **Aktueller Stand (Februar 2026):** Drei Frontier-Open-Source-Modelle wurden evaluiert:
 
-| Modell | Parameter | Aktive Parameter | FP8-Speicherbedarf | Passt auf 512GB? |
-|--------|-----------|-----------------|-------------------|-----------------|
-| **Qwen3.5-397B** | 397 Mrd. (MoE) | 17 Mrd. | ~397 GB | ✅ Ja |
-| **GLM-5** | 744 Mrd. (MoE) | 40 Mrd. | ~744 GB | ❌ Nein |
-| **Kimi K2.5** | 1 Bio. (MoE) | 32 Mrd. | ~600+ GB | ❌ Nein |
+| Modell | Parameter | Aktive Parameter | FP8-Speicherbedarf | Passt auf 512GB? | Lizenz |
+|--------|-----------|-----------------|-------------------|-----------------|--------|
+| **[Qwen3.5-397B](https://huggingface.co/Qwen/Qwen3.5-397B-A17B)** | 397 Mrd. (MoE) | 17 Mrd. | ~397 GB | ✅ Ja | [Apache 2.0](https://huggingface.co/Qwen/Qwen3.5-397B-A17B) — kommerziell uneingeschränkt |
+| **[GLM-5](https://huggingface.co/zai-org/GLM-5)** | 744 Mrd. (MoE) | 40 Mrd. | ~744 GB | ❌ Nein | [MIT](https://glm5.net/) — kommerziell uneingeschränkt |
+| **[Kimi K2.5](https://huggingface.co/moonshotai/Kimi-K2.5)** | 1 Bio. (MoE) | 32 Mrd. | ~600+ GB | ❌ Nein | [Modified MIT](https://github.com/MoonshotAI/Kimi-K2.5/blob/master/LICENSE) — kommerziell frei unter 100M MAU |
 
 **Ergebnis:** Qwen3.5-397B ist aktuell das einzige Frontier-Modell, das bei FP8-Präzision auf einer einzelnen Maschine (512GB) läuft. GLM-5 und Kimi K2.5 erfordern Multi-Maschinen-Clustering via [EXO](https://github.com/exo-explore/exo).
 
@@ -97,35 +97,52 @@ Die DPA (Datenverarbeitungsvereinbarung) bestimmt, welche Stufe ein Kunde benöt
 
 ### 4. Rechtlicher Rahmen
 
-**Anthropic Commercial Terms — Kernfakten (Stand Februar 2026):**
+Anthropic (der Hersteller von Claude) bietet zwei verschiedene Produkte mit **grundlegend unterschiedlichen Datenschutzbedingungen**. Für die Bewertung ist es entscheidend, diese Unterscheidung zu verstehen.
 
-| Aspekt | Status | Gilt für | Quelle |
-|--------|--------|----------|--------|
-| Kein Training auf API-Daten | ✅ Vertraglich verboten | Nur Commercial API | [Commercial Terms §B](https://www.anthropic.com/legal/commercial-terms) |
-| Training auf Nutzerdaten | ⚠️ Standard aktiv, Opt-out möglich | Nur Consumer (claude.ai) | [Privacy Policy](https://www.anthropic.com/legal/privacy) |
-| 30 Tage Datenspeicherung | ✅ Dann automatisch gelöscht | Nur Commercial API | [Retention Policy](https://privacy.anthropic.com/en/articles/7996866-how-long-do-you-store-personal-data) |
-| Datenspeicherung solange Konto aktiv | ⚠️ Löschung erst auf Anfrage | Nur Consumer (claude.ai) | [Consumer Retention](https://privacy.anthropic.com/en/articles/10023548-how-long-do-you-store-personal-data) |
-| DPA automatisch enthalten | ✅ Keine separate Verhandlung | Nur Commercial API | [DPA](https://www.anthropic.com/legal/data-processing-addendum) |
-| EU-Vertragspartner (Anthropic Ireland) | ✅ | Beide | [Regional Compliance](https://claude.com/regional-compliance) |
-| SOC 2 Type 2, ISO 27001 | ✅ Zertifiziert | Beide | [Regional Compliance](https://claude.com/regional-compliance) |
+> **Legende:**
+>
+> 🏢 **Commercial** = Anthropic API — das Produkt für Unternehmen. Wir nutzen dies für Kundenarbeit. Anthropic ist hier Auftragsverarbeiter, der Kunde bleibt Datenverantwortlicher. Anthropic stellt eine eigene [DPA (Datenverarbeitungsvereinbarung)](https://www.anthropic.com/legal/data-processing-addendum) bereit, die automatisch gilt — keine separate Verhandlung nötig.
+>
+> 👤 **Consumer** = claude.ai — das Produkt für Endverbraucher. Anthropic ist hier selbst Datenverantwortlicher. Keine DPA, andere Regeln. **Darf nicht für Kundenarbeit verwendet werden.**
 
-**⚠️ Wichtig:** Für Kundenarbeit ausschließlich die Commercial API (nicht claude.ai) verwenden. Bei Consumer-Nutzung ist Anthropic Datenverantwortlicher und trainiert standardmäßig auf Eingaben.
+#### Was Anthropic zusichert (Stand Februar 2026)
 
-**Bekannte Einwandspunkte für regulierte Kunden:**
+**Training auf Daten:**
+- 🏢 Commercial: Kein Training auf Kundendaten — vertraglich verboten ([Commercial Terms §B](https://www.anthropic.com/legal/commercial-terms))
+- 👤 Consumer: Training standardmäßig aktiv, Opt-out möglich ([Privacy Policy](https://www.anthropic.com/legal/privacy))
 
-| Schwere | Problem | Gilt für |
-|---------|---------|----------|
-| **Hoch** | US CLOUD Act — SCCs schützen nicht vor US-Behördenzugriff auf Anthropic PBC | Beide |
-| **Hoch** | Standard-API garantiert keine EU-Datenresidenz — erfordert Bedrock/Vertex EU | Nur Commercial API |
-| **Hoch** | Vage „harmful use"-Löschausnahme — potenziell unbefristete Speicherung | Beide |
-| **Mittel** | Safety-Review kann Daten 2 Jahre speichern, wenn Classifier auslöst | Beide |
-| **Mittel** | Sub-Processor-Liste ist rollierend, 15-Tage-Einspruchsfrist | Nur Commercial API |
+**Datenspeicherung:**
+- 🏢 Commercial: 30 Tage, dann automatisch gelöscht ([Retention Policy](https://privacy.anthropic.com/en/articles/7996866-how-long-do-you-store-personal-data))
+- 👤 Consumer: Solange Konto aktiv, Löschung erst auf Anfrage ([Consumer Retention](https://privacy.anthropic.com/en/articles/10023548-how-long-do-you-store-personal-data))
+
+**DPA (Datenverarbeitungsvereinbarung):**
+- 🏢 Commercial: Anthropic stellt eigene DPA bereit, automatisch im Vertrag enthalten ([Anthropic DPA](https://www.anthropic.com/legal/data-processing-addendum))
+- 👤 Consumer: Keine DPA — Anthropic ist selbst Verantwortlicher
+
+**EU-Vertragspartner:**
+- 🏢 👤 Beide: Anthropic Ireland, Limited ([Regional Compliance](https://claude.com/regional-compliance))
+
+**Zertifizierungen:**
+- 🏢 👤 Beide: SOC 2 Type 2, ISO 27001, ISO 27017, ISO 27018 ([Regional Compliance](https://claude.com/regional-compliance))
+
+#### Bekannte Einwandspunkte für regulierte Kunden
+
+Auch mit der Commercial API und Anthropics DPA bleiben folgende Punkte, die regulierte Kunden (BaFin, KRITIS, Gesundheitswesen) bemängeln können:
+
+**Hohes Risiko:**
+- 🏢 👤 **US CLOUD Act** — SCCs (Standardvertragsklauseln) schützen nicht vor US-Behördenzugriff auf Anthropic PBC als US-Muttergesellschaft
+- 🏢 **Keine EU-Datenresidenz garantiert** — die Standard-API routet global. EU-Verarbeitung nur über AWS Bedrock EU oder GCP Vertex EU möglich (erfordert separate Konfiguration)
+- 🏢 👤 **Vage „harmful use"-Löschausnahme** — Anthropic darf Daten potenziell unbefristet speichern, wenn sie als schädlich eingestuft werden
+
+**Mittleres Risiko:**
+- 🏢 👤 **Safety-Review** — wenn Anthropics Classifier Inhalte flaggt, können Daten bis zu 2 Jahre gespeichert werden, unabhängig von anderen Löschfristen
+- 🏢 **Sub-Processor-Liste** — nicht vertraglich fixiert, rollierend aktualisiert, nur 15 Tage Einspruchsfrist für neue Sub-Processors
 
 **→ Kunden mit diesen Einwänden werden auf Stufe 2/3 (lokale Inferenz) geleitet.**
 
-**Offene Aufgabe:** Für Stufe 2/3 benötigen wir eine eigene DPA (Datenverarbeitungsvereinbarung), die regelt, wie wir Kundendaten auf unserem Mac Studio handhaben. Dies ist ein separates Arbeitspaket und erfordert juristische Prüfung.
+#### Offene Aufgaben
 
-**Undefined:** Wilsch AI DPA für lokale Infrastruktur → [siehe Meeting-Agenda](https://mariuswilsch.github.io/public-wilsch-ai-pages/project/wilsch-group/local-ai-development-meeting-agenda)
+**Undefined:** Für Stufe 2/3 benötigen wir eine eigene Wilsch AI DPA, die regelt, wie wir Kundendaten auf unserem Mac Studio handhaben. Separates Arbeitspaket, erfordert juristische Prüfung. → [siehe Meeting-Agenda](https://mariuswilsch.github.io/public-wilsch-ai-pages/project/wilsch-group/local-ai-development-meeting-agenda)
 
 **Undefined:** Preismodell für lokale Entwicklungsstufen → [siehe Meeting-Agenda](https://mariuswilsch.github.io/public-wilsch-ai-pages/project/wilsch-group/local-ai-development-meeting-agenda)
 
