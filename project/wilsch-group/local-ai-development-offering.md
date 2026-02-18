@@ -93,7 +93,7 @@ Die DPA (Datenverarbeitungsvereinbarung) bestimmt, welche Stufe ein Kunde benöt
 
 **Warum Mac Studio:** 512GB Unified Memory (3,5× mehr als Tinybox), Desktop-Formfaktor, ~100W Stromverbrauch (vs. 3.200W bei Tinybox), Betriebssystemintegration für Entwicklungsworkflows. Höchste Speicherkapazität im Budget unter 10.000€.
 
-**Skalierungsoption:** [EXO](https://github.com/exo-explore/exo) (kostenlos, Open Source) ermöglicht es, mehrere Maschinen zu einem Cluster zu verbinden — für zukünftige Modelle, die >512GB bei FP8 benötigen. Thunderbolt 5 am Mac Studio ist eine Voraussetzung für effizientes Clustering. Aktuell nicht benötigt — Einzelmaschine reicht für die derzeitige Modelllandschaft.
+**Skalierungsoption:** [EXO](https://github.com/exo-explore/exo) (kostenlos, Open Source) ermöglicht es, mehrere Maschinen zu einem Cluster zu verbinden — für zukünftige Modelle, die >512GB bei FP8 benötigen. Thunderbolt 5 am Mac Studio ist eine Voraussetzung für effizientes Clustering. Aktuell nicht benötigt — eine Einzelmaschine reicht für Qwen3.5-397B. Für GLM-5 (744B) oder Kimi K2.5 (1T) wäre EXO-Clustering mit einer zweiten Maschine erforderlich.
 
 ### 4. Rechtlicher Rahmen
 
