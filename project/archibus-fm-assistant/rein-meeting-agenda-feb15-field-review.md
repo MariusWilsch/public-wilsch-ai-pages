@@ -10,12 +10,12 @@ publish: true
 Validate field-level decisions from the Feb 14 extraction pass. The design doc's field tiers are now defined, but 6 fields remain Undefined and 12+ field descriptions need confirmation.
 
 1. **Resolve 6 Undefined fields** — clarify purpose, data source, or remove from import scope
-2. **Validate proposed field descriptions** — 12+ fields in the [Google Sheet](https://docs.google.com/spreadsheets/d/10h8P4dMlLDpkHikUK6enDFeYtRoCwMVm/edit) have no/inadequate comments. Proposed text is highlighted for review.
+2. **Validate proposed field descriptions** — 12+ fields in the [Google Sheet](https://docs.google.com/spreadsheets/d/12xs98WKdpTLHz8U6mccOXo5clFwCqvOviuEch_VNMTw/edit) have no/inadequate comments. Proposed text is highlighted for review.
 3. **Confirm AssetType enum update** — new 23 facility types replace old category, one potential typo
 
 ## Pre-Read
 
-- [AssetImportDescription — Fields Assets sheet](https://docs.google.com/spreadsheets/d/10h8P4dMlLDpkHikUK6enDFeYtRoCwMVm/edit) — highlighted cells have proposed comments for review
+- [AssetImportDescription — Fields Assets sheet](https://docs.google.com/spreadsheets/d/12xs98WKdpTLHz8U6mccOXo5clFwCqvOviuEch_VNMTw/edit) — highlighted cells have proposed comments for review
 - [Chain 1B: Step 3 Design Doc](https://mariuswilsch.github.io/public-wilsch-ai-pages/project/archibus-fm-assistant/chain-1b-step3-design) — updated Field Tiers section
 - [Asset Types (old)](https://docs.google.com/spreadsheets/d/1Wc1BL18e5Vaxx7bAzsvxAeWojfvxRrWd/edit) — compare with new 23 facility types below
 
@@ -30,7 +30,7 @@ Validate field-level decisions from the Feb 14 extraction pass. The design doc's
 - 36 import fields in the Fields Assets sheet, 12+ have no comment at all
 - AI uses these comments as mapping instructions during Step 2
 - Without them, AI relies on field names alone → ambiguous mappings (e.g., "DateActiveService" = installation date? commission date? operational start?)
-- Proposed comments highlighted in the [Fields Assets sheet](https://docs.google.com/spreadsheets/d/10h8P4dMlLDpkHikUK6enDFeYtRoCwMVm/edit) for: DateManufacture, DatePurchased, DateActiveService, DateNextReplacement, WarrantyFrom, WarrantyTo, AreaInteriorM2, AreaTotalM2, AreaRentableM2, MainContactName, MainContactPhone, MainContactEmail, Name, Id, ParentId
+- Proposed comments highlighted in the [Fields Assets sheet](https://docs.google.com/spreadsheets/d/12xs98WKdpTLHz8U6mccOXo5clFwCqvOviuEch_VNMTw/edit) for: DateManufacture, DatePurchased, DateActiveService, DateNextReplacement, WarrantyFrom, WarrantyTo, AreaInteriorM2, AreaTotalM2, AreaRentableM2, MainContactName, MainContactPhone, MainContactEmail, Name, Id, ParentId
 
 **We need confirmation that each proposed description matches what Bruce expects, or corrections where they don't.**
 
@@ -107,11 +107,11 @@ Validate field-level decisions from the Feb 14 extraction pass. The design doc's
 ## Meeting Format
 
 - **Type:** Field-level review
-- **Expectation:** Rein reviews the highlighted cells in the [Fields Assets sheet](https://docs.google.com/spreadsheets/d/10h8P4dMlLDpkHikUK6enDFeYtRoCwMVm/edit) before the meeting
+- **Expectation:** Rein reviews the highlighted cells in the [Fields Assets sheet](https://docs.google.com/spreadsheets/d/12xs98WKdpTLHz8U6mccOXo5clFwCqvOviuEch_VNMTw/edit) before the meeting
 - **Outcome:** Undefined fields resolved (keep/remove), proposed comments validated, AssetType enum confirmed → design doc and sheet updated
 
 ## Related
 
 - **Issue:** [#373 — ARCHIBUS: AI Bulk Data Entry](https://github.com/DaveX2001/deliverable-tracking/issues/373)
 - **Design Doc:** [Chain 1B: Step 3 Fill Level-by-Level](https://mariuswilsch.github.io/public-wilsch-ai-pages/project/archibus-fm-assistant/chain-1b-step3-design)
-- **Fields Assets Sheet:** [AssetImportDescription (Google Drive)](https://docs.google.com/spreadsheets/d/10h8P4dMlLDpkHikUK6enDFeYtRoCwMVm/edit)
+- **Fields Assets Sheet:** [AssetImportDescription (Google Drive)](https://docs.google.com/spreadsheets/d/12xs98WKdpTLHz8U6mccOXo5clFwCqvOviuEch_VNMTw/edit)

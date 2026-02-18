@@ -56,7 +56,7 @@ Equipment table (N buildings)
 | A010 | Vertical Trans.-010 | IT Equipment | 3 | 333 | LG | LEDX200 | SN000010 | 2020-03-14 | Poor | Active | Team C |
 | A034 | Electrical-034 | Electrical | 1 | 194 | Honeywell | EliteBook | SN000034 | 2019-02-09 | Fair | Active | Team F |
 
-**Reference:** [cafm-asset-upload-sample.xlsx](https://github.com/MariusWilsch/ARCHIBUS__archibus-poc/blob/staging/.claude/tracking/issue-373/cafm-asset-upload-sample.xlsx) — the raw client input before any transformation.
+**Reference:** [cafm-asset-upload-sample.xlsx](https://docs.google.com/spreadsheets/d/1CUaybsk8ZnvvKr3C37xn-md96hRLBKT4/edit) — the raw client input before any transformation.
 
 *Source: [Feb 3 — Rein meeting](https://app.fireflies.ai/view/01KGHJWSXV7Y7FP822SKS9VBHW), [Feb 6 — Rein/Marius meeting](https://app.fireflies.ai/view/01KGSBJE39AW3259QVNCQHCBDQ)*
 
@@ -99,7 +99,7 @@ Extract unique values at each hierarchy level. Multiple equipment rows sharing t
 
 **Identity rule:** Room identity = parent floor + room number. Room 333 under Floor 3 is a different asset than a hypothetical Room 333 under Floor 2. This rule is structurally necessary — the nested JSON tree requires each room to be a child of exactly one floor. Sample data confirms: Room 431 exists on both Floor 3 and Floor "All" in Building A.
 
-**Reference:** [Processed Excel Table.xlsx](https://github.com/MariusWilsch/ARCHIBUS__archibus-poc/blob/staging/.claude/tracking/issue-373/Processed%20Excel%20Table.xlsx) — the data after Step 2 column mapping.
+**Reference:** [Processed Excel Table.xlsx](https://docs.google.com/spreadsheets/d/13Q_P-zbFjbN7VIi4YUWi6bPYDuTxeziK/edit) — the data after Step 2 column mapping.
 
 *Source: [Feb 6 — Rein/Marius meeting](https://app.fireflies.ai/view/01KGSBJE39AW3259QVNCQHCBDQ)*
 
@@ -107,9 +107,9 @@ Extract unique values at each hierarchy level. Multiple equipment rows sharing t
 
 The source data contains only equipment rows. Location assets (buildings, floors, rooms) are implicit in the hierarchy columns and must be created as new rows with the **same schema** — they're all entries in the same assets table, differentiated by AssetType.
 
-**What AI does:** Extract unique locations from Element 3's dedup output → create new asset rows for each.
+**What AI does:** Extract unique locations from Part 3's dedup output → create new asset rows for each.
 
-**Example — Processed table for Building A (from [Processed Excel Table](https://github.com/MariusWilsch/ARCHIBUS__archibus-poc/blob/staging/.claude/tracking/issue-373/Processed%20Excel%20Table.xlsx)):**
+**Example — Processed table for Building A (from [Processed Excel Table](https://docs.google.com/spreadsheets/d/13Q_P-zbFjbN7VIi4YUWi6bPYDuTxeziK/edit)):**
 
 | Asset Code | Asset Name | Asset Type | Location |
 |------------|------------|------------|----------|
@@ -125,19 +125,19 @@ The source data contains only equipment rows. Location assets (buildings, floors
 
 *Italic = original equipment rows. **Bold = AI-generated location assets.***
 
-The hierarchy is expressed in the nested JSON structure (Element 5) using generic `children` arrays with explicit Id/ParentId references. Location asset Names are derived directly from the hierarchy column values: Building name from Location column, Floor number from Floor column, Room number from Room column. Property name comes from the client (if hierarchy includes that level).
+The hierarchy is expressed in the nested JSON structure (Part 5) using generic `children` arrays with explicit Id/ParentId references. Location asset Names are derived directly from the hierarchy column values: Building name from Location column, Floor number from Floor column, Room number from Room column. Property name comes from the client (if hierarchy includes that level).
 
 **Attachment rule:** Equipment attaches to the lowest available hierarchy level. The recursive fallback applies unconditionally — regardless of floor value ("All", "G", empty, or numbered). If room is missing, attach to floor. If floor is missing, attach to building. No building = data error. This rule has no exceptions.
 
 **Floor "All":** Created as-is — it is a real location asset, not a skip signal. Rooms nest under it normally. Equipment with Floor = "All" and a room attaches to the room (which is a child of Floor "All"). In sample data, all 34 Floor "All" rows have a room number.
 
-**Reference:** [asset_types 1.xlsx](https://github.com/MariusWilsch/ARCHIBUS__archibus-poc/blob/staging/.claude/tracking/issue-373/asset_types%201.xlsx) — predefined AssetType enum (includes Building, Floor, Room).
+**Reference:** [asset_types 1.xlsx](https://docs.google.com/spreadsheets/d/1Wc1BL18e5Vaxx7bAzsvxAeWojfvxRrWd/edit) — predefined AssetType enum (includes Building, Floor, Room).
 
-*Source: [Feb 3 — Rein meeting](https://app.fireflies.ai/view/01KGHJWSXV7Y7FP822SKS9VBHW) (Rein: "equipment parent is the room... when the room is empty, it goes to the next level"), [Feb 11 — Rein meeting](https://app.fireflies.ai/view/01KH67KMEA533C0VVJWH7FE63D) (Rein: "let's create this floor", "always climb up until the field level")*
+*Source: [Feb 3 — Rein meeting](https://app.fireflies.ai/view/01KGHJWSXV7Y7FP822SKS9VBHW) (recursive fallback confirmed), [Feb 11 — Rein meeting](https://app.fireflies.ai/view/01KH67KMEA533C0VVJWH7FE63D) (Floor All as-is confirmed, unconditional fallback confirmed)*
 
 ### 5. Build Nested JSON
 
-Transform the flat table (equipment rows + generated location assets from Element 4) into nested JSON that the insertion API can accept. Every asset follows the same schema — location assets and equipment are all rows in the same `assets` table, differentiated by AssetType.
+Transform the flat table (equipment rows + generated location assets from Part 4) into nested JSON that the insertion API can accept. Every asset follows the same schema — location assets and equipment are all rows in the same `assets` table, differentiated by AssetType.
 
 #### Field Tiers
 
@@ -162,14 +162,14 @@ AI performs four sub-operations on each row:
 1. **Column mapping** — which Excel column feeds which JSON field (Step 2 output)
 2. **Value transformation** — enum matching, date format conversion, country resolution
 3. **Structure transformation** — flat rows → nested tree (children inside parents)
-4. **Missing value handling** — omit field from JSON body. API treats missing fields as null via .NET model binding. Rein: "we can just skip these fields and not include into the body."
+4. **Missing value handling** — omit field from JSON body. API treats missing fields as null via .NET model binding (confirmed by Rein, Feb 11).
 
 **Value transformation categories (including but not limited to):**
 
 | Category | Examples | Rule | Reference |
 |----------|----------|------|-----------|
-| **Enum fields** | AssetType, AssetStatus, Country | Must match predefined values. Element 6 backpressure catches mismatches. | [asset_types](https://github.com/MariusWilsch/ARCHIBUS__archibus-poc/blob/staging/.claude/tracking/issue-373/asset_types%201.xlsx), [asset-status-enum](https://github.com/MariusWilsch/ARCHIBUS__archibus-poc/blob/staging/.claude/tracking/issue-373/asset-status-enum.csv) |
-| **Typed fields** | DateTime, double, Guid, String(len) | Must match format from schema. | [AssetImportDescription → Fields Assets](https://github.com/MariusWilsch/ARCHIBUS__archibus-poc/blob/staging/.claude/tracking/issue-373/AssetImportDescription.xlsx) |
+| **Enum fields** | AssetType, AssetStatus, Country | Must match predefined values. Part 6 backpressure catches mismatches. | [asset_types](https://docs.google.com/spreadsheets/d/1Wc1BL18e5Vaxx7bAzsvxAeWojfvxRrWd/edit), [asset-status-enum](https://drive.google.com/file/d/1j0GzUSKKaFeG3nj6G8Qp5v7772jg7vpL/view) |
+| **Typed fields** | DateTime, double, Guid, String(len) | Must match format from schema. | [AssetImportDescription → Fields Assets](https://docs.google.com/spreadsheets/d/12xs98WKdpTLHz8U6mccOXo5clFwCqvOviuEch_VNMTw/edit) |
 | **Freeform fields** | Name, Address, LocationDescription | Pass through as-is. | Same schema for max lengths |
 
 **Example — transform + backpressure loop:**
@@ -184,14 +184,14 @@ Raw Excel Row: A008 | Safety | Building A | All | 116 | LG | FX100
     ↓
 AI-Generated JSON node
     ↓
-Element 6: Validate via API
+Part 6: Validate via API
     ↓
 API accepts ✅  OR  API rejects ❌ → error → AI corrects → resubmit
 ```
 
 #### JSON Structure: Generic `children`
 
-The nesting uses a generic `children` array at every level, differentiated by `type` field (which maps to AssetType ENUM). This replaced the earlier named-array design (`Buildings`, `floors`, `Rooms`) because Rein's backend needs to process unknown-depth hierarchies with a single recursive function — named arrays would require level-specific code paths for every possible hierarchy combination.
+The nesting uses a generic `children` array at every level, differentiated by `type` field (which maps to AssetType ENUM). This replaced the earlier named-array design (`Buildings`, `floors`, `Rooms`) because the backend needs to process unknown-depth hierarchies with a single recursive function — named arrays would require level-specific code paths for every possible hierarchy combination.
 
 ```json
 {
@@ -240,15 +240,19 @@ Both nesting and ParentId express the same parent-child relationship — the red
 
 **Phase 1 (Steps 1+2): Interactive.** Hierarchy validation and column mapping. Human-AI collaboration with lots of questions. Step 2 produces field mapping + ENUM resolution tables (including but not limited to these — additional outputs emerge empirically).
 
-**Phase 2 (Step 3): Execution + back-pressure.** JSON building and API insertion. Near-zero questions. Step 3 follows Step 2's decisions mechanically. When the API returns errors, AI self-corrects via the back-pressure loop (Element 6) — only escalating to human when self-correction fails.
+**Phase 2 (Step 3): Execution + back-pressure.** JSON building and API insertion. Near-zero questions. Step 3 follows Step 2's decisions mechanically. When the API returns errors, AI self-corrects via the back-pressure loop (Part 6) — only escalating to human when self-correction fails.
 
-**Pending Rein deliverables:**
-- Field comments: yellow-highlighted proposed comments in [Fields Assets sheet](https://docs.google.com/spreadsheets/d/12xs98WKdpTLHz8U6mccOXo5clFwCqvOviuEch_VNMTw/edit) for Rein to confirm
-- UNDEFINED fields: orange-highlighted in same sheet (ClearanceInstructions, Barcode, QrCode, Status vs AssetStatus)
-- AddressExplanation / LocationDescription — Rein to clarify if in use
-- QR code field length extension (50 chars insufficient)
-- Country table cleanup (remove parenthetical suffixes — blocked Miguel)
-- "Signing" → "Signage" typo in new AssetType enum
+**Undefined:** 12+ import fields lack descriptions — AI needs mapping context beyond field names alone → *[Fields Assets sheet](https://docs.google.com/spreadsheets/d/12xs98WKdpTLHz8U6mccOXo5clFwCqvOviuEch_VNMTw/edit)*, *[Meeting agenda §1](https://mariuswilsch.github.io/public-wilsch-ai-pages/project/archibus-fm-assistant/rein-meeting-agenda-feb15-field-review)*
+
+**Undefined:** 4 schema fields lack clear purpose or data source (ClearanceInstructions, Barcode, QrCode, Status vs AssetStatus) — keep in AI scope or remove from PoC → *[Meeting agenda §2](https://mariuswilsch.github.io/public-wilsch-ai-pages/project/archibus-fm-assistant/rein-meeting-agenda-feb15-field-review)*, *[Meeting agenda §4](https://mariuswilsch.github.io/public-wilsch-ai-pages/project/archibus-fm-assistant/rein-meeting-agenda-feb15-field-review)*, *[Meeting agenda §5](https://mariuswilsch.github.io/public-wilsch-ai-pages/project/archibus-fm-assistant/rein-meeting-agenda-feb15-field-review)*
+
+**Undefined:** AddressExplanation and LocationDescription may overlap or be unused — clarify if in scope for import → *[Meeting agenda §2](https://mariuswilsch.github.io/public-wilsch-ai-pages/project/archibus-fm-assistant/rein-meeting-agenda-feb15-field-review)*
+
+**Undefined:** QrCode field limited to 50 chars — insufficient for real-world QR data, DB extension pending → *[Meeting agenda §4](https://mariuswilsch.github.io/public-wilsch-ai-pages/project/archibus-fm-assistant/rein-meeting-agenda-feb15-field-review)*
+
+**Undefined:** 39 of 249 country entries have parenthetical suffixes — cleanup blocked on Miguel → *[Meeting agenda §8](https://mariuswilsch.github.io/public-wilsch-ai-pages/project/archibus-fm-assistant/rein-meeting-agenda-feb15-field-review)*
+
+**Undefined:** "Signing" in new AssetType enum — confirm if intentional or should be "Signage" → *[Meeting agenda §6](https://mariuswilsch.github.io/public-wilsch-ai-pages/project/archibus-fm-assistant/rein-meeting-agenda-feb15-field-review)*
 
 *Source: [Feb 6 — Rein/Marius meeting](https://app.fireflies.ai/view/01KGSBJE39AW3259QVNCQHCBDQ), [Feb 11 — Rein meeting](https://app.fireflies.ai/view/01KH67KMEA533C0VVJWH7FE63D), [Feb 14 — extraction pass](https://docs.google.com/spreadsheets/d/12xs98WKdpTLHz8U6mccOXo5clFwCqvOviuEch_VNMTw/edit)*
 
@@ -290,11 +294,11 @@ Nothing is inserted until the entire payload validates. No partial state. Dry ru
 
 **GUID mapping after insert:** Not needed for PoC (single building, no follow-up operations). For future multi-building imports where a second building references the same Property, the API may need to return a temp-ID → GUID mapping. Flagged for meeting agenda.
 
-**Implementation boundary:** Elements 1–5 are implementable now (AI-generated JSON production). Element 6 requires Rein's insertion API, which he committed to developing (Feb 11: "I need to start to develop my endpoint").
+**Implementation boundary:** Parts 1–5 are implementable now (AI-generated JSON production). Part 6 requires Rein's insertion API, which he committed to developing (Feb 11).
 
 **Reference:** API specification TBD — to be provided by Rein.
 
-*Source: [Feb 3 — Rein meeting](https://app.fireflies.ai/view/01KGHJWSXV7Y7FP822SKS9VBHW) (decisions: tree-walk, stop at first error, sequential), [Feb 11 — Rein meeting](https://app.fireflies.ai/view/01KH67KMEA533C0VVJWH7FE63D) (dry run, error format, full resubmission confirmed)*
+*Source: [Feb 3 — Rein meeting](https://app.fireflies.ai/view/01KGHJWSXV7Y7FP822SKS9VBHW) (tree-walk, stop at first error, sequential processing), [Feb 11 — Rein meeting](https://app.fireflies.ai/view/01KH67KMEA533C0VVJWH7FE63D) (dry run, error format, full resubmission confirmed)*
 
 ### 7. Repeat
 
@@ -312,20 +316,20 @@ Move to next top-level element. The full cycle (validate → correct → dry run
 | **AI creates JSON** | With Bruce BEM field names from Step 2 mapping | Feb 3 | Rein meeting |
 | **No interactive editing** | AI proposes/processes hierarchy, doesn't modify Excel | Feb 3 | Rein meeting |
 | **AI provides temp IDs** | Id = client Asset Code, ParentId = parent's Asset Code. Backend replaces with GUIDs on insert. If client has no codes, AI generates numbered IDs. | Feb 14 | Rein chat |
-| **Lowest level attachment** | Equipment attaches to lowest known hierarchy level. Empty = fallback up. | Feb 3 | Rein: "equipment parent is the room... when empty, goes to next level" |
-| **Generic `children` array** | All child nodes use `children` key, differentiated by `type` field (AssetType). Enables single recursive function for unknown-depth hierarchies. | Feb 14 | Rein: "just children makes it much easier and faster" |
+| **Lowest level attachment** | Equipment attaches to lowest known hierarchy level. Empty = fallback up. | Feb 3 | Rein, Feb 3 meeting |
+| **Generic `children` array** | All child nodes use `children` key, differentiated by `type` field (AssetType). Enables single recursive function for unknown-depth hierarchies. | Feb 14 | Rein, Feb 14 chat |
 | **ParentId = intentional redundancy** | Both nesting and ParentId express parent-child. Nesting = AI builds tree. ParentId = backend inserts to flat DB with FK. | Feb 14 | Rein chat |
 | **Same schema for all levels** | Location assets and equipment are all rows in the same assets table, differentiated by AssetType. | Feb 6 | AssetImportDescription |
-| **Elements 1-5 now, 6 after API** | JSON generation is implementable. Insertion requires Rein's API. | Feb 11 | Extraction pass session |
-| **Floor All as-is** | Create Floor "All" as a real location asset. No special-casing — standard recursive fallback applies. | Feb 11 | Rein: "let's create this floor... it is easier let it be in this way" |
-| **Recursive fallback unconditional** | Climb up hierarchy regardless of floor value. No exceptions. | Feb 11 | Rein: "always climb up until the field level" |
-| **Excel = field name source** | AssetImportDescription "Fields Assets" sheet is authoritative for JSON field names. API auto-converts casing. | Feb 11 | Rein: "all the field names are as they are in the Excel" |
-| **Country = name match** | Fuzzy-match to country name (column A), not code_2. Exact string required. | Feb 11 | Rein: "the country name should match to this list" |
-| **Omit empty fields** | Don't include empty fields in JSON body. API treats missing as null. | Feb 11 | Rein: "we can just skip these fields" (pending test confirmation) |
-| **Manufacturer → StatusDetail** | No manufacturer field. Combine into StatusDetail as overflow. | Feb 11 | Rein: "combine this information to the value of the field status detail" |
+| **Parts 1-5 now, 6 after API** | JSON generation is implementable. Insertion requires Rein's API. | Feb 11 | Extraction pass session |
+| **Floor All as-is** | Create Floor "All" as a real location asset. No special-casing — standard recursive fallback applies. | Feb 11 | Rein, Feb 11 meeting |
+| **Recursive fallback unconditional** | Climb up hierarchy regardless of floor value. No exceptions. | Feb 11 | Rein, Feb 11 meeting |
+| **Excel = field name source** | AssetImportDescription "Fields Assets" sheet is authoritative for JSON field names. API auto-converts casing. | Feb 11 | Rein, Feb 11 meeting |
+| **Country = name match** | Fuzzy-match to country name (column A), not code_2. Exact string required. | Feb 11 | Rein, Feb 11 meeting |
+| **Omit empty fields** | Don't include empty fields in JSON body. API treats missing as null. | Feb 11 | Rein, Feb 11 meeting (pending test confirmation) |
+| **Manufacturer → StatusDetail** | No manufacturer field. Combine into StatusDetail as overflow. | Feb 11 | Rein, Feb 11 meeting |
 | **OtherCode = Bruce auto-fill** | Bruce copies client Asset Code (from Id field) to OtherCode automatically. AI does not touch this field. | Feb 14 | AssetImportDescription update |
 | **Error format = Id-based** | Error response must include failing node's `id` + field + error. AI self-constructs paths from ParentId chain. | Feb 14 | Extraction pass |
-| **Dry run confirmed** | Validate without inserting. Only insert after all validations pass. | Feb 11 | Rein: "only when we are completely sure... then we can start the real insert" |
+| **Dry run confirmed** | Validate without inserting. Only insert after all validations pass. | Feb 11 | Rein, Feb 11 meeting |
 | **Casing indifferent** | API accepts any casing (PascalCase, camelCase). No normalization needed. | Feb 14 | Rein chat |
 | **Default AssetType = Equipment** | When client's asset type doesn't match any ENUM value, default to "Equipment". | Feb 14 | Rein chat |
 | **StatusDetail overflow = Step 2 decision** | Step 2 evaluates unmapped columns: overflow to StatusDetail or skip. Step 3 executes without judgment. | Feb 14 | Extraction pass |
@@ -339,7 +343,7 @@ Move to next top-level element. The full cycle (validate → correct → dry run
 **Artifacts:**
 - [AssetImportDescription](https://docs.google.com/spreadsheets/d/12xs98WKdpTLHz8U6mccOXo5clFwCqvOviuEch_VNMTw/edit) — full schema (Fields Assets sheet), hierarchy options, sample data. Yellow = AI-proposed comments, orange = UNDEFINED.
 - [asset_types 1.xlsx](https://docs.google.com/spreadsheets/d/1Wc1BL18e5Vaxx7bAzsvxAeWojfvxRrWd/edit) — AssetType enum (updated Feb 14: 23 facility types + Location/Employee/IT categories)
-- [asset-status-enum.csv](https://github.com/MariusWilsch/ARCHIBUS__archibus-poc/blob/staging/.claude/tracking/issue-373/asset-status-enum.csv) — AssetStatus enum (26 statuses)
+- [asset-status-enum.csv](https://drive.google.com/file/d/1j0GzUSKKaFeG3nj6G8Qp5v7772jg7vpL/view) — AssetStatus enum (26 statuses)
 - [cafm-asset-upload-sample.xlsx](https://docs.google.com/spreadsheets/d/1CUaybsk8ZnvvKr3C37xn-md96hRLBKT4/edit) — raw client input (201 rows)
 - [Processed Excel Table.xlsx](https://docs.google.com/spreadsheets/d/13Q_P-zbFjbN7VIi4YUWi6bPYDuTxeziK/edit) — data after processing (equipment + generated location assets)
 - [Project Index](https://mariuswilsch.github.io/public-wilsch-ai-pages/project/archibus-fm-assistant/transcript-index-373) — design docs, meeting agendas, data artifacts, transcripts
@@ -350,3 +354,4 @@ Move to next top-level element. The full cycle (validate → correct → dry run
 - `/Users/verdant/.claude/projects/-Users-verdant-Documents-projects-billable-ARCHIBUS--archibus-fm-assistant/6b1217f1-1b02-434e-be24-22dd1a8a1975.jsonl`
 - `/Users/verdant/.claude/projects/-Users-verdant-Documents-projects-billable-ARCHIBUS--archibus-fm-assistant/494332f2-3f40-4c9b-9d96-43e84c3f2441.jsonl`
 - `/Users/verdant/.claude/projects/-Users-verdant-Documents-projects-billable-ARCHIBUS--archibus-fm-assistant/7f5bcc28-c0af-4433-a1fb-2ea60171bdee.jsonl`
+- `/Users/verdant/.claude/projects/-Users-verdant-Documents-projects-billable-ARCHIBUS--archibus-fm-assistant/972b54f8-3fad-4090-8636-562ba06ccc28.jsonl`

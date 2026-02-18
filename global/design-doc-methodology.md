@@ -236,6 +236,22 @@ The WHY column captures reasoning surfaced during RESOLVE — the part that push
 | **Undefined** | Meeting agenda | Requires external stakeholder input |
 | **Tooling** | Epic/implementation | Requires tooling or implementation work |
 
+**Marker format:**
+
+```markdown
+**Undefined:** [one-sentence description] → *[Meeting agenda](URL)*
+```
+
+**Placement:** End of the Approach Part the marker belongs to. Not aggregated into a checklist — each marker sits in context where the undefined item lives.
+
+**Grouping:** Related undefined items sharing one conceptual theme can be grouped into a single marker linking to multiple agenda sections. Per Principle 3 (conceptual scope), one marker per conceptual question — not per data point.
+
+**Example** *(from Chain 1B Step 3, Part 5):*
+
+```markdown
+**Undefined:** Missing value handling — empty cells: omit field, send null, or API default? → *[Meeting agenda](https://mariuswilsch.github.io/public-wilsch-ai-pages/project/archibus-fm-assistant/rein-meeting-agenda-step3-field-alignment)*
+```
+
 ---
 
 ## Meeting Agenda
