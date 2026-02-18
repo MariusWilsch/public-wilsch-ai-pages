@@ -50,9 +50,10 @@ The Developer owns the **output** (working solution). The Dev Lead owns the Deve
 3. Spec quality review — verify decomposition and approach meet design specifications
 4. Human witness on staging — verify deployed solution works as designed
 5. Conduct daily grooming sync with each Developer (Google Meet, 15-30 min)
-6. Track delivery progress across all active projects
-7. Route Developer escalations to the appropriate position (SA for design gaps, System Engineer for AI behavior)
-8. Maintain CCI board hygiene — issues labeled per position, organized into epics, completed work closed
+6. Check Dev Lead Review Queue (dedicated GitHub Project, table layout) before each grooming — process review items FIFO
+7. Track delivery progress across all active projects
+8. Route Developer escalations to the appropriate position (SA for design gaps, System Engineer for AI behavior)
+9. Maintain CCI board hygiene — issues labeled per position, organized into epics, completed work closed
 
 ---
 
@@ -94,6 +95,8 @@ The Developer owns the **output** (working solution). The Dev Lead owns the Deve
 
 6. Developer conversation review must happen before each grooming — the Dev Lead reads the Developer's most recent session to verify system adherence and identify coaching points.
 
+7. Dev Lead Review Queue must be checked and processed before each grooming. Review items older than 2 business days without action = escalation signal (Developer blocked or Dev Lead behind).
+
 ### Company-Wide Standards
 
 1. All work will be performed using documented systems (Operations Manual)
@@ -114,6 +117,7 @@ The Developer owns the **output** (working solution). The Dev Lead owns the Deve
 - Claude Code license
 - Access to Developer conversation logs (conversation-reader)
 - Access to repos, staging environments, CCI board
+- Dev Lead Review Queue (dedicated GitHub Project with auto-add on `label:review`)
 - Design docs delivered before delegation to Developers
 
 ### Necessary Resources
@@ -168,3 +172,5 @@ The Developer owns the **output** (working solution). The Dev Lead owns the Deve
 - Framework: Michael Gerber, *The E-Myth Revisited*, Chapter 14
 - Template: E-Myth Writing Position Agreements guide
 - Evidence: Issue #712 (Operations Manual update friction), Issue #805 (personality profiling)
+- Dev Lead observability extraction pass (2026-02-17) — gate signal mechanism, review queue design
+- Session: /Users/verdant/.claude/projects/-Users-verdant-Documents-projects-00-WILSCH-AI-INTERNAL--soloforce/478e31b8-5f19-4f85-b370-7fa437440795.jsonl

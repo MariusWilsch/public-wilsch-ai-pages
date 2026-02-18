@@ -141,6 +141,28 @@ Each position has a distinct accountability toward the same epic. Ownership does
 
 **Dev Lead gates are comprehension signals.** The starting-point review and tracking.md review measure whether the Developer understands the design doc — not just whether tasks were completed. A poor decomposition signals either a design doc clarity problem (JA) or a comprehension gap (Developer growth opportunity).
 
+### Gate Signal Mechanism
+
+The `review` label signals "ready for review." It appears twice on the epic (bookending the work) and once per sub-issue gate:
+
+**Epic level (main board → Review column):**
+
+| When | Gate | Sub-issue progress |
+|------|------|--------------------|
+| **Start** — Developer just created sub-issues | Decomposition review: "Does Developer understand the design doc?" | 0 of N complete |
+| **End** — all sub-issues delivered | SA final look before epic closure | N of N complete |
+
+**Sub-issue level (Dev Lead Review Queue → dedicated project):**
+
+| When | Gate |
+|------|------|
+| Spec complete (DoD + AC in tracking.md) | Spec quality review |
+| Deployed to staging | Human witness on staging |
+
+The Developer adds `review`; the reviewer removes it after approval.
+
+**Dev Lead Review Queue:** A dedicated GitHub Project (table layout, not board) with auto-add on `label:review`. Sub-issues auto-appear grouped by parent epic. The main board stays clean (epics only). Items processed FIFO (oldest first).
+
 ### Starting-Point Sub-Issues
 
 The Developer reads the design doc and creates the first sub-issues they can see. This is not a full decomposition — it's a starting point. More sub-issues emerge naturally as work progresses.
@@ -275,3 +297,5 @@ Both happen asynchronously. Developer continues to next work.
 - Epic Lifecycle extraction pass (2026-02-16) — definition, per-position accountability, lifecycle stages
 - Session: /Users/verdant/.claude/projects/-Users-verdant-Documents-projects-00-WILSCH-AI-INTERNAL--soloforce/3762438b-6817-44d9-ae03-f45006c7917e.jsonl
 - Evidence: Issue #789 (simple epic), Issue #373 (complex epic), ADR epic/sub-issue pattern
+- Dev Lead observability extraction pass (2026-02-17) — gate signal mechanism, review queue design
+- Session: /Users/verdant/.claude/projects/-Users-verdant-Documents-projects-00-WILSCH-AI-INTERNAL--soloforce/478e31b8-5f19-4f85-b370-7fa437440795.jsonl
