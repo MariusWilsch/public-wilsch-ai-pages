@@ -161,7 +161,48 @@ The `review` label signals "ready for review." It appears twice on the epic (boo
 
 The Developer adds `review`; the reviewer removes it after approval.
 
-**Dev Lead Review Queue:** A dedicated GitHub Project (table layout, not board) with auto-add on `label:review`. Sub-issues auto-appear grouped by parent epic. The main board stays clean (epics only). Items processed FIFO (oldest first).
+#### Dev Lead Review Queue
+
+A dedicated GitHub Project that surfaces sub-issue gates without cluttering the main board. The main board stays clean (epics only). Sub-issues with `review` auto-appear here, grouped by parent epic.
+
+**Project Setup:**
+
+| Setting | Value |
+|---------|-------|
+| **Project name** | Dev Lead Review Queue |
+| **Layout** | Table (not board — this is a processing list, not a workflow pipeline) |
+| **Auto-add workflow** | Filter: `is:issue label:review` — repo: `DaveX2001/deliverable-tracking` |
+| **Auto-archive** | On close — keeps the table clean after processing |
+
+**Table Fields:**
+
+| Field | Purpose |
+|-------|---------|
+| **Parent Issue** | Groups sub-issues under their parent epic (reads sub-issue metadata — parent does not need to be on this project) |
+| **Title** | Sub-issue title (linked) |
+| **Assignee** | Which Developer's work is up for review |
+| **Date Added** | Enables FIFO sort (oldest first = highest priority) |
+
+Group by: Parent Issue. Sort by: Date Added (ascending).
+
+**Processing Workflow:**
+
+1. Developer completes spec or deploys to staging → adds `review` label to sub-issue
+2. Sub-issue auto-appears in the Review Queue, grouped under its parent epic
+3. Dev Lead processes items FIFO (top to bottom, oldest first)
+4. **Approval:** Dev Lead removes `review` label. Sub-issue proceeds to next stage.
+5. **Rejection:** Dev Lead removes `review` label + posts comment with feedback. Developer fixes, re-adds `review` when ready. Sub-issue re-enters the queue.
+
+**Automation (GitHub Action):**
+
+A single GitHub Action on the `label` event provides two signals:
+
+| Trigger | Action |
+|---------|--------|
+| `review` label added | Count previous `review` add/remove cycles on this issue. Post comment: "Review cycle {N}." At cycle 3: "⚠️ Review cycle 3 — potential design doc clarity issue." |
+| Daily schedule | Scan open issues with `review` label older than 2 business days. Post ⚠️ comment: "In review queue for {N} days (SLA: 2 days)." |
+
+The review cycle counter makes rejection frequency visible on the sub-issue itself — both Dev Lead and Developer see it. At cycle 3, the signal shifts from Developer comprehension to design doc clarity (routes back to JA). The SLA monitor is a self-accountability check — visible when opening any stale item.
 
 ### Starting-Point Sub-Issues
 
@@ -299,3 +340,5 @@ Both happen asynchronously. Developer continues to next work.
 - Evidence: Issue #789 (simple epic), Issue #373 (complex epic), ADR epic/sub-issue pattern
 - Dev Lead observability extraction pass (2026-02-17) — gate signal mechanism, review queue design
 - Session: /Users/verdant/.claude/projects/-Users-verdant-Documents-projects-00-WILSCH-AI-INTERNAL--soloforce/478e31b8-5f19-4f85-b370-7fa437440795.jsonl
+- Review Queue config spec extraction pass (2026-02-19) — table layout, processing workflow, rejection flow, SLA automation
+- Session: /Users/verdant/.claude/projects/-Users-verdant-Documents-projects-00-WILSCH-AI-INTERNAL--soloforce/e139408b-3821-499e-95dc-5f5e7f164176.jsonl
