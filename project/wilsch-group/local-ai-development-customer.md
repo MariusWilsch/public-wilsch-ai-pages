@@ -104,9 +104,20 @@ Wir setzen auf einen Mac Studio als eigene Entwicklungsinfrastruktur — ein Des
 | **[Tinybox Red v2](https://tinycorp.myshopify.com/products/tinybox-red-v2)** | 144 GB | ~1 TB/s | ~12.000 € | 12U Rack |
 | **[NVIDIA DGX Spark](https://www.nvidia.com/en-us/products/workstations/dgx-spark/)** | 128 GB | 273 GB/s | ~4.000 € | Desktop |
 
+**Stromkosten im Vergleich** (bei 0,25 €/kWh, deutscher Gewerbestrompreis):
+
+| System | Last unter KI-Inferenz | Jährliche Stromkosten (24/7) |
+|--------|----------------------|----------------------------|
+| **Mac Studio M3 Ultra** | ~200 W | **~438 €** |
+| Tinybox Red v2 (6× GPU) | ~3.200 W | ~7.008 € |
+| NVIDIA RTX 5090 (1 Karte, 32 GB) | ~575 W | ~1.261 € |
+| NVIDIA H100 SXM (1 Karte, 80 GB) | ~700 W | ~1.533 € |
+
+Der Mac Studio spart gegenüber Rack-Lösungen rund 6.500 € Strom pro Jahr — das entspricht nahezu dem Kaufpreis des Geräts.
+
 **Warum Mac Studio:** 512 GB Arbeitsspeicher (3,5× mehr als die nächste Alternative), Desktop-Formfaktor, ~100 W Stromverbrauch (gegenüber 3.200 W bei Rack-Lösungen). Höchste Speicherkapazität im Budget unter 10.000 €.
 
-**Skalierungsoption:** [EXO](https://github.com/exo-explore/exo) (kostenlos, Open Source) ermöglicht es, mehrere Maschinen zu einem Verbund zusammenzuschalten — für zukünftige Modelle, die mehr als 512 GB benötigen. Aktuell nicht erforderlich.
+**Skalierungsoption:** [EXO](https://github.com/exo-explore/exo) (kostenlos, Open Source) ermöglicht es, mehrere Maschinen zu einem Verbund zusammenzuschalten — für zukünftige Modelle, die mehr als 512 GB benötigen.
 
 ### Rechtliche Grundlage
 
@@ -122,15 +133,3 @@ Für lokale Verarbeitung (Stufe 2 und 3) schließen wir eine individuelle Datenv
 
 **Quellenverweise:** [Anthropic Commercial Terms](https://www.anthropic.com/legal/commercial-terms) | [DPA](https://www.anthropic.com/legal/data-processing-addendum) | [Regional Compliance](https://claude.com/regional-compliance)
 
----
-
-## Quellen
-
-- **Anthropic Terms:** [Commercial Terms](https://www.anthropic.com/legal/commercial-terms) | [DPA](https://www.anthropic.com/legal/data-processing-addendum) | [Regional Compliance](https://claude.com/regional-compliance)
-- **EXO:** [github.com/exo-explore/exo](https://github.com/exo-explore/exo)
-- **Qwen3.5:** [HuggingFace](https://huggingface.co/Qwen/Qwen3.5-397B-A17B)
-- **MiniMax M2.5:** [HuggingFace](https://huggingface.co/MiniMaxAI/MiniMax-M2.5)
-
----
-
-WILSCH AI SERVICES OÜ | Harju maakond, Tallinn, Sepapaja tn 6, 15551
