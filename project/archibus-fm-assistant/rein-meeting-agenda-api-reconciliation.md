@@ -1,0 +1,79 @@
+---
+publish: true
+---
+
+# Rein Meeting Agenda: API Reconciliation
+[[client-archibus]]
+
+## Meeting Goal
+
+Align design doc assumptions with API reality. Four items surfaced during API testing (Feb 19) where actual behavior differs from documented decisions.
+
+1. **Confirm or update** — 4 behavioral differences between design doc and API
+
+## Pre-Read
+
+- [Step 3 Design Doc](https://mariuswilsch.github.io/public-wilsch-ai-pages/project/archibus-fm-assistant/chain-1b-step3-design) — updated Feb 19 with API testing findings
+
+---
+
+## Discussion Topics
+
+*Starting points for discussion, not limited to these.*
+
+### 1. ParentId derivation from nesting
+⏱️ 5 min
+
+API testing confirmed: the server auto-generates UUIDs for every node and auto-wires ParentId from the `children[]` nesting structure. AI does not need to provide Id or ParentId — the tree structure alone is sufficient.
+
+- Design doc originally specified ParentId as AI Required (must-have)
+- API testing (Feb 19): sent nested payload without any Id/ParentId → server wired all relationships correctly
+- If AI sends a string Id (e.g., "PROP-001"), server maps it to OtherCode, not Id
+
+**To resolve:** Whether ParentId should still be provided explicitly despite the server deriving it from nesting, or whether nesting alone is the intended contract.
+
+### 2. brandSpecific and modelSpecific field mapping
+⏱️ 5 min
+
+The API schema includes `brandSpecific` and `modelSpecific` fields (string, nullable). The design doc (Feb 11 meeting) decided "Manufacturer → StatusDetail overflow" because no manufacturer field existed at the time.
+
+- These fields appear to map directly to Manufacturer/Model from client data
+- Current decision: overflow to StatusDetail
+- If these are the intended mapping: the overflow decision changes (Step 2 concern)
+
+**To resolve:** Whether brandSpecific and modelSpecific are the intended fields for Manufacturer and Model data, replacing the StatusDetail overflow decision.
+
+### 3. OspId preserved behavior
+⏱️ 3 min
+
+API testing revealed that OspId preserves any value the caller sends, unlike OwnerId (overwritten from auth) and OtherCode (overwritten from Id field).
+
+- OwnerId: auto-populated from authenticated user → confirmed
+- OtherCode: auto-populated from Id field → confirmed
+- OspId: preserves caller-provided value → unexpected
+
+**To resolve:** Whether OspId preservation is intentional behavior or a bug, and whether the AI EXCLUDE list (omit all three) is the correct defensive approach.
+
+### 4. ValidateAssets workflow intent
+⏱️ 5 min
+
+Both ValidateAssets and ImportAssets accept the same payload and return the same error format. ImportAssets validates internally before inserting (stop-at-first-error confirmed). ValidateAssets never persists.
+
+- The AI pipeline can either: validate first via ValidateAssets → then import, or skip directly to ImportAssets
+- ImportAssets rejects invalid data with the same error format — no garbage gets through either way
+- The practical difference: ValidateAssets is a risk-free iteration loop
+
+**To resolve:** Whether the intended workflow is ValidateAssets loop → ImportAssets, or direct ImportAssets (since it validates internally).
+
+## Meeting Format
+
+- **Type:** Review / alignment
+- **Duration:** ~20 min
+- **Expectation:** Rein reviews the 4 topics against his API implementation intent
+- **Outcome:** Design doc Undefined markers either resolved or confirmed as intentional
+
+## Related
+
+- **Issue:** [#838 EPIC: AI Bulk Data Import Pipeline](https://github.com/DaveX2001/deliverable-tracking/issues/838)
+- **Design Doc:** [Step 3 Design](https://mariuswilsch.github.io/public-wilsch-ai-pages/project/archibus-fm-assistant/chain-1b-step3-design)
+- **API Spec:** API reference 2026-02-18.json (provided by Rein)
