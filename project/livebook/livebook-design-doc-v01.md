@@ -69,7 +69,7 @@ Plug ──→ Opera ──→ Shakespeare ──→ Livebook
 (context)  (interview)  (book output)    (artifact)
 ```
 
-<img src="assets/livebook-pipeline.png" alt="Livebook Pipeline — Plug → Opera → Shakespeare" width="100%">
+<img src="livebook-pipeline.png" width="100%" alt="Livebook Pipeline — Plug → Opera → Shakespeare">
 
 **Plug — Context Collector**
 Creates relatable triggers from real life. Location, calendar, daily events — whatever makes the user go "oh yeah, that's true." The purpose is to activate neural memory chains: one relatable observation triggers associated memories, which trigger deeper stories. Like a sales process — three relatable "yeses" and the person is in a different headspace.
