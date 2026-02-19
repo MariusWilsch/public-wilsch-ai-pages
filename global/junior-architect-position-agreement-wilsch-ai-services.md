@@ -65,13 +65,13 @@ Position Agreement for the Junior Architect position at Wilsch AI Services. Fram
 
 ### Position-Specific Standards
 
-1. Each design doc section must have a clear state — defined or requiring external context. Mechanism TBD (see [CCI #395](https://github.com/DaveX2001/claude-code-improvements/issues/395)).
+1. Each design doc section must have a clear state — **Defined** (content written in full) or **Undefined** (content cannot be defined with current understanding, marked with `**Undefined:**` inline marker routing to meeting agenda). The design doc itself is the state: if a section is written → Defined; if it has an Undefined marker → Undefined. No separate tracking labels.
 2. Meeting agendas must target specific uncertainties — no "general catch-up" meetings. Organizational discussion is SA/VP territory.
-3. Design docs must be date-versioned at each iteration. Mechanism TBD (see [CCI #395](https://github.com/DaveX2001/claude-code-improvements/issues/395)).
+3. Design docs are versioned via Git commit history. No version strings in document content. Source section records session references for chronological traceability.
 4. Handoff requires two gates passed:
    - **(a) Design Complete:** Zero sections requiring external context remain. Test: "Can I write a meeting agenda with open design questions?" → must be NO.
-   - **(b) Handoff Ready:** All context captured within the epic — Developer needs nothing from outside. Context includes: problem statement, technical decisions, data schemas, scope boundaries, client agreements, dependencies, evaluation criteria, and source material links. Formal design doc structure TBD (see [CCI #395](https://github.com/DaveX2001/claude-code-improvements/issues/395)).
-5. Scope boundaries (in/out) must be explicitly documented in every design doc. Relationship to Pflichtenheft scope sections to be defined (see [CCI #395](https://github.com/DaveX2001/claude-code-improvements/issues/395)).
+   - **(b) Handoff Ready:** All context captured within the epic — Developer needs nothing from outside. Design doc follows 4-section structure: **Problem Statement** → **Success Definition** → **Approach** → **Source**. Context includes: problem statement, technical decisions, data schemas, scope boundaries, client agreements, dependencies, evaluation criteria, and source material links.
+5. Scope boundaries (in/out) must be explicitly documented in every design doc.
 6. Escalate to Solution Architect when alignment cannot be achieved after 2 meeting iterations on the same uncertainty.
 
 ### Company-Wide Standards
@@ -98,7 +98,7 @@ Position Agreement for the Junior Architect position at Wilsch AI Services. Fram
 ### Necessary Resources
 
 - Initial transcript(s) for each project (the trigger for the cycle)
-- Design doc templates (TBD from [CCI #395](https://github.com/DaveX2001/claude-code-improvements/issues/395))
+- Design doc templates (4-section structure via hippocampus skill + design-doc-workflow reference)
 - Operations Manual for the Knowledge Extraction process (to be built — Stage 2)
 
 ### Appropriate Training
@@ -131,15 +131,6 @@ Position Agreement for the Junior Architect position at Wilsch AI Services. Fram
 | **Printed Name** | _________________ |
 
 ---
-
-## Open Questions (TBDs)
-
-| Question | Depends On | Link |
-|----------|-----------|------|
-| Design doc section state mechanism (defined/undefined) | Design doc workflow | [CCI #395](https://github.com/DaveX2001/claude-code-improvements/issues/395) |
-| Date versioning mechanism | Design doc workflow | [CCI #395](https://github.com/DaveX2001/claude-code-improvements/issues/395) |
-| Formal design doc structure (which sections) | Evidence synthesis from existing docs | [CCI #395](https://github.com/DaveX2001/claude-code-improvements/issues/395) |
-| Pflichtenheft ↔ design doc scope overlap | Pflichtenheft skill analysis | [CCI #395](https://github.com/DaveX2001/claude-code-improvements/issues/395) |
 
 ---
 
