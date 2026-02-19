@@ -7,9 +7,10 @@ publish: true
 
 ## Meeting Goal
 
-Align design doc assumptions with API reality. Four items surfaced during API testing (Feb 19) where actual behavior differs from documented decisions.
+Align design doc assumptions with API reality. Five items surfaced during API testing (Feb 19) where actual behavior differs from documented decisions.
 
-1. **Confirm or update** — 4 behavioral differences between design doc and API
+1. **Confirm or propose** — id field enforcement for the backpressure correction loop
+2. **Confirm or update** — 4 behavioral differences between design doc and API
 
 ## Pre-Read
 
@@ -21,7 +22,19 @@ Align design doc assumptions with API reality. Four items surfaced during API te
 
 *Starting points for discussion, not limited to these.*
 
-### 1. ParentId derivation from nesting
+### 1. Id field enforcement for error traceability
+⏱️ 5 min
+
+API testing (Feb 19) confirmed that ValidateAssets accepts payloads where nodes have no `id` field. When validation fails on a node without an id, the error response returns `id: null` — making it impossible to locate the failing node in a nested tree.
+
+- With `id: "TEST-ROOM"` on a failing child → `error.id = "TEST-ROOM"` → correction loop can locate and fix the node
+- Without id on the same child → `error.id = null` → correction loop is blind (which of 18 rooms failed?)
+- The correction loop requires id-based node lookup to function — this is the bridge between error response and JSON tree
+- Currently the API silently accepts missing ids and returns unlocatable errors
+
+**To resolve:** Whether `id` should be a required field for ValidateAssets payloads, so that stop-at-first-error includes "missing id" as a validation error before any field validation runs.
+
+### 2. ParentId derivation from nesting
 ⏱️ 5 min
 
 API testing confirmed: the server auto-generates UUIDs for every node and auto-wires ParentId from the `children[]` nesting structure. AI does not need to provide Id or ParentId — the tree structure alone is sufficient.
@@ -43,7 +56,7 @@ API testing confirmed: the server auto-generates UUIDs for every node and auto-w
 
 **To resolve:** Whether ParentId should still be provided explicitly despite the server deriving it from nesting. Additionally: string Ids appear necessary for error traceability in the backpressure loop — confirm this is the intended error identification mechanism.
 
-### 2. brandSpecific and modelSpecific field mapping
+### 3. brandSpecific and modelSpecific field mapping
 ⏱️ 5 min
 
 The API schema includes `brandSpecific` and `modelSpecific` fields (string, nullable). The design doc (Feb 11 meeting) decided "Manufacturer → StatusDetail overflow" because no manufacturer field existed at the time.
@@ -54,7 +67,7 @@ The API schema includes `brandSpecific` and `modelSpecific` fields (string, null
 
 **To resolve:** Whether brandSpecific and modelSpecific are the intended fields for Manufacturer and Model data, replacing the StatusDetail overflow decision.
 
-### 3. OspId preserved behavior
+### 4. OspId preserved behavior
 ⏱️ 3 min
 
 API testing revealed that OspId preserves any value the caller sends, unlike OwnerId (overwritten from auth) and OtherCode (overwritten from Id field).
@@ -65,7 +78,7 @@ API testing revealed that OspId preserves any value the caller sends, unlike Own
 
 **To resolve:** Whether OspId preservation is intentional behavior or a bug, and whether the AI EXCLUDE list (omit all three) is the correct defensive approach.
 
-### 4. ValidateAssets workflow intent
+### 5. ValidateAssets workflow intent
 ⏱️ 5 min
 
 Both ValidateAssets and ImportAssets accept the same payload and return the same error format. ImportAssets validates internally before inserting (stop-at-first-error confirmed). ValidateAssets never persists.
@@ -79,8 +92,8 @@ Both ValidateAssets and ImportAssets accept the same payload and return the same
 ## Meeting Format
 
 - **Type:** Review / alignment
-- **Duration:** ~20 min
-- **Expectation:** Rein reviews the 4 topics against his API implementation intent
+- **Duration:** ~25 min
+- **Expectation:** Rein reviews the 5 topics against his API implementation intent
 - **Outcome:** Design doc Undefined markers either resolved or confirmed as intentional
 
 ## Related
