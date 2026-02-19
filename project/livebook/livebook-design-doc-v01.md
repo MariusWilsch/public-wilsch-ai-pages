@@ -2,7 +2,7 @@
 publish: true
 ---
 
-# Livebook — Design Doc v0.1 (Tipping Point)
+# Livebook — Design Doc v0.1
 [[livebook]]
 
 First extraction pass: initial alignment document for the Livebook platform. This is a conversation trigger for the first alignment meeting with Stafford — not a finished specification. Many sections are intentionally marked Undefined to drive discussion.
@@ -69,7 +69,7 @@ Plug ──→ Opera ──→ Shakespeare ──→ Livebook
 (context)  (interview)  (book output)    (artifact)
 ```
 
-![Livebook Pipeline — Plug → Opera → Shakespeare](assets/livebook-pipeline.png)
+<img src="assets/livebook-pipeline.png" alt="Livebook Pipeline — Plug → Opera → Shakespeare" width="100%">
 
 **Plug — Context Collector**
 Creates relatable triggers from real life. Location, calendar, daily events — whatever makes the user go "oh yeah, that's true." The purpose is to activate neural memory chains: one relatable observation triggers associated memories, which trigger deeper stories. Like a sales process — three relatable "yeses" and the person is in a different headspace.
