@@ -45,8 +45,6 @@ Nicht jede KI ist gleich. Es gibt einen grundlegenden Unterschied zwischen komme
 | **Löschfrist** | 30 Tage, automatisch | Solange Konto aktiv |
 | **DPA** | Ja, automatisch im Vertrag | Nein |
 
-Wir arbeiten ausschließlich mit dem Geschäftsprodukt. Verbraucherprodukte werden nicht für Kundenprojekte eingesetzt.
-
 ### Wo auch das Geschäftsprodukt an Grenzen stößt
 
 Auch mit einer gültigen DPA bleiben Punkte, die für regulierte Unternehmen problematisch sein können:
