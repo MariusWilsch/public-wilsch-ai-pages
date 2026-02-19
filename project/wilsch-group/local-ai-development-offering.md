@@ -57,15 +57,16 @@ Die DPA (Datenverarbeitungsvereinbarung) bestimmt, welche Stufe ein Kunde benöt
 
 ### 2. Modellauswahl
 
-**Aktueller Stand (Februar 2026):** Drei Frontier-Open-Source-Modelle wurden evaluiert:
+**Aktueller Stand (Februar 2026):** Vier Frontier-Open-Source-Modelle wurden evaluiert:
 
 | Modell | Parameter | Aktive Parameter | FP8-Speicherbedarf | Passt auf 512GB? | Lizenz |
 |--------|-----------|-----------------|-------------------|-----------------|--------|
 | **[Qwen3.5-397B](https://huggingface.co/Qwen/Qwen3.5-397B-A17B)** | 397 Mrd. (MoE) | 17 Mrd. | ~397 GB | ✅ Ja | [Apache 2.0](https://huggingface.co/Qwen/Qwen3.5-397B-A17B) — kommerziell uneingeschränkt |
+| **[MiniMax M2.5](https://huggingface.co/MiniMaxAI/MiniMax-M2.5)** | 229 Mrd. (MoE) | 10 Mrd. | ~229 GB | ✅ Ja | [Modified MIT](https://github.com/MiniMax-AI/MiniMax-M2.5/blob/main/LICENSE) — kommerziell frei |
 | **[GLM-5](https://huggingface.co/zai-org/GLM-5)** | 744 Mrd. (MoE) | 40 Mrd. | ~744 GB | ❌ Nein | [MIT](https://glm5.net/) — kommerziell uneingeschränkt |
 | **[Kimi K2.5](https://huggingface.co/moonshotai/Kimi-K2.5)** | 1 Bio. (MoE) | 32 Mrd. | ~600+ GB | ❌ Nein | [Modified MIT](https://github.com/MoonshotAI/Kimi-K2.5/blob/master/LICENSE) — kommerziell frei unter 100M MAU |
 
-**Ergebnis:** Qwen3.5-397B ist aktuell das einzige Frontier-Modell, das bei FP8-Präzision auf einer einzelnen Maschine (512GB) läuft. GLM-5 und Kimi K2.5 erfordern Multi-Maschinen-Clustering via [EXO](https://github.com/exo-explore/exo).
+**Ergebnis:** Qwen3.5-397B und MiniMax M2.5 sind die beiden Frontier-Modelle, die bei FP8-Präzision auf einer einzelnen Maschine (512GB) laufen. M2.5 ist auf Softwareentwicklung spezialisiert (80,2% SWE-Bench Verified), Qwen3.5 ist das stärkere Allzweckmodell. GLM-5 und Kimi K2.5 erfordern Multi-Maschinen-Clustering via [EXO](https://github.com/exo-explore/exo).
 
 **Qualitätsstandard:**
 - **FP8 ist das Minimum** für produktive Kundenarbeit (nahezu verlustfrei, >95% Qualität)
@@ -155,4 +156,5 @@ Auch mit der Commercial API und Anthropics DPA bleiben folgende Punkte, die regu
 - **Anthropic Terms:** [Commercial Terms](https://www.anthropic.com/legal/commercial-terms) | [DPA](https://www.anthropic.com/legal/data-processing-addendum) | [Regional Compliance](https://claude.com/regional-compliance)
 - **EXO:** [github.com/exo-explore/exo](https://github.com/exo-explore/exo)
 - **Qwen3.5:** [HuggingFace](https://huggingface.co/Qwen/Qwen3.5-397B-A17B) | [MLX 4-bit](https://huggingface.co/mlx-community/Qwen3.5-397B-A17B-4bit)
+- **MiniMax M2.5:** [HuggingFace](https://huggingface.co/MiniMaxAI/MiniMax-M2.5)
 - **Session:** ce7b3c88-8c2e-47cb-b165-daeae5aa8c10.jsonl
