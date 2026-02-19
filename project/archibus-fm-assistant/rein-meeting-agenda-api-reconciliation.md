@@ -29,8 +29,9 @@ API testing confirmed: the server auto-generates UUIDs for every node and auto-w
 - Design doc originally specified ParentId as AI Required (must-have)
 - API testing (Feb 19): sent nested payload without any Id/ParentId → server wired all relationships correctly
 - If AI sends a string Id (e.g., "PROP-001"), server maps it to OtherCode, not Id
+- However: error responses reference the node's Id. Without Ids, error returns `id: null` — impossible to locate the failing node in a deep hierarchy. With Ids (`id: "FLR-001"`), the error points directly to the failing node.
 
-**To resolve:** Whether ParentId should still be provided explicitly despite the server deriving it from nesting, or whether nesting alone is the intended contract.
+**To resolve:** Whether ParentId should still be provided explicitly despite the server deriving it from nesting. Additionally: string Ids appear necessary for error traceability in the backpressure loop — confirm this is the intended error identification mechanism.
 
 ### 2. brandSpecific and modelSpecific field mapping
 ⏱️ 5 min
