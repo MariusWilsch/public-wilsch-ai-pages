@@ -20,40 +20,56 @@ The Organization Chart for Wilsch AI Services at **done state** — when the fou
 
 ## The Chart
 
-```
-══════════════════════════════════════════════════════════════════════════════
-                              SHAREHOLDERS
-                         (Marius - outside business)
-══════════════════════════════════════════════════════════════════════════════
-                                    │
-                                    ▼
-                          ┌─────────────────┐
-                          │  COO/President  │
-                          └────────┬────────┘
-                                   │
-     ┌────────────┬────────────────┼────────────────┬────────────┐
-     ▼            ▼                ▼                ▼            ▼
-┌─────────┐ ┌───────────┐  ┌────────────┐  ┌───────────┐ ┌────────────┐
-│VP/Mktg  │ │VP/Delivery│  │ VP/Finance │  │System Eng │ │ (future)   │
-└────┬────┘ └─────┬─────┘  └─────┬──────┘  └───────────┘ └────────────┘
-     │            │              │
-     │            │              │
-   ┌─┴──┐      ┌──┴──┐        ┌──┴──┐
-   ▼    ▼      ▼     ▼        ▼     ▼
- Partner Content  Solution  Dev   Book-  Investment
- Manager Mktg Mgr Architect Lead  keeper Manager
-   │       │        │        │      │
-   ▼       ▼        ▼        ▼      ▼
- Sales  Content  Junior  Developer AI Bookkeeping
-Partner Marketer Architect   │     Agent × N
-(ext.)    │         │        ▼
-          ▼         │    Autonomous
-     Autonomous     │    Coder (AI) × N
-     Marketer       │
-     (AI) × N       │
-                    │
-              (interactive
-               mode only)
+```mermaid
+flowchart TD
+    SH["SHAREHOLDERS<br/><i>Marius — outside business</i>"]
+    COO["COO / President"]
+
+    SH --> COO
+
+    VPM["VP / Marketing"]
+    VPD["VP / Delivery"]
+    VPF["VP / Finance"]
+    SE["System Engineer"]
+    FUT["(future)"]
+
+    COO --> VPM
+    COO --> VPD
+    COO --> VPF
+    COO --> SE
+    COO --> FUT
+
+    PM["Partner Manager"]
+    CMM["Content Mktg Mgr"]
+    SA["Solution Architect"]
+    DL["Dev Lead"]
+    BK["Bookkeeper"]
+    IM["Investment Manager"]
+
+    VPM --> PM
+    VPM --> CMM
+    VPD --> SA
+    VPD --> DL
+    VPF --> BK
+    VPF --> IM
+
+    SP["Sales Partner<br/><i>(ext.)</i>"]
+    CMKR["Content Marketer"]
+    JA["Junior Architect<br/><i>(interactive mode only)</i>"]
+    DEV["Developer"]
+    AIBK["AI Bookkeeping<br/>Agent × N"]
+
+    PM --> SP
+    CMM --> CMKR
+    SA --> JA
+    DL --> DEV
+    BK --> AIBK
+
+    AIMKT["Autonomous Marketer<br/><i>(AI) × N</i>"]
+    AICODE["Autonomous Coder<br/><i>(AI) × N</i>"]
+
+    CMKR --> AIMKT
+    DEV --> AICODE
 ```
 
 ---
