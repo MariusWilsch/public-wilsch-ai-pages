@@ -151,7 +151,7 @@ The [AssetImportDescription — Fields Assets sheet](https://docs.google.com/spr
 
 **Skip** — excluded from PoC. Currently only AssignedPortfolioEmployee (requires employee list lookup, deferred to next version).
 
-**Status field clarification (updated Feb 19):** Rein merged the former AssetStatus and Status fields into a single `Status` field. StatusDetail remains a separate overflow field for unmapped column content. Status enum validation is not yet live in the API — Rein is implementing it. Country enum validation is also pending. Until both are live, the API accepts any string value for Status and Country without error feedback.
+**Status field clarification (updated Feb 19):** Rein merged the former AssetStatus and Status fields into a single `Status` field. StatusDetail remains a separate overflow field for unmapped column content.
 
 **Overflow rule:** When client columns don't map to any of the 36 import fields, Step 2 evaluates each individually: relevant context overflows to StatusDetail (a 2000-char description field), irrelevant columns are skipped. This is a Step 2 decision — Step 3 executes the mapping without judgment.
 
