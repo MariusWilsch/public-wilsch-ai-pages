@@ -12,8 +12,7 @@ Lock the remaining decisions for Feb 23 launch. Near-term items are launch-block
 1. **Positioning name locked** — concept is articulated, name isn't (README needs it)
 2. **Feedback notification stance** — close the loop or leave open for beta?
 3. **Beta check-in cadence** — structured feedback meetings with beta users (2 then 10)
-4. **Data collection & business model direction** — long-term, not launch-blocking, but shapes messaging
-5. **AI behavior testing approach** — long-term, operational concern for ongoing releases
+4. **Client conversation data** — consent model + technical extraction mechanism for remote Loop 2
 
 ## Pre-Read
 
@@ -49,46 +48,48 @@ Lock the remaining decisions for Feb 23 launch. Near-term items are launch-block
 
 **To resolve:** Whether feedback resolution notifications are a beta feature or a post-beta improvement.
 
-### 3. Structured check-ins with beta users could compound the improvement loop
+### 3. Two feedback loops serve different purposes — the check-in loop is how the company learns
 ⏱️ 10 min
 
-At Lovable, weekly "what's working well / what's working bad" meetings with early users surfaced issues faster than async feedback. Transcripts from these check-ins feed back into design doc improvement — the same extraction pass mechanism used internally.
+Traceline has two distinct feedback loops, and they should not be conflated:
+
+**Loop 1 — Product/company (check-in transcripts):** Structured conversations with beta users produce transcripts. These transcripts become JA source material — the extraction pass system turns them into design doc updates, positioning refinements, and product decisions. This is how the company learns what to build. Precedent: Lovable's weekly "what's working well / what's working bad" meetings.
+
+**Loop 2 — Tool (CCI board):** `/feedback` captures in-session friction. Routes to CCI. System Engineer fixes the underlying pattern. This is how the tool itself improves.
+
+Loop 1 is strategic (what to build). Loop 2 is operational (how the tool behaves). Both compound, but through different mechanisms.
 
 - First 2 users (David, Dylan): close enough for 1:1 check-ins
 - At 10 users: group session, individual, or mixed?
 - Cadence: weekly, biweekly, or on-demand?
-- Transcripts from check-ins become JA source material
+- Check-in transcripts are the highest-value input for the JA extraction system — they contain user language, pain points, and success patterns that no async feedback mechanism can capture
 
 **To resolve:** The format and cadence of structured feedback meetings for all beta users — starting with 2, scaling to 10.
 
-### 4. Conversation data is the improvement fuel but consent isn't defined
-⏱️ 10 min
+### 4. Conversation data lives on the client's machine — we need consent AND a way to get it
+⏱️ 15 min
 
-The system improves by learning from user sessions — conversation data is how the operations manual evolves. Two monetization paths emerged: subscription to curated best practices (we improve via your data, "Michael Burry model") vs. self-serve (user keeps data private, less improvement).
+Two connected problems, one topic. Internal AI behavior maintenance is solved — the [improve-system architecture](https://mariuswilsch.github.io/public-wilsch-ai-pages/global/improve-system-architecture) runs a 3-session workflow (capture → diagnose → verify) using conversation paths. But that workflow depends on reading the conversation. When a beta user hits an issue, their conversation data is on their machine, not ours.
 
-- IP sensitivity is real: cybersecurity client's data cannot be in a shared space
-- The right to collect/use conversation data could differentiate pricing tiers
+**Consent (CAN we collect it):**
+- IP sensitivity is real — cybersecurity client's data cannot be in a shared space
 - Beta users are trusted collaborators — consent may be simpler now, but needs a model for scale
+- The right to collect/use conversation data could differentiate pricing tiers (Michael Burry model: we improve via your data vs. self-serve)
 - "Works towards your way of working, not our way of thinking — while you can subscribe to ours"
 
-**To resolve:** The data collection consent mechanism for beta and the directional decision on whether data usage rights become a monetization lever.
+**Technical extraction (HOW do we get it):**
+- Internally: `/flag-for-improvement` captures the conversation path → we read it locally. On a client's machine, we can't.
+- `/feedback` already captures some context — but is it enough, or do we need the full conversation path?
+- Possible mechanisms: conversation upload via `/feedback`, Langfuse (LLM observability/tracing), structured log export, conversation path sharing
+- Connected to Loop 2: without a way to pull client conversation data, the improve-system architecture doesn't work remotely
 
-### 5. The system tests itself internally — but not on the client's machine
-⏱️ 5 min
-
-AI behavior is validated by using the system's own workflow (clarity phases, AC verify, DoD tracking) on real work — not by a separate test suite. The open question is client-side: Marius's alpha environment is the test bed, but beta users have different setups (different OS, different shells, different Claude Code versions, different project structures).
-
-- Internal validation works because the improved system workflow is used daily on real work
-- Risk: environment differences (not behavioral differences) cause failures on client machines
-- First 2 users (David, Dylan) are the canary — their setup issues are the test
-
-**To resolve:** Whether the first-2-user observation period is sufficient client-side verification, or if additional environment checks are needed in the install script.
+**To resolve:** The consent model for beta AND the technical mechanism that gets conversation data off the client's machine so Loop 2 can function remotely.
 
 ## Meeting Format
 
 - **Type:** Working session
 - **Expectation:** Christoph has read the updated design doc
-- **Outcome:** Topics 1-3 resolved before launch. Topics 4-5 directionally agreed, full resolution post-launch.
+- **Outcome:** Topics 1-3 resolved before launch. Topic 4 directionally agreed, full resolution post-launch.
 
 ## Related
 
