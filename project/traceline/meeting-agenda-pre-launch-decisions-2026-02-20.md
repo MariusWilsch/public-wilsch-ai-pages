@@ -80,8 +80,9 @@ Two connected problems, one topic. Internal AI behavior maintenance is solved �
 **Technical extraction (HOW do we get it):**
 - Internally: `/flag-for-improvement` captures the conversation path → we read it locally. On a client's machine, we can't.
 - `/feedback` already captures some context — but is it enough, or do we need the full conversation path?
-- Possible mechanisms: conversation upload via `/feedback`, Langfuse (LLM observability/tracing), structured log export, conversation path sharing
+- Possible mechanisms: conversation upload via `/feedback`, conversation store pattern (already built for internal use — [CCI#504](https://github.com/DaveX2001/claude-code-improvements/issues/504)), structured log export
 - Connected to Loop 2: without a way to pull client conversation data, the improve-system architecture doesn't work remotely
+- Active development pattern: [CCI#574 — Conversation Index: Associate Claude Code sessions with GitHub issues](https://github.com/DaveX2001/claude-code-improvements/issues/574) — this is the technical mechanism being built for internal use that would need to extend to clients
 
 **To resolve:** The consent model for beta AND the technical mechanism that gets conversation data off the client's machine so Loop 2 can function remotely.
 
