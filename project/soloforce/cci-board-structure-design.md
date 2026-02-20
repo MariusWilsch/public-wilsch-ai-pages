@@ -66,11 +66,11 @@ The board has two structural levels:
 | Level | Type | Lifecycle | Purpose |
 |-------|------|-----------|---------|
 | **Level 1** | Position epic | Permanent (never closes) | Collects observations as they arrive |
-| **Level 2** | Release epic | Time-bound (created → worked → closed) | Groups observations selected for a work cycle |
+| **Level 2** | Release epic (sub-issue) | Time-bound (created → worked → closed) | Groups observations selected for a work cycle |
 
 **Flow:**
 1. Observations accumulate on the position epic (Level 1) as comments
-2. When ready to work: create a release epic (Level 2)
+2. When ready to work: create a release epic as a sub-issue of the position epic (Level 2)
 3. Transfer relevant observations from position epic to release epic
 4. Work the release epic to completion, then close it
 5. Remove transferred observations from the position epic
