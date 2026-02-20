@@ -42,8 +42,10 @@ The triage sessions created labels with a position × scope pattern: `traceline/
 The design doc defines the two-part structure (context as hook, source as pond) and the principle that hooks must be problem-based, never solution-based. What's missing is the guide that gets embodied into the capture tooling so observations are consistently useful.
 
 - Current flag-for-improvement asks free-form questions — no structural enforcement
-- A bad observation: "The AI should use better formatting" (solution-based, no source)
-- A good observation: "AI skipped the SURFACE list format during probe session" + conversation path (problem-based, sourced)
+- The format should mirror `/issue-comment`: very short hook pointing toward the source — not analyzing or interpreting
+- A bad observation: "The AI should use better formatting" (solution-based, no source, already interpreting)
+- A good observation: "AI skipped the SURFACE list format" + conversation path (problem-based, points to source, lets the source speak at face value)
+- The hook points toward; the source speaks for itself. Observation ≠ analysis
 - The guide needs to be short enough to embed in a skill prompt
 
 **To resolve:** The observation format standard that flag-for-improvement enforces at capture time.
