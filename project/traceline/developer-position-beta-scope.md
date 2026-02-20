@@ -127,7 +127,7 @@ Discovery script kept in `/implementation-clarity` only (worktree). Removed from
 
 **Spec reading:** Local markdown files (tracking.md). GitHub Pages deferred.
 
-**Repo model (resolved):** Single shared repo for beta. Per-user forks rejected as unnecessary complexity for 10 trusted users. Issue visibility is a known tradeoff: all beta users see all issues (including `/feedback` submissions). Curated user pool mitigates IP risk. Per-user repos (phase 2) are a gating requirement for any IP-sensitive client — enterprise adoption is blocked until visibility isolation exists.
+**Repo model (resolved):** Single shared repo for beta. Per-user forks rejected as unnecessary complexity for 10 trusted users. Issue visibility is a known tradeoff: all beta users see all issues (including `/feedback` submissions). All 10 beta users are hand-picked, reducing IP risk. Per-user repos (phase 2) are a gating requirement for any IP-sensitive client — enterprise adoption is blocked until visibility isolation exists.
 
 **Beta disclosure requirements:** Two disclosures before user starts:
 1. Shared visibility — "Your issues are visible to all beta participants."
@@ -228,9 +228,11 @@ Beta-level checks only — things change fast, don't over-engineer the install s
 
 **Idea (future):** `--sdk-url` could script the ENTIRE wizard (install + tutorial as one WebSocket-driven flow). Requires Christoph discussion.
 
-**Release pipeline:** Alpha (Marius daily use) → `release-plugin` skill → Claude Team Marketplace (`MariusWilsch/claude-code-team-marketplace`) → beta users update from marketplace. `clarity-workflow-plugin` repo archived.
+**Release pipeline:** Alpha (Marius daily use) → `release-plugin` skill → beta distribution plugin repo (TBD — not the internal Claude Team Marketplace). `clarity-workflow-plugin` repo archived.
 
-**Undefined: AI behavior testing** — No pytest equivalent for interaction patterns. How to test that skills/commands behave correctly after changes? → See Meeting Agenda
+**Undefined: Beta distribution repo** — The internal Claude Team Marketplace (`MariusWilsch/claude-code-team-marketplace`) is for internal use only. A separate repo is needed for beta user distribution. → See Meeting Agenda
+
+**Undefined: Client-side verification** — AI behavior is validated internally by using the system's own workflow (clarity phases, AC verify, DoD tracking) on real work — not by a separate test suite. The open question is: how do we verify the plugin works correctly on the client's machine after install/update? Alpha testing happens on Marius's environment — differences in client setup could surface issues. → See Meeting Agenda
 
 *Settings shipped:*
 
