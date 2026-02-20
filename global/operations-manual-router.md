@@ -39,7 +39,7 @@ Entry point for all position-specific Operations Manuals at Wilsch AI Services. 
 | **Dev Lead** | [Draft](https://mariuswilsch.github.io/public-wilsch-ai-pages/global/dev-lead-position-agreement-wilsch-ai-services) | TBD | TBD |
 | **Developer** | [Draft](https://mariuswilsch.github.io/public-wilsch-ai-pages/global/developer-position-agreement-wilsch-ai-services) | [Draft](https://mariuswilsch.github.io/public-wilsch-ai-pages/global/developer-operations-manual-toc) | [Draft (v3)](https://mariuswilsch.github.io/public-wilsch-ai-pages/global/developer-operations-manual-wilsch-ai-services) |
 | **Solution Architect** | TBD | TBD | TBD |
-| **Junior Architect** | [Draft](https://mariuswilsch.github.io/public-wilsch-ai-pages/global/junior-architect-position-agreement-wilsch-ai-services) | TBD | TBD |
+| **Junior Architect** | [Draft](https://mariuswilsch.github.io/public-wilsch-ai-pages/global/junior-architect-position-agreement-wilsch-ai-services) | [Draft](https://mariuswilsch.github.io/public-wilsch-ai-pages/global/junior-architect-operations-manual-toc) | TBD |
 
 ### VP/Marketing Path
 
@@ -61,7 +61,7 @@ Entry point for all position-specific Operations Manuals at Wilsch AI Services. 
 
 | Position | Position Agreement | Operations Manual TOC | Operations Manual |
 |----------|-------------------|----------------------|-------------------|
-| **System Engineer** | [Draft](https://mariuswilsch.github.io/public-wilsch-ai-pages/global/system-engineer-position-agreement-wilsch-ai-services) | TBD | TBD |
+| **System Engineer** | [Draft](https://mariuswilsch.github.io/public-wilsch-ai-pages/global/system-engineer-position-agreement-wilsch-ai-services) | [Draft](https://mariuswilsch.github.io/public-wilsch-ai-pages/global/system-engineer-operations-manual-toc) | TBD |
 
 ### Executive Level
 
