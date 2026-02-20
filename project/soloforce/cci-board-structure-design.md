@@ -53,7 +53,7 @@ Observations are not issues — they have no state. They are context that makes 
 
 An observation has two parts:
 - **Context (the hook):** What was observed — the entry point that tells the System Engineer where to look in the source. Always problem-based, never solution-based. The source conversation contains noise; the hook cuts through it by naming the specific behavior problem. Without a problem-framed hook, the source is a pond with no indication of what fish to catch.
-- **Source (the pond):** Conversation path, transcript URL, or commit link — the full evidence where the AI extracts the actual improvement.
+- **Source (the pond):** Conversation path, transcript URL, or commit link — the full evidence where the AI extracts the actual problematic behavior to improve.
 
 This format was validated live during the extraction session — an output format observation was posted to CCI #589 as a comment instead of creating a new issue.
 
