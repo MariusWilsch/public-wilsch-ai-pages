@@ -27,7 +27,8 @@ The Developer Operations Manual defines a complete workflow (Path A: Spec-Design
 - **Goal:** A beta user installs the plugin and completes Path A (spec-design) + Path B (spec-implement + verify) on their own project without Marius explaining infrastructure
 - **Success:** Beta users run the workflow independently; friction points surface through flag-for-improvement, not through confusion
 - **Done test:** Christoph builds and completes the tutorial without asking Marius for clarification → plugin is ready for first 1-2 users
-- **Undefined: Rollout cadence** — staged rollout: 1-2 users first, trickle to 10 over ~2 weeks. Criteria for expanding from 2 → 10 undefined. → See [Meeting Agenda](https://mariuswilsch.github.io/public-wilsch-ai-pages/project/traceline/meeting-agenda-beta-launch-scope-2026-02-16)
+- **Rollout cadence:** 2 users first (David Eberle, Dylan Brodeur) → 2-3 day observation → expand to 10. Purpose of the first 2: surface distribution quirks (GitHub setup, onboarding, packaging) with close contacts who give direct feedback. Expansion criterion: distribution quirks resolved (Marius judgment — the system is proven internally, distribution is the new variable). One-off seeding pattern.
+- **Launch target:** Monday 2026-02-23
 
 ---
 
@@ -43,7 +44,7 @@ The Developer Operations Manual is the inclusion filter. Every file that maps to
 |-----------|------|-------------|
 | `/onboarding` | Command | Ship (simplified) |
 | `/issue-comment` | Command | Ship as-is |
-| `/flag-for-improvement` | Command | Ship (modified routing) |
+| `/feedback` | Command | Ship (renamed from /flag-for-improvement, modified routing) |
 | `deliverable-tracking` | Skill | Ship as-is |
 
 **Path A: Spec-Design**
@@ -117,19 +118,32 @@ Discovery script kept in `/implementation-clarity` only (worktree). Removed from
 
 ### Part 6: GitHub Integration & Repo Architecture
 
-**Principle:** GitHub is backend-only long-term. For beta, users WILL interact with GitHub Issues directly (reading issue body, tracking.md, comments). Long-term vision: own UI replaces GitHub entirely.
+**Principle:** The system works towards the user's tools, not ours. GitHub is the first adapter — architecture is task-manager-agnostic. Target systems need an API, HTTP endpoint, or CLI to integrate. Three-phase progression:
+1. **Beta:** Shared plugin repo (our infrastructure). Users interact with GitHub Issues directly.
+2. **Next:** Per-user GitHub repos (user-owned infrastructure).
+3. **Future:** Any task manager via adapters (GitHub, Linear, Jira, etc.).
 
 **Issue-commit-linker:** Ships for beta. Same-repo = GITHUB_TOKEN sufficient.
 
 **Spec reading:** Local markdown files (tracking.md). GitHub Pages deferred.
 
-**Undefined: Repo model** — shared plugin repo vs per-user forks. CLI abstracts storage regardless. → See [Meeting Agenda](https://mariuswilsch.github.io/public-wilsch-ai-pages/project/traceline/meeting-agenda-beta-launch-scope-2026-02-16)
+**Repo model (resolved):** Single shared repo for beta. Per-user forks rejected as unnecessary complexity for 10 trusted users. Issue visibility is a known tradeoff: all beta users see all issues (including `/feedback` submissions). Curated user pool mitigates IP risk. Per-user repos (phase 2) are a gating requirement for any IP-sensitive client — enterprise adoption is blocked until visibility isolation exists.
 
-### Part 7: Flag-for-Improvement (Beta Feedback)
+**Beta disclosure requirements:** Two disclosures before user starts:
+1. Shared visibility — "Your issues are visible to all beta participants."
+2. Conversation data — sessions are collected and feed system improvement (compounding knowledge mechanism).
 
-Routes to CCI via GitHub Action workflow dispatch in plugin repo. PAT stored as repo secret. `github.actor` captures username. GitHub App (Traceline Bot) deferred until user-facing visibility exists.
+**Undefined: Data collection & business model** — Conversation data is the improvement fuel. Monetization differential: subscription to curated best practices (system improves via collected data) vs. self-serve (user keeps data private). Legal mechanism for data collection consent undefined. → See Meeting Agenda
 
-**Undefined: Voice note feedback mechanism** → See [Meeting Agenda](https://mariuswilsch.github.io/public-wilsch-ai-pages/project/traceline/meeting-agenda-beta-launch-scope-2026-02-16)
+### Part 7: Feedback (Beta)
+
+Command renamed from `/flag-for-improvement` to `/feedback` — discoverability for beta users ("feedback" is immediately understood, "flag for improvement" is meta-language). Same behavior, same routing.
+
+Routes to CCI directly via GitHub Action workflow dispatch in plugin repo. PAT stored as repo secret. `github.actor` captures username. **Visibility boundary:** beta users see a thank-you confirmation on submission but do not see the CCI board or how feedback is triaged. GitHub App (Traceline Bot) deferred until user-facing visibility exists.
+
+**Community layer:** Discord channel for async communication — escape valve for when `/feedback` itself fails or for high-level overall impressions. Structure owned by Christoph.
+
+**Undefined: Feedback resolution notification** — Should users be notified when their feedback is resolved? → See Meeting Agenda
 
 ### Part 8: Plan Mode Prevention
 
@@ -205,7 +219,18 @@ The script handles three categories: settings, protocol, and dependencies.
 
 Draft inventory — validated with Christoph during tutorial building.
 
-**Undefined: Script trigger mechanism** — how the user discovers and runs the setup script (CLI command, GitHub URL, npm postinstall, manual download). → See [Meeting Agenda](https://mariuswilsch.github.io/public-wilsch-ai-pages/project/traceline/meeting-agenda-beta-launch-scope-2026-02-16)
+**Onboarding wizard (resolved):** Three-stage flow from "I'm in" to first real session:
+1. **Entry:** `curl https://traceline.dev/install | bash` (or equivalent hosted URL)
+2. **Setup script:** Minimal prereq check (Claude Code installed?), then walks through what's being installed — transparency and consent before action. Installs plugin + dependencies from the table above.
+3. **Tutorial:** Opens `--sdk-url` scripted walkthrough in browser — guides Path A (spec-design) and Path B (spec-implement) using a fake issue.
+
+Beta-level checks only — things change fast, don't over-engineer the install script.
+
+**Idea (future):** `--sdk-url` could script the ENTIRE wizard (install + tutorial as one WebSocket-driven flow). Requires Christoph discussion.
+
+**Release pipeline:** Alpha (Marius daily use) → `release-plugin` skill → Claude Team Marketplace (`MariusWilsch/claude-code-team-marketplace`) → beta users update from marketplace. `clarity-workflow-plugin` repo archived.
+
+**Undefined: AI behavior testing** — No pytest equivalent for interaction patterns. How to test that skills/commands behave correctly after changes? → See Meeting Agenda
 
 *Settings shipped:*
 
@@ -224,19 +249,23 @@ Draft inventory — validated with Christoph during tutorial building.
 
 **Tutorial:** The `--sdk-url` flag turns the Claude Code terminal into a WebSocket connection, powering a scripted walkthrough. The AI guides the user through Path A (spec-design) and Path B (spec-implement) using a fake issue. Dual purpose: Christoph learns the system while building the onboarding artifact. Litmus test: if Path B can't be scripted with a fake issue, the system isn't self-explanatory.
 
+The tutorial is stage 3 of the onboarding wizard (see Part 10). Users arrive here after the install script has configured their environment. The tutorial is not standalone — it's the guided first experience after setup.
+
 **Owner:** Christoph. "Lass mich erstmal das Tutorial bauen."
 
 **README structure:**
 1. **Vision** — what way of thinking we're selling (long-term, not product description — "it's a beta, describing it as a product would be stupid")
 2. **Setup** — how to install and get running (setup script output)
 
-**Undefined: Positioning language** — what word describes what we're selling. "Assistant" has no differentiation, "interaction patterns" is too academic, "behavioral scripts" too clinical. Tweakability and compounding knowledge are differentiators, but the framing isn't locked. → See [Meeting Agenda](https://mariuswilsch.github.io/public-wilsch-ai-pages/project/traceline/meeting-agenda-beta-launch-scope-2026-02-16)
+**Undefined: Positioning language** — The concept is now articulated: "AI doesn't need more tech people. It needs organizational people." The system treats AI like an employee — position agreements, training (operations manual), standards, accountability. Developer position makes AI-assisted development deterministic (Issues → Code). Broader Traceline: any business function → consistent output via organizational standards. Problem frame: "rogue developer → organizational standards." The NAME is undefined ("Traceline" has reservations, no alternative locked). → See Meeting Agenda
 
 ---
 
 ## Source
 
-- **Transcript:** [Developer Position Launch Deep Dive (2026-02-15)](https://app.fireflies.ai/view/01KHG1Y7QQD62BVT24755BR552)
+- **Transcripts:**
+  - [Developer Position Launch Deep Dive (2026-02-15)](https://app.fireflies.ai/view/01KHG1Y7QQD62BVT24755BR552)
+  - [Beta Scope Review with Christoph & David (2026-02-17)](https://app.fireflies.ai/view/01KHN683Z4KYG27KBMV6H0NS8P)
 - **Operations Manual:** [Developer Operations Manual v3](https://mariuswilsch.github.io/public-wilsch-ai-pages/global/developer-operations-manual-wilsch-ai-services)
 - **Meeting Agendas:**
   - [Product Vision & Launch (2026-02-14)](https://mariuswilsch.github.io/public-wilsch-ai-pages/global/meeting-agenda-product-vision-launch-2026-02-14)
@@ -244,4 +273,6 @@ Draft inventory — validated with Christoph during tutorial building.
 - **Sessions:**
   - `/Users/verdant/.claude/projects/-Users-verdant-Documents-projects-00-WILSCH-AI-INTERNAL--soloforce/3cc5c4cd-ca43-45fc-962d-80081a8dd692.jsonl` (Parts 1-7)
   - `/Users/verdant/.claude/projects/-Users-verdant-Documents-projects-00-WILSCH-AI-INTERNAL--soloforce/3780c35e-84ce-4e34-a868-d5113ff12389.jsonl` (Parts 8-11)
+  - `/Users/verdant/.claude/projects/-Users-verdant-Documents-projects-00-WILSCH-AI-INTERNAL--soloforce/8e10a9bd-c494-4e3f-9d7b-58a780999d25.jsonl` (Extraction pass: resolved 3 undefined markers, enriched positioning concept, added release pipeline + onboarding wizard)
 - **Beta User List:** [Traceline Beta User List](https://docs.google.com/spreadsheets/d/1NL6ZeNIE67t7jE9JJfwQXlneN4UYrcASvlNVcIu5n68/edit)
+- **Reference:** [Sourcegraph: Revenge of the Junior Developer](https://sourcegraph.com/blog/revenge-of-the-junior-developer)
