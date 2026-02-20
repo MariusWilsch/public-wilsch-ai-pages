@@ -52,7 +52,7 @@ Lock the remaining decisions for Feb 23 launch. Near-term items are launch-block
 ### 3. Structured check-ins with beta users could compound the improvement loop
 ⏱️ 10 min
 
-At Lawable, weekly "what's working well / what's working bad" meetings with early users surfaced issues faster than async feedback. Transcripts from these check-ins feed back into design doc improvement — the same extraction pass mechanism used internally.
+At Lovable, weekly "what's working well / what's working bad" meetings with early users surfaced issues faster than async feedback. Transcripts from these check-ins feed back into design doc improvement — the same extraction pass mechanism used internally.
 
 - First 2 users (David, Dylan): close enough for 1:1 check-ins
 - At 10 users: group session, individual, or mixed?
