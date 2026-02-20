@@ -139,6 +139,8 @@ Each position has a distinct accountability toward the same epic. Ownership does
 | **Dev Lead** | Human witness test on staging (Review stage) per sub-issue | Per sub-issue |
 | **SA** | Final look at the delivered whole | Epic closure |
 
+**Decomposition is the Developer's act — not the JA's.** Even when the design doc makes sub-issues obvious, the JA creates only the epic. The Developer decomposes after assignment. This boundary is non-negotiable because the Dev Lead starting-point gate measures Developer comprehension — if the JA pre-decomposes, the gate becomes a rubber stamp and loses its diagnostic signal. No "obvious enough" exceptions; judgment calls erode the boundary over time.
+
 **Dev Lead gates are comprehension signals.** The starting-point review and tracking.md review measure whether the Developer understands the design doc — not just whether tasks were completed. A poor decomposition signals either a design doc clarity problem (JA) or a comprehension gap (Developer growth opportunity).
 
 ### Gate Signal Mechanism
