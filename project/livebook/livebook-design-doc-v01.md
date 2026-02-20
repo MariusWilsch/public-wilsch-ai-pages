@@ -163,3 +163,6 @@ Implementation-specific decisions are premature at this stage. The following are
 
 **External References:**
 - [Anthropic Interviewer](https://www.anthropic.com/research/anthropic-interviewer) — AI-powered interviews research
+
+**Session:**
+- `/Users/verdant/.claude/projects/-Users-verdant-Documents-projects-00-WILSCH-AI-INTERNAL--soloforce/ab077198-670d-47ef-b884-eca052c0b443.jsonl`
