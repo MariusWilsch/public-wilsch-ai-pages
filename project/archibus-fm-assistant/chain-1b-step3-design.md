@@ -303,6 +303,26 @@ Nothing is inserted until the entire payload validates — server-enforced, not 
 
 Errors return HTTP 200 — caller must check for a non-null `error` key, not HTTP status codes. The error identifies the failing field, the submitted value, the reason, and the valid options (for enum fields). The `id` field in the error is null when no Id was provided in the request — if AI provides string Ids, the error will reference the failing node's Id.
 
+#### Backpressure Loop Mechanics
+
+Step 2 creates the intelligence — enum resolution tables, column mappings, transformation rules. Step 3 applies that intelligence to generate JSON. One-shot generation is not reliable: the AI will produce field values that don't match the API's expectations. The backpressure loop catches what the AI gets wrong and self-corrects using the API's own feedback.
+
+**Id contract:** Every node in the JSON tree must carry a synthetic `id` field. Equipment nodes use the client's asset code (e.g., "A034"). Location nodes (buildings, floors, rooms) use AI-generated ids (e.g., "A201"). Without ids, error responses return `id: null`, making failing nodes unlocatable in nested trees. The correction loop cannot function without id-based node lookup. **Undefined:** Whether ValidateAssets should enforce `id` as a required field (reject payloads with missing ids) → *[Meeting agenda §1](https://mariuswilsch.github.io/public-wilsch-ai-pages/project/archibus-fm-assistant/rein-meeting-agenda-api-reconciliation)*
+
+**Correction cycle (per round trip):**
+
+1. AI sends full tree to ValidateAssets
+2. Error returned → `{id, field, value, reason, valid_values}`
+3. AI locates node in the in-memory tree by matching `error.id`
+4. AI reads `valid_values` from the error response — this is the self-healing lookup table
+5. AI picks the closest match and fixes the node's field value
+6. AI resubmits the full tree (mutated in place) to ValidateAssets
+7. Repeat until no errors → send to ImportAssets
+
+During the correction cycle, ids are stable — ValidateAssets echoes them back in errors without modification. The id-to-UUID replacement (where the server generates UUIDs and maps the caller's string id to `otherCode`) only occurs on successful ImportAssets calls, after the correction loop is complete.
+
+**Stop-at-first-error:** The API returns one error per submission. Ten errors require a minimum of ten round trips. The correction strategy is point-fix: locate the specific failing node by id, fix it, resubmit. Pattern-fixing (finding all nodes with the same bad value) is an optimization for later — the base case is one fix per round trip.
+
 **importID + RevertImport:** Each successful ImportAssets call returns an `importID` (UUID) on the root node. Children's importID is null (batch import). RevertImport rolls back all assets tagged with that importID. This is a human safety net for semantic issues discovered post-import — not part of the AI backpressure loop. The best undo is not needing one.
 
 **GUID mapping (updated Feb 19):** Available for free in the ImportAssets response. The response returns the full tree with server-generated UUIDs for every node. For PoC (one top-level element per call), this is informational. Post-PoC, the response UUIDs enable multi-element imports where subsequent elements reference parent UUIDs from earlier imports.
@@ -376,3 +396,4 @@ Move to next top-level element. The full cycle (validate → correct → dry run
 - `/Users/verdant/.claude/projects/-Users-verdant-Documents-projects-billable-ARCHIBUS--archibus-fm-assistant/7f5bcc28-c0af-4433-a1fb-2ea60171bdee.jsonl`
 - `/Users/verdant/.claude/projects/-Users-verdant-Documents-projects-billable-ARCHIBUS--archibus-fm-assistant/972b54f8-3fad-4090-8636-562ba06ccc28.jsonl`
 - `/Users/verdant/.claude/projects/-Users-verdant-Documents-projects-billable-MariusWilsch--archibus-bulk-import/aee03387-ce21-4f51-9da1-b34b930d7247.jsonl`
+- `/Users/verdant/.claude/projects/-Users-verdant-Documents-projects-billable-MariusWilsch--archibus-bulk-import/18b07a8c-a336-47a3-a705-c5ed77fb5da5.jsonl`
