@@ -321,7 +321,7 @@ Step 2 creates the intelligence — enum resolution tables, column mappings, tra
 
 During the correction cycle, ids are stable — ValidateAssets echoes them back in errors without modification. The id-to-UUID replacement (where the server generates UUIDs and maps the caller's string id to `otherCode`) only occurs on successful ImportAssets calls, after the correction loop is complete.
 
-**Stop-at-first-error:** The API returns one error per submission. Ten errors require a minimum of ten round trips. The correction strategy is point-fix: locate the specific failing node by id, fix it, resubmit. Pattern-fixing (finding all nodes with the same bad value) is an optimization for later — the base case is one fix per round trip.
+**Stop-at-first-error:** The API returns one error per submission. The correction strategy: locate the failing node by id, fix it, resubmit.
 
 **importID + RevertImport:** Each successful ImportAssets call returns an `importID` (UUID) on the root node. Children's importID is null (batch import). RevertImport rolls back all assets tagged with that importID. This is a human safety net for semantic issues discovered post-import — not part of the AI backpressure loop. The best undo is not needing one.
 
