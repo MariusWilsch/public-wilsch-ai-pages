@@ -72,16 +72,16 @@ The system improves by learning from user sessions — conversation data is how 
 
 **To resolve:** The data collection consent mechanism for beta and the directional decision on whether data usage rights become a monetization lever.
 
-### 5. No pytest equivalent for testing interaction patterns
+### 5. The system tests itself internally — but not on the client's machine
 ⏱️ 5 min
 
-Skills and commands are behavioral — they guide AI through interaction sequences. When a skill is updated, there's no automated way to verify it still works correctly. The release-plugin skill validates structure but not behavior.
+AI behavior is validated by using the system's own workflow (clarity phases, AC verify, DoD tracking) on real work — not by a separate test suite. The open question is client-side: Marius's alpha environment is the test bed, but beta users have different setups (different OS, different shells, different Claude Code versions, different project structures).
 
-- Current testing: Marius uses changes daily (alpha), pushes stable versions
-- Risk: a change that works for Marius may break for a beta user with different context
-- Possible approaches: scripted --sdk-url test scenarios, manual test checklists, "smoke test" protocol
+- Internal validation works because the improved system workflow is used daily on real work
+- Risk: environment differences (not behavioral differences) cause failures on client machines
+- First 2 users (David, Dylan) are the canary — their setup issues are the test
 
-**To resolve:** An approach to behavioral testing that gives confidence before pushing releases to the marketplace.
+**To resolve:** Whether the first-2-user observation period is sufficient client-side verification, or if additional environment checks are needed in the install script.
 
 ## Meeting Format
 
