@@ -15,7 +15,7 @@ Align on the V1 product scope and engagement structure for the Livebook platform
 
 ## Pre-Read
 
-- [Livebook Design Doc v0.1](https://mariuswilsch.github.io/public-wilsch-ai-pages/project/livebook/livebook-design-doc-v01) — current state of product understanding, including defined elements and open questions
+- [Livebook Design Doc](https://mariuswilsch.github.io/public-wilsch-ai-pages/project/livebook/livebook-design-doc) — current state of product understanding, including defined elements and open questions
 
 ---
 
@@ -23,7 +23,19 @@ Align on the V1 product scope and engagement structure for the Livebook platform
 
 *Starting points for discussion, not limited to these.*
 
-### 1. Product naming
+### 1. V1 feature scope and technical requirements
+⏱️ 15 min
+
+The agent architecture (Plug → Opera → Shakespeare) defines WHAT the system does. The V1 feature scope defines HOW MUCH of that ships first. Technical decisions (hosting, languages, integrations) cascade from this.
+
+- Core pipeline: context triggers → adaptive interview → book output
+- Existing mockups show: social media import, profile matching, 12 book types
+- Technical architecture is premature until feature scope is locked
+- Launch signal: World Book Day (April 23) — needs 2-4 weeks PR lead time
+
+**To resolve:** The V1 feature boundary — which elements of the Plug → Opera → Shakespeare pipeline ship first, and the target launch date that drives the timeline backward.
+
+### 2. Product naming
 ⏱️ 5 min
 
 The platform is currently called "EasyBook" with "NS FamilyBook" as the Network School variant. The working title "Livebook" captures the core idea — a living, growing book — but hasn't been validated externally.
@@ -35,7 +47,7 @@ The platform is currently called "EasyBook" with "NS FamilyBook" as the Network 
 
 **To resolve:** The product name that will carry through V1 launch and initial marketing.
 
-### 2. Community books and V1 scope
+### 3. Community books and V1 scope
 ⏱️ 5 min
 
 The NS Family Book, Ladies Lounge book, and My Hometown books are concierge MVPs happening now — manually produced, no platform technology. The Livebook platform is the technology build that will eventually power these.
@@ -47,7 +59,7 @@ The NS Family Book, Ladies Lounge book, and My Hometown books are concierge MVPs
 
 **To resolve:** The relationship between concierge community books and the V1 platform — parallel tracks or sequential dependency.
 
-### 3. Voice cloning V1 scope
+### 4. Voice cloning V1 scope
 ⏱️ 10 min
 
 Open-source TTS models (350M parameters, 26 languages) can run on a phone. Voice cloning was discussed as a V1 feature — "put your own voice in there and gift it to a family member." The emotional impact is significant but adds technical complexity.
@@ -59,7 +71,7 @@ Open-source TTS models (350M parameters, 26 languages) can run on a phone. Voice
 
 **To resolve:** Whether voice cloning is a V1 must-have or a post-launch enhancement — balancing emotional impact against delivery speed.
 
-### 4. Book output and fulfillment
+### 5. Book output and fulfillment
 ⏱️ 10 min
 
 Shakespeare (the book production agent) needs to produce actual books. The output format and fulfillment pipeline are entirely undefined — physical printing, digital-only, or both.
@@ -71,7 +83,7 @@ Shakespeare (the book production agent) needs to produce actual books. The outpu
 
 **To resolve:** V1 book output format and fulfillment approach — physical, digital, or both.
 
-### 5. Revenue model and pricing
+### 6. Revenue model and pricing
 ⏱️ 10 min
 
 The principle is clear: interviews are free (builds emotional investment), book output is paid (extraction crystallizes value). The book is never done — continuous extraction maps to a subscription model.
@@ -83,7 +95,7 @@ The principle is clear: interviews are free (builds emotional investment), book 
 
 **To resolve:** V1 pricing model — subscription, transactional, or hybrid — and the price point that balances accessibility with sustainability.
 
-### 6. Team structure and integration
+### 7. Team structure and integration
 ⏱️ 10 min
 
 Stafford has 2-3 existing MVP developers. Marius brings a delivery methodology with defined positions (architect + developer). The integration approach affects timeline and output quality.
@@ -94,7 +106,7 @@ Stafford has 2-3 existing MVP developers. Marius brings a delivery methodology w
 
 **To resolve:** How existing developers integrate with the delivery methodology — training, parallel work, or phased handoff.
 
-### 7. Engagement terms
+### 8. Engagement terms
 ⏱️ 10 min
 
 The engagement starts with product delivery and can expand into broader company systems. Compensation follows a base + success-based model with potential to shift toward more success-based over time.
@@ -105,18 +117,6 @@ The engagement starts with product delivery and can expand into broader company 
 - Scope can expand beyond product delivery into company systems
 
 **To resolve:** Engagement terms sufficient to begin work — base amount, success triggers, initial time commitment, and first review point.
-
-### 8. V1 feature scope and technical requirements
-⏱️ 15 min
-
-The agent architecture (Plug → Opera → Shakespeare) defines WHAT the system does. The V1 feature scope defines HOW MUCH of that ships first. Technical decisions (hosting, languages, integrations) cascade from this.
-
-- Core pipeline: context triggers → adaptive interview → book output
-- Existing mockups show: social media import, profile matching, 12 book types
-- Technical architecture is premature until feature scope is locked
-- Launch signal: World Book Day (April 23) — needs 2-4 weeks PR lead time
-
-**To resolve:** The V1 feature boundary — which elements of the Plug → Opera → Shakespeare pipeline ship first, and the target launch date that drives the timeline backward.
 
 ### 9. NFT and IP tokenization roadmap
 ⏱️ 5 min
@@ -134,10 +134,9 @@ Story ownership and IP tokenization were discussed with enthusiasm. Marshall (Hy
 
 - **Type:** Vision alignment + feature scoping
 - **Duration:** ~90 min
-- **Expectation:** Review the Design Doc v0.1 before or during the meeting — it contains the current state of understanding and all open questions
+- **Expectation:** Review the Design Doc before or during the meeting — it contains the current state of understanding and all open questions
 - **Outcome:** Locked V1 feature scope + engagement direction sufficient to finalize terms by Friday/weekend
 
 ## Related
 
-- **Design Doc:** [Livebook Design Doc v0.1](https://mariuswilsch.github.io/public-wilsch-ai-pages/project/livebook/livebook-design-doc-v01)
-- **Contract Strategy:** [#847 — Contract Strategy & Retainer Model](https://github.com/DaveX2001/deliverable-tracking/issues/847)
+- **Design Doc:** [Livebook Design Doc](https://mariuswilsch.github.io/public-wilsch-ai-pages/project/livebook/livebook-design-doc)

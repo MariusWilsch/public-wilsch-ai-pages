@@ -2,7 +2,7 @@
 publish: true
 ---
 
-# Livebook — Design Doc v0.1
+# Livebook — Design Doc
 [[livebook]]
 
 This document captures our shared understanding of the Livebook platform. It is a living document — not a finished specification.
@@ -42,7 +42,7 @@ No existing tool makes story capture feel like a genuine conversation. Forms fee
 
 ### Part 1: Product Identity & Audience
 
-**Product:** Livebook (working title). A platform that produces lasting life story books through AI-powered conversation. **Undefined:** Product name — "EasyBook" is current branding but under review. → [Meeting Agenda Topic 1](#1-product-naming)
+**Product:** Livebook (working title). A platform that produces lasting life story books through AI-powered conversation. **Undefined:** Product name — "EasyBook" is current branding but under review. → [Meeting Agenda Topic 2](#2-product-naming)
 
 **Core value proposition:**
 - "You drop dead tomorrow. This is your book. Would you be happy?"
@@ -58,7 +58,7 @@ No existing tool makes story capture feel like a genuine conversation. Forms fee
 
 **V1 beachhead:** Network School (NS) community — built-in audience, immediate feedback loop. NS Family Book is a pre-existing concierge MVP (no-tech, Stafford-led) that validates demand before the platform exists.
 
-**Undefined:** Community books (Ladies Lounge, My Hometown) relationship to V1 platform scope — are they out of scope or test cases? → [Meeting Agenda Topic 2](#2-community-books-and-v1-scope)
+**Undefined:** Community books (Ladies Lounge, My Hometown) relationship to V1 platform scope — are they out of scope or test cases? → [Meeting Agenda Topic 3](#3-community-books-and-v1-scope)
 
 ---
 
@@ -92,12 +92,12 @@ Opera's design principles:
 - **Trigger, don't interrogate** — people love talking about themselves
 - **Modality-agnostic** — voice or text is a surface layer; the interaction pattern is the design
 
-**Undefined:** Voice cloning as a modality for Opera — open-source TTS models (350M params, 26 languages) make this technically feasible. Scope for V1 TBD. → [Meeting Agenda Topic 3](#3-voice-cloning-v1-scope)
+**Undefined:** Voice cloning as a modality for Opera — open-source TTS models (350M params, 26 languages) make this technically feasible. Scope for V1 TBD. → [Meeting Agenda Topic 4](#4-voice-cloning-v1-scope)
 
 **Shakespeare — Book Producer**
 Takes Opera's structured output and transforms it into formatted book pages. Decides HOW stories become book content — layout, narrative flow, visual design.
 
-**Undefined:** Shakespeare's output format — physical A5 book, digital, or both. Fulfillment pipeline (printing, shipping) entirely undefined. → [Meeting Agenda Topic 4](#4-book-output-and-fulfillment)
+**Undefined:** Shakespeare's output format — physical A5 book, digital, or both. Fulfillment pipeline (printing, shipping) entirely undefined. → [Meeting Agenda Topic 5](#5-book-output-and-fulfillment)
 
 **Reference:**
 - [Anthropic Interviewer](https://www.anthropic.com/research/anthropic-interviewer) — AI interviews at scale (1,250 professionals, 97.6% satisfaction)
@@ -116,7 +116,7 @@ Takes Opera's structured output and transforms it into formatted book pages. Dec
 
 The book is never done. Life keeps happening. Plug keeps triggering. Opera keeps interviewing. Shakespeare keeps producing new chapters. **Continuous extraction = subscription model.** Users don't pay for access — they pay for their book growing.
 
-**Undefined:** Pricing specifics — subscription amount, one-time book purchase, tiered model. → [Meeting Agenda Topic 5](#5-revenue-model-and-pricing)
+**Undefined:** Pricing specifics — subscription amount, one-time book purchase, tiered model. → [Meeting Agenda Topic 6](#6-revenue-model-and-pricing)
 
 ---
 
@@ -126,7 +126,7 @@ Marius takes on delivery of the product — accountable for turning vision into 
 
 **Comp model direction:** Base retainer + success-based component. Details to be finalized based on V1 scope and timeline alignment.
 
-**Undefined:** Engagement specifics — scope, terms, team integration. → [Meeting Agenda Topics 6-7](#6-team-structure-and-integration)
+**Undefined:** Engagement specifics — scope, terms, team integration. → [Meeting Agenda Topics 7-8](#7-team-structure-and-integration)
 
 ---
 
@@ -146,7 +146,7 @@ Implementation-specific decisions are premature at this stage. The following are
 - **Multi-language TTS** — TBD based on audience scope
 - **Social media integrations** — observed in existing mockups (Facebook, Instagram, LinkedIn, Discord import), scope to be confirmed
 
-**Undefined:** All technical architecture decisions depend on V1 feature scope. → [Meeting Agenda Topic 8](#8-v1-feature-scope-and-technical-requirements)
+**Undefined:** All technical architecture decisions depend on V1 feature scope. → [Meeting Agenda Topic 1](#1-v1-feature-scope-and-technical-requirements)
 
 ---
 
