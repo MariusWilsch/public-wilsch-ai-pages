@@ -11,7 +11,7 @@ Lock the remaining decisions for Feb 23 launch. Near-term items are launch-block
 
 1. **Positioning name locked** — concept is articulated, name isn't (README needs it)
 2. **Feedback notification stance** — close the loop or leave open for beta?
-3. **Beta check-in cadence** — structured feedback meetings with first 2 users
+3. **Beta check-in cadence** — structured feedback meetings with beta users (2 then 10)
 4. **Data collection & business model direction** — long-term, not launch-blocking, but shapes messaging
 5. **AI behavior testing approach** — long-term, operational concern for ongoing releases
 
@@ -35,6 +35,7 @@ Lock the remaining decisions for Feb 23 launch. Near-term items are launch-block
 - The actual value: consistency and the ability to improve when things go wrong
 - Each position = a product with clear input/output boundaries (JA: Transcripts → Issues, Developer: Issues → Code)
 - Reference context: [Sourcegraph — Revenge of the Junior Developer](https://sourcegraph.com/blog/revenge-of-the-junior-developer)
+- Roland delivered a "Builder-Operator" persona and README revision — an [extraction pass on these artifacts is in the works](https://github.com/DaveX2001/claude-code-improvements/issues/504#issuecomment-3932976545) and will likely drive this topic forward before the meeting
 
 **To resolve:** A name or descriptor that conveys "organizational standards for AI" without being boring or too meta — needed for the README vision section before launch.
 
@@ -53,12 +54,12 @@ Lock the remaining decisions for Feb 23 launch. Near-term items are launch-block
 
 At Lawable, weekly "what's working well / what's working bad" meetings with early users surfaced issues faster than async feedback. Transcripts from these check-ins feed back into design doc improvement — the same extraction pass mechanism used internally.
 
-- First 2 users (David, Dylan) are close enough for 1:1 check-ins
-- At 10 users: group session or individual?
+- First 2 users (David, Dylan): close enough for 1:1 check-ins
+- At 10 users: group session, individual, or mixed?
 - Cadence: weekly, biweekly, or on-demand?
 - Transcripts from check-ins become JA source material
 
-**To resolve:** The format and cadence of structured feedback meetings for beta users — starting with the first 2.
+**To resolve:** The format and cadence of structured feedback meetings for all beta users — starting with 2, scaling to 10.
 
 ### 4. Conversation data is the improvement fuel but consent isn't defined
 ⏱️ 10 min
