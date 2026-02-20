@@ -5,7 +5,9 @@ publish: true
 # Livebook — Design Doc v0.1
 [[livebook]]
 
-First extraction pass: initial alignment document for the Livebook platform. This is a conversation trigger for the first alignment meeting with Stafford — not a finished specification. Many sections are intentionally marked Undefined to drive discussion.
+This document captures our shared understanding of the Livebook platform. It is a living document — not a finished specification.
+
+**How to read this doc:** Sections marked **Undefined** are areas where we need your input. They link directly to meeting agenda topics for discussion. Everything else represents our current understanding based on initial conversations. If anything is inaccurate or incomplete — update it, comment on it, or flag it for discussion.
 
 
 ---
@@ -130,11 +132,9 @@ Marius takes on delivery of the product — accountable for turning vision into 
 
 ### Part 5: Methodology Foundation
 
-Opera's interview methodology is adapted from a tested knowledge extraction protocol used in AI-assisted design work — proven across multiple client projects to produce genuine, structured output from conversational input.
+Opera's interview methodology is adapted from a tested knowledge extraction approach used in AI-assisted design work — proven across multiple projects to produce genuine, structured output from conversational input.
 
 The core principles (same-level interaction, one element at a time, relatable triggers, adaptive probing) transfer from professional knowledge extraction to personal story extraction. The mechanism is identical; the domain and emotional tone differ.
-
-**Reference:** [Junior Architect Protocol](https://mariuswilsch.github.io/public-wilsch-ai-pages/global/junior-architect-position-agreement-wilsch-ai-services)
 
 ---
 
@@ -163,10 +163,3 @@ Implementation-specific decisions are premature at this stage. The following are
 
 **External References:**
 - [Anthropic Interviewer](https://www.anthropic.com/research/anthropic-interviewer) — AI-powered interviews research
-- [Junior Architect Position Agreement](https://mariuswilsch.github.io/public-wilsch-ai-pages/global/junior-architect-position-agreement-wilsch-ai-services) — Opera's design blueprint
-
-**Session:**
-- `/Users/verdant/.claude/projects/-Users-verdant-Documents-projects-00-WILSCH-AI-INTERNAL--soloforce/ab077198-670d-47ef-b884-eca052c0b443.jsonl`
-
-**Cross-references:**
-- [#847 — Contract Strategy & Retainer Model](https://github.com/DaveX2001/deliverable-tracking/issues/847)
