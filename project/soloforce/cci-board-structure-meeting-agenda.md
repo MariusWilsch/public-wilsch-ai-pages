@@ -60,11 +60,24 @@ When a release epic is created, observations transfer from the position epic. Th
 
 **To resolve:** The transfer mechanism that keeps position epics clean while preserving evidence in release epics.
 
+### 4. Capture friction — observation speed vs. flow interruption
+⏱️ 15 min
+
+Flag-for-improvement currently requires interactive back-and-forth that breaks the user's working flow. Observation capture needs to be nearly invisible — low enough friction that it happens naturally, not as a deliberate ceremony.
+
+- Current skill requires multiple AskUserQuestion rounds mid-session
+- The AI is good at wording — only the problem description and evidence path need to come from the user
+- Background task model: user provides problem + source, AI formats and posts asynchronously
+- Two non-negotiable constraints: problem-based hooks only, full evidence paths always (findable conversation paths, not IDs)
+- Possible approach: lightweight skill or inline command that captures in one interaction, formats in background
+
+**To resolve:** The capture mechanism that maintains problem-based hooks and full evidence paths while minimizing flow interruption.
+
 ## Meeting Format
 
 - **Type:** Working session (self-facilitated)
 - **Expectation:** Review the design doc pre-read, bring examples of good/bad observations from recent sessions
-- **Outcome:** Three decisions documented as design doc updates (Undefined → Defined)
+- **Outcome:** Four decisions documented as design doc updates (Undefined → Defined)
 
 ## Related
 

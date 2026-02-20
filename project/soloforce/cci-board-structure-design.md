@@ -113,6 +113,8 @@ The AI handles mode selection as part of routing (Part 4). When the AI identifie
 
 **Migration:** Existing labeled CCI issues are converted to observation comments on their position epics in a one-time pass. This is manual work driven by this conversation, not automated tooling.
 
+**Undefined:** Capture friction — flag-for-improvement breaks flow too much. Observation capture must be as low-friction as possible while maintaining two constraints: (1) problem-based hooks only, (2) full evidence paths always (conversation paths, not IDs or shorthand — it must be findable again). Since the AI handles wording well, capture could run as a background task: user provides the problem + evidence, AI formats and posts asynchronously. → Meeting agenda topic.
+
 ---
 
 ## Source
