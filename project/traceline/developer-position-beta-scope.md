@@ -135,15 +135,22 @@ Discovery script kept in `/implementation-clarity` only (worktree). Removed from
 
 **Undefined: Data collection & business model** — Conversation data is the improvement fuel. Monetization differential: subscription to curated best practices (system improves via collected data) vs. self-serve (user keeps data private). Legal mechanism for data collection consent undefined. → See Meeting Agenda
 
-### Part 7: Feedback (Beta)
+### Part 7: Feedback Architecture (Two Loops)
 
-Command renamed from `/flag-for-improvement` to `/feedback` — discoverability for beta users ("feedback" is immediately understood, "flag for improvement" is meta-language). Same behavior, same routing.
+Traceline has two distinct feedback loops. They serve different purposes and should not be conflated.
 
-Routes to CCI directly via GitHub Action workflow dispatch in plugin repo. PAT stored as repo secret. `github.actor` captures username. **Visibility boundary:** beta users see a thank-you confirmation on submission but do not see the CCI board or how feedback is triaged. GitHub App (Traceline Bot) deferred until user-facing visibility exists.
+**Loop 1 — Product/company (how we learn what to build):**
+Structured check-ins with beta users produce transcripts. These transcripts become JA source material — the extraction pass system turns them into design doc updates, positioning refinements, and product decisions. This is how the company learns. Without the JA position, transcripts are just recordings. With the JA, they become structured product intelligence. Precedent: Lovable's weekly early-user meetings.
+
+**Loop 2 — Tool (how the tool itself improves):**
+`/feedback` (renamed from `/flag-for-improvement` — discoverability for beta users) captures in-session friction. Routes to CCI directly via GitHub Action workflow dispatch in plugin repo. PAT stored as repo secret. `github.actor` captures username. System Engineer diagnoses and fixes the underlying pattern. **Visibility boundary:** beta users see a thank-you confirmation but do not see the CCI board. GitHub App (Traceline Bot) deferred.
+
+Loop 1 is strategic (what to build). Loop 2 is operational (how the tool behaves). Both compound, but through different mechanisms.
 
 **Community layer:** Discord channel for async communication — escape valve for when `/feedback` itself fails or for high-level overall impressions. Structure owned by Christoph.
 
 **Undefined: Feedback resolution notification** — Should users be notified when their feedback is resolved? → See Meeting Agenda
+**Undefined: Check-in cadence** — Format and frequency of structured feedback meetings for beta users (2 then 10). Check-in transcripts are the highest-value input for the JA extraction system. → See Meeting Agenda
 
 ### Part 8: Plan Mode Prevention
 
@@ -232,7 +239,7 @@ Beta-level checks only — things change fast, don't over-engineer the install s
 
 **Undefined: Beta distribution repo** — The internal Claude Team Marketplace (`MariusWilsch/claude-code-team-marketplace`) is for internal use only. A separate repo is needed for beta user distribution. → See Meeting Agenda
 
-**Undefined: Client-side verification** — AI behavior is validated internally by using the system's own workflow (clarity phases, AC verify, DoD tracking) on real work — not by a separate test suite. The open question is: how do we verify the plugin works correctly on the client's machine after install/update? Alpha testing happens on Marius's environment — differences in client setup could surface issues. → See Meeting Agenda
+**Client-side maintenance:** AI behavior maintenance is solved internally via the [improve-system architecture](https://mariuswilsch.github.io/public-wilsch-ai-pages/global/improve-system-architecture) (3-session workflow: capture → diagnose → verify). The open question is making Loop 2 work remotely — which depends on getting conversation data off the client's machine. See Part 7 undefined marker.
 
 *Settings shipped:*
 
