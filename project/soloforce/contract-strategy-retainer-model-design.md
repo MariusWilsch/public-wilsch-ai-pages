@@ -39,7 +39,7 @@ This is not a unique problem. Y Combinator's Spring 2026 RFS identifies "AI-Nati
 
 **Success:**
 - New engagements use either retainer (function ownership + outcome reporting) or fixed-price (no hourly, AI speed = better margins)
-- Existing hourly clients (UWI, IITR, Abtmayr-Reichert) migrate away from hourly within 6 months
+- Existing hourly clients (UWI, IITR, Abtmayr-Reichert) migrate away from hourly by end of Q1 2026 (March 31)
 - Every engagement starts with a design doc that aligns understanding before implementation begins
 
 **Done test:** Can a new operator sign a client on the standard contract without the founder negotiating custom terms? If yes → design is complete.
