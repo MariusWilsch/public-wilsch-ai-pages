@@ -7,9 +7,10 @@ publish: true
 
 ## Meeting Goal
 
-Resolve the deployment pipeline design from the CCI Board Structure design doc (Part 6) — how observations flow through positions from capture to deployed fix:
+Resolve two open design questions from the CCI Board Structure design doc so the model can move from design to implementation:
 
-1. **Deployment pipeline** — the full position pipeline from observation to production-deployed fix
+1. **Origin resolution** — how the capture skill determines observation origin (Part 2)
+2. **Deployment pipeline** — the full position pipeline from observation to production-deployed fix (Part 6)
 
 ## Pre-Read
 
@@ -23,7 +24,19 @@ Resolve the deployment pipeline design from the CCI Board Structure design doc (
 
 *Starting points for discussion, not limited to these.*
 
-### 1. The improvement cycle follows a position pipeline with undefined stage gates
+### 1. The observation origin field has no auto-resolution mechanism
+⏱️ 10 min
+
+The observation format includes an origin field (traceline/beta-user, internal/team, internal/marius) that gives the System Engineer a prioritization signal. The design doc states "auto-resolved from session context" but the resolution mechanism is undefined.
+
+- GitHub username (github.actor) could distinguish Marius from team from beta users
+- Project context (soloforce = internal, plugin repo = traceline) could distinguish scope
+- Workflow dispatch context in the Traceline plugin could carry origin metadata
+- Explicit user input is the simplest but highest-friction option
+
+**To resolve:** The mechanism by which the capture skill determines observation origin without user input.
+
+### 2. The improvement cycle follows a position pipeline with undefined stage gates
 ⏱️ 20 min
 
 The extraction pass surfaced a pipeline: observations accumulate → SE monitors pressure → release epic → JA creates design doc → Developer implements → stability gate (R&D → team → Traceline). This connects the CCI board to the improve-system architecture and the E-Myth position pipeline, but the stage transitions are implicit.
