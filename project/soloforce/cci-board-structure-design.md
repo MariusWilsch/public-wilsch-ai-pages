@@ -37,9 +37,11 @@ The CCI board lacks an organizing principle. Issues are created flat — one per
 
 Deliverable-tracking organizes by **project** — each client gets a label, issues group under it. CCI organizes by **position** — each E-Myth position gets a long-lived epic, observations group under it.
 
-Position is the organizing axis of CCI. Every observation, every improvement, every release ties back to which position it serves. The triage sessions (4 sessions, 210 issues) created the position labels that make this possible: `traceline/developer`, `traceline/system-engineer`, `internal/developer`, `internal/system-engineer`, `internal/ja`.
+Position is the organizing axis of CCI. Every observation, every improvement, every release ties back to which position it serves. The triage sessions (4 sessions, 210 issues) created position labels with a position × scope pattern (`traceline/developer`, `internal/system-engineer`, etc.) that served the triage pass as a classification tool.
 
-**Undefined:** The label taxonomy uses a position × scope decomposition (traceline vs internal). Whether this maps 1:1 to position epics or requires further refinement is unresolved. → Meeting agenda topic.
+**Three position epics** map 1:1 to position agreements: Developer, System Engineer, Junior Architect. The scope dimension (traceline vs internal) is not a structural axis — it is a deployment stage. All observations land on position epics without scope differentiation. The distinction between "traceline-relevant" and "internal R&D" emerges when the System Engineer selects observations for a release epic and when fixes are judged stable enough to deploy downstream (R&D → team → Traceline product). Scope is a stability judgment made at deployment time, not a label applied at capture time.
+
+**Routing rule:** Observations route to the position epic that owns the affected artifact. A JA protocol defect routes to the JA epic — even if the System Engineer will fix it — because the artifact belongs to the JA position. The Position Agreements define the accountability boundaries that govern this routing.
 
 ### 2. Observation Model
 
@@ -57,7 +59,27 @@ An observation has two parts:
 
 This format was validated live during the extraction session — an output format observation was posted to CCI #589 as a comment instead of creating a new issue.
 
-**Undefined:** The observation format should not be fully free-form. A structured "how to write an observation" guide needs to be embodied into the capture tooling (flag-for-improvement or equivalent). → Meeting agenda topic.
+**Format standard.** Each observation comment follows a three-part structure that mirrors the `/issue-comment` pattern:
+
+```
+## Observation: [short problem name]
+[1-2 sentences — the problem frame not found in the source itself.
+The hook adds semantic meaning the source doesn't carry: naming the
+behavior problem so the System Engineer knows what to look for.]
+
+## Source
+[conversation path — auto-resolved from current session]
+
+## Origin
+[traceline/beta-user | internal/team | internal/marius — auto-resolved
+from session context]
+```
+
+**Constraints:**
+- One observation = one source. If the same behavior appears in three conversations, that is three observations. The accumulation on the position epic IS the pattern signal.
+- The hook names the behavior problem — not which standard was violated. Standard mapping is diagnosis work (System Engineer), not capture work (observer). The problem name implicitly signals the domain.
+- Problem-based enforcement happens through prompt guidance in the capture skill. The AI is always the formatter — whether the observer is a beta user, a team member, or Marius. The skill prompt contains examples of good hooks (behavior-naming) and bad hooks (solution-proposing).
+- The origin field gives the System Engineer the prioritization signal: observations from Traceline users carry product urgency; internal observations follow the normal accumulation cycle.
 
 ### 3. Two-Level Hierarchy
 
@@ -86,7 +108,11 @@ State tracking is implicit — no marking mechanism needed:
 
 Artifact grouping (which commands, skills, or protocols are affected) happens during release planning, not as a structural level. This keeps the hierarchy flat at two levels.
 
-**Undefined:** The exact mechanism for transferring observations from position epic to release epic (copy comment content? link to original? delete original?) needs definition through usage. → Meeting agenda topic.
+**Transfer mechanism:** When a release epic is created, the System Engineer selects a cluster of observations from the position epic and batch-transfers them: re-post each observation as a comment on the release epic, then delete the original from the position epic.
+
+This keeps the position epic clean — only unaddressed observations remain. The release epic stays open until the improve-system B→C loop verifies all observations in the cluster are resolved. No partial closure: if one observation in the release isn't fixed, the cycle continues.
+
+The System Engineer names the release epic after the concern the cluster addresses. This framing — a short title describing the behavioral pattern — is the SE's only addition beyond the observations themselves. The release epic then routes to the Junior Architect for design doc creation, following the standard pipeline.
 
 ### 4. Routing
 
@@ -102,25 +128,37 @@ This replaces the current model where flag-for-improvement creates standalone is
 
 ### 5. Tooling Evolution
 
-The primary tooling change is flag-for-improvement. Currently it always creates a new standalone issue. Under the new model it needs two modes:
+The primary tooling change replaces flag-for-improvement's capture function with a dedicated observation skill. The skill uses Claude Code's `context: fork` mechanism — when invoked, it spawns an isolated subagent that formats and posts the observation while the main conversation continues unblocked. Zero flow interruption.
 
-1. **Observe** — Post an observation comment on a position epic (default mode)
-2. **Create** — Create a new standalone issue (for genuinely new concerns that don't belong to any existing position epic)
+**Capture interaction:**
+1. User describes the behavior problem in natural language
+2. AI recognizes the trigger and invokes the observation skill
+3. Forked subagent auto-resolves: source (current session path), origin (session context), routing (problem → artifact → position epic)
+4. Subagent formats observation (hook + source + origin) and posts as comment on the target position epic
+5. Main conversation continues — user sees confirmation when the background agent completes
 
-The AI handles mode selection as part of routing (Part 4). When the AI identifies a position epic match, it defaults to Observe mode. When no match exists, it falls back to Create mode.
+**Trigger mechanism (experiment):** The skill's discovery description contains trigger phrases. Whether the AI reliably catches these triggers mid-session is unproven — Track B (position epic creation + first real observations) will produce the evidence. If triggers prove unreliable, fallback is explicit invocation.
+
+**Standalone issue creation** remains available for genuinely new concerns that don't belong to any position epic. This is a separate path — not the default.
 
 **PA standard (new):** When a new position is created, a corresponding CCI position epic must be created immediately. This is a standard in the Position Agreement, not a separate tooling concern.
 
 **Migration:** Existing labeled CCI issues are converted to observation comments on their position epics in a one-time pass. This is manual work driven by this conversation, not automated tooling.
 
-**Undefined:** Capture friction — flag-for-improvement breaks flow too much. Observation capture must be as low-friction as possible while maintaining two constraints: (1) problem-based hooks only, (2) full evidence paths always (conversation paths, not IDs or shorthand — it must be findable again). Since the AI handles wording well, capture could run as a background task: user provides the problem + evidence, AI formats and posts asynchronously. → Meeting agenda topic.
+### 6. Deployment Pipeline
+
+The CCI improvement cycle follows a position pipeline that mirrors CI/CD for code: observations accumulate, cluster, get designed, get implemented, and deploy through stability stages.
+
+**Undefined:** The full pipeline — observations → SE monitors pressure → release epic → JA creates design doc → Developer implements → stability gate (Marius R&D → team validation → Traceline product) — was surfaced during this extraction pass but needs its own design pass. The pipeline connects the CCI board structure to the improve-system architecture and the E-Myth position pipeline. Key open questions: how the SE's "pressure threshold" judgment works in practice, how the JA design doc for a release epic differs from a project design doc, and how stability gates between deployment stages are formalized. → Meeting agenda topic.
 
 ---
 
 ## Source
 
 - **Session:** /Users/verdant/.claude/projects/-Users-verdant-Documents-projects-00-WILSCH-AI-INTERNAL--soloforce/530036f4-94ab-419c-8100-745707068c77.jsonl
-- **System Engineer PA:** https://mariuswilsch.github.io/public-wilsch-ai-pages/global/system-engineer-position-agreement-wilsch-ai-services
+- **Session (extraction pass 2):** /Users/verdant/.claude/projects/-Users-verdant-Documents-projects-00-WILSCH-AI-INTERNAL--soloforce/bf020ba2-f183-4f52-93ac-3ad32b4a4b41.jsonl
+- **Position Agreements:** [Developer PA](https://mariuswilsch.github.io/public-wilsch-ai-pages/global/developer-position-agreement-wilsch-ai-services), [SE PA](https://mariuswilsch.github.io/public-wilsch-ai-pages/global/system-engineer-position-agreement-wilsch-ai-services), [JA PA](https://mariuswilsch.github.io/public-wilsch-ai-pages/global/junior-architect-position-agreement-wilsch-ai-services)
+- **Traceline Beta Scope:** [Developer Position Beta](https://mariuswilsch.github.io/public-wilsch-ai-pages/project/traceline/developer-position-beta-scope)
 - **Evidence Chain System:** DaveX2001/deliverable-tracking#851
 - **JA Lifecycle Violations:** DaveX2001/claude-code-improvements#589
 - **Flag-for-improvement gap:** DaveX2001/claude-code-improvements#363
