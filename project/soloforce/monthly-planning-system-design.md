@@ -54,7 +54,7 @@ A project and its associated position are a single unit — the package. Working
 
 Packages change month by month. This month's Archibus-Developer package may become next month's AVO-Developer package. The position stays, the project rotates. This gives a full month of scope — no pressure to rush because the package holds for 30 days.
 
-The monthly plan lists packages, not projects or positions independently. Deadlines from contracts and retainers drive which package gets attention. Position improvement is a byproduct of project delivery, not a standalone activity.
+The monthly plan lists packages, not projects or positions independently. Deadlines from contracts and retainers drive which package gets attention. Position improvement is a byproduct of project delivery, not a standalone activity — but it is the key value being gained. The position methodology is the scalable product that gets sold. Project delivery funds the research; the research produces the product.
 
 **Outcome-based reporting:** Each package produces two reportable outcomes: (1) what was delivered on the project, and (2) what improved on the position. Associating conversations with issues enables performance review of AI operator sessions — tracing position improvement back to specific project delivery.
 
