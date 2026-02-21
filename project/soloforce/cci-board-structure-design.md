@@ -81,6 +81,8 @@ from session context]
 - Problem-based enforcement happens through prompt guidance in the capture skill. The AI is always the formatter — whether the observer is a beta user, a team member, or Marius. The skill prompt contains examples of good hooks (behavior-naming) and bad hooks (solution-proposing).
 - The origin field gives the System Engineer the prioritization signal: observations from Traceline users carry product urgency; internal observations follow the normal accumulation cycle.
 
+**Undefined:** The origin auto-resolution mechanism — how the capture skill determines whether an observation comes from a Traceline user, a team member, or Marius. Candidates: GitHub username (github.actor from workflow dispatch), project context (soloforce = internal, plugin = traceline), or explicit user input. → Meeting agenda topic.
+
 ### 3. Two-Level Hierarchy
 
 The board has two structural levels:
