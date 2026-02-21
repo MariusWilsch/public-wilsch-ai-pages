@@ -66,7 +66,7 @@ The system-dependent model is the structural counter to every trust-deficit obje
 
 **The organizational shift:** Workers don't lose jobs — they shift upward. Each person becomes a 1-to-N manager of AI agents instead of doing the work manually. Institutional knowledge stays in the system even when people leave — because the AI does the work, the knowledge is encoded in configurations and processes, not in someone's head. "AI doesn't need more tech people — it needs more operational people and org people."
 
-![Before/After: Traditional org chart vs AI-Native org chart](assets/org-chart-before-after.png)
+<img src="assets/org-chart-before-after.png" alt="Before/After: Traditional org chart vs AI-Native org chart" width="100%">
 
 External validation: Sierra AI ($4.5B), WPP, and Decagon (YC-backed) have moved from hourly to outcome-based pricing. 67% of consulting buyers prefer fixed-fee over T&M (Deloitte 2024). [Mayer Brown published a contract framework for agentic AI delivery (February 2026)](https://www.mayerbrown.com/en/insights/publications/2026/02/contracting-for-agentic-ai-solutions-shifting-the-model-from-saas-to-services). YC's Spring 2026 RFS codifies this as ["AI-Native Agencies"](https://www.ycombinator.com/rfs#ai-powered-agencies) — agencies that "use AI internally and sell finished outcomes at software-level margins. They'll scale far bigger than any agencies that exist in these fragmented markets today." [Sourcegraph's FY26 org chart](https://sourcegraph.com/blog/revenge-of-the-junior-developer) shows the new hierarchy: Senior Leaders → Managers → Developers → AI Managers → AI Coding Agents.
 
@@ -92,7 +92,7 @@ The AI department is unique among outsourced functions: it touches every other d
 
 Like ARK Invest's "Technological Convergence" thesis ([Big Ideas 2026, p.5](https://ark-invest.com/big-ideas-2026)) — where AI is the central node touching all other technologies — the AI department is the central node touching all other departments. When one department sees what AI can do, the others demand it. AVO demonstrated this: the first workshop was scoped for software, but the production department was instantly interested. The possibility space, once visible, creates its own demand across departments. Clients always ask: "Can you do this for our other departments too?"
 
-![AI Department convergence — the department that touches every other department](assets/ai-department-convergence.png)
+<img src="assets/ai-department-convergence.png" alt="AI Department convergence — the department that touches every other department" width="100%">
 
 **Observability replaces timesheets.** The AI delivery system produces a complete audit trail — every agent action, every conversation, every decision is queryable. Point-in-time observability of what your AI department has been doing replaces the need for Stundennachweis. The system IS the transparency layer — more transparent than any person could be, and it comes free as a byproduct of AI-native delivery.
 
