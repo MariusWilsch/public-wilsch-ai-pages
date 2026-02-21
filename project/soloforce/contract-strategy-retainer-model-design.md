@@ -58,6 +58,8 @@ What this team delivers maps to the Strategic Objective's value identity: the co
 
 The unlock pattern: prove capability first (prototype or initial project), then transition to retainer as the natural evolution. Archibus demonstrated this — the client chose retainer because he wanted ongoing strategic access. His words: "I want you in my team. You are a gear in the Swiss watch."
 
+**Undefined:** The standard first engagement format that "proves capability" before the retainer conversation — fixed-price project, prototype, workshop, or does it vary by client type?
+
 The system is person-independent by design. Contracts sell the delivery system, not the individual.
 
 External validation: Sierra AI ($4.5B), WPP, and Decagon (YC-backed) have moved from hourly to outcome-based pricing. 67% of consulting buyers prefer fixed-fee over T&M (Deloitte 2024). [Mayer Brown published a contract framework for agentic AI delivery (February 2026)](https://www.mayerbrown.com/en/insights/publications/2026/02/contracting-for-agentic-ai-solutions-shifting-the-model-from-saas-to-services).
@@ -66,7 +68,9 @@ External validation: Sierra AI ($4.5B), WPP, and Decagon (YC-backed) have moved 
 
 The client-facing framing: "You're outsourcing your AI department to me. I own the function, you own the results."
 
-Every company needs AI capability — it's becoming as foundational as marketing or IT. Most Mittelstand clients don't have it and can't build it internally. Wilsch AI fills this function: not just building things, but bringing the AI knowledge, methodology, and orchestration capability that enables the client to act on AI at all.
+But "outsourcing" is only half the picture. Wilsch AI also builds AI capability inside the client's company — making their teams more efficient, introducing them to what's possible. Over time, the client gains internal AI competence. This isn't a threat to the engagement: the system keeps improving, the methodology deepens, and clients return because the gap between what they can do alone and what the orchestrated system delivers keeps widening.
+
+Every company needs AI capability — it's becoming as foundational as marketing or IT. Most Mittelstand clients don't have it and can't build it internally. Wilsch AI fills this function: not just building things, but bringing the AI knowledge, methodology, and orchestration capability that enables the client to act on AI at all. AVO demonstrated this in the first workshop — the client immediately wanted production deployment. The possibility space, once visible, creates its own demand.
 
 Department framing works because:
 - It implies a team behind the delivery (which exists — the AI agent system)
@@ -77,6 +81,12 @@ Department framing works because:
 The value delivered is alignment — understanding the client's problem before writing code. The design doc process is the visible differentiator. The Claude Code Operating System that makes delivery fast and reliable stays proprietary.
 
 Every engagement owns a function, not a task list. The function stays constant; deliverables within it change. A contractor who "builds for 3K and leaves" delivers a thing, not an ongoing function. When they leave, the function goes empty.
+
+The AI department is unique among outsourced functions: it touches every other department. Marketing, operations, finance, customer service — AI capability has cross-cutting impact. "Every employee you have is an AI use case." This makes the outsourced AI department fundamentally more valuable than outsourced accounting or IT — it multiplies the effectiveness of everything else the company does. The contract must communicate this cross-functional value, not just the narrow deliverables.
+
+**Undefined:** How to frame the "AI touches everything" value proposition for Mittelstand clients who think in departmental silos — the cross-functional impact needs a concrete communication strategy.
+
+**Undefined:** The Betriebskosten vs Projektkosten budget psychology — clients spend €150K on marketing without blinking but resist €3K/month retainers because the retainer is framed as project cost, not operating cost. The department framing moves the retainer into the operating budget where it gets renewed, not re-justified. This connects to the contract lifecycle: as the AI function decreases the client's operating costs or COGS, the success component grows from real savings — the client pays less base, more success, and both sides win. Needs deeper probing on the mechanics.
 
 The contract communicates: methodology architect with concurrent engagements, not embedded founder or dedicated CTO. Distance principle: deliver the system from outside, not embedded inside the company.
 
@@ -100,6 +110,10 @@ Outcome reporting replaces timesheets: weekly problem-solution pairs with busine
 **Undefined:** Revenue share mechanics — standard structure, tiers, caps.
 **Undefined:** Weekly outcome report format — needs empirical testing (UWI as first implementation).
 
+The success fee also acts as a client selection filter: if the client cannot demonstrate commercial viability sufficient for a meaningful success component, the engagement may not be a fit. This inverts the negotiation — the client proves their business case, not just the provider justifying the fee.
+
+**Undefined:** How to frame the success fee conversation as a mutual qualification step during contract negotiation — the mechanics of using the success fee as a client filter.
+
 Fixed-price projects remain valid within the model — no hourly reporting, AI speed means faster delivery equals better margins.
 
 ### Part 4: Engagement Types and Migration Path
@@ -118,11 +132,13 @@ Migration principle: existing hourly clients transition at their next contract r
 
 **Quarterly fairness review:** Both sides evaluate whether scope and pricing remain fair. If delivery significantly exceeds the scoped function, the retainer adjusts upward.
 
-**Non-exclusive:** Explicitly stated. Enables lower per-client pricing because the overbooking model distributes capacity across concurrent engagements.
+**Non-exclusive:** Explicitly stated. The theory: non-exclusivity enables lower per-client pricing because the overbooking model distributes capacity across 3-4 concurrent engagements, with total revenue exceeding what a single exclusive engagement would yield.
+
+**Undefined:** The non-exclusivity pricing math needs validation with real numbers — does lower per-client price × 3-4 concurrent engagements actually increase or decrease margins compared to higher per-client price × 1 exclusive engagement? This is theory until tested against actual client revenue data.
 
 **Internal cascade:** The same base + success structure applies to team members internally — the model works at every level of the delivery chain.
 
-**Contract lifecycle:** The base retainer bridges the period before the success fee generates meaningful income. Over time, as the AI function establishes itself and the client generates revenue from it, the success component grows and the base can decrease. The ideal trajectory: success fee outcompetes the retainer — the client pays less in fixed cost and more from shared success. The retainer is always a "Dorn im Auge" for the client; the success fee is earned value both sides celebrate.
+**Contract lifecycle:** The base retainer bridges the period before the success fee generates meaningful income. Over time, as the AI function establishes itself and the client generates revenue from it, the success component grows and the base can decrease. The ideal trajectory: success fee outcompetes the retainer — the client pays less in fixed cost and more from shared success. The retainer is always a cost the client bears. The success fee is earned value both sides celebrate — proof that the AI function is generating real returns.
 
 **Undefined:** When the success fee outcompetes the base, it means the client has a new revenue stream that didn't exist before — the ultimate proof of value. The mechanics and success criteria of this lifecycle transition need deeper probing.
 
@@ -144,6 +160,7 @@ Migration principle: existing hourly clients transition at their next contract r
 - [Organization Chart](https://mariuswilsch.github.io/public-wilsch-ai-pages/global/organization-chart-wilsch-ai-services)
 - [Sierra AI — Outcome-based pricing](https://sierra.ai/blog/outcome-based-pricing-for-ai-agents)
 - [Mayer Brown — Contracting for Agentic AI (Feb 2026)](https://www.mayerbrown.com/en/insights/publications/2026/02/contracting-for-agentic-ai-solutions-shifting-the-model-from-saas-to-services)
+- [ARK Invest — AI Great Acceleration (2026)](https://www.investmentnews.com/equities/cathie-woods-ark-invest-predicts-ai-other-techs-great-acceleration/264929) — AI as the technology that touches all other technologies
 
 **Sessions:**
 - `/Users/verdant/.claude/projects/-Users-verdant-Documents-projects-00-WILSCH-AI-INTERNAL--soloforce/87151f23-d09a-4ed4-a4fe-71368c49c52d.jsonl` — position-as-product thesis
