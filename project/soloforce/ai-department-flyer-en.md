@@ -69,7 +69,7 @@ A full-time AI hire costs €70,000–80,000+ per year — for one person, one d
 
 Every engagement has two components:
 
-- **Base retainer** — guaranteed access to the AI delivery system and an operator. Think of it as Betriebskosten, not Projektkosten — a running operating cost, like your IT or accounting function.
+- **Base retainer** — guaranteed access to the AI delivery system and a dedicated specialist trained in our AI systems. Think of it as Betriebskosten, not Projektkosten — a running operating cost, like your IT or accounting function.
 - **Success component** — a share of the commercial outcome the work enables. We succeed when you succeed. This isn't an additional cost — it's earned value tied to measurable results.
 
 ## How We're Different

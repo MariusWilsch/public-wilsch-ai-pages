@@ -69,7 +69,7 @@ Eine Vollzeit-KI-Fachkraft kostet €70.000–80.000+ im Jahr — für eine Pers
 
 Jedes Engagement hat zwei Komponenten:
 
-- **Basisretainer** — garantierter Zugang zum KI-Liefersystem und einem Operator. Denken Sie daran wie an Betriebskosten, nicht Projektkosten — ein laufender Betriebsaufwand, wie Ihre IT- oder Buchhaltungsfunktion.
+- **Basisretainer** — garantierter Zugang zum KI-Liefersystem und einem dedizierten Spezialisten, der in unseren KI-Systemen ausgebildet ist. Denken Sie daran wie an Betriebskosten, nicht Projektkosten — ein laufender Betriebsaufwand, wie Ihre IT- oder Buchhaltungsfunktion.
 - **Erfolgsbeteiligung** — ein Anteil am wirtschaftlichen Ergebnis, das die Arbeit ermöglicht. Wir verdienen, wenn Sie verdienen. Das sind keine zusätzlichen Kosten — es ist verdienter Wert, gebunden an messbare Ergebnisse.
 
 ## Was uns unterscheidet
