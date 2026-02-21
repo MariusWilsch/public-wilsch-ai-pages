@@ -7,11 +7,11 @@ publish: true
 
 ## Meeting Goal
 
-Resolve the undefined elements of the Monthly Planning System that require either deeper probing or empirical evidence from the first March instantiation.
+Resolve remaining undefined elements of the Monthly Planning System. Plan artifact format, Shutdown Ritual integration, and pre-decision framework were defined in extraction pass 2. Remaining items require either deeper probing or empirical evidence from March.
 
 1. **Team & capacity model** — who fills which positions, session budgets, availability
 2. **Contract model** — retainer structure that pre-decides projects
-3. **Operational integration** — Shutdown Ritual evolution, multi-terminal model, success criteria
+3. **Operational gaps** — multi-terminal model, SO update, position transition methodology, docket selection criteria
 
 ## Pre-Read
 
@@ -59,29 +59,19 @@ The package model runs one package per maker session with multiple Claude Code t
 
 **To resolve:** Operational model for multi-terminal maker sessions — how the human orchestrates 3-4 concurrent Claude Code personas.
 
-### 4. Shutdown Ritual evolution
+### 4. Monthly success criteria
 ⏱️ 10 min
 
-The Shutdown Ritual currently selects 3 maker issues for tomorrow's physical book without evaluating against a monthly plan. The monthly planning system requires the ritual to ask "which 3 issues serve THIS month's plan?" and show yesterday's progress alongside tomorrow's selection.
+The monthly plan needs a "done" definition. Without milestones or deadlines on the stateless plan artifact, month-end assessment is qualitative — checking each package's "why" column against observed friction reduction. Whether this qualitative approach works or needs quantitative metrics is unknown until March runs.
 
-- Current ritual: data quality check + maker selection (max 3)
-- Missing: monthly plan filter, progress view (past + future)
-- The ritual is the forcing function — without it, the plan is just a document
+- Plan artifact is deliberately stateless — no progress tracking on the page
+- "Why" per package encodes direction: "orchestration friction" → did it reduce?
+- Position stage advancement and project milestones are candidates but untested
+- Deferred to after first month's empirical run (March 2026)
 
-**To resolve:** Ritual redesign that integrates monthly plan evaluation into the nightly selection workflow.
+**To resolve:** Month-end evaluation methodology — what assessment looks like after running the docket model for one month.
 
-### 5. Monthly success criteria
-⏱️ 10 min
-
-The monthly plan needs a "done" definition. Without it, month-end assessment is subjective. The walkthrough produces packages with associated position stages — but how to measure whether the month succeeded or not is undefined.
-
-- Possible: position stage advancement ("Dev Lead went from TBD to PA Draft")
-- Possible: project milestone ("IITR deployed to production")
-- Possible: combined package outcome
-
-**To resolve:** What a successful month looks like, measured against the package model.
-
-### 6. Strategic Objective update
+### 5. Strategic Objective update
 ⏱️ 10 min
 
 The SO (written Feb 3-4) describes a dev shop with a proprietary method. Current thinking has evolved: positions are products, the org structure itself is the vision product, the company is an AI research lab for organizational strategy. The three-product hierarchy (client deliverables → position methods → org system for acquisitions) is confirmed but not yet written into the SO.
@@ -92,7 +82,7 @@ The SO (written Feb 3-4) describes a dev shop with a proprietary method. Current
 
 **To resolve:** SO update scope — which sections change and how the three-product hierarchy integrates.
 
-### 7. Position transition methodology gaps
+### 6. Position transition methodology gaps
 ⏱️ 15 min
 
 The cross-cutting friction from the walkthrough: JA → Developer decomposition is a methodology gap, and Developer → Dev Lead review is a tooling gap. David completed IITR decomposition successfully — why he doesn't struggle while Marius does is an open question.
@@ -103,6 +93,18 @@ The cross-cutting friction from the walkthrough: JA → Developer decomposition 
 - Rohdex + evidence chain system: future agent/triage angle (deep undefined)
 
 **To resolve:** Whether these gaps need their own design docs or can be resolved through the next project walkthrough.
+
+### 7. Walkthrough-to-docket selection criteria
+⏱️ 10 min
+
+The walkthrough (Part 3) produces a full landscape of project-position packages. The docket (Part 7) contains only the active subset. The selection mechanism — how the full landscape gets cut to the active docket — is currently a judgment call during the planning session.
+
+- First walkthrough (February) was done live in extraction — selection happened conversationally
+- No explicit criteria for what makes a package "active" vs "not this month"
+- Deadlines, contract status, and position priority all play a role but aren't formalized
+- May resolve naturally through practice — the cut might be obvious once you see the landscape
+
+**To resolve:** Whether the walkthrough-to-docket cut needs explicit selection criteria or remains a judgment call informed by the walkthrough data.
 
 ## Meeting Format
 
