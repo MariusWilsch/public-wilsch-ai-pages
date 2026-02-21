@@ -3,7 +3,7 @@ publish: true
 ---
 
 # Hosting-Anforderungen — ROHDEX Dokumentenverarbeitung
-[[hosting-anforderungen-kunde]]
+[[client-rohdex]]
 
 Technische Anforderungen und Hosting-Optionen für die Migration des ROHDEX-Dokumentenverarbeitungssystems.
 
@@ -102,7 +102,8 @@ Das System benötigt ein dediziertes E-Mail-Konto mit IMAP- und SMTP-Zugang.
 - Ordnerstruktur wird automatisch angelegt: `Processed`, `Skipped`
 - Aktuell konfiguriert für Gmail und IONOS — weitere Provider möglich
 
-**Stundensatz Migration:** 90 EUR/Stunde
+**Migrationskosten Cloud:** 720 EUR (8 Stunden × 90 EUR/Stunde)
+**Migrationskosten On-Premise:** Wird nach Erhalt der Server-Specs kalkuliert (voraussichtlich 8–12 Stunden)
 
 ---
 
