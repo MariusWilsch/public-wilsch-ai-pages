@@ -87,7 +87,7 @@ Beide Anbieter sind für diese Systemgröße mehr als ausreichend.
 - Umgebungsvariablen setzen (E-Mail-Zugangsdaten, Monitoring)
 - E-Mail-Konten einrichten und testen (IMAP + SMTP)
 - DNS/SSL-Konfiguration falls erforderlich
-- Smoke-Tests und Funktionsüberprüfung
+- Funktionstest und Überprüfung aller Verarbeitungsschritte
 
 **Migrationsaufwand On-Premise:** Wird nach Erhalt der Server-Specs konkretisiert. Zusätzlich zum Cloud-Aufwand:
 - Firewall-Konfiguration in Abstimmung mit IT
@@ -106,5 +106,3 @@ Das System benötigt ein dediziertes E-Mail-Konto mit IMAP- und SMTP-Zugang.
 **Migrationskosten On-Premise:** Wird nach Erhalt der Server-Specs kalkuliert (voraussichtlich 8–12 Stunden)
 
 ---
-
-*Erstellt: 2026-02-21 | Ansprechpartner: Marius Wilsch (marius@wilsch-ai.com)*
