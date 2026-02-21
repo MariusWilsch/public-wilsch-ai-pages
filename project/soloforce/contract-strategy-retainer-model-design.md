@@ -62,7 +62,13 @@ The unlock pattern: prove capability first (prototype or initial project), then 
 
 The system is person-independent by design. Contracts sell the delivery system, not the individual.
 
-External validation: Sierra AI ($4.5B), WPP, and Decagon (YC-backed) have moved from hourly to outcome-based pricing. 67% of consulting buyers prefer fixed-fee over T&M (Deloitte 2024). [Mayer Brown published a contract framework for agentic AI delivery (February 2026)](https://www.mayerbrown.com/en/insights/publications/2026/02/contracting-for-agentic-ai-solutions-shifting-the-model-from-saas-to-services).
+The system-dependent model is the structural counter to every trust-deficit objection. "I've been burned before" is person-dependent thinking — the person left, the capability left. In a system-dependent engagement, the delivery infrastructure stays: documented processes, AI agent configurations, and observable audit trails remain regardless of which operator runs them. The E-Myth Revisited (Gerber, 1986) identified this forty years ago — businesses fail when they depend on the technician instead of the system. AI-native delivery makes the franchise prototype real: build the system once, run it repeatedly, any operator can execute.
+
+**The organizational shift:** Workers don't lose jobs — they shift upward. Each person becomes a 1-to-N manager of AI agents instead of doing the work manually. Institutional knowledge stays in the system even when people leave — because the AI does the work, the knowledge is encoded in configurations and processes, not in someone's head. "AI doesn't need more tech people — it needs more operational people and org people."
+
+![Before/After: Traditional org chart vs AI-Native org chart](assets/org-chart-before-after.png)
+
+External validation: Sierra AI ($4.5B), WPP, and Decagon (YC-backed) have moved from hourly to outcome-based pricing. 67% of consulting buyers prefer fixed-fee over T&M (Deloitte 2024). [Mayer Brown published a contract framework for agentic AI delivery (February 2026)](https://www.mayerbrown.com/en/insights/publications/2026/02/contracting-for-agentic-ai-solutions-shifting-the-model-from-saas-to-services). YC's Spring 2026 RFS codifies this as ["AI-Native Agencies"](https://www.ycombinator.com/rfs#ai-powered-agencies) — agencies that "use AI internally and sell finished outcomes at software-level margins. They'll scale far bigger than any agencies that exist in these fragmented markets today." [Sourcegraph's FY26 org chart](https://sourcegraph.com/blog/revenge-of-the-junior-developer) shows the new hierarchy: Senior Leaders → Managers → Developers → AI Managers → AI Coding Agents.
 
 ### Part 2: The Value Proposition — Outsourced AI Department
 
@@ -82,9 +88,15 @@ The value delivered is alignment — understanding the client's problem before w
 
 Every engagement owns a function, not a task list. The function stays constant; deliverables within it change. A contractor who "builds for 3K and leaves" delivers a thing, not an ongoing function. When they leave, the function goes empty.
 
-The AI department is unique among outsourced functions: it touches every other department. Marketing, operations, finance, customer service — AI capability has cross-cutting impact. "Every employee you have is an AI use case." This makes the outsourced AI department fundamentally more valuable than outsourced accounting or IT — it multiplies the effectiveness of everything else the company does. The contract must communicate this cross-functional value, not just the narrow deliverables.
+The AI department is unique among outsourced functions: it touches every other department. Marketing, operations, finance, customer service — AI capability has cross-cutting impact. "Every employee you have is an AI use case." This makes the outsourced AI department fundamentally more valuable than outsourced accounting or IT — it multiplies the effectiveness of everything else the company does.
 
-**Undefined:** How to frame the "AI touches everything" value proposition for Mittelstand clients who think in departmental silos — the cross-functional impact needs a concrete communication strategy.
+Like ARK Invest's "Technological Convergence" thesis ([Big Ideas 2026, p.5](https://ark-invest.com/big-ideas-2026)) — where AI is the central node touching all other technologies — the AI department is the central node touching all other departments. When one department sees what AI can do, the others demand it. AVO demonstrated this: the first workshop was scoped for software, but the production department was instantly interested. The possibility space, once visible, creates its own demand across departments. Clients always ask: "Can you do this for our other departments too?"
+
+![AI Department convergence — the department that touches every other department](assets/ai-department-convergence.png)
+
+**Observability replaces timesheets.** The AI delivery system produces a complete audit trail — every agent action, every conversation, every decision is queryable. Point-in-time observability of what your AI department has been doing replaces the need for Stundennachweis. The system IS the transparency layer — more transparent than any person could be, and it comes free as a byproduct of AI-native delivery.
+
+**Undefined:** How to frame the "AI touches everything" value proposition concretely for Mittelstand clients in the flyer — the convergence visual exists, the pitch narrative needs empirical testing with real clients.
 
 **Undefined:** The Betriebskosten vs Projektkosten budget psychology — clients spend €150K on marketing without blinking but resist €3K/month retainers because the retainer is framed as project cost, not operating cost. The department framing moves the retainer into the operating budget where it gets renewed, not re-justified. This connects to the contract lifecycle: as the AI function decreases the client's operating costs or COGS, the success component grows from real savings — the client pays less base, more success, and both sides win. Needs deeper probing on the mechanics.
 
@@ -93,10 +105,10 @@ The contract communicates: methodology architect with concurrent engagements, no
 ### Part 3: The Pricing Structure — Base + Success, Always AND
 
 Every retainer has two components, always combined:
-- **Base fee:** Fair payment for work done — secures the client's capacity slot and guarantees availability
-- **Success component:** Skin in the game — a percentage of the commercial outcome the work enables, tied to net margin not gross revenue
+- **Base fee:** Bridge cost — buys system access, not person-time. Metered by hours of throughput (5h, 10h, 20h tiers) but what the client buys is the AI delivery system plus an operator, not a specific individual's attention. The base is the guaranteed floor; the real money comes from the success component.
+- **Success component:** Skin in the game — a percentage of the commercial outcome the work enables, tied to net margin not gross revenue. The aim is to make the real money here, not on the base.
 
-This is AND, not OR. The base ensures fair compensation; the success component aligns incentives.
+This is AND, not OR. The base ensures system access; the success component aligns incentives. The price anchor for clients: "You can hire a person to deliver a deliverable, or you can subscribe to an ongoing AI-native agency that delivers monthly outcomes." The comparison is hiring internally (€70-80K+ for one full-time AI person) versus subscribing to an AI department at a fraction of the cost — with the system scaling as needs grow.
 
 The success component is margin-dependent and negotiated per deal:
 - Product engagements (Archibus): revenue share from subscriptions
@@ -151,6 +163,8 @@ Migration principle: existing hourly clients transition at their next contract r
 - [Dad <> Marius (2026-02-18)](https://app.fireflies.ai/view/01KHQHYP17N1DRR9183J3BVCFR) — scope definition, financial pressure, outcome-based delivery
 - [David sync (2026-02-18)](https://app.fireflies.ai/view/01KHR8XQMWMBV1TJJF4GVNA3RK) — revenue baseline
 - [Archibus post-demo (2025-10-08)](https://app.fireflies.ai/view/01K71QRZX71S801A7ENSAMS301) — Swiss watch, "I want you in my team"
+- [Doru/Needed Tech (2026-02-21)](https://app.fireflies.ai/view/01KHZGZN8JG04A8JP1K0PSJZDX) — positive case: training program entry, AI department pitch, zero hard objections
+- [Doru blocker (2026-02-21)](https://app.fireflies.ai/view/01KHZGZN8JG04A8JP1K0PSJZDX) — quoting automation, resale opportunity, "every employee is an AI use case"
 
 **Artifacts:**
 - [Archibus Retainer Agreement](https://mariuswilsch.github.io/public-wilsch-ai-pages/project/archibus-fm-assistant/archibus-retainer-services-agreement-6mo-extension)
@@ -161,7 +175,13 @@ Migration principle: existing hourly clients transition at their next contract r
 - [Sierra AI — Outcome-based pricing](https://sierra.ai/blog/outcome-based-pricing-for-ai-agents)
 - [Mayer Brown — Contracting for Agentic AI (Feb 2026)](https://www.mayerbrown.com/en/insights/publications/2026/02/contracting-for-agentic-ai-solutions-shifting-the-model-from-saas-to-services)
 - [ARK Invest — AI Great Acceleration (2026)](https://www.investmentnews.com/equities/cathie-woods-ark-invest-predicts-ai-other-techs-great-acceleration/264929) — AI as the technology that touches all other technologies
+- [ARK Invest — Big Ideas 2026, p.5](https://ark-invest.com/big-ideas-2026) — "Technological Convergence Is Accelerating" — source for department convergence diagram
+- [YC RFS Spring 2026 — AI-Native Agencies](https://www.ycombinator.com/rfs#ai-powered-agencies) — "agencies of the future will look more like software companies, with software margins"
+- [Sourcegraph — Revenge of the Junior Developer](https://sourcegraph.com/blog/revenge-of-the-junior-developer) — FY26 org chart: Devs → AI Managers → AI Coding Agents
+- E-Myth Revisited (Michael Gerber, 1986) — franchise prototype model applied to AI-native delivery
+- **Competitors:** [tune.eco](https://tune.eco) (SaaS agents, €149/user/mo), [heronos.com](https://heronos.com) (digital Fachkräfte, €375/mo), [mindgpt.cloud](https://mindgpt.cloud) (private AI workspace) — all sell SOFTWARE, not a FUNCTION
 
 **Sessions:**
 - `/Users/verdant/.claude/projects/-Users-verdant-Documents-projects-00-WILSCH-AI-INTERNAL--soloforce/87151f23-d09a-4ed4-a4fe-71368c49c52d.jsonl` — position-as-product thesis
-- `/Users/verdant/.claude/projects/-Users-verdant-Documents-projects-00-WILSCH-AI-INTERNAL--soloforce/15c30f47-6bd1-45c6-8e18-3295b58d0cb8.jsonl` — this extraction pass
+- `/Users/verdant/.claude/projects/-Users-verdant-Documents-projects-00-WILSCH-AI-INTERNAL--soloforce/15c30f47-6bd1-45c6-8e18-3295b58d0cb8.jsonl` — first extraction pass
+- `/Users/verdant/.claude/projects/-Users-verdant-Documents-projects-00-WILSCH-AI-INTERNAL--soloforce/9715c300-2036-4389-882d-e9a3af2eb55a.jsonl` — second extraction pass (this session)
