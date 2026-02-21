@@ -67,7 +67,7 @@ Entry point for all position-specific Operations Manuals at Wilsch AI Services. 
 
 | Position | Position Agreement | Operations Manual TOC | Operations Manual |
 |----------|-------------------|----------------------|-------------------|
-| **COO/President** | TBD | TBD | TBD |
+| **COO/President** | TBD | [Draft](https://mariuswilsch.github.io/public-wilsch-ai-pages/global/coo-operations-manual-toc) | TBD |
 | **VP/Delivery** | TBD | TBD | TBD |
 | **VP/Marketing** | TBD | TBD | TBD |
 | **VP/Finance** | TBD | TBD | TBD |
