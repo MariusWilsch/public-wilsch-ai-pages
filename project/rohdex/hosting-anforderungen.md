@@ -111,7 +111,7 @@ Zwei Cloud-Anbieter mit Rechenzentren in Deutschland (DSGVO-konform):
 - Umgebungsvariablen setzen (E-Mail-Zugangsdaten, Monitoring)
 - E-Mail-Konten einrichten und testen (IMAP + SMTP)
 - DNS/SSL-Konfiguration falls erforderlich
-- Smoke-Tests und Funktionsüberprüfung
+- Funktionstest und Überprüfung aller Verarbeitungsschritte
 
 **Migrationsaufwand On-Premise:** Wird nach Erhalt der Server-Specs konkretisiert. Zusätzlich zum Cloud-Aufwand:
 - Firewall-Konfiguration in Abstimmung mit IT
@@ -129,7 +129,7 @@ Das System benötigt ein dediziertes E-Mail-Konto mit IMAP- und SMTP-Zugang.
 **Migrationskosten Cloud:** 720 EUR (8 Stunden × 90 EUR/Stunde)
 **Migrationskosten On-Premise:** Wird nach Erhalt der Server-Specs kalkuliert (voraussichtlich 8–12 Stunden)
 
-**Undefined:** SLA-Modellanpassung nach Hosting-Entscheidung — wenn Rohdex die Infrastrukturkosten selbst trägt, verändert sich die Kostenstruktur des bestehenden SLA. → Nächster Extraktionspass
+**Undefined:** SLA-Modellanpassung nach Hosting-Entscheidung — zwei offene Punkte: (1) Preisanpassung wenn Rohdex Infrastrukturkosten selbst trägt, (2) Verantwortungsgrenze definieren: Was deckt das SLA ab (App-Wartung, Monitoring, Updates, Bugfixes) vs. was liegt bei Rohdex-IT (Server-Uptime, Backups, Netzwerk, Hardware). Antwort hängt von gewählter Hosting-Option ab. → Nächster Extraktionspass
 
 **Undefined:** Codebase-Bereinigung — nicht genutzter KI-Extraktionspfad (OpenRouter/Langfuse) und zugehörige Dokumentation aufräumen. → Nächster Extraktionspass
 
