@@ -54,7 +54,7 @@ Hourly billing is structurally incompatible with AI-native delivery. Timing data
 
 The delivery model operates as a "main thread": the human is the CPU scheduler, AI agents are spawned processes per client. Opportunity cost is magnified — every idle moment on the main thread means N agents not running. The client doesn't buy 1/4 of a person's attention; they buy access to an AI-orchestrated delivery team.
 
-What this team delivers maps to the Strategic Objective's value identity: the commodity is finished AI projects, the product is possibility space made tangible, and the proprietary method (Claude Code OS) stays internal. The contract scopes the commodity; the client pays for the product; the method is the competitive moat. (See: [Strategic Objective — Wilsch AI Services](https://mariuswilsch.github.io/public-wilsch-ai-pages/global/strategic-objective-wilsch-ai-services).)
+What this team delivers maps to the Strategic Objective's value identity: the commodity is finished AI projects, the product is possibility space made tangible, and the proprietary method (Claude Code OS) stays internal. **The contract scopes the commodity; the client pays for the product; the method is the competitive moat.** (See: [Strategic Objective — Wilsch AI Services](https://mariuswilsch.github.io/public-wilsch-ai-pages/global/strategic-objective-wilsch-ai-services).)
 
 The unlock pattern: prove capability first (prototype or initial project), then transition to retainer as the natural evolution. Archibus demonstrated this — the client chose retainer because he wanted ongoing strategic access. His words: "I want you in my team. You are a gear in the Swiss watch."
 
