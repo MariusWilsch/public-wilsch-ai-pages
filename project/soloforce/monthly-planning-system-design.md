@@ -128,6 +128,7 @@ The following project-position map was produced during the first walkthrough. It
 | IITR | Developer → Dev Lead | Decomposition success case |
 | UWI | Full chain (JA→Dev→Dev Lead) | Handoff speed between roles |
 | AVO | JA + Developer (autonomous) | Ralph experiment, local dev |
+| Rekers | JA + Developer (autonomous) | Same as AVO, waiting on Thomas |
 | Traceline | System Engineer + Developer | Beta friction → improvement loop |
 
 **Cross-cutting friction surfaced through the walkthrough:**
