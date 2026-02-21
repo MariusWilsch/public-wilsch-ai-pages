@@ -74,13 +74,13 @@ Every engagement has two components:
 
 ## How We're Different
 
-| | AI Software Tools | Your AI Department (Wilsch AI) |
-|--|-------------------|-------------------------------|
-| **What you get** | A tool to configure yourself | A function that delivers outcomes |
-| **AI expertise required** | Yes — your team must learn it | No — we bring the methodology |
-| **Data sovereignty** | Cloud-dependent | Local deployment available |
-| **Scales with you** | Per-user pricing | Function grows as needs grow |
-| **Examples** | tune.eco (€149/mo), heronos (€375/mo), mindgpt | Base retainer + success component |
+| | [tune.eco](https://tune.eco) | [heronos](https://heronos.com) | [mindgpt](https://mindgpt.cloud) | **Wilsch AI** |
+|--|----------|---------|---------|-----------|
+| **What it is** | SaaS agent platform | Digital call/chat workers | Private AI workspace | Outsourced AI department |
+| **What it does** | Pre-built agents for reporting, onboarding, accounting | Handles inbound calls, routes tickets, answers emails | Secure ChatGPT alternative for internal use | Delivers outcomes across all departments — engineering, operations, production |
+| **You need** | Your team configures and manages it | Integration into your phone/ticket system | Users who know what to ask | Nothing — we bring methodology, delivery, and AI expertise |
+| **Pricing** | €149/user/mo + €499 base | Ab €375/mo + €2,500 setup | Subscription | Base retainer + success component |
+| **Category** | Software tool | Software tool | Software tool | **Function ownership** |
 
 ## Get Started
 
@@ -90,9 +90,7 @@ Start with a free scoping workshop — we identify your AI potential in a focuse
 
 ---
 
-*Aligned with emerging legal frameworks for agentic AI service delivery.¹*
-
-<sup>¹ Mayer Brown, "Contracting for Agentic AI Solutions: Shifting the Model from SaaS to Services," February 2026.</sup>
+*Aligned with emerging legal frameworks for agentic AI service delivery — [Mayer Brown, "Contracting for Agentic AI Solutions: Shifting the Model from SaaS to Services," February 2026](https://www.mayerbrown.com/en/insights/publications/2026/02/contracting-for-agentic-ai-solutions-shifting-the-model-from-saas-to-services).*
 
 ---
 

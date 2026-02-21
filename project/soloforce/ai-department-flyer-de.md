@@ -74,13 +74,13 @@ Jedes Engagement hat zwei Komponenten:
 
 ## Was uns unterscheidet
 
-| | KI-Softwaretools | Ihre KI-Abteilung (Wilsch AI) |
-|--|------------------|-------------------------------|
-| **Was Sie bekommen** | Ein Tool zum Selbstkonfigurieren | Eine Funktion, die Ergebnisse liefert |
-| **KI-Expertise nötig** | Ja — Ihr Team muss es lernen | Nein — wir bringen die Methodik mit |
-| **Datensouveränität** | Cloud-abhängig | Lokale Installation verfügbar |
-| **Skalierbarkeit** | Preis pro Nutzer | Funktion wächst mit Ihrem Bedarf |
-| **Beispiele** | tune.eco (€149/Monat), heronos (€375/Monat), mindgpt | Basisretainer + Erfolgsbeteiligung |
+| | [tune.eco](https://tune.eco) | [heronos](https://heronos.com) | [mindgpt](https://mindgpt.cloud) | **Wilsch AI** |
+|--|----------|---------|---------|-----------|
+| **Was es ist** | SaaS-Agenten-Plattform | Digitale Telefon-/Chat-Mitarbeiter | Privater KI-Arbeitsbereich | Ausgelagerte KI-Abteilung |
+| **Was es tut** | Vorgefertigte Agenten für Reporting, Onboarding, Buchhaltung | Bearbeitet Anrufe, routet Tickets, beantwortet E-Mails | Sichere ChatGPT-Alternative für internen Gebrauch | Liefert Ergebnisse über alle Abteilungen — Engineering, Betrieb, Produktion |
+| **Was Sie brauchen** | Ihr Team konfiguriert und verwaltet es | Integration in Ihre Telefon-/Ticketsysteme | Nutzer, die wissen, was sie fragen sollen | Nichts — wir bringen Methodik, Umsetzung und KI-Expertise mit |
+| **Preismodell** | €149/Nutzer/Mo. + €499 Basis | Ab €375/Mo. + €2.500 Setup | Abonnement | Basisretainer + Erfolgsbeteiligung |
+| **Kategorie** | Softwaretool | Softwaretool | Softwaretool | **Funktionsübernahme** |
 
 ## Loslegen
 
@@ -90,9 +90,7 @@ Starten Sie mit einem kostenlosen Scoping-Workshop — wir identifizieren Ihr KI
 
 ---
 
-*Ausgerichtet an aktuellen rechtlichen Rahmenwerken für KI-gestützte Dienstleistungen.¹*
-
-<sup>¹ Mayer Brown, „Contracting for Agentic AI Solutions: Shifting the Model from SaaS to Services," Februar 2026.</sup>
+*Ausgerichtet an aktuellen rechtlichen Rahmenwerken für KI-gestützte Dienstleistungen — [Mayer Brown, „Contracting for Agentic AI Solutions: Shifting the Model from SaaS to Services," Februar 2026](https://www.mayerbrown.com/en/insights/publications/2026/02/contracting-for-agentic-ai-solutions-shifting-the-model-from-saas-to-services).*
 
 ---
 
