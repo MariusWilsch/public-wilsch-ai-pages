@@ -7,16 +7,15 @@ publish: true
 
 ## Meeting Goal
 
-Resolve three open design questions from the CCI Board Structure design doc so the model can move from design to implementation:
+Resolve the deployment pipeline design from the CCI Board Structure design doc (Part 6) — how observations flow through positions from capture to deployed fix:
 
-1. **Label taxonomy mapping** — how position × scope labels translate to position epics
-2. **Observation format standard** — what a well-written observation looks like
-3. **Transfer mechanism** — how observations move from position epic to release epic
+1. **Deployment pipeline** — the full position pipeline from observation to production-deployed fix
 
 ## Pre-Read
 
 - [CCI Board Structure Design Doc](https://mariuswilsch.github.io/public-wilsch-ai-pages/project/soloforce/cci-board-structure-design)
 - [System Engineer PA](https://mariuswilsch.github.io/public-wilsch-ai-pages/global/system-engineer-position-agreement-wilsch-ai-services) — Standards 2-4, Strategic Work #2
+- [/improve-system Architecture](https://mariuswilsch.github.io/public-wilsch-ai-pages/global/improve-system-architecture)
 
 ---
 
@@ -24,62 +23,23 @@ Resolve three open design questions from the CCI Board Structure design doc so t
 
 *Starting points for discussion, not limited to these.*
 
-### 1. The label taxonomy has two dimensions — position and scope
-⏱️ 10 min
+### 1. The improvement cycle follows a position pipeline with undefined stage gates
+⏱️ 20 min
 
-The triage sessions created labels with a position × scope pattern: `traceline/developer`, `internal/system-engineer`, etc. Position epics need a 1:1 mapping to these labels, but the scope dimension (traceline vs internal) creates ambiguity.
+The extraction pass surfaced a pipeline: observations accumulate → SE monitors pressure → release epic → JA creates design doc → Developer implements → stability gate (R&D → team → Traceline). This connects the CCI board to the improve-system architecture and the E-Myth position pipeline, but the stage transitions are implicit.
 
-- Five label combinations exist: traceline/developer, traceline/system-engineer, internal/developer, internal/system-engineer, internal/ja
-- One position epic per label = 5 epics (fine-grained)
-- One position epic per position = 3 epics (developer, system-engineer, ja) with scope as metadata
-- Traceline is a product; internal is infrastructure — different priorities
+- The SE's "pressure threshold" is human judgment — no formal metric exists for when a cluster warrants a release epic
+- The JA design doc for a release epic may differ from a project design doc — observations as sources vs. transcripts as sources
+- Stability gates between deployment stages (R&D → team → Traceline) are currently Marius's judgment without formalization
+- The improve-system architecture (Session A → B → C) predates the position pipeline — integration points need definition
 
-**To resolve:** The mapping between the label taxonomy and position epic creation.
-
-### 2. The observation format needs a "how to write" standard
-⏱️ 15 min
-
-The design doc defines the two-part structure (context as hook, source as pond) and the principle that hooks must be problem-based, never solution-based. What's missing is the guide that gets embodied into the capture tooling so observations are consistently useful.
-
-- Current flag-for-improvement asks free-form questions — no structural enforcement
-- The format should mirror `/issue-comment`: very short hook pointing toward the source — not analyzing or interpreting
-- A bad observation: "The AI should use better formatting" (solution-based, no source, already interpreting)
-- A good observation: "AI skipped the SURFACE list format" + conversation path (problem-based, points to source, lets the source speak at face value)
-- The hook points toward; the source speaks for itself. Observation ≠ analysis
-- The guide needs to be short enough to embed in a skill prompt
-
-**To resolve:** The observation format standard that flag-for-improvement enforces at capture time.
-
-### 3. Moving observations from position epic to release epic
-⏱️ 10 min
-
-When a release epic is created, observations transfer from the position epic. The transfer mechanism affects whether the position epic stays clean and whether evidence is preserved in the release context.
-
-- Copy content to release epic comment → delete from position epic (clean but destructive)
-- Link to original comment from release epic → mark original with reaction (non-destructive but noisy)
-- Move by re-posting with attribution → delete original (clean and traceable)
-- GitHub has no native "move comment" feature
-
-**To resolve:** The transfer mechanism that keeps position epics clean while preserving evidence in release epics.
-
-### 4. Capture friction — observation speed vs. flow interruption
-⏱️ 15 min
-
-Flag-for-improvement currently requires interactive back-and-forth that breaks the user's working flow. Observation capture needs to be nearly invisible — low enough friction that it happens naturally, not as a deliberate ceremony.
-
-- Current skill requires multiple AskUserQuestion rounds mid-session
-- The AI is good at wording — only the problem description and evidence path need to come from the user
-- Background task model: user provides problem + source, AI formats and posts asynchronously
-- Two non-negotiable constraints: problem-based hooks only, full evidence paths always (findable conversation paths, not IDs)
-- Possible approach: lightweight skill or inline command that captures in one interaction, formats in background
-
-**To resolve:** The capture mechanism that maintains problem-based hooks and full evidence paths while minimizing flow interruption.
+**To resolve:** The stage gates and position handoffs in the deployment pipeline from observation to production fix.
 
 ## Meeting Format
 
 - **Type:** Working session (self-facilitated)
-- **Expectation:** Review the design doc pre-read, bring examples of good/bad observations from recent sessions
-- **Outcome:** Four decisions documented as design doc updates (Undefined → Defined)
+- **Expectation:** Review design doc Part 6 + improve-system architecture
+- **Outcome:** Pipeline stages formalized as design doc update (Undefined → Defined)
 
 ## Related
 
