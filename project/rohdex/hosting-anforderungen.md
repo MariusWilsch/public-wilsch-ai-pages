@@ -89,49 +89,67 @@ Zwei Cloud-Anbieter mit Rechenzentren in Deutschland (DSGVO-konform):
 |------------|---------|-----------|
 | CPU | 2 Kerne, x86-64 | 4 Kerne |
 | RAM | 4 GB dediziert | 8 GB Gesamt-Host |
-| Festplatte | 40 GB SSD | 80 GB SSD |
-| Betriebssystem | Linux (Ubuntu 22.04 LTS) | — |
+| Festplatte | 40 GB (SSD empfohlen, HDD ausreichend) | 80 GB |
+| Betriebssystem | Linux-basiert (Ubuntu empfohlen) | — |
 | Container-Runtime | Docker Engine 24.x+ | — |
 | Netzwerk ausgehend | IMAP (993), SMTP (587/465) | — |
 | Netzwerk eingehend | Port 9000 (intern/VPN) | — |
 | Internet | Business-Leitung, >10 Mbit/s | — |
 | Stromversorgung | USV empfohlen | — |
 
+**Machbarkeitsbewertung (Stand Feb 2026):**
+Rohdex-IT bietet: 4 V-Cores, 16 GB RAM, 120 GB Speicher. Diese Spezifikationen übertreffen alle Mindestanforderungen — On-Premise-Hosting ist aus Hardware-Sicht machbar.
+
+**Vorbereitung durch IT (vor Migrationstermin):**
+1. Docker Engine 24.x+ auf der VM installieren und lauffähig bestätigen
+2. Ausgehende Ports freigeben: IMAP (993) und SMTP (587 oder 465)
+3. Konnektivität prüfen: Von der VM aus `imap.ionos.de:993` und `smtp.ionos.de:587` erreichbar
+4. SSH-Zugang oder Remote-Zugriff für Marius einrichten
+
 **Risikofaktoren:**
-- IMAP/SMTP-Ports werden häufig durch Firmen-Firewalls blockiert — IT muss ausgehende Ports prüfen und freigeben
 - 24/7-Verfügbarkeit abhängig von eigener Wartungsdisziplin
 - Keine automatischen Backups ohne explizite Backup-Strategie
 
-**Nächster Schritt:** Konstantin sendet die Server-Spezifikationen seines hauseigenen Systems → Marius bewertet Machbarkeit → konkreter Migrationsplan wird erstellt.
+**Undefined:** Wer konfiguriert die Infrastruktur auf Rohdex-Seite? Zwei Optionen — (A) Marius konfiguriert alles (Infrastruktur + App-Deployment), Rohdex-IT stellt Zugang bereit, oder (B) Rohdex-IT bereitet Infrastruktur nach obiger Checkliste vor, Marius deployt nur die Applikation. Antwort beeinflusst Migrationsaufwand und Zeitplanung. → Meeting Agenda
 
 ### Part 4: Migration und E-Mail-Konfiguration
 
 **Migrationsaufwand Cloud:** 1 Arbeitstag (8 Stunden)
 - Docker-Container deployen und konfigurieren
 - Umgebungsvariablen setzen (E-Mail-Zugangsdaten, Monitoring)
-- E-Mail-Konten einrichten und testen (IMAP + SMTP)
+- E-Mail-Konnektivität verifizieren (IMAP + SMTP)
 - DNS/SSL-Konfiguration falls erforderlich
 - Funktionstest und Überprüfung aller Verarbeitungsschritte
 
-**Migrationsaufwand On-Premise:** Wird nach Erhalt der Server-Specs konkretisiert. Zusätzlich zum Cloud-Aufwand:
-- Firewall-Konfiguration in Abstimmung mit IT
-- Netzwerk-Freigaben (IMAP/SMTP-Ports ausgehend)
-- Puffer für infrastrukturspezifische Besonderheiten
+**Migrationsaufwand On-Premise:** 1 Arbeitstag (8 Stunden)
+Identischer technischer Aufwand wie Cloud-Migration. Zusätzliche Kalenderzeit für IT-Koordination (Firewall-Freigaben, Zugangsvorbereitung) — diese fällt vor dem Migrationstermin an, nicht am Migrationstag selbst.
 
 **E-Mail-Konfiguration:**
-Das System benötigt ein dediziertes E-Mail-Konto mit IMAP- und SMTP-Zugang.
+Das System nutzt bereits ein Rohdex-eigenes E-Mail-Konto: `export-ki@rohdex.com` (IONOS). Dieses Konto bleibt bei der Migration identisch — es werden lediglich die bestehenden Zugangsdaten auf dem neuen Server hinterlegt.
 
 - IMAP: Eingangsverarbeitung (Polling alle ~10 Sekunden)
 - SMTP: Versand der fertigen Dokumente an Absender
 - Ordnerstruktur wird automatisch angelegt: `Processed`, `Skipped`
-- Aktuell konfiguriert für Gmail und IONOS — weitere Provider möglich
+- IMAP-Server: `imap.ionos.de` (Port 993, TLS)
+- SMTP-Server: `smtp.ionos.de` (Port 587, TLS)
 
-**Migrationskosten Cloud:** 720 EUR (8 Stunden × 90 EUR/Stunde)
-**Migrationskosten On-Premise:** Wird nach Erhalt der Server-Specs kalkuliert (voraussichtlich 8–12 Stunden)
+**Migrationskosten:** 720 EUR (8 Stunden × 90 EUR/Stunde) — gilt für beide Hosting-Optionen.
 
-**Undefined:** SLA-Modellanpassung nach Hosting-Entscheidung — zwei offene Punkte: (1) Preisanpassung wenn Rohdex Infrastrukturkosten selbst trägt, (2) Verantwortungsgrenze definieren: Was deckt das SLA ab (App-Wartung, Monitoring, Updates, Bugfixes) vs. was liegt bei Rohdex-IT (Server-Uptime, Backups, Netzwerk, Hardware). Antwort hängt von gewählter Hosting-Option ab. → Nächster Extraktionspass
+### Part 5: SLA-Modell nach Hosting-Entscheidung
 
-**Undefined:** Codebase-Bereinigung — nicht genutzter KI-Extraktionspfad (OpenRouter/Langfuse) und zugehörige Dokumentation aufräumen. → Nächster Extraktionspass
+Das aktuelle SLA (525 EUR/Monat) beinhaltet sowohl die Applikationswartung als auch die Infrastrukturverantwortung. Bei Eigenhosting verschiebt sich die Verantwortung — der SLA-Preis passt sich entsprechend an.
+
+| | Cloud (Marius hosted) | Eigenes Rechenzentrum |
+|---|---|---|
+| **Server-Verantwortung** | Marius | Rohdex-IT |
+| **App-Wartung & Updates** | Marius | Marius |
+| **Monitoring** | Marius | *zu klären* |
+| **Bugfixes** | Marius | Marius |
+| **Monatspreis** | 525 EUR | *nach Absprache — abhängig von Verantwortungsaufteilung* |
+
+> *Bei Eigenhosting entfallen die Infrastrukturkosten auf Rohdex-Seite. Die SLA-Anpassung richtet sich danach, welche Verantwortlichkeiten Rohdex-IT übernimmt — je mehr Rohdex-IT abdeckt, desto geringer der monatliche SLA-Betrag.*
+
+**Undefined:** Verantwortungsgrenze zwischen Server-Ebene und App-Ebene — bestimmt sowohl die SLA-Preisanpassung als auch die Monitoring-Zuständigkeit. Zu klären im nächsten Gespräch mit Konstantin und Rohdex-IT. → Meeting Agenda
 
 ---
 
@@ -141,5 +159,8 @@ Das System benötigt ein dediziertes E-Mail-Konto mit IMAP- und SMTP-Zugang.
 - **Community Research:** [LowEndTalk OVH vs Hetzner](https://lowendtalk.com/discussion/209375/does-ovh-vps-beat-hetzner-cloud-vps), [HN Discussion](https://news.ycombinator.com/item?id=45480878)
 - **Production Validation:** Server logs (91.99.74.207) — 7 Emails, alle Excel-only, kein AI-Pfad aktiv
 - **Code Analysis:** `processing_orchestration_service.py:344` — DOCX/AI-Pfad existiert aber nie getriggert
+- **Server Specs:** [Konstantin Email (Feb 18)](https://mail.google.com/mail/u/0/#all/19c715d69ebb2c67) — 4 V-Cores, 16 GB RAM, 120 GB Speicher
+- **Email Config:** Production env (WILSCH-AI-SERVER) — `export-ki@rohdex.com` via IONOS (IMAP/SMTP)
 - **Issue:** [#766 Client Communication Transition](https://github.com/DaveX2001/deliverable-tracking/issues/766)
 - **Session:** /Users/verdant/.claude/projects/-Users-verdant-Documents-projects-00-WILSCH-AI-INTERNAL--soloforce/dc52c659-0c63-41ea-8af8-6183d2a72867.jsonl
+- **Session:** /Users/verdant/.claude/projects/-Users-verdant-Documents-projects-00-WILSCH-AI-INTERNAL--soloforce/6aba464a-4eac-48dc-82c6-d5f78cd4d7e4.jsonl
