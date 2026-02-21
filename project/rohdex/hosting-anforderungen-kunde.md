@@ -63,46 +63,47 @@ Beide Anbieter sind für diese Systemgröße mehr als ausreichend.
 |------------|---------|-----------|
 | CPU | 2 Kerne, x86-64 | 4 Kerne |
 | RAM | 4 GB dediziert | 8 GB Gesamt-Host |
-| Festplatte | 40 GB SSD | 80 GB SSD |
-| Betriebssystem | Linux (Ubuntu 22.04 LTS) | — |
+| Festplatte | 40 GB (SSD empfohlen, HDD ausreichend) | 80 GB |
+| Betriebssystem | Linux-basiert (Ubuntu empfohlen) | — |
 | Container-Runtime | Docker Engine 24.x+ | — |
 | Netzwerk ausgehend | IMAP (993), SMTP (587/465) | — |
 | Netzwerk eingehend | Port 9000 (intern/VPN) | — |
 | Internet | Business-Leitung, >10 Mbit/s | — |
 | Stromversorgung | USV empfohlen | — |
 
+**Machbarkeitsbewertung (Stand Feb 2026):**
+Die von Rohdex-IT angebotenen Spezifikationen (4 V-Cores, 16 GB RAM, 120 GB Speicher) übertreffen alle Mindestanforderungen — On-Premise-Hosting ist aus Hardware-Sicht machbar.
+
+**Vorbereitung durch IT (vor Migrationstermin):**
+1. Docker Engine 24.x+ auf der VM installieren und lauffähig bestätigen
+2. Ausgehende Ports freigeben: IMAP (993) und SMTP (587 oder 465)
+3. Konnektivität prüfen: Von der VM aus `imap.ionos.de:993` und `smtp.ionos.de:587` erreichbar
+4. SSH-Zugang oder Remote-Zugriff für Marius einrichten
+
 **Risikofaktoren:**
-- IMAP/SMTP-Ports werden häufig durch Firmen-Firewalls blockiert — IT muss ausgehende Ports prüfen und freigeben
 - 24/7-Verfügbarkeit abhängig von eigener Wartungsdisziplin
 - Keine automatischen Backups ohne explizite Backup-Strategie
-
-**Nächster Schritt:** Server-Spezifikationen des hauseigenen Systems zusenden → Machbarkeit wird bewertet → konkreter Migrationsplan wird erstellt.
 
 ---
 
 ## 4. Migration
 
-**Migrationsaufwand Cloud:** 1 Arbeitstag (8 Stunden)
+**Migrationsaufwand:** 1 Arbeitstag (8 Stunden) — gilt für beide Hosting-Optionen.
 - Docker-Container deployen und konfigurieren
 - Umgebungsvariablen setzen (E-Mail-Zugangsdaten, Monitoring)
-- E-Mail-Konten einrichten und testen (IMAP + SMTP)
+- E-Mail-Konnektivität verifizieren (IMAP + SMTP)
 - DNS/SSL-Konfiguration falls erforderlich
 - Funktionstest und Überprüfung aller Verarbeitungsschritte
 
-**Migrationsaufwand On-Premise:** Wird nach Erhalt der Server-Specs konkretisiert. Zusätzlich zum Cloud-Aufwand:
-- Firewall-Konfiguration in Abstimmung mit IT
-- Netzwerk-Freigaben (IMAP/SMTP-Ports ausgehend)
-- Puffer für infrastrukturspezifische Besonderheiten
+Bei On-Premise-Migration: zusätzliche Kalenderzeit für IT-Koordination (Firewall-Freigaben, Zugangsvorbereitung) — diese fällt vor dem Migrationstermin an, nicht am Migrationstag selbst.
 
 **E-Mail-Konfiguration:**
-Das System benötigt ein dediziertes E-Mail-Konto mit IMAP- und SMTP-Zugang.
+Das System nutzt bereits das Rohdex-eigene E-Mail-Konto `export-ki@rohdex.com` (IONOS). Dieses Konto bleibt bei der Migration identisch — es werden lediglich die bestehenden Zugangsdaten auf dem neuen Server hinterlegt.
 
-- IMAP: Eingangsverarbeitung (Polling alle ~10 Sekunden)
-- SMTP: Versand der fertigen Dokumente an Absender
+- IMAP: Eingangsverarbeitung (Polling alle ~10 Sekunden) — Server: `imap.ionos.de` (Port 993, TLS)
+- SMTP: Versand der fertigen Dokumente — Server: `smtp.ionos.de` (Port 587, TLS)
 - Ordnerstruktur wird automatisch angelegt: `Processed`, `Skipped`
-- Aktuell konfiguriert für Gmail und IONOS — weitere Provider möglich
 
-**Migrationskosten Cloud:** 720 EUR (8 Stunden × 90 EUR/Stunde)
-**Migrationskosten On-Premise:** Wird nach Erhalt der Server-Specs kalkuliert (voraussichtlich 8–12 Stunden)
+**Migrationskosten:** 720 EUR (8 Stunden × 90 EUR/Stunde)
 
 ---
