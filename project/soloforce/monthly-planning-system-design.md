@@ -104,7 +104,7 @@ The monthly plan is strategy. The Shutdown Ritual is the enforcement mechanism �
 
 Without this connection, the monthly plan is a document. With it, every evening forces a check against the plan.
 
-**Undefined:** Shutdown Ritual mechanical evolution — filtering by focus package, progress view (past + future), and ritual-to-plan integration. → [Meeting Agenda](monthly-planning-system-meeting-agenda)
+The Shutdown Ritual's integration with the monthly plan is the plan page itself — the docket table provides the package filter, and project deadlines (carried instinctively, not on the plan) provide the urgency signal for which package gets tomorrow's maker blocks. The ritual question shifts from "which 3 issues?" to "which 3 issues from my active packages?" The meaning connection — seeing the "why" per package nightly — reinforces the link between daily work and the company vision. Mechanical details (progress view, procedural changes) will be evaluated empirically after the first month's run.
 
 ### Part 5: Position Progress & the Router
 
@@ -142,6 +142,47 @@ This is what Part 3's walkthrough produces. Each month's output differs.
 
 **Undefined:** Contract model (#847) — retainer structure that pre-decides projects. → [Meeting Agenda](monthly-planning-system-meeting-agenda)
 
+### Part 7: The Monthly Plan Artifact
+
+The walkthrough (Part 3) produces the analysis. The monthly plan artifact records the decisions. It is a stateless decision record — not a progress tracker. Nothing on this page changes within the month. When something new arrives, you point at the plan and evaluate: does it fit?
+
+**Location:** The plan lives on the [Operations Manual Router](https://mariuswilsch.github.io/public-wilsch-ai-pages/global/operations-manual-router) as a "Monthly Plans" section — one row per month, each linking to a published page. Current month shows Active; past months show Archived. The Router is already the daily bookmark; the plan becomes part of that daily surface.
+
+**Document structure:**
+
+The plan page contains two sections:
+
+**1. The Docket** — a table of active packages for the month:
+
+| Package (Client → Position) | Owner | Why | Board |
+|-----------------------------|-------|-----|-------|
+| {Client} → {Position} | {Name} | {Friction or strategic reason from walkthrough} | [→ view]({filtered board URL}) |
+
+Each row answers: what client-position combination, who owns it, why it was selected this month (the reasoning from the walkthrough's friction analysis), and a direct link to the filtered GitHub board view for that project's issues.
+
+"Why" is per package — the reasoning that makes this client-position combination active. It does not change mid-month. It is the decision record from the walkthrough.
+
+**2. Pre-Decisions** — binary choices made once at month start, eliminating mid-month deliberation:
+
+- **New leads:** Yes/No (with constraints if Yes)
+- Additional pre-decisions develop empirically — start with leads, add categories as recurring deliberations emerge from practice
+
+**The stateless principle:** Deadlines, milestones, and progress are deliberately excluded. Deadlines live in the operator's head and in contracts — adding them to the plan creates maintenance burden that turns the page into stale shelf-ware. The plan narrows the decision space to 3-4 active packages. Within that small space, instinct combined with known deadlines is sufficient for daily prioritization. The calendar doesn't rank which time block is "most important" — it shows them all. The plan works the same way.
+
+**Three-layer evaluation for new work:**
+
+1. **Vision filter** (permanent): Does this advance the AI-native agency operating model?
+2. **Package filter** (monthly): Does this fit one of the docket's active packages?
+3. **Calendar filter** (daily): Is there a maker block available?
+
+All three must pass. This is the equivalent of the calendar's time-box evaluation — "does it fit?" — applied to work instead of time.
+
+**Not on the docket = not this month.** No separate "parked" section. Packages either appear on the docket or they don't. If they return, they appear on next month's docket.
+
+**Undefined:** Month-end evaluation methodology — how to assess whether the month's packages achieved their intended friction reduction. Deferred until after the first month's empirical run (March 2026). → [Meeting Agenda](monthly-planning-system-meeting-agenda)
+
+**Undefined:** Walkthrough-to-docket selection framework — the decision mechanism for how the walkthrough's full package landscape gets cut down to the active docket. Currently a judgment call; may need criteria after the first formal walkthrough. → [Meeting Agenda](monthly-planning-system-meeting-agenda)
+
 ---
 
 ## Source
@@ -159,3 +200,4 @@ This is what Part 3's walkthrough produces. Each month's output differs.
   - [#884 March capacity plan](https://github.com/DaveX2001/deliverable-tracking/issues/884)
   - [#847 Contract Strategy](https://github.com/DaveX2001/deliverable-tracking/issues/847)
 - **Session:** `/Users/verdant/.claude/projects/-Users-verdant-Documents-projects-00-WILSCH-AI-INTERNAL--soloforce/87151f23-d09a-4ed4-a4fe-71368c49c52d.jsonl`
+- **Session:** `/Users/verdant/.claude/projects/-Users-verdant-Documents-projects-00-WILSCH-AI-INTERNAL--soloforce/af0f8b80-edc4-4aaa-8b99-b107cf4b48a9.jsonl` (extraction pass 2 — plan artifact format, stateless principle, pre-decisions, evaluation stack)
