@@ -108,6 +108,8 @@ Every retainer has two components, always combined:
 - **Base fee:** Bridge cost — buys system access, not person-time. Metered by hours of throughput (5h, 10h, 20h tiers) but what the client buys is the AI delivery system plus an operator, not a specific individual's attention. The base is the guaranteed floor; the real money comes from the success component.
 - **Success component:** Skin in the game — a percentage of the commercial outcome the work enables, tied to net margin not gross revenue. The aim is to make the real money here, not on the base.
 
+**Undefined:** The hour-metered base creates a tension with the system-dependent framing. "5 hours" reads as person-hours, not system throughput. The reframe — hours of AI-orchestrated throughput that produce more than 5 person-hours of output — needs concrete mechanics. What does a "system hour" mean commercially? Is it wall-clock operator time, a capacity tier, or just a pricing unit while outcomes are the value unit? This also intersects with the overbooking model: if the system serves 3-4 clients concurrently, how does the client understand their "hours" aren't exclusive?
+
 This is AND, not OR. The base ensures system access; the success component aligns incentives. The price anchor for clients: "You can hire a person to deliver a deliverable, or you can subscribe to an ongoing AI-native agency that delivers monthly outcomes." The comparison is hiring internally (€70-80K+ for one full-time AI person) versus subscribing to an AI department at a fraction of the cost — with the system scaling as needs grow.
 
 The success component is margin-dependent and negotiated per deal:
