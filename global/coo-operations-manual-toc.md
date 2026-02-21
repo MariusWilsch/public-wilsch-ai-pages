@@ -20,6 +20,7 @@ TBD
 | System | Design Doc | Status |
 |--------|-----------|--------|
 | **Monthly Planning System** | [Design Doc](https://mariuswilsch.github.io/public-wilsch-ai-pages/project/soloforce/monthly-planning-system-design) | Draft |
+| **Contract Strategy & Retainer Model** | [Design Doc](https://mariuswilsch.github.io/public-wilsch-ai-pages/project/soloforce/contract-strategy-retainer-model-design) | Draft |
 
 ---
 
