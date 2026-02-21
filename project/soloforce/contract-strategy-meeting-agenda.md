@@ -7,7 +7,7 @@ publish: true
 
 ## Meeting Goal
 
-This meeting resolves the eight undefined elements in the Contract Strategy design doc — the mechanics that couldn't be defined from extraction alone and need either empirical data or deeper probing.
+This meeting resolves the nine undefined elements in the Contract Strategy design doc — the mechanics that couldn't be defined from extraction alone and need either empirical data or deeper probing.
 
 1. **Standard engagement entry point** — what proves capability before the retainer conversation
 2. **AI department cross-functional framing** — how to communicate "AI touches everything" to Mittelstand clients
@@ -16,7 +16,8 @@ This meeting resolves the eight undefined elements in the Contract Strategy desi
 5. **Success fee lifecycle** — define when and how the success component outcompetes the base retainer
 6. **Success fee as client filter** — frame the success fee conversation as mutual qualification
 7. **Budget psychology** — moving retainer from Projektkosten to Betriebskosten in client perception
-8. **Non-exclusivity pricing math** — validate whether overbooking model actually increases margins
+8. **Objection mapping** — extract all client objections and map to counter-arguments from design doc
+9. **Non-exclusivity pricing math** — validate whether overbooking model actually increases margins
 
 ## Pre-Read
 
@@ -113,7 +114,19 @@ Clients spend €150K on marketing without justification but resist €3K/month 
 
 **To resolve:** How to explicitly frame the retainer as operating cost in contract language and client conversations, and how this connects to the success fee lifecycle (base decreases as AI-driven savings increase).
 
-### 8. Non-exclusivity pricing math — does the overbooking model actually increase margins?
+### 8. Client objection mapping — systematize counter-arguments from live negotiations
+⏱️ 20 min
+
+The collaborator transcript surfaced a key objection: "why should I pay you a base and make you comfortable?" Ulrich's transcript surfaced scope anxiety and cost pressure. These are real objections from real conversations — they need systematic extraction and mapping to the design doc's counter-arguments.
+
+- Collaborator objections: comfort/complacency concern, skin-in-the-game demand, "I've been burned 3x," capacity constraint
+- Ulrich objections: scope ambiguity, financial pressure ("can't afford experiments like Atli"), wants timesheets for transparency
+- The design doc now has the counter-arguments (AI throughput, department framing, base+success AND) but they're not yet mapped to specific objections
+- This is the BDP learning loop: real objections → systematized responses → tested in next client conversation (Stafford, Ulrich)
+
+**To resolve:** Extract all objections from transcripts, map each to its counter-argument from the design doc, and create an objection-handling framework (Part 6 of Approach).
+
+### 9. Non-exclusivity pricing math — does the overbooking model actually increase margins?
 ⏱️ 10 min
 
 The design doc assumes non-exclusive engagements with lower per-client pricing are preferable because the overbooking model distributes capacity across 3-4 concurrent engagements. But this is theory — the actual margin impact hasn't been validated.
