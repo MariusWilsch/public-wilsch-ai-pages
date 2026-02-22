@@ -14,7 +14,7 @@ Zwei offene Verantwortungsfragen klären, die den SLA-Preis und den Migrationsab
 
 ## Pre-Read
 
-- [Hosting-Anforderungen Design Doc](https://mariuswilsch.github.io/public-wilsch-ai-pages/project/rohdex/hosting-anforderungen) — Part 3 (On-Premise) und Part 5 (SLA-Modell) enthalten die Undefined-Marker zu diesen Themen
+- [Hosting-Anforderungen — ROHDEX Dokumentenverarbeitung](https://mariuswilsch.github.io/public-wilsch-ai-pages/project/rohdex/hosting-anforderungen-kunde) — Abschnitt 3 (On-Premise) und Abschnitt 4 (Migration) als Kontext für die Diskussionspunkte
 
 ---
 
