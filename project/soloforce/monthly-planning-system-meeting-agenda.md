@@ -114,14 +114,14 @@ The walkthrough (Part 3) produces a full landscape of project-position packages.
 ### 8. Fire handling policy
 ⏱️ 10 min
 
-The shutdown ritual redesign separates proactive (package selection) from reactive (fire scan). Fires live outside the package system — SLA violations, client emergencies, blockers. The open question: when does a fire justify breaking into maker time vs waiting for manager time?
+The shutdown ritual redesign separates proactive (package selection) from reactive (fire scan). Fires are manager-time items that consume terminal slots — they do not break into maker time. The open question: how to prioritize fires within manager time when multiple compete for the same terminal slot.
 
-- Fires are not connected to packages — they're interrupts
-- Manager time slots exist for reactive work, but some fires may be truly urgent
-- Without a policy, fires become an excuse to break the one-package-per-day hypothesis
+- Fires take up one of the manager-time terminal slots
+- Maker blocks are protected — fires never interrupt maker time
+- Multiple fires may compete for manager-time attention
 - Deferred to empirical — first month's run will produce evidence
 
-**To resolve:** Fire severity classification that determines maker-time interruption vs manager-time handling.
+**To resolve:** Priority ordering of fires within manager-time terminal slots.
 
 ### 9. Forcing function integration
 ⏱️ 10 min
