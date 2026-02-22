@@ -17,6 +17,8 @@ Consolidated index for [Issue #373: AI Bulk Data Entry — Background Data Impor
 | Chain 1B: Bulk Entry Design | [Bulk Entry Design](https://mariuswilsch.github.io/public-wilsch-ai-pages/project/archibus-fm-assistant/chain-1b-bulk-entry-design) |
 | Step 2: Schema Mapping Design | [Schema Mapping](https://mariuswilsch.github.io/public-wilsch-ai-pages/project/archibus-fm-assistant/step-2-schema-mapping-design) |
 | Step 3: Field Tier Mapping | [Field Tiers](https://mariuswilsch.github.io/public-wilsch-ai-pages/project/archibus-fm-assistant/step3-field-tier-mapping) |
+| Dec 18: Assets Session Summary (7 chains) | [Session Summary](https://mariuswilsch.github.io/public-wilsch-ai-pages/project/archibus-fm-assistant/dec-18-assets-session-summary) |
+| Dec 23: Chain Prioritization Router (1B→3→7) | [Session Progression](https://mariuswilsch.github.io/public-wilsch-ai-pages/project/archibus-fm-assistant/dec-23-session-progression) |
 
 ---
 
@@ -32,6 +34,7 @@ Consolidated index for [Issue #373: AI Bulk Data Entry — Background Data Impor
 | Hierarchy Understanding | Miguel/Ian | [Agenda](https://mariuswilsch.github.io/public-wilsch-ai-pages/project/archibus-fm-assistant/miguel-ian-meeting-agenda-hierarchy-understanding) |
 | Bulk Entry Spike | Team | [Agenda](https://mariuswilsch.github.io/public-wilsch-ai-pages/project/archibus-fm-assistant/bulk-entry-spike-agenda) |
 | AI Work Track Prioritization | All-Hands | [Agenda](https://mariuswilsch.github.io/public-wilsch-ai-pages/project/archibus-fm-assistant/all-hands-ai-work-track-prioritization) |
+| Monday Demo + Field Recommendations (Feb 24) | All-Hands | [Agenda](https://mariuswilsch.github.io/public-wilsch-ai-pages/project/archibus-fm-assistant/monday-meeting-agenda-feb24-demo-feedback) |
 
 ---
 
@@ -55,6 +58,12 @@ Consolidated index for [Issue #373: AI Bulk Data Entry — Background Data Impor
 | asset-status-enum.csv | AssetStatus enum (26 predefined statuses) | [GitHub](https://github.com/MariusWilsch/ARCHIBUS__archibus-poc/blob/staging/.claude/tracking/issue-373/asset-status-enum.csv) |
 | asset-import-schema.csv | Import schema field reference | [GitHub](https://github.com/MariusWilsch/ARCHIBUS__archibus-poc/blob/staging/.claude/tracking/issue-373/asset-import-schema.csv) |
 | Hierarchical Body.json | Rein's example nesting structure | [GitHub](https://github.com/MariusWilsch/ARCHIBUS__archibus-poc/blob/staging/.claude/tracking/issue-373/Hierarchical%20Body.json) |
+
+### Teams Chat Logs
+
+| File | Description | Link |
+|------|-------------|------|
+| Rein Teams Chat Feb 19-20 | ENUM validation examples (Countries, AssetTypes, Status), Countries table update, existing-database scenario proposal, rollback status | [Local](~/.claude/hippocampus/project/archibus-fm-assistant/rein-teams-chat-feb19-20.md) |
 
 ---
 
@@ -83,7 +92,9 @@ Consolidated index for [Issue #373: AI Bulk Data Entry — Background Data Impor
 | 2026-02-12 | Fireflies | [Transcript](https://app.fireflies.ai/view/01KH8PXGT0DBPVDP2RQM98G6G7) | Design work, data examples, progressive development with Rein |
 | 2026-02-12 | Google Drive | [Transcript](https://drive.google.com/file/d/16SZVyKQ0CzmJ0npowaA5pXPL4yT8aDZ_/view) | Design doc effectively done, pending Rein deliverables (Step 5), send final to Miguel |
 | 2026-02-13 | Google Drive | [Transcript](https://drive.google.com/file/d/1E2CNOR39mWnKu5XRalPYrmJH4jhcibBt/view) | Design doc refinements: XLSX to Drive, RALPH scope expansion, proxy architecture, pricing strategy |
+| 2026-02-19 | Fireflies | [Transcript](https://app.fireflies.ai/view/01KHTD7ASXXTZWTA0K1P2H0S0M) | Rein meeting: live API test (105 assets), 4 API refinements, country issues, demo rehearsal |
+| 2026-02-20 | Fireflies | [Transcript](https://app.fireflies.ai/view/01KHXD6NN4Y35G0MJWM8NYZJZH) | Rein meeting: existing-database scenario, bulk update, Step 2 field walkthrough, Monday demo planning |
 
 ---
 
-*Last updated: 2026-02-14*
+*Last updated: 2026-02-22*

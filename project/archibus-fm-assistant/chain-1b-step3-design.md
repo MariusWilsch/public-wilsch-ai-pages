@@ -131,6 +131,10 @@ The hierarchy is expressed in the nested JSON structure (Part 5) using generic `
 
 **Floor "All":** Created as-is — it is a real location asset, not a skip signal. Rooms nest under it normally. Equipment with Floor = "All" and a room attaches to the room (which is a child of Floor "All"). In sample data, all 34 Floor "All" rows have a room number.
 
+**Production constraint: existing location assets.** Part 4 assumes a new database — every building, floor, and room is created from scratch. In production, BruceBEM databases already contain location assets from prior imports or manual entry. Adding equipment to an existing building must attach children to the existing parent, not create a duplicate. The dedup mechanism is a Step 2 responsibility: during data review, AI compares the implementer's location data against existing BruceBEM assets. Address is the primary match key for buildings — without it, duplicate detection is not possible. This constraint is foundational: every import after the first one encounters it.
+
+*Source: [Feb 20 — Rein meeting](https://app.fireflies.ai/view/01KHXD6NN4Y35G0MJWM8NYZJZH) (existing-database scenario), [Rein Teams chat Feb 19-20](~/.claude/hippocampus/project/archibus-fm-assistant/rein-teams-chat-feb19-20.md) (UUID-based pre-check proposal)*
+
 **Reference:** [asset_types 1.xlsx](https://docs.google.com/spreadsheets/d/1Wc1BL18e5Vaxx7bAzsvxAeWojfvxRrWd/edit) — predefined AssetType enum (includes Building, Floor, Room).
 
 *Source: [Feb 3 — Rein meeting](https://app.fireflies.ai/view/01KGHJWSXV7Y7FP822SKS9VBHW) (recursive fallback confirmed), [Feb 11 — Rein meeting](https://app.fireflies.ai/view/01KH67KMEA533C0VVJWH7FE63D) (Floor All as-is confirmed, unconditional fallback confirmed)*
@@ -143,7 +147,7 @@ Transform the flat table (equipment rows + generated location assets from Part 4
 
 The [AssetImportDescription — Fields Assets sheet](https://docs.google.com/spreadsheets/d/12xs98WKdpTLHz8U6mccOXo5clFwCqvOviuEch_VNMTw/edit) assigns each of the 36 import fields to a tier. The sheet is the authoritative field-level reference.
 
-**AI Required** — fields the insert will fail without. Name identifies the asset. AssetType classifies it (ENUM — determines hierarchy level for location assets, equipment category for equipment). These two fields are the only ones the API enforces as mandatory. The `children` array expresses parent-child relationships through nesting — the server auto-generates UUIDs for each node and auto-wires ParentId from the tree structure. Id and ParentId are accepted but optional: if AI provides a string Id (e.g., client Asset Code), the server maps it to OtherCode for traceability. If omitted, the server generates both. **Undefined:** Confirm with Rein whether ParentId should still be provided explicitly despite the server deriving it from nesting → *[Meeting agenda §1](https://mariuswilsch.github.io/public-wilsch-ai-pages/project/archibus-fm-assistant/rein-meeting-agenda-api-reconciliation)*
+**AI Required** — fields the insert will fail without. Name identifies the asset. AssetType classifies it (ENUM — determines hierarchy level for location assets, equipment category for equipment). These two fields are the only ones the API enforces as mandatory. The `children` array expresses parent-child relationships through nesting — the server auto-generates UUIDs for each node and auto-wires ParentId from the tree structure. Id and ParentId are accepted but optional: if AI provides a string Id (e.g., client Asset Code), the server maps it to OtherCode for traceability. If omitted, the server generates both. ParentId does not need to be provided explicitly — the server derives it from the nesting structure. (Confirmed Feb 19 via API testing.)
 
 **AI Optional** — all other AI-filled fields. The rule: if the client's source data has a value, map it. If not, omit the field from JSON entirely — don't fabricate. The API treats missing fields as null. What counts as "optional" is defined per-field in the Sheet.
 
@@ -155,7 +159,7 @@ The [AssetImportDescription — Fields Assets sheet](https://docs.google.com/spr
 
 **Overflow rule:** When client columns don't map to any of the 36 import fields, Step 2 evaluates each individually: relevant context overflows to StatusDetail (a 2000-char description field), irrelevant columns are skipped. This is a Step 2 decision — Step 3 executes the mapping without judgment.
 
-**Reference:** [AssetImportDescription.xlsx](https://docs.google.com/spreadsheets/d/12xs98WKdpTLHz8U6mccOXo5clFwCqvOviuEch_VNMTw/edit) — full 36-field schema. [Countries enum](https://docs.google.com/spreadsheets/d/12xs98WKdpTLHz8U6mccOXo5clFwCqvOviuEch_VNMTw/edit) (249 entries — 39 have parenthetical suffixes pending cleanup, blocked Miguel).
+**Reference:** [AssetImportDescription.xlsx](https://docs.google.com/spreadsheets/d/12xs98WKdpTLHz8U6mccOXo5clFwCqvOviuEch_VNMTw/edit) — full 37-field schema (BrandSpecific added Feb 19). [Countries enum](https://docs.google.com/spreadsheets/d/12xs98WKdpTLHz8U6mccOXo5clFwCqvOviuEch_VNMTw/edit) (249 entries — parentheses removed Feb 19 by Rein. Remaining: trailing spaces on some entries, "North Kores" typo — [Rein Teams chat](~/.claude/hippocampus/project/archibus-fm-assistant/rein-teams-chat-feb19-20.md)).
 
 #### The Transform
 
@@ -235,17 +239,17 @@ The `children` array is the sole expression of parent-child relationships. The s
 
 **Phase 2 (Step 3): Execution + back-pressure.** JSON building and API insertion. Near-zero questions. Step 3 follows Step 2's decisions mechanically. When the API returns errors, AI self-corrects via the back-pressure loop (Part 6) — only escalating to human when self-correction fails.
 
-**Undefined:** 12+ import fields lack descriptions — AI needs mapping context beyond field names alone → *[Fields Assets sheet](https://docs.google.com/spreadsheets/d/12xs98WKdpTLHz8U6mccOXo5clFwCqvOviuEch_VNMTw/edit)*, *[Meeting agenda §1](https://mariuswilsch.github.io/public-wilsch-ai-pages/project/archibus-fm-assistant/rein-meeting-agenda-feb15-field-review)*
+**ClearanceInstructions (resolved Feb 20):** Applies at both building and equipment levels — not restricted to one asset type. Example: a large generator behind a locked door needs equipment-level access instructions. Rein: "We cannot predict all situations in life."
 
-**Undefined:** 4 schema fields lack clear purpose or data source (ClearanceInstructions, Barcode, QrCode, Status vs AssetStatus) — keep in AI scope or remove from PoC → *[Meeting agenda §2](https://mariuswilsch.github.io/public-wilsch-ai-pages/project/archibus-fm-assistant/rein-meeting-agenda-feb15-field-review)*, *[Meeting agenda §4](https://mariuswilsch.github.io/public-wilsch-ai-pages/project/archibus-fm-assistant/rein-meeting-agenda-feb15-field-review)*, *[Meeting agenda §5](https://mariuswilsch.github.io/public-wilsch-ai-pages/project/archibus-fm-assistant/rein-meeting-agenda-feb15-field-review)*
+**BrandSpecific (added Feb 19):** Manufacturer/brand name (e.g., "Nestlé", "LG"). Rein added this field to the AssetImportDescription sheet. Maps to the manufacturer column in client data. ModelSpecific = model name (e.g., "Roomba 5000").
 
-**Undefined:** AddressExplanation and LocationDescription may overlap or be unused — clarify if in scope for import → *[Meeting agenda §2](https://mariuswilsch.github.io/public-wilsch-ai-pages/project/archibus-fm-assistant/rein-meeting-agenda-feb15-field-review)*
+**AddressExplanation / LocationDescription:** Empirical — applicability determined by real client data, not upfront design. Both remain in the schema as potential fields. If client data contains matching content, map them. If not, omit.
 
-**Undefined:** QrCode field limited to 50 chars — insufficient for real-world QR data, DB extension pending → *[Meeting agenda §4](https://mariuswilsch.github.io/public-wilsch-ai-pages/project/archibus-fm-assistant/rein-meeting-agenda-feb15-field-review)*
+**Undefined:** Barcode and QrCode need real-world data examples from client implementations. QrCode DB extension pending — 50 chars insufficient, Rein committed to extending. → *[Monday meeting agenda]*
 
-**Undefined:** 39 of 249 country entries have parenthetical suffixes — cleanup blocked on Miguel → *[Meeting agenda §8](https://mariuswilsch.github.io/public-wilsch-ai-pages/project/archibus-fm-assistant/rein-meeting-agenda-feb15-field-review)*
+**Undefined:** OspId preserved behavior — confirm with Rein whether this is intentional or a bug → *[Meeting agenda §3](https://mariuswilsch.github.io/public-wilsch-ai-pages/project/archibus-fm-assistant/rein-meeting-agenda-api-reconciliation)*
 
-**Undefined:** "Signing" in new AssetType enum — confirm if intentional or should be "Signage" → *[Meeting agenda §6](https://mariuswilsch.github.io/public-wilsch-ai-pages/project/archibus-fm-assistant/rein-meeting-agenda-feb15-field-review)*
+**Undefined:** ValidateAssets as required dry-run step or optional given ImportAssets validates internally → *[Meeting agenda §4](https://mariuswilsch.github.io/public-wilsch-ai-pages/project/archibus-fm-assistant/rein-meeting-agenda-api-reconciliation)*
 
 *Source: [Feb 6 — Rein/Marius meeting](https://app.fireflies.ai/view/01KGSBJE39AW3259QVNCQHCBDQ), [Feb 11 — Rein meeting](https://app.fireflies.ai/view/01KH67KMEA533C0VVJWH7FE63D), [Feb 14 — extraction pass](https://docs.google.com/spreadsheets/d/12xs98WKdpTLHz8U6mccOXo5clFwCqvOviuEch_VNMTw/edit)*
 
@@ -339,6 +343,8 @@ Move to next top-level element. The full cycle (validate → correct → dry run
 
 ## Decisions
 
+**Field-level decisions** (field tiers, applicability, descriptions, enum values) are maintained in the [AssetImportDescription — Fields Assets sheet](https://docs.google.com/spreadsheets/d/12xs98WKdpTLHz8U6mccOXo5clFwCqvOviuEch_VNMTw/edit). The Sheet is the authoritative field reference. This table captures **architectural and structural decisions** only.
+
 | Decision | What | Date | Source |
 |----------|------|------|--------|
 | **Tree-walk** | Process one top-level element and all children at a time | Feb 3 | Rein meeting |
@@ -357,7 +363,7 @@ Move to next top-level element. The full cycle (validate → correct → dry run
 | **Excel = field name source** | AssetImportDescription "Fields Assets" sheet is authoritative for JSON field names. API auto-converts casing. | Feb 11 | Rein, Feb 11 meeting |
 | **Country = name match** | Fuzzy-match to country name (column A), not code_2. Exact string required. | Feb 11 | Rein, Feb 11 meeting |
 | **Omit empty fields** | Don't include empty fields in JSON body. API treats missing as null. | Feb 11 | Rein, Feb 11 meeting (pending test confirmation) |
-| **Manufacturer → StatusDetail (under review)** | API has brandSpecific and modelSpecific fields. Mapping may change — flagged for Rein. | Feb 19 | API spec |
+| **Manufacturer → BrandSpecific** | Manufacturer maps to brandSpecific field (not StatusDetail). ModelSpecific = model name. | Feb 20 | Rein meeting |
 | **OtherCode = Bruce auto-fill** | Bruce copies client Asset Code (from Id field) to OtherCode automatically. AI does not touch this field. | Feb 14 | AssetImportDescription update |
 | **Error format = Id-based** | Error response must include failing node's `id` + field + error. AI self-constructs paths from ParentId chain. | Feb 14 | Extraction pass |
 | **Dry run confirmed** | Validate without inserting. Only insert after all validations pass. | Feb 11 | Rein, Feb 11 meeting |
@@ -373,6 +379,8 @@ Move to next top-level element. The full cycle (validate → correct → dry run
 | **importID = batch tag** | Server-generated UUID on root per ImportAssets call. Children get null. RevertImport rolls back by importID. | Feb 19 | API testing |
 | **RevertImport = human safety net** | Not part of AI backpressure loop. For semantic issues discovered post-import. | Feb 19 | Extraction pass |
 | **GUID mapping free** | ImportAssets response returns full tree with server UUIDs. Post-PoC: enables multi-element reference. | Feb 19 | API testing |
+| **Existing-database = foundational constraint** | Production imports must dedup against existing location assets. Address is the primary match key for buildings. Step 2 responsibility. Every import after the first one encounters this. | Feb 20 | Rein meeting |
+| **ENUM validation live** | Countries, AssetTypes, Status all validated server-side. Errors return valid_values list for self-correction. | Feb 19 | [Rein Teams chat](~/.claude/hippocampus/project/archibus-fm-assistant/rein-teams-chat-feb19-20.md) |
 
 ---
 
@@ -388,6 +396,7 @@ Move to next top-level element. The full cycle (validate → correct → dry run
 - Countries Data enum (provided by Rein Feb 11, 249 entries) — country name matching reference
 - [API reference 2026-02-18.json](/Users/verdant/Downloads/API reference 2026 02 18.json) — OpenAPI 3.0.4 spec for Bruce BEM AI endpoints (ValidateAssets, ImportAssets, RevertImport)
 - [Rein meeting agenda — API reconciliation](https://mariuswilsch.github.io/public-wilsch-ai-pages/project/archibus-fm-assistant/rein-meeting-agenda-api-reconciliation) — 6 undefined items from Feb 19 extraction pass
+- [Rein Teams chat Feb 19-20](~/.claude/hippocampus/project/archibus-fm-assistant/rein-teams-chat-feb19-20.md) — ENUM validation examples, countries update, existing-database proposal
 
 **Session:**
 - `/Users/verdant/.claude/projects/-Users-verdant-Documents-projects-billable-ARCHIBUS--archibus-fm-assistant/1443f1aa-f108-4e27-94ba-d2954cc26dc5.jsonl`
@@ -397,3 +406,4 @@ Move to next top-level element. The full cycle (validate → correct → dry run
 - `/Users/verdant/.claude/projects/-Users-verdant-Documents-projects-billable-ARCHIBUS--archibus-fm-assistant/972b54f8-3fad-4090-8636-562ba06ccc28.jsonl`
 - `/Users/verdant/.claude/projects/-Users-verdant-Documents-projects-billable-MariusWilsch--archibus-bulk-import/aee03387-ce21-4f51-9da1-b34b930d7247.jsonl`
 - `/Users/verdant/.claude/projects/-Users-verdant-Documents-projects-billable-MariusWilsch--archibus-bulk-import/18b07a8c-a336-47a3-a705-c5ed77fb5da5.jsonl`
+- `/Users/verdant/.claude/projects/-Users-verdant-Documents-projects-billable-MariusWilsch--archibus-bulk-import/719f17b2-3360-4099-a3ba-ffe732076e46.jsonl`
