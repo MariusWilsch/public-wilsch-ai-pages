@@ -18,7 +18,24 @@ publish: true
 
 ---
 
-## Part 1: Discussion Topics
+## Part 1: Demo
+
+### Step 3 Pipeline — Live
+⏱️ 10 min
+
+**Narrative:** The implementer gives us messy Excel. Buildings, floors, and rooms aren't separate rows — they're buried in columns. AI reads the data, creates the structure, and inserts everything into BruceBEM with correct hierarchy. One command.
+
+**Sequence:**
+1. Marius: show raw Excel (the implementer's starting point)
+2. Marius: show the transformation (fuzzy → structured — the value)
+3. Marius: execute live push for all buildings (`--all` flag)
+4. Rein: navigate BruceBEM UI — buildings, floors, rooms, equipment with correct hierarchy
+
+**Post-demo:** Invite feedback. "What would make this more useful for your implementations? What data do you work with?"
+
+---
+
+## Part 2: Discussion Topics
 
 *Starting points for discussion, not limited to these.*
 
@@ -53,23 +70,6 @@ Two scenarios the team should be aware of. Neither is in scope for the current d
 - **Bulk update:** Mujahid's request — update fields on existing assets via Excel upload. This is Chain 3 (Data Freshness) scope, not Chain 1B.
 
 **To resolve:** Team awareness and any early feedback on priority or constraints.
-
----
-
-## Part 2: Demo
-
-### Step 3 Pipeline — Live
-⏱️ 10 min
-
-**Narrative:** The implementer gives us messy Excel. Buildings, floors, and rooms aren't separate rows — they're buried in columns. AI reads the data, creates the structure, and inserts everything into BruceBEM with correct hierarchy. One command.
-
-**Sequence:**
-1. Marius: show raw Excel (the implementer's starting point)
-2. Marius: show the transformation (fuzzy → structured — the value)
-3. Marius: execute live push for all buildings (`--all` flag)
-4. Rein: navigate BruceBEM UI — buildings, floors, rooms, equipment with correct hierarchy
-
-**Post-demo:** Invite feedback. "What would make this more useful for your implementations? What data do you work with?"
 
 ---
 
