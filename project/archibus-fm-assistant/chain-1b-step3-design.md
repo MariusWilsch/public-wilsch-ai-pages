@@ -133,6 +133,8 @@ The hierarchy is expressed in the nested JSON structure (Part 5) using generic `
 
 **Production constraint: existing location assets.** Part 4 assumes a new database — every building, floor, and room is created from scratch. In production, BruceBEM databases already contain location assets from prior imports or manual entry. Adding equipment to an existing building must attach children to the existing parent, not create a duplicate. The dedup mechanism is a Step 2 responsibility: during data review, AI compares the implementer's location data against existing BruceBEM assets. Address is the primary match key for buildings — without it, duplicate detection is not possible. This constraint is foundational: every import after the first one encounters it.
 
+**Undefined:** The dedup mechanism itself — how AI identifies existing assets, confirms with the implementer, and attaches children to existing parents instead of creating duplicates. Two approaches discussed (name-based pre-check via existing API, UUID-based linking via implementer-provided BruceCode). Designed as part of Step 2 after Step 3 PoC is validated. → *[Monday meeting agenda §3](https://mariuswilsch.github.io/public-wilsch-ai-pages/project/archibus-fm-assistant/monday-meeting-agenda-feb24-demo-feedback)*
+
 *Source: [Feb 20 — Rein meeting](https://app.fireflies.ai/view/01KHXD6NN4Y35G0MJWM8NYZJZH) (existing-database scenario), [Rein Teams chat Feb 19-20](~/.claude/hippocampus/project/archibus-fm-assistant/rein-teams-chat-feb19-20.md) (UUID-based pre-check proposal)*
 
 **Reference:** [asset_types 1.xlsx](https://docs.google.com/spreadsheets/d/1Wc1BL18e5Vaxx7bAzsvxAeWojfvxRrWd/edit) — predefined AssetType enum (includes Building, Floor, Room).
