@@ -108,11 +108,11 @@ Without this connection, the monthly plan is a document. With it, every evening 
 
 **Proactive track (package selection):** Open the monthly plan → select tomorrow's package from the docket. One package gets both maker blocks. The "why" column reinforces the meaning connection nightly: this daily work → this package → this position → the vision.
 
-**Reactive track (fire scan):** Scan across all client labels for urgent items — SLA violations, blockers, client fires. Fires live outside the package system. They are interrupts handled in manager time, not planned maker work. The physical book gets: tomorrow's package + any burning issues within it.
+**Reactive track (fire scan):** Scan across all client labels for urgent items — SLA violations, blockers, client fires. Fires live outside the package system. They are manager-time items that take up one of the terminal slots — not maker-time interrupts. The physical book gets: tomorrow's package + any burning issues within it.
 
 **External forcing functions drive urgency within the package.** Each project has a meeting cadence that creates deadline pressure without adding dates to the stateless plan: Archibus (weekly all-hands), UWI (daily sync), AVO/Rekers (biweekly meetings), SLA projects (reactive triage). The plan narrows the space; the forcing function provides urgency within that space. Together, the ritual selection becomes obvious. See [Stakes Visibility: A Forcing Function for Task Prioritization](https://mariuswilsch.github.io/public-wilsch-ai-pages/global/stakes-visibility-forcing-function) for the underlying framework.
 
-**Undefined:** Fire handling policy — when does a fire justify breaking into maker time vs waiting for manager time? Deferred to empirical (first month's run). → [Meeting Agenda](monthly-planning-system-meeting-agenda)
+**Undefined:** Fire handling policy — how fires consume manager-time terminal slots and whether priority ordering within manager time is needed. Deferred to empirical (first month's run). → [Meeting Agenda](monthly-planning-system-meeting-agenda)
 
 **Undefined:** Forcing function integration — how the [stakes visibility framework](https://mariuswilsch.github.io/public-wilsch-ai-pages/global/stakes-visibility-forcing-function) maps to the per-package meeting cadences and influences nightly package selection. → [Meeting Agenda](monthly-planning-system-meeting-agenda)
 
