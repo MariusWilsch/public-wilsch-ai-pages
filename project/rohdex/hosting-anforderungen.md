@@ -100,11 +100,13 @@ Zwei Cloud-Anbieter mit Rechenzentren in Deutschland (DSGVO-konform):
 **Machbarkeitsbewertung (Stand Feb 2026):**
 Rohdex-IT bietet: 4 V-Cores, 16 GB RAM, 120 GB Speicher. Diese Spezifikationen übertreffen alle Mindestanforderungen — On-Premise-Hosting ist aus Hardware-Sicht machbar.
 
-**Vorbereitung durch IT (vor Migrationstermin):**
-1. Docker Engine 24.x+ auf der VM installieren und lauffähig bestätigen
-2. Ausgehende Ports freigeben: IMAP (993) und SMTP (587 oder 465)
-3. Konnektivität prüfen: Von der VM aus `imap.ionos.de:993` und `smtp.ionos.de:587` erreichbar
-4. SSH-Zugang oder Remote-Zugriff für Marius einrichten
+**Vorbereitung durch Rohdex-IT (vor Migrationstermin):**
+1. Ausgehende Ports freigeben: IMAP (993) und SMTP (587 oder 465)
+2. SSH-Zugang oder Remote-Zugriff für Marius einrichten
+
+**Abhängig von vereinbarter Verantwortung (Marius oder Rohdex-IT):**
+3. Docker Engine 24.x+ auf der VM installieren und lauffähig bestätigen
+4. Konnektivität prüfen: Von der VM aus `imap.ionos.de:993` und `smtp.ionos.de:587` erreichbar
 
 **Risikofaktoren:**
 - 24/7-Verfügbarkeit abhängig von eigener Wartungsdisziplin
