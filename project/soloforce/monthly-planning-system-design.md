@@ -138,6 +138,8 @@ The following project-position map was produced during the first walkthrough. It
 
 This is what Part 3's walkthrough produces. Each month's output differs.
 
+**Walkthrough session:** The full reasoning that produced this map is in the first extraction pass — `/Users/verdant/.claude/projects/-Users-verdant-Documents-projects-00-WILSCH-AI-INTERNAL--soloforce/87151f23-d09a-4ed4-a4fe-71368c49c52d.jsonl`
+
 **Undefined:** Team capacity — who can fill which positions, current skill levels, availability. → [Meeting Agenda](monthly-planning-system-meeting-agenda)
 
 **Undefined:** Contract model (#847) — retainer structure that pre-decides projects. → [Meeting Agenda](monthly-planning-system-meeting-agenda)
