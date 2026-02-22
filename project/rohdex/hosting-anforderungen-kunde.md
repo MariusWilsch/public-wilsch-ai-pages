@@ -74,11 +74,11 @@ Beide Anbieter sind für diese Systemgröße mehr als ausreichend.
 **Machbarkeitsbewertung (Stand Feb 2026):**
 Die von Rohdex-IT angebotenen Spezifikationen (4 V-Cores, 16 GB RAM, 120 GB Speicher) übertreffen alle Mindestanforderungen — On-Premise-Hosting ist aus Hardware-Sicht machbar.
 
-**Vorbereitung durch IT (vor Migrationstermin):**
-1. Docker Engine 24.x+ auf der VM installieren und lauffähig bestätigen
-2. Ausgehende Ports freigeben: IMAP (993) und SMTP (587 oder 465)
-3. Konnektivität prüfen: Von der VM aus `imap.ionos.de:993` und `smtp.ionos.de:587` erreichbar
-4. SSH-Zugang oder Remote-Zugriff für Marius einrichten
+**Vorbereitung durch Rohdex-IT (vor Migrationstermin):**
+1. Ausgehende Ports freigeben: IMAP (993) und SMTP (587 oder 465)
+2. SSH-Zugang oder Remote-Zugriff für Marius einrichten
+
+Alle weiteren Schritte (Docker-Installation, Konnektivitätstest, App-Deployment) übernimmt Marius nach Erhalt des Zugangs.
 
 **Risikofaktoren:**
 - 24/7-Verfügbarkeit abhängig von eigener Wartungsdisziplin
