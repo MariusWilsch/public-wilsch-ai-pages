@@ -148,6 +148,8 @@ This is what Part 3's walkthrough produces. Each month's output differs.
 
 The walkthrough (Part 3) produces the analysis. The monthly plan artifact records the decisions. It is a stateless decision record — not a progress tracker. Nothing on this page changes within the month. When something new arrives, you point at the plan and evaluate: does it fit?
 
+**Hypothesis:** This is the first attempt at enforcing a monthly plan for the company. The core behavioral problem is within-day jumping — switching between projects, positions, and contexts multiple times per day. Each context switch costs momentum even with AI handling context bridging. The docket enforces: one package per day, both maker blocks (ON and IN) on that package. All terminals in a maker session — System Engineer, JA, Developer — work on the same package. Day-to-day switching is fine — within-day switching is what kills progress. Two focused maker sessions on a single package produces compounding progress that scattered work across three packages cannot.
+
 **Location:** The plan lives on the [Operations Manual Router](https://mariuswilsch.github.io/public-wilsch-ai-pages/global/operations-manual-router) as a "Monthly Plans" section — one row per month, each linking to a published page. Current month shows Active; past months show Archived. The Router is already the daily bookmark; the plan becomes part of that daily surface.
 
 **Document structure:**
