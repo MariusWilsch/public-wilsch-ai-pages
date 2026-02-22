@@ -144,21 +144,21 @@ Das aktuelle SLA (525 EUR/Monat) setzt sich aus zwei Verantwortungsbereichen zus
 - **App-Verantwortung (325 EUR/Monat):** Wartung, Updates, Bugfixes, Monitoring (GlitchTip), Template-Anpassungen — bleibt bei Marius unabhängig von der Hosting-Option.
 - **Infrastruktur-Verantwortung (200 EUR/Monat):** Server-Uptime, OS-Updates, Backups, Netzwerk, Docker-Engine — entfällt wenn Rohdex-IT diese Aufgaben übernimmt.
 
-**Preismodell:**
+**Preismodell — Verantwortung bestimmt den Preis (nicht der Standort):**
 
-| Verantwortung | Wer | Preis |
-|---------------|-----|-------|
-| **App-Ebene** (Wartung, Monitoring, Updates, Bugfixes) | Marius | 325 EUR/Monat |
-| **Infra-Ebene** (Server, OS, Backups, Netzwerk) | Marius ODER Rohdex-IT | 200 EUR/Monat (nur wenn Marius) |
+| Verantwortung | Umfang | Preis |
+|---------------|--------|-------|
+| **App-Ebene** | Wartung, Monitoring (GlitchTip), Updates, Bugfixes, Template-Anpassungen | 325 EUR/Monat |
+| **Infra-Ebene** | Server-Uptime, OS-Updates, Backups, Netzwerk, Docker-Engine | +200 EUR/Monat |
 
-| Szenario | Monatspreis |
-|----------|-------------|
-| Cloud — Marius hosted alles | 525 EUR |
-| On-Premise — Rohdex-IT übernimmt Infrastruktur | 325 EUR |
+| Wer managt den Server? | Monatspreis |
+|------------------------|-------------|
+| Marius managt Server (Cloud oder On-Premise) | 525 EUR |
+| Rohdex-IT managt Server (Cloud oder On-Premise) | 325 EUR |
 
-> *Monitoring (GlitchTip) ist App-Ebene: Es überwacht ob die Applikation E-Mails korrekt verarbeitet — nicht ob der Server läuft. Bleibt bei Marius in beiden Szenarien.*
+> *Der Preis hängt davon ab, wer die Server-Verantwortung trägt — nicht davon, wo der Server steht. Auch bei On-Premise kann Marius die Infrastruktur managen (525 EUR), oder Rohdex-IT übernimmt (325 EUR). Monitoring (GlitchTip) ist App-Ebene und bleibt bei Marius in allen Szenarien.*
 
-**Undefined:** Exakte Zuordnung der Verantwortlichkeiten bei On-Premise — welche Infrastruktur-Aufgaben übernimmt Rohdex-IT konkret? Bestätigung im nächsten Gespräch mit Konstantin. → Meeting Agenda
+**Undefined:** Bestätigung, wer die Server-Verantwortung übernimmt — bestimmt den SLA-Preis. Zu klären im nächsten Gespräch mit Konstantin. → Meeting Agenda
 
 ---
 
