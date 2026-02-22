@@ -217,6 +217,62 @@ Leads are not packages — they don't have positions or owners yet. The only pla
 
 **Undefined:** Walkthrough-to-docket selection framework — the decision mechanism for how the walkthrough's full package landscape gets cut down to the active docket. Currently a judgment call; may need criteria after the first formal walkthrough. → [Meeting Agenda](monthly-planning-system-meeting-agenda)
 
+### Part 8: Revenue Model
+
+The monthly plan decides WHERE to work. The revenue model decides WHETHER to take on more. Two systems, one constraint: the financial framework sets a target, the monthly plan fills it.
+
+**Two buckets:**
+
+| Bucket | Feeds | Revenue source | Control |
+|--------|-------|----------------|---------|
+| **Agency** | Level 1 + Level 2 | Retainers, fixed-price projects | High — we set the prices |
+| **Principal** | Level 3 | Success-based fees | Lower — depends on client success |
+
+**Three levels within the buckets:**
+
+| Level | Purpose | Monthly target | Bucket | Mechanism |
+|-------|---------|---------------|--------|-----------|
+| **1. Salary** | Survival + team compensation | €4,000 (€2K Marius + €2K David) | Agency | Bare minimum — covers rent, flights, essentials |
+| **2. Nest Egg** | Safety net — 12 months of runway at €3K/month | €3,000 → €36K/year | Agency | If everything fails, 12 months to rebuild |
+| **3. Principal** | Passive income — €360K in Nexo at 10% APY → €3K/month | Accumulated over time | Principal | Stretch goal — less control, higher reward |
+
+Level 1 + Level 2 = €7,000 allocation + €1,000 company expenses = **€8,000/month agency revenue target.** This is the number the monthly forecast compares against. Everything above €8K is surplus — accelerates the nest egg, distributes as bonuses, or accumulates toward the principal.
+
+**The design principle:** "Build your company the way that you're comfortable building it and fit into your financial framework." The financial framework is a constraint that makes decisions automatic. Hit the target with what you have. Don't chase more revenue for the sake of earning more — either raise the target with proof that current capacity is sustainable, or maintain it. Taking on more without that proof risks losing what's already working.
+
+**Monthly forecast methodology:**
+
+During the monthly planning session, walk each client and ask: "Revenue this month — yes or no? How much?" Binary. No "maybe." If you can't count on it, it goes in the surplus column — pleasant surprise when it arrives, zero impact on decisions if it doesn't.
+
+The forecast feeds the lead pipeline pre-decision:
+- Forecast ≥ €8K → "New leads: no" (default response: "Booked this month, re-evaluate next month")
+- Forecast < €8K → "New leads: yes" with constraint (e.g., "one retainer for redundancy")
+- Minimum 2 clients for redundancy — single-client dependency is unacceptable risk
+
+No artificial client cap. The revenue target IS the cap. If two clients produce €8K, two is enough. If four are needed, four it is.
+
+**12-month clock:** March 1, 2026 = Month 1 of 12. February 2026 was the design phase. The financial framework targets accumulate over this window — €36K nest egg by February 2027 at €3K/month savings.
+
+### Part 9: Lead Pipeline
+
+Leads are inbound — they arrive through the personal network. There is no marketing, no outbound. The pipeline is a filter framework, not a generation engine.
+
+**When the monthly plan says "new leads: yes":** evaluate every inbound lead against three filters, in order:
+
+1. **Revenue filter:** Does the monthly forecast show a gap below €8K? If no gap exists, the default response is: "Booked this month, re-evaluate next month." No engagement, no evaluation, no energy spent.
+2. **Position filter:** Does this client advance a position being built? A client that exercises the JA→Developer handoff is more valuable than one that's just billable hours — the position improvement is the scalable product, not the project delivery.
+3. **Selectivity gate:** Does this client have a viable business? Can they prove their revenue or profitability targets? The retainer model includes a success-based component — taking on a client without business viability means the success fee never materializes.
+
+All three must pass. This mirrors the three-layer evaluation for new work (Part 7: vision → package → calendar) but applied specifically to leads entering the pipeline.
+
+**Mid-month lead arrivals:** When a lead appears mid-month and the plan says "no new leads," the response is immediate and templated: "This month we're booked. We may re-evaluate next month." No deliberation, no exception-making. The monthly planning session is the only time revenue decisions are made. During the month, execute — don't reconsider.
+
+**Lead-to-package lifecycle:** A lead is not a package. Leads have a contract model target (retainer or fixed-price) but no position or owner yet. When a lead converts to a client, it enters the next month's walkthrough and becomes a docket package — project + position + owner + why.
+
+**Undefined:** Lead strategy per lead — deeper extraction on each active lead's conversion path, timeline, and retainer vs. fixed-price reasoning. Deferred to next extraction pass. → [Meeting Agenda](monthly-planning-system-meeting-agenda)
+
+**Undefined:** Selectivity gate formalization — whether the "prove your business viability" requirement becomes a formal pipeline stage with criteria, or remains an instinctive filter. → [Meeting Agenda](monthly-planning-system-meeting-agenda)
+
 ---
 
 ## Source
@@ -236,8 +292,12 @@ Leads are not packages — they don't have positions or owners yet. The only pla
 - **Session:** `/Users/verdant/.claude/projects/-Users-verdant-Documents-projects-00-WILSCH-AI-INTERNAL--soloforce/87151f23-d09a-4ed4-a4fe-71368c49c52d.jsonl`
 - **Session:** `/Users/verdant/.claude/projects/-Users-verdant-Documents-projects-00-WILSCH-AI-INTERNAL--soloforce/af0f8b80-edc4-4aaa-8b99-b107cf4b48a9.jsonl` (extraction pass 2 — plan artifact format, stateless principle, pre-decisions, evaluation stack)
 - **Session:** `/Users/verdant/.claude/projects/-Users-verdant-Documents-projects-00-WILSCH-AI-INTERNAL--soloforce/2f8d924c-21df-4bb1-b1cb-46f2b645b257.jsonl` (extraction pass 3 — hypothesis, March walkthrough, shutdown ritual redesign, revenue model, forcing functions)
+- **Session:** `/Users/verdant/.claude/projects/-Users-verdant-Documents-projects-00-WILSCH-AI-INTERNAL--soloforce/053c839f-9e9b-4426-aa96-eba196931a4f.jsonl` (extraction pass 4 — revenue model, client walkthrough, lead triage)
 - **Fireflies:** https://app.fireflies.ai/view/xkn-ucts-pps::01KJ1YM415CRH4KJG7QKX2RHJV (revenue reasoning conversation)
 - **Data Artifacts:**
   - [Stakes Visibility: Forcing Function](https://mariuswilsch.github.io/public-wilsch-ai-pages/global/stakes-visibility-forcing-function)
   - [2025 Sales Pipeline](https://docs.google.com/spreadsheets/d/1zFrb-2B9KufHqOT0fafJoZbNenLNivgN4eYeE5DRMoQ/edit?usp=sharing)
-  - [Contract Strategy Design](~/.claude/hippocampus/project/soloforce/contract-strategy-retainer-model-design.md)
+  - [Contract Strategy Design](https://mariuswilsch.github.io/public-wilsch-ai-pages/project/soloforce/contract-strategy-retainer-model-design)
+  - [Archibus Retainer Agreement](hippocampus/project/archibus-fm-assistant/) (6-month renewal, Feb–Aug 2026)
+  - [Rekers Order S184773](hippocampus/project/rekers/Order%20S184773%20Rekers%20Betonwerk.pdf) (€5,635 workshop, 50/50 split via UWI)
+  - [UWI Supportvertrag](hippocampus/project/wilsch-group/supportvertrag-dezember-2025.md) (€2,500/month + SLA)
