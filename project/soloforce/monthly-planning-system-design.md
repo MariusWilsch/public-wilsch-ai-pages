@@ -104,7 +104,17 @@ The monthly plan is strategy. The Shutdown Ritual is the enforcement mechanism �
 
 Without this connection, the monthly plan is a document. With it, every evening forces a check against the plan.
 
-The Shutdown Ritual's integration with the monthly plan is the plan page itself — the docket table provides the package filter, and project deadlines (carried instinctively, not on the plan) provide the urgency signal for which package gets tomorrow's maker blocks. The ritual question shifts from "which 3 issues?" to "which 3 issues from my active packages?" The meaning connection — seeing the "why" per package nightly — reinforces the link between daily work and the company vision. Mechanical details (progress view, procedural changes) will be evaluated empirically after the first month's run.
+**Ritual redesign:** The ritual operates on two tracks — proactive and reactive — at the package level, not the issue level.
+
+**Proactive track (package selection):** Open the monthly plan → select tomorrow's package from the docket. One package gets both maker blocks. The "why" column reinforces the meaning connection nightly: this daily work → this package → this position → the vision.
+
+**Reactive track (fire scan):** Scan across all client labels for urgent items — SLA violations, blockers, client fires. Fires live outside the package system. They are interrupts handled in manager time, not planned maker work. The physical book gets: tomorrow's package + any burning issues within it.
+
+**External forcing functions drive urgency within the package.** Each project has a meeting cadence that creates deadline pressure without adding dates to the stateless plan: Archibus (weekly all-hands), UWI (daily sync), AVO/Rekers (biweekly meetings), SLA projects (reactive triage). The plan narrows the space; the forcing function provides urgency within that space. Together, the ritual selection becomes obvious. See [Stakes Visibility: A Forcing Function for Task Prioritization](https://mariuswilsch.github.io/public-wilsch-ai-pages/global/stakes-visibility-forcing-function) for the underlying framework.
+
+**Undefined:** Fire handling policy — when does a fire justify breaking into maker time vs waiting for manager time? Deferred to empirical (first month's run). → [Meeting Agenda](monthly-planning-system-meeting-agenda)
+
+**Undefined:** Forcing function integration — how the [stakes visibility framework](https://mariuswilsch.github.io/public-wilsch-ai-pages/global/stakes-visibility-forcing-function) maps to the per-package meeting cadences and influences nightly package selection. → [Meeting Agenda](monthly-planning-system-meeting-agenda)
 
 ### Part 5: Position Progress & the Router
 
@@ -148,7 +158,17 @@ This is what Part 3's walkthrough produces. Each month's output differs.
 
 The walkthrough (Part 3) produces the analysis. The monthly plan artifact records the decisions. It is a stateless decision record — not a progress tracker. Nothing on this page changes within the month. When something new arrives, you point at the plan and evaluate: does it fit?
 
-**Hypothesis:** This is the first attempt at enforcing a monthly plan for the company. The core behavioral problem is within-day jumping — switching between projects, positions, and contexts multiple times per day. Each context switch costs momentum even with AI handling context bridging. The docket enforces: one package per day, both maker blocks (ON and IN) on that package. All terminals in a maker session — System Engineer, JA, Developer — work on the same package. Day-to-day switching is fine — within-day switching is what kills progress. Two focused maker sessions on a single package produces compounding progress that scattered work across three packages cannot.
+**Hypothesis:** If monthly pre-decides direction and daily enforces it, daily judgment shifts from WHAT to work on to HOW to advance — one step per day, traceable to the monthly target. Without this system, daily execution stays incremental: work gets done, but capability doesn't compound toward shareholder status. With it, the same daily effort connects to step-change capability growth — building the company IS doing the work, not a separate activity.
+
+The core behavioral problem is within-day jumping — switching between projects, positions, and contexts multiple times per day. Each context switch costs momentum even with AI handling context bridging. The docket enforces: one package per day, both maker blocks (ON and IN) on that package. All terminals in a maker session — System Engineer, JA, Developer — work on the same package. Day-to-day switching is fine — within-day switching is what kills progress. Two focused maker sessions on a single package produces compounding progress that scattered work across three packages cannot.
+
+**Failure test:** End of March, daily decisions were disconnected from the monthly target — same reactive mode as before. The post-mortem catches wrong direction; the system prevents no direction.
+
+**COO first act:** This is the first position built without prior practical experience. Unlike Developer, JA, or SE — where formalization followed existing behavior — the monthly planning system IS the COO's first operational act. The system precedes the experience. Format may change; the hypothesis stays.
+
+**Financial anchor:** 10K/month agency revenue (controllable — retainers + fixed-price). 5K expenses, 5K pure profit. Traceline success fees as scalable extra. 12-month target: 120K agency revenue. The plan must connect daily work not just to vision but to the financial foundation that makes the vision sustainable.
+
+**Undefined:** Revenue target grounding — why 10K/month, how current pipeline maps to that target, what gap the leads need to fill. → [Meeting Agenda](monthly-planning-system-meeting-agenda)
 
 **Location:** The plan lives on the [Operations Manual Router](https://mariuswilsch.github.io/public-wilsch-ai-pages/global/operations-manual-router) as a "Monthly Plans" section — one row per month, each linking to a published page. Current month shows Active; past months show Archived. The Router is already the daily bookmark; the plan becomes part of that daily surface.
 
@@ -183,6 +203,16 @@ All three must pass. This is the equivalent of the calendar's time-box evaluatio
 
 **Not on the docket = not this month.** No separate "parked" section. Packages either appear on the docket or they don't. If they return, they appear on next month's docket.
 
+**3. Leads** — active sales pipeline items with contract model targets:
+
+| Lead | Contract Target |
+|------|----------------|
+| {Lead name} | Retainer / Fixed-price / TBD |
+
+Leads are not packages — they don't have positions or owners yet. The only plan-level decision for a lead is which contract model to target. Conversion actions and next steps live in the sales pipeline document, not the monthly plan. When a lead converts, it becomes a docket package in the same or next month's plan.
+
+**Undefined:** Sales pipeline document — revive from [2025 Sales Pipeline GSheet](https://docs.google.com/spreadsheets/d/1zFrb-2B9KufHqOT0fafJoZbNenLNivgN4eYeE5DRMoQ/edit?usp=sharing), link from Router. Manages lead conversion tracking separately from the stateless monthly plan. → [Meeting Agenda](monthly-planning-system-meeting-agenda)
+
 **Undefined:** Month-end evaluation methodology — how to assess whether the month's packages achieved their intended friction reduction. Deferred until after the first month's empirical run (March 2026). → [Meeting Agenda](monthly-planning-system-meeting-agenda)
 
 **Undefined:** Walkthrough-to-docket selection framework — the decision mechanism for how the walkthrough's full package landscape gets cut down to the active docket. Currently a judgment call; may need criteria after the first formal walkthrough. → [Meeting Agenda](monthly-planning-system-meeting-agenda)
@@ -205,3 +235,9 @@ All three must pass. This is the equivalent of the calendar's time-box evaluatio
   - [#847 Contract Strategy](https://github.com/DaveX2001/deliverable-tracking/issues/847)
 - **Session:** `/Users/verdant/.claude/projects/-Users-verdant-Documents-projects-00-WILSCH-AI-INTERNAL--soloforce/87151f23-d09a-4ed4-a4fe-71368c49c52d.jsonl`
 - **Session:** `/Users/verdant/.claude/projects/-Users-verdant-Documents-projects-00-WILSCH-AI-INTERNAL--soloforce/af0f8b80-edc4-4aaa-8b99-b107cf4b48a9.jsonl` (extraction pass 2 — plan artifact format, stateless principle, pre-decisions, evaluation stack)
+- **Session:** `/Users/verdant/.claude/projects/-Users-verdant-Documents-projects-00-WILSCH-AI-INTERNAL--soloforce/2f8d924c-21df-4bb1-b1cb-46f2b645b257.jsonl` (extraction pass 3 — hypothesis, March walkthrough, shutdown ritual redesign, revenue model, forcing functions)
+- **Fireflies:** https://app.fireflies.ai/view/xkn-ucts-pps::01KJ1YM415CRH4KJG7QKX2RHJV (revenue reasoning conversation)
+- **Data Artifacts:**
+  - [Stakes Visibility: Forcing Function](https://mariuswilsch.github.io/public-wilsch-ai-pages/global/stakes-visibility-forcing-function)
+  - [2025 Sales Pipeline](https://docs.google.com/spreadsheets/d/1zFrb-2B9KufHqOT0fafJoZbNenLNivgN4eYeE5DRMoQ/edit?usp=sharing)
+  - [Contract Strategy Design](~/.claude/hippocampus/project/soloforce/contract-strategy-retainer-model-design.md)
