@@ -156,6 +156,76 @@ Migration principle: existing hourly clients transition at their next contract r
 
 **Undefined:** When the success fee outcompetes the base, it means the client has a new revenue stream that didn't exist before — the ultimate proof of value. The mechanics and success criteria of this lifecycle transition need deeper probing.
 
+### Part 6: The Methodology — How AI Becomes Your Employee
+
+Most people know AI as ChatGPT — you type a question, you get an answer. That's useful, like asking a smart colleague for advice at a coffee shop. But advice doesn't get work done.
+
+The difference is tools. The same AI brain that gives advice can also create documents, manage data, write code, and test its own work — if you give it a work environment. Anthropic (the company behind Claude) makes this visible in their product: Chat, Cowork, and Code are three modes of the same intelligence. Chat is the brain in a sealed room. Cowork and Code are the brain at a desk with a full workstation. The intelligence didn't change — the access did. Giving AI a work environment is like giving a skilled tradesperson their tools: without the hammer, it doesn't matter how skilled they are.
+
+Every company that uses AI gives it tools. That's table stakes. What differentiates an AI-native agency from generic AI usage is what happens next: training the AI to work like a specific role in your organization, with your tools, following your processes.
+
+#### The Building Blocks
+
+Think of it like hiring. When you hire someone, you don't just hand them a laptop. You:
+
+1. **Define the role** (Employee Handbook) — what's their job, what authority do they have, what decisions can they make on their own, and when must they escalate? This is a structured document that defines the AI's identity, authority boundaries, knowledge sources, quality standards, and task lifecycle. The same structure works for every role — only the content changes.
+
+2. **Define the process** (Standard Procedures) — step-by-step workflows the operator triggers to guide the AI through its task lifecycle. Example: the Developer position has a "think before acting" procedure — the operator triggers it, the AI asks questions until both sides understand the problem, and only then does building start. Another procedure verifies "what exactly are we building?" before a single line of code is written. No guessing allowed.
+
+3. **Give it expertise** (Specialist Knowledge) — reference knowledge the AI loads on demand, without being told. Example: the Developer AI knows how to create a project ticket in your specific system — your format, your labels, your conventions. Like an employee who knows where the company templates are without being asked. The AI invokes this knowledge itself when it recognizes the need.
+
+4. **Install quality checks** (Automatic Guardrails) — automated enforcement that catches mistakes before they ship. If the AI tries to skip a step or take a shortcut, the guardrail blocks it. Like quality control on a production line — nobody has to press a button, it just catches problems.
+
+The result: a trained AI position that follows the same process every time. Consistent, documented, auditable. The [Developer position](https://mariuswilsch.github.io/public-wilsch-ai-pages/global/developer-operations-manual-wilsch-ai-services) demonstrates this: it takes issues from a task board and turns them into tested, working code through a structured two-phase workflow — first think through what needs to be built (Path A: specification), then build it and verify it works (Path B: implementation + verification). Every project, same process, same quality.
+
+This methodology is model-agnostic — it works across AI platforms, including local deployment on the client's own infrastructure for full data sovereignty. The training is in the structured documents and procedures, not locked to any vendor.
+
+#### The Operator Model
+
+The AI doesn't operate itself. An operator — a person — manages the AI positions, triggering procedures, judging quality, and directing work. This is the organizational shift from the before/after org chart: workers don't lose jobs, they move up. Each person becomes a 1-to-N manager of AI positions instead of doing the work manually.
+
+How the operator model maps to engagement types:
+
+- **Fixed-price project:** Wilsch AI operates the AI positions. The client buys the outcome — a delivered solution built with AI-native methods, faster and more reliable than traditional delivery.
+- **Retainer (AI department):** Wilsch AI extracts knowledge from the client's people, builds trained AI positions, and trains the client's operators to manage them. The delivery pipeline: knowledge extraction → agent building → operator training → client independence.
+- **Product ([Traceline](https://mariuswilsch.github.io/public-wilsch-ai-pages/project/traceline/developer-position-beta-scope)):** The Developer position packaged as a distributable product. The client's operators run the methodology on their own projects. Combined with [local AI deployment](https://mariuswilsch.github.io/public-wilsch-ai-pages/project/wilsch-group/local-ai-development-customer), this means: a trained coding agent running on the client's infrastructure, their data never leaves their building.
+
+The progression: we operate FOR you → we train you TO operate → you operate YOURSELF. The framework is the franchise — standardized system, personalized application. Every position follows the same four building blocks. Only the content changes.
+
+#### The System Gets Smarter
+
+Every time someone uses the system, the system improves. Not in a vague "machine learning" way — in a concrete, documented way:
+
+1. When the AI makes a mistake, that mistake becomes an improvement ticket with evidence
+2. The improvement is diagnosed and a fix is designed
+3. The fix is tested in a blind session — the AI doesn't know it's being tested
+4. The verified fix is deployed. Next time, the same mistake doesn't happen.
+
+This is the [System Engineer position](https://mariuswilsch.github.io/public-wilsch-ai-pages/global/system-engineer-position-agreement-wilsch-ai-services) — a dedicated role for continuous improvement of AI behavior. The improvement loop means the client's 100th project runs better than their 1st. Knowledge doesn't just stay when people leave — it grows. Every operator interaction feeds knowledge back into the system.
+
+The [Operations Manual Router](https://mariuswilsch.github.io/public-wilsch-ai-pages/global/operations-manual-router) serves as the dashboard: which positions in the company have trained AI agents, and which don't yet. Filled rows = positions with trained AI. Empty rows = positions waiting for their agent. Every month, more positions get built.
+
+**Undefined:** The knowledge augmentation over time — how decision traces and context accumulate into a growing knowledge graph specific to the client's company. The visual representation exists (context graph), but the abstraction for client communication needs a dedicated pass. Sources: [Context engineering thread 1](https://x.com/jayagup10/status/2003525933534179480), [Thread 2](https://x.com/akoratana/status/2005303231660867619), [Thread 3](https://x.com/ashugarg/status/2006103837292011936).
+
+**Undefined:** Pricing model for the operator training → independence transition. When the client's operators are trained and can run the AI positions themselves, how does the contract structure adapt? Does the retainer decrease? Does it shift to a maintenance tier? The economics of this handoff need probing.
+
+**Undefined:** A concise name for the atomic unit — one trained AI position (agent + employee handbook + procedures + expertise + guardrails). This is the smallest sellable unit and needs a client-facing term that communicates value without technical jargon.
+
+#### What Clients Recognize
+
+Three common concerns and how the methodology addresses them:
+
+**"I've never seen this before — how do I buy something I don't understand?"**
+The education layer resolves this. AI is the same brain everyone already knows from ChatGPT — the difference is giving it tools and training. It's like hiring and training an employee, just digital. The methodology is visible: an employee handbook (readable), standard procedures (observable), specialist knowledge (demonstrable), quality checks (auditable). Nothing is hidden behind a black box.
+
+**"Last time, the external left and everything went with them."**
+The system is documented files, not one person's knowledge. The employee handbook, the procedures, the expertise — all of it is in the system. When a person leaves, the AI keeps working the same way. The improvement loop means the system is MORE knowledgeable after the person worked with it than before — their knowledge was captured back into the system during every interaction.
+
+**"I want something off-the-shelf, not custom."**
+The framework IS off-the-shelf. Same four building blocks for every position. Same structure, same sections, same principles — only the content changes for the specific role. Like a franchise: McDonald's is standardized, but every location serves its market. Competitors ([tune.eco](https://tune.eco), [heronos](https://heronos.com), [mindgpt](https://mindgpt.cloud)) sell off-the-shelf AI software — configured the way THEY think it should work, not yours. The methodology produces AI that works YOUR way. [Traceline](https://mariuswilsch.github.io/public-wilsch-ai-pages/project/traceline/developer-position-beta-scope) already packages this as a distributable product with a dedicated team building it.
+
+The legal framework for this delivery model is validated: [Mayer Brown's "Contracting for Agentic AI Solutions" (February 2026)](https://www.mayerbrown.com/en/insights/publications/2026/02/contracting-for-agentic-ai-solutions-shifting-the-model-from-saas-to-services) explicitly recommends adapting BPO (Business Process Outsourcing) contract structures for agentic AI service delivery — the same hybrid model this design doc proposes.
+
 ---
 
 ## Source
@@ -182,8 +252,18 @@ Migration principle: existing hourly clients transition at their next contract r
 - [Sourcegraph — Revenge of the Junior Developer](https://sourcegraph.com/blog/revenge-of-the-junior-developer) — FY26 org chart: Devs → AI Managers → AI Coding Agents
 - E-Myth Revisited (Michael Gerber, 1986) — franchise prototype model applied to AI-native delivery
 - **Competitors:** [tune.eco](https://tune.eco) (SaaS agents, €149/user/mo), [heronos.com](https://heronos.com) (digital Fachkräfte, €375/mo), [mindgpt.cloud](https://mindgpt.cloud) (private AI workspace) — all sell SOFTWARE, not a FUNCTION
+- [Developer Operations Manual v3](https://mariuswilsch.github.io/public-wilsch-ai-pages/global/developer-operations-manual-wilsch-ai-services) — Developer position as methodology proof point
+- [Traceline Beta Scope](https://mariuswilsch.github.io/public-wilsch-ai-pages/project/traceline/developer-position-beta-scope) — methodology packaged as distributable product
+- [Operations Manual Router](https://mariuswilsch.github.io/public-wilsch-ai-pages/global/operations-manual-router) — dashboard: which positions have AI agents
+- [System Engineer Position Agreement](https://mariuswilsch.github.io/public-wilsch-ai-pages/global/system-engineer-position-agreement-wilsch-ai-services) — improvement loop role
+- [ADR-008: Protocols vs Agents vs Workflows](https://mariuswilsch.github.io/public-wilsch-ai-pages/global/distinguish-workflows-protocols-agents-ai-systems) — architectural hierarchy
+- [ADR: Skills as Pre-packaged HOW](https://mariuswilsch.github.io/public-wilsch-ai-pages/global/skill-lifecycle-execution-timing) — skill invocation model
+- [Improve System Architecture](https://mariuswilsch.github.io/public-wilsch-ai-pages/global/improve-system-architecture) — three-session improvement workflow
+- Dendrite Concept Brief V3.0 — before/after visual communication pattern (WhatsApp artifact)
+- Context engineering: [Thread 1](https://x.com/jayagup10/status/2003525933534179480), [Thread 2](https://x.com/akoratana/status/2005303231660867619), [Thread 3](https://x.com/ashugarg/status/2006103837292011936)
 
 **Sessions:**
 - `/Users/verdant/.claude/projects/-Users-verdant-Documents-projects-00-WILSCH-AI-INTERNAL--soloforce/87151f23-d09a-4ed4-a4fe-71368c49c52d.jsonl` — position-as-product thesis
 - `/Users/verdant/.claude/projects/-Users-verdant-Documents-projects-00-WILSCH-AI-INTERNAL--soloforce/15c30f47-6bd1-45c6-8e18-3295b58d0cb8.jsonl` — first extraction pass
-- `/Users/verdant/.claude/projects/-Users-verdant-Documents-projects-00-WILSCH-AI-INTERNAL--soloforce/9715c300-2036-4389-882d-e9a3af2eb55a.jsonl` — second extraction pass (this session)
+- `/Users/verdant/.claude/projects/-Users-verdant-Documents-projects-00-WILSCH-AI-INTERNAL--soloforce/9715c300-2036-4389-882d-e9a3af2eb55a.jsonl` — second extraction pass
+- `/Users/verdant/.claude/projects/-Users-verdant-Documents-projects-00-WILSCH-AI-INTERNAL--soloforce/fe55b5ce-9f72-49c8-8348-99f48176ae27.jsonl` — fourth extraction pass (methodology section)
