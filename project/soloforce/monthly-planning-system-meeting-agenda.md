@@ -7,17 +7,20 @@ publish: true
 
 ## Meeting Goal
 
-Resolve remaining undefined elements of the Monthly Planning System. Plan artifact format, Shutdown Ritual integration, and pre-decision framework were defined in extraction pass 2. Remaining items require either deeper probing or empirical evidence from March.
+Resolve remaining undefined elements of the Monthly Planning System. Extraction pass 3 defined: testable hypothesis, March docket (5 packages, 3 leads), shutdown ritual redesign (package-level selection, two tracks), and revenue model (10K/month agency target). Remaining items require deeper probing or empirical evidence from the first month's run.
 
-1. **Team & capacity model** — who fills which positions, session budgets, availability
-2. **Contract model** — retainer structure that pre-decides projects
-3. **Operational gaps** — multi-terminal model, SO update, position transition methodology, docket selection criteria
+1. **Revenue & pipeline** — revenue target grounding, sales pipeline revival, pre-decisions
+2. **Operational gaps** — fire handling, forcing function integration, Traceline section, multi-terminal model
+3. **Strategy updates** — SO update, position transition methodology, month-end evaluation
 
 ## Pre-Read
 
 - [Monthly Planning System Design Doc](monthly-planning-system-design)
+- [March Monthly Plan](monthly-plan-2026-02-23-to-2026-03-31) — the active docket
 - [Operations Manual Router](https://mariuswilsch.github.io/public-wilsch-ai-pages/global/operations-manual-router) — position progress dashboard
 - [Contract Strategy #847](https://github.com/DaveX2001/deliverable-tracking/issues/847) — retainer model context
+- [Stakes Visibility Framework](https://mariuswilsch.github.io/public-wilsch-ai-pages/global/stakes-visibility-forcing-function) — forcing function drivers
+- [2025 Sales Pipeline](https://docs.google.com/spreadsheets/d/1zFrb-2B9KufHqOT0fafJoZbNenLNivgN4eYeE5DRMoQ/edit?usp=sharing) — lead tracking baseline
 
 ---
 
@@ -25,16 +28,18 @@ Resolve remaining undefined elements of the Monthly Planning System. Plan artifa
 
 *Starting points for discussion, not limited to these.*
 
-### 1. Team capacity model
-⏱️ 20 min
+### 1. Revenue target grounding
+⏱️ 15 min
 
-The package model requires knowing who can fill which positions. David completed decomposition on IITR. Ralph is a potential for spec-design. Thomas handles infrastructure. Christoph builds the Traceline tutorial.
+The March plan targets 10K/month agency revenue (retainers + fixed-price). Current recurring: ~6K (Archibus 3K + UWI 3K). Gap: ~4K. The 10K figure emerged from financial reasoning: 5K expenses, 5K profit → 60K/year. But "10K because it sounds good" is not grounded.
 
-- Current team: David, Ralph, Thomas, Christoph, Ulrich
-- Each person's position capability and availability is implicit, not documented
-- The monthly plan needs named capacity: "David can handle 2 Developer packages"
+- Goal: 360K principal at ~10% or 10K/month earning capability as safety net
+- Traceline success fees are the scalable extra, not the controllable base
+- Current pipeline: Stafford (retainer), Rekers (fixed-price), Christoph (TBD)
+- IITR and Rohdex have unclear contract models (legal dispute, SLA respectively)
+- Fireflies transcript contains the revenue reasoning conversation
 
-**To resolve:** Team roster with per-person position capability and monthly availability, documented as an input to the planning walkthrough.
+**To resolve:** Whether 10K/month is the right target based on actual expense structure and how the current pipeline maps to that target.
 
 ### 2. Contract model as project pre-decider
 ⏱️ 15 min
@@ -105,6 +110,65 @@ The walkthrough (Part 3) produces a full landscape of project-position packages.
 - May resolve naturally through practice — the cut might be obvious once you see the landscape
 
 **To resolve:** Whether the walkthrough-to-docket cut needs explicit selection criteria or remains a judgment call informed by the walkthrough data.
+
+### 8. Fire handling policy
+⏱️ 10 min
+
+The shutdown ritual redesign separates proactive (package selection) from reactive (fire scan). Fires live outside the package system — SLA violations, client emergencies, blockers. The open question: when does a fire justify breaking into maker time vs waiting for manager time?
+
+- Fires are not connected to packages — they're interrupts
+- Manager time slots exist for reactive work, but some fires may be truly urgent
+- Without a policy, fires become an excuse to break the one-package-per-day hypothesis
+- Deferred to empirical — first month's run will produce evidence
+
+**To resolve:** Fire severity classification that determines maker-time interruption vs manager-time handling.
+
+### 9. Forcing function integration
+⏱️ 10 min
+
+External meeting cadences (weekly all-hands, daily syncs, biweekly meetings) emerged as the urgency mechanism per package — replacing deadlines on the stateless plan. The [Stakes Visibility framework](https://mariuswilsch.github.io/public-wilsch-ai-pages/global/stakes-visibility-forcing-function) describes five forcing function drivers.
+
+- Archibus: weekly all-hands (Thursday), UWI: daily sync, AVO/Rekers: biweekly meetings
+- SLA projects: reactive triage flow — the contract itself is the forcing function
+- Development projects need cadence; SLA projects need triage — two patterns
+- The forcing function document exists but isn't connected to the monthly plan methodology
+
+**To resolve:** How the stakes visibility framework maps to per-package meeting cadences and how this informs nightly package selection in the shutdown ritual.
+
+### 10. Sales pipeline revival
+⏱️ 10 min
+
+The monthly plan's leads section contains contract model targets but no conversion tracking. Conversion actions and next steps need a separate document. The [2025 Sales Pipeline GSheet](https://docs.google.com/spreadsheets/d/1zFrb-2B9KufHqOT0fafJoZbNenLNivgN4eYeE5DRMoQ/edit?usp=sharing) exists but is unused.
+
+- 10 open leads on the board, only 3 on the March plan
+- Lead conversion tracking is stateful — doesn't belong on the stateless monthly plan
+- The GSheet format may need updating for the current contract model (retainer vs fixed-price)
+- Sales pipeline document should link from the Router
+
+**To resolve:** Revived sales pipeline document format and how it feeds into the monthly planning walkthrough.
+
+### 11. Traceline as internal product
+⏱️ 15 min
+
+Traceline was deferred from the March walkthrough as an undefined marker. It's unique: internal product, not a client project. The position mapping is System Engineer + Developer, but the relationship to the agency packages is unclear.
+
+- Traceline beta was targeting Feb 23 launch
+- Success fees from retainers connect to Traceline (the scalable revenue stream)
+- Junior Architect will have its own name and may be a Traceline product
+- How internal product work competes with or complements agency maker time is undefined
+
+**To resolve:** Traceline's place on the monthly plan — separate section, its own package type, or background activity that doesn't compete for maker blocks.
+
+### 12. Pre-decisions extraction
+⏱️ 10 min
+
+Pre-decisions were removed from the first March plan because the revenue target isn't grounded yet. The design doc defines pre-decisions as binary choices made at month start. Beyond "new leads: yes/no," which recurring deliberations should become pre-decisions?
+
+- Pre-decisions develop empirically from recurring mid-month deliberations
+- The first month is the evidence-gathering period
+- Potential categories: hiring, conferences, internal project time allocation
+
+**To resolve:** Which pre-decision categories to add after the first month's evidence, and the revenue target that grounds the "new leads" pre-decision.
 
 ## Meeting Format
 
