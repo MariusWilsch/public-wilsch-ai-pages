@@ -31,7 +31,7 @@ The API requires only Name and AssetType. Everything else is optional. But some 
 - Address has a dual purpose: data quality AND future duplicate detection against existing buildings
 - The warning is a suggestion, not a blocker — implementer decides
 
-**To resolve:** Which optional fields AI should recommend, starting from these four and extending based on commercial experience.
+**To resolve:** Whether AI should proactively suggest missing fields to implementers at all — and if yes, which fields to start with.
 
 ### 2. Example data from different implementations
 ⏱️ 5 min
