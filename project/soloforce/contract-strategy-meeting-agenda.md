@@ -7,7 +7,7 @@ publish: true
 
 ## Meeting Goal
 
-This meeting resolves the nine undefined elements in the Contract Strategy design doc — the mechanics that couldn't be defined from extraction alone and need either empirical data or deeper probing.
+This meeting resolves the twelve undefined elements in the Contract Strategy design doc — the mechanics that couldn't be defined from extraction alone and need either empirical data or deeper probing.
 
 1. **Standard engagement entry point** — what proves capability before the retainer conversation
 2. **AI department cross-functional framing** — how to communicate "AI touches everything" to Mittelstand clients
@@ -18,6 +18,9 @@ This meeting resolves the nine undefined elements in the Contract Strategy desig
 7. **Budget psychology** — moving retainer from Projektkosten to Betriebskosten in client perception
 8. **Objection mapping** — extract all client objections and map to counter-arguments from design doc
 9. **Non-exclusivity pricing math** — validate whether overbooking model actually increases margins
+10. **Knowledge augmentation** — client-facing abstraction of how the system's knowledge graph grows over time
+11. **Operator training → independence pricing** — contract mechanics when the client becomes self-sufficient
+12. **Atomic unit naming** — client-facing term for one trained AI position
 
 ## Pre-Read
 
@@ -137,6 +140,44 @@ The design doc assumes non-exclusive engagements with lower per-client pricing a
 - The overbooking model also has risk: if one client demands emergency attention, others may suffer
 
 **To resolve:** A margin comparison between the non-exclusive overbooking model and an exclusive high-ticket model, using actual client revenue data to validate the theory.
+
+### 10. Knowledge augmentation — how decision traces accumulate into a company-specific knowledge graph
+⏱️ 15 min
+
+The methodology section describes the improvement loop (mistakes → tickets → fixes → verified deployment). But there's a deeper layer: every interaction with the AI system produces decision traces and context that accumulate over time into a growing knowledge graph specific to the client's company. A visual representation exists (context graph), but the abstraction for client communication is undefined.
+
+- Three external threads describe the pattern: context engineering as the augmentation of knowledge and decisions over time
+- The visual looks like a brain — nodes are decisions, connections are relationships, green dots are new knowledge being added
+- For the client, this is "company memory" — but that term may be too abstract for Mittelstand
+- The knowledge graph compounds: the more the system is used, the more context it has for future decisions
+- This connects to the "person leaves, knowledge stays" rebuttal — the context graph IS the retained knowledge
+
+**To resolve:** A client-facing abstraction of the knowledge augmentation concept that communicates "the system gets smarter about YOUR company over time" without requiring technical understanding of knowledge graphs.
+
+### 11. Pricing model for operator training → independence transition
+⏱️ 10 min
+
+The methodology section defines a delivery pipeline: knowledge extraction → agent building → operator training → client independence. When the client's operators are trained and can run the AI positions themselves, the contract structure needs to adapt. The current retainer model (base + success) doesn't account for this progression.
+
+- Fixed-price: Wilsch AI operates, client pays for outcome. No transition needed.
+- Retainer: Wilsch AI trains client operators. At some point, the client can operate independently. Does the retainer decrease? Shift to maintenance tier? Or does the success component carry the relationship?
+- Product (Traceline): client operates from day one. Different pricing entirely.
+- The retainer → independence transition might INCREASE trust and lead to expansion (new positions) rather than churn
+
+**To resolve:** The contract mechanics for when a client's operators become self-sufficient — how the retainer adapts without creating an incentive for Wilsch AI to slow down training.
+
+### 12. Naming the atomic unit — agent with protocol
+⏱️ 10 min
+
+The methodology defines the smallest sellable unit: one trained AI position (agent + employee handbook + procedures + expertise + guardrails). This atom needs a client-facing name that communicates value without technical jargon. Multiple atoms compose into an "outsourced AI department."
+
+- "Trained position" — functional but boring
+- "AI role" — short but abstract
+- "Digital specialist" — heronos already uses "digitale Fachkraft"
+- The name affects how Ulrich pitches it and how the flyer communicates the offer
+- Traceline is the product name for the Developer atom — but the generic concept needs its own term
+
+**To resolve:** A client-facing term for the atomic unit that Ulrich can use naturally in sales conversations and that appears in the flyer as the core offer.
 
 ## Meeting Format
 
