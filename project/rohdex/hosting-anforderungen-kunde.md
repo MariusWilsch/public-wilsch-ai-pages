@@ -89,11 +89,17 @@ Alle weiteren Schritte (Docker-Installation, Konnektivitätstest, App-Deployment
 ## 4. Migration
 
 **Migrationsaufwand:** 1 Arbeitstag (8 Stunden) — gilt für beide Hosting-Optionen.
-- Docker-Container deployen und konfigurieren
-- Umgebungsvariablen setzen (E-Mail-Zugangsdaten, Monitoring)
-- E-Mail-Konnektivität verifizieren (IMAP + SMTP)
-- DNS/SSL-Konfiguration falls erforderlich
-- Funktionstest und Überprüfung aller Verarbeitungsschritte
+
+| Aufgabe | Stunden |
+|---------|---------|
+| Docker-Container deployen und konfigurieren | ~1,5h |
+| Umgebungsvariablen setzen (E-Mail, Monitoring) | ~0,5h |
+| E-Mail-Konnektivität verifizieren (IMAP + SMTP) | ~0,5h |
+| DNS/SSL-Konfiguration falls erforderlich | ~0,5h |
+| Funktionstest aller 9 Verarbeitungsschritte | ~2h |
+| Inbetriebnahme und Übergabe | ~1h |
+| Puffer für Unvorhergesehenes | ~2h |
+| **Gesamt** | **~8h** |
 
 Bei On-Premise-Migration: zusätzliche Kalenderzeit für IT-Koordination (Firewall-Freigaben, Zugangsvorbereitung) — diese fällt vor dem Migrationstermin an, nicht am Migrationstag selbst.
 
