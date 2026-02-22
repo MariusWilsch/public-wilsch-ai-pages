@@ -139,19 +139,26 @@ Das System nutzt bereits ein Rohdex-eigenes E-Mail-Konto: `export-ki@rohdex.com`
 
 ### Part 5: SLA-Modell nach Hosting-Entscheidung
 
-Das aktuelle SLA (525 EUR/Monat) beinhaltet sowohl die Applikationswartung als auch die Infrastrukturverantwortung. Bei Eigenhosting verschiebt sich die Verantwortung — der SLA-Preis passt sich entsprechend an.
+Das aktuelle SLA (525 EUR/Monat) setzt sich aus zwei Verantwortungsbereichen zusammen:
 
-| | Cloud (Marius hosted) | Eigenes Rechenzentrum |
-|---|---|---|
-| **Server-Verantwortung** | Marius | Rohdex-IT |
-| **App-Wartung & Updates** | Marius | Marius |
-| **Monitoring** | Marius | *zu klären* |
-| **Bugfixes** | Marius | Marius |
-| **Monatspreis** | 525 EUR | *nach Absprache — abhängig von Verantwortungsaufteilung* |
+- **App-Verantwortung (325 EUR/Monat):** Wartung, Updates, Bugfixes, Monitoring (GlitchTip), Template-Anpassungen — bleibt bei Marius unabhängig von der Hosting-Option.
+- **Infrastruktur-Verantwortung (200 EUR/Monat):** Server-Uptime, OS-Updates, Backups, Netzwerk, Docker-Engine — entfällt wenn Rohdex-IT diese Aufgaben übernimmt.
 
-> *Bei Eigenhosting entfallen die Infrastrukturkosten auf Rohdex-Seite. Die SLA-Anpassung richtet sich danach, welche Verantwortlichkeiten Rohdex-IT übernimmt — je mehr Rohdex-IT abdeckt, desto geringer der monatliche SLA-Betrag.*
+**Preismodell:**
 
-**Undefined:** Verantwortungsgrenze zwischen Server-Ebene und App-Ebene — bestimmt sowohl die SLA-Preisanpassung als auch die Monitoring-Zuständigkeit. Zu klären im nächsten Gespräch mit Konstantin und Rohdex-IT. → Meeting Agenda
+| Verantwortung | Wer | Preis |
+|---------------|-----|-------|
+| **App-Ebene** (Wartung, Monitoring, Updates, Bugfixes) | Marius | 325 EUR/Monat |
+| **Infra-Ebene** (Server, OS, Backups, Netzwerk) | Marius ODER Rohdex-IT | 200 EUR/Monat (nur wenn Marius) |
+
+| Szenario | Monatspreis |
+|----------|-------------|
+| Cloud — Marius hosted alles | 525 EUR |
+| On-Premise — Rohdex-IT übernimmt Infrastruktur | 325 EUR |
+
+> *Monitoring (GlitchTip) ist App-Ebene: Es überwacht ob die Applikation E-Mails korrekt verarbeitet — nicht ob der Server läuft. Bleibt bei Marius in beiden Szenarien.*
+
+**Undefined:** Exakte Zuordnung der Verantwortlichkeiten bei On-Premise — welche Infrastruktur-Aufgaben übernimmt Rohdex-IT konkret? Bestätigung im nächsten Gespräch mit Konstantin. → Meeting Agenda
 
 ---
 

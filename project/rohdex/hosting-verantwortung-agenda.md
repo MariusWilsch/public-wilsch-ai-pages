@@ -33,17 +33,17 @@ Für die Migration auf Rohdex-Infrastruktur muss Docker installiert, Firewall-Po
 
 **To resolve:** Die Zuständigkeit für die Infrastruktur-Vorbereitung festlegen — entweder übernimmt Marius die gesamte Konfiguration (mit Zugang von Rohdex-IT), oder Rohdex-IT bereitet die Umgebung nach Checkliste vor und Marius deployt nur die Applikation.
 
-### 2. Laufende Verantwortungsgrenze zwischen Server- und App-Ebene
+### 2. SLA-Preismodell bei Eigenhosting — Verantwortung bestimmt den Preis
 ⏱️ 15 min
 
-Das aktuelle SLA (525 EUR/Monat) deckt sowohl Infrastruktur als auch Applikationswartung ab. Bei Eigenhosting verschiebt sich die Infrastrukturverantwortung auf Rohdex — der SLA-Preis muss sich entsprechend anpassen.
+Das aktuelle SLA (525 EUR/Monat) setzt sich aus zwei Bereichen zusammen: App-Verantwortung (325 EUR) und Infrastruktur-Verantwortung (200 EUR). Bei Eigenhosting übernimmt Rohdex-IT die Infrastruktur — der Preis folgt der Verantwortung.
 
-- Server-Ebene: Uptime, OS-Updates, Backups, Netzwerk, Hardware
-- App-Ebene: Container-Health, Monitoring, Code-Updates, Bugfixes, Template-Anpassungen
-- Monitoring (GlitchTip) liegt aktuell bei Marius — Zuständigkeit bei Eigenhosting offen
-- Je mehr Rohdex-IT übernimmt, desto geringer der monatliche SLA-Betrag
+- App-Ebene (325 EUR): Wartung, Updates, Bugfixes, Monitoring (GlitchTip), Template-Anpassungen — bleibt bei Marius
+- Infra-Ebene (200 EUR): Server-Uptime, OS-Updates, Backups, Netzwerk, Docker-Engine — entfällt bei Eigenhosting
+- Monitoring (GlitchTip) ist App-Ebene: überwacht ob die Applikation E-Mails verarbeitet, nicht ob der Server läuft
+- Konkretes Ergebnis: Cloud = 525 EUR, On-Premise = 325 EUR
 
-**To resolve:** Die Trennlinie zwischen Server-Verantwortung (Rohdex-IT) und App-Verantwortung (Marius) definieren — insbesondere für Monitoring und Störungserkennung, da dies den SLA-Preis direkt beeinflusst.
+**To resolve:** Bestätigung, dass Rohdex-IT die vollständige Infrastruktur-Verantwortung übernimmt — damit gilt das 325 EUR Modell für den laufenden Betrieb.
 
 ## Meeting Format
 
