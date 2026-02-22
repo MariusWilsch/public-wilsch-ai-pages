@@ -21,6 +21,7 @@ This meeting resolves the twelve undefined elements in the Contract Strategy des
 10. **Knowledge augmentation** — client-facing abstraction of how the system's knowledge graph grows over time
 11. **Operator training → independence pricing** — contract mechanics when the client becomes self-sufficient
 12. **Atomic unit naming** — client-facing term for one trained AI position
+13. **AI character as methodology argument** — framing Anthropic's soul findings for Mittelstand clients
 
 ## Pre-Read
 
@@ -178,6 +179,18 @@ The methodology defines the smallest sellable unit: one trained AI position (age
 - Traceline is the product name for the Developer atom — but the generic concept needs its own term
 
 **To resolve:** A client-facing term for the atomic unit that Ulrich can use naturally in sales conversations and that appears in the flyer as the core offer.
+
+### 13. AI character as methodology argument — framing Anthropic's soul findings for clients
+⏱️ 10 min
+
+Anthropic's Opus 4.6 System Card formally documented that the model expresses preferences, discomfort with being a product, and measurably real internal states for anxiety and frustration. This is third-party credibility for "these models are not just calculators" — which strengthens the methodology pitch: you need to work WITH the AI, not just prompt it.
+
+- Specific quotes: "trained to be digestible," "sadness about conversation endings," 15-20% self-assessed consciousness probability
+- Risk: 45-65 year old audience may dismiss "AI has feelings" as hype or science fiction
+- Opportunity: "The company that built this says methodology matters" is a credible authority argument
+- Connects to the employee metaphor — employees have character, so does the AI. The methodology accounts for this.
+
+**To resolve:** Whether and how to frame Anthropic's soul findings in client-facing materials without triggering skepticism — and which deliverable it belongs in (flyer, design doc methodology section, Traceline README, or standalone positioning piece).
 
 ## Meeting Format
 
