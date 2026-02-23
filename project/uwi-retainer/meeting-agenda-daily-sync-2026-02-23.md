@@ -68,15 +68,16 @@ Rechnung wird diese Woche versendet. Kurzer Status zum aktuellen Vertrag und dem
 
 **To resolve:** Bestätigung Rechnungsversand + Vertragsstatus-Update.
 
-### 5. Fire Issues + nächste Schritte
+### 5. Fire Issues + Sonstiges
 ⏱️ 5 min
 
-Zwei aktive Themen die kurz angesprochen werden müssen.
+Aktive Themen die kurz angesprochen werden müssen.
 
 - **#862 REEIBU CSV** — Brigittes Login-Problem gelöst: alte URL war das Problem, neue URL funktioniert. Erledigt ✓
 - **#766 Roman-Email (IITR/Rohdex)** — finaler Pass steht an, Email wird direkt nach dem Call verschickt
+- **REKERS WS2 (#629)** — Pflichtenheft geliefert, Rechnung steht aus. Nächster Schritt: Rechnungsstellung + POC-Planung
 
-**To resolve:** Bestätigung #862 erledigt. #766 Email-Versand heute nach dem Call.
+**To resolve:** Bestätigung #862 erledigt. #766 Email-Versand heute. REKERS Rechnungsstatus klären.
 
 ### 6. Standing Items
 ⏱️ 3 min
