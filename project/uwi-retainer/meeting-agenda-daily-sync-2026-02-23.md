@@ -57,15 +57,33 @@ Täglicher Backlog-Check — jedes Item bekommt ein Ja/Nein zur Priorität. Nich
 
 **To resolve:** Priorität ja/nein für jedes Item — nicht priorisierte Items werden geschlossen.
 
-### 4. Standing Items + Vertragsupdate
+### 4. Rechnung + Vertragsstatus
 ⏱️ 5 min
 
-Kurzer Check auf wiederkehrende Elemente und Vertragsstatus.
+Rechnung wird diese Woche versendet. Kurzer Status zum aktuellen Vertrag und dem geplanten Vertragsmeeting.
+
+- **Rechnung** — geht diese Woche raus
+- **Vertragsstatus** — wo stehen wir aktuell?
+- **Vertragsmeeting** — für erste Märzwoche geplant. Termin steht?
+
+**To resolve:** Bestätigung Rechnungsversand + Vertragsstatus-Update.
+
+### 5. Fire Issues + nächste Schritte
+⏱️ 5 min
+
+Zwei aktive Themen die kurz angesprochen werden müssen.
+
+- **#862 REEIBU CSV** — Brigittes Login-Problem gelöst: alte URL war das Problem, neue URL funktioniert. Erledigt ✓
+- **#766 Roman-Email (IITR/Rohdex)** — finaler Pass steht an, Email wird direkt nach dem Call verschickt
+
+**To resolve:** Bestätigung #862 erledigt. #766 Email-Versand heute nach dem Call.
+
+### 6. Standing Items
+⏱️ 3 min
 
 - **FSO Lead Follow-up** — Leads vom Februar-FSO nachgefasst?
-- **Vertragsmeeting** — für erste Märzwoche geplant (du, David, Ulrich + ggf. weiterer Teilnehmer). Termin steht?
 
-**To resolve:** Status beider Punkte — keine Diskussion, nur Bestätigung.
+**To resolve:** Status — keine Diskussion, nur Bestätigung.
 
 ## Meeting Format
 
