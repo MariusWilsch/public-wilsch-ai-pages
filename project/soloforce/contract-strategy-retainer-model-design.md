@@ -60,7 +60,32 @@ The unlock pattern: prove capability first (prototype or initial project), then 
 
 **Undefined:** The standard first engagement format that "proves capability" before the retainer conversation — fixed-price project, prototype, workshop, or does it vary by client type?
 
-The system is person-independent by design. Contracts sell the delivery system, not the individual.
+#### The Three-Slice Ownership Model
+
+The delivery system decomposes into three distinct slices, each with its own ownership:
+
+| Slice | Description | Owner |
+|-------|------------|-------|
+| **AI Agent** | The trained position — employee handbook, procedures, expertise, guardrails | Wilsch AI (always) |
+| **Operator** | The person trained to manage and run AI positions | Wilsch AI operator (early phase) or client operator (after training) |
+| **Improvement Loop** | Systematic diagnosis, fix design, blind testing, deployment of agent improvements | Wilsch AI (always proprietary) |
+
+The operator can sit on either side. In the early phase, a Wilsch AI operator runs the agents. As the engagement matures, client workers shift upward from manual tasks to AI Managers — trained to operate the agents themselves. The agent and improvement loop always stay with Wilsch AI.
+
+This is the defensible position: **when the contract ends, the agents leave.** Like any outsourced department — when you cancel your outsourced accounting, the accounting function leaves. The client retains their trained operators (people who now understand AI management) and all data and outputs generated during the engagement ([Mayer Brown BPO Clause 6: client owns all data and outputs](https://www.mayerbrown.com/en/insights/publications/2026/02/contracting-for-agentic-ai-solutions-shifting-the-model-from-saas-to-services)).
+
+The retention moat is ownership, not just the improvement loop. The improvement loop is bonus value — the system gets better while you use it. But the baseline retention is: you are renting an AI workforce.
+
+Three exit paths exist:
+- **Continue retainer** — agents keep improving, relationship deepens
+- **Buyout** — client purchases the agent slice outright. One-time fee. Agents become client-owned. Improvement loop purchasable at premium, or lost.
+- **Cancel** — agents leave with Wilsch AI. Client keeps operators and all data/outputs.
+
+Dependency builds gradually with penetration depth. At month 3 (one department), reversion to manual is straightforward. At month 18 (cross-functional), the AI department touches every other department — cancellation means all departments lose AI capability simultaneously. The buyout option is the safety valve that makes this dependency palatable.
+
+Person-independence means operator-interchangeable: any trained operator — Wilsch AI's or the client's — can run the agents. It does not mean system-independent. The system is provider-dependent by design, like any outsourced function.
+
+**Undefined:** Three-slice packaging — the specific buyout pricing, rent tiers, and operator training transition options that map the three slices into purchasable contract packages.
 
 The system-dependent model is the structural counter to every trust-deficit objection. "I've been burned before" is person-dependent thinking — the person left, the capability left. In a system-dependent engagement, the delivery infrastructure stays: documented processes, AI agent configurations, and observable audit trails remain regardless of which operator runs them. The E-Myth Revisited (Gerber, 1986) identified this forty years ago — businesses fail when they depend on the technician instead of the system. AI-native delivery makes the franchise prototype real: build the system once, run it repeatedly, any operator can execute.
 
@@ -248,6 +273,7 @@ The legal framework for this delivery model is validated: [Mayer Brown's "Contra
 - [Archibus post-demo (2025-10-08)](https://app.fireflies.ai/view/01K71QRZX71S801A7ENSAMS301) — Swiss watch, "I want you in my team"
 - [Doru/Needed Tech (2026-02-21)](https://app.fireflies.ai/view/01KHZGZN8JG04A8JP1K0PSJZDX) — positive case: training program entry, AI department pitch, zero hard objections
 - [Doru blocker (2026-02-21)](https://app.fireflies.ai/view/01KHZGZN8JG04A8JP1K0PSJZDX) — quoting automation, resale opportunity, "every employee is an AI use case"
+- [Stafford pitch (2026-02-22)](https://app.fireflies.ai/view/01KJ1YM415CRH4KJG7QKX2RHJV) — first real pitch attempt, 13 objections, three-slice ownership model, buyout option discovery, system dependency paradox
 
 **Artifacts:**
 - [Archibus Retainer Agreement](https://mariuswilsch.github.io/public-wilsch-ai-pages/project/archibus-fm-assistant/archibus-retainer-services-agreement-6mo-extension)
@@ -278,3 +304,4 @@ The legal framework for this delivery model is validated: [Mayer Brown's "Contra
 - `/Users/verdant/.claude/projects/-Users-verdant-Documents-projects-00-WILSCH-AI-INTERNAL--soloforce/15c30f47-6bd1-45c6-8e18-3295b58d0cb8.jsonl` — first extraction pass
 - `/Users/verdant/.claude/projects/-Users-verdant-Documents-projects-00-WILSCH-AI-INTERNAL--soloforce/9715c300-2036-4389-882d-e9a3af2eb55a.jsonl` — second extraction pass
 - `/Users/verdant/.claude/projects/-Users-verdant-Documents-projects-00-WILSCH-AI-INTERNAL--soloforce/fe55b5ce-9f72-49c8-8348-99f48176ae27.jsonl` — fourth extraction pass (methodology section)
+- `/Users/verdant/.claude/projects/-Users-verdant-Documents-projects-00-WILSCH-AI-INTERNAL--soloforce/44fc742b-6b54-4abb-8624-f9992d7e69dd.jsonl` — fifth extraction pass (Stafford pitch dissection, three-slice ownership model)
