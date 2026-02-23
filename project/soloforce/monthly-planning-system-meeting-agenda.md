@@ -167,8 +167,35 @@ Pre-decisions were removed from the first March plan because the revenue target 
 - Pre-decisions develop empirically from recurring mid-month deliberations
 - The first month is the evidence-gathering period
 - Potential categories: hiring, conferences, internal project time allocation
+- **Partially resolved (pass 4):** Revenue target grounded at €8K/month. "New leads" pre-decision now on the March plan with constraint. Remaining: which additional pre-decision categories emerge from practice.
 
-**To resolve:** Which pre-decision categories to add after the first month's evidence, and the revenue target that grounds the "new leads" pre-decision.
+**To resolve:** Which pre-decision categories to add after the first month's evidence.
+
+### 13. Lead strategy per lead
+⏱️ 20 min
+
+The lead triage (extraction pass 4) classified 11 leads by contract target (retainer/fixed-price) but did not extract the conversion strategy per lead — what meeting is next, what's the pitch, what makes each one a good or bad fit for the retainer model.
+
+- 3 hot leads: Stafford (retainer), Manuel Tessun (fixed-price), Jens RPG (via UWI)
+- Stafford decided next week; Tessun starts next week
+- Jens RPG could fold into UWI consolidation retainer discussion
+- 8 remaining leads at various stages from backlog to dead
+- Contract Strategy design doc (#847) is the product being sold through the lead pipeline
+- The goal isn't just replicating Archibus — it's having one more rock-solid revenue source AND using the process to work out the retainer model
+
+**To resolve:** Per-lead conversion path, timeline, and which leads justify retainer vs. fixed-price pursuit based on the three-filter framework (revenue gap, position fit, business viability).
+
+### 14. Selectivity gate formalization
+⏱️ 10 min
+
+Current client selection includes an instinctive filter: "Can they prove to me they actually have a business?" This was articulated in the revenue reasoning conversation but is not formalized as a pipeline stage with criteria.
+
+- Archibus: proven (6-month extension, success fee negotiation underway)
+- Estonian client meeting end-of-month: must prove profitability projections
+- The retainer model includes success-based components that depend on client viability
+- Referrals (e.g., Christoph Neumaier) tend to be higher quality but still need business viability assessment
+
+**To resolve:** Whether the selectivity gate becomes a formal stage (with documented criteria) or remains an instinctive evaluation during the planning walkthrough.
 
 ## Meeting Format
 
