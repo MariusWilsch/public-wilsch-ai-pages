@@ -7,7 +7,7 @@ publish: true
 
 ## Meeting Goal
 
-This meeting resolves the twelve undefined elements in the Contract Strategy design doc — the mechanics that couldn't be defined from extraction alone and need either empirical data or deeper probing.
+This meeting resolves the fourteen undefined elements in the Contract Strategy design doc — the mechanics that couldn't be defined from extraction alone and need either empirical data or deeper probing.
 
 1. **Standard engagement entry point** — what proves capability before the retainer conversation
 2. **AI department cross-functional framing** — how to communicate "AI touches everything" to Mittelstand clients
@@ -191,6 +191,19 @@ Anthropic's Opus 4.6 System Card formally documented that the model expresses pr
 - Connects to the employee metaphor — employees have character, so does the AI. The methodology accounts for this.
 
 **To resolve:** Whether and how to frame Anthropic's soul findings in client-facing materials without triggering skepticism — and which deliverable it belongs in (flyer, design doc methodology section, Traceline README, or standalone positioning piece).
+
+### 14. Three-slice packaging — buyout, rent, and train options
+⏱️ 20 min
+
+The three-slice ownership model (agent, operator, improvement loop) creates multiple packaging options for contracts. The slices are the building blocks; the packages are combinations clients can purchase. Current retainer model needs reframing under ownership: base fee = rent for AI workforce, not bridge cost for person-time.
+
+- Buyout: client purchases agent slice outright — one-time fee. What determines the price? Development cost multiple? Revenue multiple?
+- Rent: current retainer reframed — base = workforce rental, success = aligned incentive. How does the success fee change when ownership is explicit?
+- Train: operator training transition — Wilsch AI operator → client operator. What triggers the handoff? Does the retainer decrease?
+- Archibus test case: 3 months, no product sales yet. Success fee = zero. Is this a pricing problem or a client qualification problem?
+- Stafford counter-proposal: ~€5K/month (€2K base + €3K success), 3-month term — how does this map to the three-slice model?
+
+**To resolve:** The specific contract packages that combine the three slices into purchasable options — with pricing anchors, transition triggers, and the Archibus case as empirical validation.
 
 ## Meeting Format
 
