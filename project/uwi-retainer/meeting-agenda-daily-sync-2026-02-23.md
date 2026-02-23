@@ -24,7 +24,18 @@ Täglicher Sync — Fortschritt auf den Prioritätsthemen bestätigen, nächste 
 
 *Starting points for discussion, not limited to these.*
 
-### 1. Google Meet Dokumentation für UWI, STE, KHN
+### 1. Fire Issues + Sonstiges
+⏱️ 5 min
+
+Aktive Themen die kurz angesprochen werden müssen.
+
+- **#862 REEIBU CSV** — Brigittes Login-Problem gelöst: alte URL war das Problem, neue URL funktioniert. Erledigt ✓
+- **#766 Roman-Email (IITR/Rohdex)** — finaler Pass steht an, Email wird direkt nach dem Call verschickt
+- **REKERS WS2 (#629)** — Pflichtenheft geliefert, Rechnung steht aus. Nächster Schritt: Rechnungsstellung + POC-Planung
+
+**To resolve:** Bestätigung #862 erledigt. #766 Email-Versand heute. REKERS Rechnungsstatus klären.
+
+### 2. Google Meet Dokumentation für UWI, STE, KHN
 ⏱️ 10 min
 
 Thema wurde mehrfach besprochen, aber nie abschließend gelöst. Statt nochmals ad hoc zu erklären: diesmal die Spezifikation extrahieren — wie genau muss die Anleitung aussehen, damit du sie selbstständig nutzen kannst?
@@ -34,7 +45,7 @@ Thema wurde mehrfach besprochen, aber nie abschließend gelöst. Statt nochmals 
 
 **To resolve:** Exakte Anforderungen an die Google Meet Anleitung — Format, Sprache, Detailgrad — damit David sie in 1-2 Tagen erstellen kann.
 
-### 2. Dialpad VoIP Migration — nächster Schritt definieren
+### 3. Dialpad VoIP Migration — nächster Schritt definieren
 ⏱️ 15 min
 
 Bisherige Arbeit: David hat Dialpad-Research abgeschlossen (Capabilities, Migration, Preise). Scholli liefert nicht — David übernimmt mit ~10h/Woche. Enfon-Dokumente wurden angefragt. Scope noch offen: nur WISO-IP ersetzen oder Voll-Konsolidierung (iCall + Handy + WhatsApp → Dialpad)?
@@ -45,7 +56,7 @@ Bisherige Arbeit: David hat Dialpad-Research abgeschlossen (Capabilities, Migrat
 
 **To resolve:** Ein konkreter nächster Schritt bis morgen — nicht alles auf einmal, sondern die eine Sache die als nächstes passieren muss.
 
-### 3. Offene Sub-Issues: Priorität bestätigen oder schließen
+### 4. Offene Sub-Issues: Priorität bestätigen oder schließen
 ⏱️ 10 min
 
 Täglicher Backlog-Check — jedes Item bekommt ein Ja/Nein zur Priorität. Nicht priorisierte Items werden geschlossen oder zurückgestellt.
@@ -57,7 +68,7 @@ Täglicher Backlog-Check — jedes Item bekommt ein Ja/Nein zur Priorität. Nich
 
 **To resolve:** Priorität ja/nein für jedes Item — nicht priorisierte Items werden geschlossen.
 
-### 4. Rechnung + Vertragsstatus
+### 5. Rechnung + Vertragsstatus
 ⏱️ 5 min
 
 Rechnung wird diese Woche versendet. Kurzer Status zum aktuellen Vertrag und dem geplanten Vertragsmeeting.
@@ -67,17 +78,6 @@ Rechnung wird diese Woche versendet. Kurzer Status zum aktuellen Vertrag und dem
 - **Vertragsmeeting** — für erste Märzwoche geplant. Termin steht?
 
 **To resolve:** Bestätigung Rechnungsversand + Vertragsstatus-Update.
-
-### 5. Fire Issues + Sonstiges
-⏱️ 5 min
-
-Aktive Themen die kurz angesprochen werden müssen.
-
-- **#862 REEIBU CSV** — Brigittes Login-Problem gelöst: alte URL war das Problem, neue URL funktioniert. Erledigt ✓
-- **#766 Roman-Email (IITR/Rohdex)** — finaler Pass steht an, Email wird direkt nach dem Call verschickt
-- **REKERS WS2 (#629)** — Pflichtenheft geliefert, Rechnung steht aus. Nächster Schritt: Rechnungsstellung + POC-Planung
-
-**To resolve:** Bestätigung #862 erledigt. #766 Email-Versand heute. REKERS Rechnungsstatus klären.
 
 ### 6. Standing Items
 ⏱️ 3 min
