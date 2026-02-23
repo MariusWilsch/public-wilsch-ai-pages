@@ -12,9 +12,9 @@ Implementation blueprint for the instruction artifact improvement ecosystem.
 
 Two commands orchestrate a multi-session workflow for fixing instruction artifacts (skills, commands, hooks, protocol).
 
-| Command | Session | Purpose |
-|---------|---------|---------|
-| `/flag-for-improvement` | A (Project) | Capture failure: introspect + create issue |
+| Command                          | Session       | Purpose                                            |
+| -------------------------------- | ------------- | -------------------------------------------------- |
+| `/flag-for-improvement`          | A (Project)   | Capture failure: introspect + create issue         |
 | `/improve-system [issue_number]` | B (soloforce) | Fix workflow: load context + guide phases + verify |
 
 ## Prerequisites

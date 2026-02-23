@@ -90,7 +90,7 @@ Two connected problems, one topic. Internal AI behavior maintenance is solved â€
 
 - **Type:** Working session
 - **Expectation:** Christoph has read the updated design doc
-- **Outcome:** Topics 1-3 resolved before launch. Topic 4 directionally agreed, full resolution post-launch.
+- **Outcome:** Topics 1-3 resolved before launch. Topic 4: consent model agreed for beta + technical extraction approach decided (conversation store pattern vs. alternatives).
 
 ## Related
 
