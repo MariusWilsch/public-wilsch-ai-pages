@@ -34,17 +34,17 @@ Entry point for all position-specific Operations Manuals at Wilsch AI Services. 
 
 ### VP/Delivery Path
 
-| Position | Position Agreement | Operations Manual TOC | Operations Manual |
-|----------|-------------------|----------------------|-------------------|
+| Position | Position Agreement | Operations Manual TOC | Plugin |
+|----------|-------------------|----------------------|--------|
 | **Dev Lead** | [Draft](https://mariuswilsch.github.io/public-wilsch-ai-pages/global/dev-lead-position-agreement-wilsch-ai-services) | [Draft](https://mariuswilsch.github.io/public-wilsch-ai-pages/global/dev-lead-operations-manual-toc) | TBD |
-| **Developer** | [Draft](https://mariuswilsch.github.io/public-wilsch-ai-pages/global/developer-position-agreement-wilsch-ai-services) | [Draft](https://mariuswilsch.github.io/public-wilsch-ai-pages/global/developer-operations-manual-toc) | [Draft (v3)](https://mariuswilsch.github.io/public-wilsch-ai-pages/global/developer-operations-manual-wilsch-ai-services) |
+| **Developer** | [Draft](https://mariuswilsch.github.io/public-wilsch-ai-pages/global/developer-position-agreement-wilsch-ai-services) | [Draft](https://mariuswilsch.github.io/public-wilsch-ai-pages/global/developer-operations-manual-toc) | [Draft](https://github.com/MariusWilsch/claude-code-team-marketplace/tree/main/plugins/developer-position-plugin) |
 | **Solution Architect** | TBD | TBD | TBD |
-| **Junior Architect** | [Draft](https://mariuswilsch.github.io/public-wilsch-ai-pages/global/junior-architect-position-agreement-wilsch-ai-services) | [Draft](https://mariuswilsch.github.io/public-wilsch-ai-pages/global/junior-architect-operations-manual-toc) | TBD |
+| **Junior Architect** | [Draft](https://mariuswilsch.github.io/public-wilsch-ai-pages/global/junior-architect-position-agreement-wilsch-ai-services) | [Draft](https://mariuswilsch.github.io/public-wilsch-ai-pages/global/junior-architect-operations-manual-toc) | [Draft](https://github.com/MariusWilsch/junior-architect-position-plugin) |
 
 ### VP/Marketing Path
 
-| Position | Position Agreement | Operations Manual TOC | Operations Manual |
-|----------|-------------------|----------------------|-------------------|
+| Position | Position Agreement | Operations Manual TOC | Plugin |
+|----------|-------------------|----------------------|--------|
 | **Partner Manager** | TBD | TBD | TBD |
 | **Content Marketing Manager** | TBD | TBD | TBD |
 | **Sales Partner** (external) | TBD | TBD | TBD |
@@ -52,21 +52,21 @@ Entry point for all position-specific Operations Manuals at Wilsch AI Services. 
 
 ### VP/Finance Path
 
-| Position | Position Agreement | Operations Manual TOC | Operations Manual |
-|----------|-------------------|----------------------|-------------------|
+| Position | Position Agreement | Operations Manual TOC | Plugin |
+|----------|-------------------|----------------------|--------|
 | **Bookkeeper** | TBD | TBD | TBD |
 | **Investment Manager** | TBD | TBD | TBD |
 
 ### Staff Positions
 
-| Position | Position Agreement | Operations Manual TOC | Operations Manual |
-|----------|-------------------|----------------------|-------------------|
+| Position | Position Agreement | Operations Manual TOC | Plugin |
+|----------|-------------------|----------------------|--------|
 | **System Engineer** | [Draft](https://mariuswilsch.github.io/public-wilsch-ai-pages/global/system-engineer-position-agreement-wilsch-ai-services) | [Draft](https://mariuswilsch.github.io/public-wilsch-ai-pages/global/system-engineer-operations-manual-toc) | TBD |
 
 ### Executive Level
 
-| Position | Position Agreement | Operations Manual TOC | Operations Manual |
-|----------|-------------------|----------------------|-------------------|
+| Position | Position Agreement | Operations Manual TOC | Plugin |
+|----------|-------------------|----------------------|--------|
 | **COO/President** | TBD | [Draft](https://mariuswilsch.github.io/public-wilsch-ai-pages/global/coo-operations-manual-toc) | TBD |
 | **VP/Delivery** | TBD | TBD | TBD |
 | **VP/Marketing** | TBD | TBD | TBD |
