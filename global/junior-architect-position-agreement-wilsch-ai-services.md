@@ -73,6 +73,7 @@ Position Agreement for the Junior Architect position at Wilsch AI Services. Fram
    - **(b) Handoff Ready:** All context captured within the epic — Developer needs nothing from outside. Design doc follows 4-section structure: **Problem Statement** → **Success Definition** → **Approach** → **Source**. Context includes: problem statement, technical decisions, data schemas, scope boundaries, client agreements, dependencies, evaluation criteria, and source material links.
 5. Scope boundaries (in/out) must be explicitly documented in every design doc.
 6. Escalate to Solution Architect when alignment cannot be achieved after 2 meeting iterations on the same uncertainty.
+7. Always bring a prepared meeting agenda into every meeting — prevents topic sprawl and ensures meeting time targets specific unknowns. No meeting without an agenda.
 
 ### Company-Wide Standards
 
