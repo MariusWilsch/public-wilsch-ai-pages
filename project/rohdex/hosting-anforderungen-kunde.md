@@ -65,29 +65,14 @@ Alle weiteren Schritte (Docker-Installation, Konnektivitätstest, App-Deployment
 
 ## 3. Migration
 
-**Migrationsaufwand:** 1 Arbeitstag (8 Stunden).
+**Vorbereitung durch Rohdex-IT (vor Migrationstermin):**
 
-| Aufgabe | Stunden |
-|---------|---------|
-| Docker-Container deployen und konfigurieren | ~1,5h |
-| Umgebungsvariablen setzen (E-Mail, Monitoring) | ~0,5h |
-| E-Mail-Konnektivität verifizieren (IMAP + SMTP) | ~0,5h |
-| DNS/SSL-Konfiguration falls erforderlich | ~0,5h |
-| Funktionstest aller 9 Verarbeitungsschritte | ~2h |
-| Inbetriebnahme und Übergabe | ~1h |
-| Bugfix Tara-Berechnung (Nachkommastellen-Fehler) | ~1h |
-| Puffer für Unvorhergesehenes | ~1h |
-| **Gesamt** | **~8h** |
+1. Ausgehende Ports freigeben: IMAP (993) und SMTP (587 oder 465)
+2. SSH-Zugang für Wilsch AI Services einrichten
+3. Docker Engine 24.x+ auf der virtuellen Maschine installieren
 
-Zusätzliche Kalenderzeit für IT-Koordination (Firewall-Freigaben, Zugangsvorbereitung) fällt vor dem Migrationstermin an, nicht am Migrationstag selbst.
+Alle weiteren Schritte (Deployment, Konfiguration, Test, Inbetriebnahme) übernimmt Wilsch AI Services nach Erhalt des Zugangs.
 
-**E-Mail-Konfiguration:**
-Das System nutzt bereits das Rohdex-eigene E-Mail-Konto `export-ki@rohdex.com` (IONOS). Dieses Konto bleibt bei der Migration identisch — es werden lediglich die bestehenden Zugangsdaten auf dem neuen Server hinterlegt.
-
-- IMAP: Eingangsverarbeitung (Polling alle ~10 Sekunden) — Server: `imap.ionos.de` (Port 993, TLS)
-- SMTP: Versand der fertigen Dokumente — Server: `smtp.ionos.de` (Port 587, TLS)
-- Ordnerstruktur wird automatisch angelegt: `Processed`, `Skipped`
-
-**Migrationskosten:** 720 EUR (8 Stunden × 90 EUR/Stunde)
+**Migrationsaufwand:** 1 Arbeitstag (8 Stunden) / 720 EUR
 
 ---

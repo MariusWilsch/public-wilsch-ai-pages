@@ -9,7 +9,7 @@ publish: true
 
 ## Dienstleistungsvertrag
 
-Dieser Dienstleistungsvertrag („Vereinbarung"), datiert auf den [TODO: TAG] [TODO: MONAT] 2026 („Wirksamkeitsdatum"), wird geschlossen zwischen:
+Dieser Dienstleistungsvertrag („Vereinbarung"), datiert auf den 24. Februar 2026 („Wirksamkeitsdatum"), wird geschlossen zwischen:
 
 **ROHDEX GmbH & Co. KG** („Kunde")
 - Handelsregisternummer: HRA 74823 (Amtsgericht München)
