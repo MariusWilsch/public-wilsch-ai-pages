@@ -13,7 +13,7 @@ System design for how the Dev Lead conducts witness testing, review, and quality
 
 Ship with Confidence defines three quality layers (sanity check, AC verification, human witness) but does not map who owns each layer, what depth each role performs, or what the output of each layer looks like. Position Agreements reference "human witness" as a deliverable without defining methodology, tooling, or attention requirements.
 
-When a solo operator holds all positions, this works — tacit knowledge about what to test, where the canonical rubric lives, and whether the codebase is coherent stays unified in one person. When positions are held by different people, that tacit knowledge does not transfer. The result: the Dev Lead absorbs 3-4 hours of deep witness work that should have been the Developer's responsibility, creates ad-hoc tooling during review instead of before, and falls into the technician trap — doing fixes instead of generating feedback.
+When a solo operator holds all positions, this works — tacit knowledge about what to test, where the authoritative rubric lives, and whether the codebase is coherent stays unified in one person. When positions are held by different people, that tacit knowledge does not transfer. The result: the Dev Lead absorbs 3-4 hours of deep witness work that should have been the Developer's responsibility, creates ad-hoc tooling during review instead of before, and falls into the technician trap — doing fixes instead of generating feedback.
 
 **Preconditions:**
 - Multi-operator delivery (Developer and Dev Lead are different people)
@@ -57,12 +57,12 @@ Test infrastructure splits across three positions. Each position owns a differen
 | Position | Owns | Example (IITR #789 — illustrative, not exhaustive) |
 |----------|------|---------------|
 | **JA** | **Defines** — rubric in design doc: what to test, success metrics, expected outcomes, fidelity requirements ("test tool must mirror production pipeline") | 29 test questions, accuracy targets, source references ✅ |
-| **Dev Lead** | **Provisions** — canonical version deployed before developer starts. Deduplicates competing versions. Verifies accessibility. Periodic fidelity check. | 4 competing rubric versions, nobody canonicalized ❌ |
-| **Developer** | **Executes** — builds test harness, runs tests, performs deep witness against canonical rubric. Signals issues upward. | Built harness, ran against wrong rubric version ⚠️ |
+| **Dev Lead** | **Provisions** — authoritative version deployed before developer starts. Deduplicates competing versions. Verifies accessibility. Periodic fidelity check. | 4 competing rubric versions, no single source designated ❌ |
+| **Developer** | **Executes** — builds test harness, runs tests, performs deep witness against authoritative rubric. Signals issues upward. | Built harness, ran against wrong rubric version ⚠️ |
 
-**Two distinct things:** The test *rubric* (data — questions + expected answers) and the test *infrastructure* (code — harness, debug scripts, faithful pipeline mirror). Both follow the same three-way split. The JA defines what to test and what "faithful" means. The Dev Lead provisions the canonical data and verifies tool fidelity. The Developer builds and runs the tools.
+**Two distinct things:** The test *rubric* (data — questions + expected answers) and the test *infrastructure* (code — harness, debug scripts, faithful pipeline mirror). Both follow the same three-way split. The JA defines what to test and what "faithful" means. The Dev Lead provisions the authoritative data and verifies tool fidelity. The Developer builds and runs the tools.
 
-**Rubric canonicalization:** For every project with a test rubric, there is exactly ONE canonical source. The Dev Lead designates it before delegation. All other versions (e.g., server copies, Drive exports, hippocampus snapshots) derive from it. When the canonical source changes, the Dev Lead is responsible for propagating the update.
+**Single source of truth:** For every project with a test rubric, there is exactly ONE authoritative version. The Dev Lead designates it before delegation. All other copies (e.g., server files, Drive exports, hippocampus snapshots) derive from it. When the authoritative version changes, the Dev Lead is responsible for propagating the update.
 
 **Escalation chain:** When something is wrong with the rubric or tooling:
 - **Developer** finds rubric/tool issue during execution → signals **Dev Lead** via issue comment
