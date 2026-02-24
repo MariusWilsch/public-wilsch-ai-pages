@@ -50,6 +50,8 @@ Ship with Confidence defines three quality layers. Each layer has a different ow
 
 **Attention mode:** Human witness requires single-window focus. Implementation and spec work can be multi-terminal. The Dev Lead cannot review while doing other work — same constraint as spec-design review.
 
+**Undefined:** Concrete spot-check methodology — how many items, what selection criteria, what the Dev Lead's spot-check workflow looks like operationally.
+
 ### Part 2: Test Infrastructure Ownership
 
 Test infrastructure splits across three positions. Each position owns a different aspect. Escalation flows upward: Developer → Dev Lead → JA.
@@ -60,6 +62,8 @@ Test infrastructure splits across three positions. Each position owns a differen
 | **Dev Lead** | **Provisions** — authoritative version deployed before developer starts. Deduplicates competing versions. Verifies accessibility. Periodic fidelity check. | 4 competing rubric versions, no single source designated ❌ |
 | **Developer** | **Executes** — builds test harness, runs tests, performs deep witness against authoritative rubric. Signals issues upward. | Built harness, ran against wrong rubric version ⚠️ |
 
+**Issue-level vs project-level:** The Developer creates ACs for each issue (how to verify THIS implementation). The JA designs the project-level test rubric (how to verify the PROJECT works as a whole). The Developer should not be expected to figure out the test rubric design — that is a spec-design artifact.
+
 **Two distinct things:** The test *rubric* (data — questions + expected answers) and the test *infrastructure* (code — harness, debug scripts, faithful pipeline mirror). Both follow the same three-way split. The JA defines what to test and what "faithful" means. The Dev Lead provisions the authoritative data and verifies tool fidelity. The Developer builds and runs the tools.
 
 **Single source of truth:** For every project with a test rubric, there is exactly ONE authoritative version. The Dev Lead designates it before delegation. All other copies (e.g., server files, Drive exports, hippocampus snapshots) derive from it. When the authoritative version changes, the Dev Lead is responsible for propagating the update.
@@ -68,6 +72,8 @@ Test infrastructure splits across three positions. Each position owns a differen
 - **Developer** finds rubric/tool issue during execution → signals **Dev Lead** via issue comment
 - **Dev Lead** finds design gap during provisioning or fidelity check → signals **JA** via issue comment
 - **JA** updates design doc → cycle restarts
+
+**Undefined:** Operational provisioning steps — what "designate and deploy the authoritative version" looks like as a concrete procedure per project type.
 
 ### Part 3: Feedback-Not-Fixes
 
@@ -86,6 +92,8 @@ When the Dev Lead spot-checks and finds an issue, the output is an issue comment
 
 **When the Dev Lead IS the solo operator:** This principle still applies conceptually. When wearing the Dev Lead hat, generate feedback (observations, issue comments). When wearing the Developer hat, do the fixes. The hat-switch is the discipline — even for one person, separating review from execution prevents the "quick fix" that introduces new debt.
 
+**Undefined:** Structure and routing mechanism for feedback comments — what a feedback comment contains, how it gets assigned back to the Developer's workstream.
+
 ### Part 4: Communication Standards
 
 Two principles ensure the Dev Lead has visibility without needing conversation log access.
@@ -93,6 +101,8 @@ Two principles ensure the Dev Lead has visibility without needing conversation l
 **Witness Reports:** After deep witness, the Developer communicates findings and spot-check recommendations via issue comment. This is the handoff artifact — without it, the Dev Lead rediscovers what to test from scratch.
 
 **Deviation Signals:** When the Developer goes off-plan (adds data, changes approach, creates unspecified infrastructure), they signal the deviation. Going off-plan is fine — initiative is valued. Invisible deviation is the failure. The communication medium and exact format are TBD — the principle is: the Dev Lead learns about deviations before the review, not during it.
+
+**Undefined:** Exact format and structure for witness reports and deviation signals — to be defined through practice as more multi-operator deliveries are executed.
 
 ### Part 5: Codebase Coherence Audit
 
