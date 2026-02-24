@@ -72,6 +72,6 @@ Alle weiteren Schritte (Docker-Installation, Konnektivitätstest, App-Deployment
 
 Alle weiteren Schritte (Deployment, Konfiguration, Test, Inbetriebnahme) übernimmt Wilsch AI Services nach Erhalt des Zugangs.
 
-**Migrationsaufwand:** 1 Arbeitstag (8 Stunden) / 720 EUR
+**Migrationsaufwand:** 1 Arbeitstag (8 Stunden)
 
 ---
