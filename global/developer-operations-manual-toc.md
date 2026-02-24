@@ -73,6 +73,7 @@ Structure follows [MG-0080 Operations Manuals](https://www.emyth.com) (E-Myth Ma
 |----------|--------|------|
 | Developer Operations Manual | Draft (v3) | [developer-operations-manual-wilsch-ai-services](https://mariuswilsch.github.io/public-wilsch-ai-pages/global/developer-operations-manual-wilsch-ai-services) |
 | Issue Lifecycle Router | Draft | [issue-lifecycle-router](https://mariuswilsch.github.io/public-wilsch-ai-pages/global/issue-lifecycle-router) |
+| Ship with Confidence | Draft | [ship-with-confidence](https://mariuswilsch.github.io/public-wilsch-ai-pages/global/ship-with-confidence) |
 
 **Logic:** MG-0080 Operations Manuals guide. Systems section is the "tool kit" — all processes and procedures for running the position.
 
