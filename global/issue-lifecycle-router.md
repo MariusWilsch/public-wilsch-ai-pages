@@ -248,6 +248,17 @@ The Sub-Issue Board includes review processing views (filtered by `review` label
 
 Before each client meeting, the milestone shows what was completed and what remains. After the meeting, unfinished sub-issues move to the next milestone. The monthly plan sets the strategic frame; milestones execute within it.
 
+### Sub-Issue Board Columns
+
+| Column | Meaning |
+|--------|---------|
+| **To Do** | Ready to start |
+| **In Progress** | Being worked on |
+| **Review** | Waiting for Dev Lead review (`review` label) |
+| **Done** | Complete |
+
+Same columns as the current board — these work for fast-moving items. The `review` label auto-adds items to a filtered review processing view (FIFO sort by date added) for the Dev Lead.
+
 ### Conversation Audit Trail
 
 Developer sessions (Claude Code conversations) are pushed to a shared repository ([claude-code-conversation-store](https://github.com/MariusWilsch/claude-code-conversation-store)) and linked from epic comments. This gives the Dev Lead forensic-level access to investigate decisions point-in-time using the conversation-reader skill, without relying on the Developer's account of what happened.
