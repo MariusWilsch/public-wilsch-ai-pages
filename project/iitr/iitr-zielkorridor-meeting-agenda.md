@@ -10,8 +10,8 @@ publish: true
 
 Die direkte Zusammenarbeit zwischen Marius Wilsch und IITR Datenschutz GmbH definieren — Taktung, Umfang und gegenseitige Erwartungen.
 
-1. **DS-Kit Lieferstatus** — aktuelle Testergebnisse und Live-Demo vorstellen, Lieferzeitplan bestätigen
-2. **Zweiwöchentliche Taktung vereinbaren** — Festpreis-Meilensteinlieferung mit regelmäßigen zweiwöchentlichen Berührungspunkten als Zusammenarbeitsmodell vorschlagen
+1. **Zweiwöchentliche Taktung vereinbaren** — Festpreis-Meilensteinlieferung mit regelmäßigen zweiwöchentlichen Berührungspunkten als Zusammenarbeitsmodell vorschlagen
+2. **DS-Kit Lieferstatus** — aktuelle Testergebnisse und Evaluierungsbericht vorstellen, Lieferzeitplan bestätigen
 3. **Portfolio-Abgleich** — alle aktiven Systeme (RAG-V1, RAG-V2, DS-Kit, Avatar) durchgehen und Prioritäten für nächste Meilensteine abstimmen
 4. **Serveradministration** — formelle Übernahme der Infrastrukturverantwortung
 
