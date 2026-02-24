@@ -238,6 +238,16 @@ The Sub-Issue Board includes review processing views (filtered by `review` label
 
 **Sprint boundaries:** GitHub milestones scope sub-issues to touch-point windows (e.g., "Archibus — Sprint March 10"). Milestones are orthogonal to the epic hierarchy — no additional nesting level required.
 
+**How milestones connect to client cadence:**
+
+| Source | What It Provides | Cadence |
+|--------|-----------------|---------|
+| **Monthly plan** | Project priorities, deadlines, capacity allocation | Monthly |
+| **Client touch points** | Natural sprint boundaries (meetings, reviews, workshops) | Every 1-3 weeks |
+| **Milestone** | Scoped sub-issues for the next touch point | Per touch point |
+
+Before each client meeting, the milestone shows what was completed and what remains. After the meeting, unfinished sub-issues move to the next milestone. The monthly plan sets the strategic frame; milestones execute within it.
+
 ### Conversation Audit Trail
 
 Developer sessions (Claude Code conversations) are pushed to a shared repository ([claude-code-conversation-store](https://github.com/MariusWilsch/claude-code-conversation-store)) and linked from epic comments. This gives the Dev Lead forensic-level access to investigate decisions point-in-time using the conversation-reader skill, without relying on the Developer's account of what happened.
