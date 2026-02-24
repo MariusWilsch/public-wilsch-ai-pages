@@ -74,6 +74,10 @@ Position Agreement for the Developer position at Wilsch AI Services. Framework: 
 
 6. Keep multiple issues (3-4 worktrees) from the same design doc moving in parallel. One worktree per issue. Focus on one project at a time.
 
+7. After completing human witness (technical validation), post findings as an issue comment — including what was tested, pass/fail per item, and spot-check recommendations for the Dev Lead. This is the handoff artifact.
+
+8. Signal deviations from the design doc or implementation plan via issue comment before adding `review` label. Initiative is valued — invisible deviation is not.
+
 ### Company-Wide Standards
 
 1. All work will be performed using documented systems (Operations Manual)
@@ -137,6 +141,7 @@ Position Agreement for the Developer position at Wilsch AI Services. Framework: 
 - [Organization Chart - Wilsch AI Services](https://mariuswilsch.github.io/public-wilsch-ai-pages/global/organization-chart-wilsch-ai-services)
 - [Issue Lifecycle Router](https://mariuswilsch.github.io/public-wilsch-ai-pages/global/issue-lifecycle-router)
 - [Ship with Confidence](https://mariuswilsch.github.io/public-wilsch-ai-pages/global/ship-with-confidence)
+- [Dev Lead Witness & Review System](https://mariuswilsch.github.io/public-wilsch-ai-pages/global/dev-lead-witness-review-system)
 - [Three-Session Model](https://mariuswilsch.github.io/public-wilsch-ai-pages/global/three-session-model)
 
 ---
