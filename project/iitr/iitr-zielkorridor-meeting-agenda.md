@@ -50,6 +50,7 @@ Ein strukturiertes Zusammenarbeitsmodell ersetzt das bisherige Ad-hoc-Kommunikat
 - **Zyklusstruktur:** Erledigtes besprechen → nächsten Meilenstein vereinbaren → vor dem nächsten Meeting liefern
 - **Ad-hoc:** Bei Klärungsbedarf zwischen den Zyklen kurze Ad-hoc-Gespräche möglich — primärer Kontakt über Stellmacher
 - **Beispielumfang pro Zyklus:** Langfuse-Monitoring-Verbesserungen, DS-Kit-Iterationen nach Feedback, Avatar-Fortschritt
+- **Erster Zyklus:** Start nächste Woche Dienstag. DS-Kit-Lieferung als erster Meilenstein. CSV-Vorabversion heute als Feedbackgrundlage
 
 💡 **Verbal erwähnen (nicht im Vorschlag):** Sobald die Zusammenarbeit eingespielt ist, besteht perspektivisch die Möglichkeit eines Retainer-Modells, das alle Projekte und Wartung bündelt — als Teaser, nicht als Vorschlag.
 
@@ -60,9 +61,18 @@ Ein strukturiertes Zusammenarbeitsmodell ersetzt das bisherige Ad-hoc-Kommunikat
 
 Fortschrittsbericht über das DS-Kit-Navigationssystem. Ein strukturierter Evaluierungsbericht (CSV) zeigt den aktuellen Stand: 29 Testfragen mit vollständigen RAG-Antworten und Quellenattribution. Dieser Bericht ist ein Beispiel für das Lieferformat im zweiwöchentlichen Rhythmus (→ Thema 2).
 
+- **Live-System:** [dskit.iitr-cloud.de](https://dskit.iitr-cloud.de/)
 - **Evaluierungsbericht:** Testfrage, erwartete Antwort, vollständige RAG-Antwort, erwartete vs. tatsächliche Quellen (Top-3)
 - Bericht dient als Feedbackgrundlage — IITR kann Antwortqualität bewerten und Prioritäten für nächsten Zyklus setzen
 - Bekannte Einschränkungen sind identifiziert und werden im nächsten Zyklus adressiert
+
+**Demo-Fragen (3 Beispiele live zeigen):**
+
+1. *Kann ich Sie als Datenschutzbeauftragter auf meiner Webseite angeben?* — zeigt korrekte Kontaktdaten + Kapitelreferenz
+2. *Wir haben eine Datenschutzverletzung, bei der ein Kunde versehentlich eine Buchungsbestätigung mit Daten aus einem anderen Vorgang erhalten hat. Was müssen wir tun?* — zeigt Notfallprozess + Dokumentenverweis (Kapitel 10)
+3. *Im Rahmen unseres anstehenden TISAX Audits müssen wir genau die Inhalte unserer Schulungen aus dem Datenschutz Kit angeben. Haben Sie eine solche Übersicht für mich?* — zeigt tiefe Navigation (Dokument 11-03, 11-04)
+
+💡 **Nach dem Meeting:** CSV-Evaluierungsbericht an Stellmacher schicken für Feedback
 
 **Zu klären:** Feedback zum Evaluierungsbericht, Priorisierung der offenen Punkte für nächsten Zweiwochenzyklus.
 
