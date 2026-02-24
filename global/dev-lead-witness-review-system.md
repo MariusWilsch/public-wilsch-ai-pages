@@ -106,7 +106,9 @@ Two principles ensure the Dev Lead has visibility without needing conversation l
 
 ### Part 5: Codebase Coherence Audit
 
-Before delegating an epic to a Developer, the Dev Lead verifies the codebase is in a consistent state. The Developer implements what ACs say — they cannot be held responsible for architectural debt they inherit.
+Before delegating an epic to a Developer, the Dev Lead verifies the codebase is in a consistent state.
+
+**Developer boundary:** The Developer operates at issue-level — ACs, implementation within design doc scope, issue-level test harness. The Developer is NOT responsible for project-level concerns: codebase coherence, test rubric design, cross-issue architectural consistency, or inherited technical debt. Those are Dev Lead and JA concerns respectively.
 
 **Principle:** The Dev Lead is the bridge between the design spec and the codebase. If the codebase is messy, undocumented, or internally contradictory, that is the Dev Lead's problem to surface — either cleaning it up or flagging it as a precondition before the Developer starts.
 
