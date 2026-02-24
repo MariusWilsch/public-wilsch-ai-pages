@@ -76,6 +76,8 @@ Every issue has clear "when is this done?"
 
 **At epic level (within an epic):** The JA creates a spec-design sub-issue — producing a design doc through extraction passes. Same work type, different position, different level. The SA ensures design quality but the JA does the extraction work.
 
+**Undefined:** JA work type label encoding — how is spec-design at JA level signaled in tooling and on the board? Does the JA sub-issue get a `maker/spec-design` label, a position-specific label, or is the sub-issue relationship to the epic sufficient signal?
+
 **Key insight:** Type describes what KIND of refinement is happening. Position determines who does it. Level determines scope.
 
 ### Developer Entry Points
@@ -125,6 +127,8 @@ VP/Delivery creates epics when a business outcome is identified. The epic enters
 **Routing within the epic:** VP/Delivery (or SA acting on VP/Delivery's behalf) decides whether the business outcome needs a design doc (JA creates a spec-design sub-issue) or can be built directly (Developer creates spec-implement sub-issues). This routing decision determines which position creates the first sub-issue.
 
 **Context partitioning:** Each sub-issue has its own trace line (comments, commits, conversations). The JA's extraction pass comments live on the JA's sub-issue — the Developer never needs to read them. Context is partitioned by sub-issue, not by issue lifecycle.
+
+**Undefined:** Data artifact centralization — where do raw artifacts (spreadsheets, PDFs, test data) live across the JA-to-Developer handoff? Options: hippocampus project directory as anchor (both JA and Developer reference it), epic body (centralized but GitHub-limited), or sub-issue tracking dirs (current pattern, but orphans on close).
 
 ### Per-Position Accountability
 
@@ -251,6 +255,8 @@ The Work Board includes review processing views (filtered by `review` label, FIF
 | **Milestone** | Scoped sub-issues for the next touch point | Per touch point |
 
 Before each client meeting, the milestone shows what was completed and what remains. After the meeting, unfinished sub-issues move to the next milestone. The monthly plan sets the strategic frame; milestones execute within it.
+
+**Undefined:** Milestone sufficiency vs release epics — are milestones alone enough for sprint-boundary cadence, or do time-bound release epics (like the CCI pattern) provide better intermediate review checkpoints? Pending empirical evidence from running the milestone pattern on active projects.
 
 ### Work Board Columns
 
