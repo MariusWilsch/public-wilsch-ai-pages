@@ -28,7 +28,6 @@ Das System ist ein einzelner Docker-Container (FastAPI, Python 3.11+) ohne Daten
 **Systemverhalten:**
 - Polling-Intervall: ~10 Sekunden (konfigurierbar)
 - Geringe CPU/RAM-Last — reine Dateiverarbeitung
-- Kein ausgehender Internet-Traffic außer E-Mail und optionalem Monitoring
 
 ---
 
