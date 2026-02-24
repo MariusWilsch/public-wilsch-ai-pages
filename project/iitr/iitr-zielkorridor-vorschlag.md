@@ -10,17 +10,6 @@ publish: true
 
 ---
 
-## Systemportfolio — Aktueller Stand
-
-| System | Status | Nächster Schritt |
-|--------|--------|------------------|
-| **RAG-V1** (DSGVO FAQ) | Produktion (85% Automatisierung, 97% Genauigkeit) | Laufende Wartung + Monitoring-Verbesserungen |
-| **RAG-V2** (Rechtsprechungssuche) | Fertiggestellt (2.567 Urteile indiziert) | Abstimmung über Produktiveinsatz |
-| **DS-Kit Navigation** | Kurz vor Fertigstellung | Heute: Demo + Feedback |
-| **Avatar** (Konvergenz) | Konzeptphase | Prioritäten und Vision abstimmen |
-
----
-
 ## Vorgeschlagenes Arbeitsmodell
 
 **Zweiwöchentlicher Rhythmus** als Zusammenarbeitsrahmen:
@@ -29,6 +18,17 @@ publish: true
 - **Zyklusstruktur:** Fortschritt des letzten Zyklus zeigen → nächsten Umfang gemeinsam definieren → liefern
 - **Festpreis** pro Liefergegenstand, vereinbart in jedem Meeting. Abrechnung bei Lieferung
 - **Ad-hoc-Gespräche** bei Klärungsbedarf zwischen den Zyklen möglich — primärer Kontakt über Herrn Stellmacher
+
+---
+
+## Systemportfolio — Aktueller Stand
+
+| System | Status | Nächster Schritt |
+|--------|--------|------------------|
+| **RAG-V1** (DSGVO FAQ) | Produktion (85% Automatisierung, 97% Genauigkeit) | Laufende Wartung + Monitoring-Verbesserungen |
+| **RAG-V2** (Rechtsprechungssuche) | Fertiggestellt (2.567 Urteile indiziert) | Abstimmung über Produktiveinsatz |
+| **DS-Kit Navigation** | Kurz vor Fertigstellung | Heute: Demo + Feedback |
+| **Avatar** (Konvergenz) | Konzeptphase | Prioritäten und Vision abstimmen |
 
 ---
 
