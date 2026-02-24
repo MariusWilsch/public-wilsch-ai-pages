@@ -30,13 +30,15 @@ Die direkte Zusammenarbeit zwischen Marius Wilsch und IITR Datenschutz GmbH defi
 ### 1. Verzögerte Antworten und Verantwortungsübernahme
 ⏱️ 5 Min.
 
-Mehrere E-Mails sind unbeantwortet, darunter die SpaceNet VPN-Migrations-Rückfrage (20. Feb). Die Verzögerung hängt mit einer Übergangsphase bezüglich des bisherigen Vermittlers zusammen.
+Mehrere E-Mails sind unbeantwortet, darunter die SpaceNet VPN-Migrations-Rückfrage (20. Feb). Die Verzögerung hängt mit einer laufenden rechtlichen Auseinandersetzung mit dem bisherigen Vermittler zusammen — Transparenz darüber, ohne um Unterstützung zu bitten.
 
 - SpaceNet wartet auf Rückmeldung zum VPN/SSL-Migrationsstatus ([E-Mail](https://mail.google.com/mail/u/0/#all/19c79f0c8b9388a8))
+- Hintergrund: Rechtliche Situation mit Rolnik — Vertragsverhältnis beendet, Kommunikation nicht mehr möglich. Marius hat das Projekt eigenständig weitergeführt
 - Ab sofort: Marius ist der einzige Ansprechpartner für alle technischen Themen — keine Vermittlerverzögerungen mehr
 - Dieses Meeting etabliert die Arbeitsbeziehung, die diese Zusage umsetzbar macht
+- Falls IITR bereit wäre, ihre Erfahrungen mit der bisherigen Kommunikationsstruktur schriftlich zu bestätigen — willkommen, aber keine Voraussetzung
 
-**Zu klären:** Verzögerung anerkennen, direkte Verantwortungsübernahme für Kommunikation und Reaktionsfähigkeit zusagen.
+**Zu klären:** Verzögerung anerkennen, kurzer Kontext zur rechtlichen Situation, direkte Verantwortungsübernahme zusagen.
 
 ### 2. DS-Kit Navigation: Aktueller Stand und Evaluierungsbericht
 ⏱️ 10 Min.
