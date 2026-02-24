@@ -42,10 +42,9 @@ Das System ist ein einzelner Docker-Container (FastAPI, Python 3.11+) ohne Daten
 | Festplatte | 40 GB (SSD empfohlen, HDD ausreichend) | 80 GB |
 | Betriebssystem | Linux-basiert (Ubuntu empfohlen) | — |
 | Container-Runtime | Docker Engine 24.x+ | — |
-| Netzwerk ausgehend | IMAP (993), SMTP (587/465) | — |
-| Netzwerk eingehend | Port 9000 (intern/VPN) | — |
+| Netzwerk ausgehend | IMAP und SMTP Ports offen | — |
+| Netzwerk eingehend | SSH-Zugang für Deployment | — |
 | Internet | Business-Leitung, >10 Mbit/s | — |
-| Stromversorgung | USV empfohlen | — |
 
 **Machbarkeitsbewertung (Stand Feb 2026):**
 Die von Rohdex-IT angebotenen Spezifikationen (4 V-Cores, 16 GB RAM, 120 GB Speicher) übertreffen alle Mindestanforderungen — On-Premise-Hosting ist aus Hardware-Sicht machbar.
