@@ -8,6 +8,13 @@ publish: true
 
 *Vorgelegt von Marius Wilsch, 24. Februar 2026*
 
+**Gesprächsthemen:**
+
+1. Vorgeschlagenes Arbeitsmodell
+2. DS-Kit Navigation: Aktueller Stand und Evaluierungsbericht
+3. Systemportfolio: Status und Prioritäten
+4. Serveradministration und Wartungsvereinbarung
+
 ---
 
 ## Vorgeschlagenes Arbeitsmodell
