@@ -218,14 +218,14 @@ Two boards serve different audiences at different cadences:
 
 | Board | Audience | Cadence | Content |
 |-------|----------|---------|---------|
-| **Epic Board** | VP/Delivery, SA, Dev Lead | Weeks/months | Business outcomes only |
-| **Sub-Issue Board** | Developer, Dev Lead | Days | Sub-issues, manager tasks, review processing |
+| **Commitments Board** | VP/Delivery, SA, Dev Lead | Weeks/months | Business outcomes only |
+| **Work Board** | Developer, Dev Lead | Days | Sub-issues, manager tasks, review processing |
 
-The Sub-Issue Board includes review processing views (filtered by `review` label, FIFO sort) for the Dev Lead to process sub-issue gates. See [Gate Signal Mechanism](#gate-signal-mechanism).
+The Work Board includes review processing views (filtered by `review` label, FIFO sort) for the Dev Lead to process sub-issue gates. See [Gate Signal Mechanism](#gate-signal-mechanism).
 
-**The Epic Board is a capacity signal.** The number of Active epics tells you how many business outcomes you've committed to. 119 issues tells you nothing about capacity. 10 Active epics tells you "we're overcommitted." The board becomes a commitment dashboard — a forcing function for saying no to new work.
+**The Commitments Board is a capacity signal.** The number of Active epics tells you how many business outcomes you've committed to. 119 issues tells you nothing about capacity. 10 Active epics tells you "we're overcommitted." The board becomes a commitment dashboard — a forcing function for saying no to new work.
 
-### Epic Board Columns
+### Commitments Board Columns
 
 | Column | Meaning | Trigger | Owner |
 |--------|---------|---------|-------|
@@ -248,7 +248,7 @@ The Sub-Issue Board includes review processing views (filtered by `review` label
 
 Before each client meeting, the milestone shows what was completed and what remains. After the meeting, unfinished sub-issues move to the next milestone. The monthly plan sets the strategic frame; milestones execute within it.
 
-### Sub-Issue Board Columns
+### Work Board Columns
 
 | Column | Meaning |
 |--------|---------|
