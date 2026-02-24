@@ -43,10 +43,10 @@ Ship with Confidence defines three quality layers. Each layer has a different ow
 |-------|-------|-------|--------|
 | **Sanity Check** | Developer | Does it run? Does it not crash? | Pass/fail in session |
 | **AC Verification** | Developer (AI) | Does the implementation match the spec? Objective, automatable. | `verification.jsonl` — machine-readable trace |
-| **Human Witness (Deep)** | Developer | Does the output actually look right? Sequential attention, one question at a time. | Issue comment: witness report + spot-check recommendations |
+| **Human Witness (Deep)** | Developer | Does the output actually look right? Sequential attention, one verification item at a time (question, scenario, sub-issue — depends on project). | Issue comment: witness report + spot-check recommendations |
 | **Human Witness (Spot-check)** | Dev Lead | Quick verification using developer-prepared materials. Gut-check: "does this feel right?" | Issue comment: approval or feedback items routed back to developer |
 
-**Key distinction:** ACs test issue-level spec compliance (objective). Human witness tests subjective quality that ACs structurally cannot capture — wrong chapter references, hallucinated content, format issues that "look off." These are different layers, not different depths of the same thing.
+**Key distinction:** ACs test issue-level spec compliance (objective). Human witness tests subjective quality that ACs structurally cannot capture — e.g., incorrect references, hallucinated content, format issues that "look off." These are different layers, not different depths of the same thing.
 
 **Attention mode:** Human witness requires single-window focus. Implementation and spec work can be multi-terminal. The Dev Lead cannot review while doing other work — same constraint as spec-design review.
 
@@ -54,15 +54,15 @@ Ship with Confidence defines three quality layers. Each layer has a different ow
 
 Test infrastructure splits across three positions. Each position owns a different aspect. Escalation flows upward: Developer → Dev Lead → JA.
 
-| Position | Owns | Example (#789) |
+| Position | Owns | Example (IITR #789 — illustrative, not exhaustive) |
 |----------|------|---------------|
-| **JA** | **Defines** — rubric in design doc: what to test, success metrics, expected outcomes, fidelity requirements ("test tool must mirror production pipeline") | 29 test questions, accuracy targets, source references in design doc ✅ |
+| **JA** | **Defines** — rubric in design doc: what to test, success metrics, expected outcomes, fidelity requirements ("test tool must mirror production pipeline") | 29 test questions, accuracy targets, source references ✅ |
 | **Dev Lead** | **Provisions** — canonical version deployed before developer starts. Deduplicates competing versions. Verifies accessibility. Periodic fidelity check. | 4 competing rubric versions, nobody canonicalized ❌ |
 | **Developer** | **Executes** — builds test harness, runs tests, performs deep witness against canonical rubric. Signals issues upward. | Built harness, ran against wrong rubric version ⚠️ |
 
 **Two distinct things:** The test *rubric* (data — questions + expected answers) and the test *infrastructure* (code — harness, debug scripts, faithful pipeline mirror). Both follow the same three-way split. The JA defines what to test and what "faithful" means. The Dev Lead provisions the canonical data and verifies tool fidelity. The Developer builds and runs the tools.
 
-**Rubric canonicalization:** For every project with a test rubric, there is exactly ONE canonical source. The Dev Lead designates it before delegation. All other versions (VPS copies, Drive exports, hippocampus snapshots) derive from it. When the canonical source changes, the Dev Lead is responsible for propagating the update.
+**Rubric canonicalization:** For every project with a test rubric, there is exactly ONE canonical source. The Dev Lead designates it before delegation. All other versions (e.g., server copies, Drive exports, hippocampus snapshots) derive from it. When the canonical source changes, the Dev Lead is responsible for propagating the update.
 
 **Escalation chain:** When something is wrong with the rubric or tooling:
 - **Developer** finds rubric/tool issue during execution → signals **Dev Lead** via issue comment
