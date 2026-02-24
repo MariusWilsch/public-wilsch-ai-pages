@@ -51,6 +51,8 @@ Ein strukturiertes Zusammenarbeitsmodell ersetzt das bisherige Ad-hoc-Kommunikat
 - **Ad-hoc:** Bei Klärungsbedarf zwischen den Zyklen kurze Ad-hoc-Gespräche möglich — primärer Kontakt über Stellmacher
 - **Beispielumfang pro Zyklus:** Langfuse-Monitoring-Verbesserungen, DS-Kit-Iterationen nach Feedback, Avatar-Fortschritt
 
+💡 **Verbal erwähnen (nicht im Vorschlag):** Sobald die Zusammenarbeit eingespielt ist, besteht perspektivisch die Möglichkeit eines Retainer-Modells, das alle Projekte und Wartung bündelt — als Teaser, nicht als Vorschlag.
+
 **Zu klären:** Einigung auf die zweiwöchentliche Taktung als Zusammenarbeitsrahmen und Startdatum des ersten Zyklus.
 
 ### 3. DS-Kit Navigation: Aktueller Stand und Evaluierungsbericht
