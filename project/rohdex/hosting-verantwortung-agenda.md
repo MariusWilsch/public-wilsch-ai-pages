@@ -46,17 +46,17 @@ Für die Migration auf Rohdex-Infrastruktur muss Docker installiert, Firewall-Po
 
 **To resolve:** Die Zuständigkeit für die Infrastruktur-Vorbereitung festlegen — entweder übernimmt Marius die gesamte Konfiguration (mit Zugang von Rohdex-IT), oder Rohdex-IT bereitet die Umgebung nach Checkliste vor und Marius deployt nur die Applikation.
 
-### 3. SLA-Preismodell — Verantwortung bestimmt den Preis, nicht der Standort
+### 3. SLA-Preismodell — Verantwortung bestimmt den Preis
 ⏱️ 15 min
 
-Das aktuelle SLA (525 EUR/Monat) setzt sich aus zwei Bereichen zusammen: App-Verantwortung (325 EUR) und Infrastruktur-Verantwortung (200 EUR). Der Preis hängt davon ab, wer den Server managt — nicht davon, wo der Server steht.
+Das SLA setzt sich aus zwei Bereichen zusammen: App-Verantwortung (325 EUR) und Infrastruktur-Verantwortung (200 EUR). Der Preis hängt davon ab, wer den On-Premise-Server managt.
 
 - App-Ebene (325 EUR): Wartung, Updates, Bugfixes, Monitoring (GlitchTip), Template-Anpassungen — bleibt bei Marius
 - Infra-Ebene (+200 EUR): Server-Uptime, OS-Updates, Backups, Netzwerk, Docker-Engine — nur wenn Marius verantwortlich
-- Marius managt Server (Cloud oder On-Premise) = 525 EUR
-- Rohdex-IT managt Server (Cloud oder On-Premise) = 325 EUR
+- Marius managt On-Premise-Server = 525 EUR
+- Rohdex-IT managt On-Premise-Server = 325 EUR
 
-**To resolve:** Festlegen, wer die Server-Verantwortung übernimmt — unabhängig vom Hosting-Standort. Damit steht der SLA-Preis fest.
+**To resolve:** Festlegen, wer die Server-Verantwortung auf der Rohdex-Infrastruktur übernimmt. Damit steht der SLA-Preis fest.
 
 ## Meeting Format
 
