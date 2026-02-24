@@ -5,7 +5,7 @@ publish: true
 # Hosting-Anforderungen — ROHDEX Dokumentenverarbeitung
 [[client-rohdex]]
 
-Technische Anforderungen und Hosting-Optionen für die Migration des ROHDEX-Dokumentenverarbeitungssystems.
+Technische Anforderungen für die Migration des ROHDEX-Dokumentenverarbeitungssystems auf Rohdex-Infrastruktur.
 
 ---
 
@@ -32,30 +32,7 @@ Das System ist ein einzelner Docker-Container (FastAPI, Python 3.11+) ohne Daten
 
 ---
 
-## 2. Cloud-Hosting-Optionen
-
-Zwei Cloud-Anbieter mit Rechenzentren in Deutschland (DSGVO-konform):
-
-**Empfehlung:** [OVHcloud VPS-1](https://www.ovhcloud.com/de/vps/) — ab ~€3,82/Mo (exkl. MwSt., 12-Mo-Vertrag, Stand Feb 2026)
-
-**Alternative:** [Hetzner CX33](https://www.hetzner.com/cloud/) — ab ~€6,59/Mo (exkl. MwSt., inkl. Backup, Stand Feb 2026)
-
-**Vergleich:**
-
-| Kriterium | OVHcloud | Hetzner |
-|-----------|----------|---------|
-| Monatspreis | ~€3,82 | ~€6,59 (inkl. Backup) |
-| Backups | Inklusive (täglich) | +€1,10/Mo |
-| DDoS-Schutz | Inklusive | Aufpreis |
-| Support | 24/7, Live-Chat | Geschäftszeiten, Tickets |
-| Performance/Kern | Gut | Besser |
-| Control Panel | Langsam (bekannt) | Schnell |
-
-Beide Anbieter sind für diese Systemgröße mehr als ausreichend.
-
----
-
-## 3. Eigenes Rechenzentrum (On-Premise)
+## 2. On-Premise-Hosting (Rohdex-Infrastruktur)
 
 **Mindestanforderungen:**
 
@@ -76,9 +53,9 @@ Die von Rohdex-IT angebotenen Spezifikationen (4 V-Cores, 16 GB RAM, 120 GB Spei
 
 **Vorbereitung durch Rohdex-IT (vor Migrationstermin):**
 1. Ausgehende Ports freigeben: IMAP (993) und SMTP (587 oder 465)
-2. SSH-Zugang oder Remote-Zugriff für Marius einrichten
+2. SSH-Zugang oder Remote-Zugriff für Wilsch AI Services einrichten
 
-Alle weiteren Schritte (Docker-Installation, Konnektivitätstest, App-Deployment) übernimmt Marius nach Erhalt des Zugangs.
+Alle weiteren Schritte (Docker-Installation, Konnektivitätstest, App-Deployment) übernimmt Wilsch AI Services nach Erhalt des Zugangs.
 
 **Risikofaktoren:**
 - 24/7-Verfügbarkeit abhängig von eigener Wartungsdisziplin
@@ -86,9 +63,9 @@ Alle weiteren Schritte (Docker-Installation, Konnektivitätstest, App-Deployment
 
 ---
 
-## 4. Migration
+## 3. Migration
 
-**Migrationsaufwand:** 1 Arbeitstag (8 Stunden) — gilt für beide Hosting-Optionen.
+**Migrationsaufwand:** 1 Arbeitstag (8 Stunden).
 
 | Aufgabe | Stunden |
 |---------|---------|
@@ -98,10 +75,11 @@ Alle weiteren Schritte (Docker-Installation, Konnektivitätstest, App-Deployment
 | DNS/SSL-Konfiguration falls erforderlich | ~0,5h |
 | Funktionstest aller 9 Verarbeitungsschritte | ~2h |
 | Inbetriebnahme und Übergabe | ~1h |
-| Puffer für Unvorhergesehenes | ~2h |
+| Bugfix Tara-Berechnung (Nachkommastellen-Fehler) | ~1h |
+| Puffer für Unvorhergesehenes | ~1h |
 | **Gesamt** | **~8h** |
 
-Bei On-Premise-Migration: zusätzliche Kalenderzeit für IT-Koordination (Firewall-Freigaben, Zugangsvorbereitung) — diese fällt vor dem Migrationstermin an, nicht am Migrationstag selbst.
+Zusätzliche Kalenderzeit für IT-Koordination (Firewall-Freigaben, Zugangsvorbereitung) fällt vor dem Migrationstermin an, nicht am Migrationstag selbst.
 
 **E-Mail-Konfiguration:**
 Das System nutzt bereits das Rohdex-eigene E-Mail-Konto `export-ki@rohdex.com` (IONOS). Dieses Konto bleibt bei der Migration identisch — es werden lediglich die bestehenden Zugangsdaten auf dem neuen Server hinterlegt.
