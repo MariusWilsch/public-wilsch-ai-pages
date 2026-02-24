@@ -17,7 +17,7 @@ Die direkte Zusammenarbeit zwischen Marius Wilsch und IITR Datenschutz GmbH defi
 
 ## Pre-Read
 
-- [DS-Kit Test-Analyse](dskit-rag-test-analysis.md) — aktueller Genauigkeits- und Lückenstatus
+- [DS-Kit Evaluierungsbericht](https://docs.google.com/spreadsheets/d/16xGQ_SQwVmCGgEUhMpnIYDMbX8Lp8UVeq224j2gzHAY/edit?gid=1671636194#gid=1671636194) — aktueller Genauigkeits- und Lückenstatus
 - [DS-Kit Festpreisangebot](dskit-navigation-rag-estimate.md) — ursprünglicher Umfang und Preisgestaltung
 - [Kraska-E-Mail (17. Feb)](https://mail.google.com/mail/u/0/#all/19c6ae56b934ed26) — ursprüngliche Anfrage zu Zielkorridoren
 
@@ -38,16 +38,16 @@ Mehrere E-Mails sind unbeantwortet, darunter die SpaceNet VPN-Migrations-Rückfr
 
 **Zu klären:** Verzögerung anerkennen, direkte Verantwortungsübernahme für Kommunikation und Reaktionsfähigkeit zusagen.
 
-### 2. DS-Kit Navigation: Aktueller Stand und Live-Demo
+### 2. DS-Kit Navigation: Aktueller Stand und Evaluierungsbericht
 ⏱️ 10 Min.
 
-Das DS-Kit-Navigationssystem steht kurz vor der Fertigstellung. Ein Test-Harness validiert Antworten gegen erwartete Ergebnisse mit Quellenattribution. Human-Witness-Testing läuft.
+Fortschrittsbericht über das DS-Kit-Navigationssystem. Ein strukturierter Evaluierungsbericht (CSV) zeigt den aktuellen Stand: 29 Testfragen mit vollständigen RAG-Antworten und Quellenattribution. Dieser Bericht ist ein Beispiel für das Lieferformat im zweiwöchentlichen Rhythmus (→ Thema 4).
 
-- Test-Rubrik: Frage, erwartete Antwort, erwartete Quelle vs. tatsächliche RAG-Antwort und Top-3 abgerufene Quellen
-- Live-Demo von 2–3 repräsentativen Fragen mit Antwortqualität und Referenzgenauigkeit
-- Verbleibende Lücken in der Testanalyse identifiziert — datenabhängig, nicht systemabhängig
+- **Evaluierungsbericht:** Testfrage, erwartete Antwort, vollständige RAG-Antwort, erwartete vs. tatsächliche Quellen (Top-3)
+- Bericht dient als Feedbackgrundlage — IITR kann Antwortqualität bewerten und Prioritäten für nächsten Zyklus setzen
+- Bekannte Einschränkungen sind identifiziert und werden im nächsten Zyklus adressiert
 
-**Zu klären:** Validierung, dass das System den Erwartungen entspricht, und Bestätigung des Lieferzeitplans.
+**Zu klären:** Feedback zum Evaluierungsbericht, Priorisierung der offenen Punkte für nächsten Zweiwochenzyklus.
 
 ### 3. IITR-Systemportfolio: Status und Prioritäten
 ⏱️ 10 Min.
