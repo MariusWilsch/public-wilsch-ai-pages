@@ -7,10 +7,11 @@ publish: true
 
 ## Meeting Goal
 
-Zwei offene Verantwortungsfragen klären, die den SLA-Preis und den Migrationsablauf bestimmen:
+Drei Themen klären — Kommunikationsstruktur, Infrastruktur-Verantwortung und SLA-Preis:
 
-1. **Infrastruktur-Konfiguration** — Wer richtet die Server-Umgebung ein (Docker, Firewall, Ports)?
-2. **Laufende Verantwortungsgrenze** — Wo endet Marius' Zuständigkeit (App) und wo beginnt Rohdex-IT (Server)?
+1. **Aktuelle Situation** — Direkte Zusammenarbeit ohne Vermittler vorschlagen, Konstantins Bereitschaft zur Fortführung klären
+2. **Infrastruktur-Konfiguration** — Wer richtet die Server-Umgebung ein (Docker, Firewall, Ports)?
+3. **Laufende Verantwortungsgrenze** — Wo endet Marius' Zuständigkeit (App) und wo beginnt Rohdex-IT (Server)?
 
 ## Pre-Read
 
@@ -22,7 +23,19 @@ Zwei offene Verantwortungsfragen klären, die den SLA-Preis und den Migrationsab
 
 *Starting points for discussion, not limited to these.*
 
-### 1. Infrastruktur-Konfiguration bei On-Premise-Migration
+### 1. Aktuelle Situation und direkte Zusammenarbeit
+⏱️ 5 min
+
+Der SLA-Vertrag wurde am 11. Dezember an den bisherigen Vermittler übergeben — ist aber nie bei Rohdex angekommen. Konstantin hat am 14. Februar bestätigt, dass er keine Unterlagen erhalten hat. Gleichzeitig läuft die Infrastruktur seit über zwei Monaten auf Marius' Servern ohne vertragliche Grundlage.
+
+- Hintergrund: Das Vertragsverhältnis mit dem bisherigen Vermittler wird aufgelöst — Marius übernimmt die direkte Kommunikation
+- Das System läuft produktiv und stabil — an der technischen Betreuung ändert sich nichts
+- Ab sofort: Marius ist der direkte Ansprechpartner für alles Technische und Vertragliche
+- Falls Konstantin bereit wäre, seine Erfahrung mit der bisherigen Kommunikationsstruktur kurz schriftlich zu bestätigen — willkommen, aber keine Voraussetzung
+
+**To resolve:** Konstantins Bereitschaft zur direkten Zusammenarbeit klären und den SLA-Vertrag ohne Vermittler neu aufsetzen.
+
+### 2. Infrastruktur-Konfiguration bei On-Premise-Migration
 ⏱️ 10 min
 
 Für die Migration auf Rohdex-Infrastruktur muss Docker installiert, Firewall-Ports geöffnet und Netzwerk-Konnektivität hergestellt werden. Aktuell ist nicht definiert, wer diese Arbeiten durchführt.
@@ -33,7 +46,7 @@ Für die Migration auf Rohdex-Infrastruktur muss Docker installiert, Firewall-Po
 
 **To resolve:** Die Zuständigkeit für die Infrastruktur-Vorbereitung festlegen — entweder übernimmt Marius die gesamte Konfiguration (mit Zugang von Rohdex-IT), oder Rohdex-IT bereitet die Umgebung nach Checkliste vor und Marius deployt nur die Applikation.
 
-### 2. SLA-Preismodell — Verantwortung bestimmt den Preis, nicht der Standort
+### 3. SLA-Preismodell — Verantwortung bestimmt den Preis, nicht der Standort
 ⏱️ 15 min
 
 Das aktuelle SLA (525 EUR/Monat) setzt sich aus zwei Bereichen zusammen: App-Verantwortung (325 EUR) und Infrastruktur-Verantwortung (200 EUR). Der Preis hängt davon ab, wer den Server managt — nicht davon, wo der Server steht.
