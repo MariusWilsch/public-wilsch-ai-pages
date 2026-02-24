@@ -98,7 +98,7 @@ An epic is a GitHub Issue that serves as both a task container and a knowledge c
 - **Task container:** Sub-issues represent the work — each position creates sub-issues relevant to their accountability
 - **Knowledge container:** Transcripts, emails, and meeting notes centralize here — the epic stays stable while sub-issues can move, change, or be recreated
 
-**Creating an epic is cheap.** Same principle as "issues are cheap" — capturing a business outcome costs nothing. The epic shell starts with What and Why. Refinement happens through sub-issues. Don't wait for full understanding to create the epic.
+**Creating an epic is cheap but rare.** The shell costs nothing (What and Why only), but each epic is a commitment to deliver a business outcome. Issues are created often — they're reminders. Epics are created rarely — they're promises. If the Commitments Board has too many Active epics, that's a capacity signal: you've overcommitted.
 
 **GitHub mapping:**
 
