@@ -40,30 +40,7 @@ Mehrere E-Mails sind unbeantwortet, darunter die SpaceNet VPN-Migrations-Rückfr
 
 **Zu klären:** Verzögerung anerkennen, kurzer Kontext zur rechtlichen Situation, direkte Verantwortungsübernahme zusagen.
 
-### 2. DS-Kit Navigation: Aktueller Stand und Evaluierungsbericht
-⏱️ 10 Min.
-
-Fortschrittsbericht über das DS-Kit-Navigationssystem. Ein strukturierter Evaluierungsbericht (CSV) zeigt den aktuellen Stand: 29 Testfragen mit vollständigen RAG-Antworten und Quellenattribution. Dieser Bericht ist ein Beispiel für das Lieferformat im zweiwöchentlichen Rhythmus (→ Thema 4).
-
-- **Evaluierungsbericht:** Testfrage, erwartete Antwort, vollständige RAG-Antwort, erwartete vs. tatsächliche Quellen (Top-3)
-- Bericht dient als Feedbackgrundlage — IITR kann Antwortqualität bewerten und Prioritäten für nächsten Zyklus setzen
-- Bekannte Einschränkungen sind identifiziert und werden im nächsten Zyklus adressiert
-
-**Zu klären:** Feedback zum Evaluierungsbericht, Priorisierung der offenen Punkte für nächsten Zweiwochenzyklus.
-
-### 3. IITR-Systemportfolio: Status und Prioritäten
-⏱️ 10 Min.
-
-Vier Systeme existieren im IITR-Portfolio. Jedes befindet sich in einem anderen Stadium — die Prioritäten von Kraska bestimmen, wohin der Aufwand als nächstes fließt.
-
-- **RAG-V1** (DSGVO FAQ): Produktion, 85% Automatisierung, 97% Genauigkeit. Wartungsmodus. Langfuse-Monitoring vorhanden — Verbesserungen als laufender Umfang verfügbar
-- **RAG-V2** (Rechtsprechungssuche): Gebaut, 2.567 Gerichtsurteile indiziert. Zitierextraktion und semantische Suche funktionsfähig
-- **DS-Kit Navigation**: Kurz vor Fertigstellung (siehe Thema 2)
-- **Avatar**: Konvergenzpunkt — einheitliche Oberfläche über alle drei RAG-Systeme. Aktueller Stand und IITRs Vision dafür müssen abgestimmt werden
-
-**Zu klären:** Kraskas Prioritäten über das Portfolio verstehen und wo die Avatar-Konvergenz aus ihrer Sicht steht.
-
-### 4. Vorgeschlagenes Arbeitsmodell: Zweiwöchentliche Festpreis-Taktung
+### 2. Vorgeschlagenes Arbeitsmodell: Zweiwöchentliche Festpreis-Taktung
 ⏱️ 10 Min.
 
 Ein strukturiertes Zusammenarbeitsmodell ersetzt das bisherige Ad-hoc-Kommunikationsmuster. Jeder Zweiwochenzyklus hat einen klaren Rhythmus: Fortschritt des letzten Zyklus zeigen, Umfang für den nächsten definieren.
@@ -75,6 +52,29 @@ Ein strukturiertes Zusammenarbeitsmodell ersetzt das bisherige Ad-hoc-Kommunikat
 - **Beispielumfang pro Zyklus:** Langfuse-Monitoring-Verbesserungen, DS-Kit-Iterationen nach Feedback, Avatar-Fortschritt
 
 **Zu klären:** Einigung auf die zweiwöchentliche Taktung als Zusammenarbeitsrahmen und Startdatum des ersten Zyklus.
+
+### 3. DS-Kit Navigation: Aktueller Stand und Evaluierungsbericht
+⏱️ 10 Min.
+
+Fortschrittsbericht über das DS-Kit-Navigationssystem. Ein strukturierter Evaluierungsbericht (CSV) zeigt den aktuellen Stand: 29 Testfragen mit vollständigen RAG-Antworten und Quellenattribution. Dieser Bericht ist ein Beispiel für das Lieferformat im zweiwöchentlichen Rhythmus (→ Thema 2).
+
+- **Evaluierungsbericht:** Testfrage, erwartete Antwort, vollständige RAG-Antwort, erwartete vs. tatsächliche Quellen (Top-3)
+- Bericht dient als Feedbackgrundlage — IITR kann Antwortqualität bewerten und Prioritäten für nächsten Zyklus setzen
+- Bekannte Einschränkungen sind identifiziert und werden im nächsten Zyklus adressiert
+
+**Zu klären:** Feedback zum Evaluierungsbericht, Priorisierung der offenen Punkte für nächsten Zweiwochenzyklus.
+
+### 4. IITR-Systemportfolio: Status und Prioritäten
+⏱️ 10 Min.
+
+Vier Systeme existieren im IITR-Portfolio. Jedes befindet sich in einem anderen Stadium — die Prioritäten von Kraska bestimmen, wohin der Aufwand als nächstes fließt.
+
+- **RAG-V1** (DSGVO FAQ): Produktion, 85% Automatisierung, 97% Genauigkeit. Wartungsmodus. Langfuse-Monitoring vorhanden — Verbesserungen als laufender Umfang verfügbar
+- **RAG-V2** (Rechtsprechungssuche): Gebaut, 2.567 Gerichtsurteile indiziert. Zitierextraktion und semantische Suche funktionsfähig
+- **DS-Kit Navigation**: Kurz vor Fertigstellung (siehe Thema 3)
+- **Avatar**: Konvergenzpunkt — einheitliche Oberfläche über alle drei RAG-Systeme. Aktueller Stand und IITRs Vision dafür müssen abgestimmt werden
+
+**Zu klären:** Kraskas Prioritäten über das Portfolio verstehen und wo die Avatar-Konvergenz aus ihrer Sicht steht.
 
 ### 5. Serveradministration und Wartungsvereinbarung
 ⏱️ 10 Min.
