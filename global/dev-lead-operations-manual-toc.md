@@ -72,6 +72,7 @@ Structure follows [MG-0080 Operations Manuals](https://www.emyth.com) (E-Myth Ma
 | Document | Status | Link |
 |----------|--------|------|
 | Dev Lead Operations Manual | TBD | — |
+| Witness & Review System | Draft | [dev-lead-witness-review-system](https://mariuswilsch.github.io/public-wilsch-ai-pages/global/dev-lead-witness-review-system) |
 | Issue Lifecycle Router | Draft | [issue-lifecycle-router](https://mariuswilsch.github.io/public-wilsch-ai-pages/global/issue-lifecycle-router) |
 | Ship with Confidence | Draft | [ship-with-confidence](https://mariuswilsch.github.io/public-wilsch-ai-pages/global/ship-with-confidence) |
 
