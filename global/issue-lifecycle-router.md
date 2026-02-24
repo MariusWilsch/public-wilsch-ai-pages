@@ -74,7 +74,7 @@ Every issue has clear "when is this done?"
 
 **At task level (primary):** The Developer owns both types. Spec-design = define DoD + AC. Spec-implement = build it.
 
-**At epic level:** The Solution Architect does spec-design — creating a design doc that decomposes into tasks for the Developer. Same work type, different position, different level.
+**At epic level (within an epic):** The JA creates a spec-design sub-issue — producing a design doc through extraction passes. Same work type, different position, different level. The SA ensures design quality but the JA does the extraction work.
 
 **Key insight:** Type describes what KIND of refinement is happening. Position determines who does it. Level determines scope.
 
@@ -89,14 +89,16 @@ Not everything is an epic. A cheap reminder can be a task directly.
 
 ## Epic Lifecycle
 
-An epic is the output of a design doc. When the Junior Architect completes a design doc through iterative extraction passes, the spec-design issue closes and an epic is born via cascade creation. The epic is a new, clean issue — a context reset that gives the Developer a fresh trace line to work from.
+An epic is a business outcome. It represents a single meaningful effort — client deliverable or internal initiative — that lives on the board from identification to completion. Epics are created when work is identified, not born from a design phase. All positions contribute sub-issues to the same epic: the JA designs within it, the Developer builds within it, the Dev Lead reviews within it.
 
 ### What IS an Epic
 
 An epic is a GitHub Issue that serves as both a task container and a knowledge container:
 
-- **Task container:** Sub-issues (created by the Developer) represent the work
+- **Task container:** Sub-issues represent the work — each position creates sub-issues relevant to their accountability
 - **Knowledge container:** Transcripts, emails, and meeting notes centralize here — the epic stays stable while sub-issues can move, change, or be recreated
+
+**Creating an epic is cheap.** Same principle as "issues are cheap" — capturing a business outcome costs nothing. The epic shell starts with What and Why. Refinement happens through sub-issues. Don't wait for full understanding to create the epic.
 
 **GitHub mapping:**
 
@@ -106,40 +108,33 @@ An epic is a GitHub Issue that serves as both a task container and a knowledge c
 | **Label** | `epic` — programmatically filterable, board views can group by it |
 | **Sub-issues** | Linked via `gh sub-issue` — structural parent-child relationship |
 
-Epics appear on the GitHub Projects board alongside manager tasks. The sub-issue progress bar (X of Y) provides at-a-glance status.
+The epic board shows only epics. The sub-issue progress bar (X of Y) provides at-a-glance status. Manager tasks live on a separate operational board.
 
 **Epics do NOT have:**
 - Acceptance criteria or tracking.md — the epic is a container, not a verifiable unit
-- A GitHub assignee — only sub-issues get assigned to the Developer executing them
+- A GitHub assignee — only sub-issues get assigned to the position executing them
 
-### Epic Birth
+### Epic Creation
 
-Epics are born from the cascade creation pattern. A spec-design issue produces a design doc through JA extraction passes. When the design doc is complete:
+VP/Delivery creates epics when a business outcome is identified. The epic enters the board in **Not Started** as a shell — What and Why only. No sub-issues yet.
 
-1. Spec-design issue **closes** — its trace line (extraction pass comments, meeting agendas, design decisions) is archived
-2. Epic issue **is created** — fresh trace line, links to the completed design doc, enters the board in **Todo**
+**Routing within the epic:** VP/Delivery (or SA acting on VP/Delivery's behalf) decides whether the business outcome needs a design doc (JA creates a spec-design sub-issue) or can be built directly (Developer creates spec-implement sub-issues). This routing decision determines which position creates the first sub-issue.
 
-This context reset is essential. The spec-design issue accumulates JA back-and-forth that would confuse the Developer. Comments are the system's memory — each issue's trace line serves a different audience. The JA's trace serves the design process. The epic's trace serves the implementation process.
-
-**Routing at creation:** The SA decides whether new work needs a design doc (routes to JA) or can be handled directly by the Developer (stays a regular issue). This is user authority — the AI doesn't make this routing decision.
+**Context partitioning:** Each sub-issue has its own trace line (comments, commits, conversations). The JA's extraction pass comments live on the JA's sub-issue — the Developer never needs to read them. Context is partitioned by sub-issue, not by issue lifecycle.
 
 ### Per-Position Accountability
 
-Each position has a distinct accountability toward the same epic. Ownership doesn't transfer — all three positions interact with the epic throughout its life.
+Each position has a distinct accountability toward the same epic. All positions contribute sub-issues — ownership is per sub-issue, not per epic.
 
-| Position | Accountability | When |
-|----------|---------------|------|
-| **SA** | Routes work to JA (decides "this needs a design doc") | Before epic exists |
-| **JA** | Creates the epic via cascade when design doc is complete | Epic birth |
-| **Dev Lead** | Assigns epic to a Developer from the board | After epic enters Todo |
-| **Developer** | Creates starting-point sub-issues from the design doc | After assignment |
-| **Dev Lead** | Reviews starting point — "Is this Developer getting it?" (blocking gate) | Before any building |
-| **Developer** | Runs each sub-issue through the refinement pipeline | After starting-point approval |
-| **Dev Lead** | Reviews tracking.md (Design stage) per sub-issue | Per sub-issue |
-| **Dev Lead** | Human witness test on staging (Review stage) per sub-issue | Per sub-issue |
-| **SA** | Final look at the delivered whole | Epic closure |
+| Position | Epic-Level Accountability | Sub-Issue Work |
+|----------|--------------------------|----------------|
+| **VP/Delivery** | Creates epic, moves to Done | Owns epic board transitions |
+| **SA** | Design quality standards | Reviews JA's design doc output |
+| **JA** | Creates spec-design sub-issue, produces design doc | Works within Active phase |
+| **Dev Lead** | Moves epic to Validating, review queue processing | Comprehension gates, staging witness |
+| **Developer** | Creates spec-implement sub-issues from design doc | Builds, verifies, deploys |
 
-**Decomposition is the Developer's act — not the JA's.** Even when the design doc makes sub-issues obvious, the JA creates only the epic. The Developer decomposes after assignment. This boundary is non-negotiable because the Dev Lead starting-point gate measures Developer comprehension — if the JA pre-decomposes, the gate becomes a rubber stamp and loses its diagnostic signal. No "obvious enough" exceptions; judgment calls erode the boundary over time.
+**Decomposition is still the Developer's act — not the JA's.** The JA's spec-design sub-issue produces a design doc. The Developer reads it and creates sibling spec-implement sub-issues. The Dev Lead's starting-point gate measures Developer comprehension — if the JA pre-decomposes, the gate becomes a rubber stamp.
 
 **Dev Lead gates are comprehension signals.** The starting-point review and tracking.md review measure whether the Developer understands the design doc — not just whether tasks were completed. A poor decomposition signals either a design doc clarity problem (JA) or a comprehension gap (Developer growth opportunity).
 
@@ -217,18 +212,31 @@ Creating ten sub-issues where seven will be closed is bad practice. The Develope
 
 **Undefined:** Detailed decomposition mechanics for complex epics — pending empirical evidence from applying this to issue #373.
 
-### Epic Board Mapping
+### Board Architecture
 
-Epics coexist with manager tasks on the same GitHub Projects board:
+Two boards serve different audiences at different cadences:
 
-| Board Column | Epic State |
-|-------------|------------|
-| **Todo** | Epic created, waiting for Dev Lead to assign |
-| **In Progress** | Developer working — sub-issues being created and built |
-| **Review** | SA final look at the delivered whole |
-| **Done** | All sub-issues complete, epic closed |
+| Board | Audience | Cadence | Content |
+|-------|----------|---------|---------|
+| **Epic Board** | VP/Delivery, SA, Dev Lead | Weeks/months | Business outcomes only |
+| **Sub-Issue Board** | Developer, Dev Lead | Days | Sub-issues, manager tasks, review processing |
 
-No additional columns or labels needed for intermediate states. The epic's built-in sub-issue section is the signal and progress mechanism — the Dev Lead opens the epic and sees the sub-issues, their titles, and their completion status.
+The Sub-Issue Board includes review processing views (filtered by `review` label, FIFO sort) for the Dev Lead to process sub-issue gates. See [Gate Signal Mechanism](#gate-signal-mechanism).
+
+**The Epic Board is a capacity signal.** The number of Active epics tells you how many business outcomes you've committed to. 119 issues tells you nothing about capacity. 10 Active epics tells you "we're overcommitted." The board becomes a commitment dashboard — a forcing function for saying no to new work.
+
+### Epic Board Columns
+
+| Column | Meaning | Trigger | Owner |
+|--------|---------|---------|-------|
+| **Not Started** | Epic identified, no work begun | Default | VP/Delivery creates |
+| **Active** | Work happening (any position) | First sub-issue starts | Automated |
+| **Validating** | All implementation done, final look | Dev Lead moves | Dev Lead |
+| **Done** | Business outcome delivered | VP/Delivery closes | VP/Delivery |
+
+"Active" replaces "In Progress" — signals long-running work without implying it should be quick. Epics may be Active for weeks or months. The sub-issue progress bar (X of Y) is the primary signal, not the column.
+
+**Sprint boundaries:** GitHub milestones scope sub-issues to touch-point windows (e.g., "Archibus — Sprint March 10"). Milestones are orthogonal to the epic hierarchy — no additional nesting level required.
 
 ### Conversation Audit Trail
 
@@ -236,7 +244,7 @@ Developer sessions (Claude Code conversations) are pushed to a shared repository
 
 ### Epic Closure
 
-All sub-issues complete = mechanical closure signal. The SA takes a final look at the delivered whole before closing. This is user authority — no formal verification criteria on the epic itself. Closing an epic means the business outcome was delivered and the work is complete.
+All sub-issues complete = mechanical closure signal. VP/Delivery confirms the business outcome was delivered before closing. This is user authority — no formal verification criteria on the epic itself.
 
 ---
 
@@ -311,10 +319,13 @@ Both happen asynchronously. Developer continues to next work.
 |------|----------------|
 | **maker/spec-design** | Artifact determines next (SA decides): |
 
-**Spec-design cascade paths:**
-1. **→ Epic** — complex scope requiring decomposition. Create epic issue with design doc link. See [Epic Lifecycle](#epic-lifecycle).
-2. **→ Spec-implement issue** — simple scope, Developer can handle directly. Create spec-implement issue (cascade).
-3. **→ Client deliverable** — external output. Send to client. No cascade.
+**Spec-design closing (sub-issue within an epic):**
+The JA's spec-design sub-issue closes when the design doc is complete. The design doc links from the epic body. The Developer then creates sibling spec-implement sub-issues from the design doc. No new epic is created — the epic already exists.
+
+**Spec-design closing (standalone, outside an epic):**
+1. **→ Spec-implement issue** — simple scope, Developer handles directly (cascade).
+2. **→ Client deliverable** — external output. Send to client. No cascade.
+
 | **maker/spec-implement** | Merge to production. Deploy. Issue closed. |
 
 *Currently implemented via:* `done` label, PR merge, deployment.
@@ -344,3 +355,6 @@ Both happen asynchronously. Developer continues to next work.
 - Session: /Users/verdant/.claude/projects/-Users-verdant-Documents-projects-00-WILSCH-AI-INTERNAL--soloforce/478e31b8-5f19-4f85-b370-7fa437440795.jsonl
 - Review Queue config spec extraction pass (2026-02-19) — table layout, processing workflow, rejection flow, SLA automation
 - Session: /Users/verdant/.claude/projects/-Users-verdant-Documents-projects-00-WILSCH-AI-INTERNAL--soloforce/e139408b-3821-499e-95dc-5f5e7f164176.jsonl
+- Epic model restructure extraction pass (2026-02-24) — epic = business outcome, two-board architecture, position accountability recalibration, milestone sprint boundaries
+- Session: /Users/verdant/.claude/projects/-Users-verdant-Documents-projects-00-WILSCH-AI-INTERNAL--soloforce/73be003e-98a7-4deb-851f-9764a04081d9.jsonl
+- Research: SAFe, Atlassian, GitHub April 2025 sub-issues GA — validated epic-as-business-outcome model
