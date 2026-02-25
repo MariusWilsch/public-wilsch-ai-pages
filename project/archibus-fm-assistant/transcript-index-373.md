@@ -15,6 +15,7 @@ Consolidated index for [Issue #373: AI Bulk Data Entry — Background Data Impor
 |----------|------|
 | Chain 1B: Step 3 Fill Level-by-Level | [Step 3 Design](https://mariuswilsch.github.io/public-wilsch-ai-pages/project/archibus-fm-assistant/chain-1b-step3-design) |
 | Chain 1B: Bulk Entry Design | [Bulk Entry Design](https://mariuswilsch.github.io/public-wilsch-ai-pages/project/archibus-fm-assistant/chain-1b-bulk-entry-design) |
+| Step 1+2: Setup Phase Design | [Step 1+2 Design](https://mariuswilsch.github.io/public-wilsch-ai-pages/project/archibus-fm-assistant/step-1-2-setup-phase-design) |
 | Step 2: Schema Mapping Design | [Schema Mapping](https://mariuswilsch.github.io/public-wilsch-ai-pages/project/archibus-fm-assistant/step-2-schema-mapping-design) |
 | Step 3: Field Tier Mapping | [Field Tiers](https://mariuswilsch.github.io/public-wilsch-ai-pages/project/archibus-fm-assistant/step3-field-tier-mapping) |
 | Dec 18: Assets Session Summary (7 chains) | [Session Summary](https://mariuswilsch.github.io/public-wilsch-ai-pages/project/archibus-fm-assistant/dec-18-assets-session-summary) |
@@ -30,6 +31,7 @@ Consolidated index for [Issue #373: AI Bulk Data Entry — Background Data Impor
 | Step 3: Insertion API | Rein | [Agenda](https://mariuswilsch.github.io/public-wilsch-ai-pages/project/archibus-fm-assistant/rein-meeting-agenda-step3-insertion-api) |
 | Background Data | Rein | [Agenda](https://mariuswilsch.github.io/public-wilsch-ai-pages/project/archibus-fm-assistant/rein-meeting-agenda-background-data) |
 | Step 2: Schema Mapping | Rein | [Agenda](https://mariuswilsch.github.io/public-wilsch-ai-pages/project/archibus-fm-assistant/rein-meeting-agenda-step2-schema-mapping) |
+| Step 1+2: Unmappable Column Handling | Rein | [Agenda](https://mariuswilsch.github.io/public-wilsch-ai-pages/project/archibus-fm-assistant/rein-meeting-agenda-step1-2-unmappable-columns) |
 | Step 3: Field Review & Undefined Items | Rein | [Agenda](https://mariuswilsch.github.io/public-wilsch-ai-pages/project/archibus-fm-assistant/rein-meeting-agenda-feb15-field-review) |
 | Hierarchy Understanding | Miguel/Ian | [Agenda](https://mariuswilsch.github.io/public-wilsch-ai-pages/project/archibus-fm-assistant/miguel-ian-meeting-agenda-hierarchy-understanding) |
 | Bulk Entry Spike | Team | [Agenda](https://mariuswilsch.github.io/public-wilsch-ai-pages/project/archibus-fm-assistant/bulk-entry-spike-agenda) |
@@ -125,6 +127,7 @@ When Chain 1B approaches deployment: **NVIDIA Orchestrator-8B** — tool-calling
 | 2026-02-13 | Google Drive | [Transcript](https://drive.google.com/file/d/1E2CNOR39mWnKu5XRalPYrmJH4jhcibBt/view) | Design doc refinements: XLSX to Drive, RALPH scope expansion, proxy architecture, pricing strategy |
 | 2026-02-19 | Fireflies | [Transcript](https://app.fireflies.ai/view/01KHTD7ASXXTZWTA0K1P2H0S0M) | Rein meeting: live API test (105 assets), 4 API refinements, country issues, demo rehearsal |
 | 2026-02-20 | Fireflies | [Transcript](https://app.fireflies.ai/view/01KHXD6NN4Y35G0MJWM8NYZJZH) | Rein meeting: existing-database scenario, bulk update, Step 2 field walkthrough, Monday demo planning |
+| 2026-02-23 | Local | [Transcript](/Users/verdant/Downloads/AI Data Entry Demo Transcript.txt) | AI data entry demo: hierarchy inference, column mapping, Miguel feedback on UX, name enrichment rules, geographic inheritance |
 
 ---
 

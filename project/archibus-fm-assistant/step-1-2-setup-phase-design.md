@@ -69,7 +69,7 @@ With the hierarchy established, the AI maps remaining client columns to BEM's 35
 
 **Training data:** The more diverse client Excels the team provides internally, the better the AI's context engineering becomes for column name recognition. Self-improving agent loops across deployments are a post-deployment architecture concern.
 
-**Undefined:** Handling of unmappable columns (client columns with no BEM field match). See [Meeting Agenda: Unmappable Column Handling](rein-meeting-agenda-step2-schema-mapping).
+**Undefined:** Handling of unmappable columns (client columns with no BEM field match). See [Meeting Agenda: Unmappable Column Handling](https://mariuswilsch.github.io/public-wilsch-ai-pages/project/archibus-fm-assistant/rein-meeting-agenda-step1-2-unmappable-columns).
 
 **Undefined:** Enum and value transformation — mapping client values to BEM lookup tables (e.g., equipment types, asset statuses, countries). Column mapping tells Step 3 WHERE data goes; value transformation tells it HOW to translate. See [Meeting Agenda: Enum & Value Transformation](rein-meeting-agenda-step2-schema-mapping).
 
