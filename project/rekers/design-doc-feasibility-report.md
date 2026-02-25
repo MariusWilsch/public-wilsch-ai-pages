@@ -298,6 +298,40 @@ Target: IBM Power 10 (~20 TOPS per chip). Alternative: hybrid approach (external
 
 **Transcript:** [Wed AM](https://app.fireflies.ai/view/01KG1V9Y791YHSAVP7GJABEJAA) (10-project scope, project-level first, batch processing model)
 
+### Part 7: Local Model Feasibility — Can Power 10 produce Kriteriennachweis?
+
+The Kriteriennachweis documents (Part 2) were produced using Claude Opus via the Ralph playbook — a frontier model with multimodal vision, running on Anthropic's API. REKERS asked: can this be done locally on Power 10?
+
+**What we're testing:** Whether a local vision-language model on IBM Power 10 can extract the same 9 criteria from the same project PDFs and produce comparable Kriteriennachweis output. Not a chat system — batch processing with tolerance for longer runtimes.
+
+**UNDEFINED — model selection:** Initial research identified multimodal vision-language models available as open weights with Ollama/GGUF support: Qwen2.5-VL (7B/32B), Qwen3-VL (8B/32B), InternVL3 (8B/14B). Multimodal is required — the 5x criteria extraction advantage from visual PDF reading (Part 2) depends on it. Model selection needs deeper evaluation: ppc64le compatibility, German language quality, prompt eval performance on Power 10, and actual output quality against the existing Kriteriennachweis. RAM sizing (~10-12 GB at 7B Q4_K_M) fits Power 10 comfortably.
+
+**Architecture:** Script-driven pipeline. Python orchestrates file inventory, PDF rendering, and output formatting. The vision model handles only the extraction step (PDF page → criteria). This separates deterministic logic from model inference, making the model swappable.
+
+**Initial performance projection:**
+
+| Platform | Prompt Eval | 1 Project (50 pages) | 14 Projects |
+|----------|------------:|---------------------:|------------:|
+| Power 10 — current (5 CPUs, 55 tok/s) | 55 tok/s | ~60 min | ~14 hours |
+| Power 10 — optimized target (500 tok/s) | 500 tok/s | ~6.7 min | ~1.5 hours |
+| M3 Ultra 512GB (Metal GPU, reference) | 1,470 tok/s | ~2.3 min | ~32 min |
+
+Assumptions: ~4,000 image tokens per PDF page, 50 priority pages per project. Primary bottleneck is prompt eval for image input — token generation speed is adequate. Known ppc64le issue: llama.cpp defaults to 1 thread on Power architecture (GitHub #9623), must be explicitly configured.
+
+**Strategic context:** This benchmark is an internal investment trigger for Thomas and Ulrich. The performance table makes the case visible: current speed processes 14 projects overnight, optimization brings it to under two hours. Feeds into the IBM Power AI Inference Optimization Initiative (#713) and the broader product line question: Power 10 as deployment target for operations below a complexity threshold, M3/M5 Ultra for operations above it.
+
+**Quality benchmark:** A/B comparison — Claude output (existing Kriteriennachweis) vs Power 10 output (same project, same PDFs). At least one project, preferably more. Quality is subjective; criteria hit rate provides a quantitative anchor.
+
+**UNDEFINED — deeper investigation needed** (→ next extraction pass):
+1. Model candidates — ppc64le validation, German output quality, actual benchmarking on Power 10
+2. PDF-to-image rendering on ppc64le — library availability (poppler)
+3. Ollama vision API on ppc64le — multimodal endpoint untested on Power architecture
+4. Prompt design — Ralph playbook prompts need adaptation for smaller model
+5. Extraction scope — PDFs only, or include EML body and XLSX reading?
+6. Multi-turn vs single-turn — iterative extraction (like Ralph) or one-pass?
+7. Runtime tolerance — Ulrich validation: what processing time is acceptable?
+8. Libel engagement — Power 10 hardware optimization, timing TBD
+
 ---
 
 ## Source
@@ -323,3 +357,4 @@ Target: IBM Power 10 (~20 TOPS per chip). Alternative: hybrid approach (external
 - `/Users/verdant/.claude/projects/-Users-verdant-Documents-projects-WILSCH-AI-INTERNAL--soloforce/00e6a51f-cd0d-432f-b5f4-f2a41dd07a4d.jsonl` (data deep dive, criteria mapping, validation design)
 - `/Users/verdant/.claude/projects/-Users-verdant-Documents-projects-WILSCH-AI-INTERNAL--soloforce/cb7381c0-65f8-42cd-bf0a-a6a09bbfe357.jsonl` (Part 1 extraction pass — 16 uncertainties resolved)
 - `/Users/verdant/.claude/projects/-Users-verdant-Documents-projects-billable-REKERS--poc/772b96f8-d646-428c-bde6-9eeddf0418b5.jsonl` (Part 2 extraction pass — 12 uncertainties resolved, evidence template formalized)
+- `/Users/verdant/.claude/projects/-Users-verdant-Documents-projects-billable-REKERS--poc/a661e34f-b89f-48bf-bc6c-bd590536fae4.jsonl` (Part 7 extraction pass — local model feasibility, Power 10 benchmarks)
