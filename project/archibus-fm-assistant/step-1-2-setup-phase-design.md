@@ -67,7 +67,7 @@ With the hierarchy established, the AI maps remaining client columns to BEM's 35
 
 **Confirmation surface:** Chat-rendered table as the primary review artifact. The implementer sees the proposed mappings and confirms in conversation. Excel export is available as an option for deeper review.
 
-**Training data:** Diverse client Excels improve mapping quality across deployments. Each implementer session exposes new column naming patterns; those learnings feed back into the AI's context (better examples, better prompts) for future sessions. The individual session doesn't train the system — improvement happens between deployments as we accumulate more Excel format diversity.
+**Training data:** The more diverse client Excels the team provides internally, the better the AI's context engineering becomes for column name recognition. Self-improving agent loops across deployments are a post-deployment architecture concern.
 
 **Undefined:** Handling of unmappable columns (client columns with no BEM field match). See [Meeting Agenda: Unmappable Column Handling](rein-meeting-agenda-step2-schema-mapping).
 
