@@ -36,7 +36,18 @@ Neues Format: wöchentliche Lieferzyklus-Übersicht statt einzelner Aufgaben. Ze
 
 **To resolve:** Bestätigung der sechs Liefergegenstände und deren Prioritätsreihenfolge — und ob das wöchentliche Milestone-Format für Ulrich passt.
 
-### 2. Standing Items
+### 2. IITR/Rohdex Vertragserstellung — Preisberatung (#766)
+⏱️ 5 min
+
+Roman-Übernahme abgeschlossen — jetzt muss ein direkter Vertrag mit den Kunden her. Ulrichs Einschätzung zur Preisgestaltung gefragt: typischerer Kunde als bisherige Projekte, kein Retainer-Modell sondern klassischer Dienstleistungsvertrag. Potenziell auch langfristig interessant für Ulrich.
+
+- Marius übernimmt IITR und Rohdex direkt (kein Zwischenhändler mehr)
+- Vertrag muss erstellt werden — Preisfindung offen
+- Ulrichs Erfahrung mit vergleichbaren Kunden nutzen
+
+**To resolve:** Ulrichs Empfehlung zur Preisgestaltung und ob er langfristig von der Kundenbeziehung profitieren könnte.
+
+### 3. Standing Items
 ⏱️ 3 min
 
 Kurzer Status auf laufende Elemente.
