@@ -67,6 +67,37 @@ Consolidated index for [Issue #373: AI Bulk Data Entry — Background Data Impor
 
 ---
 
+## Value Discovery Methodology
+
+Repeatable process for extracting high-value AI use cases from Mandala FM blocks. **Assets is the template block** — once proven, same methodology applies to Contracts, Works, Costs, etc.
+
+**The process:**
+1. **Prepare** — Structure agenda, define what we need from FM experts
+2. **Facilitate** — Engage FM experts on specific block
+3. **Identify** — Which actions CREATE VALUE (not just replicate UI)
+4. **Build & validate** — Implement high-value actions (→ sub-issues)
+5. **Document & repeat** — Capture learnings, apply to next block
+
+**Key artifacts:**
+- [Pattern Encoding ADR](https://mariuswilsch.github.io/public-wilsch-ai-pages/project/archibus-fm-assistant/adr-pattern-encoding-methodology)
+- [Parallel Paths ADR](https://mariuswilsch.github.io/public-wilsch-ai-pages/project/archibus-fm-assistant/adr-parallel-paths-ai-fm-automation)
+
+**Full context:** [Closed issue #267](https://github.com/DaveX2001/deliverable-tracking/issues/267) — original methodology issue with session artifacts and comments.
+
+### SharePoint Publication
+
+Validated AI documentation goes to: **Bruce Partners → Technology Details → Bruce Platform AI** (SharePoint). Marius has editor permissions. Format: SharePoint pages (not file drops). Add docs as they get validated. Miguel's standing request from Dec 18.
+
+**Full context:** [Closed issue #344](https://github.com/DaveX2001/deliverable-tracking/issues/344)
+
+### Deployment Model Candidate
+
+When Chain 1B approaches deployment: **NVIDIA Orchestrator-8B** — tool-calling optimized, 8B params, designed for orchestration tasks. Strong candidate for local inference on IBM Power. Evaluate when deployment scope is concrete.
+
+**Closed references:** [#149](https://github.com/DaveX2001/deliverable-tracking/issues/149) (Chatbot Infrastructure), [#12](https://github.com/DaveX2001/deliverable-tracking/issues/12) (Orchestrator-8B vs Qwen3-8B), [#50](https://github.com/DaveX2001/deliverable-tracking/issues/50) (Modal GPU cold start)
+
+---
+
 ## Transcripts
 
 | Date | Source | Link | Summary |
@@ -97,4 +128,4 @@ Consolidated index for [Issue #373: AI Bulk Data Entry — Background Data Impor
 
 ---
 
-*Last updated: 2026-02-22*
+*Last updated: 2026-02-25*
