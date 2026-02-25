@@ -11,7 +11,7 @@ publish: true
 
 ## Meeting Goal
 
-This topic has been open since January with no resolution. Both sides are interested but neither has converted interest into action. This call decides one of two outcomes:
+We started discussing content marketing in January and want to decide how to move forward. This call has two possible outcomes:
 
 1. **Commit** — agree on a forcing function (recurring cadence, first deliverable date) and add YouTube content as its own docket item
 2. **Close** — acknowledge it's not a priority right now and close #594 so it stops occupying mental bandwidth
@@ -27,17 +27,16 @@ This topic has been open since January with no resolution. Both sides are intere
 
 *Starting points for discussion, not limited to these.*
 
-### 1. Where things stand after January
+### 1. Picking up where we left off
 ⏱️ 5 min
 
-We agreed on the content marketing approach in January — shorts, long-form, roles defined. Since then, both sides checked in multiple times but never scheduled the working session. ACHS held an internal meeting and aligned on a marketing plan. That plan hasn't been shared yet.
+We agreed on the content marketing approach in January — shorts, long-form, roles defined. Since then, the ACHS team aligned internally on a marketing and sales action plan.
 
-- January 22: concept agreed, roles assigned, February start planned
-- ACHS internal meeting happened — marketing and sales action plan agreed
-- Follow-up between Marius and the team never materialized
-- Both sides stayed interested but neither activated
+- January 22: concept agreed, roles assigned
+- ACHS team has an internal marketing plan ready to discuss
+- Next step: align Wilsch AI's contribution with that plan
 
-**To resolve:** Shared understanding of where each side stands today, including what changed since January.
+**To resolve:** Shared understanding of current priorities and readiness on both sides.
 
 ### 2. Commit or close
 ⏱️ 5 min
