@@ -72,48 +72,21 @@ From [Don't Waste Your Backpressure](https://banay.me/dont-waste-your-backpressu
 
 **Setup Phase** (one-time per import job)
 
-### Step 1: Understand the hierarchy
+### Step 1+2: Setup Phase (Hierarchy + Column Mapping)
 
-Determine which of the 9 possible levels (Campus → Site → Complex → Property → Building → Floor → Storewell → Suite → Room) the client uses. Each client has a different hierarchy, but always from this finite list. AI proposes, implementer confirms.
+→ **[Step 1+2 Detail Design](https://mariuswilsch.github.io/public-wilsch-ai-pages/project/archibus-fm-assistant/step-1-2-setup-phase-design)**
 
-**What we know:**
-- 9 levels, flexible per client (subset)
-- AI proposes, implementer confirms
-
-**What we don't know:**
-- Exact interaction pattern for hierarchy confirmation
-
----
-
-### Step 2: Map the input column schema to the background table schema
-
-Map client column names to Bruce BEM schema fields. AI infers semantically, implementer confirms. This mapping pattern is reusable across all 12+ background data tables.
-
-**What we know:**
-- 35 schema fields, required/optional marked
-- AI infers mapping, implementer confirms
-- Pattern reusable across 12+ tables
-
-**What we don't know:**
-- Rein hasn't marked AI-filled vs API-filled fields yet
-- #605 mapping pattern pending
+AI reads client Excel, infers hierarchy mapping (Step 1) and column-to-schema mapping (Step 2), produces the mapping contract that Step 3 consumes. Implementer confirms through conversational interaction.
 
 ---
 
 **Processing Phase** (bulk — where the real value lives)
 
-### Step 3: Fill level-by-level
+### Step 3: Fill Level-by-Level
+
+→ **[Step 3 Detail Design](https://mariuswilsch.github.io/public-wilsch-ai-pages/project/archibus-fm-assistant/chain-1b-step3-design)**
 
 With hierarchy and mapping established, AI processes all rows top-down. Schema provides backpressure for autonomous self-correction. Implementer only intervenes on genuine gaps.
-
-**What we know:**
-- Insert top-down: parents before children (parent_id linking)
-- Schema backpressure enables autonomous self-correction
-- Thousands of rows — this is the bulk value step
-
-**What we don't know:**
-- Insertion API doesn't exist yet
-- Checkpoint/revert mechanism not yet designed
 
 ## Target Audience
 
