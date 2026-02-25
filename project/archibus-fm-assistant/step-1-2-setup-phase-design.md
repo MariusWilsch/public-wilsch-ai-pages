@@ -57,6 +57,64 @@ Column names alone are insufficient. Client data uses domain-specific naming (e.
 
 **Output:** Confirmed mapping of client columns → BEM hierarchy levels. Step 3 uses this mapping to generate phantom location assets (Building, Floor, Room records that don't exist in the client's Excel but are required by BEM's parent-child structure).
 
+#### Proposal Artifact
+
+The AI presents its hierarchy proposal using progressive disclosure:
+
+1. **Level names** (must-have) — which client columns map to which BEM levels
+2. **Sample values + lightweight reasoning** (should-have) — evidence from the data, one line per level
+3. **Expanded reasoning** (on-demand) — implementer can ask the AI to explain its inference
+
+All levels appear in a single proposal. Uncertain levels are flagged inline — the AI does not split confident and uncertain levels into separate phases.
+
+**Example — clean data (CAFM sample, 200 rows):**
+
+| BEM Level | ← Client Column | Sample Values | Confidence |
+|-----------|-----------------|---------------|------------|
+| Building | Location | Building A, B, C, D | High |
+| Floor | Floor | 1, 2, 3, G | High |
+| Room | Room No. | 315, 330, 173 | High |
+
+**Example — domain-specific data (Housekeeping Tracker, FMM Qatar):**
+
+| BEM Level | ← Client Column | Sample Values | Confidence |
+|-----------|-----------------|---------------|------------|
+| Complex | AREA | CONCOURSE A, B, C | ⚠️ Medium |
+| ??? | SUB AREA OF FACILITY | PTC, RETAILS | ⚠️ Uncertain |
+| Room | LOCATION | DEPARTURE GATE C4 | High |
+
+The clean data resolves in one confirmation. The domain-specific data triggers a correction loop — the AI surfaces the ambiguity with its reasoning, and the implementer provides the external context the data alone cannot supply.
+
+#### Hierarchy Type Descriptions
+
+BEM defines 9 hierarchy levels (Campus → Site → Complex → Property → Building → Floor → Stairwell → Suite → Room). The AI infers which levels apply by matching the client's data against **descriptions and examples per hierarchy AssetType** — not just the type name.
+
+Without descriptions, the AI is guessing from a single word ("Complex" vs "Building"). With descriptions, the AI matches "4 concourse zones in a terminal" against a defined pattern.
+
+**Proposed descriptions (starting point — to be validated with Rein):**
+
+| BEM Type | Proposed Description | Examples |
+|----------|---------------------|----------|
+| Campus | Entire grounds spanning multiple buildings and sites | University campus, hospital campus |
+| Site | A distinct land area within a campus | North wing, Terminal 1 |
+| Complex | A group of related zones sharing infrastructure | Airport concourse, shopping mall wing |
+| Property | A land parcel or named estate with its own address | Main Office Park |
+| Building | A single enclosed structure | Office Tower A, Warehouse B |
+| Floor | A horizontal level within a building | Floor 1, Ground Floor, Mezzanine |
+| Stairwell | A vertical access shaft (sibling of Floor) | Stairwell A, Fire escape north |
+| Suite | A named functional unit within a floor | Suite 204, Lab B, Retail zone |
+| Room | An individual enclosed space | Room 315, Server Room, Gate C4 |
+
+**Undefined:** Hierarchy type descriptions — BEM's asset_types file contains only structural codes (hierarchy depth), no descriptions or examples. Proposed descriptions above are AI-generated starting points. See [Meeting Agenda: Step 1+2 Hierarchy & Interpretation](https://mariuswilsch.github.io/public-wilsch-ai-pages/project/archibus-fm-assistant/rein-meeting-agenda-step1-2-hierarchy-interpretation).
+
+#### Name Enrichment
+
+During hierarchy review, the AI also proposes a naming pattern. BEM stores all asset types in a single table — a floor named "3" is unreadable without its parent context. The AI compiles readable names by aggregating hierarchy context: "Building D Floor 3 Room 315" instead of just "315".
+
+The enrichment rule is contextual: if the client's data already contains readable names (e.g., "CONCOURSE C"), the AI passes them through. If the data contains only codes or numbers (e.g., "3"), the AI enriches. The AI discriminates when to apply the rule — this is interpretation, not copying.
+
+**Undefined:** The exact naming enrichment logic, rule discrimination boundaries, and readability validation criteria need empirical testing and stakeholder alignment. See [Meeting Agenda: Step 1+2 Hierarchy & Interpretation](https://mariuswilsch.github.io/public-wilsch-ai-pages/project/archibus-fm-assistant/rein-meeting-agenda-step1-2-hierarchy-interpretation).
+
 ---
 
 ### Part 2: Column-to-Schema Mapping (Step 2)
@@ -105,3 +163,4 @@ The combined output of Step 1 and Step 2 is the **mapping contract** — the art
 - **Issue:** [#852](https://github.com/DaveX2001/deliverable-tracking/issues/852)
 - **Project Index:** [#373](https://mariuswilsch.github.io/public-wilsch-ai-pages/project/archibus-fm-assistant/transcript-index-373)
 - **Session:** /Users/verdant/.claude/projects/-Users-verdant-Documents-projects-billable-MariusWilsch--archibus-bulk-import/7d4d0137-c41c-4df3-835f-0218a90eba19.jsonl
+- **Session:** /Users/verdant/.claude/projects/-Users-verdant-Documents-projects-billable-MariusWilsch--archibus-bulk-import/919879a0-f08e-4ce4-acfd-8ef68c39ef55.jsonl
