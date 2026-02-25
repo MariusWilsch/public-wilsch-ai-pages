@@ -300,7 +300,7 @@ Target: IBM Power 10 (~20 TOPS per chip). Alternative: hybrid approach (external
 
 ### Part 7: Local Model Feasibility — Can Power 10 produce Kriteriennachweis?
 
-The Kriteriennachweis documents (Part 2) were produced using a cloud-based multimodal vision model via an automated playbook. REKERS asked: can this be done locally on Power 10?
+The Kriteriennachweis documents (Part 2) were produced using the current model via an automated playbook. REKERS asked: can this be done locally on Power 10?
 
 **What we're testing:** Whether a local vision-language model on IBM Power 10 can extract the same 9 criteria from the same project PDFs and produce comparable Kriteriennachweis output. Not a chat system — batch processing with tolerance for longer runtimes.
 
@@ -320,7 +320,7 @@ Assumptions: ~4,000 image tokens per PDF page, 50 priority pages per project. Pr
 
 **Strategic context:** This benchmark is an internal investment trigger for Thomas and Ulrich. The performance table makes the case visible: current speed processes 14 projects overnight, optimization brings it to under two hours. Feeds into the IBM Power AI Inference Optimization Initiative (#713) and the broader product line question: Power 10 as deployment target for operations below a complexity threshold, M3/M5 Ultra for operations above it.
 
-**Quality benchmark:** A/B comparison — cloud model output (existing Kriteriennachweis) vs Power 10 output (same project, same PDFs). At least one project, preferably more. Quality is subjective; criteria hit rate provides a quantitative anchor.
+**Quality benchmark:** A/B comparison — current model output (existing Kriteriennachweis) vs Power 10 model output (same project, same PDFs). At least one project, preferably more. Quality is subjective; criteria hit rate provides a quantitative anchor.
 
 **UNDEFINED — deeper investigation needed** (→ next extraction pass):
 1. Model candidates — ppc64le validation, German output quality, actual benchmarking on Power 10
