@@ -127,6 +127,33 @@ With the hierarchy established, the AI maps remaining client columns to BEM's 35
 
 Mapped columns go through batch confirmation — the implementer sees all confident mappings in one table and confirms. Flagged columns get individual 1x1 resolution.
 
+```
+┌─────────────────────────────────────────────────────┐
+│  Layer 1: Column-Level Matching                     │
+│                                                     │
+│  Client Column        →  BEM Field                  │
+│  ─────────────           ─────────                  │
+│  "Status"             →  status        ✅ Mapped    │
+│  "Condition"          →  ???           ⚠️ Flagged   │
+│  "Serial No."         →  serialNumber  ✅ Mapped    │
+└──────────────────────────┬──────────────────────────┘
+                           │
+                    (enum fields only)
+                           │
+                           ▼
+┌─────────────────────────────────────────────────────┐
+│  Layer 2: Value-Level Matching                      │
+│                                                     │
+│  Client Value    →  BEM Enum Value                  │
+│  ────────────       ──────────────                  │
+│  "Active"        →  "Active"           ✅ Match     │
+│  "Inactive"      →  ???                ⚠️ Suggest   │
+│                     ├─ "Out of Service"              │
+│                     ├─ "Not Ready"                   │
+│                     └─ "In Storage"                  │
+└─────────────────────────────────────────────────────┘
+```
+
 **Confirmation surface:** Chat-rendered table as the primary review artifact. The implementer sees the proposed mappings and confirms in conversation. Excel export is available as an option for deeper review.
 
 **Training data:** The more diverse client Excels the team provides internally, the better the AI's context engineering becomes for column name recognition. Self-improving agent loops across deployments are a post-deployment architecture concern.
