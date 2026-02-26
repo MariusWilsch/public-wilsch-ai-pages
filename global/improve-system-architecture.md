@@ -117,6 +117,42 @@ Part of `/rubber-duck` diagnosis - the fix depends on artifact type:
 - Command fix: Strengthen `/rubber-duck` instruction
 - Hook fix: Stop hook that blocks plain-text questions
 
+## Theme-Level Workflow
+
+When multiple observations share a root behavioral pattern, they form a **theme**.
+Themes are the unit of work for release-level instruction changes.
+
+### Observation → Theme Pipeline
+
+| Step | Action | Output |
+|------|--------|--------|
+| 1 | Observations accumulate from organic work | Individual issues with conversation paths |
+| 2 | Group related observations | Theme with deduplicated conversation IDs |
+
+### Session B at Theme Level
+
+Same A/B/C architecture. Session B reads all deduplicated conversations in main context.
+
+| Aspect | Single Observation | Theme |
+|--------|-------------------|-------|
+| Input | 1 conversation | N deduplicated conversations |
+| Diagnosis | One failure instance | Pattern across instances |
+| Context loading | Sub-agent acceptable | Main context required |
+
+**Why main context:** Instruction artifact fixes require seeing the actual exchanges —
+success and failure cases. Summaries from sub-agents lose behavioral nuance.
+Conversations are the design material, not an intermediate artifact.
+
+### Design Doc Promotion
+
+Design methodology docs reflect verified patterns only.
+
+| Timing | Rule |
+|--------|------|
+| After Session B | Push instruction fix. Methodology doc unchanged. |
+| After Session C confirms | Promote to methodology doc. |
+| After Session C fails | Iterate Session B with new conversation as evidence. |
+
 ## Session C: Verification
 
 | Step | Action | Notes |
@@ -124,6 +160,8 @@ Part of `/rubber-duck` diagnosis - the fix depends on artifact type:
 | 1 | New project session | Fresh context |
 | 2 | Trigger same scenario | Use conversation path from issue |
 | 3 | Observe: fixed or not? | - |
+
+**For themes:** Session C is organic — continue real work using the position. The next natural session IS the test. Do not manufacture scenarios.
 
 **Issue Closure:** Close issue manually after verified fix, or use `Fixes DaveX2001/claude-code-improvements#{number}` in commit message.
 
@@ -181,3 +219,4 @@ For `/flag-for-improvement`: When AI introspects "why did I do that?", expect po
 **Related:**
 - ADR: [Three-Session Model](three-session-instruction-artifact-improvement.md)
 - Implementation tracking: [Issue #49](https://github.com/DaveX2001/deliverable-tracking/issues/49)
+- Theme-level workflow source: [CCI #607](https://github.com/DaveX2001/claude-code-improvements/issues/607) behavioral verification session
