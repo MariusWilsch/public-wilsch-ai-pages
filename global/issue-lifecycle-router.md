@@ -410,12 +410,24 @@ Six label types. Status labels are eliminated — columns carry that information
 
 ### Issue Body
 
-The issue body is a cheap, stable shell. Two fields only:
+The issue body has stable fields and a living artifact section:
 
-| Field | Purpose | Changes? |
-|-------|---------|----------|
+| Section | Purpose | Changes? |
+|---------|---------|----------|
 | **What?** | What this is about | Never |
 | **Why?** | Why it matters | Never |
+| **Tracking** | Artifact progression links | Updated as artifacts are created |
+
+The `## Tracking` section is the living part — it shows where artifacts are in the pipeline:
+
+```markdown
+## Tracking
+- [ ] [tracking.md](link) — DoD + AC
+- [ ] [PR #N](link) — implementation
+- [ ] [verification.jsonl](link) — decision traces
+```
+
+As each artifact is created, the checkbox is checked and the link is added. This gives the manager a single glance at the issue body to see: what exists, what's missing, and where to click.
 
 No closing criteria in the body — closure is systemic:
 - Design phase done when: tracking.md has DoD + AC
