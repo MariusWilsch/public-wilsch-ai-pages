@@ -130,6 +130,8 @@ VP/Delivery creates epics when a business outcome is identified. The epic enters
 
 **Undefined:** Data artifact centralization — where do raw artifacts (spreadsheets, PDFs, test data) live across the JA-to-Developer handoff? Options: hippocampus project directory as anchor (both JA and Developer reference it), epic body (centralized but GitHub-limited), or sub-issue tracking dirs (current pattern, but orphans on close).
 
+**Undefined:** Epic creation ceremony — what is the forcing function for creating new epics from standalone issues? Epic creation is about recognizing a new commitment, not tied to milestone cadence. A "Board Health" view (standalone issues spliced per client) could serve as the diagnostic surface — too many standalones for one client signals that work is happening without a commitment container. But the trigger, ceremony, and tooling for VP/Delivery to act on that signal are not yet defined.
+
 ### Per-Position Accountability
 
 Each position has a distinct accountability toward the same epic. All positions contribute sub-issues — ownership is per sub-issue, not per epic.
@@ -285,16 +287,12 @@ TOUCHPOINT DATE ARRIVES:
   → Agent auto-creates NEXT milestone
   → Current milestone enters CLOSING phase
 
-CLOSING (grooming, human — milestone closure ceremony):
+CLOSING (grooming, human):
   → Gate: milestone can ONLY close when every item has a decision
   → For each item still in the milestone:
     - Done → stays (history preserved)
     - Working/Review → move to next milestone or close
     - Backlog (never started) → return to general backlog
-  → VP/Delivery reviews standalone issues (no epic parent):
-    - Obvious fit → link as sub-issue of existing epic
-    - New commitment → create epic shell (What + Why + Closing Criteria)
-    - Standalone is fine → no action
   → Once all items dispositioned → human closes milestone
   → Closed milestones preserve history forever (not deleted)
 ```
@@ -378,7 +376,7 @@ Grooming is the daily operational ceremony that keeps milestones filled, priorit
 
 **What grooming does NOT do:**
 - ~~Review scan~~ — manager processes Review column async via Sprint view
-- ~~Epic creation~~ — VP/Delivery creates epics at milestone closure ceremony
+- ~~Epic creation~~ — VP/Delivery creates epics when new commitments are recognized (see **Undefined** in [Epic Creation](#epic-creation))
 - ~~Detailed context review~~ — artifact-based, not body-based
 
 **Agent integration:**
