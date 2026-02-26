@@ -91,16 +91,27 @@ BEM's full asset table has `condition` (nvarchar 50) and `classification_for_mai
 
 **To resolve:** Whether `condition` and `classification_for_maintenance` can be added to the import API, making common client data columns directly mappable.
 
-### 5. Status Enum Semantic Mapping
+### 5. Status Enum — Validating the Ranked-Suggestion Approach
 ⏱️ 10 min
 
-Rein merged AssetStatus and Status into a single Status field (Feb 19). Client data uses generic values ("Active", "Inactive") that don't always match BEM's 26 predefined statuses. "Active" matches directly; "Inactive" has no exact equivalent.
+Same pattern as hierarchy type descriptions (topic 1) — the AI uses BEM's enum descriptions to propose semantic matches. The status enum already has descriptions, so the AI can reason about matches.
 
-- Closest candidates for "Inactive": "Out of Service", "Not Ready", "In Storage"
-- The AI proposes ranked candidates during Step 2; the implementer picks
-- Establishing standard mappings for common generic values would reduce per-client effort
+**Concrete example — CAFM "Inactive" status:**
 
-**To resolve:** Rein's intended semantic mapping for common generic status values that don't have exact BEM equivalents.
+The AI reads BEM's 26 status descriptions and ranks suggestions:
+
+| BEM Status | Description | Semantic Fit |
+|---|---|---|
+| Out of Service | "No longer used; run minimally, could be out for a while" | ✅ Closest |
+| In Storage | "Stored, not in use but usable" | Possible |
+| Not Ready | "Being installed or commissioned" | ⚠️ Wrong direction |
+
+The implementer sees ranked suggestions and picks. Same two-layer matching as column mapping — the pattern is consistent across hierarchy inference and enum resolution.
+
+- "Active" → "Active" (direct match, no suggestion needed)
+- "Inactive" → AI suggests "Out of Service" as top candidate, implementer confirms or overrides
+
+**To resolve:** Whether this ranked-suggestion approach matches Rein's expectation for how enum mismatches should be handled during the interactive setup phase.
 
 ### 6. Unmappable Column Disposition
 ⏱️ 10 min
