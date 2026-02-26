@@ -418,24 +418,24 @@ The issue body has stable fields and a living artifact section:
 | **Why?** | Why it matters | Never |
 | **Tracking** | Artifact progression links | Updated as artifacts are created |
 
-The `## Tracking` section is the living part — it shows where artifacts are in the pipeline:
+The `## Tracking` section is the living part — it links to the spec artifact once created:
 
 ```markdown
 ## Tracking
 - [ ] [tracking.md](link) — DoD + AC
-- [ ] [PR #N](link) — implementation
-- [ ] [verification.jsonl](link) — decision traces
 ```
 
-As each artifact is created, the checkbox is checked and the link is added. This gives the manager a single glance at the issue body to see: what exists, what's missing, and where to click.
+PR association is automatic — the PR description uses `Fixes #N` and GitHub links it. No manual tracking needed. verification.jsonl is a machine artifact (lives in `.claude/tracking/issue-{N}/`) and doesn't need to appear in the issue body.
 
 No closing criteria in the body — closure is systemic:
-- Design phase done when: tracking.md has DoD + AC
-- Implementation done when: DoD checkboxes checked, code merged
-- Verification done when: verification.jsonl complete
-- Done-done when: manager does human witness
+- Design done when: tracking.md has DoD + AC
+- Implementation done when: DoD checkboxes checked, merged to staging worktree
+- Verification done when: AC verified on staging, verification.jsonl complete
+- Done-done when: manager does human witness on staging → merged to main
 
-The three-session model (Design → Implementation → Verification) produces artifacts that accumulate on the same issue. See [Three-Session Model](https://mariuswilsch.github.io/public-wilsch-ai-pages/global/three-session-model).
+See [Ship with Confidence](https://mariuswilsch.github.io/public-wilsch-ai-pages/global/ship-with-confidence) for the full testing pyramid (AC → Smoke → Human Witness) and the staging→production flow.
+
+The [Three-Session Model](https://mariuswilsch.github.io/public-wilsch-ai-pages/global/three-session-model) (Design → Implementation → Verification) produces artifacts that accumulate on the same issue.
 
 ### Conversation Audit Trail
 
