@@ -122,6 +122,19 @@ Part of `/rubber-duck` diagnosis - the fix depends on artifact type:
 When multiple observations share a root behavioral pattern, they form a **theme**.
 Themes are the unit of work for release-level instruction changes.
 
+### Inverted Artifacts-as-Memory
+
+The [three-session model](three-session-model.md) assumes **artifacts as memory**: tracking.md carries
+understanding between sessions, discussions are disposable. For instruction artifact work,
+this inverts: **discussions as memory, artifacts are secondary**. The AI must see the actual
+failure and success exchanges to understand what "good behavior" looks like. No spec or
+tracking file can substitute for reading the conversation.
+
+| Domain | Memory carrier | Disposable |
+|--------|---------------|------------|
+| Code | tracking.md (spec) | Design discussion |
+| Instruction artifacts | Conversations (behavior) | tracking.md |
+
 ### Observation → Theme Pipeline
 
 | Step | Action | Output |
@@ -137,11 +150,9 @@ Same A/B/C architecture. Session B reads all deduplicated conversations in main 
 |--------|-------------------|-------|
 | Input | 1 conversation | N deduplicated conversations |
 | Diagnosis | One failure instance | Pattern across instances |
-| Context loading | Sub-agent acceptable | Main context required |
 
-**Why main context:** Instruction artifact fixes require seeing the actual exchanges —
-success and failure cases. Summaries from sub-agents lose behavioral nuance.
-Conversations are the design material, not an intermediate artifact.
+**Context loading:** Always in main context for instruction artifacts — both single observations
+and themes. Sub-agent summaries lose the behavioral nuance that makes instruction fixes work.
 
 ### Design Doc Promotion
 
