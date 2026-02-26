@@ -7,13 +7,12 @@ publish: true
 
 ## Meeting Goal
 
-Resolve five open design questions from the Step 1+2 design doc — AI interpretation behaviors for hierarchy inference, naming, and data handling.
+Resolve four open design questions from the Step 1+2 design doc — AI interpretation behaviors for hierarchy inference, naming, and data handling.
 
 1. **Unmappable column handling** — disposition path for unmatched columns
 2. **Hierarchy type descriptions** — definitions per BEM AssetType for AI inference
 3. **Geographic inheritance** — child assets inheriting address from container
 4. **Rule discrimination** — when AI enriches vs passes through raw data
-5. **Readability validation** — AI flagging unreadable asset names
 
 ## Pre-Read
 
@@ -68,16 +67,6 @@ The AI enriches names when raw data is unreadable: "3" becomes "Building D Floor
 - Housekeeping: "CONCOURSE C" → pass through. "PTC" → flag (unclear)
 
 **To resolve:** Whether BEM has naming conventions that inform where the enrichment boundary sits.
-
-### 5. Readability Validation for Asset Names
-⏱️ 10 min
-
-Should the AI flag asset names that no stakeholder could understand — like a building named "X1" or an equipment asset named "ABC123"?
-
-- Miguel (Feb 23): names should be human-readable, not machine codes
-- Open: does this check happen in Step 1 (interactive) or Step 3 (backpressure)?
-
-**To resolve:** Whether readability validation is a BEM concern (API-enforced) or an AI concern (flagged during setup).
 
 ## Meeting Format
 
