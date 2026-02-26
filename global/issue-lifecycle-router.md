@@ -244,30 +244,188 @@ The Work Board includes review processing views (filtered by `review` label, FIF
 
 "Active" replaces "In Progress" — signals long-running work without implying it should be quick. Epics may be Active for weeks or months. The sub-issue progress bar (X of Y) is the primary signal, not the column.
 
-**Sprint boundaries:** GitHub milestones scope sub-issues to touch-point windows (e.g., "Archibus — Sprint March 10"). Milestones are orthogonal to the epic hierarchy — no additional nesting level required.
+### Milestone Lifecycle
 
-**How milestones connect to client cadence:**
+Milestones are the execution gate. Nothing gets worked without a milestone. They provide what the board and epics alone cannot: a forcing function tied to an external date.
 
-| Source | What It Provides | Cadence |
-|--------|-----------------|---------|
-| **Monthly plan** | Project priorities, deadlines, capacity allocation | Monthly |
-| **Client touch points** | Natural sprint boundaries (meetings, reviews, workshops) | Every 1-3 weeks |
-| **Milestone** | Scoped sub-issues for the next touch point | Per touch point |
+**Three-layer value proposition:**
 
-Before each client meeting, the milestone shows what was completed and what remains. After the meeting, unfinished sub-issues move to the next milestone. The monthly plan sets the strategic frame; milestones execute within it.
+| Layer | What it provides | Without it |
+|-------|-----------------|------------|
+| **Board** | Captures work (issues exist) | "What work do you pick?" — no prioritization signal |
+| **Epic** | Capacity signal (commitments visible) | No way to see overcommitment |
+| **Milestone** | Forcing function (date + scope) | Tasks don't move by themselves |
 
-**Undefined:** Milestone sufficiency vs release epics — are milestones alone enough for sprint-boundary cadence, or do time-bound release epics (like the CCI pattern) provide better intermediate review checkpoints? Pending empirical evidence from running the milestone pattern on active projects.
+Epics = commitment (WHAT we promised). Milestones = temporal (WHEN we do it). Orthogonal — an epic has 1-to-N milestones over its lifetime.
+
+**Operating model: Fixed time, variable scope** (Shape Up principle). The milestone date is immovable — it's the client touchpoint. Scope adapts to fit. Items can be added or removed mid-sprint. The forcing function creates pressure: deliver by the date, or explain why not.
+
+**Milestone lifecycle:**
+
+```
+CREATION (agent, auto):
+  → Trigger: previous milestone's touchpoint date passes
+  → Agent creates [CLIENT] YYYY-MM-DD with next touchpoint date
+  → VP/Delivery configures cadence per client (stored in repo config)
+  → Naming convention: [CLIENT-CODE] YYYY-MM-DD
+
+FILLING (grooming, human):
+  → During daily grooming, associate backlog items to active milestone
+  → Joint decision: manager has priority context, worker has capacity context
+  → Items can also be added mid-sprint (variable scope)
+  → Manager can remove items at any time
+
+ACTIVE SPRINT:
+  → Workers pull from milestone Sprint view
+  → Items flow: Backlog → Working → Review → Done
+  → Only items moved to Working by grooming get worked
+  → Fires: manager authority — same-day urgency goes directly to Working
+
+TOUCHPOINT DATE ARRIVES:
+  → Agent auto-creates NEXT milestone
+  → Current milestone enters CLOSING phase
+
+CLOSING (grooming, human — milestone closure ceremony):
+  → Gate: milestone can ONLY close when every item has a decision
+  → For each item still in the milestone:
+    - Done → stays (history preserved)
+    - Working/Review → move to next milestone or close
+    - Backlog (never started) → return to general backlog
+  → VP/Delivery reviews standalone issues (no epic parent):
+    - Obvious fit → link as sub-issue of existing epic
+    - New commitment → create epic shell (What + Why + Closing Criteria)
+    - Standalone is fine → no action
+  → Once all items dispositioned → human closes milestone
+  → Closed milestones preserve history forever (not deleted)
+```
+
+**All milestones are date-based.** Both client milestones (`[ARCHIBUS] 2026-03-06`) and internal milestones (`[INTERNAL] 2026-03-03`). Auto-created by agent, manually closed during grooming. Closed milestones don't appear in the active selection dropdown — only open ones are visible.
+
+**Forcing functions by source:**
+
+| Source | Forcing function | Milestone cadence |
+|--------|-----------------|-------------------|
+| **Client touchpoints** | Meeting date (social + financial consequence) | Per client meeting (weekly/biweekly) |
+| **Monthly plan** | Position transition deadline (March 31: manager-only) | Weekly internal milestones |
+| **March plan** | Strategic forcing function for the period | Frames all milestone cadences |
+
+See [Stakes Visibility: Forcing Function](https://mariuswilsch.github.io/public-wilsch-ai-pages/global/stakes-visibility-forcing-function) — milestones derive their power from external forcing functions attached to the date.
 
 ### Work Board Columns
 
-| Column | Meaning |
-|--------|---------|
-| **To Do** | Ready to start |
-| **In Progress** | Being worked on |
-| **Review** | Waiting for Dev Lead review (`review` label) |
-| **Done** | Complete |
+| Column | Meaning | Who Moves Here |
+|--------|---------|----------------|
+| **Backlog** | In milestone, not started | Grooming (triage) |
+| **Working** | Someone is actively on it | Grooming (prioritize) |
+| **Review** | Waiting for manager handoff | Worker (signals "I'm done") |
+| **Done** | Complete | Manager (approves) |
 
-Same columns as the current board — these work for fast-moving items. The `review` label auto-adds items to a filtered review processing view (FIFO sort by date added) for the Dev Lead.
+Four universal columns — all work types (spec-design, spec-implement, manager) flow through the same stages. Manager items skip Review (Backlog → Working → Done). Maker items cycle through Review twice: once for spec review (tracking.md), once for human witness (staging).
+
+**One issue, cycling model.** A single issue moves through the full refinement pipeline. The phase label (spec-design → spec-implement) changes when the manager approves a spec review and the issue re-enters Working for implementation. Artifacts signal the current phase:
+
+| Artifact | Phase signal |
+|----------|-------------|
+| No tracking.md | Needs design |
+| tracking.md exists (DoD + AC) | Needs spec review or implementation |
+| Code on branch | Needs human witness |
+| verification.jsonl exists | Ready for final approval |
+
+See [Three-Session Model](https://mariuswilsch.github.io/public-wilsch-ai-pages/global/three-session-model) — sessions are separated for bias prevention, but all artifacts accumulate on the same issue.
+
+**Column transitions:**
+
+| Transition | Who | When |
+|-----------|-----|------|
+| Backlog → Working | Manager (grooming) | "Do this today" |
+| Working → Review | Worker | "I'm done, review this" |
+| Review → Done | Manager | "Approved" — issue closes |
+| Review → Working | Manager | Rejection: "Redo with feedback" (same label) OR Approval: spec-design → spec-implement (label changes) |
+
+**Views:**
+
+| View | Audience | Filter | Purpose |
+|------|----------|--------|---------|
+| **Sprint view** | Worker (primary), Manager | `has:milestone -status:Done` | All milestoned work, grouped by milestone, columns left-to-right |
+| **Grooming view** | Manager + Worker | `status:Backlog,Review no:parent-issue no:milestone` | Orphan items needing triage |
+
+The Sprint view IS the worker's primary working surface. All work that needs to get done lives here.
+
+### Grooming
+
+Grooming is the daily operational ceremony that keeps milestones filled, priorities set, and the board clean. It replaces the previous data-quality model (4 questions per item) with a milestone-first model focused on sprint commitment.
+
+**Cadence:** Daily sync (manager + worker).
+
+**Two responsibilities:**
+
+**1. Triage new items** (items with no milestone):
+
+| Decision | Who | Output |
+|----------|-----|--------|
+| Which milestone? | Joint (manager has priority, worker has capacity) | Issue associated to `[CLIENT] YYYY-MM-DD` |
+| Maker or manager? | Joint | `spec-design` or `manager` label applied |
+| Epic association? | Manager (if obvious fit → link; if not → leave standalone) | Sub-issue link or no action |
+| Assignee correct? | Joint | Assignee set |
+| Blocked? | Joint | `blocked` label if external dependency |
+
+**2. Prioritize milestoned items** (items already in milestones, in Backlog column):
+
+- For each active milestone: which items should the worker tackle TODAY?
+- Manager moves selected items from Backlog → Working column
+- Order in Working = priority (top = first)
+- Worker does NOT self-pull from Backlog between groomings
+
+**What grooming does NOT do:**
+- ~~Review scan~~ — manager processes Review column async via Sprint view
+- ~~Epic creation~~ — VP/Delivery creates epics at milestone closure ceremony
+- ~~Detailed context review~~ — artifact-based, not body-based
+
+**Agent integration:**
+- Agents create issues with client label + context (from transcripts/emails)
+- Agents do NOT auto-link to epics — epic association is a grooming decision
+- Agents do NOT assign milestones — milestone association is a grooming decision
+- Under normal daily grooming, 3-5 new items per day is manageable (~10 min)
+
+**Fires/urgency:** Manager has authority to bypass grooming and drop items directly into Working for same-day urgency. Not same-day → backlog, wait for next grooming.
+
+### Label Architecture
+
+Six label types. Status labels are eliminated — columns carry that information.
+
+| Label | Purpose | Board value |
+|-------|---------|-------------|
+| **spec-design** | Issue is in design phase | Glanceable phase signal without opening issue |
+| **spec-implement** | Issue is in build phase | Same |
+| **manager** | Quick admin/email task (no spec flow) | Distinguishes from maker items |
+| **blocked** | External dependency | Signal overlay — item stays in current column |
+| **epic** | Identifies epics on Commitment Board | Programmatically filterable |
+| **Client labels** | Per-client filtering/slicing | Sprint view sidebar grouping |
+
+**Eliminated labels:** `backlog`, `to-do`, `in-progress`, `done`, `review`, `maker` (prefix). Columns and phase labels replace all of these.
+
+**Phase label transitions:**
+- Issue created → `spec-design` (default for maker items) or `manager`
+- Spec review approved → manager changes label to `spec-implement`, moves back to Working
+- Spec review rejected → stays `spec-design`, moves back to Working with feedback
+- Implementation review approved → issue closes (Done)
+
+### Issue Body
+
+The issue body is a cheap, stable shell. Two fields only:
+
+| Field | Purpose | Changes? |
+|-------|---------|----------|
+| **What?** | What this is about | Never |
+| **Why?** | Why it matters | Never |
+
+No closing criteria in the body — closure is systemic:
+- Design phase done when: tracking.md has DoD + AC
+- Implementation done when: DoD checkboxes checked, code merged
+- Verification done when: verification.jsonl complete
+- Done-done when: manager does human witness
+
+The three-session model (Design → Implementation → Verification) produces artifacts that accumulate on the same issue. See [Three-Session Model](https://mariuswilsch.github.io/public-wilsch-ai-pages/global/three-session-model).
 
 ### Conversation Audit Trail
 
@@ -389,3 +547,7 @@ The JA's spec-design sub-issue closes when the design doc is complete. The desig
 - Epic model restructure extraction pass (2026-02-24) — epic = business outcome, two-board architecture, position accountability recalibration, milestone sprint boundaries
 - Session: /Users/verdant/.claude/projects/-Users-verdant-Documents-projects-00-WILSCH-AI-INTERNAL--soloforce/73be003e-98a7-4deb-851f-9764a04081d9.jsonl
 - Research: SAFe, Atlassian, GitHub April 2025 sub-issues GA — validated epic-as-business-outcome model
+- Operational model extraction pass (2026-02-26) — milestone lifecycle, grooming redesign, Work Board columns, label architecture, one-issue cycling model, Shape Up fixed-time-variable-scope principle
+- Session: /Users/verdant/.claude/projects/-Users-verdant-Documents-projects-00-WILSCH-AI-INTERNAL--soloforce/dc864b00-8aa4-4f8a-8b8d-eeadc213e5c4.jsonl
+- Sources: Transcript `01KJAS108J3K7167NK8B8J2NGK` (Feb 25), GROOMING.md (deliverable-tracking), Shape Up (Basecamp), Kanban best practices research
+- Evidence: Sprint view screenshots, Grooming view screenshots, agent code review (epic-link.ts, epic-index.ts)
