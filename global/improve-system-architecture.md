@@ -117,6 +117,69 @@ Part of `/rubber-duck` diagnosis - the fix depends on artifact type:
 - Command fix: Strengthen `/rubber-duck` instruction
 - Hook fix: Stop hook that blocks plain-text questions
 
+## Theme-Level Workflow (Release Epics)
+
+When multiple observations share a root cause, they cluster into a **theme**. Themes are the unit of work for release-level instruction changes.
+
+### Why Themes Exist
+
+Single observations catch isolated failures. But behavioral patterns (e.g., "AI synthesizes when it should probe") span multiple conversations and multiple artifacts. Themes group related observations so Session B addresses the pattern, not individual symptoms.
+
+### Observation → Theme Pipeline
+
+| Step | Action | Output |
+|------|--------|--------|
+| 1 | Observations accumulate from organic work | Individual issues with conversation paths |
+| 2 | Group related observations into theme | Release epic comment with observation list |
+| 3 | Deduplicate conversation IDs per theme | Unique conversation set for Session B |
+
+### Session B at Theme Level
+
+Same architecture as single-observation Session B, but with richer input:
+
+| Step | Action | Notes |
+|------|--------|-------|
+| 1 | Load theme (observations + conversation IDs) | From release epic |
+| 2 | Read conversations in main context | All deduplicated conversations — not in sub-agents |
+| 3 | Diagnose pattern across conversations | Success cases AND failure cases |
+| 4 | Fix affected artifacts | Same artifact type diagnostic |
+| 5 | `git push` | Direct to main |
+
+**Critical difference from code:** For instruction artifacts, conversations ARE the design material. The AI must read the actual failure and success cases to understand what "good" looks like. Artifact specs (tracking.md, ACs) cannot substitute for seeing the behavior.
+
+**Why main context, not sub-agents:** Sub-agents return summaries. Summaries lose the behavioral nuance that makes instruction fixes work. The AI needs to SEE the exchanges, not read about them.
+
+### Session C: Organic Verification
+
+Instruction artifacts cannot be simulated — you need real work to test them.
+
+| Step | Action | Notes |
+|------|--------|-------|
+| 1 | Continue organic work using the position | Natural JA/Dev sessions post-fix |
+| 2 | Read post-fix conversation | Check if failure pattern persists |
+| 3 | If fixed: close theme | If not: iterate with new conversation as evidence |
+
+**Pattern:** Work on the position (SE terminal) while using the position (project terminal). The project terminal naturally generates Session C data.
+
+### Design Doc Promotion
+
+Design doc = verified methodology only. Update AFTER Session C confirms behavioral change, not before.
+
+| Timing | Action |
+|--------|--------|
+| After Session B | Push instruction fix. Design doc unchanged. |
+| After Session C passes | Promote instruction patterns to design doc. |
+| After Session C fails | Iterate Session B with new evidence. |
+
+### Comparison: Single Observation vs Theme
+
+| Aspect | Single Observation | Theme |
+|--------|-------------------|-------|
+| Input | 1 conversation path | N deduplicated conversation paths |
+| Diagnosis | One failure instance | Pattern across instances |
+| Fix scope | One artifact | May span multiple artifacts |
+| Verification | Trigger same scenario | Organic work post-fix |
+
 ## Session C: Verification
 
 | Step | Action | Notes |
