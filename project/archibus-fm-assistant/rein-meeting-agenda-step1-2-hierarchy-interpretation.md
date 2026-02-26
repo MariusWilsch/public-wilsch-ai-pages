@@ -40,9 +40,25 @@ BEM's asset_types file defines 9 hierarchy levels with only a name and depth cod
 - Current state: asset_types has `id`, `show`, `hierarchy` (A-code depth) — no descriptions
 - The AssetImportDescription Fields Assets sheet has descriptions per field — same format needed per type
 - Proposed descriptions with examples are in the [Step 1+2 Design Doc — Hierarchy Type Descriptions](https://mariuswilsch.github.io/public-wilsch-ai-pages/project/archibus-fm-assistant/step-1-2-setup-phase-design)
-- The Housekeeping Tracker walkthrough in the same doc shows why "CONCOURSE A" can't be mapped from the word alone
 
-**To resolve:** Whether BEM can provide or validate descriptions and examples per hierarchy AssetType, following the same format as the field descriptions in AssetImportDescription.
+**Concrete example — Housekeeping Tracker (FMM Qatar airport):**
+
+The AI attempts to map airport zones to BEM levels without type descriptions:
+
+| Client Column | Values | → BEM Level | Confidence |
+|---|---|---|---|
+| AREA | Concourse A, B, C | Complex? Building? | ⚠️ Medium |
+| AREA | ARRIVALS | Complex? | ⚠️ Low |
+| SUB AREA | PTC, RETAILS | Suite? | ⚠️ Low |
+| SUB AREA | NORTH NODE, SOUTH NODE | ??? | ❓ Unknown |
+| LOCATION | DEPARTURE GATE C4 | Room | ✅ High |
+| LOCATION | CA-1100 DAY 2 DAY | ??? | ❓ Unknown |
+
+Without descriptions: "Concourse" could be Complex or Building. "PTC" is an acronym with no BEM match. "NORTH NODE" has no obvious hierarchy level. The AI can only flag these for the implementer.
+
+With descriptions (e.g., "Complex = group of related zones sharing infrastructure"): the AI reasons that a concourse contains gates and retail zones → matches Complex. Descriptions turn low-confidence guesses into medium-confidence proposals.
+
+**To resolve:** Whether BEM can provide or validate descriptions and examples per hierarchy AssetType — specifically, how Rein would describe the difference between Complex, Building, and Suite when applied to airport infrastructure.
 
 ### 2. Geographic Inheritance for Sub-Elements
 ⏱️ 10 min
