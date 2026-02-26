@@ -60,8 +60,8 @@ Every issue has clear "when is this done?"
 
 | Type | Done When |
 |------|-----------|
-| **maker/spec-design** | Artifact created (design doc, follow-up issue) |
-| **maker/spec-implement** | DoD + AC verified + merged to staging |
+| **maker/design** | Artifact created (design doc, follow-up issue) |
+| **maker/implement** | DoD + AC verified + merged to staging |
 
 ---
 
@@ -69,14 +69,14 @@ Every issue has clear "when is this done?"
 
 | Type | Meaning | Context |
 |------|---------|---------|
-| **maker/spec-design** | Creates specifications | Needs context OUTSIDE the issue |
-| **maker/spec-implement** | Implementable directly | Everything needed is IN the issue |
+| **maker/design** | Creates specifications | Needs context OUTSIDE the issue |
+| **maker/implement** | Implementable directly | Everything needed is IN the issue |
 
 **At task level (primary):** The Developer owns both types. Spec-design = define DoD + AC. Spec-implement = build it.
 
 **At epic level (within an epic):** The JA creates a spec-design sub-issue — producing a design doc through extraction passes. Same work type, different position, different level. The SA ensures design quality but the JA does the extraction work.
 
-**Undefined:** JA work type label encoding — how is spec-design at JA level signaled in tooling and on the board? Does the JA sub-issue get a `maker/spec-design` label, a position-specific label, or is the sub-issue relationship to the epic sufficient signal?
+**Undefined:** JA work type label encoding — how is spec-design at JA level signaled in tooling and on the board? Does the JA sub-issue get a `maker/design` label, a position-specific label, or is the sub-issue relationship to the epic sufficient signal?
 
 **Key insight:** Type describes what KIND of refinement is happening. Position determines who does it. Level determines scope.
 
@@ -362,7 +362,7 @@ Grooming is the daily operational ceremony that keeps milestones filled, priorit
 | Decision | Who | Output |
 |----------|-----|--------|
 | Which milestone? | Joint (manager has priority, worker has capacity) | Issue associated to `[CLIENT] YYYY-MM-DD` |
-| Maker or manager? | Joint | `spec-design` or `manager` label applied |
+| Maker or manager? | Joint | `maker/design` or `manager` label applied |
 | Epic association? | Manager (if obvious fit → link; if not → leave standalone) | Sub-issue link or no action |
 | Assignee correct? | Joint | Assignee set |
 | Blocked? | Joint | `blocked` label if external dependency |
@@ -393,8 +393,8 @@ Six label types. Status labels are eliminated — columns carry that information
 
 | Label | Purpose | Board value |
 |-------|---------|-------------|
-| **spec-design** | Issue is in design phase | Glanceable phase signal without opening issue |
-| **spec-implement** | Issue is in build phase | Same |
+| **maker/design** | Issue is in design phase | Glanceable phase signal without opening issue |
+| **maker/implement** | Issue is in build phase | Same |
 | **manager** | Quick admin/email task (no spec flow) | Distinguishes from maker items |
 | **blocked** | External dependency | Signal overlay — item stays in current column |
 | **epic** | Identifies epics on Commitment Board | Programmatically filterable |
@@ -403,9 +403,9 @@ Six label types. Status labels are eliminated — columns carry that information
 **Eliminated labels:** `backlog`, `to-do`, `in-progress`, `done`, `review`, `maker` (prefix). Columns and phase labels replace all of these.
 
 **Phase label transitions:**
-- Issue created → `spec-design` (default for maker items) or `manager`
-- Spec review approved → manager changes label to `spec-implement`, moves back to Working
-- Spec review rejected → stays `spec-design`, moves back to Working with feedback
+- Issue created → `maker/design` (default for maker items) or `manager`
+- Spec review approved → manager changes label to `maker/implement`, moves back to Working
+- Spec review rejected → stays `maker/design`, moves back to Working with feedback
 - Implementation review approved → issue closes (Done)
 
 ### Issue Body
@@ -455,8 +455,8 @@ All sub-issues complete = mechanical closure signal. VP/Delivery confirms the bu
 
 | Type | Output |
 |------|--------|
-| **maker/spec-design** | Artifact (design doc, follow-up issue). Design IS execution for this type — no separate Stage 3. |
-| **maker/spec-implement** | DoD + AC defined in tracking.md. Ready for execution. |
+| **maker/design** | Artifact (design doc, follow-up issue). Design IS execution for this type — no separate Stage 3. |
+| **maker/implement** | DoD + AC defined in tracking.md. Ready for execution. |
 
 **Decision point (spec-implement):** After DoD + AC are defined, the issue is ready for execution.
 
@@ -504,7 +504,7 @@ Both happen asynchronously. Developer continues to next work.
 
 | Type | Closing Action |
 |------|----------------|
-| **maker/spec-design** | Artifact determines next (SA decides): |
+| **maker/design** | Artifact determines next (SA decides): |
 
 **Spec-design closing (sub-issue within an epic):**
 The JA's spec-design sub-issue closes when the design doc is complete. The design doc links from the epic body. The Developer then creates sibling spec-implement sub-issues from the design doc. No new epic is created — the epic already exists.
@@ -513,7 +513,7 @@ The JA's spec-design sub-issue closes when the design doc is complete. The desig
 1. **→ Spec-implement issue** — simple scope, Developer handles directly (cascade).
 2. **→ Client deliverable** — external output. Send to client. No cascade.
 
-| **maker/spec-implement** | Merge to production. Deploy. Issue closed. |
+| **maker/implement** | Merge to production. Deploy. Issue closed. |
 
 *Currently implemented via:* `done` label, PR merge, deployment.
 
