@@ -7,16 +7,24 @@ publish: true
 
 ## Meeting Goal
 
-Resolve four open design questions from the Step 1+2 design doc — AI interpretation behaviors for hierarchy inference, naming, and data handling.
+Resolve nine open design questions from the Step 1+2 design doc — covering hierarchy inference, naming, column mapping, enum resolution, and import pipeline scope.
 
-1. **Unmappable column handling** — disposition path for unmatched columns
-2. **Hierarchy type descriptions** — definitions per BEM AssetType for AI inference
-3. **Geographic inheritance** — child assets inheriting address from container
-4. **Rule discrimination** — when AI enriches vs passes through raw data
+**Pass 1 topics (hierarchy & interpretation):**
+1. **Hierarchy type descriptions** — definitions per BEM AssetType for AI inference
+2. **Geographic inheritance** — child assets inheriting address from container
+3. **Rule discrimination** — when AI enriches vs passes through raw data
+
+**Pass 2 topics (mapping contract & enums):**
+4. **Import API field expansion** — condition and maintenance fields in import endpoint
+5. **Status enum mapping** — ambiguous values like "Inactive" → which BEM status?
+6. **Unmappable column disposition** — overflow vs exclude, catch-all mechanisms
+7. **assignedPortfolioEmployee timeline** — when Skip → AI tier?
+8. **Location-only imports** — hierarchy without equipment as valid scenario
+9. **Background data entity prioritization** — which entity after Assets?
 
 ## Pre-Read
 
-[Step 1+2 Design Doc](https://mariuswilsch.github.io/public-wilsch-ai-pages/project/archibus-fm-assistant/step-1-2-setup-phase-design) — see Part 1 (hierarchy inference examples, proposed type descriptions) and Part 2 (unmappable columns).
+[Step 1+2 Design Doc](https://mariuswilsch.github.io/public-wilsch-ai-pages/project/archibus-fm-assistant/step-1-2-setup-phase-design) — Part 1 (hierarchy inference, type descriptions), Part 2 (column taxonomy, enum resolution), Part 3 (contract elements, data type detection).
 
 ---
 
@@ -24,19 +32,7 @@ Resolve four open design questions from the Step 1+2 design doc — AI interpret
 
 *Starting points for discussion, not limited to these.*
 
-### 1. Unmappable Column Handling
-⏱️ 15 min
-
-When the AI maps client columns to BEM's 35 fields, some columns won't match anything — "maintenance frequency", "assigned teams", or domain-specific fields that BEM doesn't have.
-
-- Current design: binary mapping (mapped / flagged)
-- Flagged columns reach the implementer, but their disposition is undefined
-- The implementer needs to know: drop it, force-map to closest field, or store somewhere
-- BEM's `additionalProperties: false` on the import schema means extra fields can't just pass through
-
-**To resolve:** The disposition path for client columns that have no BEM field match — whether BEM has a catch-all mechanism or the data is acknowledged and excluded.
-
-### 2. Hierarchy Type Descriptions per AssetType
+### 1. Hierarchy Type Descriptions per AssetType
 ⏱️ 15 min
 
 BEM's asset_types file defines 9 hierarchy levels with only a name and depth code. The AI needs descriptions and examples per type to distinguish Building from Complex when client data uses domain-specific naming.
@@ -48,7 +44,7 @@ BEM's asset_types file defines 9 hierarchy levels with only a name and depth cod
 
 **To resolve:** Whether BEM can provide or validate descriptions and examples per hierarchy AssetType, following the same format as the field descriptions in AssetImportDescription.
 
-### 3. Geographic Inheritance for Sub-Elements
+### 2. Geographic Inheritance for Sub-Elements
 ⏱️ 10 min
 
 If a building has an address, should its floors and rooms also carry that address — or does BEM read it from the parent?
@@ -58,7 +54,7 @@ If a building has an address, should its floors and rooms also carry that addres
 
 **To resolve:** Whether sub-elements need explicit address fields or inherit from their container in BEM's data model.
 
-### 4. Name Enrichment — When to Apply
+### 3. Name Enrichment — When to Apply
 ⏱️ 10 min
 
 The AI enriches names when raw data is unreadable: "3" becomes "Building D Floor 3". But if data is already readable ("CONCOURSE C"), it passes through unchanged.
@@ -68,12 +64,76 @@ The AI enriches names when raw data is unreadable: "3" becomes "Building D Floor
 
 **To resolve:** Whether BEM has naming conventions that inform where the enrichment boundary sits.
 
+### 4. Import API Field Expansion for Condition and Maintenance
+⏱️ 10 min
+
+BEM's full asset table has `condition` (nvarchar 50) and `classification_for_maintenance` (nvarchar 128), but the import API's 36-field subset doesn't include them. Client data commonly contains condition assessments and maintenance schedules.
+
+- CAFM sample: "Condition" column (Excellent/Good/Fair/Poor/New) — currently unmappable via import API
+- CAFM sample: "Maintenance Frequency" column (Monthly/Quarterly) — currently unmappable
+- Both fields exist in the database, just not exposed via the import endpoint
+
+**To resolve:** Whether `condition` and `classification_for_maintenance` can be added to the import API, making common client data columns directly mappable.
+
+### 5. Status Enum Semantic Mapping
+⏱️ 10 min
+
+Rein merged AssetStatus and Status into a single Status field (Feb 19). Client data uses generic values ("Active", "Inactive") that don't always match BEM's 26 predefined statuses. "Active" matches directly; "Inactive" has no exact equivalent.
+
+- Closest candidates for "Inactive": "Out of Service", "Not Ready", "In Storage"
+- The AI proposes ranked candidates during Step 2; the implementer picks
+- Establishing standard mappings for common generic values would reduce per-client effort
+
+**To resolve:** Rein's intended semantic mapping for common generic status values that don't have exact BEM equivalents.
+
+### 6. Unmappable Column Disposition
+⏱️ 10 min
+
+When a client column has no BEM field match, the AI flags it neutrally and the implementer chooses: overflow to statusDetail (pipe-separated catch-all) or exclude.
+
+- statusDetail is the only overflow field (2000 chars, pipe-separated)
+- Some unmappable columns carry valuable data (e.g., Manufacturer before brandSpecific was added Feb 19)
+- BEM's `additionalProperties: false` on the import schema means extra fields can't pass through
+- The AI presents options without recommending — the implementer owns the decision
+
+**To resolve:** Whether statusDetail overflow is the intended disposition path for unmappable-but-valuable columns, or whether BEM has other mechanisms.
+
+### 7. assignedPortfolioEmployee Timeline
+⏱️ 5 min
+
+Currently Skip tier — requires Guid lookup against an employee list. The AssetImportDescription notes "(For next version)." Client data commonly includes "Assigned To" columns with person names.
+
+- Employee lookup adds complexity (name → Guid resolution)
+- Currently excluded from the mapping contract entirely
+
+**To resolve:** Timeline and prerequisites for moving assignedPortfolioEmployee from Skip to AI tier.
+
+### 8. Location-Only Imports
+⏱️ 10 min
+
+Not all client data is asset inventories. Operational trackers (Housekeeping Tracker, maintenance logs) contain location hierarchies but no equipment rows. The AI detects this and surfaces it to the implementer before column mapping begins.
+
+- Housekeeping Tracker (FMM Qatar): 25 columns of work order data, only 3 are BEM-relevant location columns (AREA, SUB AREA, LOCATION)
+- Extracting the location tree without equipment could pre-populate BEM's hierarchy for a site
+
+**To resolve:** Whether the import pipeline should accept location-only data (hierarchy without equipment children) as a valid import scenario.
+
+### 9. Background Data Entity Prioritization
+⏱️ 5 min
+
+The mapping contract is entity-specific — designed for Assets. background-data-tables.xlsx lists ~11 BEM entities (employees, departments, PM procedures, spare parts, service catalogue) that follow the same import pattern with different field targets.
+
+- Assets is the pilot entity — contract pattern proven via CAFM walkthrough
+- Same two-layer matching (column + value) applies to other entities
+
+**To resolve:** Which BEM entity after Assets should be the next priority for the import pipeline.
+
 ## Meeting Format
 
 - **Type:** Technical alignment
 - **Attendees:** Rein, Marius
 - **Expectation:** Rein brings knowledge of BEM's import API constraints
-- **Outcome:** Clear disposition path written into Step 1+2 design doc
+- **Outcome:** Resolved Undefined markers in the Step 1+2 design doc — hierarchy, mapping contract, and enum sections
 
 ## Related
 
