@@ -133,7 +133,7 @@ tracking file can substitute for reading the conversation.
 | Domain | Memory carrier | Disposable |
 |--------|---------------|------------|
 | Code | tracking.md (spec) | Design discussion |
-| Instruction artifacts | Conversations (behavior) | tracking.md |
+| Instruction artifacts | Conversations (behavior) | tracking.md (not needed) |
 
 ### Observation → Theme Pipeline
 
