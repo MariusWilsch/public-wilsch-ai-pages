@@ -7,7 +7,7 @@ publish: true
 
 ## Meeting Goal
 
-Resolve nine open design questions from the Step 1+2 design doc — covering hierarchy inference, naming, column mapping, enum resolution, and import pipeline scope.
+Resolve seven open design questions from the Step 1+2 design doc — covering hierarchy inference, naming, column mapping, enum resolution, and import pipeline scope.
 
 **Pass 1 topics (hierarchy & interpretation):**
 1. **Hierarchy type descriptions** — definitions per BEM AssetType for AI inference
@@ -16,11 +16,9 @@ Resolve nine open design questions from the Step 1+2 design doc — covering hie
 
 **Pass 2 topics (mapping contract & enums):**
 4. **Import API field expansion** — condition and maintenance fields in import endpoint
-5. **Status enum mapping** — ambiguous values like "Inactive" → which BEM status?
+5. **Status enum mapping** — validating the ranked-suggestion approach
 6. **Unmappable column disposition** — overflow vs exclude, catch-all mechanisms
-7. **assignedPortfolioEmployee timeline** — when Skip → AI tier?
-8. **Location-only imports** — hierarchy without equipment as valid scenario
-9. **Background data entity prioritization** — which entity after Assets?
+7. **Location-only imports** — hierarchy without equipment as valid scenario
 
 ## Pre-Read
 
@@ -125,17 +123,7 @@ When a client column has no BEM field match, the AI flags it neutrally and the i
 
 **To resolve:** Whether statusDetail overflow is the intended disposition path for unmappable-but-valuable columns, or whether BEM has other mechanisms.
 
-### 7. assignedPortfolioEmployee Timeline
-⏱️ 5 min
-
-Currently Skip tier — requires Guid lookup against an employee list. The AssetImportDescription notes "(For next version)." Client data commonly includes "Assigned To" columns with person names.
-
-- Employee lookup adds complexity (name → Guid resolution)
-- Currently excluded from the mapping contract entirely
-
-**To resolve:** Timeline and prerequisites for moving assignedPortfolioEmployee from Skip to AI tier.
-
-### 8. Location-Only Imports
+### 7. Location-Only Imports
 ⏱️ 10 min
 
 Not all client data is asset inventories. Operational trackers (Housekeeping Tracker, maintenance logs) contain location hierarchies but no equipment rows. The AI detects this and surfaces it to the implementer before column mapping begins.
@@ -144,16 +132,6 @@ Not all client data is asset inventories. Operational trackers (Housekeeping Tra
 - Extracting the location tree without equipment could pre-populate BEM's hierarchy for a site
 
 **To resolve:** Whether the import pipeline should accept location-only data (hierarchy without equipment children) as a valid import scenario.
-
-### 9. Background Data Entity Prioritization
-⏱️ 5 min
-
-The mapping contract is entity-specific — designed for Assets. background-data-tables.xlsx lists ~11 BEM entities (employees, departments, PM procedures, spare parts, service catalogue) that follow the same import pattern with different field targets.
-
-- Assets is the pilot entity — contract pattern proven via CAFM walkthrough
-- Same two-layer matching (column + value) applies to other entities
-
-**To resolve:** Which BEM entity after Assets should be the next priority for the import pipeline.
 
 ## Meeting Format
 
