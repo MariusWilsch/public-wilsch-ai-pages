@@ -315,7 +315,7 @@ See [Stakes Visibility: Forcing Function](https://mariuswilsch.github.io/public-
 
 | Column | Meaning | Who Moves Here |
 |--------|---------|----------------|
-| **Backlog** | In milestone, not started | Grooming (triage) |
+| **Backlog** | Not started (with or without milestone) | Grooming (triage) |
 | **Working** | Someone is actively on it | Grooming (prioritize) |
 | **Review** | Waiting for manager handoff | Worker (signals "I'm done") |
 | **Done** | Complete | Manager (approves) |
