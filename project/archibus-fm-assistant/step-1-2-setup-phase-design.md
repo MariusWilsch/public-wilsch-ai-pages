@@ -216,14 +216,46 @@ The contract contains four elements, each corresponding to a Step 1 or Step 2 ou
 **Element 1 — Hierarchy Assignments** (Step 1 output):
 An ordered array where position defines nesting depth. Each entry identifies the client column by index (primary) and name (human-readable), the BEM hierarchy level, and whether name enrichment applies.
 
+```json
+"hierarchy": [
+  {"index": 3, "clientColumn": "Location",  "bemLevel": "Building", "enrich": false},
+  {"index": 4, "clientColumn": "Floor",     "bemLevel": "Floor",    "enrich": true},
+  {"index": 5, "clientColumn": "Room No.",  "bemLevel": "Room",     "enrich": true}
+]
+```
+
 **Element 2 — Field Mappings** (Step 2 output):
 A flat lookup — each entry maps a client column to a BEM field. No transformation metadata beyond the column→field pairing. Step 3 processes whatever values are present.
+
+```json
+"fieldMappings": [
+  {"clientColumn": "Asset Name",     "bemField": "name"},
+  {"clientColumn": "Serial No.",     "bemField": "serialNumber"},
+  {"clientColumn": "Model",          "bemField": "modelSpecific"},
+  {"clientColumn": "Manufacturer",   "bemField": "brandSpecific"},
+  {"clientColumn": "Purchase Date",  "bemField": "datePurchased"},
+  {"clientColumn": "Warranty Expiry","bemField": "warrantyTo"}
+]
+```
 
 **Element 3 — Enum Rules** (Step 2 output):
 Per-enum-field translation tables confirmed during Step 2. Maps client values to BEM enum values. Includes a default fallback per enum. Only exists for enum fields (AssetType, Status, Country).
 
+```json
+"enumRules": {
+  "assetType": {
+    "map": {"Safety": "Safety Equipment", "HVAC": "HVAC equipment", "Electrical": "Other EPE"},
+    "default": "Equipment"
+  },
+  "status": {
+    "map": {"Active": "Active", "Inactive": null},
+    "default": "Unknown"
+  }
+}
+```
+
 **Element 4 — Enrichment Rules** (Step 1 output):
-Per-hierarchy-level flag indicating whether phantom node names should be enriched with parent context (e.g., "3" → "Building A Floor 3"). The AI judges readability during Step 1; the implementer confirms.
+Per-hierarchy-level flag indicating whether phantom node names should be enriched with parent context (e.g., "3" → "Building A Floor 3"). The AI judges readability during Step 1; the implementer confirms. Encoded in the hierarchy array's `enrich` flag (see Element 1).
 
 **Step 3 consumption:** Step 3 walks the hierarchy array top-to-bottom, building the tree. For each equipment row, it reads field mappings to populate BEM fields and applies enum rules for translation. Absent fields are omitted from the JSON. Step 3 performs no interpretation — it executes the contract.
 
