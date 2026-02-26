@@ -101,20 +101,15 @@ The component-by-component rhythm creates the design doc. The extraction pass de
 | Step | Name | Definition | Output |
 |------|------|-----------|--------|
 | 1 | **SCOPE** | Pick one Approach part. User judgment. That part is the session boundary. | "I am working on Part X" |
-| 2 | **SURFACE** | AI produces numbered uncertainties (questions + hypotheses) from the scoped part text — both structural (framing, audience, scope) and content (research needed to fill sections). No transcript mining at this stage, but if sources were loaded during SCOPE, calibrate the list against them to filter already-answered items. User validates the list. | Numbered list. List = SURFACE done. |
-| 3 | **RESOLVE** | Probe for understanding — one item at a time. Default mode is probing questions, not resolution drafts. Resolution drafts are UPDATE artifacts — they do not appear during RESOLVE. AI captures the user's verbatim words + source attribution (P4), not AI-synthesized prose. User controls pacing — do not advance without explicit "next." When a RESOLVE item changes the fundamental model, pause and present a recalibrated uncertainty list (mini-SURFACE) for user approval before continuing. Source attribution per resolution: Fireflies link + search anchor words. | Verbatim user words + source per item |
-| 4 | **UPDATE** | AI proposes transition ("All items resolved. Ready to write?"), user confirms. Then: diff-based, section-by-section, approval-gated writing into the design doc — scoped part and any other components improved by the resolutions. Each section diff includes an **Undefined marker audit**: flag any principle-level statements that are actually TBD as explicit `**Undefined:**` markers inline with the diff, not as an afterthought. User confirms markers as part of the Apply/Adjust gate. Meeting agenda created/updated after design doc changes if undefined items route to client meetings (AI re-entry uses inline markers only — no meeting agenda overhead). Per-element source attribution inline (ideal) + session reference in Source section (minimum). Secondary validation surface: diff shows AI's understanding, user skims for instinctive judgment, new micro-decisions emerge from seeing text in context. | Updated design doc + meeting agenda if client-facing undefined items exist |
-| 5 | **ASSESS** | Publish once — AI runs `verify_publish.sh`, presents commit link + published doc URL. User reads full published doc (Speechify: hear + see). Feedback loop: user drops corrections one at a time → AI fixes without republishing → user continues reading → repeat until user signals done. No republishing between minor fixes. After feedback loop: AI uses sequential_thinking (2 steps minimum) to reason about next-pass candidates based on current session's discoveries, then presents Track A / Track B options. Re-entry comment posted to issue in Context → Remaining → Source format (#819 standard). | Published doc approved + re-entry decision with traceable next-pass scope |
-
-**Question format:** Single-focus, maximum two sentences. Anti-patterns: escape hatches (offering an out instead of forcing articulation), categorization questions (asking user to sort/label — that's AI work), compound questions (multiple sub-questions splitting attention). Test: does the question force the user to recall, articulate, or discover? If the AI could answer it by reading a source — it's not a probe, it's a self-routing failure.
+| 2 | **SURFACE** | AI produces numbered uncertainties (questions + hypotheses) from the scoped part text. No transcript reading at this stage. User validates the list. | Numbered list. List = SURFACE done. |
+| 3 | **RESOLVE** | Chisel ambiguity one item at a time. AI self-routes each uncertainty before asking the user. User controls pacing — do not advance without explicit "next." Lightweight dependency ordering (conceptual building). Source attribution per resolution: Fireflies link + search anchor words. | Each item gets a disposition + source |
+| 4 | **UPDATE** | AI proposes transition ("All items resolved. Ready to write?"), user confirms. Then: diff-based, section-by-section, approval-gated writing into the design doc — scoped part and any other components improved by the resolutions. Inline **Undefined** markers for flagged items link to meeting agenda. Meeting agenda created/updated after design doc changes, also component-by-component. Per-element source attribution inline (ideal) + session reference in Source section (minimum). Secondary validation surface: diff shows AI's understanding, user skims for instinctive judgment, new micro-decisions emerge from seeing text in context. | Updated design doc + meeting agenda if flagged items exist |
+| 5 | **ASSESS** | Publish-verify-review. AI runs `verify_publish.sh`, opens commit link + published doc URL. User reads published doc (Speechify: hear + see). Improve loop: user gives feedback on wording → AI adjusts → repeat until satisfied. Session ends with explicit re-entry check: "Another extraction pass needed on any part?" | Published doc approved + re-entry decision |
 
 **Self-Routing in RESOLVE:**
 
-**Mandatory pre-check:** Before every user question, exhaust the self-routing table. User is the convergence point, not the first stop.
-
 | Before asking user | AI checks | Tool | If found |
 |---|---|---|---|
-| Is this in **source code / skills / project files**? | Read project files | Glob / Grep / Read | Present for validation or skip user question entirely |
 | Is this in **transcripts**? | Mine transcripts (chunked read) | Transcript mining skill *(TBD — `context: fork`, reads JSONL in chunks)* | Present for validation: "transcript says X — still valid?" |
 | Is this in **data artifacts**? | Read data files | Standard file read / agents | Present for validation |
 | Neither → **user decision** | — | AskUserQuestion | Evidence-informed question |
@@ -192,14 +187,13 @@ Three rounds on one section is normal. The format change (table → list) and co
 ASSESS is not a separate judgment — it's the validation surface shift from in-chat diffs to the published document. The user reads the real artifact, not a preview.
 
 **Rhythm:**
-1. AI runs `verify_publish.sh` — publishes once, presents commit link + published doc URL
-2. User reads full published doc via Speechify (hear + see simultaneously)
-3. Feedback loop: user drops corrections one at a time → AI fixes without republishing → user continues reading → "another one" → repeat until user signals done
-4. No republishing between minor fixes — user trusts AI to infer corrections from text
-5. After feedback loop: AI uses sequential_thinking (2 steps) to reason about next-pass candidates based on session discoveries → presents Track A / Track B options
-6. Re-entry comment posted to issue in Context → Remaining → Source format
-   - **Another pass** → `/issue-comment` with Track A/B scope → session complete
-   - **Done** → session complete
+1. AI runs `verify_publish.sh` — confirms doc is published
+2. AI opens commit link (diff view) + published doc URL
+3. User reads via Speechify (hear + see simultaneously)
+4. User gives feedback on wording/writing → AI adjusts → re-publish → repeat
+5. When satisfied: AI asks "Another extraction pass needed on any part?"
+   - **Yes** → post `/issue-comment` capturing which part + context for next session → session complete
+   - **No** → session complete
 
 Multiple extraction passes on the same part are normal. Re-entry happens naturally when the user revisits the doc and feels "this part needs more work." The explicit question makes the decision visible rather than implicit.
 
@@ -265,8 +259,6 @@ The WHY column captures reasoning surfaced during RESOLVE — the part that push
 The other half of the system. When a design doc component is **Undefined**, its uncertainty moves to a meeting agenda. The meeting fills the gap. The design doc gets updated. The agenda is not a checklist — it's a container for facilitated discovery.
 
 **Creation rule:** Meeting agendas are born during the extraction pass UPDATE step, in the same commit that adds `**Undefined:**` markers to the design doc. They are not created as a standalone task. Every Undefined marker generates exactly one discussion topic — 1:1 mapping, no exceptions. The marker in the design doc links to the meeting agenda topic. The meeting agenda Pre-Read links back to the design doc.
-
-**Routing rule:** Meeting agendas are for facilitated meetings with other people — client meetings, cross-team alignment, stakeholder decisions. When undefined items route to a future AI extraction pass (self-facilitated), inline **Undefined:** markers in the design doc are sufficient — no meeting agenda overhead. The markers ARE the re-entry pointers for the next session's SCOPE. Meeting agendas are the human-readable expansion of undefined markers; when the next consumer is AI, markers are enough.
 
 **Why 1:1 matters for extraction:** When a future AI processes the meeting transcript during RESOLVE, the 1:1 mapping lets it trace each discussed topic back to the specific Undefined marker in the design doc. The meeting agenda topic is the bridge between what was discussed (transcript) and where the resolution belongs (design doc section). Without this mapping, connecting transcript content to design doc updates is significantly harder.
 
@@ -355,7 +347,6 @@ The attendee reads the design doc before the meeting. The discussion topics are 
 - **ASSESS extraction pass session:** /Users/verdant/.claude/projects/-Users-verdant-Documents-projects-WILSCH-AI-INTERNAL--soloforce/f880f009-fe13-4c26-8bac-b2c2cd6a1773.jsonl
 - **Behavioral principles session (9 principles from 6 evidence conversations):** /Users/verdant/.claude/projects/-Users-verdant-Documents-projects-WILSCH-AI-INTERNAL--soloforce/abdb1c11-e71c-40db-8c8e-ab05acdc9d20.jsonl
 - **Design docs demonstrating extraction output:** [Chain 1B Step 3](https://mariuswilsch.github.io/public-wilsch-ai-pages/project/archibus-fm-assistant/chain-1b-step3-design) (per-element source attribution, Defined/Partially Defined/Undefined per part)
-- **JA Lifecycle Violations extraction pass (CCI #604, 3 themes → 10 resolutions):** /Users/verdant/.claude/projects/-Users-verdant-Documents-projects-00-WILSCH-AI-INTERNAL--soloforce/29c4bc5e-cdec-4745-9363-74f976ec3c51.jsonl
 
 **Shared references:**
 - **Meeting agendas analyzed:** [Mujahid - Asset Code](https://mariuswilsch.github.io/public-wilsch-ai-pages/project/archibus-fm-assistant/mujahid-meeting-agenda-asset-code-hosting), [Miguel/Ian - Hierarchy](https://mariuswilsch.github.io/public-wilsch-ai-pages/project/archibus-fm-assistant/miguel-ian-meeting-agenda-hierarchy-understanding), [Rein - Background Data](https://mariuswilsch.github.io/public-wilsch-ai-pages/project/archibus-fm-assistant/rein-meeting-agenda-background-data), [Rein - Step 3 API](https://mariuswilsch.github.io/public-wilsch-ai-pages/project/archibus-fm-assistant/ryan-meeting-agenda-step3-insertion-api), [All-Hands Prioritization](https://mariuswilsch.github.io/public-wilsch-ai-pages/project/archibus-fm-assistant/all-hands-ai-work-track-prioritization), [Bulk Entry Spike](https://mariuswilsch.github.io/public-wilsch-ai-pages/project/archibus-fm-assistant/bulk-entry-spike-agenda)
