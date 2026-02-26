@@ -123,15 +123,50 @@ Readability validation is an AI concern — the AI flags unreadable names (e.g.,
 
 With the hierarchy established, the AI maps remaining client columns to BEM's 35 schema fields.
 
-**Mapping model:** Binary — every client column is either **mapped** (AI is confident) or **flagged** (AI cannot determine the match). Mapped columns go through batch confirmation. Flagged columns get individual 1x1 resolution with the implementer.
+**Mapping model:** Two-layer. First, column-level matching: every client column is either **mapped** (AI is confident of the BEM field) or **flagged** (AI cannot determine the match). Second, for enum fields only, value-level matching: each client value is either a direct match or needs translation.
+
+Mapped columns go through batch confirmation — the implementer sees all confident mappings in one table and confirms. Flagged columns get individual 1x1 resolution.
 
 **Confirmation surface:** Chat-rendered table as the primary review artifact. The implementer sees the proposed mappings and confirms in conversation. Excel export is available as an option for deeper review.
 
 **Training data:** The more diverse client Excels the team provides internally, the better the AI's context engineering becomes for column name recognition. Self-improving agent loops across deployments are a post-deployment architecture concern.
 
-**Undefined:** Handling of unmappable columns (client columns with no BEM field match). See [Meeting Agenda: Unmappable Column Handling](https://mariuswilsch.github.io/public-wilsch-ai-pages/project/archibus-fm-assistant/rein-meeting-agenda-step1-2-unmappable-columns).
+#### Column Taxonomy
 
-**Undefined:** Enum and value transformation — mapping client values to BEM lookup tables (e.g., equipment types, asset statuses, countries). Column mapping tells Step 3 WHERE data goes; value transformation tells it HOW to translate. See [Meeting Agenda: Enum & Value Transformation](rein-meeting-agenda-step2-schema-mapping).
+Every client column falls into one of six categories. The category determines how the mapping contract records it and how Step 2 presents it to the implementer.
+
+| Category | Contract Records | Step 2 Behavior |
+|----------|-----------------|-----------------|
+| **Hierarchy assignment** | index, clientColumn, bemLevel, enrich flag | Handled in Step 1 (Part 1) |
+| **Direct passthrough** | clientColumn → bemField | Batch confirm — AI is confident |
+| **Passthrough with fallback** | clientColumn → bemField + auto-fallback | Auto-resolved — no implementer flag |
+| **Enum mapping** | clientColumn → bemField + value translation table | Batch confirm (column) + 1x1 (unmatched values) |
+| **Flagged unmappable** | flagged with options: overflow / exclude | 1x1 — AI flags neutrally, implementer decides |
+| **Excluded (Skip tier)** | excluded, reason recorded | Excluded — no implementer decision |
+
+**CAFM example (15 columns → 6 categories):**
+- Hierarchy: Location, Floor, Room No. (3 columns → Part 1)
+- Direct passthrough: Serial No.→serialNumber, Model→modelSpecific, BrandSpecific→brandSpecific, 6 dates, 3 contacts (12 columns)
+- Passthrough with fallback: Asset ID→id (row index if no client ID column)
+- Enum mapping: Asset Type→assetType, Status→status
+- Flagged unmappable: Condition, Maintenance Frequency (BEM's full table has `condition` and `classification_for_maintenance` but the import API doesn't expose them yet)
+- Excluded: Assigned To (assignedPortfolioEmployee is Skip tier — requires Guid lookup)
+
+#### Enum Resolution
+
+For enum fields (AssetType, Status, Country), column-level matching is insufficient — the client's values must also match BEM's predefined enum values. The AI resolves enums during Step 2's interactive phase:
+
+1. AI reads the client's unique values for the column
+2. AI compares against BEM's enum reference (asset_types, asset-status-enum, countries table)
+3. Direct matches pass through; unmatched values get ranked suggestions from the enum
+4. Implementer confirms or picks from suggestions for each unmatched value
+5. The confirmed translation table enters the mapping contract
+
+Enum resolution can be partial — some values match cleanly while others need implementer input. The contract carries both resolved and pending translations. A default fallback exists per enum (e.g., "Equipment" for unknown AssetType values).
+
+**Undefined:** Handling of unmappable columns — AI flags neutrally with options (overflow to statusDetail, exclude), implementer decides. BEM's full asset table has `condition` (nvarchar 50) and `classification_for_maintenance` (nvarchar 128) that could solve common unmappable cases if added to the import API. See [Meeting Agenda: Mapping Contract & Enum Resolution](https://mariuswilsch.github.io/public-wilsch-ai-pages/project/archibus-fm-assistant/rein-meeting-agenda-step1-2-hierarchy-interpretation).
+
+**Undefined:** Specific enum translations (e.g., "Inactive" → which BEM Status value?) need Rein input on intended semantic mapping. The pattern is defined; specific mappings require domain knowledge. See [Meeting Agenda: Mapping Contract & Enum Resolution](https://mariuswilsch.github.io/public-wilsch-ai-pages/project/archibus-fm-assistant/rein-meeting-agenda-step1-2-hierarchy-interpretation).
 
 ---
 
@@ -143,12 +178,35 @@ The combined output of Step 1 and Step 2 is the **mapping contract** — the art
 
 **Visibility:** Internal JSON, invisible to the implementer. The AI internalizes BEM's schema and produces structured output from the raw client Excel. The implementer validates the mapping through the chat-rendered table (Part 2), not by inspecting the contract itself.
 
-**Known contents:**
-- Hierarchy level assignments (client columns → BEM levels)
-- Schema field mappings (client columns → BEM fields)
-- Flagged/excluded columns (with implementer's disposition)
+**Design principle — absence = omission:** Fields not present in the contract are omitted from Step 3's JSON output. The BEM API treats missing fields as null. No explicit "skip" entries needed for unmapped BEM fields — their absence IS the signal.
 
-**Undefined:** Exact contract schema — JSON structure, field names, how enum/value transformation rules are encoded, and how Step 3 consumes it. See [Meeting Agenda: Mapping Contract Schema](rein-meeting-agenda-step2-schema-mapping).
+**Field placement:** Address fields (address, city, state, postalCode, country) are placed on the highest container node in the hierarchy. All other mapped fields are placed on equipment leaf nodes. This follows the principle that location-level data lives on the container, equipment-level data lives on the leaf.
+
+#### Contract Elements
+
+The contract contains four elements, each corresponding to a Step 1 or Step 2 output:
+
+**Element 1 — Hierarchy Assignments** (Step 1 output):
+An ordered array where position defines nesting depth. Each entry identifies the client column by index (primary) and name (human-readable), the BEM hierarchy level, and whether name enrichment applies.
+
+**Element 2 — Field Mappings** (Step 2 output):
+A flat lookup — each entry maps a client column to a BEM field. No transformation metadata beyond the column→field pairing. Step 3 processes whatever values are present.
+
+**Element 3 — Enum Rules** (Step 2 output):
+Per-enum-field translation tables confirmed during Step 2. Maps client values to BEM enum values. Includes a default fallback per enum. Only exists for enum fields (AssetType, Status, Country).
+
+**Element 4 — Enrichment Rules** (Step 1 output):
+Per-hierarchy-level flag indicating whether phantom node names should be enriched with parent context (e.g., "3" → "Building A Floor 3"). The AI judges readability during Step 1; the implementer confirms.
+
+**Step 3 consumption:** Step 3 walks the hierarchy array top-to-bottom, building the tree. For each equipment row, it reads field mappings to populate BEM fields and applies enum rules for translation. Absent fields are omitted from the JSON. Step 3 performs no interpretation — it executes the contract.
+
+#### Data Type Detection (Step 0)
+
+Before column mapping begins, the AI assesses whether the uploaded data is an asset inventory. Not all client files contain equipment data — operational trackers (work orders, maintenance logs, staff lists) contain location hierarchies but no asset properties. The AI surfaces this upfront: "This appears to be a work order tracker, not an asset inventory. Location hierarchy can be extracted, but there are no equipment records."
+
+The mapping contract is entity-specific — designed for the Assets import pipeline. Other BEM entities (employees, departments, PM procedures) would follow the same pattern with entity-specific field targets.
+
+**Undefined:** Exact JSON schema (field names, nesting structure) is an implementation detail to be validated empirically during Step 3 development. The four-element structure and consumption pattern are defined; the wire format is not. See [Meeting Agenda: Mapping Contract & Enum Resolution](https://mariuswilsch.github.io/public-wilsch-ai-pages/project/archibus-fm-assistant/rein-meeting-agenda-step1-2-hierarchy-interpretation).
 
 ---
 
@@ -166,3 +224,4 @@ The combined output of Step 1 and Step 2 is the **mapping contract** — the art
 - **Project Index:** [#373](https://mariuswilsch.github.io/public-wilsch-ai-pages/project/archibus-fm-assistant/transcript-index-373)
 - **Session:** /Users/verdant/.claude/projects/-Users-verdant-Documents-projects-billable-MariusWilsch--archibus-bulk-import/7d4d0137-c41c-4df3-835f-0218a90eba19.jsonl
 - **Session:** /Users/verdant/.claude/projects/-Users-verdant-Documents-projects-billable-MariusWilsch--archibus-bulk-import/919879a0-f08e-4ce4-acfd-8ef68c39ef55.jsonl
+- **Session:** /Users/verdant/.claude/projects/-Users-verdant-Documents-projects-billable-MariusWilsch__archibus-bulk-import/23cb9666-8d53-4479-ab6c-e775b7020083.jsonl
