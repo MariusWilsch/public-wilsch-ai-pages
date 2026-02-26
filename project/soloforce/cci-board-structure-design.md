@@ -114,7 +114,7 @@ Artifact grouping (which commands, skills, or protocols are affected) happens du
 
 This keeps the position epic clean — only unaddressed observations remain. The release epic stays open until the improve-system B→C loop verifies all observations in the cluster are resolved. No partial closure: if one observation in the release isn't fixed, the cycle continues.
 
-The System Engineer names the release epic after the concern the cluster addresses. This framing — a short title describing the behavioral pattern — is the SE's only addition beyond the observations themselves. The release epic then routes to the Junior Architect for design doc creation, following the standard pipeline.
+The System Engineer names the release epic after the concern the cluster addresses. This framing — a short title describing the behavioral pattern — is the SE's only addition beyond the observations themselves. The release epic then routes to execution — for instruction artifacts, this is `/improve-system` at theme level (Session B reads deduplicated conversations, diagnoses, fixes). See [/improve-system architecture](https://mariuswilsch.github.io/public-wilsch-ai-pages/global/improve-system-architecture) Theme-Level Workflow.
 
 ### 4. Routing
 
@@ -151,7 +151,7 @@ The primary tooling change replaces flag-for-improvement's capture function with
 
 The CCI improvement cycle follows a position pipeline that mirrors CI/CD for code: observations accumulate, cluster, get designed, get implemented, and deploy through stability stages.
 
-**Undefined:** The full pipeline — observations → SE monitors pressure → release epic → JA creates design doc → Developer implements → stability gate (Marius R&D → team validation → Traceline product) — was surfaced during this extraction pass but needs its own design pass. The pipeline connects the CCI board structure to the improve-system architecture and the E-Myth position pipeline. Key open questions: how the SE's "pressure threshold" judgment works in practice, how the JA design doc for a release epic differs from a project design doc, and how stability gates between deployment stages are formalized. → Meeting agenda topic.
+**Partially defined:** The pipeline — observations → SE monitors pressure → release epic → `/improve-system` at theme level → organic verification — was surfaced across two extraction passes. For instruction artifacts, conversations are the design material (not design docs or tracking.md). The JA design doc step does not apply — the SE runs `/improve-system` Session B directly against deduplicated conversations. See [/improve-system architecture](https://mariuswilsch.github.io/public-wilsch-ai-pages/global/improve-system-architecture) for the theme-level workflow. **Remaining open questions:** how the SE's "pressure threshold" judgment works in practice, and how stability gates between deployment stages (Marius R&D → team → product) are formalized. → Meeting agenda topic.
 
 ---
 
@@ -166,3 +166,4 @@ The CCI improvement cycle follows a position pipeline that mirrors CI/CD for cod
 - **Flag-for-improvement gap:** DaveX2001/claude-code-improvements#363
 - **CCI Triage Sessions:** DaveX2001/deliverable-tracking#819 (comments contain 4 session summaries)
 - **Live validation:** CCI #589 comment (observation format success case)
+- **Session (behavioral verification):** /Users/verdant/.claude/projects/-Users-verdant-Documents-projects-00-WILSCH-AI-INTERNAL--soloforce/823e5e47-f275-4f14-add7-48674d8328d9.jsonl
