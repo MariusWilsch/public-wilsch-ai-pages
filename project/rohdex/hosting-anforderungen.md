@@ -16,11 +16,12 @@ Das ROHDEX-Dokumentenverarbeitungssystem läuft aktuell auf der Infrastruktur vo
 Konstantin (Rohdex) muss seinem IT-Dienstleister ein Anforderungsdokument vorlegen, das die technischen Mindestanforderungen und Hosting-Optionen beschreibt, damit dieser die Machbarkeit bewerten kann.
 
 **Preconditions:**
-- Geschäftsbeziehung läuft ab sofort direkt zwischen Marius und Rohdex (kein Intermediär)
-- SLA v3 (525 EUR/Monat) ist via SignNow zur Unterschrift versendet
-- System ist produktiv und verarbeitet aktiv Versanddokumente
-- Konstantin hat keine technische Erfahrung mit Hosting ("komplett Laien")
-- Rohdex hat einen internen IT-Dienstleister mit eigener Serverinfrastruktur
+- Geschäftsbeziehung direkt zwischen Marius und Rohdex (kein Intermediär)
+- SLA v4 countersigned (26.02.2026) — 90 EUR/h, keine Pauschale, 30-Minuten-Takte
+- System produktiv auf WILSCH-AI-SERVER, verarbeitet aktiv Versanddokumente
+- On-Premise-Entscheidung getroffen: Migration auf Rohdex-VM (RDX-APP-01)
+- IT-Dienstleister: Gmelch IT-Systeme (Sikander Wenzel, sw@gmelch-itsysteme.de)
+- VM bereitgestellt: 4 V-Cores, 16 GB RAM, 100 GB VHD (60 GB nutzbar), Docker installiert
 
 ---
 
@@ -57,119 +58,106 @@ Das System ist ein einzelner Docker-Container (FastAPI, Python 3.11+) ohne Daten
 - Geringe CPU/RAM-Last — reine Dateiverarbeitung
 - Kein ausgehender Internet-Traffic außer E-Mail und optionalem Monitoring
 
-### Part 2: Cloud-Hosting-Optionen
+### Part 2: On-Premise-Infrastruktur (Rohdex / Gmelch IT)
 
-Zwei Cloud-Anbieter mit Rechenzentren in Deutschland (DSGVO-konform):
+**Bereitgestellte Infrastruktur (Gmelch IT-Systeme, Stand 26.02.2026):**
 
-**Empfehlung:** [OVHcloud VPS-1](https://www.ovhcloud.com/de/vps/) — ab ~€3,82/Mo (exkl. MwSt., 12-Mo-Vertrag, Stand Feb 2026)
+| Eigenschaft | Wert |
+|------------|------|
+| Servername | RDX-APP-01 |
+| Interne IP | 192.168.44.11 |
+| CPU | 4 V-Cores |
+| RAM | 16 GB |
+| Festplatte | 100 GB VHD (60 GB nutzbar nach Ubuntu-Installation) |
+| Betriebssystem | Ubuntu Server |
+| Docker | Neueste Version installiert |
+| Backups | Täglich ab 22:00 (VM-Level, durch Gmelch) |
+| Ausgehend | Sicherheitskritische Anwendungen + Länder (RU, CN etc.) gesperrt — IONOS-Mailserver (DE) nicht betroffen |
 
-**Alternative:** [Hetzner CX33](https://www.hetzner.com/cloud/) — ab ~€6,59/Mo (exkl. MwSt., inkl. Backup, Stand Feb 2026)
+**Zugang:**
+- **VPN:** WatchGuard SSL-VPN-Client → `217.92.100.123:443`
+- **SSH:** Über VPN-Tunnel zu `192.168.44.11`
+- **Credentials:** psst-Vault (global, Tag `rohdex`) — Details in Rohdex CLAUDE.md
+- **Support:** Projektbezogen → Sikander Wenzel direkt. Supportanfragen → support@gmelch-itsysteme.de
 
-**Vergleich:**
+**Verantwortungsteilung (geklärt durch SLA v4 §1.3):**
+- **Gmelch IT:** Infrastruktur — Server-Uptime, OS-Updates, Backups, Netzwerk, Docker-Engine
+- **Marius:** Applikationsebene — Deployment, Wartung, Monitoring, Updates, Bugfixes
 
-| Kriterium | OVHcloud | Hetzner |
-|-----------|----------|---------|
-| Monatspreis | ~€3,82 | ~€6,59 (inkl. Backup) |
-| Backups | Inklusive (täglich) | +€1,10/Mo |
-| DDoS-Schutz | Inklusive | Aufpreis |
-| Support | 24/7, Live-Chat | Geschäftszeiten, Tickets |
-| Performance/Kern | Gut | Besser |
-| Control Panel | Langsam (bekannt) | Schnell |
+### Part 3: Migration
 
-**Community-Konsens (LowEndTalk, HackerNews):**
-- OVHcloud: Bestes Preis-Leistungs-Verhältnis, inkludierte Sicherheitsfeatures
-- Hetzner: Höhere Zuverlässigkeit, bessere Admin-Erfahrung
-- Beide für diese Systemgröße mehr als ausreichend
+**Migrationsaufwand:** 1 Arbeitstag (8 Stunden, 720 EUR) — gemäß SLA v4 §1.1
 
-### Part 3: Eigenes Rechenzentrum (On-Premise)
+| Schritt | Aufwand |
+|---------|---------|
+| Docker-Container deployen und konfigurieren | ~1,5h |
+| Umgebungsvariablen setzen (E-Mail, Monitoring) | ~0,5h |
+| E-Mail-Konnektivität verifizieren (IMAP + SMTP) | ~0,5h |
+| DNS/SSL-Konfiguration falls erforderlich | ~0,5h |
+| Funktionstest aller 9 Verarbeitungsschritte | ~2h |
+| Inbetriebnahme und Übergabe | ~1h |
+| Bugfix Tara-Berechnung (→ Part 5, #655) | ~1h |
+| Puffer für Unvorhergesehenes | ~1h |
 
-**Mindestanforderungen:**
+**Deployment-Methode:** Repo auf Server klonen (`git clone`) + `make deploy`. Alternativ: pre-built image via `docker save/load` falls Git-Zugang von VM problematisch.
 
-| Anforderung | Minimum | Empfohlen |
-|------------|---------|-----------|
-| CPU | 2 Kerne, x86-64 | 4 Kerne |
-| RAM | 4 GB dediziert | 8 GB Gesamt-Host |
-| Festplatte | 40 GB (SSD empfohlen, HDD ausreichend) | 80 GB |
-| Betriebssystem | Linux-basiert (Ubuntu empfohlen) | — |
-| Container-Runtime | Docker Engine 24.x+ | — |
-| Netzwerk ausgehend | IMAP (993), SMTP (587/465) | — |
-| Netzwerk eingehend | Port 9000 (intern/VPN) | — |
-| Internet | Business-Leitung, >10 Mbit/s | — |
-| Stromversorgung | USV empfohlen | — |
+**Dead-Code-Cleanup (vor Migration):**
+- AI-Pfad entfernen: `ai_data_extraction_service.py`, OpenRouter/Langfuse/Helicone Dependencies, DOCX-Handling
+- GlitchTip/Sentry entfernen: `sentry-sdk[fastapi]`, kommentierter Init-Block, `/sentry-debug` Route, `SENTRY_DSN` Config
+- Ungenutzte `.env`-Variablen: `OPENROUTER_API_KEY`, `HELICONE_API_KEY`, `LANGFUSE_SECRET_KEY`, `LANGFUSE_PUBLIC_KEY`, `SENTRY_DSN`
 
-**Machbarkeitsbewertung (Stand Feb 2026):**
-Rohdex-IT bietet: 4 V-Cores, 16 GB RAM, 120 GB Speicher. Diese Spezifikationen übertreffen alle Mindestanforderungen — On-Premise-Hosting ist aus Hardware-Sicht machbar.
+**E-Mail-Konfiguration (unverändert):**
+- Konto: `export-ki@rohdex.com` (IONOS)
+- IMAP: `imap.ionos.de:993` (TLS) — Polling alle ~60 Sekunden
+- SMTP: `smtp.ionos.de:587` (TLS)
+- Ordner: `Processed`, `Skipped` (automatisch angelegt)
 
-**Vorbereitung durch Rohdex-IT (vor Migrationstermin):**
-1. Ausgehende Ports freigeben: IMAP (993) und SMTP (587 oder 465)
-2. SSH-Zugang oder Remote-Zugriff für Marius einrichten
+### Part 4: SLA-Modell
 
-**Abhängig von vereinbarter Verantwortung (Marius oder Rohdex-IT):**
-3. Docker Engine 24.x+ auf der VM installieren und lauffähig bestätigen
-4. Konnektivität prüfen: Von der VM aus `imap.ionos.de:993` und `smtp.ionos.de:587` erreichbar
+**Superseded:** Retainer-Modell (525/325 EUR/Monat) durch SLA v4 ersetzt.
 
-**Risikofaktoren:**
-- 24/7-Verfügbarkeit abhängig von eigener Wartungsdisziplin
-- Keine automatischen Backups ohne explizite Backup-Strategie
+**Aktuelles Modell (SLA v4, signed 26.02.2026):**
+- 90 EUR/h, 30-Minuten-Takte, keine Pauschale
+- Infrastruktur: Rohdex-IT (Gmelch) — Server-Uptime, OS-Updates, Backups, Netzwerk, Docker
+- Applikation: Marius — Wartung, Updates, Bugfixes, Template-Anpassungen
+- Reaktionszeit: 1 Werktag (geschäftskritisch), Best-Effort (nicht-kritisch)
 
-**Undefined:** Wer konfiguriert die Infrastruktur auf Rohdex-Seite? Zwei Optionen — (A) Marius konfiguriert alles (Infrastruktur + App-Deployment), Rohdex-IT stellt Zugang bereit, oder (B) Rohdex-IT bereitet Infrastruktur nach obiger Checkliste vor, Marius deployt nur die Applikation. Antwort beeinflusst Migrationsaufwand und Zeitplanung. → Meeting Agenda
+**Vollständiger Vertrag:** [SLA v4 Wartungsvertrag](https://mariuswilsch.github.io/public-wilsch-ai-pages/project/rohdex/sla-v4-wartungsvertrag)
 
-### Part 4: Migration und E-Mail-Konfiguration
+### Part 5: Bekannte Probleme (Spec-Design durch Developer)
 
-**Migrationsaufwand Cloud:** 1 Arbeitstag (8 Stunden)
-- Docker-Container deployen und konfigurieren
-- Umgebungsvariablen setzen (E-Mail-Zugangsdaten, Monitoring)
-- E-Mail-Konnektivität verifizieren (IMAP + SMTP)
-- DNS/SSL-Konfiguration falls erforderlich
-- Funktionstest und Überprüfung aller Verarbeitungsschritte
+**#655: Tara-Berechnung — Dezimalstellen-Fehler in Packliste**
 
-**Migrationsaufwand On-Premise:** 1 Arbeitstag (8 Stunden)
-Identischer technischer Aufwand wie Cloud-Migration. Zusätzliche Kalenderzeit für IT-Koordination (Firewall-Freigaben, Zugangsvorbereitung) — diese fällt vor dem Migrationstermin an, nicht am Migrationstag selbst.
+Packing List zeigt übermäßige Nachkommastellen bei Tara-Werten (z.B. `15.333333` statt `15.33`). Berechnete Gesamtsumme stimmt nicht mit Referenzwerten aus Log-Datei überein. Ursache: Rohe Python-Float-Arithmetik in `calculation_service.py` ohne Rundung vor Schreiben in Excel-Zellen. SLA v4 §1.1 allokiert ~1h für Fix.
 
-**E-Mail-Konfiguration:**
-Das System nutzt bereits ein Rohdex-eigenes E-Mail-Konto: `export-ki@rohdex.com` (IONOS). Dieses Konto bleibt bei der Migration identisch — es werden lediglich die bestehenden Zugangsdaten auf dem neuen Server hinterlegt.
+**Datenquellen:** 📧 [Tara Problem Email (24.02.2026)](https://mail.google.com/mail/u/0/#all/19c8f8c66c05d43d) — Anhänge: `WAHRHEITSDATEI_2610023_.xlsx`, `Log_38302M.csv`, `PackingList_2610023.xlsx`, `Vorlage Packliste BUNDLES.xlsx`
+**Code:** `app/services/data/calculation_service.py` (Zeilen 87–121), `app/services/document/strategies/PackingListExcelStrategy`
+**Issue:** [#655](https://github.com/DaveX2001/deliverable-tracking/issues/655)
 
-- IMAP: Eingangsverarbeitung (Polling alle ~10 Sekunden)
-- SMTP: Versand der fertigen Dokumente an Absender
-- Ordnerstruktur wird automatisch angelegt: `Processed`, `Skipped`
-- IMAP-Server: `imap.ionos.de` (Port 993, TLS)
-- SMTP-Server: `smtp.ionos.de` (Port 587, TLS)
+**#585: Veterinary BUSAN — Integrationsumfang definieren**
 
-**Migrationskosten:** 720 EUR (8 Stunden × 90 EUR/Stunde) — gilt für beide Hosting-Optionen.
+Konstantin sandte `Veterinary BUSAN.docx` (Beispiel-Dokument, 03.12.2025). VET-Dokumenttyp (`VetExcelStrategy`) existiert bereits im Code und generiert Veterinärzertifikate. Zu klären: Stimmt der aktuelle VET-Output mit dem Beispiel-Dokument überein?
 
-### Part 5: SLA-Modell nach Hosting-Entscheidung
+**Undefined:** (A) VET-Template-Review — Vergleich des generierten VET-Outputs mit dem Beispieldokument `Veterinary BUSAN.docx`. Abweichungen dokumentieren. → Developer Spec-Design
 
-Das aktuelle SLA (525 EUR/Monat) setzt sich aus zwei Verantwortungsbereichen zusammen:
+**Undefined:** (B) Rezept/Material-Datenintegration — JSON-Datenstruktur vereinbart (Recipe ID → Materials Array → Material ID + Percentage + Ebenen/Vormischungen). 500MB+ Datenlieferung ausstehend. Beziehung zum VET-Dokument unklar. → Tiefere Analyse nötig
 
-- **App-Verantwortung (325 EUR/Monat):** Wartung, Updates, Bugfixes, Monitoring (GlitchTip), Template-Anpassungen — bleibt bei Marius unabhängig von der Hosting-Option.
-- **Infrastruktur-Verantwortung (200 EUR/Monat):** Server-Uptime, OS-Updates, Backups, Netzwerk, Docker-Engine — entfällt wenn Rohdex-IT diese Aufgaben übernimmt.
-
-**Preismodell — Verantwortung bestimmt den Preis (nicht der Standort):**
-
-| Verantwortung | Umfang | Preis |
-|---------------|--------|-------|
-| **App-Ebene** | Wartung, Monitoring (GlitchTip), Updates, Bugfixes, Template-Anpassungen | 325 EUR/Monat |
-| **Infra-Ebene** | Server-Uptime, OS-Updates, Backups, Netzwerk, Docker-Engine | +200 EUR/Monat |
-
-| Wer managt den Server? | Monatspreis |
-|------------------------|-------------|
-| Marius managt Server (Cloud oder On-Premise) | 525 EUR |
-| Rohdex-IT managt Server (Cloud oder On-Premise) | 325 EUR |
-
-> *Der Preis hängt davon ab, wer die Server-Verantwortung trägt — nicht davon, wo der Server steht. Auch bei On-Premise kann Marius die Infrastruktur managen (525 EUR), oder Rohdex-IT übernimmt (325 EUR). Monitoring (GlitchTip) ist App-Ebene und bleibt bei Marius in allen Szenarien.*
-
-**Undefined:** Bestätigung, wer die Server-Verantwortung übernimmt — bestimmt den SLA-Preis. Zu klären im nächsten Gespräch mit Konstantin. → Meeting Agenda
+**Datenquellen:** 📧 [VETERINÄR Email (03.12.2025)](https://mail.google.com/mail/u/0/#all/19ae34999468ca08) — Anhang: `Veterinary BUSAN.docx`
+**Code:** `app/services/document/strategies/VetExcelStrategy` (strukturell identisch mit DISPO)
+**Issue:** [#585](https://github.com/DaveX2001/deliverable-tracking/issues/585)
 
 ---
 
 ## Source
 
-- **Transcript:** [Rohdex Call — Hosting Requirements (Feb 18, 10 min)](https://app.fireflies.ai/view/01KHRFX1ESBZ7CJ8Z4X69CS4XK) — Konstantin/Marius, Anforderungen und Hosting-Optionen besprochen
-- **Community Research:** [LowEndTalk OVH vs Hetzner](https://lowendtalk.com/discussion/209375/does-ovh-vps-beat-hetzner-cloud-vps), [HN Discussion](https://news.ycombinator.com/item?id=45480878)
-- **Production Validation:** Server logs (91.99.74.207) — 7 Emails, alle Excel-only, kein AI-Pfad aktiv
-- **Code Analysis:** `processing_orchestration_service.py:344` — DOCX/AI-Pfad existiert aber nie getriggert
-- **Server Specs:** [Konstantin Email (Feb 18)](https://mail.google.com/mail/u/0/#all/19c715d69ebb2c67) — 4 V-Cores, 16 GB RAM, 120 GB Speicher
-- **Email Config:** Production env (WILSCH-AI-SERVER) — `export-ki@rohdex.com` via IONOS (IMAP/SMTP)
-- **Issue:** [#766 Client Communication Transition](https://github.com/DaveX2001/deliverable-tracking/issues/766)
-- **Session:** /Users/verdant/.claude/projects/-Users-verdant-Documents-projects-00-WILSCH-AI-INTERNAL--soloforce/dc52c659-0c63-41ea-8af8-6183d2a72867.jsonl
-- **Session:** /Users/verdant/.claude/projects/-Users-verdant-Documents-projects-00-WILSCH-AI-INTERNAL--soloforce/6aba464a-4eac-48dc-82c6-d5f78cd4d7e4.jsonl
+- **Transcript:** [Rohdex Call — Hosting Requirements (Feb 18, 10 min)](https://app.fireflies.ai/view/01KHRFX1ESBZ7CJ8Z4X69CS4XK) — Anforderungen und Hosting-Optionen besprochen
+- **Email Thread:** [Migration Programm ROHDEX (Feb 25-26)](https://mail.google.com/mail/u/0/#all/19c9530e9b21c06b) — Konstantin → Sikander → Marius: VM-Vorbereitung, VPN-Zugang, Server-Details
+- **VPN Credentials:** [Keeper Link (Feb 26)](https://mail.google.com/mail/u/0/#all/19c9a93fce2727cf) — WatchGuard SSL-VPN
+- **SSH Credentials:** [Keeper Link (Feb 26)](https://mail.google.com/mail/u/0/#all/19c9a955f43ac511) — Ubuntu-Benutzer RDX-APP-01
+- **SLA v4:** [Wartungsvertrag (signed 26.02.2026)](https://mariuswilsch.github.io/public-wilsch-ai-pages/project/rohdex/sla-v4-wartungsvertrag)
+- **Tara Bug:** [Email (Feb 24)](https://mail.google.com/mail/u/0/#all/19c8f8c66c05d43d) — Input/Output-Daten zum Tara-Problem
+- **Veterinary BUSAN:** [Email (Dec 3, 2025)](https://mail.google.com/mail/u/0/#all/19ae34999468ca08) — Beispiel-Dokument
+- **Code Analysis:** Codebase at `~/Documents/projects/billable/ROHDEX/` — AI-Pfad nie getriggert (production validated)
+- **Issue:** [#909 Dokumentenverarbeitung SLA & Wartung](https://github.com/DaveX2001/deliverable-tracking/issues/909) (Epic)
+- **Sub-Issues:** [#961 Migration](https://github.com/DaveX2001/deliverable-tracking/issues/961), [#655 Tara Fix](https://github.com/DaveX2001/deliverable-tracking/issues/655), [#585 BUSAN](https://github.com/DaveX2001/deliverable-tracking/issues/585)
+- **Session:** /Users/verdant/.claude/projects/-Users-verdant-Documents-projects-00-WILSCH-AI-INTERNAL--soloforce/eb15ce95-2336-43e6-baa8-a92e2e6b1adf.jsonl
