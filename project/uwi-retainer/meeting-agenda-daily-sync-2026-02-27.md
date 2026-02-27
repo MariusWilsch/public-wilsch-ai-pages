@@ -68,7 +68,7 @@ Anbieter-Recherche abgeschlossen, Handlungsdokument veröffentlicht, E-Mail an T
 - [Mac Studio Beschaffung — Recherche & Handlungsoptionen](https://mariuswilsch.github.io/public-wilsch-ai-pages/project/uwi-retainer/mac-studio-beschaffung)
 - Erste Priorität: INKI, Flex IT Rent — 6- und 12-Monatslaufzeiten
 - Compute-as-a-Service (#988): NS Network School als erster Zielkunde
-- Überschneidung mit IITR (#954): Ulrich braucht Apple-Mietpreis für Vertragspaket
+
 
 **To resolve:** Thomas-Antwort abwarten und Compute-as-a-Service als zusätzliche Einnahmequelle bewerten.
 
@@ -88,7 +88,13 @@ Anbieter-Recherche abgeschlossen, Handlungsdokument veröffentlicht, E-Mail an T
 | #866 | Ostermann Dokumentation | Unklar (siehe Topic 3) |
 | #917 | Mac Studio AI Dev Environment | Hardware-Entscheidung ausstehend (siehe Topic 4) |
 
-**Abgeschlossen seit 25. Feb:** #928 (WPH INTEVA Angebot kondensiert), #836 (Time-Tracking Strategie), #724 (FSO Marketing Lead Follow-up)
+**Abgeschlossen seit 25. Feb:**
+
+| # | Item | Closed |
+|---|------|--------|
+| #928 | WPH INTEVA Angebot kondensiert | 25. Feb |
+| #836 | Time-Tracking Strategie definiert | 23. Feb |
+| #724 | FSO Marketing Lead Follow-up | 23. Feb |
 
 **To resolve:** Statusbestätigung — keine Diskussion.
 
