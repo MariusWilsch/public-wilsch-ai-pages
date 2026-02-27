@@ -189,7 +189,7 @@ Every client column falls into one of six categories. The category determines ho
 
 | Category | Contract Records | Step 2 Behavior |
 |----------|-----------------|-----------------|
-| **Hierarchy assignment** | index, clientColumn, bemLevel, enrich flag | Handled in Step 1 (Part 1) |
+| **Hierarchy assignment** | clientColumn, bemLevel | Handled in Step 1 (Part 1) |
 | **Direct passthrough** | clientColumn → bemField | Batch confirm — AI is confident |
 | **Passthrough with fallback** | clientColumn → bemField + auto-fallback | Auto-resolved — no implementer flag |
 | **Enum mapping** | clientColumn → bemField + value translation table | Batch confirm (column) + 1x1 (unmatched values) |
@@ -214,7 +214,7 @@ For enum fields (AssetType, Status, Country), column-level matching is insuffici
 4. Implementer confirms or picks from suggestions for each unmatched value
 5. The confirmed translation table enters the mapping contract
 
-Enum resolution can be partial — some values match cleanly while others need implementer input. The contract carries both resolved and pending translations. A default fallback exists per enum (e.g., "Equipment" for unknown AssetType values).
+The contract's enum map must be complete — every client value that appears in the data has a confirmed BEM translation. No unresolved values pass through to Step 3. A default fallback exists per enum (e.g., "Equipment" for unknown AssetType values) to catch values that appear in future data rows Step 2 never encountered.
 
 **Undefined:** Handling of unmappable columns — AI flags neutrally with options (overflow to statusDetail, exclude), implementer decides. BEM's full asset table has `condition` (nvarchar 50) and `classification_for_maintenance` (nvarchar 128) that could solve common unmappable cases if added to the import API. See [Meeting Agenda: Mapping Contract & Enum Resolution](https://mariuswilsch.github.io/public-wilsch-ai-pages/project/archibus-fm-assistant/rein-meeting-agenda-step1-2-hierarchy-interpretation).
 
@@ -236,35 +236,42 @@ The combined output of Step 1 and Step 2 is the **mapping contract** — the art
 
 #### Contract Elements
 
-The contract contains four elements, each corresponding to a Step 1 or Step 2 output:
+The contract contains three elements, each corresponding to a Step 1 or Step 2 output:
 
 **Element 1 — Hierarchy Assignments** (Step 1 output):
-An ordered array where position defines nesting depth. Each entry identifies the client column by index (primary) and name (human-readable), the BEM hierarchy level, and whether name enrichment applies.
+An ordered array where position defines nesting depth. Each entry maps a client column name to a BEM hierarchy level. Name enrichment happens during Step 1 before the contract is finalized — the contract carries the mapping, not the enrichment logic.
 
 ```json
 "hierarchy": [
-  {"index": 3, "clientColumn": "Location",  "bemLevel": "Building", "enrich": false},
-  {"index": 4, "clientColumn": "Floor",     "bemLevel": "Floor",    "enrich": true},
-  {"index": 5, "clientColumn": "Room No.",  "bemLevel": "Room",     "enrich": true}
+  {"clientColumn": "Location",  "bemLevel": "Building"},
+  {"clientColumn": "Floor",     "bemLevel": "Floor"},
+  {"clientColumn": "Room No.",  "bemLevel": "Room"}
 ]
 ```
 
 **Element 2 — Field Mappings** (Step 2 output):
-A flat lookup — each entry maps a client column to a BEM field. No transformation metadata beyond the column→field pairing. Step 3 processes whatever values are present.
+A flat lookup — each entry maps a client column to a BEM field. The AI knows field types and lengths from its static context (AssetImportDescription); the contract carries only the mapping, not the schema. The `id` field uses an explicit fallback when the client has no Asset ID column.
 
 ```json
 "fieldMappings": [
-  {"clientColumn": "Asset Name",     "bemField": "name"},
-  {"clientColumn": "Serial No.",     "bemField": "serialNumber"},
-  {"clientColumn": "Model",          "bemField": "modelSpecific"},
-  {"clientColumn": "Manufacturer",   "bemField": "brandSpecific"},
-  {"clientColumn": "Purchase Date",  "bemField": "datePurchased"},
+  {"clientColumn": "Asset ID",      "bemField": "id"},
+  {"clientColumn": "Asset Name",    "bemField": "name"},
+  {"clientColumn": "Serial No.",    "bemField": "serialNumber"},
+  {"clientColumn": "Model",         "bemField": "modelSpecific"},
+  {"clientColumn": "Manufacturer",  "bemField": "brandSpecific"},
+  {"clientColumn": "Purchase Date", "bemField": "datePurchased"},
   {"clientColumn": "Warranty Expiry","bemField": "warrantyTo"}
 ]
 ```
 
+When the client has no Asset ID column, the fallback is explicit:
+
+```json
+{"clientColumn": null, "bemField": "id", "fallback": "rowIndex"}
+```
+
 **Element 3 — Enum Rules** (Step 2 output):
-Per-enum-field translation tables confirmed during Step 2. Maps client values to BEM enum values. Includes a default fallback per enum. Only exists for enum fields (AssetType, Status, Country).
+Per-enum-field translation tables confirmed during Step 2. Every client value that appears in the data must have a confirmed BEM translation — no nulls or unresolved values. The `default` catches values that appear in future data rows Step 2 never encountered.
 
 ```json
 "enumRules": {
@@ -273,16 +280,21 @@ Per-enum-field translation tables confirmed during Step 2. Maps client values to
     "default": "Equipment"
   },
   "status": {
-    "map": {"Active": "Active", "Inactive": null},
+    "map": {"Active": "Active", "Inactive": "Out of Service", "New": "Not Ready"},
     "default": "Unknown"
   }
 }
 ```
 
-**Element 4 — Enrichment Rules** (Step 1 output):
-Per-hierarchy-level flag indicating whether phantom node names should be enriched with parent context (e.g., "3" → "Building A Floor 3"). The AI judges readability during Step 1; the implementer confirms. Encoded in the hierarchy array's `enrich` flag (see Element 1).
-
 **Step 3 consumption:** Step 3 walks the hierarchy array top-to-bottom, building the tree. For each equipment row, it reads field mappings to populate BEM fields and applies enum rules for translation. Absent fields are omitted from the JSON. Step 3 performs no interpretation — it executes the contract.
+
+#### Contract Design Principles
+
+**Transformation spec, not mutation.** The contract is a set of transformation rules applied over the immutable source Excel. The original data is never modified. With all three artifacts preserved (source Excel + contract + output JSON), every transformation is traceable and diffable.
+
+**AI/CLI boundary.** The contract separates the intelligent layer (Steps 1+2: semantic inference, interactive confirmation) from the programmatic layer (Step 3: tree building, API calls). The AI produces the contract; the CLI/MCP consumes it mechanically.
+
+**Backpressure updates the contract.** When the BEM API rejects an enum value, the AI corrects the contract's enum rules — not just the individual JSON node. This fixes the root cause: all rows with that value get the corrected translation, including buildings not yet processed. Data-specific errors (e.g., name too long) are fixed per-node.
 
 #### Data Type Detection (Step 0)
 
@@ -290,7 +302,6 @@ Before column mapping begins, the AI assesses whether the uploaded data is an as
 
 The mapping contract is entity-specific — designed for the Assets import pipeline. Other BEM entities (employees, departments, PM procedures) would follow the same pattern with entity-specific field targets.
 
-**Undefined:** Exact JSON schema (field names, nesting structure) is an implementation detail to be validated empirically during Step 3 development. The four-element structure and consumption pattern are defined; the wire format is not. See [Meeting Agenda: Mapping Contract & Enum Resolution](https://mariuswilsch.github.io/public-wilsch-ai-pages/project/archibus-fm-assistant/rein-meeting-agenda-step1-2-hierarchy-interpretation).
 
 ---
 
@@ -304,8 +315,8 @@ The AI draws from three context layers during the setup phase:
 
 | Layer | What | When Loaded |
 |-------|------|-------------|
-| **Static** | BEM schema knowledge: 35 import fields, 9 hierarchy levels, enum reference tables (AssetType, Status, Country), field descriptions from AssetImportDescription | Pre-loaded before any client interaction |
-| **Dynamic** | The mapping contract — hierarchy assignments, field mappings, enum rules, enrichment rules. Built progressively through Steps 1+2 confirmations | Accumulated during the interactive phase |
+| **Static** | Four BEM reference artifacts baked into the AI agent: (1) [AssetImportDescription](https://docs.google.com/spreadsheets/d/12xs98WKdpTLHz8U6mccOXo5clFwCqvOviuEch_VNMTw/edit) — 37 import fields with data types, lengths, descriptions; (2) [asset_types.xlsx](https://docs.google.com/spreadsheets/d/1Wc1BL18e5Vaxx7bAzsvxAeWojfvxRrWd/edit) — AssetType enum; (3) [asset-status-enum.csv](https://github.com/MariusWilsch/ARCHIBUS__archibus-poc/blob/staging/.claude/tracking/issue-373/asset-status-enum.csv) — Status enum; (4) Countries table (249 entries). Google Sheets are working copies — authoritative versions live on Bruce Partners SharePoint. | Pre-loaded before any client interaction |
+| **Dynamic** | The mapping contract — hierarchy assignments, field mappings, enum rules. Built progressively through Steps 1+2 confirmations | Accumulated during the interactive phase |
 | **Runtime** | API backpressure — validation errors, enum lists returned on rejection, correction signals | Generated during Step 3 autonomous processing |
 
 The static layer is the AI's prior knowledge. The dynamic layer is the output of the interaction flow described below. The runtime layer is Step 3's feedback mechanism (see [Step 3 Design](https://mariuswilsch.github.io/public-wilsch-ai-pages/project/archibus-fm-assistant/chain-1b-step3-design)). The exact encoding of each layer is an implementation detail — the design-level decision is the three-layer separation and progressive accumulation.
@@ -318,7 +329,7 @@ Three principles govern the interaction flow across all steps:
 
 **2. Announce and ask for foundational decisions, announce and advance for low-stakes.** Data type detection (Step 0) is low-stakes for supported types — the AI announces and advances. Hierarchy confirmation (Step 1) is foundational — it determines the entire tree structure. The AI always asks. The weight of the confirmation gate matches the weight of the decision.
 
-**3. Progressive trust.** First import = full explicit gates at every step. As the implementer and AI build mutual understanding, gates can condense. The AI sets expectations upfront so the implementer knows the journey. Three opening modes exist for the initial response (roadmap-first, show-first, result-first) — to be tested empirically with implementers.
+**3. Progressive trust.** First import = full explicit gates at every step. As the implementer and AI build mutual understanding, gates can condense. The AI sets expectations upfront so the implementer knows the journey. v1 uses **roadmap-first** as the opening mode: "I'll analyze your file in 3 steps..." before showing results. Two alternative modes exist for future empirical testing: **show-first** (jump to first result, no preamble) and **result-first** (entire analysis at once, closest to Miguel's "boom" demo feedback).
 
 See [Anthropic Skill Best Practices — Progressive Disclosure](https://platform.claude.com/docs/en/agents-and-tools/agent-skills/best-practices) for the underlying pattern: AI recommends one option with an escape hatch, not a menu of choices.
 
@@ -442,7 +453,7 @@ Default recommendation with escape hatch.
 
 Last gate before autonomous processing. In-chat summary is the default review artifact.
 
-**Undefined:** The human-readable version of the mapping contract — what the implementer sees as their "decision receipt" at this handoff point. Two faces, one artifact: human-readable (implementer's review) and machine-readable (Step 3's input). The rendering of the human-readable face needs design. See next extraction pass scope.
+The summary above is the default handoff artifact. A detailed "decision receipt" is available on demand — a chat-native expandable view showing every mapping row, every enum translation, and every exclusion with reason. Two faces, one artifact: the summary (quick scan) and the receipt (full audit). The receipt is in-chat, not Excel — it aggregates heterogeneous decision types (hierarchy, mappings, enums, exclusions) that don't fit a single spreadsheet format. Test empirically whether implementers use the receipt or just confirm the summary.
 
 **Message 8 — Step 3 (autonomous processing):**
 
@@ -514,4 +525,5 @@ When the BEM database already contains assets (buildings, floors, rooms), the in
 - **Session:** /Users/verdant/.claude/projects/-Users-verdant-Documents-projects-billable-MariusWilsch--archibus-bulk-import/919879a0-f08e-4ce4-acfd-8ef68c39ef55.jsonl
 - **Session:** /Users/verdant/.claude/projects/-Users-verdant-Documents-projects-billable-MariusWilsch__archibus-bulk-import/23cb9666-8d53-4479-ab6c-e775b7020083.jsonl
 - **Session:** /Users/verdant/.claude/projects/-Users-verdant-Documents-projects-billable-MariusWilsch__archibus-bulk-import/58bfde61-b97e-45fe-9a57-c8bdc231b7fe.jsonl
+- **Session:** /Users/verdant/.claude/projects/-Users-verdant-Documents-projects-billable-MariusWilsch--archibus-bulk-import/57d480dc-e7ea-4ee3-b96f-dce4a2e6f4ca.jsonl
 - **Reference:** [Anthropic Skill Best Practices — Progressive Disclosure](https://platform.claude.com/docs/en/agents-and-tools/agent-skills/best-practices)
