@@ -109,11 +109,36 @@ Without descriptions, the AI is guessing from a single word ("Complex" vs "Build
 
 #### Name Enrichment
 
-During hierarchy review, the AI also proposes a naming pattern. BEM stores all asset types in a single table — a floor named "3" is unreadable without its parent context. The AI compiles readable names by aggregating hierarchy context: "Building D Floor 3 Room 315" instead of just "315".
+After hierarchy confirmation (Step 1, Beat 2), the AI proposes a naming pattern as a separate confirmation. BEM stores all asset types in a single table — a floor named "3" is unreadable without its parent context. The AI compiles readable names by aggregating hierarchy context: "Building D Floor 3 Room 315" instead of just "315".
 
-The enrichment rule is contextual: if the client's data already contains readable names (e.g., "CONCOURSE C"), the AI passes them through. If the data contains only codes or numbers (e.g., "3"), the AI enriches. The AI discriminates when to apply the rule — this is interpretation, not copying.
+The enrichment rule is contextual: if the client's data already contains readable names (e.g., "CONCOURSE C"), the AI passes them through. If the data contains only codes or numbers (e.g., "3"), the AI enriches. The AI discriminates when to apply the rule — this is interpretation, not copying. The discrimination rule runs behind the scenes; the AI presents the result for confirmation.
 
 Readability validation is an AI concern — the AI flags unreadable names (e.g., "X1", "ABC123") during the interactive setup phase. The API accepts anything; the quality gate is in the AI layer.
+
+**Interaction placement:** Name enrichment is presented as a separate confirmation after the hierarchy is locked in (Beat 2 of Step 1). This keeps the hierarchy decision and the naming decision as separate cognitive loads — the implementer focuses on one thing at a time.
+
+**Example — CAFM sample (clean data):**
+
+> **AI (Beat 2):** Some of your hierarchy values are just numbers. I'd like to compile readable names:
+>
+> | Level | Raw Value | → Enriched Name |
+> |-------|-----------|----------------|
+> | Building | Building A | Building A *(already readable — pass through)* |
+> | Floor | 3 | Building A Floor 3 *(enriched)* |
+> | Room | 315 | Building A Floor 3 Room 315 *(enriched)* |
+>
+> Buildings keep their original names. Floors and rooms get parent context added. Agree?
+
+**Example — Housekeeping Tracker (domain-specific data):**
+
+> **AI (Beat 2):** Your hierarchy values are already readable names — no enrichment needed:
+>
+> | Level | Raw Value | → BEM Name |
+> |-------|-----------|------------|
+> | Complex | CONCOURSE C | CONCOURSE C *(pass through)* |
+> | Room | DEPARTURE GATE C4 | DEPARTURE GATE C4 *(pass through)* |
+>
+> All names are already descriptive. I'll use them as-is.
 
 **Undefined:** The exact naming enrichment logic and rule discrimination boundaries need empirical testing and stakeholder alignment. See [Meeting Agenda: Step 1+2 Hierarchy & Interpretation](https://mariuswilsch.github.io/public-wilsch-ai-pages/project/archibus-fm-assistant/rein-meeting-agenda-step1-2-hierarchy-interpretation).
 
@@ -269,6 +294,207 @@ The mapping contract is entity-specific — designed for the Assets import pipel
 
 ---
 
+### Part 4: Interaction Flow
+
+The implementer's journey through Steps 0-2 as a chat-based conversation inside BruceBEM's AI interface. The implementer uploads a file, the AI analyzes it, and the conversation walks through each step until the mapping contract is confirmed and Step 3 can begin.
+
+#### Context Layers
+
+The AI draws from three context layers during the setup phase:
+
+| Layer | What | When Loaded |
+|-------|------|-------------|
+| **Static** | BEM schema knowledge: 35 import fields, 9 hierarchy levels, enum reference tables (AssetType, Status, Country), field descriptions from AssetImportDescription | Pre-loaded before any client interaction |
+| **Dynamic** | The mapping contract — hierarchy assignments, field mappings, enum rules, enrichment rules. Built progressively through Steps 1+2 confirmations | Accumulated during the interactive phase |
+| **Runtime** | API backpressure — validation errors, enum lists returned on rejection, correction signals | Generated during Step 3 autonomous processing |
+
+The static layer is the AI's prior knowledge. The dynamic layer is the output of the interaction flow described below. The runtime layer is Step 3's feedback mechanism (see [Step 3 Design](https://mariuswilsch.github.io/public-wilsch-ai-pages/project/archibus-fm-assistant/chain-1b-step3-design)). The exact encoding of each layer is an implementation detail — the design-level decision is the three-layer separation and progressive accumulation.
+
+#### Design Principles
+
+Three principles govern the interaction flow across all steps:
+
+**1. Fast lane / slow lane.** AI presents confident work as quick-scan batch tables, uncertain work as individual 1x1 engagement. This pattern applies universally — hierarchy, column mapping, enum resolution. The implementer's attention goes where it's needed, not spread across everything equally.
+
+**2. Announce and ask for foundational decisions, announce and advance for low-stakes.** Data type detection (Step 0) is low-stakes for supported types — the AI announces and advances. Hierarchy confirmation (Step 1) is foundational — it determines the entire tree structure. The AI always asks. The weight of the confirmation gate matches the weight of the decision.
+
+**3. Progressive trust.** First import = full explicit gates at every step. As the implementer and AI build mutual understanding, gates can condense. The AI sets expectations upfront so the implementer knows the journey. Three opening modes exist for the initial response (roadmap-first, show-first, result-first) — to be tested empirically with implementers.
+
+See [Anthropic Skill Best Practices — Progressive Disclosure](https://platform.claude.com/docs/en/agents-and-tools/agent-skills/best-practices) for the underlying pattern: AI recommends one option with an escape hatch, not a menu of choices.
+
+#### Happy Case Walkthrough (CAFM Sample)
+
+The CAFM asset upload sample (201 rows, 16 columns, 4 buildings) represents the clean-data path. 8 messages, 4 confirmation gates.
+
+**Message 1** — Implementer uploads `cafm-asset-upload-sample.xlsx`.
+
+**Message 2 — Step 0 + Step 1, Beat 1 (data type + hierarchy):**
+
+> `cafm-asset-upload-sample.xlsx` — 201 rows, 16 columns. Equipment asset data.
+>
+> **Hierarchy detected:**
+>
+> | BEM Level | ← Your Column | Sample Values |
+> |-----------|---------------|---------------|
+> | Building | Location | Building A, B, C, D |
+> | Floor | Floor | 1, 2, 3, G |
+> | Room | Room No. | 116, 232, 333 |
+>
+> 3 levels. Does this match your data structure?
+
+Data type announced without a gate (high confidence, supported type). Hierarchy presented with an explicit question — the implementer must confirm before advancing.
+
+**Message 3 — Step 1, Beat 2 (name enrichment):**
+
+After hierarchy confirmation:
+
+> Some of your hierarchy values are just numbers. I'd like to compile readable names:
+>
+> | Level | Raw Value | → Enriched Name |
+> |-------|-----------|----------------|
+> | Building | Building A | Building A *(already readable)* |
+> | Floor | 3 | Building A Floor 3 |
+> | Room | 315 | Building A Floor 3 Room 315 |
+>
+> Buildings keep their original names. Floors and rooms get parent context added. Agree?
+
+Separate cognitive load from hierarchy. The discrimination rule ran behind the scenes — the AI shows the result.
+
+**Message 4 — Step 2 (column mapping batch):**
+
+> **Column mapping — 13 remaining columns analyzed:**
+>
+> **Mapped (9 confident):**
+>
+> | Your Column | → BEM Field |
+> |-------------|------------|
+> | Asset Name | assetName |
+> | Serial No. | serialId |
+> | Manufacturer | manufacturer |
+> | Model | model |
+> | Purchase Date | datePurchased |
+> | Warranty Expiry | warrantyExpiry |
+> | Condition | condition |
+> | Status | status |
+> | Assigned To | assignedPortfolioEmployee |
+>
+> **Already used in hierarchy:** Location, Floor, Room No.
+>
+> **Needs your input (2):**
+> 1. `Asset Type` → assetType — one enum value didn't match
+> 2. `Maintenance Frequency` — no BEM field found
+>
+> Let's resolve the 2 items.
+
+Confident mappings in a batch table (fast lane). Flagged items listed with count. Hierarchy columns called back to Step 1. Internal IDs (Asset ID, ParentId) silently handled.
+
+**Message 5 — Step 2 (enum resolution, 1x1):**
+
+For each enum mismatch, the AI leads with its top recommendation plus alternatives:
+
+> `Asset Type` → BEM's `assetType`. 3 of 4 values matched:
+>
+> | Your Value | → BEM AssetType | Match |
+> |------------|----------------|-------|
+> | Safety | Safety Equipment | Fuzzy |
+> | IT Equipment | IT Equipment | Exact |
+> | HVAC | HVAC equipment | Fuzzy |
+> | Vertical Trans. | **?** | No match |
+>
+> For "Vertical Trans." I'd suggest **Vertical Transportation**. Other options: Other Equipment, Mechanical Equipment. [See all BEM types]
+>
+> Which one fits?
+
+Then for Status:
+
+> `Status` → BEM's `status`. 1 of 3 matched:
+>
+> | Your Value | → BEM Status |
+> |------------|-------------|
+> | Active | Active *(exact)* |
+> | Inactive | **?** — I'd suggest **Out of Service** ("asset no longer used, could be out of service for a while") |
+> | New | **?** — I'd suggest **Not Ready** ("asset being installed or commissioned") |
+>
+> Does "Inactive" mean the same as "Out of Service" in your client's context?
+
+One mismatch at a time. AI provides BEM descriptions to help the implementer decide. Progressive disclosure: top recommendations shown, full enum list one click away.
+
+**Message 6 — Step 2 (unmappable column):**
+
+> `Maintenance Frequency` doesn't match any of BEM's 35 import fields.
+>
+> **→ Exclude** — this data won't be imported.
+>
+> If you'd rather keep it, I can store it in `statusDetail` (free-text field). What would you prefer?
+
+Default recommendation with escape hatch.
+
+**Message 7 — Summary + handoff:**
+
+> **Mapping complete.** Summary:
+>
+> - **Hierarchy:** Building → Floor → Room (names enriched)
+> - **Mapped:** 9 equipment fields
+> - **Enums resolved:** AssetType (4 values), Status (3 values)
+> - **Excluded:** Maintenance Frequency
+>
+> Ready to process 201 rows across 4 buildings. Proceed?
+
+Last gate before autonomous processing. In-chat summary is the default review artifact.
+
+**Undefined:** The human-readable version of the mapping contract — what the implementer sees as their "decision receipt" at this handoff point. Two faces, one artifact: human-readable (implementer's review) and machine-readable (Step 3's input). The rendering of the human-readable face needs design. See next extraction pass scope.
+
+**Message 8 — Step 3 (autonomous processing):**
+
+> Processing...
+>
+> **Building A:** 3 locations + 52 equipment ✓
+> **Building B:** 3 locations + 48 equipment ✓
+> **Building C:** 3 locations + 55 equipment ✓
+> **Building D:** 3 locations + 46 equipment ✓
+>
+> **Done.** 201 equipment + 12 location assets inserted. 0 errors.
+>
+> [Export to Excel] [View in BruceBEM]
+
+In-chat progress by building. Excel export available on demand for detailed review.
+
+#### Step 0 Scenarios
+
+| Scenario | AI Behavior | Gate? |
+|----------|------------|-------|
+| **0a: Recognized equipment data** | Announces "equipment asset data" and advances to hierarchy | No gate — announce and advance |
+| **0b: Recognized but unsupported** (e.g., work orders) | "This looks like work order data. I can only process asset/equipment data right now." | Stop — blocked |
+| **0c: Ambiguous data type** | "I'm not sure if this is equipment data or work orders. What type of data is this?" | Ask — implementer decides |
+
+**Undefined:** The exact mechanism for data type detection (which signals the AI uses to distinguish asset data from work orders) needs Rein input. See [Meeting Agenda: Step 1+2 Hierarchy & Interpretation](https://mariuswilsch.github.io/public-wilsch-ai-pages/project/archibus-fm-assistant/rein-meeting-agenda-step1-2-hierarchy-interpretation).
+
+#### Step 1 Scenarios
+
+| Scenario | Description | Example |
+|----------|------------|---------|
+| **1a: Clean, all high confidence** | All columns map clearly to hierarchy levels | CAFM sample: Location→Building, Floor→Floor, Room No.→Room |
+| **1b: Partial confidence** | Some levels confident, some uncertain | Housekeeping Tracker: AREA→Complex (medium), SUB AREA→??? (uncertain), LOCATION→Room (high) |
+| **1c: No hierarchy detected** | Flat equipment list, no location columns | Inventory export with only equipment attributes (name, serial, type) |
+| **1d: Too many candidate columns** | Multiple columns could be hierarchy levels | Facility export with AREA, ZONE, SUB AREA, LOCATION, SECTOR — implementer disambiguates |
+| **1e: Hierarchy found, wrong data type** | Location columns exist but non-hierarchy columns suggest work orders, not equipment | Housekeeping Tracker: has AREA/LOCATION hierarchy but columns are Task Description, Completion Status, Scheduled Date |
+
+Scenario 1e is Step 0 and Step 1 interacting — data type detection gets refined BY the hierarchy analysis.
+
+#### Step 2 Scenarios
+
+| Scenario | Description | Example |
+|----------|------------|---------|
+| **2a: Mostly confident** | Most columns match, few flagged | CAFM: 9 mapped, 2 flagged |
+| **2b: Many fuzzy matches** | Cryptic column names, AI guesses | Abbreviated names: SN→serialId?, MFR→manufacturer?, EQ_NM→assetName? |
+| **2c: All confident** | Clean template-based data, every column matches | Rare — all 12 columns match, no enum conflicts, no flags |
+
+#### Future Extension: Existing-Database Scenario
+
+When the BEM database already contains assets (buildings, floors, rooms), the interaction flow gains a fork: "Are these buildings new or do they already exist?" This scenario introduces a pre-check against BEM's existing data using the `get asset by name` endpoint. Documented here as a known future extension — not designed in the current flow.
+
+---
+
 ## Source
 
 - **Design docs:**
@@ -284,3 +510,5 @@ The mapping contract is entity-specific — designed for the Assets import pipel
 - **Session:** /Users/verdant/.claude/projects/-Users-verdant-Documents-projects-billable-MariusWilsch--archibus-bulk-import/7d4d0137-c41c-4df3-835f-0218a90eba19.jsonl
 - **Session:** /Users/verdant/.claude/projects/-Users-verdant-Documents-projects-billable-MariusWilsch--archibus-bulk-import/919879a0-f08e-4ce4-acfd-8ef68c39ef55.jsonl
 - **Session:** /Users/verdant/.claude/projects/-Users-verdant-Documents-projects-billable-MariusWilsch__archibus-bulk-import/23cb9666-8d53-4479-ab6c-e775b7020083.jsonl
+- **Session:** /Users/verdant/.claude/projects/-Users-verdant-Documents-projects-billable-MariusWilsch__archibus-bulk-import/58bfde61-b97e-45fe-9a57-c8bdc231b7fe.jsonl
+- **Reference:** [Anthropic Skill Best Practices — Progressive Disclosure](https://platform.claude.com/docs/en/agents-and-tools/agent-skills/best-practices)
