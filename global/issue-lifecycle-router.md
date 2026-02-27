@@ -150,64 +150,43 @@ Each position has a distinct accountability toward the same epic. All positions 
 
 ### Gate Signal Mechanism
 
-The `review` label signals "ready for review." It appears twice on the epic (bookending the work) and once per sub-issue gate:
+The Review column signals "ready for review." No label needed — the column IS the signal. It appears twice per sub-issue lifecycle (spec review + staging witness) and twice at epic level (bookending the work):
 
-**Epic level (main board → Review column):**
+**Epic level (Commitments Board):**
 
 | When | Gate | Sub-issue progress |
 |------|------|--------------------|
 | **Start** — Developer just created sub-issues | Decomposition review: "Does Developer understand the design doc?" | 0 of N complete |
 | **End** — all sub-issues delivered | SA final look before epic closure | N of N complete |
 
-**Sub-issue level (Dev Lead Review Queue → dedicated project):**
+**Sub-issue level (Work Board → Review column):**
 
 | When | Gate |
 |------|------|
 | Spec complete (DoD + AC in tracking.md) | Spec quality review |
 | Deployed to staging | Human witness on staging |
 
-The Developer adds `review`; the reviewer removes it after approval.
+Worker moves issue to Review column; the manager moves it back to Working (rejection) or to Done (approval).
 
 #### Dev Lead Review Queue
 
-A dedicated GitHub Project that surfaces sub-issue gates without cluttering the main board. The main board stays clean (epics only). Sub-issues with `review` auto-appear here, grouped by parent epic.
-
-**Project Setup:**
-
-| Setting | Value |
-|---------|-------|
-| **Project name** | Dev Lead Review Queue |
-| **Layout** | Table (not board — this is a processing list, not a workflow pipeline) |
-| **Auto-add workflow** | Filter: `is:issue label:review` — repo: `DaveX2001/deliverable-tracking` |
-| **Auto-archive** | On close — keeps the table clean after processing |
-
-**Table Fields:**
-
-| Field | Purpose |
-|-------|---------|
-| **Parent Issue** | Groups sub-issues under their parent epic (reads sub-issue metadata — parent does not need to be on this project) |
-| **Title** | Sub-issue title (linked) |
-| **Assignee** | Which Developer's work is up for review |
-| **Date Added** | Enables FIFO sort (oldest first = highest priority) |
-
-Group by: Parent Issue. Sort by: Date Added (ascending).
+The Work Board's Review column IS the Dev Lead Review Queue. No separate project needed — the Sprint view filtered to `status:Review` surfaces all items waiting for review, grouped by milestone.
 
 **Processing Workflow:**
 
-1. Developer completes spec or deploys to staging → adds `review` label to sub-issue
-2. Sub-issue auto-appears in the Review Queue, grouped under its parent epic
-3. Dev Lead processes items FIFO (top to bottom, oldest first)
-4. **Approval:** Dev Lead removes `review` label. Sub-issue proceeds to next stage.
-5. **Rejection:** Dev Lead removes `review` label + posts comment with feedback. Developer fixes, re-adds `review` when ready. Sub-issue re-enters the queue.
+1. Worker completes spec or deploys to staging → moves issue to Review column
+2. Dev Lead processes Review column via Sprint view (FIFO by date, oldest first)
+3. **Approval:** Manager moves to Done (issue closes) OR moves back to Working with label change (spec-design → spec-implement)
+4. **Rejection:** Manager moves back to Working + posts comment with feedback. Worker fixes, moves back to Review when ready.
 
 **Automation (GitHub Action):**
 
-A single GitHub Action on the `label` event provides two signals:
+A single GitHub Action on the `project_v2_item` event provides two signals:
 
 | Trigger | Action |
 |---------|--------|
-| `review` label added | Count previous `review` add/remove cycles on this issue. Post comment: "Review cycle {N}." At cycle 3: "⚠️ Review cycle 3 — potential design doc clarity issue." |
-| Daily schedule | Scan open issues with `review` label older than 2 business days. Post ⚠️ comment: "In review queue for {N} days (SLA: 2 days)." |
+| Item moved to Review column | Count previous Review→Working→Review cycles on this issue. Post comment: "Review cycle {N}." At cycle 3: "⚠️ Review cycle 3 — potential design doc clarity issue." |
+| Daily schedule | Scan items in Review column older than 2 business days. Post ⚠️ comment: "In review queue for {N} days (SLA: 2 days)." |
 
 The review cycle counter makes rejection frequency visible on the sub-issue itself — both Dev Lead and Developer see it. At cycle 3, the signal shifts from Developer comprehension to design doc clarity (routes back to JA). The SLA monitor is a self-accountability check — visible when opening any stale item.
 
@@ -231,7 +210,7 @@ Two boards serve different audiences at different cadences:
 | **Commitments Board** | VP/Delivery, SA, Dev Lead | Weeks/months | Business outcomes only |
 | **Work Board** | Developer, Dev Lead | Days | Sub-issues, manager tasks, review processing |
 
-The Work Board includes review processing views (filtered by `review` label, FIFO sort) for the Dev Lead to process sub-issue gates. See [Gate Signal Mechanism](#gate-signal-mechanism).
+The Work Board's Review column surfaces sub-issue gates for the Dev Lead to process (Sprint view filtered to `status:Review`, FIFO sort). See [Gate Signal Mechanism](#gate-signal-mechanism).
 
 **The Commitments Board is a capacity signal.** The number of Active epics tells you how many business outcomes you've committed to. 119 issues tells you nothing about capacity. 10 Active epics tells you "we're overcommitted." The board becomes a commitment dashboard — a forcing function for saying no to new work.
 
@@ -267,9 +246,10 @@ Epics = commitment (WHAT we promised). Milestones = temporal (WHEN we do it). Or
 ```
 CREATION (agent, auto):
   → Trigger: previous milestone's touchpoint date passes
-  → Agent creates [CLIENT] YYYY-MM-DD with next touchpoint date
-  → VP/Delivery configures cadence per client (stored in repo config)
-  → Naming convention: [CLIENT-CODE] YYYY-MM-DD
+  → Agent reads cadence from closing milestone's body
+  → Agent creates next milestone with same cadence + forcing function name
+  → Naming convention: [CLIENT-CODE] YYYY-MM-DD — forcing function name
+  → Example: [ARCHIBUS] 2026-02-28 — Rein meeting
 
 FILLING (grooming, human):
   → During daily grooming, associate backlog items to active milestone
@@ -297,7 +277,27 @@ CLOSING (grooming, human):
   → Closed milestones preserve history forever (not deleted)
 ```
 
-**All milestones are date-based.** Both client milestones (`[ARCHIBUS] 2026-03-06`) and internal milestones (`[INTERNAL] 2026-03-03`). Auto-created by agent, manually closed during grooming. Closed milestones don't appear in the active selection dropdown — only open ones are visible.
+**All milestones are date-based.** Both client milestones (`[ARCHIBUS] 2026-02-28 — Rein meeting`) and internal milestones (`[INTERNAL] 2026-03-02 — Weekly sprint`). Auto-created by agent for recurring cadences, manually closed during grooming. Closed milestones don't appear in the active selection dropdown — only open ones are visible.
+
+**Milestone body = cadence config for the auto-creation agent.** The body contains machine-readable cadence that the agent copies forward when creating the next milestone:
+
+```
+cadence: weekly friday
+touchpoint: Rein meeting
+date-format: YYYY-MM-DD
+```
+
+**Three cadence types:**
+
+| Type | Body format | Agent behavior |
+|------|-------------|----------------|
+| **Fixed recurring** | `cadence: weekly friday` | Auto-creates confidently |
+| **Approximate recurring** | `cadence: ~monthly first-friday` | Proposes date, flags for human confirmation |
+| **One-off** | `cadence: none` | No auto-creation — milestone closes and that's it |
+
+**Milestones = forcing functions, not commitments.** Epics are commitments (WHAT we promised). Milestones are temporal containers tied to external forcing functions (WHEN we do it). A single client can have multiple milestones with different forcing functions (e.g., UWI has a weekly sync + a monthly seminar). Epics do not get milestones — only sub-issues do.
+
+**Undefined:** Reactive SLA clients (e.g., Rohdex) — fire-driven work has no recurring forcing function. Create milestones only when a specific event creates a deadline (e.g., server migration handoff). The fire IS the forcing function.
 
 **Forcing functions by source:**
 
@@ -400,7 +400,7 @@ Six label types. Status labels are eliminated — columns carry that information
 | **epic** | Identifies epics on Commitment Board | Programmatically filterable |
 | **Client labels** | Per-client filtering/slicing | Sprint view sidebar grouping |
 
-**Eliminated labels:** `backlog`, `to-do`, `in-progress`, `done`, `review`, `maker` (prefix). Columns and phase labels replace all of these.
+**Eliminated labels:** `backlog`, `to-do`, `in-progress`, `done`, `review`, `maker` (prefix). Columns carry status. Phase labels (`maker/design`, `maker/implement`) carry type.
 
 **Phase label transitions:**
 - Issue created → `maker/design` (default for maker items) or `manager`
@@ -410,7 +410,7 @@ Six label types. Status labels are eliminated — columns carry that information
 
 ### Issue Body
 
-The issue body has stable fields and a living artifact section:
+**Sub-issue bodies** have stable fields and a living artifact section:
 
 | Section | Purpose | Changes? |
 |---------|---------|----------|
@@ -427,7 +427,7 @@ The `## Tracking` section is the living part — it links to the spec artifact o
 
 PR association is automatic — the PR description uses `Fixes #N` and GitHub links it. No manual tracking needed. verification.jsonl is a machine artifact (lives in `.claude/tracking/issue-{N}/`) and doesn't need to appear in the issue body.
 
-No closing criteria in the body — closure is systemic:
+No closing criteria in the sub-issue body — closure is systemic:
 - Design done when: tracking.md has DoD + AC
 - Implementation done when: DoD checkboxes checked, merged to staging worktree
 - Verification done when: AC verified on staging, verification.jsonl complete
@@ -436,6 +436,16 @@ No closing criteria in the body — closure is systemic:
 See [Ship with Confidence](https://mariuswilsch.github.io/public-wilsch-ai-pages/global/ship-with-confidence) for the full testing pyramid (AC → Smoke → Human Witness) and the staging→production flow.
 
 The [Three-Session Model](https://mariuswilsch.github.io/public-wilsch-ai-pages/global/three-session-model) (Design → Implementation → Verification) produces artifacts that accumulate on the same issue.
+
+**Epic bodies** are simpler — What, Why, and Closing Criteria only:
+
+| Section | Purpose | Changes? |
+|---------|---------|----------|
+| **What?** | What this business outcome is | Never |
+| **Why?** | Why it matters | Never |
+| **Closing Criteria** | When this epic can close (business-level, not AC-level) | Never |
+
+Epics have no Tracking section, no DoD, no AC, no tracking.md. The sub-issue progress bar (X of Y) is the primary status signal.
 
 ### Conversation Audit Trail
 
@@ -504,7 +514,7 @@ All sub-issues complete = mechanical closure signal. VP/Delivery confirms the bu
 
 Both happen asynchronously. Developer continues to next work.
 
-*Currently implemented via:* `review` label triggers async review. Detailed procedure in Developer Operations Manual.
+*Currently implemented via:* Review column on Work Board triggers async review. Detailed procedure in Developer Operations Manual.
 
 ---
 
@@ -527,7 +537,7 @@ The JA's spec-design sub-issue closes when the design doc is complete. The desig
 
 | **maker/implement** | Merge to production. Deploy. Issue closed. |
 
-*Currently implemented via:* `done` label, PR merge, deployment.
+*Currently implemented via:* Done column, PR merge, deployment.
 
 ---
 
@@ -561,3 +571,6 @@ The JA's spec-design sub-issue closes when the design doc is complete. The desig
 - Session: /Users/verdant/.claude/projects/-Users-verdant-Documents-projects-00-WILSCH-AI-INTERNAL--soloforce/dc864b00-8aa4-4f8a-8b8d-eeadc213e5c4.jsonl
 - Sources: Transcript `01KJAS108J3K7167NK8B8J2NGK` (Feb 25), GROOMING.md (deliverable-tracking), Shape Up (Basecamp), Kanban best practices research
 - Evidence: Sprint view screenshots, Grooming view screenshots, agent code review (epic-link.ts, epic-index.ts)
+- Milestone retrofit + ILR contradiction pass (2026-02-27) — milestone naming with forcing functions, cadence body config, column-only review gates, epic body format, reactive SLA pattern
+- Session: /Users/verdant/.claude/projects/-Users-verdant-Documents-projects-00-WILSCH-AI-INTERNAL--soloforce/316adeee-7e5d-4f7c-a9b3-ef546cae4085.jsonl
+- Evidence: 7 dead milestones closed, 10 active milestones configured, 11 IITR issues closed, IITR epic #953 created
