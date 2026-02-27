@@ -296,6 +296,8 @@ Per-enum-field translation tables confirmed during Step 2. Every client value th
 
 **Backpressure updates the contract.** When the BEM API rejects an enum value, the AI corrects the contract's enum rules — not just the individual JSON node. This fixes the root cause: all rows with that value get the corrected translation, including buildings not yet processed. Data-specific errors (e.g., name too long) are fixed per-node.
 
+**Undefined:** Contract consumption interface — in Claude Code (development), the AI calls the CLI via terminal. In deployed environments (BruceBEM chat), the AI has no terminal access and needs an MCP tool that accepts the contract and executes Step 3 programmatically. CLI for dev, MCP for production — the interface design is TBD.
+
 #### Data Type Detection (Step 0)
 
 Before column mapping begins, the AI assesses whether the uploaded data is an asset inventory. Not all client files contain equipment data — operational trackers (work orders, maintenance logs, staff lists) contain location hierarchies but no asset properties. The AI surfaces this upfront: "This appears to be a work order tracker, not an asset inventory. Location hierarchy can be extracted, but there are no equipment records."
