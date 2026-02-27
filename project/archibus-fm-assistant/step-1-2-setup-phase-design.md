@@ -331,7 +331,52 @@ Three principles govern the interaction flow across all steps:
 
 **2. Announce and ask for foundational decisions, announce and advance for low-stakes.** Data type detection (Step 0) is low-stakes for supported types — the AI announces and advances. Hierarchy confirmation (Step 1) is foundational — it determines the entire tree structure. The AI always asks. The weight of the confirmation gate matches the weight of the decision.
 
-**3. Progressive trust.** First import = full explicit gates at every step. As the implementer and AI build mutual understanding, gates can condense. The AI sets expectations upfront so the implementer knows the journey. v1 uses **roadmap-first** as the opening mode: "I'll analyze your file in 3 steps..." before showing results. Two alternative modes exist for future empirical testing: **show-first** (jump to first result, no preamble) and **result-first** (entire analysis at once, closest to Miguel's "boom" demo feedback).
+**3. Progressive trust.** First import = full explicit gates at every step. As the implementer and AI build mutual understanding, gates can condense. The AI sets expectations upfront so the implementer knows the journey. v1 uses **roadmap-first** as the opening mode. Two alternative modes exist for future empirical testing.
+
+**Opening modes — what Message 2 looks like after file upload:**
+
+**A) Roadmap-first (v1 default):**
+
+> I'll analyze your file in 3 steps:
+> 1. Detect data type
+> 2. Map your columns to BEM's hierarchy
+> 3. Map remaining columns to BEM fields
+>
+> Let's start. Your file has 201 rows and 16 columns. This looks like equipment asset data.
+>
+> **Hierarchy detected:** ...
+
+Explains the journey before showing results. Best for first-time implementers who need orientation.
+
+**B) Show-first:**
+
+> `cafm-asset-upload-sample.xlsx` — 201 rows, 16 columns. Equipment asset data.
+>
+> **Hierarchy detected:**
+>
+> | BEM Level | ← Your Column | Sample Values |
+> |-----------|---------------|---------------|
+> | Building | Location | Building A, B, C, D |
+> | Floor | Floor | 1, 2, 3, G |
+> | Room | Room No. | 116, 232, 333 |
+>
+> Does this match your data structure?
+
+No preamble — jumps straight to the first result. For implementers who know the process.
+
+**C) Result-first:**
+
+> `cafm-asset-upload-sample.xlsx` — 201 rows, 16 columns. Equipment data.
+>
+> **Full analysis:**
+> - Hierarchy: Building → Floor → Room (3 levels)
+> - Mapped: 9 columns → BEM fields
+> - Enums: AssetType (4 values), Status (3 values)
+> - Flagged: 2 columns need your input
+>
+> Everything look right, or should I walk through each section?
+
+Shows the entire analysis at once. Closest to Miguel's "boom" demo feedback. Implementer confirms in one shot or drills into detail.
 
 See [Anthropic Skill Best Practices — Progressive Disclosure](https://platform.claude.com/docs/en/agents-and-tools/agent-skills/best-practices) for the underlying pattern: AI recommends one option with an escape hatch, not a menu of choices.
 
