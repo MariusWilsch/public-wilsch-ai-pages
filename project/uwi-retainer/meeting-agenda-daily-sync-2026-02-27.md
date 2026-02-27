@@ -7,7 +7,11 @@ publish: true
 
 ## Meeting Goal
 
-Zwei Ziele: (1) Fortschrittsbericht über UWI-Milestone [UWI] Mar 4 — was ist passiert seit letztem Sync am 25. Feb. (2) IITR-Vertragsverlängerung vorbereiten — Ulrich bekommt die Hardware-/Software-Konfiguration und offenen Fragen, damit er das Full Service Paket entwerfen kann.
+Zwei Ziele:
+
+(1) Fortschrittsbericht über UWI-Milestone [UWI] Mar 4 — was ist passiert seit letztem Sync am 25. Feb.
+
+(2) IITR-Vertragsverlängerung vorbereiten — Ulrich bekommt die Hardware-/Software-Konfiguration und offenen Fragen, damit er das Full Service Paket entwerfen kann.
 
 1. **UWI Status klar** — Ulrich kennt den Stand aller Milestone-Items + offene Entscheidungspunkte
 2. **IITR-Vertrag vorbereitet** — Konfigurationsliste, Warranty-Info und Service-Scope übergeben. Nächste Schritte (Telco + München-Termin) vereinbart
