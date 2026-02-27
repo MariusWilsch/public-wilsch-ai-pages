@@ -384,9 +384,9 @@ Separate cognitive load from hierarchy. The discrimination rule ran behind the s
 > 1. `Asset Type` → assetType — one enum value didn't match
 > 2. `Maintenance Frequency` — no BEM field found
 >
-> Let's resolve the 2 items.
+> Do the 9 mappings above look correct? If so, we'll resolve the 2 flagged items next.
 
-Confident mappings in a batch table (fast lane). Flagged items listed with count. Hierarchy columns called back to Step 1. Internal IDs (Asset ID, ParentId) silently handled.
+Confident mappings in a batch table — still a confirmation gate. The implementer reviews the batch and may disagree with a mapping before moving on. Flagged items listed with count so the implementer knows what's coming. Hierarchy columns called back to Step 1. Internal IDs (Asset ID, ParentId) silently handled.
 
 **Message 5 — Step 2 (enum resolution, 1x1):**
 
