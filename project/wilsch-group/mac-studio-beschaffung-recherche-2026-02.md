@@ -5,13 +5,13 @@ publish: true
 # Mac Studio Beschaffung — Recherche & Handlungsoptionen
 [[client-wilsch-group]]
 
-Zusammenfassung der Anbieter-Recherche für die Kurzzeit-Beschaffung eines Mac Studio M3 Ultra mit mindestens 256 GB Arbeitsspeicher. Zielgruppe: Thomas und Heiko als Entscheider für Beschaffung und Finanzierung.
+Zusammenfassung der Anbieter-Recherche für die Kurzzeit-Beschaffung eines Mac Studio M3 Ultra mit mindestens 256 GB Arbeitsspeicher. Zielgruppe: Ulrich (UWI) und Thomas (Wilsch) als Entscheider für Beschaffung und Finanzierung.
 
 ---
 
 ## Kontext
 
-Die Wilsch AI benötigt kurzfristig einen Mac Studio M3 Ultra mit mindestens 256 GB Arbeitsspeicher für lokale KI-Inferenz (MiniMax M2.5). Hintergrund: Der AVO-Kunde hat Datenschutzanforderungen, die cloudbasierte KI-Entwicklung (z.B. Claude) ausschließen.
+Die Wilsch AI benötigt kurzfristig einen Mac Studio M3 Ultra mit mindestens 256 GB Arbeitsspeicher für lokale KI-Inferenz (MiniMax M2.5). Hintergrund: Kundenprojekte haben Datenschutzanforderungen, die cloudbasierte KI-Entwicklung (z.B. Claude) ausschließen.
 
 **Frist:** Demo am 27. März 2026 — Gerät muss vorher einsatzbereit sein.
 
