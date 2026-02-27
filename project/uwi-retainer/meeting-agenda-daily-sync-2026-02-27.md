@@ -7,11 +7,7 @@ publish: true
 
 ## Meeting Goal
 
-Zwei Ziele:
-
-(1) Fortschrittsbericht über UWI-Milestone [UWI] Mar 4 — was ist passiert seit letztem Sync am 25. Feb.
-
-(2) IITR-Vertragsverlängerung vorbereiten — Ulrich bekommt die Hardware-/Software-Konfiguration und offenen Fragen, damit er das Full Service Paket entwerfen kann.
+Zwei Ziele: (1) Fortschrittsbericht über UWI-Milestone [UWI] Mar 4 — was ist passiert seit letztem Sync am 25. Feb. (2) IITR-Vertragsverlängerung vorbereiten — Ulrich bekommt die Hardware-/Software-Konfiguration und offenen Fragen, damit er das Full Service Paket entwerfen kann.
 
 1. **UWI Status klar** — Ulrich kennt den Stand aller Milestone-Items + offene Entscheidungspunkte
 2. **IITR-Vertrag vorbereitet** — Konfigurationsliste, Warranty-Info und Service-Scope übergeben. Nächste Schritte (Telco + München-Termin) vereinbart
@@ -67,8 +63,8 @@ Anbieter-Recherche abgeschlossen, Handlungsdokument veröffentlicht, E-Mail an T
 
 - [Mac Studio Beschaffung — Recherche & Handlungsoptionen](https://mariuswilsch.github.io/public-wilsch-ai-pages/project/uwi-retainer/mac-studio-beschaffung)
 - Erste Priorität: INKI, Flex IT Rent — 6- und 12-Monatslaufzeiten
-- Compute-as-a-Service (#988): NS Network School als erster Zielkunde
-
+- Compute-as-a-Service (#988): AI-Frontier-Team bei Nuca Systems als erster Zielkunde
+- Überschneidung mit IITR (#954): Ulrich braucht Apple-Mietpreis für Vertragspaket
 
 **To resolve:** Thomas-Antwort abwarten und Compute-as-a-Service als zusätzliche Einnahmequelle bewerten.
 
@@ -88,13 +84,7 @@ Anbieter-Recherche abgeschlossen, Handlungsdokument veröffentlicht, E-Mail an T
 | #866 | Ostermann Dokumentation | Unklar (siehe Topic 3) |
 | #917 | Mac Studio AI Dev Environment | Hardware-Entscheidung ausstehend (siehe Topic 4) |
 
-**Abgeschlossen seit 25. Feb:**
-
-| # | Item | Closed |
-|---|------|--------|
-| #928 | WPH INTEVA Angebot kondensiert | 25. Feb |
-| #836 | Time-Tracking Strategie definiert | 23. Feb |
-| #724 | FSO Marketing Lead Follow-up | 23. Feb |
+**Abgeschlossen seit 25. Feb:** #928 (WPH INTEVA Angebot kondensiert), #836 (Time-Tracking Strategie), #724 (FSO Marketing Follow-up)
 
 **To resolve:** Statusbestätigung — keine Diskussion.
 
@@ -124,6 +114,7 @@ Stellmacher hat am 26. Feb schriftliche Rahmenbedingungen angefragt ([Email](htt
 - Monitoring: SigNoz, Langfuse, OpenLIT
 - Alle Tools Open-Source — keine Lizenzkosten
 
+**Bereits abgeschlossen (Milestone 4/7):**
 - ✅ #766 — Kundenkommunikation Transition (Roman → direkt)
 - ✅ #876 — Space.NET VPN Migration
 - ✅ #962 — Staging-Latenz untersucht (8min+ → behoben)
