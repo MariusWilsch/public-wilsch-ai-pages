@@ -449,8 +449,11 @@ Last gate before autonomous processing. In-chat summary is the default review ar
 > Processing...
 >
 > **Building A:** 3 locations + 52 equipment ✓
+>
 > **Building B:** 3 locations + 48 equipment ✓
+>
 > **Building C:** 3 locations + 55 equipment ✓
+>
 > **Building D:** 3 locations + 46 equipment ✓
 >
 > **Done.** 201 equipment + 12 location assets inserted. 0 errors.
