@@ -5,7 +5,7 @@ publish: true
 # Mac Studio Beschaffung — Handlungsoptionen
 [[client-wilsch-group]]
 
-Wir brauchen kurzfristig einen Mac Studio M3 Ultra (mindestens 256 GB) für lokale KI-Entwicklung. Kundenprojekte schließen Cloud-Lösungen aus Datenschutzgründen aus.
+Wir brauchen kurzfristig einen Mac Studio M3 Ultra (mindestens 256 GB) für lokale KI-Entwicklung. Datensouveränität ist der entscheidende Faktor.
 
 **Frist:** Vor dem 27. März 2026.
 
