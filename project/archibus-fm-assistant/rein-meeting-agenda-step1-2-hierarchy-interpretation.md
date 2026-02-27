@@ -7,7 +7,7 @@ publish: true
 
 ## Meeting Goal
 
-Resolve seven open design questions from the Step 1+2 design doc — covering hierarchy inference, naming, column mapping, enum resolution, and import pipeline scope.
+Resolve eight open design questions from the Step 1+2 design doc — covering hierarchy inference, naming, column mapping, enum resolution, data type detection, and import pipeline scope.
 
 **Pass 1 topics (hierarchy & interpretation):**
 1. **Hierarchy type descriptions** — definitions per BEM AssetType for AI inference
@@ -19,6 +19,9 @@ Resolve seven open design questions from the Step 1+2 design doc — covering hi
 5. **Status enum mapping** — validating the ranked-suggestion approach
 6. **Unmappable column disposition** — overflow vs exclude, catch-all mechanisms
 7. **Location-only imports** — hierarchy without equipment as valid scenario
+
+**Pass 3 topics (interaction flow):**
+8. **Data type detection mechanism** — how AI distinguishes asset data from work orders
 
 ## Pre-Read
 
@@ -132,6 +135,17 @@ Not all client data is asset inventories. Operational trackers (Housekeeping Tra
 - Extracting the location tree without equipment could pre-populate BEM's hierarchy for a site
 
 **To resolve:** Whether the import pipeline should accept location-only data (hierarchy without equipment children) as a valid import scenario.
+
+### 8. Data Type Detection Mechanism (Step 0)
+⏱️ 10 min
+
+Before column mapping begins, the AI needs to determine whether the uploaded file contains asset/equipment data or something else (work orders, maintenance logs, staff lists). The interaction flow design (Part 4) defines three scenarios: recognized equipment, recognized-but-unsupported, and ambiguous.
+
+- The Housekeeping Tracker (FMM Qatar) has location hierarchy columns but is actually work order data — scenario 1e in the Step 1 design
+- The AI needs signals beyond column names to distinguish: the non-hierarchy columns reveal the data type (Task Description = work orders, Serial No. = equipment)
+- Current proof of concept only supports the asset import table. Other BEM entities would follow the same pattern with entity-specific field targets
+
+**To resolve:** Which signals Rein considers definitive for distinguishing asset data from other data types — and whether the import API provides any metadata that helps with this classification.
 
 ## Meeting Format
 
