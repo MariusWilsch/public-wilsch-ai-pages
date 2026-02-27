@@ -124,7 +124,6 @@ Stellmacher hat am 26. Feb schriftliche Rahmenbedingungen angefragt ([Email](htt
 - Monitoring: SigNoz, Langfuse, OpenLIT
 - Alle Tools Open-Source — keine Lizenzkosten
 
-**Bereits abgeschlossen (Milestone 4/7):**
 - ✅ #766 — Kundenkommunikation Transition (Roman → direkt)
 - ✅ #876 — Space.NET VPN Migration
 - ✅ #962 — Staging-Latenz untersucht (8min+ → behoben)
