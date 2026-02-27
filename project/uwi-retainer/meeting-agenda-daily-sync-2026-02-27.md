@@ -114,12 +114,6 @@ Stellmacher hat am 26. Feb schriftliche Rahmenbedingungen angefragt ([Email](htt
 - Monitoring: SigNoz, Langfuse, OpenLIT
 - Alle Tools Open-Source — keine Lizenzkosten
 
-**Bereits abgeschlossen (Milestone 4/7):**
-- ✅ #766 — Kundenkommunikation Transition (Roman → direkt)
-- ✅ #876 — Space.NET VPN Migration
-- ✅ #962 — Staging-Latenz untersucht (8min+ → behoben)
-- ✅ #964 — Staging/Production Umgebungstrennung
-
 **Offene Punkte aus dem Transkript vom 25. Feb:**
 - [ ] Telco mit IITR/Stellmacher als Zwischenschritt — wann?
 - [ ] München-Termin Mitte März mit Ulrich — Datum festlegen
