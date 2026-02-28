@@ -207,7 +207,14 @@ The Dev Lead reads the tour to know what to test. The Dev Lead reads the trace t
 | Big failure | Record, route back to implementation session | Recorded — discrepancy noted |
 | Always | Record regardless | Dev Lead sees full history |
 
-**Back-pressure: missing artifacts.** When the skill cannot construct a concrete step because no witnessable artifact exists (no staging URL, no test report, no deployed feature), this is a **witness test failure** — recorded in tracking.md like any other mismatch. The failure signals that either: (1) the implementation needs to produce the artifact, or (2) the AC was too abstract and needs a spec design pass. Don't waste the back-pressure — suppressing the gap (skipping the step, guessing) wastes the diagnostic signal.
+**Back-pressure: missing artifacts.** When the skill cannot construct a concrete step because no witnessable artifact exists (no staging URL, no test report, no deployed feature), this is a **witness test failure** — recorded in tracking.md like any other mismatch. The failure routes to two possible causes:
+
+1. **Implementation gap** — the spec defined the artifact, but the Developer didn't produce it. Route: back to Developer.
+2. **Spec design gap** — the spec never defined which artifacts the implementation should produce. Route: back to JA for a spec design pass defining the artifact creation strategy.
+
+This means the spec design (JA responsibility) must include not just WHAT to test but also WHICH witnessable artifacts the implementation must produce. The test rubric, staging endpoints, and deployment surfaces should be anticipated during design — not discovered during witness. When they aren't anticipated, the witness failure is the signal that spec design needs another pass.
+
+Don't waste the back-pressure — suppressing the gap (skipping the step, guessing) wastes the diagnostic signal.
 
 **Dev Lead integration:**
 
