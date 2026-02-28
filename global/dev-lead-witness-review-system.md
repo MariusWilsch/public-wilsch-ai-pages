@@ -181,9 +181,13 @@ ACs annotate the journey (each step references which ACs it covers) but do not o
 | **Action** | AI derives from ACs + implementation context | "Open `https://staging.example.com/admin` and log in" |
 | **Artifact** | The concrete thing being witnessed | CMS admin panel, API response, test harness CSV |
 | **AC reference** | Annotation from tracking.md | "(AC2, AC4)" |
-| **Expectation** | Lives in the AC itself | Not duplicated — reader references tracking.md |
+| **Expectation** | Brief hint from the AC, shown in-session | AI sets the scene before presenting the step — full AC detail lives in tracking.md |
 
 The artifact varies by testability layer (see [AC-DoD Framework § 4](https://mariuswilsch.github.io/public-wilsch-ai-pages/global/ac-dod-framework) for layer taxonomy): staging URLs, API response payloads, test harness reports, CLI output, file content. Every experiential AC should produce a witnessable artifact. If not, the skill records a witness failure (see back-pressure below).
+
+**Experiential vs machine-only classification:** The distinction is a spectrum — even a document count *could* be witnessed, but it's less valuable than judging an answer's quality. The heuristic: does human judgment add value beyond what a machine check provides? High-value witness targets are subjective quality checks (answer correctness, UI experience, user journey flow). Low-value targets are binary assertions (file exists, threshold passed, container running). The AI classifies ACs along this spectrum when constructing the tour, prioritizing high-value experiential items.
+
+**Undefined:** Exact classification criteria for experiential vs machine-only ACs — to be calibrated empirically through real witness sessions. The spectrum heuristic (human judgment value) is stable; the threshold for "worth witnessing" will emerge from practice.
 
 At the issue level, the AI also references relevant items from the project-level test rubric — "if you want to test more, here are relevant test cases from the full rubric." The AI curates 2-3 rubric items and links to the rest, proving it sees the full project context.
 

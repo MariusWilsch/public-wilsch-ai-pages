@@ -60,8 +60,9 @@ Every issue has clear "when is this done?"
 
 | Type | Done When |
 |------|-----------|
-| **maker/design** | Artifact created (design doc, follow-up issue) |
-| **maker/implement** | DoD + AC verified + merged to staging |
+| **ja/design** | Design doc published (JA sub-issue closes) |
+| **dev/design** | DoD + AC in tracking.md, spec review approved |
+| **dev/implement** | DoD + AC verified + merged to staging |
 
 ---
 
@@ -69,16 +70,15 @@ Every issue has clear "when is this done?"
 
 | Type | Meaning | Context |
 |------|---------|---------|
-| **maker/design** | Creates specifications | Needs context OUTSIDE the issue |
-| **maker/implement** | Implementable directly | Everything needed is IN the issue |
+| **ja/design** | JA produces design doc via extraction passes | Needs context OUTSIDE the issue (transcripts, conversations, data artifacts) |
+| **dev/design** | Developer creates specifications (DoD + AC) | Needs the JA's design doc as input |
+| **dev/implement** | Implementable directly | Everything needed is IN the issue (tracking.md) |
 
-**At task level (primary):** The Developer owns both types. Spec-design = define DoD + AC. Spec-implement = build it.
+**At task level (primary):** The Developer owns both dev types — designing (DoD + AC) and implementing (code). This is the dual cycle: every maker sub-issue starts as dev/design, cycles to dev/implement after spec review.
 
-**At epic level (within an epic):** The JA creates a spec-design sub-issue — producing a design doc through extraction passes. Same work type, different position, different level. The SA ensures design quality but the JA does the extraction work.
+**At epic level (within an epic):** The JA creates a ja/design sub-issue — producing a design doc through extraction passes. Same design work, different position, different level. The SA ensures design quality but the JA does the extraction work.
 
-**Undefined:** JA work type label encoding — how is spec-design at JA level signaled in tooling and on the board? Does the JA sub-issue get a `maker/design` label, a position-specific label, or is the sub-issue relationship to the epic sufficient signal?
-
-**Key insight:** Type describes what KIND of refinement is happening. Position determines who does it. Level determines scope.
+**Key insight:** Type describes what KIND of refinement is happening. Position determines who does it. Level determines scope. The label architecture (`ja/design`, `dev/design`, `dev/implement`) encodes both type and position in a single glanceable signal.
 
 ### Developer Entry Points
 
@@ -124,7 +124,7 @@ The epic board shows only epics. The sub-issue progress bar (X of Y) provides at
 
 VP/Delivery creates epics when a business outcome is identified. The epic enters the board in **Not Started** as a shell — What and Why only. No sub-issues yet.
 
-**Routing within the epic:** VP/Delivery (or SA acting on VP/Delivery's behalf) decides whether the business outcome needs a design doc (JA creates a spec-design sub-issue) or can be built directly (Developer creates spec-implement sub-issues). This routing decision determines which position creates the first sub-issue.
+**Routing within the epic:** VP/Delivery (or SA acting on VP/Delivery's behalf) decides whether the business outcome needs a design doc (JA creates a ja/design sub-issue) or can be built directly (Developer creates dev/design sub-issues). This routing decision determines which position creates the first sub-issue.
 
 **Context partitioning:** Each sub-issue has its own trace line (comments, commits, conversations). The JA's extraction pass comments live on the JA's sub-issue — the Developer never needs to read them. Context is partitioned by sub-issue, not by issue lifecycle.
 
@@ -140,11 +140,15 @@ Each position has a distinct accountability toward the same epic. All positions 
 |----------|--------------------------|----------------|
 | **VP/Delivery** | Creates epic, moves to Done | Owns epic board transitions |
 | **SA** | Design quality standards | Reviews JA's design doc output |
-| **JA** | Creates spec-design sub-issue, produces design doc | Works within Active phase |
-| **Dev Lead** | Moves epic to Client Sign-Off, review queue processing | Comprehension gates, staging witness |
-| **Developer** | Creates spec-implement sub-issues from design doc | Builds, verifies, deploys |
+| **JA** | Creates ja/design sub-issue, produces design doc | Extraction passes within Active phase |
+| **Dev Lead** | Moves epic to Validating, review queue processing | Comprehension gates, staging witness |
+| **Developer** | Decomposes design doc into sub-issues (dev/design) | Designs (DoD+AC), implements (code), deploys |
 
-**Decomposition is still the Developer's act — not the JA's.** The JA's spec-design sub-issue produces a design doc. The Developer reads it and creates sibling spec-implement sub-issues. The Dev Lead's starting-point gate measures Developer comprehension — if the JA pre-decomposes, the gate becomes a rubber stamp.
+**Decomposition is still the Developer's act — not the JA's.** The JA's ja/design sub-issue produces a design doc. The Developer reads it and creates sibling sub-issues (labeled dev/design). At least one grooming session separates the JA's design doc completion from the Developer's decomposition — the handoff goes through the existing gate mechanism. The Dev Lead's starting-point gate measures Developer comprehension — if the JA pre-decomposes, the gate becomes a rubber stamp.
+
+**Undefined:** JA-to-Developer handoff ceremony — should there be a formal "read design doc + briefing session" step before the Developer decomposes? Or is the grooming session sufficient?
+
+**Undefined:** Decomposition mechanics — the exact process by which the Developer breaks a design doc into sub-issues is being operationalized as a skill. The Starting-Point Sub-Issues section stays at principle level until the skill makes it concrete.
 
 **Dev Lead gates are comprehension signals.** The starting-point review and tracking.md review measure whether the Developer understands the design doc — not just whether tasks were completed. A poor decomposition signals either a design doc clarity problem (JA) or a comprehension gap (Developer growth opportunity).
 
@@ -176,7 +180,7 @@ The Work Board's Review column IS the Dev Lead Review Queue. No separate project
 
 1. Worker completes spec or deploys to staging → moves issue to Review column
 2. Dev Lead processes Review column via Sprint view (FIFO by date, oldest first)
-3. **Approval:** Manager moves to Done (issue closes) OR moves back to Working with label change (spec-design → spec-implement)
+3. **Approval:** Manager moves to Done (issue closes) OR moves back to Working with label change (dev/design → dev/implement)
 4. **Rejection:** Manager moves back to Working + posts comment with feedback. Worker fixes, moves back to Review when ready.
 
 **Automation (GitHub Action):**
@@ -200,6 +204,23 @@ The Developer reads the design doc and creates the first sub-issues they can see
 Creating ten sub-issues where seven will be closed is bad practice. The Developer should look as far as they can see and start doing.
 
 **Undefined:** Detailed decomposition mechanics for complex epics — pending empirical evidence from applying this to issue #373.
+
+### Sub-Issue Quality Criteria
+
+Closability is the primary quality signal. A sub-issue that can't be definitively closed is badly designed — it lingers on the board even with a milestone forcing function, because there's no clear done-state to reach.
+
+**Empirical criteria (from deliverable-tracking analysis, 2026-02-28):**
+
+| Criterion | Good | Bad |
+|-----------|------|-----|
+| **Title** | One verb, one outcome | Compound deliverables ("X + Y + Z") |
+| **Milestone-ability** | Fits in one sprint | Can't be committed to a sprint |
+| **Scope** | Single deliverable | Multiple deliverables in one issue |
+| **Blocked items** | Decomposed into what CAN move | Blocked without decomposition |
+
+The milestone gate naturally filters: unclosable items can't fit in a sprint. Grooming IS the quality gate — if an item can't be milestoned, it hasn't been thought through enough.
+
+**Undefined:** Detailed quality criteria pending more empirical evidence from board operation. The criteria above are a starting point, not exhaustive.
 
 ### Board Architecture
 
@@ -320,9 +341,28 @@ See [Stakes Visibility: Forcing Function](https://mariuswilsch.github.io/public-
 | **Review** | Waiting for manager handoff | Worker (signals "I'm done") |
 | **Done** | Complete | Manager (approves) |
 
-Four universal columns — all work types (spec-design, spec-implement, manager) flow through the same stages. Manager items skip Review (Backlog → Working → Done). Maker items cycle through Review twice: once for spec review (tracking.md), once for human witness (staging).
+Four universal columns — all work types (ja/design, dev/design, dev/implement, manager) flow through the same stages. Manager items skip Review (Backlog → Working → Done). Maker items cycle through Review twice: once for spec review (tracking.md), once for human witness (staging).
 
-**One issue, cycling model.** A single issue moves through the full refinement pipeline. The phase label (spec-design → spec-implement) changes when the manager approves a spec review and the issue re-enters Working for implementation. Artifacts signal the current phase:
+**One issue, cycling model.** A single issue moves through the full refinement pipeline. The phase label changes when the manager approves a spec review and the issue re-enters Working for implementation. The dual cycle runs within the same milestone — no re-grooming between cycles.
+
+**Sub-Issue Dual Cycle:**
+
+```mermaid
+graph LR
+    A["dev/design<br/>(Working)"] -->|"produces: tracking.md"| B["Review<br/>(spec review)"]
+    B -->|"Reject: feedback"| A
+    B -->|"Approve: label flip + comment"| C["dev/implement<br/>(Working)"]
+    C -->|"produces: code + verification.jsonl"| D["Review<br/>(witness)"]
+    D -->|"Reject: feedback"| C
+    D -->|"Reject: spec problem"| A
+    D -->|"Approve: comment"| E["Done"]
+```
+
+All maker items start as dev/design — no exceptions. The dual cycle is universal because every piece of work needs an audit trail (spec → implementation), even trivial items. Manager items skip Review entirely (Backlog → Working → Done, self-service).
+
+The [Three-Session Model](https://mariuswilsch.github.io/public-wilsch-ai-pages/global/three-session-model) aligns: Design session = cycle 1, Implementation + Verification sessions = cycle 2, Witness = separate end session. If the witness fails, the manager routes back to dev/design (spec problem) or dev/implement (code problem) based on judgment.
+
+Artifacts signal the current phase:
 
 | Artifact | Phase signal |
 |----------|-------------|
@@ -335,12 +375,17 @@ See [Three-Session Model](https://mariuswilsch.github.io/public-wilsch-ai-pages/
 
 **Column transitions:**
 
-| Transition | Who | When |
-|-----------|-----|------|
-| Backlog → Working | Manager (grooming) | "Do this today" |
-| Working → Review | Worker | "I'm done, review this" |
-| Review → Done | Manager | "Approved" — issue closes |
-| Review → Working | Manager | Rejection: "Redo with feedback" (same label) OR Approval: spec-design → spec-implement (label changes) |
+| Transition | Type | Who | When |
+|-----------|------|-----|------|
+| [No milestone] → [Milestoned] | View transition (Gate 1) | Joint (grooming) | "We commit to this sprint" |
+| Backlog → Working | Column transition (Gate 2) | Manager (sprint) | "Do this today" |
+| Working → Review | Column transition | Worker | "I'm done, review this" |
+| Review → Working | Column transition | Manager | Rejection (same label, feedback) OR Approval (label flip: dev/design → dev/implement, comment) |
+| Review → Done | Column transition | Manager | "Approved" — issue closes |
+
+**Worker authority:** Working → Review (signals completion), apply `blocked` label (signals blocker). Workers do not move items backwards. Once in Working, the only path is forward to Review. When blocked, the manager owns the resolution (re-prioritize, remove, or escalate).
+
+**Spec approval = immediate signal.** When the manager approves spec in Review and flips the label to dev/implement, the worker continues immediately — no re-grooming needed. The "no self-pull" rule applies to Gate 2 (Backlog → Working) only, not to the Review → Working cycle.
 
 **Views:**
 
@@ -353,28 +398,41 @@ The Sprint view IS the worker's primary working surface. All work that needs to 
 
 ### Grooming
 
-Grooming is the daily operational ceremony that keeps milestones filled, priorities set, and the board clean. It replaces the previous data-quality model (4 questions per item) with a milestone-first model focused on sprint commitment.
+Grooming is the daily operational ceremony that keeps milestones filled, priorities set, and the board clean. Two gates, two cognitive modes — the manager and worker switch decision frameworks entirely between triage and sprint prioritization.
 
-**Cadence:** Daily sync (manager + worker).
+**Cadence:** Daily sync (manager + worker). Always both gates, every session — even if one has no items, the check itself is the discipline.
 
-**Two responsibilities:**
+**Worker role:** Accountability partner. The worker's presence creates a social forcing function — both parties commit to decisions in front of each other. The worker is expected to actively push back on capacity limits, technical blockers, and sequencing concerns.
 
-**1. Triage new items** (items with no milestone):
+#### Gate 1: Triage (Grooming View → Sprint View)
+
+**Question:** "Do we need to commit to this right now?" → If yes: "Which sprint does this belong to?"
+
+Items with no milestone. Joint decision — manager has priority context, worker has capacity context. Passing this gate means the item gains a milestone and disappears from the Grooming view, appearing in the Sprint view. Not all backlog items get milestoned — some stay in general backlog because the answer to "do we need to commit?" is no.
 
 | Decision | Who | Output |
 |----------|-----|--------|
+| Commit now? | Joint | Yes → continue routing; No → stays in general backlog |
 | Which milestone? | Joint (manager has priority, worker has capacity) | Issue associated to `[CLIENT] YYYY-MM-DD` |
-| Maker or manager? | Joint | `maker/design` or `manager` label applied |
+| Maker or manager? | Joint | `ja/design`, `dev/design`, or `manager` label applied |
 | Epic association? | Manager (if obvious fit → link; if not → leave standalone) | Sub-issue link or no action |
 | Assignee correct? | Joint | Assignee set |
 | Blocked? | Joint | `blocked` label if external dependency |
 
-**2. Prioritize milestoned items** (items already in milestones, in Backlog column):
+#### Gate 2: Prioritization (Sprint View: Backlog → Working)
 
-- For each active milestone: which items should the worker tackle TODAY?
+**Question:** "What's the most impactful item to start?" → "Should this move to Working today?" (plus dependency awareness between items)
+
+Milestones processed sequentially, closest touchpoint date first. For each active milestone:
+
+- Which items should the worker tackle TODAY?
 - Manager moves selected items from Backlog → Working column
 - Order in Working = priority (top = first)
 - Worker does NOT self-pull from Backlog between groomings
+
+**Every new item goes through Gate 1** — even sub-issues spawned mid-sprint from active work. No milestone inheritance. This prevents scope creep through cascading sub-issues.
+
+**Variable scope:** Manager can add or remove items from a milestone at any time (Shape Up: fixed time, variable scope). Items removed mid-sprint return to general backlog.
 
 **What grooming does NOT do:**
 - ~~Review scan~~ — manager processes Review column async via Sprint view
@@ -387,27 +445,30 @@ Grooming is the daily operational ceremony that keeps milestones filled, priorit
 - Agents do NOT assign milestones — milestone association is a grooming decision
 - Under normal daily grooming, 3-5 new items per day is manageable (~10 min)
 
-**Fires/urgency:** Manager has authority to bypass grooming and drop items directly into Working for same-day urgency. Not same-day → backlog, wait for next grooming.
+**Fires/urgency:** Manager has authority to bypass both gates and drop items directly into Working for same-day urgency. Not same-day → backlog, wait for next grooming.
 
 ### Label Architecture
 
-Six label types. Status labels are eliminated — columns carry that information.
+Seven label types. Status labels are eliminated — columns carry that information. Phase labels are position-specific — the board reader can immediately see whether work belongs to the JA or the Developer.
 
 | Label | Purpose | Board value |
 |-------|---------|-------------|
-| **maker/design** | Issue is in design phase | Glanceable phase signal without opening issue |
-| **maker/implement** | Issue is in build phase | Same |
+| **ja/design** | JA extraction pass work (design doc) | Distinguishes JA process trace from Developer work |
+| **dev/design** | Developer spec phase (DoD + AC) | Cycle 1 of the dual cycle |
+| **dev/implement** | Developer build phase (code) | Cycle 2 of the dual cycle |
 | **manager** | Quick admin/email task (no spec flow) | Distinguishes from maker items |
 | **blocked** | External dependency | Signal overlay — item stays in current column |
 | **epic** | Identifies epics on Commitment Board | Programmatically filterable |
 | **Client labels** | Per-client filtering/slicing | Sprint view sidebar grouping |
 
-**Eliminated labels:** `backlog`, `to-do`, `in-progress`, `done`, `review`, `maker` (prefix). Columns carry status. Phase labels (`maker/design`, `maker/implement`) carry type.
+**Eliminated labels:** `backlog`, `to-do`, `in-progress`, `done`, `review`, `maker/design`, `maker/implement`. Columns carry status. Position-specific phase labels (`ja/design`, `dev/design`, `dev/implement`) carry both type and ownership.
+
+**Trace line separation:** JA sub-issues have separate trace lines from Developer sub-issues. The JA's extraction pass history (conflicting choices, iterative drafts) would confuse the Developer — the published design doc is the contract between them. JA sub-issues close when the design doc is done; Developer sub-issues cycle through dev/design → dev/implement on the same issue.
 
 **Phase label transitions:**
-- Issue created → `maker/design` (default for maker items) or `manager`
-- Spec review approved → manager changes label to `maker/implement`, moves back to Working
-- Spec review rejected → stays `maker/design`, moves back to Working with feedback
+- Issue created → `dev/design` (default for Developer maker items), `ja/design` (JA items), or `manager`
+- Spec review approved → manager changes label to `dev/implement`, moves back to Working + comment
+- Spec review rejected → stays `dev/design`, moves back to Working with feedback comment
 - Implementation review approved → issue closes (Done)
 
 ### Issue Body
@@ -479,10 +540,11 @@ All sub-issues complete = mechanical closure signal. VP/Delivery confirms the bu
 
 | Type | Output |
 |------|--------|
-| **maker/design** | Artifact (design doc, follow-up issue). Design IS execution for this type — no separate Stage 3. |
-| **maker/implement** | DoD + AC defined in tracking.md. Ready for execution. |
+| **ja/design** | Design doc published (JA sub-issue closes). Design IS execution for this type — no separate Stage 3. |
+| **dev/design** | DoD + AC defined in tracking.md. Spec review approved → label flips to dev/implement. |
+| **dev/implement** | DoD + AC verified + code merged to staging. Ready for witness. |
 
-**Decision point (spec-implement):** After DoD + AC are defined, the issue is ready for execution.
+**Decision point (dev/design → dev/implement):** After DoD + AC are defined and spec review approved, the issue enters the implementation cycle.
 
 *Currently implemented via:* rubber-duck (externalization), ac-create (DoD + AC). Detailed procedure in Developer Operations Manual.
 
@@ -513,7 +575,7 @@ All sub-issues complete = mechanical closure signal. VP/Delivery confirms the bu
 
 ### Design Review Ceremony
 
-**Trigger:** Sub-issue moves to Review column with `maker/design` label.
+**Trigger:** Sub-issue moves to Review column with `dev/design` label.
 
 **What the Dev Lead does:**
 1. Open tracking.md (DoD + ACs)
@@ -521,15 +583,15 @@ All sub-issues complete = mechanical closure signal. VP/Delivery confirms the bu
 3. Anything that doesn't sound right → post as comment on the issue
 4. Judgment: approve or reject
 
-**Approve:** Change label to `maker/implement`, move back to Working. Implementation begins.
+**Approve:** Change label to `dev/implement`, move back to Working + comment. Implementation begins immediately (no re-grooming).
 
-**Reject:** Keep `maker/design`, move back to Working with feedback comment. Developer redesigns.
+**Reject:** Keep `dev/design`, move back to Working with feedback comment. Developer redesigns.
 
 The sub-issue never stays in Review — it is immediately routed.
 
 ### Implementation Review Ceremony
 
-**Trigger:** Sub-issue moves to Review column with `maker/implement` label.
+**Trigger:** Sub-issue moves to Review column with `dev/implement` label.
 
 **Fail-fast cascade** — check in order, stop at first failure:
 
@@ -561,16 +623,16 @@ See [Witness & Review System](https://mariuswilsch.github.io/public-wilsch-ai-pa
 
 | Type | Closing Action |
 |------|----------------|
-| **maker/design** | Artifact determines next (SA decides): |
+| **ja/design** | Artifact determines next (SA decides): |
 
-**Spec-design closing (sub-issue within an epic):**
-The JA's spec-design sub-issue closes when the design doc is complete. The design doc links from the epic body. The Developer then creates sibling spec-implement sub-issues from the design doc. No new epic is created — the epic already exists.
+**ja/design closing (sub-issue within an epic):**
+The JA's ja/design sub-issue closes when the design doc is complete. The design doc links from the epic body. The Developer then creates sibling sub-issues (labeled dev/design) from the design doc. No new epic is created — the epic already exists. At least one grooming session separates the handoff.
 
-**Spec-design closing (standalone, outside an epic):**
-1. **→ Spec-implement issue** — simple scope, Developer handles directly (cascade).
+**ja/design closing (standalone, outside an epic):**
+1. **→ dev/design issue** — simple scope, Developer handles directly.
 2. **→ Client deliverable** — external output. Send to client. No cascade.
 
-| **maker/implement** | Merge to production. Deploy. Issue closed. |
+| **dev/implement** | Merge to production. Deploy. Issue closed. |
 
 *Currently implemented via:* Done column, PR merge, deployment.
 
@@ -612,3 +674,6 @@ The JA's spec-design sub-issue closes when the design doc is complete. The desig
 - Ceremony definition extraction pass (2026-02-28) — design review ceremony (Speechify + judge), implementation review ceremony (5-check fail-fast cascade), witness tour mechanism
 - Session: /Users/verdant/.claude/projects/-Users-verdant-Documents-projects-00-WILSCH-AI-INTERNAL--soloforce/83d4d2fe-f380-41ee-90e1-82ad154feca5.jsonl
 - Evidence: #757 ceremony validation (1/5 checks pass), #726 sub-issues as live test case, tracking.md examples from DaveX2001/deliverable-tracking
+- Sub-issue lifecycle extraction pass (2026-02-28) — two-gate transition model, dual-cycle diagram, position-specific labels (ja/design, dev/design, dev/implement), Developer triple role (decompose/design/implement), grooming question framings, sub-issue quality criteria (empirical)
+- Session: /Users/verdant/.claude/projects/-Users-verdant-Documents-projects-00-WILSCH-AI-INTERNAL--soloforce/a38692bf-0233-4e71-ac7f-6e4f7d00d5a8.jsonl
+- Evidence: Empirical analysis of 41 open deliverable-tracking issues, Developer PA gap analysis (4 points missing/contradicted)
