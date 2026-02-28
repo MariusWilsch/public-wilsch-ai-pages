@@ -212,7 +212,9 @@ The Dev Lead reads the tour to know what to test. The Dev Lead reads the trace t
 1. **Implementation gap** — the spec defined the artifact, but the Developer didn't produce it. Route: back to Developer.
 2. **Spec design gap** — the spec never defined which artifacts the implementation should produce. Route: back to JA for a spec design pass defining the artifact creation strategy.
 
-This means the spec design (JA responsibility) must include not just WHAT to test but also WHICH witnessable artifacts the implementation must produce. The test rubric, staging endpoints, and deployment surfaces should be anticipated during design — not discovered during witness. When they aren't anticipated, the witness failure is the signal that spec design needs another pass.
+This raises the question of whether spec design should anticipate which artifacts the implementation produces — defining artifact expectations at design time rather than discovering gaps at witness time.
+
+**Undefined:** Artifact anticipation in spec design — should the JA define expected witnessable artifacts (staging URLs, test reports, deployment surfaces) during design? This would be a major change to the JA protocol but could prevent witness failures from spec gaps. Currently, artifacts emerge organically from implementation. The witness failure back-pressure may be sufficient to surface gaps without adding design-time overhead.
 
 Don't waste the back-pressure — suppressing the gap (skipping the step, guessing) wastes the diagnostic signal.
 
