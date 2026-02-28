@@ -536,7 +536,7 @@ The sub-issue never stays in Review — it is immediately routed.
 | # | Check | Gate | What to verify |
 |---|-------|------|----------------|
 | 1 | **Spec review completed** | Hard | tracking.md has DoD + ACs (design review was done) |
-| 2 | **PR exists** | Hard | Diff visible, PR Toolkit + Augment Review ran. Without PR: no code review visibility, no audit trail, no automated review. |
+| 2 | **PR exists** | Hard | Diff visible, PR Toolkit review ran (mandatory), Augment Review ran (should-have). Without PR: no code review visibility, no audit trail, no automated review. |
 | 3 | **Code deployed to staging** | Hard | Feature live and witnessable on staging |
 | 4 | **Witness report posted** | Main | Developer ran `/witness` — trace recorded in tracking.md witness section |
 | 5 | **Conversation linked** | Soft | Session JSONL accessible for forensic review (blocked on tooling) |
