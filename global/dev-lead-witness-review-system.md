@@ -128,7 +128,9 @@ Two principles ensure the Dev Lead has visibility without needing conversation l
 
 **Deviation Signals:** When the Developer goes off-plan (adds data, changes approach, creates unspecified infrastructure), they signal the deviation. Going off-plan is fine — initiative is valued. Invisible deviation is the failure. The communication medium and exact format are TBD — the principle is: the Dev Lead learns about deviations before the review, not during it.
 
-**Undefined:** Exact format and structure for witness reports and deviation signals — to be defined through practice as more multi-operator deliveries are executed.
+**Witness report format:** The witness report is the Tour + Trace structure in tracking.md (see Part 6). The tour provides the actionable steps; the trace provides the historical record. Together they replace ad-hoc exploration with structured spot-check material. Exact visual format is being calibrated empirically.
+
+**Undefined:** Deviation signal format — how the Developer communicates off-plan changes. The principle (signal before review, not during) is stable; the medium and structure are TBD.
 
 ### Part 5: Codebase Coherence Audit
 
@@ -144,6 +146,88 @@ Before delegating an epic to a Developer, the Dev Lead verifies the codebase is 
 
 **Undefined:** Exact checklist, frequency, and depth — routed to [#807](https://github.com/DaveX2001/deliverable-tracking/issues/807).
 
+### Part 6: Witness Skill Operational Design
+
+The `/witness` skill is a Claude Code skill that operationalizes the Feynman teaching test from Part 1. The AI constructs a guided tour from implementation context and presents it step-by-step to the human. The tour proves the AI's understanding — gaps in the teaching reveal gaps in the implementation.
+
+**Source architecture:** The skill runs in a separate session (cold view — no implementation memory) and builds its understanding from three sources in progressive order:
+
+| Source | Provides | Access |
+|--------|----------|--------|
+| **tracking.md** | WHAT to verify — ACs define the spec boundary | Direct file read |
+| **Project index** | WHERE + PROJECT CONTEXT — URLs, design docs, test rubrics, deployment surfaces | `project-index.md` via GitHub API |
+| **Implementation conversations** | HOW + DECISIONS — credentials, deployment specifics, implementation reasoning | Conversation-reader with targeted queries, session paths from issue comments or conversation index (#986) |
+
+Each layer adds teaching depth. tracking.md gives the spec. The project index gives the project world view. The conversations give the builder's understanding — enabling Feynman-quality teaching rather than spec-level checking.
+
+**Cold view pattern:** The skill runs in a separate session from implementation, mirroring ac-verify's two-session model. Three reasons:
+1. **Bias removal** — the AI that built a feature unconsciously skips what it "knows works"
+2. **AI-to-AI path** — cold witness is already the architecture for spawning a separate AI to witness another AI's work
+3. **Context window economy** — implementation sessions consume context; fresh sessions start clean
+
+The preparation phase is visible (what was read, what was queried, what gaps remain) — same as ac-verify's pre-verification code review. The witness steps are the output.
+
+**Tour construction:** The tour is always a journey — a natural sequential experience, not a per-AC checklist. The layer (UI, API, CLI, test harness) changes the medium but not the shape:
+- UI: navigate → interact → see result
+- RAG/API: open interface → input query → see response
+- CLI: connect → run command → see output
+
+ACs annotate the journey (each step references which ACs it covers) but do not organize it. The AI uses judgment to construct the most natural experience flow for the feature type. Infrastructure ACs stay machine-only in verification.jsonl.
+
+**Witness step structure:** Each step combines an action and a witnessable artifact. The AC defines the expectation — it is not duplicated in the step.
+
+| Element | Source | Example |
+|---------|--------|---------|
+| **Action** | AI derives from ACs + implementation context | "Open `https://staging.example.com/admin` and log in" |
+| **Artifact** | The concrete thing being witnessed | CMS admin panel, API response, test harness CSV |
+| **AC reference** | Annotation from tracking.md | "(AC2, AC4)" |
+| **Expectation** | Lives in the AC itself | Not duplicated — reader references tracking.md |
+
+The artifact varies by testability layer (see [AC-DoD Framework § 4](https://mariuswilsch.github.io/public-wilsch-ai-pages/global/ac-dod-framework) for layer taxonomy): staging URLs, API response payloads, test harness reports, CLI output, file content. Every experiential AC should produce a witnessable artifact. If not, the skill records a witness failure (see back-pressure below).
+
+At the issue level, the AI also references relevant items from the project-level test rubric — "if you want to test more, here are relevant test cases from the full rubric." The AI curates 2-3 rubric items and links to the rest, proving it sees the full project context.
+
+**Output structure — Tour and Trace:** The witness section in tracking.md contains two visually separate parts:
+
+*Tour (reusable launchpad):* The steps the human follows. Any human — developer or Dev Lead — can use this to experience the feature. Scannable, self-contained per step, with clickable links or copy-paste commands.
+
+*Trace (historical record):* What was actually witnessed during the session. Each step records the human's observation and whether it matched expectations. The trace is "verification.jsonl made for humans" — structured evidence of what was experienced.
+
+The Dev Lead reads the tour to know what to test. The Dev Lead reads the trace to see what the developer found. Together they enable spot-check without ad-hoc exploration.
+
+**Mismatch handling (Middle Ground):** When the human's experience doesn't match the AI's guidance:
+
+| Mismatch type | Action | Trace |
+|---------------|--------|-------|
+| Quick fix | Fix in witness session, retry step | Recorded — fix visible |
+| Big failure | Record, route back to implementation session | Recorded — discrepancy noted |
+| Always | Record regardless | Dev Lead sees full history |
+
+**Back-pressure: missing artifacts.** When the skill cannot construct a concrete step because no witnessable artifact exists (no staging URL, no test report, no deployed feature), this is a **witness test failure** — recorded in tracking.md like any other mismatch. The failure signals that either: (1) the implementation needs to produce the artifact, or (2) the AC was too abstract and needs a spec design pass. Don't waste the back-pressure — suppressing the gap (skipping the step, guessing) wastes the diagnostic signal.
+
+**Dev Lead integration:**
+
+| Mode | Priority | How it works |
+|------|----------|--------------|
+| **Self-directed** | Must-have | Dev Lead reads the tour section, cherry-picks 2-3 steps, tests on staging, posts feedback. No AI involvement. |
+| **AI-guided** | Should-have | Dev Lead runs `/witness --spot-check`, AI presents steps from the tour one-by-one, records Dev Lead's findings. |
+
+The trace is the primary launchpad for the Dev Lead. If the tour is well-constructed, the Dev Lead can spot-check without the AI guiding them — reading the tour and testing on their own is the baseline.
+
+**Dependencies:**
+
+| Dependency | Classification | Without it |
+|-----------|----------------|------------|
+| **tracking.md with ACs** | Hard gate | Cannot construct tour — nothing to derive steps from |
+| **Project index** | Essential | Tour is spec-level only — no project understanding, no Feynman depth |
+| **Conversation index (#986)** | Being built | Cannot query implementation sessions for deep context — tour is project-aware but shallow on implementation specifics |
+
+**Undefined:** Exact tour and trace format — to be calibrated empirically through first real `/witness` runs. The principle (Tour as reusable launchpad + Trace as historical record) is stable; the visual format will emerge from practice.
+
+**Undefined:** Project-level regression witness — how `/witness` connects to Ship with Confidence smoke testing at the project level (vs issue-level witness defined here). Routed to Ship with Confidence methodology.
+
+**Undefined:** Design doc template mandate for test rubric section — the JA should always include a test rubric section in design docs, feeding the witness tour via the project index. Currently not enforced in the design doc template.
+
 ---
 
 ## Source
@@ -155,3 +239,4 @@ Before delegating an epic to a Developer, the Dev Lead verifies the codebase is 
 - **Session (initial):** /Users/verdant/.claude/projects/-Users-verdant-Documents-projects-00-WILSCH-AI-INTERNAL--soloforce/344de871-d0b0-47b8-a44c-a01f726b24fc.jsonl
 - **Session (Feynman Test extraction):** /Users/verdant/.claude/projects/-Users-verdant-Documents-projects-00-WILSCH-AI-INTERNAL--soloforce/4b8d4a93-6ccb-4b4f-ac6a-4b8500619905.jsonl
 - **Session (Ceremony + witness tour extraction):** /Users/verdant/.claude/projects/-Users-verdant-Documents-projects-00-WILSCH-AI-INTERNAL--soloforce/83d4d2fe-f380-41ee-90e1-82ad154feca5.jsonl
+- **Session (Witness skill operational design):** /Users/verdant/.claude/projects/-Users-verdant-Documents-projects-00-WILSCH-AI-INTERNAL--soloforce/7ea9fbcf-1f68-43f0-9d84-f843ea2a1175.jsonl
