@@ -48,13 +48,35 @@ Ship with Confidence defines three quality layers. Each layer has a different ow
 
 **Key distinction — Verification vs Validation:** AC verification catches *specified* failures (system state checks via automation). Human witness catches *unspecified* failures (experience quality via human judgment). These are different layers, not different depths of the same thing. See [AC-DoD Framework § 1](https://mariuswilsch.github.io/public-wilsch-ai-pages/global/ac-dod-framework) for the three-gate model.
 
-**Witness session mechanism (`/witness` skill):** After implementation, the AI derives human witness steps from the ACs and actual implementation context (URLs, credentials, surfaces). The AI presents steps one-by-one to the human — the human executes, reports what they see, and the AI records findings in the tracking.md witness section. The developer runs multiple witness sessions (deep coverage). The Dev Lead follows the same witness trace for spot-check (pick 2-3 steps, verify, judge).
+**Witness session mechanism (`/witness` skill):** After implementation, the AI derives a guided tour from three sources: ACs in tracking.md, implementation context (URLs, credentials, surfaces), and project-level test rubrics (from the epic body, data artifacts, or issue comments). The AI curates — it selects the most revealing test cases, explains why it picked them, and links to the full rubric for additional coverage.
+
+The tour is structured as a natural experience flow, not per-AC tests. Each tour step annotates which ACs it covers, providing traceability without forcing the human to experience the feature as a checklist. Infrastructure ACs (document counts, config values, file existence) stay machine-only in verification.jsonl — the witness tour covers only experiential ACs where human judgment adds value.
+
+No design-time witness hints are needed. The ACs themselves serve as the source — the AI derives concrete steps post-implementation because URLs, paths, and credentials only stabilize after the feature is built.
+
+The AI presents steps one-by-one to the human. The human executes each step, reports what they see, and the AI records findings in the tracking.md witness section. The developer runs the witness session for deep coverage. The Dev Lead follows the same trace for spot-check (pick 2-3 steps based on judgment, verify on staging).
 
 **The teaching test (Feynman principle):** The AI that built the feature must prove understanding by teaching the human to experience it. The witness session is not a test plan — it is a teaching demonstration. If the AI's instructions don't match what the human sees, either the implementation or the AI's understanding has gaps. This separation also future-proofs to AI-to-AI validation: swap the human executor for a second AI in a fresh context (no implementation bias).
 
 **Attention mode:** Human witness requires single-window focus. Implementation and spec work can be multi-terminal. The Dev Lead cannot review while doing other work — same constraint as spec-design review.
 
-**Spot-check methodology:** The Dev Lead follows the developer's witness trace in tracking.md. Pick 2-3 steps (highest risk or developer-recommended), execute them on staging, form judgment. The witness trace IS the prepared material — no separate artifact needed. If the trace is missing or incomplete, that itself is the signal: the developer didn't witness their work.
+**Spot-check methodology:** The Dev Lead follows the developer's witness trace in tracking.md. Pick 2-3 steps based on the Dev Lead's own judgment — no curated recommendations needed from the developer. Execute on staging, form judgment. The witness trace IS the prepared material — no separate artifact needed. If the trace is missing or incomplete, that itself is the signal: the developer didn't witness their work.
+
+**Tour examples (feature-type determines shape):**
+
+*UI feature (#757 — Foundation + CMS + Deploy):*
+1. Open `http://localhost:3000` → page rendered by Vike (AC1)
+2. Open `http://VPS_IP:{port}/admin` → Payload CMS login screen (AC2)
+3. Log in → 4 collections in sidebar: projects, memberships, content, legal (AC4)
+4. Create a project entry → save → visible in list
+5. Open frontend → project rendered from CMS data (AC5)
+
+*RAG pipeline (#797 — Masterfragen Expansion):*
+1. Open OpenWebUI on staging → chat interface ready
+2. Ask: "Welche englischsprachigen Zertifikate bieten Sie an?" → answer with certificate info (AC2)
+3. Ask: "Was kostet ein Datenschutz-Audit?" → answer with €790 + DS-Kit Plus (AC3)
+
+The UI feature produces a 5-step tour through pages and data flow. The RAG pipeline produces a 3-step tour through questions and answers. Infrastructure ACs (doc counts, CSV updates) have no tour step — they stay in verification.jsonl.
 
 ### Part 2: Test Infrastructure Ownership
 
@@ -132,3 +154,4 @@ Before delegating an epic to a Developer, the Dev Lead verifies the codebase is 
 - **Methodology:** [Ship with Confidence](https://mariuswilsch.github.io/public-wilsch-ai-pages/global/ship-with-confidence)
 - **Session (initial):** /Users/verdant/.claude/projects/-Users-verdant-Documents-projects-00-WILSCH-AI-INTERNAL--soloforce/344de871-d0b0-47b8-a44c-a01f726b24fc.jsonl
 - **Session (Feynman Test extraction):** /Users/verdant/.claude/projects/-Users-verdant-Documents-projects-00-WILSCH-AI-INTERNAL--soloforce/4b8d4a93-6ccb-4b4f-ac6a-4b8500619905.jsonl
+- **Session (Ceremony + witness tour extraction):** /Users/verdant/.claude/projects/-Users-verdant-Documents-projects-00-WILSCH-AI-INTERNAL--soloforce/83d4d2fe-f380-41ee-90e1-82ad154feca5.jsonl
