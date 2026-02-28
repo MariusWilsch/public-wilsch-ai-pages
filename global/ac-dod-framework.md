@@ -9,14 +9,23 @@ source: Rubber-duck session analyzing #377, #89, #314, #307
 
 ## 1. Core Concepts
 
-**Definition of Done (DoD)** and **Acceptance Criteria (AC)** are separate concepts:
+**Definition of Done (DoD)**, **Acceptance Criteria (AC)**, and **Witness** are separate concepts:
 
 | Concept | Purpose | Question Answered |
 |---------|---------|-------------------|
 | **DoD** | What to build | "Does it exist?" |
-| **AC** | How to verify it works | "Does it behave correctly?" |
+| **AC** | How to verify system state | "Is the system state correct?" |
+| **Witness** | How to validate the experience | "Does it work when a human sees it?" |
 
-**Key insight:** Parallel gates, not traced to each other. Both must pass independently.
+**Key insight:** Three parallel gates. DoD, AC, and Witness must each pass independently. AC and Witness test different things — AC catches *specified* failures (system state via automation), Witness catches *unspecified* failures (experience via human judgment).
+
+**Empirical observation:** ACs in practice test system state — counts, thresholds, file existence, API responses — not user-observable behavior. Reviewing ACs across IITR (6 issues) and Archibus (4 issues) revealed that verification commands are `curl | jq`, `ssh ... jq`, `docker ps | grep`, not experiential checks. The GWT best practice says "focus on user-observable outcomes," but real ACs are sophisticated sanity checks for specified correctness. This is not wrong — it confirms that ACs and Witness serve genuinely different purposes, not different depths of the same purpose.
+
+**Verification vs Validation (ISO 9000):**
+- **Verification** (AC): "Did we build it right?" — AI executes GWT scenarios, records to `verification.jsonl`
+- **Validation** (Witness): "Did we build the right thing?" — AI guides human through experience, records to witness section in `tracking.md`
+
+**The teaching test:** The AI that built the feature must prove understanding by teaching the human to experience it step by step. If the AI cannot guide the human to see it work, the AI's understanding of what it built has gaps. Mismatch between AI's prescription and human's observation = feedback signal.
 
 **Source:** [Scrum.org](https://www.scrum.org/resources/blog/what-difference-between-definition-done-and-acceptance-criteria)
 
@@ -184,6 +193,14 @@ And I should see a welcome message
 Given: ...
 When: ...
 Then: ...
+
+## Human Witness
+<!-- Steps+Expected written during design. Witnessed filled post-implementation via /witness session. -->
+
+### HW1: {scenario name} (from AC1)
+**Steps:** {what to do — URL, action, navigation}
+**Expected:** {what you should see}
+**Witnessed:** {filled by developer during /witness session}
 ```
 
 ### Why local file over GitHub issue body?
