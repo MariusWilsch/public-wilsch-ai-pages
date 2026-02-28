@@ -141,7 +141,7 @@ Each position has a distinct accountability toward the same epic. All positions 
 | **VP/Delivery** | Creates epic, moves to Done | Owns epic board transitions |
 | **SA** | Design quality standards | Reviews JA's design doc output |
 | **JA** | Creates spec-design sub-issue, produces design doc | Works within Active phase |
-| **Dev Lead** | Moves epic to Validating, review queue processing | Comprehension gates, staging witness |
+| **Dev Lead** | Moves epic to Client Sign-Off, review queue processing | Comprehension gates, staging witness |
 | **Developer** | Creates spec-implement sub-issues from design doc | Builds, verifies, deploys |
 
 **Decomposition is still the Developer's act — not the JA's.** The JA's spec-design sub-issue produces a design doc. The Developer reads it and creates sibling spec-implement sub-issues. The Dev Lead's starting-point gate measures Developer comprehension — if the JA pre-decomposes, the gate becomes a rubber stamp.
@@ -220,10 +220,12 @@ The Work Board's Review column surfaces sub-issue gates for the Dev Lead to proc
 |--------|---------|---------|-------|
 | **Not Started** | Epic identified, no work begun | Default | VP/Delivery creates |
 | **Active** | Work happening (any position) | First sub-issue starts | Automated |
-| **Validating** | All implementation done, final look | Dev Lead moves | Dev Lead |
-| **Done** | Business outcome delivered | VP/Delivery closes | VP/Delivery |
+| **Client Sign-Off** | All sub-issues done, awaiting client confirmation | Dev Lead moves | Dev Lead |
+| **Done** | Client confirmed business outcome delivered | VP/Delivery closes | VP/Delivery |
 
 "Active" replaces "In Progress" — signals long-running work without implying it should be quick. Epics may be Active for weeks or months. The sub-issue progress bar (X of Y) is the primary signal, not the column.
+
+**Client Sign-Off gate:** When all sub-issues reach Done on the Work Board, the Dev Lead moves the epic to Client Sign-Off. The client provides a written yes/no on the delivered outcome, posted as a comment on the epic (auditable trail required). Client yes → Done. Client no → back to Active with new sub-issues addressing gaps.
 
 ### Milestone Lifecycle
 
