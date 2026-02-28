@@ -199,6 +199,28 @@ At the issue level, the AI also references relevant items from the project-level
 
 The Dev Lead reads the tour to know what to test. The Dev Lead reads the trace to see what the developer found. Together they enable spot-check without ad-hoc exploration.
 
+**Example (#757 — Foundation + CMS + Deploy Pipeline):**
+
+*Tour:*
+
+1. Open `https://klimafolgenschutz-cms.wilsch-deployment.com/admin` → Payload CMS login (AC2)
+2. Log in with admin credentials → 4 collections visible in sidebar (AC4)
+3. Create a new project entry → fill title + description → save (AC5)
+4. Open `https://klimafolgenschutz.com` → project rendered from CMS data (AC5)
+5. Push a commit to main → verify deploy pipeline fires: `gh run list` (AC3)
+
+*Trace:*
+
+| Step | Witnessed | Result |
+|------|-----------|--------|
+| 1 | Login form rendered, Payload branding visible | ✅ |
+| 2 | 4 collections in sidebar, all accessible | ✅ |
+| 3 | Project created, appears in list view | ✅ |
+| 4 | Frontend shows project tile with title + image | ✅ |
+| 5 | Deploy workflow not found — no `production.yaml` in `.github/workflows/` | ❌ |
+
+Step 5's mismatch becomes feedback routed back to the developer. The Dev Lead doesn't fix it — they post the finding as an issue comment.
+
 **Mismatch handling (Middle Ground):** When the human's experience doesn't match the AI's guidance:
 
 | Mismatch type | Action | Trace |

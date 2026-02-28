@@ -18,20 +18,18 @@ The system captures everything because capturing is nearly free. Everything afte
 
 ```mermaid
 graph LR
-    A["🔵 Cheap Reminder"] -->|Creation| B["📋 Typed Shell"]
-    B -->|Design| C["📐 Spec: DoD + AC"]
-    C -->|Execution| D["✅ Verified Code"]
-    D -->|Review| E["👁️ Approved"]
-    E -->|Closing| F["🚀 Production"]
+    A["🔵 Cheap Reminder"] -->|Creation| B["📋 dev/design"]
+    B -->|"Spec Review ✓"| C["⚙️ dev/implement"]
+    C -->|"Witness Review ✓"| D["🚀 Production"]
+    C -.->|"Spec problem"| B
 ```
 
-| Stage | Output |
-|-------|--------|
-| **Creation** | Issue with type label (shell + context) |
-| **Design** | DoD + AC in tracking.md |
-| **Execution** | Code on branch, backpressure verified, merged to staging |
-| **Review** | Business-approved on staging |
-| **Closing** | Merged to production, issue closed |
+| Stage | Label | Output |
+|-------|-------|--------|
+| **Creation** | — | Issue with type label (shell + context) |
+| **Design** | `dev/design` | DoD + AC in tracking.md → spec review |
+| **Implementation** | `dev/implement` | Code on branch, verified, merged to staging → witness review |
+| **Production** | — | Merged to production, issue closed |
 
 > **Gap:** Currently, issues close after merge to staging (not production). The system doesn't yet distinguish staging-merged from production-deployed.
 
@@ -446,6 +444,8 @@ Milestones processed sequentially, closest touchpoint date first. For each activ
 - Under normal daily grooming, 3-5 new items per day is manageable (~10 min)
 
 **Fires/urgency:** Manager has authority to bypass both gates and drop items directly into Working for same-day urgency. Not same-day → backlog, wait for next grooming.
+
+**Undefined:** Non-interactive agent (Ralph) issue creation — when AI agents create issues autonomously, do they enter grooming like all other items, or do they need a separate path? The current rule says every new item goes through Gate 1, but non-interactive agents may operate outside grooming cadence.
 
 ### Label Architecture
 
