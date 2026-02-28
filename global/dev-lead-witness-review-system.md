@@ -42,15 +42,19 @@ Ship with Confidence defines three quality layers. Each layer has a different ow
 | Layer | Owner | Depth | Output |
 |-------|-------|-------|--------|
 | **Sanity Check** | Developer | Does it run? Does it not crash? | Pass/fail in session |
-| **AC Verification** | Developer (AI) | Does the implementation match the spec? Objective, automatable. | `verification.jsonl` — machine-readable trace |
-| **Human Witness (Deep)** | Developer | Does the output actually look right? Sequential attention, one verification item at a time (question, scenario, sub-issue — depends on project). | Issue comment: witness report + spot-check recommendations |
-| **Human Witness (Spot-check)** | Dev Lead | Quick verification using developer-prepared materials. Gut-check: "does this feel right?" | Issue comment: approval or feedback items routed back to developer |
+| **AC Verification** | Developer (AI) | Is the system state correct? Objective, automatable. | `verification.jsonl` — machine-readable trace |
+| **Human Witness (Deep)** | Developer | Does the experience work? AI-guided teaching session, one step at a time. | Witness section in `tracking.md` — steps, expected, witnessed |
+| **Human Witness (Spot-check)** | Dev Lead | Quick validation using developer's witness trace. | Issue comment: approval or feedback items routed back to developer |
 
-**Key distinction:** ACs test issue-level spec compliance (objective). Human witness tests subjective quality that ACs structurally cannot capture — e.g., incorrect references, hallucinated content, format issues that "look off." These are different layers, not different depths of the same thing.
+**Key distinction — Verification vs Validation:** AC verification catches *specified* failures (system state checks via automation). Human witness catches *unspecified* failures (experience quality via human judgment). These are different layers, not different depths of the same thing. See [AC-DoD Framework § 1](https://mariuswilsch.github.io/public-wilsch-ai-pages/global/ac-dod-framework) for the three-gate model.
+
+**Witness session mechanism (`/witness` skill):** After implementation, the AI derives human witness steps from the ACs and actual implementation context (URLs, credentials, surfaces). The AI presents steps one-by-one to the human — the human executes, reports what they see, and the AI records findings in the tracking.md witness section. The developer runs multiple witness sessions (deep coverage). The Dev Lead follows the same witness trace for spot-check (pick 2-3 steps, verify, judge).
+
+**The teaching test (Feynman principle):** The AI that built the feature must prove understanding by teaching the human to experience it. The witness session is not a test plan — it is a teaching demonstration. If the AI's instructions don't match what the human sees, either the implementation or the AI's understanding has gaps. This separation also future-proofs to AI-to-AI validation: swap the human executor for a second AI in a fresh context (no implementation bias).
 
 **Attention mode:** Human witness requires single-window focus. Implementation and spec work can be multi-terminal. The Dev Lead cannot review while doing other work — same constraint as spec-design review.
 
-**Undefined:** Concrete spot-check methodology — how many items, what selection criteria, what the Dev Lead's spot-check workflow looks like operationally.
+**Spot-check methodology:** The Dev Lead follows the developer's witness trace in tracking.md. Pick 2-3 steps (highest risk or developer-recommended), execute them on staging, form judgment. The witness trace IS the prepared material — no separate artifact needed. If the trace is missing or incomplete, that itself is the signal: the developer didn't witness their work.
 
 ### Part 2: Test Infrastructure Ownership
 
@@ -126,4 +130,5 @@ Before delegating an epic to a Developer, the Dev Lead verifies the codebase is 
 - **Observations:** [#605 Dev Lead Position Epic](https://github.com/DaveX2001/claude-code-improvements/issues/605) — 17 observations clustered into this system
 - **Position Agreements:** [Dev Lead PA](https://mariuswilsch.github.io/public-wilsch-ai-pages/global/dev-lead-position-agreement-wilsch-ai-services) | [Developer PA](https://mariuswilsch.github.io/public-wilsch-ai-pages/global/developer-position-agreement-wilsch-ai-services)
 - **Methodology:** [Ship with Confidence](https://mariuswilsch.github.io/public-wilsch-ai-pages/global/ship-with-confidence)
-- **Session:** /Users/verdant/.claude/projects/-Users-verdant-Documents-projects-00-WILSCH-AI-INTERNAL--soloforce/344de871-d0b0-47b8-a44c-a01f726b24fc.jsonl
+- **Session (initial):** /Users/verdant/.claude/projects/-Users-verdant-Documents-projects-00-WILSCH-AI-INTERNAL--soloforce/344de871-d0b0-47b8-a44c-a01f726b24fc.jsonl
+- **Session (Feynman Test extraction):** /Users/verdant/.claude/projects/-Users-verdant-Documents-projects-00-WILSCH-AI-INTERNAL--soloforce/4b8d4a93-6ccb-4b4f-ac6a-4b8500619905.jsonl
