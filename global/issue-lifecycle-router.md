@@ -509,14 +509,45 @@ All sub-issues complete = mechanical closure signal. VP/Delivery confirms the bu
 
 ## Stage 4: Review
 
-**What happens:** Quality gate before closing. Two review types:
+**What happens:** Quality gate before closing. The Dev Lead processes the Review column via Sprint view. Two review ceremonies exist, one per phase:
 
-- **Spec quality** (Dev Lead position) — "Does the design make sense?"
-- **Business witness** (VP/Delivery position) — "Is this what I wanted?"
+### Design Review Ceremony
 
-Both happen asynchronously. Developer continues to next work.
+**Trigger:** Sub-issue moves to Review column with `maker/design` label.
 
-*Currently implemented via:* Review column on Work Board triggers async review. Detailed procedure in Developer Operations Manual.
+**What the Dev Lead does:**
+1. Open tracking.md (DoD + ACs)
+2. Read aloud via Speechify — the medium shift reveals quality issues that silent reading misses
+3. Anything that doesn't sound right → post as comment on the issue
+4. Judgment: approve or reject
+
+**Approve:** Change label to `maker/implement`, move back to Working. Implementation begins.
+**Reject:** Keep `maker/design`, move back to Working with feedback comment. Developer redesigns.
+
+The sub-issue never stays in Review — it is immediately routed.
+
+### Implementation Review Ceremony
+
+**Trigger:** Sub-issue moves to Review column with `maker/implement` label.
+
+**Fail-fast cascade** — check in order, stop at first failure:
+
+| # | Check | Gate | What to verify |
+|---|-------|------|----------------|
+| 1 | **Spec review completed** | Hard | tracking.md has DoD + ACs (design review was done) |
+| 2 | **PR exists** | Hard | Diff visible, PR Toolkit + Augment Review ran. Without PR: no code review visibility, no audit trail, no automated review. |
+| 3 | **Code deployed to staging** | Hard | Feature live and witnessable on staging |
+| 4 | **Witness report posted** | Main | Developer ran `/witness` — trace recorded in tracking.md witness section |
+| 5 | **Conversation linked** | Soft | Session JSONL accessible for forensic review (blocked on tooling) |
+
+If any hard gate fails → send back to Working with specific feedback ("Create PR via /worktree"). If all pass → Dev Lead does spot-check witness (pick 2-3 steps from developer's trace, verify on staging, form judgment).
+
+**Approve:** Move to Done. Issue closes.
+**Reject:** Move back to Working with feedback comment. Developer fixes, re-witnesses, moves back to Review.
+
+See [Witness & Review System](https://mariuswilsch.github.io/public-wilsch-ai-pages/global/dev-lead-witness-review-system) for witness methodology (guided tour, Feynman Test, spot-check depth).
+
+*Currently implemented via:* Review column on Work Board triggers async review.
 
 ---
 
@@ -576,3 +607,6 @@ The JA's spec-design sub-issue closes when the design doc is complete. The desig
 - Milestone retrofit + ILR contradiction pass (2026-02-27) — milestone naming with forcing functions, cadence body config, column-only review gates, epic body format, reactive SLA pattern
 - Session: /Users/verdant/.claude/projects/-Users-verdant-Documents-projects-00-WILSCH-AI-INTERNAL--soloforce/316adeee-7e5d-4f7c-a9b3-ef546cae4085.jsonl
 - Evidence: 7 dead milestones closed, 10 active milestones configured, 11 IITR issues closed, IITR epic #953 created
+- Ceremony definition extraction pass (2026-02-28) — design review ceremony (Speechify + judge), implementation review ceremony (5-check fail-fast cascade), witness tour mechanism
+- Session: /Users/verdant/.claude/projects/-Users-verdant-Documents-projects-00-WILSCH-AI-INTERNAL--soloforce/83d4d2fe-f380-41ee-90e1-82ad154feca5.jsonl
+- Evidence: #757 ceremony validation (1/5 checks pass), #726 sub-issues as live test case, tracking.md examples from DaveX2001/deliverable-tracking
