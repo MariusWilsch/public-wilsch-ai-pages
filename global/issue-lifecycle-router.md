@@ -522,6 +522,7 @@ All sub-issues complete = mechanical closure signal. VP/Delivery confirms the bu
 4. Judgment: approve or reject
 
 **Approve:** Change label to `maker/implement`, move back to Working. Implementation begins.
+
 **Reject:** Keep `maker/design`, move back to Working with feedback comment. Developer redesigns.
 
 The sub-issue never stays in Review — it is immediately routed.
@@ -543,6 +544,7 @@ The sub-issue never stays in Review — it is immediately routed.
 If any hard gate fails → send back to Working with specific feedback ("Create PR via /worktree"). If all pass → Dev Lead does spot-check witness (pick 2-3 steps from developer's trace, verify on staging, form judgment).
 
 **Approve:** Move to Done. Issue closes.
+
 **Reject:** Move back to Working with feedback comment. Developer fixes, re-witnesses, moves back to Review.
 
 See [Witness & Review System](https://mariuswilsch.github.io/public-wilsch-ai-pages/global/dev-lead-witness-review-system) for witness methodology (guided tour, Feynman Test, spot-check depth).
