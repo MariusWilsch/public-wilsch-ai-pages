@@ -2,84 +2,84 @@
 publish: true
 ---
 
-# IITR Wartungsvertrag — Ulrich Prep Meeting
+# IITR Wartungsvertrag — Vorbereitung Ulrich
 
 [[client-iitr]]
 
-## Meeting Goal
+## Meetingziel
 
-Resolve two open Wartungsvertrag terms before sending the financial framework to IITR:
+Zwei offene Wartungsvertragspunkte klären, bevor die finanziellen Rahmenbedingungen an IITR gehen:
 
-1. **Scope boundary** — define which infrastructure layers Marius covers vs. Primeline/Hetzner
-2. **Weekend pricing** — decide whether to offer extended-hours availability and at what fee
+1. **Scope-Grenze** — welche Infrastrukturebenen Marius abdeckt vs. Primeline/Hetzner
+2. **Wochenend-Preisgestaltung** — ob erweiterte Erreichbarkeit angeboten wird und zu welchem Preis
 
-Both decisions directly affect the Wartungsvertrag document. Without them, the SLA scope
-and standby fee are incomplete.
+Beide Entscheidungen betreffen direkt das Wartungsvertragsdokument. Ohne sie sind SLA-Umfang
+und Bereitschaftspauschale unvollständig.
 
 ## Pre-Read
 
-- [IITR Contract Extension — Commercial Framework](https://mariuswilsch.github.io/public-wilsch-ai-pages/project/iitr/iitr-contract-extension-framework) — pricing decisions already made (120 EUR/h, 300 EUR standby, Festpreis per project). Focus on the two **Undefined** markers in Sections 3 and 3.
-- [CTS Solutions — IT SLA Preisliste](https://cts-solutions.at/edv-preisliste-wartungsvertrage-slas/) — reference pricing for extended-hours and weekend SLA tiers
+- [IITR Vertragsrahmen — Kommerzielle Rahmenbedingungen](https://mariuswilsch.github.io/public-wilsch-ai-pages/project/iitr/iitr-contract-extension-framework) — Preisentscheidungen bereits getroffen (120 EUR/h, 300 EUR Bereitschaft, Festpreis pro Projekt). Fokus auf die zwei **Undefined**-Markierungen in Abschnitt 3.
+- [CTS Solutions — IT-SLA-Preisliste](https://cts-solutions.at/edv-preisliste-wartungsvertrage-slas/) — Referenzpreise für erweiterte und Wochenend-SLA-Stufen
 
 ---
 
-## Discussion Topics
+## Diskussionsthemen
 
-*Starting points for discussion, not limited to these.*
+*Ausgangspunkte für die Diskussion, nicht darauf beschränkt.*
 
-### 1. Betreuung scope boundary and liability
-⏱️ 10 min
+### 1. Betreuungs-Scope und Haftungsgrenze
+⏱️ 10 Min.
 
-The Wartungsvertrag says "dedizierte Betreuung unseres Servers" — but four infrastructure
-layers exist, each with a different owner:
+Der Wartungsvertrag sagt "dedizierte Betreuung unseres Servers" — aber es existieren vier
+Infrastrukturebenen, jede mit einem anderen Verantwortlichen:
 
-| Layer | Current owner | Marius's role |
-|-------|--------------|---------------|
-| **Application** (AI code, Docker, Ollama) | Marius | Builds and maintains |
-| **Middleware** (OS services, networking) | Unclear | Manages in practice |
-| **Hardware** (Staging: Hetzner bare metal; Production: Primeline) | Hetzner / Primeline | No ownership |
-| **Network** (Hetzner 99% SLA; Primeline 4h response Mon–Fri) | Hetzner / Primeline | No control |
+| Ebene | Aktueller Eigentümer | Marius' Rolle |
+|-------|---------------------|---------------|
+| **Applikation** (KI-Code, Docker, Ollama) | Marius | Baut und wartet |
+| **Middleware** (OS-Dienste, Netzwerk) | Unklar | Verwaltet in der Praxis |
+| **Hardware** (Staging: Hetzner Bare Metal; Produktion: Primeline) | Hetzner / Primeline | Kein Eigentum |
+| **Netzwerk** (Hetzner 99% SLA; Primeline 4h Reaktion Mo–Fr) | Hetzner / Primeline | Keine Kontrolle |
 
-- Marius's current approach: handle everything he can, escalate what exceeds his capability
-- Primeline's production warranty covers hardware replacement (36-month, 4h response) — but only Mon–Fri
-- If Primeline is slow during a hardware failure, IITR is offline. The contract language determines whether that's Marius's liability or not
-- Ulrich flagged this in the Feb 27 call as "a huge risk" if the contract doesn't draw a clear boundary
+- Marius' aktueller Ansatz: alles übernehmen, was er kann, eskalieren was seine Fähigkeiten übersteigt
+- Primeines Produktionsgarantie deckt Hardware-Austausch ab (36 Monate, 4h Reaktionszeit) — aber nur Mo–Fr
+- Wenn Primeline bei einem Hardware-Ausfall langsam reagiert, ist IITR offline. Die Vertragssprache bestimmt, ob das Marius' Haftung ist oder nicht
+- Ulrich hat das im Gespräch am 27. Feb. als "riesiges Risiko" eingestuft, wenn der Vertrag keine klare Grenze zieht
 
-**To resolve:** The contract liability boundary — which layers Marius is responsible for, and explicit exclusion language for third-party infrastructure failures.
+**Zu klären:** Die vertragliche Haftungsgrenze — für welche Ebenen Marius verantwortlich ist, und explizite Ausschlusssprache für Ausfälle der Drittanbieter-Infrastruktur.
 
-### 2. Weekend SLA coverage pricing
-⏱️ 10 min
+### 2. Wochenend-SLA-Preisgestaltung
+⏱️ 10 Min.
 
-The current Wartungsvertrag proposes 24h reaction during German business hours (Mon–Fri
-8–18 CET). Worst case: IITR reports a failure Friday at 17:01, Marius responds Monday
-at 17:00 — a 72-hour gap.
+Der aktuelle Wartungsvertrag sieht 24h Reaktionszeit während deutscher Geschäftszeiten vor
+(Mo–Fr 8–18 Uhr MEZ). Worst Case: IITR meldet einen Ausfall Freitag um 17:01, Marius
+antwortet Montag um 17:00 — eine 72-Stunden-Lücke.
 
-Marius works every day in practice, so extending availability is operationally feasible.
-The question is how to price it.
+Marius arbeitet in der Praxis jeden Tag, daher ist eine erweiterte Erreichbarkeit operativ
+machbar. Die Frage ist, wie sie bepreist wird.
 
-| Coverage tier | Reaction window | Market rate (single server) | Current proposal |
-|---------------|----------------|---------------------------|-----------------|
-| **Business hours** (Mon–Fri 8–18) | 24h within business days | 300–330 EUR/month | 300 EUR ✓ |
-| **Extended hours** (Mon–Fri 7–20) | 24h within extended days | ~450 EUR/month | — |
-| **5/24** (Mon–Fri, any hour) | 24h any weekday | ~690 EUR/month | — |
-| **7/24** (every day, any hour) | 24h any day | ~890 EUR/month | — |
+| Stufe | Reaktionsfenster | Marktpreis (einzelner Server) | Aktueller Vorschlag |
+|-------|-----------------|------------------------------|-------------------|
+| **Geschäftszeiten** (Mo–Fr 8–18) | 24h innerhalb Geschäftstagen | 300–330 EUR/Monat | 300 EUR ✓ |
+| **Erweiterte Zeiten** (Mo–Fr 7–20) | 24h innerhalb erweiterter Zeiten | ~450 EUR/Monat | — |
+| **5/24** (Mo–Fr, jede Stunde) | 24h jeder Werktag | ~690 EUR/Monat | — |
+| **7/24** (jeden Tag, jede Stunde) | 24h jeder Tag | ~890 EUR/Monat | — |
 
-- Market reference: CTS Solutions Austria published SLA tiers per Linux server
-- At 120 EUR/h, the current 300 EUR standby equals 2.5 hours — a single weekend incident could consume that
-- Marius is willing but wants the price to reflect the personal commitment
+- Marktdaten: CTS Solutions Austria veröffentlichte SLA-Stufen pro Linux-Server
+- Bei 120 EUR/h entspricht die aktuelle 300 EUR Bereitschaftspauschale 2,5 Stunden — ein einzelner Wochenend-Vorfall könnte das aufbrauchen
+- Marius ist bereit, möchte aber dass der Preis das persönliche Engagement widerspiegelt
 
-**To resolve:** Which availability tier to offer IITR and the corresponding standby fee — balancing Marius's willingness with fair compensation for extended coverage.
+**Zu klären:** Welche Erreichbarkeitsstufe IITR angeboten wird und die entsprechende Bereitschaftspauschale — Balance zwischen Marius' Bereitschaft und fairer Vergütung für erweiterte Abdeckung.
 
-## Meeting Format
+## Meeting-Format
 
-- **Type:** Decision call (Marius × Ulrich)
-- **Duration:** 20 min
-- **Expectation:** Ulrich reads the Commercial Framework design doc beforehand — pricing decisions are already made, only the two Undefined items need his input
-- **Outcome:** Two decisions that complete the Wartungsvertrag scope and pricing — ready to draft the contract document for Eckhard
+- **Art:** Entscheidungsgespräch (Marius × Ulrich)
+- **Dauer:** 20 Min.
+- **Erwartung:** Ulrich liest vorher das Design-Dokument zu den kommerziellen Rahmenbedingungen — Preisentscheidungen stehen, nur die zwei offenen Punkte brauchen seinen Input
+- **Ergebnis:** Zwei Entscheidungen, die den Wartungsvertrag-Scope und die Preisgestaltung vervollständigen — bereit, das Vertragsdokument für Eckhard zu erstellen
 
-## Related
+## Verknüpfungen
 
 - **Issue:** [#954 — Prepare extension contract for signing](https://github.com/DaveX2001/deliverable-tracking/issues/954)
 - **Design Doc:** [IITR Contract Extension — Commercial Framework](https://mariuswilsch.github.io/public-wilsch-ai-pages/project/iitr/iitr-contract-extension-framework)
-- **Transcript:** [Marius × Ulrich — Contract Extension Pricing Strategy (Feb 27)](https://app.fireflies.ai/view/01KJEVQ0Q6XWZNZP9P1FTPB2VW)
+- **Transkript:** [Marius × Ulrich — Contract Extension Pricing Strategy (27. Feb.)](https://app.fireflies.ai/view/01KJEVQ0Q6XWZNZP9P1FTPB2VW)
 - **Session:** /Users/verdant/.claude/projects/-Users-verdant-Documents-projects-00-WILSCH-AI-INTERNAL--soloforce/9f14b021-2a4f-4da9-8925-b30c9eb7d426.jsonl
