@@ -1,0 +1,163 @@
+---
+publish: true
+---
+
+# Wartungsvertrag (Dienstleistungsvertrag) — Wilsch AI × IITR
+[[client-iitr]]
+
+> **Status:** Entwurf — Platzhalter (⚠️) vor Unterzeichnung zu klären.
+> **Begleitdokument:** [Werkvertrag-Rahmenvereinbarung](werkvertrag-rahmenvereinbarung-iitr.md)
+
+---
+
+Dieser Wartungsvertrag („Vertrag") wird geschlossen zwischen:
+
+**IITR Datenschutz GmbH** („Auftraggeber")
+- Marienplatz 2
+- 80331 München
+- Deutschland
+
+und
+
+**Wilsch AI Services OÜ** („Auftragnehmer")
+- Registernummer: 17341774
+- Sepapaja 6
+- 15551 Tallinn, Estland
+- USt-IdNr.: EE102934113
+
+---
+
+## §1 Vertragsgegenstand
+
+1.1 Gegenstand dieses Vertrags ist die dedizierte Betreuung der Datenschutz-KI-Infrastruktur des Auftraggebers durch den Auftragnehmer.
+
+1.2 Die Betreuung umfasst den laufenden Betrieb, die Wartung und die Fehlerbehebung der vom Auftragnehmer entwickelten und betriebenen KI-Systeme, insbesondere:
+- RAG-Systeme (V1, V2)
+- DS-Kit Navigationssystem
+- Weitere KI-Anwendungen im Portfolio des Auftraggebers
+
+1.3 Dieser Vertrag ist unabhängig von der [Werkvertrag-Rahmenvereinbarung](werkvertrag-rahmenvereinbarung-iitr.md) für die Weiterentwicklung der Datenschutz-KI. Beide Verträge können unabhängig voneinander gekündigt werden.
+
+---
+
+## §2 Leistungsumfang
+
+2.1 Der Auftragnehmer erbringt folgende Leistungen:
+
+**a) Applikationsschicht (eingeschlossen):**
+- KI-Code, Docker-Container, Ollama-Modelle
+- Anwendungskonfiguration und -optimierung
+- Fehlerbehebung auf Applikationsebene
+
+**b) Scope-Abgrenzung:**
+
+[⚠️ PLACEHOLDER: SCOPE_BOUNDARY — Die genaue Abgrenzung zwischen Applikation, Middleware (Betriebssystem, Netzwerkdienste) und Hardware/Netzwerk (Hetzner/Primeline) ist mit Ulrich zu klären. Insbesondere: Welche Infrastrukturschichten fallen in die Verantwortung des Auftragnehmers, welche verbleiben beim Hosting-Anbieter?]
+
+2.2 Nicht im Leistungsumfang enthalten sind:
+- Hardware-Beschaffung und -austausch
+- Netzwerkinfrastruktur des Hosting-Anbieters
+- Leistungen, die gesondert über die Werkvertrag-Rahmenvereinbarung beauftragt werden
+
+---
+
+## §3 Vergütung
+
+3.1 **Bereitschaftspauschale:** 300,00 EUR netto pro Monat.
+Die Pauschale deckt die Bereitschaft des Auftragnehmers, die Aufrechterhaltung des institutionellen Wissens über die Systeme des Auftraggebers sowie die Vorarbeit für zukünftige Projekte (Pflichtenheft-Erstellung) ab.
+
+3.2 **Stundensatz (Time & Material):** 120,00 EUR netto pro Stunde.
+Wartungs- und Supportleistungen, die über die Bereitschaft hinausgehen, werden nach tatsächlichem Aufwand zu diesem Stundensatz abgerechnet. Der Auftragnehmer dokumentiert die geleisteten Stunden und legt diese dem Auftraggeber mit der Rechnung vor.
+
+3.3 Die Bereitschaftspauschale wird monatlich in Rechnung gestellt. Stunden nach Aufwand werden zusammen mit der monatlichen Pauschale abgerechnet.
+
+---
+
+## §4 Reaktionszeiten
+
+4.1 **Geschäftszeiten:** Montag bis Freitag, 08:00–18:00 Uhr MEZ/MESZ.
+
+4.2 **Reaktionszeit:** Der Auftragnehmer reagiert innerhalb von 24 Stunden (Geschäftszeiten) auf Supportanfragen des Auftraggebers. Die Reaktionszeit bezeichnet die erste qualifizierte Rückmeldung, nicht die Fehlerbehebung.
+
+4.3 **Erweiterte Erreichbarkeit:**
+
+[⚠️ PLACEHOLDER: WEEKEND_SLA — Die Konditionen für erweiterte Erreichbarkeit außerhalb der Geschäftszeiten (Wochenende, Feiertage) sind mit Ulrich zu klären. Marktübliche Richtwerte: 300 EUR/Monat = Geschäftszeiten, bis 890 EUR/Monat = 7/24-Erreichbarkeit. Preisanpassung der Bereitschaftspauschale entsprechend festzulegen.]
+
+---
+
+## §5 Vertragslaufzeit
+
+5.1 **Beginn:** Der Vertrag tritt mit Unterzeichnung durch beide Parteien in Kraft.
+
+5.2 **Laufzeit:** Der Vertrag wird für eine Laufzeit von drei (3) Monaten geschlossen und verlängert sich automatisch um jeweils weitere drei Monate, sofern er nicht von einer Partei gekündigt wird.
+
+5.3 **Kündigung:** Jede Partei kann den Vertrag mit einer Frist von dreißig (30) Tagen zum Ende der jeweiligen Vertragslaufzeit schriftlich kündigen.
+
+5.4 **Außerordentliche Kündigung:** Das Recht zur fristlosen Kündigung aus wichtigem Grund bleibt unberührt.
+
+---
+
+## §6 Zahlungsbedingungen
+
+6.1 **Zahlungsziel:** Rechnungen sind innerhalb von dreißig (30) Tagen nach Rechnungsstellung fällig (netto).
+
+6.2 **Umsatzsteuer:** Die Leistung unterliegt dem Reverse-Charge-Verfahren gemäß Art. 196 der EU-Mehrwertsteuerrichtlinie 2006/112/EG. Der Auftraggeber schuldet die Umsatzsteuer als Leistungsempfänger (innergemeinschaftliche B2B-Dienstleistung, estnischer Leistungserbringer an deutschen Leistungsempfänger).
+
+6.3 **Bankverbindung des Auftragnehmers:**
+
+[⚠️ PLACEHOLDER: KONTOVERBINDUNG — Bankverbindung von Wilsch AI Services OÜ (Xolo/Wise-Konto) hier einfügen.]
+
+6.4 **Umsatzsteuer-Identifikationsnummern:**
+- Auftragnehmer: EE102934113
+- Auftraggeber: [⚠️ PLACEHOLDER: VAT_NUMBER — USt-IdNr. der IITR Datenschutz GmbH einfügen]
+
+---
+
+## §7 Haftungsbeschränkung
+
+7.1 **Haftungsobergrenze:** Die Gesamthaftung des Auftragnehmers aus diesem Vertrag ist auf die Summe der unter diesem Vertrag insgesamt gezahlten Vergütungen begrenzt.
+
+7.2 **Folgeschäden:** Keine der Parteien haftet für mittelbare Schäden, Folgeschäden, entgangenen Gewinn oder entgangene Einsparungen, die sich aus oder im Zusammenhang mit diesem Vertrag ergeben.
+
+7.3 **Höhere Gewalt:** Keine Partei haftet für die Nichterfüllung von Pflichten aus diesem Vertrag, soweit diese auf Umstände zurückzuführen ist, die außerhalb ihres zumutbaren Einflussbereichs liegen (höhere Gewalt).
+
+7.4 Die Haftungsbeschränkungen gelten nicht bei Vorsatz, grober Fahrlässigkeit oder der Verletzung wesentlicher Vertragspflichten (Kardinalpflichten).
+
+---
+
+## §8 Vertraulichkeit
+
+Die Vertraulichkeitspflichten der Parteien richten sich nach der separat geschlossenen Geheimhaltungsvereinbarung (NDA) zwischen den Parteien.
+
+---
+
+## §9 Schlussbestimmungen
+
+9.1 **Gesamte Vereinbarung:** Dieser Vertrag stellt die vollständige Vereinbarung der Parteien hinsichtlich des Vertragsgegenstands dar und ersetzt alle vorherigen mündlichen oder schriftlichen Absprachen.
+
+9.2 **Änderungen:** Änderungen und Ergänzungen dieses Vertrags bedürfen der Schriftform und der Unterzeichnung durch beide Parteien.
+
+9.3 **Salvatorische Klausel:** Sollte eine Bestimmung dieses Vertrags unwirksam oder undurchführbar sein, so bleiben die übrigen Bestimmungen hiervon unberührt. Die unwirksame Bestimmung ist durch eine wirksame Regelung zu ersetzen, die dem wirtschaftlichen Zweck der unwirksamen Bestimmung am nächsten kommt.
+
+9.4 **Unabhängiger Auftragnehmer:** Der Auftragnehmer erbringt seine Leistungen als selbständiger Unternehmer. Ein Arbeitsverhältnis wird durch diesen Vertrag nicht begründet. Der Auftragnehmer ist für seine steuerlichen und sozialversicherungsrechtlichen Verpflichtungen selbst verantwortlich.
+
+9.5 **Anwendbares Recht:** Dieser Vertrag unterliegt dem Recht der Europäischen Union. Gerichtsstand ist München.
+
+---
+
+### Unterschriften
+
+Dieses Dokument wird von den bevollmächtigten Vertretern beider Parteien unterzeichnet.
+
+**IITR Datenschutz GmbH**
+
+________________________
+Name:
+Funktion:
+Datum:
+
+**Wilsch AI Services OÜ**
+
+________________________
+Marius Wilsch
+Board Member
+Datum:
