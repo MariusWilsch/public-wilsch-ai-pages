@@ -43,8 +43,8 @@ Ship with Confidence defines three quality layers. Each layer has a different ow
 |-------|-------|-------|--------|
 | **Sanity Check** | Developer | Does it run? Does it not crash? | Pass/fail in session |
 | **AC Verification** | Developer (AI) | Is the system state correct? Objective, automatable. | `verification.jsonl` — machine-readable trace |
-| **Human Witness (Deep)** | Developer | Does the experience work? AI-guided teaching session, one step at a time. | Witness section in `tracking.md` — steps, expected, witnessed |
-| **Human Witness (Spot-check)** | Dev Lead | Quick validation using developer's witness trace. | Issue comment: approval or feedback items routed back to developer |
+| **Human Witness (Deep)** | Developer | Does the experience work? AI-guided teaching session, one step at a time. | Tour in PR body, Trace as PR comments |
+| **Human Witness (Spot-check)** | Dev Lead | Quick validation using developer's witness Tour in PR. | Issue comment: findings routed back to developer |
 
 **Key distinction — Verification vs Validation:** AC verification catches *specified* failures (system state checks via automation). Human witness catches *unspecified* failures (experience quality via human judgment). These are different layers, not different depths of the same thing. See [AC-DoD Framework § 1](https://mariuswilsch.github.io/public-wilsch-ai-pages/global/ac-dod-framework) for the three-gate model.
 
@@ -54,13 +54,24 @@ The tour is structured as a natural experience flow, not per-AC tests. Each tour
 
 No design-time witness hints are needed. The ACs themselves serve as the source — the AI derives concrete steps post-implementation because URLs, paths, and credentials only stabilize after the feature is built.
 
-The AI presents steps one-by-one to the human. The human executes each step, reports what they see, and the AI records findings in the tracking.md witness section. The developer runs the witness session for deep coverage. The Dev Lead follows the same trace for spot-check (pick 2-3 steps based on judgment, verify on staging).
+The AI presents steps one-by-one to the human. The human executes each step, reports what they see, and the AI records findings as PR comments (Trace). The developer runs the witness session for deep coverage. The Dev Lead follows the same Tour in the PR for spot-check (pick 2-3 steps based on judgment, verify on staging).
 
 **The teaching test (Feynman principle):** The AI that built the feature must prove understanding by teaching the human to experience it. The witness session is not a test plan — it is a teaching demonstration. If the AI's instructions don't match what the human sees, either the implementation or the AI's understanding has gaps. This separation also future-proofs to AI-to-AI validation: swap the human executor for a second AI in a fresh context (no implementation bias).
 
 **Attention mode:** Human witness requires single-window focus. Implementation and spec work can be multi-terminal. The Dev Lead cannot review while doing other work — same constraint as spec-design review.
 
-**Spot-check methodology:** The Dev Lead follows the developer's witness trace in tracking.md. Pick 2-3 steps based on the Dev Lead's own judgment — no curated recommendations needed from the developer. Execute on staging, form judgment. The witness trace IS the prepared material — no separate artifact needed. If the trace is missing or incomplete, that itself is the signal: the developer didn't witness their work.
+**Spot-check methodology:** The Dev Lead opens the PR and follows the developer's witness Tour. Pick 2-3 steps based on the Dev Lead's own judgment — no curated recommendations needed from the developer. Execute on staging, form judgment. The Tour IS the prepared material — no separate artifact needed. If the Tour is missing or incomplete, that itself is the signal: the developer didn't witness their work.
+
+**Ceremony checks (fail-fast cascade):** Before witness begins, the Dev Lead walks through a pre-flight checklist. The /witness skill presents each check; the human decides pass or fail. A failed check is itself a finding — it may block witness or become the primary feedback item.
+
+| # | Check | Gate |
+|---|-------|------|
+| 1 | PR exists (on the code repo, open — not draft) | Hard — no PR → no witness |
+| 2 | Spec review completed (ACs in tracking.md) | Hard — no spec → no tour |
+| 3 | Witness report posted (developer ran deep witness) | Soft — absence is the finding |
+| 4 | Deployed to staging | Hard — nothing to witness |
+| 5 | Implementation conversations linked | Soft — limits teaching depth |
+| 6 | tracking.md in the code repo (co-located with implementation) | Soft — absence is the finding |
 
 **Tour examples (feature-type determines shape):**
 
@@ -167,37 +178,47 @@ Each layer adds teaching depth. tracking.md gives the spec. The project index gi
 
 The preparation phase is visible (what was read, what was queried, what gaps remain) — same as ac-verify's pre-verification code review. The witness steps are the output.
 
-**Tour construction:** The tour is always a journey — a natural sequential experience, not a per-AC checklist. The layer (UI, API, CLI, test harness) changes the medium but not the shape:
-- UI: navigate → interact → see result
-- RAG/API: open interface → input query → see response
-- CLI: connect → run command → see output
+**Tour construction:** The tour derives from business promises — the human-visible capabilities the issue delivers — not from ACs. "What can a human DO after this issue?" organizes the tour; ACs annotate each step for traceability but do not determine the sequence.
 
-ACs annotate the journey (each step references which ACs it covers) but do not organize it. The AI uses judgment to construct the most natural experience flow for the feature type. Infrastructure ACs stay machine-only in verification.jsonl.
+The tour is constructed once and reused. Subsequent ceremonies follow the existing tour and produce a new trace — the tour is a stable launchpad, not rebuilt each time. The layer (UI, API, CLI, test harness) changes the medium but not the shape.
 
-**Witness step structure:** Each step combines an action and a witnessable artifact. The AC defines the expectation — it is not duplicated in the step.
+**Three-beat witness step (mandatory):** Every step follows three beats:
+1. **Teach** — GWT acceptance criteria as verbose context (why this step matters)
+2. **Ground** — reproducible action: CLI command, URL, API call, or screenshot (depends on step type — the principle is reproducibility, not the medium)
+3. **Witness** — compact Action/Expected prompt for the human to verify
 
-| Element | Source | Example |
-|---------|--------|---------|
-| **Action** | AI derives from ACs + implementation context | "Open `https://staging.example.com/admin` and log in" |
-| **Artifact** | The concrete thing being witnessed | CMS admin panel, API response, test harness CSV |
-| **AC reference** | Annotation from tracking.md | "(AC2, AC4)" |
-| **Expectation** | Brief hint from the AC, shown in-session | AI sets the scene before presenting the step — full AC detail lives in tracking.md |
+The AI presents all three beats for each step. The human reads the teaching context, sees the grounding evidence, then executes the action and reports what they witness.
 
-The artifact varies by testability layer (see [AC-DoD Framework § 4](https://mariuswilsch.github.io/public-wilsch-ai-pages/global/ac-dod-framework) for layer taxonomy): staging URLs, API response payloads, test harness reports, CLI output, file content. Every experiential AC should produce a witnessable artifact. If not, the skill records a witness failure (see back-pressure below).
+**Undefined:** Business promise derivation method — how to extract business promises from issue context and design docs. To be defined from #757 empirical data (next extraction pass).
 
-**Experiential vs machine-only classification:** The distinction is a spectrum — even a document count *could* be witnessed, but it's less valuable than judging an answer's quality. The heuristic: does human judgment add value beyond what a machine check provides? High-value witness targets are subjective quality checks (answer correctness, UI experience, user journey flow). Low-value targets are binary assertions (file exists, threshold passed, container running). The AI classifies ACs along this spectrum when constructing the tour, prioritizing high-value experiential items.
+**Witness step format:** Each step follows the three-beat structure (teach → ground → witness). The written format in the PR body:
 
-**Undefined:** Exact classification criteria for experiential vs machine-only ACs — to be calibrated empirically through real witness sessions. The spectrum heuristic (human judgment value) is stable; the threshold for "worth witnessing" will emerge from practice.
+```
+**Step N: {Step Title}** (AC references)
+Given {precondition}, When {action}, Then {expected outcome}.
+
+$ {CLI command or reproducible action}
+→ {expected output or URL}
+
+**Action:** {What the human does}
+**Expected:** {What they should see}
+```
+
+The GWT context teaches why. The grounding proves the AI checked. The Action/Expected prompts the human to verify. The artifact type varies by feature layer: staging URLs, API payloads, test reports, CLI output, file content (see [AC-DoD Framework § 4](https://mariuswilsch.github.io/public-wilsch-ai-pages/global/ac-dod-framework) for layer taxonomy). When no witnessable artifact exists, record a witness failure (see back-pressure below).
+
+**What gets witnessed vs what stays machine-only:** The Tour derives from business promises, not from a classification heuristic. If a step is in the Tour (derived from "what can a human DO?"), it gets witnessed. If it's not in the Tour, it stays in verification.jsonl. The developer may suggest which ACs are "low witness value," but the Dev Lead decides — the developer's classification is input, not authority.
 
 At the issue level, the AI also references relevant items from the project-level test rubric — "if you want to test more, here are relevant test cases from the full rubric." The AI curates 2-3 rubric items and links to the rest, proving it sees the full project context.
 
-**Output structure — Tour and Trace:** The witness section in tracking.md contains two visually separate parts:
+**Output structure — Tour and Trace:** The witness artifacts live in the PR, not in tracking.md. The PR is the Dev Lead's natural entry point when the `review` label appears — everything needed for review is co-located there. tracking.md remains the machine layer (ac-verify reads it programmatically). The Dev Lead never needs to open tracking.md.
 
-*Tour (reusable launchpad):* The steps the human follows. Any human — developer or Dev Lead — can use this to experience the feature. Scannable, self-contained per step, with clickable links or copy-paste commands.
+*Tour (PR body):* The replayable launchpad. ACs listed up top, then three-beat steps with reproducible grounding. Any human — developer or Dev Lead — can follow the steps to experience the feature. Written once by the /witness skill, reused for subsequent ceremonies.
 
-*Trace (historical record):* What was actually witnessed during the session. Each step records the human's observation and whether it matched expectations. The trace is "verification.jsonl made for humans" — structured evidence of what was experienced.
+*Trace (PR comments):* What was actually witnessed during each ceremony. Each ceremony run produces a new PR comment recording the human's observations and whether they matched expectations. The trace is "verification.jsonl made for humans" — structured evidence of what was experienced.
 
-The Dev Lead reads the tour to know what to test. The Dev Lead reads the trace to see what the developer found. Together they enable spot-check without ad-hoc exploration.
+*Findings (issue comments):* When the Dev Lead discovers a mismatch, the finding is posted as an issue comment — not on the PR. The PR stays clean as the evidence package. The issue is the lifecycle thread where feedback routes back to the developer.
+
+The PR becomes structurally necessary: no PR → no place for the witness Tour → ceremony cannot proceed. This makes the PR a hard gate not just procedurally but architecturally.
 
 **Example (#757 — Foundation + CMS + Deploy Pipeline):**
 
@@ -242,22 +263,23 @@ Don't waste the back-pressure — suppressing the gap (skipping the step, guessi
 
 **Dev Lead integration:**
 
-| Mode | Priority | How it works |
-|------|----------|--------------|
-| **Self-directed** | Must-have | Dev Lead reads the tour section, cherry-picks 2-3 steps, tests on staging, posts feedback. No AI involvement. |
-| **AI-guided** | Should-have | Dev Lead runs `/witness --spot-check`, AI presents steps from the tour one-by-one, records Dev Lead's findings. |
+| Mode | How it works |
+|------|--------------|
+| **Self-directed** | Dev Lead opens the PR, reads the Tour (body), cherry-picks 2-3 steps, tests on staging, posts findings as issue comments. |
+| **AI-guided** | Dev Lead runs `/witness --spot-check`. AI presents steps from the Tour one-by-one. Dev Lead executes each step and reports. AI records the Trace as PR comments. |
 
-The trace is the primary launchpad for the Dev Lead. If the tour is well-constructed, the Dev Lead can spot-check without the AI guiding them — reading the tour and testing on their own is the baseline.
+The PR is the Dev Lead's entry point. Open the PR → read the Tour → spot-check → post findings on the issue. No navigation to tracking.md required.
+
+**Authority model (mandatory):** The AI presents ONE step at a time. The human decides: pass, fail, skip, or investigate further. The AI NEVER auto-advances to the next step without the human's explicit signal. Batching steps or presenting findings as a summary destroys the collaborative witness experience — the Dev Lead needs to form judgment AT each step, not after reading a report.
 
 **Dependencies:**
 
 | Dependency | Classification | Without it |
 |-----------|----------------|------------|
+| **PR** | Hard gate | No PR → no place for Tour/Trace → ceremony cannot proceed |
 | **tracking.md with ACs** | Hard gate | Cannot construct tour — nothing to derive steps from |
 | **Project index** | Essential | Tour is spec-level only — no project understanding, no Feynman depth |
 | **Conversation index (#986)** | Being built | Cannot query implementation sessions for deep context — tour is project-aware but shallow on implementation specifics |
-
-**Undefined:** Exact tour and trace format — to be calibrated empirically through first real `/witness` runs. The principle (Tour as reusable launchpad + Trace as historical record) is stable; the visual format will emerge from practice.
 
 **Undefined:** Project-level regression witness — how `/witness` connects to Ship with Confidence smoke testing at the project level (vs issue-level witness defined here). Routed to Ship with Confidence methodology.
 
@@ -268,10 +290,13 @@ The trace is the primary launchpad for the Dev Lead. If the tour is well-constru
 ## Source
 
 - **Post-mortem:** [#789 IITR DS-Kit Navigation](https://github.com/DaveX2001/deliverable-tracking/issues/789) — first multi-operator delivery, 3-4 hour witness pain
-- **Observations:** [#605 Dev Lead Position Epic](https://github.com/DaveX2001/claude-code-improvements/issues/605) — 17 observations clustered into this system
+- **Observations:** [#605 Dev Lead Position Epic](https://github.com/DaveX2001/claude-code-improvements/issues/605) — 20+ observations clustered into this system
 - **Position Agreements:** [Dev Lead PA](https://mariuswilsch.github.io/public-wilsch-ai-pages/global/dev-lead-position-agreement-wilsch-ai-services) | [Developer PA](https://mariuswilsch.github.io/public-wilsch-ai-pages/global/developer-position-agreement-wilsch-ai-services)
 - **Methodology:** [Ship with Confidence](https://mariuswilsch.github.io/public-wilsch-ai-pages/global/ship-with-confidence)
 - **Session (initial):** /Users/verdant/.claude/projects/-Users-verdant-Documents-projects-00-WILSCH-AI-INTERNAL--soloforce/344de871-d0b0-47b8-a44c-a01f726b24fc.jsonl
 - **Session (Feynman Test extraction):** /Users/verdant/.claude/projects/-Users-verdant-Documents-projects-00-WILSCH-AI-INTERNAL--soloforce/4b8d4a93-6ccb-4b4f-ac6a-4b8500619905.jsonl
 - **Session (Ceremony + witness tour extraction):** /Users/verdant/.claude/projects/-Users-verdant-Documents-projects-00-WILSCH-AI-INTERNAL--soloforce/83d4d2fe-f380-41ee-90e1-82ad154feca5.jsonl
 - **Session (Witness skill operational design):** /Users/verdant/.claude/projects/-Users-verdant-Documents-projects-00-WILSCH-AI-INTERNAL--soloforce/7ea9fbcf-1f68-43f0-9d84-f843ea2a1175.jsonl
+- **Session (Empirical #849 ceremony — first witness test):** /Users/verdant/.claude/projects/-Users-verdant-Documents-projects-billable-klimafolgenschutz-website/92fcc982-ab32-406a-b2ed-1c09e085c821.jsonl
+- **Session (Empirical #757 ceremony — second witness test):** /Users/verdant/.claude/projects/-Users-verdant-Documents-projects-billable-klimafolgenschutz-website/9428d73a-196f-453e-8d23-73e905325d03.jsonl
+- **Session (Part 6 redesign from empirical data — pass 1):** /Users/verdant/.claude/projects/-Users-verdant-Documents-projects-00-WILSCH-AI-INTERNAL--soloforce/e9b37733-feca-4a2b-9d62-4a61f74f5962.jsonl
