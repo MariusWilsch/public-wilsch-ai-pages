@@ -12,8 +12,6 @@ LLMs respond to the same persuasion principles as humans. Understanding this psy
 
 **Research foundation:** Meincke et al. (2025) tested 7 persuasion principles with N=28,000 AI conversations. Persuasion techniques more than doubled compliance rates (33% → 72%, p < .001).
 
-<!-- TEST MARKER: verify_publish.sh live test — remove after validation -->
-
 ## The Seven Principles
 
 ### 1. Authority
