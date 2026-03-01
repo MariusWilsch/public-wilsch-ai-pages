@@ -152,8 +152,10 @@ It covers all future AI development work across the portfolio (RAG-V1, RAG-V2, D
 Avatar). Each project within the framework gets its own Pflichtenheft and Festpreis.
 The pipeline is driven by Kraska's priorities, decided in the bi-weekly meetings.
 
-**Current project:** DS-Kit Navigation extension (800 EUR, website extraction + support
-escalation). Next project depends on IITR's priorities after delivery.
+**Current project:** DS-Kit Navigation (2,880 EUR POC + 800 EUR extension). The original
+project stalled under the Roman intermediary arrangement — its non-delivery was the catalyst
+for the partnership dissolution. Completing this delivery is the first proof point of the
+direct relationship. Next project depends on IITR's priorities after DS-Kit is delivered.
 
 ---
 
