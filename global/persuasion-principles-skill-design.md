@@ -4,6 +4,8 @@ publish: true
 
 # Persuasion Principles for Skill Design
 
+<!-- VERIFY_TEST_MARKER_2026_03_01 -->
+
 [[prompt-engineering]]
 
 ## Overview
