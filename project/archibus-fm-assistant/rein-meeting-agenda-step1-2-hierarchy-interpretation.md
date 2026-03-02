@@ -49,7 +49,7 @@ Ali submitted an Excel that neither Rein nor Marius could interpret — appears 
 ### 3. Client Data Examples — ARCHIBUS Team Deliverable
 ⏱️ 10 min
 
-The AI pipeline has been tested against one dataset (CAFM sample) which is a near-perfect happy case. Real-world validation requires messier data with unmappable columns, ambiguous hierarchies, and edge cases. The ARCHIBUS team has been asked 3-4 times for additional examples but hasn't delivered.
+The AI pipeline has been tested against one dataset (CAFM sample) which is a near-perfect happy case. Real-world validation requires messier data with unmappable columns, ambiguous hierarchies, and edge cases.
 
 - CAFM sample: too clean — all columns map, hierarchy is obvious, no real edge cases
 - Housekeeping Tracker: no assets at all (confirmed by Rein)
