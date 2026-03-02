@@ -559,7 +559,7 @@ Scenario 1e is Step 0 and Step 1 interacting — data type detection gets refine
 
 When the BEM database already contains location assets (buildings, floors, rooms), the implementer imports new equipment under existing parents. This is "bulk insert using existing parents" — the equipment is new, but the location hierarchy already exists. Rein describes this as "completely different scenario" from clean insert and "much more complicated."
 
-**Identifying signal:** The client's data contains hierarchy codes (building code "A02", floor code "GF", room code "LRBAL") but no descriptive names or addresses. Codes-only data assumes parents already exist — the AI cannot create buildings from a code alone.
+**Identifying signal (hypothesis):** The client's data contains hierarchy codes (building code "A02", floor code "GF", room code "LRBAL") but no descriptive names or addresses. This likely indicates that parent assets already exist in BEM and the codes are references, not new records — but this needs validation with more client data examples.
 
 **Algorithmic sketch (Rein, Feb 27 2026):**
 1. Extract unique building codes from the client's data
