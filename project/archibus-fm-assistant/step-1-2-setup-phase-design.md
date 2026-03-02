@@ -53,6 +53,8 @@ Column names alone are insufficient. Client data uses domain-specific naming (e.
 
 **Scope boundary:** AI maps only what exists in the client's data. It does not suggest adding hierarchy levels that the data doesn't contain. The value proposition is translating client data into BEM's language, not restructuring the client's data model.
 
+**Non-contiguous hierarchies:** BEM's data model supports level-skipping — a Room can be a direct child of a Building with no intermediate Floor. The AI works with what the client provides: if the data has no floor column, the hierarchy is Building → Room. No phantom levels, no proposals to add missing layers. *(Confirmed: Rein, Feb 27 2026)*
+
 **Rejection flow:** If the implementer disagrees, they provide context ("AREA means campus zones, not buildings") and the AI re-proposes. The correction loop is conversational — no re-upload, no UI reassignment. Loop runs until explicit confirmation.
 
 **Output:** Confirmed mapping of client columns → BEM hierarchy levels. Step 3 uses this mapping to generate phantom location assets (Building, Floor, Room records that don't exist in the client's Excel but are required by BEM's parent-child structure).
@@ -91,7 +93,7 @@ BEM defines 9 hierarchy levels (Campus → Site → Complex → Property → Bui
 
 Without descriptions, the AI is guessing from a single word ("Complex" vs "Building"). With descriptions, the AI matches "4 concourse zones in a terminal" against a defined pattern.
 
-**Proposed descriptions (starting point — to be validated with Rein):**
+**Hierarchy type descriptions (validated with Rein, Feb 27 2026):**
 
 | BEM Type | Proposed Description | Examples |
 |----------|---------------------|----------|
@@ -105,7 +107,7 @@ Without descriptions, the AI is guessing from a single word ("Complex" vs "Build
 | Suite | A named functional unit within a floor | Suite 204, Lab B, Retail zone |
 | Room | An individual enclosed space | Room 315, Server Room, Gate C4 |
 
-**Undefined:** Hierarchy type descriptions — BEM's asset_types file contains only structural codes (hierarchy depth), no descriptions or examples. Proposed descriptions above are AI-generated starting points. See [Meeting Agenda: Step 1+2 Hierarchy & Interpretation](https://mariuswilsch.github.io/public-wilsch-ai-pages/project/archibus-fm-assistant/rein-meeting-agenda-step1-2-hierarchy-interpretation).
+Rein confirmed these descriptions as "accurate enough" for AI inference. BEM's asset_types file provides structural codes only — these descriptions serve as the AI's reference for semantic matching between client data and BEM hierarchy levels. *(Confirmed: Rein, Feb 27 2026)*
 
 #### Name Enrichment
 
@@ -140,7 +142,7 @@ Readability validation is an AI concern — the AI flags unreadable names (e.g.,
 >
 > All names are already descriptive. I'll use them as-is.
 
-**Undefined:** The exact naming enrichment logic and rule discrimination boundaries need empirical testing and stakeholder alignment. See [Meeting Agenda: Step 1+2 Hierarchy & Interpretation](https://mariuswilsch.github.io/public-wilsch-ai-pages/project/archibus-fm-assistant/rein-meeting-agenda-step1-2-hierarchy-interpretation).
+Name enrichment boundaries are confirmed as empirical — the exact discrimination logic (when to enrich vs pass through) will be tested against real client data. Three agreed reference cases: "Building D" → pass through (already readable), "3" → enrich to "Building D Floor 3" (bare number), "PTC" → flag for implementer (ambiguous acronym). *(Confirmed: Rein + Marius, Feb 27 2026)*
 
 ---
 
@@ -159,7 +161,7 @@ Mapped columns go through batch confirmation — the implementer sees all confid
 │  Client Column        →  BEM Field                  │
 │  ─────────────           ─────────                  │
 │  "Status"             →  status        ✅ Mapped    │
-│  "Condition"          →  ???           ⚠️ Flagged   │
+│  "Condition"          →  condition     ✅ Mapped    │
 │  "Serial No."         →  serialNumber  ✅ Mapped    │
 └──────────────────────────┬──────────────────────────┘
                            │
@@ -193,15 +195,15 @@ Every client column falls into one of six categories. The category determines ho
 | **Direct passthrough** | clientColumn → bemField | Batch confirm — AI is confident |
 | **Passthrough with fallback** | clientColumn → bemField + auto-fallback | Auto-resolved — no implementer flag |
 | **Enum mapping** | clientColumn → bemField + value translation table | Batch confirm (column) + 1x1 (unmatched values) |
-| **Flagged unmappable** | flagged with options: overflow / exclude | 1x1 — AI flags neutrally, implementer decides |
+| **Flagged unmappable** | flagged with options: additional properties (key-value) / exclude | 1x1 — AI flags neutrally, implementer decides |
 | **Excluded (Skip tier)** | excluded, reason recorded | Excluded — no implementer decision |
 
 **CAFM example (15 columns → 6 categories):**
 - Hierarchy: Location, Floor, Room No. (3 columns → Part 1)
 - Direct passthrough: Serial No.→serialNumber, Model→modelSpecific, BrandSpecific→brandSpecific, 6 dates, 3 contacts (12 columns)
 - Passthrough with fallback: Asset ID→id (row index if no client ID column)
-- Enum mapping: Asset Type→assetType, Status→status
-- Flagged unmappable: Condition, Maintenance Frequency (BEM's full table has `condition` and `classification_for_maintenance` but the import API doesn't expose them yet)
+- Enum mapping: Asset Type→assetType, Status→status, Condition→condition
+- Flagged unmappable: Maintenance Frequency (no BEM import field)
 - Excluded: Assigned To (assignedPortfolioEmployee is Skip tier — requires Guid lookup)
 
 #### Enum Resolution
@@ -216,9 +218,11 @@ For enum fields (AssetType, Status, Country), column-level matching is insuffici
 
 The contract's enum map must be complete — every client value that appears in the data has a confirmed BEM translation. No unresolved values pass through to Step 3. A default fallback exists per enum (e.g., "Equipment" for unknown AssetType values) to catch values that appear in future data rows Step 2 never encountered.
 
-**Undefined:** Handling of unmappable columns — AI flags neutrally with options (overflow to statusDetail, exclude), implementer decides. BEM's full asset table has `condition` (nvarchar 50) and `classification_for_maintenance` (nvarchar 128) that could solve common unmappable cases if added to the import API. See [Meeting Agenda: Mapping Contract & Enum Resolution](https://mariuswilsch.github.io/public-wilsch-ai-pages/project/archibus-fm-assistant/rein-meeting-agenda-step1-2-hierarchy-interpretation).
+Condition is being added to the import API as an enum field. Classification_for_maintenance may follow. Unmappable columns now route to **additional properties** — a key-value pair array per asset stored in a separate BEM table, replacing the statusDetail overflow approach. The API schema change is in progress. *(Confirmed: Rein, Feb 27 2026)*
 
-**Undefined:** Specific enum translations (e.g., "Inactive" → which BEM Status value?) need Rein input on intended semantic mapping. The pattern is defined; specific mappings require domain knowledge. See [Meeting Agenda: Mapping Contract & Enum Resolution](https://mariuswilsch.github.io/public-wilsch-ai-pages/project/archibus-fm-assistant/rein-meeting-agenda-step1-2-hierarchy-interpretation).
+**Undefined:** Additional properties API schema — Rein is implementing an `additionalProperties` array on the asset import body (key-value pairs per asset). The exact JSON structure and the mapping contract's 4th element for unmapped columns depend on the updated API documentation. Rein's deliverable: updated asset schema (~week of March 3, 2026). See [Meeting Agenda: Step 1+2 Hierarchy & Interpretation](https://mariuswilsch.github.io/public-wilsch-ai-pages/project/archibus-fm-assistant/rein-meeting-agenda-step1-2-hierarchy-interpretation).
+
+Rein confirmed "Out of Service" as the correct mapping for "Inactive" — the ranked-suggestion approach is validated ("very correct approach"). The pattern works: AI reads BEM's enum descriptions, ranks suggestions by semantic fit, implementer confirms. Specific mappings beyond status (e.g., condition enum values) will follow the same pattern once the condition enum is finalized. *(Confirmed: Rein, Feb 27 2026)*
 
 ---
 
@@ -232,7 +236,7 @@ The combined output of Step 1 and Step 2 is the **mapping contract** — the art
 
 **Design principle — absence = omission:** Fields not present in the contract are omitted from Step 3's JSON output. The BEM API treats missing fields as null. No explicit "skip" entries needed for unmapped BEM fields — their absence IS the signal.
 
-**Field placement:** Address fields (address, city, state, postalCode, country) are placed on the highest container node in the hierarchy. All other mapped fields are placed on equipment leaf nodes. This follows the principle that location-level data lives on the container, equipment-level data lives on the leaf.
+**Field placement:** Address fields (address, city, state, postalCode, country) are placed on **all location-based assets** — building, floor, room. The AI auto-populates children from the building, which is the authoritative address source (property may carry a more generic address). All other mapped fields are placed on equipment leaf nodes. *(Confirmed: Rein, Feb 27 2026 — "at least address line and city line are good to repeat to the children")*
 
 #### Contract Elements
 
@@ -527,8 +531,9 @@ In-chat progress by building. Excel export available on demand for detailed revi
 | **0a: Recognized equipment data** | Announces "equipment asset data" and advances to hierarchy | No gate — announce and advance |
 | **0b: Recognized but unsupported** (e.g., work orders) | "This looks like work order data. I can only process asset/equipment data right now." | Stop — blocked |
 | **0c: Ambiguous data type** | "I'm not sure if this is equipment data or work orders. What type of data is this?" | Ask — implementer decides |
+| **0d: Insufficient data** | Equipment data detected but no hierarchy columns (flat list with no location context) | Stop — "I need at least one location column to build the hierarchy" |
 
-**Undefined:** The exact mechanism for data type detection (which signals the AI uses to distinguish asset data from work orders) needs Rein input. See [Meeting Agenda: Step 1+2 Hierarchy & Interpretation](https://mariuswilsch.github.io/public-wilsch-ai-pages/project/archibus-fm-assistant/rein-meeting-agenda-step1-2-hierarchy-interpretation).
+Data type detection confirmed: the AI distinguishes by checking non-hierarchy columns. Equipment columns (Serial No., Model, Manufacturer) = assets. Task columns (Task Description, Completion Status, Scheduled Date) = work orders. If neither equipment nor location data is present, the AI rejects. *(Confirmed: Rein, Feb 27 2026)*
 
 #### Step 1 Scenarios
 
@@ -550,9 +555,30 @@ Scenario 1e is Step 0 and Step 1 interacting — data type detection gets refine
 | **2b: Many fuzzy matches** | Cryptic column names, AI guesses | Abbreviated names: SN→serialId?, MFR→manufacturer?, EQ_NM→assetName? |
 | **2c: All confident** | Clean template-based data, every column matches | Rare — all 12 columns match, no enum conflicts, no flags |
 
-#### Future Extension: Existing-Database Scenario
+#### Future Extension: Existing-Database Scenario (Phase 2)
 
-When the BEM database already contains assets (buildings, floors, rooms), the interaction flow gains a fork: "Are these buildings new or do they already exist?" This scenario introduces a pre-check against BEM's existing data using the `get asset by name` endpoint. Documented here as a known future extension — not designed in the current flow.
+When the BEM database already contains location assets (buildings, floors, rooms), the implementer imports new equipment under existing parents. This is "bulk insert using existing parents" — the equipment is new, but the location hierarchy already exists. Rein describes this as "completely different scenario" from clean insert and "much more complicated."
+
+**Identifying signal:** The client's data contains hierarchy codes (building code "A02", floor code "GF", room code "LRBAL") but no descriptive names or addresses. Codes-only data assumes parents already exist — the AI cannot create buildings from a code alone.
+
+**Algorithmic sketch (Rein, Feb 27 2026):**
+1. Extract unique building codes from the client's data
+2. API queries BEM database for buildings matching those codes → returns real UUIDs
+3. For each matched building, API retrieves its floor and room children
+4. AI compares the returned hierarchy JSON against the client's floor/room codes
+5. If hierarchy matches: insert equipment under the matched room (using room's UUID as parent)
+6. If hierarchy doesn't match: flag to implementer — "room code X not found under building Y"
+7. If building code not found: ask implementer to verify codes or provide more data
+
+**Key constraints:**
+- Room codes can repeat across buildings — matching must verify the full chain (building → floor → room), not just the room code
+- Large databases: cannot fetch all assets at once. Process building-by-building, same as clean insert
+- Equipment already exists: if lookup finds equipment with the same code under the same room, return error (duplicate detection)
+- otherCode field is the lookup key — BEM's primary key is UUID, but otherCode preserves the client's original code
+
+**Phase ordering:** Complete Phase 1 (clean insert with unmapped properties + name enrichment) → demo → Phase 2 design begins. Phase 2 needs new API endpoints for hierarchy lookup by code.
+
+**Applicability to other BEM tables:** The pattern generalizes. Employees have department → business unit (3 levels, simpler). Once assets work, remaining 11 tables follow the same approach with fewer levels and fewer fields. *(Source: Rein, Feb 27 2026)*
 
 ---
 
@@ -573,4 +599,6 @@ When the BEM database already contains assets (buildings, floors, rooms), the in
 - **Session:** /Users/verdant/.claude/projects/-Users-verdant-Documents-projects-billable-MariusWilsch__archibus-bulk-import/23cb9666-8d53-4479-ab6c-e775b7020083.jsonl
 - **Session:** /Users/verdant/.claude/projects/-Users-verdant-Documents-projects-billable-MariusWilsch__archibus-bulk-import/58bfde61-b97e-45fe-9a57-c8bdc231b7fe.jsonl
 - **Session:** /Users/verdant/.claude/projects/-Users-verdant-Documents-projects-billable-MariusWilsch--archibus-bulk-import/57d480dc-e7ea-4ee3-b96f-dce4a2e6f4ca.jsonl
+- **Transcript:** [Rein <> Marius (Feb 27, 2026)](https://app.fireflies.ai/view/01KJFJ49ZFV2VWS7E811W7DJ6Z)
+- **Session:** /Users/verdant/.claude/projects/-Users-verdant-Documents-projects-billable-MariusWilsch--archibus-bulk-import/b1add1e7-2807-4c2b-9cc7-1df0be954eb9.jsonl
 - **Reference:** [Anthropic Skill Best Practices — Progressive Disclosure](https://platform.claude.com/docs/en/agents-and-tools/agent-skills/best-practices)
