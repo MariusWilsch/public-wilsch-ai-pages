@@ -11,6 +11,7 @@ Two remaining items from the original 8-topic agenda. Topics 1-5 and 8 resolved 
 
 1. **Additional properties API schema** — Rein's deliverable: updated asset import body with key-value array
 2. **Location-only imports** — deferred to Ali meeting for data clarification
+3. **Client data examples** — ARCHIBUS team deliverable for real-world testing
 
 ## Pre-Read
 
@@ -41,14 +42,26 @@ Ali submitted an Excel that neither Rein nor Marius could interpret — appears 
 
 - Housekeeping Tracker also had no assets (confirmed by Rein)
 - Location-only import (hierarchy without equipment) remains an open design question
-- Need better test examples from the FMM team — Rein will escalate via Miguel
+- Need better test examples from the ARCHIBUS team — Rein will escalate via Miguel
 
 **To resolve:** Whether Ali's data contains importable assets, and whether location-only imports are a valid Phase 1 scenario.
+
+### 3. Client Data Examples — ARCHIBUS Team Deliverable
+⏱️ 10 min
+
+The AI pipeline has been tested against one dataset (CAFM sample) which is a near-perfect happy case. Real-world validation requires messier data with unmappable columns, ambiguous hierarchies, and edge cases. The ARCHIBUS team has been asked 3-4 times for additional examples but hasn't delivered.
+
+- CAFM sample: too clean — all columns map, hierarchy is obvious, no real edge cases
+- Housekeeping Tracker: no assets at all (confirmed by Rein)
+- Ali's Excel: uninterpretable — possibly work requests or employees
+- Rein committed to escalating via Miguel (Feb 27 2026)
+
+**To resolve:** Status of the data request — whether the ARCHIBUS team has provided new examples, and if not, what's blocking delivery.
 
 ## Meeting Format
 
 - **Type:** Technical alignment
-- **Attendees:** Rein, Marius, Ali (for topic 2)
+- **Attendees:** Rein, Marius, Ali (for topics 2+3)
 - **Expectation:** Rein brings knowledge of BEM's import API constraints
 - **Outcome:** Resolved Undefined markers in the Step 1+2 design doc — hierarchy, mapping contract, and enum sections
 
