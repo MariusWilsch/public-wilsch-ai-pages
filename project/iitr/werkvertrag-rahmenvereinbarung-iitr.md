@@ -160,16 +160,32 @@ Die Vertraulichkeitspflichten der Parteien richten sich nach der separat geschlo
 
 Dieses Dokument wird von den bevollmächtigten Vertretern beider Parteien unterzeichnet.
 
+&nbsp;
+
 **IITR Datenschutz GmbH**
 
+&nbsp;
+
 ________________________
+
 Name:
+
 Funktion:
+
 Datum:
+
+&nbsp;
+
+&nbsp;
 
 **Wilsch AI Services OÜ**
 
+&nbsp;
+
 ________________________
+
 Marius Wilsch
+
 Board Member
+
 Datum:
