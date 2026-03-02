@@ -31,15 +31,15 @@ und
 
 1.1 Gegenstand dieses Vertrags ist die Schaffung eines Rahmens für die Weiterentwicklung der Datenschutz-KI des Auftraggebers durch den Auftragnehmer.
 
-1.2 Der Vertrag umfasst das gesamte KI-Portfolio des Auftraggebers, insbesondere:
+1.2 Der Vertrag umfasst folgende KI-Systeme des Auftraggebers:
 - RAG-Systeme (V1, V2)
 - DS-Kit Navigationssystem
 - Avatar-System
 - Weitere KI-Anwendungen nach Vereinbarung
 
-1.3 Einzelne Entwicklungsprojekte werden als Einzelaufträge gemäß §2 beauftragt. Dieser Rahmenvertrag begründet keine Verpflichtung zur Beauftragung von Einzelaufträgen.
+1.3 Einzelne Entwicklungsprojekte werden als Einzelaufträge gemäß §2 abgewickelt. Dieser Rahmenvertrag begründet keine Verpflichtung zur Beauftragung von Einzelaufträgen. Bei Abweichungen zwischen dieser Rahmenvereinbarung und einem Einzelauftrag gehen die Bestimmungen des Einzelauftrags vor.
 
-1.4 Dieser Vertrag ist unabhängig vom [Wartungsvertrag](wartungsvertrag-iitr.md) für die dedizierte Betreuung der KI-Infrastruktur. Beide Verträge können unabhängig voneinander gekündigt werden.
+1.4 Dieser Vertrag ist unabhängig vom [Wartungsvertrag](wartungsvertrag-iitr.md) für die dedizierte Betreuung der KI-Infrastruktur. Beide Verträge sollen unabhängig voneinander behandelt werden.
 
 ---
 
@@ -53,7 +53,7 @@ Der Auftragnehmer erstellt ein Pflichtenheft, das den Leistungsumfang, die Anfor
 
 ### 2.2 Beauftragung
 
-Der Auftraggeber beauftragt das Projekt durch schriftliche Annahme des Pflichtenhefts und des darin genannten Festpreises. Mit Annahme wird der Einzelauftrag Bestandteil dieser Rahmenvereinbarung.
+Der Auftraggeber beauftragt das Projekt durch schriftliche Annahme des Pflichtenhefts und des darin genannten Festpreises. Mit Annahme wird der Einzelauftrag nach den Regeln dieser Rahmenvereinbarung abgewickelt.
 
 ### 2.3 Ausführung
 
@@ -98,8 +98,6 @@ Bank: Wise, Rue du Trône 100, 3rd floor, Brussels, 1050, Belgium
 
 4.3 **Mängelbeseitigung:** Bei begründeten Mängelrügen beseitigt der Auftragnehmer die Mängel innerhalb einer angemessenen Frist. Nach Mängelbeseitigung beginnt eine neue Abnahmefrist von sieben (7) Werktagen.
 
-4.4 **Regelmäßige Abstimmung:** Die Parteien halten Abstimmungen im Zwei-Wochen-Rhythmus ab, um den Projektfortschritt zu besprechen und Abweichungen frühzeitig zu identifizieren.
-
 ---
 
 ## §5 Geistiges Eigentum
@@ -113,6 +111,8 @@ Bank: Wise, Rue du Trône 100, 3rd floor, Brussels, 1050, Belgium
 
 5.3 **Lizenzerteilung:** Der Auftraggeber erhält eine zeitlich unbefristete, nicht-exklusive Lizenz zur Nutzung des in die Liefergegenstände eingeflossenen vorbestehenden geistigen Eigentums des Auftragnehmers, ausschließlich für die Zwecke, für die die Liefergegenstände erstellt wurden.
 
+5.4 **Drittlizenzen:** Soweit in die Liefergegenstände Komponenten Dritter einfließen (z. B. Open-Source-Bibliotheken, KI-Modelle von Drittanbietern), unterliegen diese den jeweiligen Lizenzbedingungen des Drittanbieters. Der Auftragnehmer weist den Auftraggeber auf solche Drittlizenzen hin. Eine Übertragung von Rechten, die dem Auftragnehmer nicht zustehen, ist ausgeschlossen.
+
 ---
 
 ## §6 Vertragslaufzeit
@@ -121,21 +121,27 @@ Bank: Wise, Rue du Trône 100, 3rd floor, Brussels, 1050, Belgium
 
 6.2 **Laufzeit:** Der Rahmenvertrag wird auf unbestimmte Zeit geschlossen.
 
-6.3 **Kündigung:** Jede Partei kann den Rahmenvertrag mit einer Frist von dreißig (30) Tagen schriftlich kündigen. Laufende Einzelaufträge werden bis zur Fertigstellung fortgeführt und gemäß den vereinbarten Konditionen abgerechnet.
+6.3 **Kündigung:** Jede Partei kann den Rahmenvertrag mit einer Frist von drei (3) Monaten zum Jahresende schriftlich kündigen. Laufende Einzelaufträge werden bis zur Fertigstellung fortgeführt und gemäß den vereinbarten Konditionen abgerechnet.
 
 6.4 **Außerordentliche Kündigung:** Das Recht zur fristlosen Kündigung aus wichtigem Grund bleibt unberührt.
 
 ---
 
-## §7 Haftungsbeschränkung
+## §7 Haftung
 
-7.1 **Haftungsobergrenze:** Die Haftung des Auftragnehmers für einen Einzelauftrag ist auf den jeweiligen Festpreis dieses Einzelauftrags begrenzt.
+7.1 Die Vertragsparteien haften unbeschränkt für Vorsatz und grobe Fahrlässigkeit gemäß den gesetzlichen Vorschriften.
 
-7.2 **Folgeschäden:** Keine der Parteien haftet für mittelbare Schäden, Folgeschäden, entgangenen Gewinn oder entgangene Einsparungen, die sich aus oder im Zusammenhang mit diesem Vertrag oder einem Einzelauftrag ergeben.
+7.2 Für einfache Fahrlässigkeit haften die Vertragsparteien — außer im Falle der Verletzung des Lebens, des Körpers oder der Gesundheit — nur, sofern wesentliche Vertragspflichten (Kardinalpflichten) verletzt werden. Die Haftung ist in diesem Fall begrenzt auf den vertragstypischen und vorhersehbaren Schaden, maximal jedoch auf den jeweiligen Festpreis des betroffenen Einzelauftrags.
 
-7.3 **Höhere Gewalt:** Keine Partei haftet für die Nichterfüllung von Pflichten aus diesem Vertrag, soweit diese auf Umstände zurückzuführen ist, die außerhalb ihres zumutbaren Einflussbereichs liegen (höhere Gewalt).
+7.3 Die Haftung für mittelbare und unvorhersehbare Schäden, Produktions- und Nutzungsausfall, entgangenen Gewinn, ausgebliebene Einsparungen und Vermögensschäden wegen Ansprüchen Dritter ist im Falle einfacher Fahrlässigkeit — außer im Falle der Verletzung des Lebens, des Körpers oder der Gesundheit — ausgeschlossen.
 
-7.4 Die Haftungsbeschränkungen gelten nicht bei Vorsatz, grober Fahrlässigkeit oder der Verletzung wesentlicher Vertragspflichten (Kardinalpflichten).
+7.4 Soweit die Haftung nach Ziffern 7.2 und 7.3 ausgeschlossen oder beschränkt ist, gilt dies auch für die persönliche Haftung der Angestellten, Arbeitnehmer, Vertreter, Organe und Erfüllungsgehilfen der jeweiligen Vertragspartei.
+
+7.5 Die Vertragsparteien haften nicht für höhere Gewalt, insbesondere nicht für Krieg, Naturkatastrophen, Terroranschläge, Pandemien, Streik oder behördliche Anordnungen.
+
+7.6 **Verletzung von Schutzrechten Dritter:** Werden von einem Dritten Ansprüche wegen der Verletzung von gewerblichen Schutzrechten oder Urheberrechten durch die vom Auftragnehmer erbrachten Leistungen geltend gemacht, wird der Auftragnehmer nach seiner Wahl und auf seine Kosten entweder die Leistungen so ändern oder ersetzen, dass sie das Schutzrecht nicht verletzen, aber im Wesentlichen den vereinbarten Leistungen entsprechen, oder den Auftraggeber von Vergütungsansprüchen Dritter freistellen. Die Parteien werden einander über Ansprüche Dritter wegen einer Schutzrechtsverletzung unverzüglich schriftlich verständigen.
+
+7.7 Eine weitergehende Haftung als in diesem Vertrag vorgesehen ist — ohne Rücksicht auf die Rechtsnatur des geltend gemachten Anspruchs — ausgeschlossen. Vorstehende Haftungsbeschränkungen gelten jedoch nicht für eine gesetzlich zwingend vorgeschriebene verschuldensunabhängige Haftung oder die Haftung aus einer verschuldensunabhängigen Garantie.
 
 ---
 

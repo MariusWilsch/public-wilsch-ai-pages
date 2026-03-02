@@ -36,7 +36,7 @@ und
 - DS-Kit Navigationssystem
 - Weitere KI-Anwendungen im Portfolio des Auftraggebers
 
-1.3 Dieser Vertrag ist unabhängig von der [Werkvertrag-Rahmenvereinbarung](werkvertrag-rahmenvereinbarung-iitr.md) für die Weiterentwicklung der Datenschutz-KI. Beide Verträge können unabhängig voneinander gekündigt werden.
+1.3 Dieser Vertrag ist unabhängig von der [Werkvertrag-Rahmenvereinbarung](werkvertrag-rahmenvereinbarung-iitr.md) für die Weiterentwicklung der Datenschutz-KI. Beide Verträge sollen unabhängig voneinander behandelt werden.
 
 ---
 
@@ -80,7 +80,10 @@ Wartungs- und Supportleistungen, die über die Bereitschaft hinausgehen, werden 
 
 4.3 **Erweiterte Erreichbarkeit:**
 
-[⚠️ PLACEHOLDER: WEEKEND_SLA — Die Konditionen für erweiterte Erreichbarkeit außerhalb der Geschäftszeiten (Wochenende, Feiertage) sind mit Ulrich zu klären. Marktübliche Richtwerte: 300 EUR/Monat = Geschäftszeiten, bis 890 EUR/Monat = 7/24-Erreichbarkeit. Preisanpassung der Bereitschaftspauschale entsprechend festzulegen.]
+Für Supportleistungen außerhalb der Geschäftszeiten gemäß §4.1 gelten folgende Aufschläge auf den Stundensatz gemäß §3.2:
+
+- Werktags außerhalb der Geschäftszeiten: +50% (180,00 EUR netto pro Stunde)
+- Sonn- und Feiertage: +100% (240,00 EUR netto pro Stunde)
 
 ---
 
@@ -90,7 +93,7 @@ Wartungs- und Supportleistungen, die über die Bereitschaft hinausgehen, werden 
 
 5.2 **Laufzeit:** Der Vertrag wird für eine Laufzeit von drei (3) Monaten geschlossen und verlängert sich automatisch um jeweils weitere drei Monate, sofern er nicht von einer Partei gekündigt wird.
 
-5.3 **Kündigung:** Jede Partei kann den Vertrag mit einer Frist von dreißig (30) Tagen zum Ende der jeweiligen Vertragslaufzeit schriftlich kündigen.
+5.3 **Kündigung:** Jede Partei kann den Vertrag mit einer Frist von drei (3) Monaten zum Jahresende schriftlich kündigen.
 
 5.4 **Außerordentliche Kündigung:** Das Recht zur fristlosen Kündigung aus wichtigem Grund bleibt unberührt.
 
@@ -115,15 +118,19 @@ Bank: Wise, Rue du Trône 100, 3rd floor, Brussels, 1050, Belgium
 
 ---
 
-## §7 Haftungsbeschränkung
+## §7 Haftung
 
-7.1 **Haftungsobergrenze:** Die Gesamthaftung des Auftragnehmers aus diesem Vertrag ist auf die Summe der unter diesem Vertrag insgesamt gezahlten Vergütungen begrenzt.
+7.1 Die Vertragsparteien haften unbeschränkt für Vorsatz und grobe Fahrlässigkeit gemäß den gesetzlichen Vorschriften.
 
-7.2 **Folgeschäden:** Keine der Parteien haftet für mittelbare Schäden, Folgeschäden, entgangenen Gewinn oder entgangene Einsparungen, die sich aus oder im Zusammenhang mit diesem Vertrag ergeben.
+7.2 Für einfache Fahrlässigkeit haften die Vertragsparteien — außer im Falle der Verletzung des Lebens, des Körpers oder der Gesundheit — nur, sofern wesentliche Vertragspflichten (Kardinalpflichten) verletzt werden. Die Haftung ist in diesem Fall begrenzt auf den vertragstypischen und vorhersehbaren Schaden, maximal jedoch auf die Summe der unter diesem Vertrag in den letzten zwölf (12) Monaten gezahlten Vergütungen.
 
-7.3 **Höhere Gewalt:** Keine Partei haftet für die Nichterfüllung von Pflichten aus diesem Vertrag, soweit diese auf Umstände zurückzuführen ist, die außerhalb ihres zumutbaren Einflussbereichs liegen (höhere Gewalt).
+7.3 Die Haftung für mittelbare und unvorhersehbare Schäden, Produktions- und Nutzungsausfall, entgangenen Gewinn, ausgebliebene Einsparungen und Vermögensschäden wegen Ansprüchen Dritter ist im Falle einfacher Fahrlässigkeit — außer im Falle der Verletzung des Lebens, des Körpers oder der Gesundheit — ausgeschlossen.
 
-7.4 Die Haftungsbeschränkungen gelten nicht bei Vorsatz, grober Fahrlässigkeit oder der Verletzung wesentlicher Vertragspflichten (Kardinalpflichten).
+7.4 Soweit die Haftung nach Ziffern 7.2 und 7.3 ausgeschlossen oder beschränkt ist, gilt dies auch für die persönliche Haftung der Angestellten, Arbeitnehmer, Vertreter, Organe und Erfüllungsgehilfen der jeweiligen Vertragspartei.
+
+7.5 Die Vertragsparteien haften nicht für höhere Gewalt, insbesondere nicht für Krieg, Naturkatastrophen, Terroranschläge, Pandemien, Streik oder behördliche Anordnungen.
+
+7.6 Eine weitergehende Haftung als in diesem Vertrag vorgesehen ist — ohne Rücksicht auf die Rechtsnatur des geltend gemachten Anspruchs — ausgeschlossen. Vorstehende Haftungsbeschränkungen gelten jedoch nicht für eine gesetzlich zwingend vorgeschriebene verschuldensunabhängige Haftung oder die Haftung aus einer verschuldensunabhängigen Garantie.
 
 ---
 
