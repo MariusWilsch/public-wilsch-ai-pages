@@ -59,7 +59,7 @@ Der Auftraggeber beauftragt das Projekt durch schriftliche Annahme des Pflichten
 
 Der Auftragnehmer führt das Projekt gemäß dem Pflichtenheft aus. Die Parteien halten regelmäßige Abstimmungen im Zwei-Wochen-Rhythmus ab, um den Projektfortschritt zu besprechen und ggf. Anpassungen innerhalb des vereinbarten Umfangs abzustimmen.
 
-Die Zwei-Wochen-Abstimmungen dienen der Fortschrittskontrolle und Priorisierung — nicht der Neuverhandlung des Festpreises. Preisanpassungen erfolgen ausschließlich bei dokumentierten Änderungen des Leistungsumfangs (Change Request).
+Die Zwei-Wochen-Abstimmungen dienen der Fortschrittskontrolle und Priorisierung — nicht der Neuverhandlung des Festpreises. Preisanpassungen erfolgen ausschließlich bei dokumentierten Änderungen des Leistungsumfangs (Änderungsantrag).
 
 ### 2.4 Abnahme und Abrechnung
 
@@ -79,11 +79,14 @@ Die Abnahme erfolgt gemäß §4. Nach Abnahme wird das Projekt abgerechnet und d
 
 3.5 **Bankverbindung des Auftragnehmers:**
 
-[⚠️ PLACEHOLDER: KONTOVERBINDUNG — Bankverbindung von Wilsch AI Services OÜ (Xolo/Wise-Konto) hier einfügen.]
+Wilsch AI Services OÜ
+IBAN: BE32 9056 8928 1502
+BIC/SWIFT: TRWIBEB1XXX
+Bank: Wise, Rue du Trône 100, 3rd floor, Brussels, 1050, Belgium
 
 3.6 **Umsatzsteuer-Identifikationsnummern:**
 - Auftragnehmer: EE102934113
-- Auftraggeber: [⚠️ PLACEHOLDER: VAT_NUMBER — USt-IdNr. der IITR Datenschutz GmbH einfügen]
+- Auftraggeber: DE256675995
 
 ---
 

@@ -104,11 +104,14 @@ Wartungs- und Supportleistungen, die über die Bereitschaft hinausgehen, werden 
 
 6.3 **Bankverbindung des Auftragnehmers:**
 
-[⚠️ PLACEHOLDER: KONTOVERBINDUNG — Bankverbindung von Wilsch AI Services OÜ (Xolo/Wise-Konto) hier einfügen.]
+Wilsch AI Services OÜ
+IBAN: BE32 9056 8928 1502
+BIC/SWIFT: TRWIBEB1XXX
+Bank: Wise, Rue du Trône 100, 3rd floor, Brussels, 1050, Belgium
 
 6.4 **Umsatzsteuer-Identifikationsnummern:**
 - Auftragnehmer: EE102934113
-- Auftraggeber: [⚠️ PLACEHOLDER: VAT_NUMBER — USt-IdNr. der IITR Datenschutz GmbH einfügen]
+- Auftraggeber: DE256675995
 
 ---
 
