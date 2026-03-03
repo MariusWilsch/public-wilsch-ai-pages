@@ -11,9 +11,13 @@ Technische Anforderungen und Hosting-Optionen für die Migration des ROHDEX-Doku
 
 ## Problem Statement
 
-Das ROHDEX-Dokumentenverarbeitungssystem läuft aktuell auf der Infrastruktur von Wilsch AI Services (Hetzner VPS). Rohdex übernimmt die direkte Geschäftsbeziehung und benötigt eine eigene Hosting-Lösung — entweder Cloud-basiert oder im eigenen Rechenzentrum.
+Das ROHDEX-Dokumentenverarbeitungssystem läuft aktuell auf der Infrastruktur von Wilsch AI Services (Hetzner VPS). Die Migration auf Rohdex-eigene Infrastruktur erfordert Koordination zwischen drei Parteien:
 
-Konstantin (Rohdex) muss seinem IT-Dienstleister ein Anforderungsdokument vorlegen, das die technischen Mindestanforderungen und Hosting-Optionen beschreibt, damit dieser die Machbarkeit bewerten kann.
+- **Rohdex (Konstantin Fitermann)** — Auftraggeber. Geschäftsbeziehung direkt mit Wilsch AI Services.
+- **Gmelch IT-Systeme (Sikander Wenzel)** — IT-Dienstleister von Rohdex. Stellt Server-Infrastruktur bereit (VM, VPN, Backups, Netzwerk).
+- **Wilsch AI Services (Marius Wilsch)** — Applikationsentwickler. Führt Migration durch, wartet das System gemäß SLA v4.
+
+Gmelch IT stellt die Infrastruktur bereit und betreibt sie. Wilsch AI migriert die Applikation und wartet sie. Rohdex ist der Auftraggeber beider Leistungen.
 
 **Preconditions:**
 - Geschäftsbeziehung direkt zwischen Marius und Rohdex (kein Intermediär)
@@ -29,9 +33,9 @@ Konstantin (Rohdex) muss seinem IT-Dienstleister ein Anforderungsdokument vorleg
 
 | Element | Definition |
 |---------|-----------|
-| **Goal** | Konstantin kann seinem IT-Dienstleister ein Dokument vorlegen, das alle technischen Anforderungen und Hosting-Optionen enthält — ohne Rückfragen an Marius |
-| **Success** | IT-Dienstleister bestätigt Machbarkeit für mindestens eine Option und Rohdex trifft eine Hosting-Entscheidung |
-| **Done test** | Kann Konstantin das Dokument weiterleiten und erhält eine ja/nein-Antwort von der IT? Wenn ja → Dokument ist vollständig |
+| **Goal** | System migriert auf RDX-APP-01, bekannte Bugs gefixt, alle Dokumenttypen funktional — Wartung läuft unter SLA v4 |
+| **Success** | System produktiv auf Rohdex-Infrastruktur, kein Traffic mehr über Wilsch AI Server |
+| **Done test** | E-Mails werden auf RDX-APP-01 verarbeitet und Dokumente korrekt zurückgesendet? Wenn ja → Migration abgeschlossen |
 
 ---
 
