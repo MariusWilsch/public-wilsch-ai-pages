@@ -71,7 +71,7 @@ Structure follows [MG-0080 Operations Manuals](https://www.emyth.com) (E-Myth Ma
 
 | Document | Status | Link |
 |----------|--------|------|
-| Junior Architect Operations Manual | TBD | — |
+| Junior Architect Operations Manual | Draft | [junior-architect-operations-manual-wilsch-ai-services](https://mariuswilsch.github.io/public-wilsch-ai-pages/global/junior-architect-operations-manual-wilsch-ai-services) |
 | Design Doc & Meeting Agenda Methodology | Draft | [design-doc-methodology](https://mariuswilsch.github.io/public-wilsch-ai-pages/global/design-doc-methodology) |
 
 **Logic:** MG-0080 Operations Manuals guide. Systems section is the "tool kit" — all processes and procedures for running the position.
