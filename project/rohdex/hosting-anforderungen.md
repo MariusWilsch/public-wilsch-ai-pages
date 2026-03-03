@@ -255,12 +255,28 @@ Cutover-Strategie: Erst Gmail-Testkonto, dann IONOS-Produktion. Altes System (WI
 
 ### Part 5: Bekannte Probleme (Spec-Design durch Developer)
 
-**#655: Tara-Berechnung — Dezimalstellen-Fehler in Packliste**
+**#655: Tara-Berechnung — Verlustbehaftete Mittelwertbildung in Extraktion**
 
-Packing List zeigt übermäßige Nachkommastellen bei Tara-Werten (z.B. `15.333333` statt `15.33`). Berechnete Gesamtsumme stimmt nicht mit Referenzwerten aus Log-Datei überein. Ursache: Rohe Python-Float-Arithmetik in `calculation_service.py` ohne Rundung vor Schreiben in Excel-Zellen. SLA v4 §1.1 allokiert ~1h für Fix.
+**Symptome:** Packing List zeigt übermäßige Nachkommastellen bei Tara-Werten (z.B. `3.2142857142857157` statt `3.2`) und die Gesamtsumme weicht von der Log-Datei ab (+0.043 kg bei 32 Ballen). Beide Symptome haben die gleiche Ursache.
 
-**Datenquellen:** 📧 [Tara Problem Email (24.02.2026)](https://mail.google.com/mail/u/0/#all/19c8f8c66c05d43d) — Anhänge: `WAHRHEITSDATEI_2610023_.xlsx`, `Log_38302M.csv`, `PackingList_2610023.xlsx`, `Vorlage Packliste BUNDLES.xlsx`
-**Code:** `app/services/data/calculation_service.py` (Zeilen 87–121), `app/services/document/strategies/PackingListExcelStrategy`
+**Ursache (verifiziert an Fall 2610023):** Die CSV-Extraktion in `_extract_from_partie_csv()` berechnet pro Zeile `tare_value / number_of_bags`, mittelt alle Werte zu EINEM `tare_per_bag` pro Partie, und speichert nur diesen Durchschnitt. Die ursprünglichen Tara-Werte pro Ballen gehen verloren. `BundleDetail` hat kein Feld für den Original-Tara. In `calculation_service.py` wird `tare_per_bag` zurückmultipliziert (`num_bags * tare_per_bag`), was bei heterogenen Ballen systematisch falsche Werte produziert.
+
+**Beweis — Fall 2610023 (Log_38302M.csv):**
+- 24 Ballen: 8 Säcke, Tara=3,2 → tare_per_bag=0,4
+- 7 Ballen: 7 Säcke, Tara=2,8 → tare_per_bag=0,4
+- 1 Ausreißer (Ballen 12): 7 Säcke, Tara=3,2 → tare_per_bag=0,457
+- Gemittelt: `tare_per_bag = 0,4018` → Rückmultiplikation: 8 × 0,4018 = 3,2143 (statt 3,2), Ballen 12: 7 × 0,4018 = 2,8125 (statt 3,2 → **Fehler: −0,39 kg**)
+
+**Systemisch:** Jede Lieferung mit unterschiedlichen Tara-pro-Sack-Verhältnissen über Ballen hinweg ist betroffen. Die Evaluierungs-Datensätze (Pacific, Nishikawa) haben zufällig uniforme Verhältnisse und maskieren den Bug.
+
+**Test-Lücke:** Kein End-to-End-Test für die Pipeline `_extract_from_partie_csv()` → `CalculationService.perform_calculations()`. Die `conftest.py` umgeht Extraktion und Berechnung vollständig (hardcodierte `CalculatedShipmentData`). Der Bug war strukturell nicht testbar.
+
+**Fix-Ansatz (zweiphasig):**
+- **Phase 1 (~30 Min, innerhalb SLA):** Runden auf 1 Dezimalstelle in `calculation_service.py` + Excel `number_format='0.0'` in `packing_list_excel_strategy.py`. Behebt Display-Symptome, Mittelwert-Problem bleibt.
+- **Phase 2 (~2–3 Std, Follow-up):** Schema-Änderung — `tare_weight`-Feld zu `BundleDetail` hinzufügen. Extraktion speichert Original-Tara pro Ballen aus CSV. `calculation_service.py` nutzt `tare_weight` direkt statt `num_bags * tare_per_bag`. Beseitigt Datenverlust.
+
+**Datenquellen:** 📧 [Tara Problem Email (24.02.2026)](https://mail.google.com/mail/u/0/#all/19c8f8c66c05d43d) — Anhänge: `WAHRHEITSDATEI_2610023_.xlsx`, `Log_38302M.csv`, `PackingList_2610023.xlsx`, `Vorlage Packliste BUNDLES.xlsx` · 📧 [Original-Report Roxana (29.01.2026)](https://mail.google.com/mail/u/0/#all/19c09019e3c0afee)
+**Code:** `app/services/data/data_extraction_service.py` (Zeilen 375–450 — Mittelwertbildung), `app/services/data/calculation_service.py` (Zeilen 87–121 — Rückmultiplikation), `app/services/document/strategies/packing_list_excel_strategy.py` (Zeilen 190–200 — Zellwerte ohne Rundung)
 **Issue:** [#655](https://github.com/DaveX2001/deliverable-tracking/issues/655)
 
 **#585: Veterinary BUSAN — Integrationsumfang definieren**
@@ -294,3 +310,4 @@ Konstantin sandte `Veterinary BUSAN.docx` (Beispiel-Dokument, 03.12.2025). VET-D
 - **Codebase:** [MariusWilsch/rohdex-mvp](https://github.com/MariusWilsch/rohdex-mvp) — Strategy-Dateien, Evaluation-Datasets, ADR-014
 - **Email Thread (VPN):** [Migration VPN Troubleshooting (Feb 26 — Mar 2)](https://mail.google.com/mail/u/0/#all/19c9530e9b21c06b) — WatchGuard → OpenVPN switch, Keeper-Links, Geo-Blocking-Fix
 - **Session (Extraction Pass 2 — VPN/SSH Zugang):** /Users/daveFem/.claude/projects/-Users-daveFem-Desktop-claude-projects-04-ROHDEX--deliverable/3b53456f-4ba4-41a5-a16d-207a99ba8e42.jsonl
+- **Session (Extraction Pass 3 — Tara #655):** /Users/daveFem/.claude/projects/-Users-daveFem-Desktop-claude-projects-04-ROHDEX--deliverable/93486107-19c1-4502-8861-c22d37d87e60.jsonl
