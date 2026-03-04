@@ -116,12 +116,13 @@ The AI searches Langfuse using filters extracted from the `/flag` input:
 | Phase | What | Surfaces |
 |-------|------|----------|
 | **Phase 1: PULL** | On-demand evidence capture via `/flag` | GitHub + OpenClaw |
-| **Phase 2: REVIEW** | Periodic agent activity digest | TBD |
-| **Phase 3: Surface abstraction** | Formalize interface contract | All surfaces |
+| **Phase 2: REVIEW** | Periodic agent activity digest | TBD — [Discussion Topic 1](evidence-chain-meeting-agenda#1-review-mechanism-design) |
 
-**Undefined:** Phase 2 REVIEW mechanism — possibly a UI with a list view, potentially using Claude Code `--sdk-url` for interactive chat over the digest. Needs more design. → [Discussion Topic 1](evidence-chain-meeting-agenda#1-review-mechanism-design)
+**Phase 1 extensibility:** Phase 1's Moltbot handler separates surface-specific code (webhook reception, WhatsApp output) from the core engine (Langfuse search, trace matching, evidence linking). Adding a future capture surface means writing a new handler that calls the same core engine — not a separate design phase. No formal abstraction layer is needed until a second surface is actually built.
 
-**Undefined:** Surface abstraction layer (Phase 3). → [Discussion Topic 2](evidence-chain-meeting-agenda#2-surface-abstraction-layer)
+**Review output:** When evidence accumulates on an agent's epic and patterns emerge, the user creates sub-issues to act on them (defined in Part 2). These sub-issues flow into the existing `/improve-system` Session B diagnosis workflow — no special integration required. The sub-issue is the bridge.
+
+**Undefined:** Phase 2 REVIEW mechanism — how the user periodically reviews accumulated evidence across agent epics. Three coupled decisions: what triggers a review (scheduled vs. on-demand), what format the review takes (raw epic comments vs. cross-agent digest), and where the review happens (GitHub, WhatsApp, web UI, Claude Code). These form a single design decision for the SA. → [Discussion Topic 1](evidence-chain-meeting-agenda#1-review-mechanism-design)
 
 ---
 
@@ -130,6 +131,7 @@ The AI searches Langfuse using filters extracted from the `/flag` input:
 - **Issue:** [#851: Evidence Chain System](https://github.com/DaveX2001/deliverable-tracking/issues/851)
 - **Session:** /Users/verdant/.claude/projects/-Users-verdant-Documents-projects-00-WILSCH-AI-INTERNAL--soloforce/51421801-e902-49e7-b6ab-26bded59186f.jsonl
 - **Extraction Pass 1:** /Users/daveFem/.claude/projects/-Users-daveFem-Desktop-claude-projects-00-WILSCH-AI-INTERNAL--deliverable/80938c4d-2392-4485-b288-499c221a921d.jsonl
+- **Extraction Pass 2:** /Users/daveFem/.claude/projects/-Users-daveFem-Desktop-claude-projects-00-WILSCH-AI-INTERNAL--deliverable/14f93472-f0f3-4075-8929-cdc79e825cb3.jsonl
 - **Related docs:**
   - [System Engineer Position Agreement](https://mariuswilsch.github.io/public-wilsch-ai-pages/global/system-engineer-position-agreement-wilsch-ai-services)
   - [/improve-system Architecture](https://mariuswilsch.github.io/public-wilsch-ai-pages/global/improve-system-architecture)
