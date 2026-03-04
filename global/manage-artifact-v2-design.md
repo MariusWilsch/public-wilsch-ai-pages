@@ -55,24 +55,42 @@ The original manage-artifact was built on two sources:
 
 Since December 2025, Anthropic has published updated guidance that may invalidate assumptions in the current methodology. Best practices may also shift with each model generation — what works for Claude 4.6 may behave differently on the next generation. The methodology needs to be model-aware, not model-locked.
 
-The following sources need to be consumed and cross-referenced against the existing ADRs before defining the v2 methodology:
+The following sources need to be consumed and cross-referenced against the existing ADRs before defining the v2 methodology. Each resource was scored on two axes by dedicated analysis agents:
+
+- **P** = Instruction Persistence (how well it addresses instructions holding across autonomous multi-turn sessions)
+- **E** = Evidence-to-Fix (how well it addresses systematic diagnosis and minimal instruction fixes)
+
+Tier placement = combined score. Resources within a tier are ordered by combined relevance.
 
 **Tier 1 — Must consume first:**
-- [Prompting Best Practices](https://docs.anthropic.com/en/docs/build-with-claude/prompt-engineering/claude-prompting-best-practices) — Claude 4.6 behavioral changes, multi-context window workflows, named failure modes
-- [Effective Harnesses for Long-Running Agents](https://www.anthropic.com/engineering/effective-harnesses-for-long-running-agents) — instruction persistence patterns for autonomous agents
-- [Intro to Agent Skills](https://anthropic.skilljar.com/introduction-to-agent-skills) — skill troubleshooting guide, trigger design
+
+| Resource | P | E | Key Insight |
+|----------|:-:|:-:|-------------|
+| [Prompting Best Practices](https://docs.anthropic.com/en/docs/build-with-claude/prompt-engineering/claude-prompting-best-practices) | 9 | 7 | Claude 4.6 behavioral changes, multi-context window workflows, named failure modes |
+| [Effective Harnesses for Long-Running Agents](https://www.anthropic.com/engineering/effective-harnesses-for-long-running-agents) | 10 | — | JSON > markdown, initializer agents, progress files, instruction persistence patterns |
+| [Intro to Agent Skills](https://anthropic.skilljar.com/introduction-to-agent-skills) | 9 | 7 | Skill troubleshooting guide, trigger design, progressive disclosure |
 
 **Tier 2 — High value:**
-- [Building with Claude API — Eval module](https://anthropic.skilljar.com/claude-with-the-anthropic-api) — eval workflow: hypothesis → test → grade → fix
-- [Codified Context](https://arxiv.org/abs/2602.20478) — constitution model across 283 sessions
-- [AI Prompt Engineering: A Deep Dive](https://www.youtube.com/watch?v=T9aRN5JkmL8) — original video (re-watch with fresh eyes)
+
+| Resource | P | E | Key Insight |
+|----------|:-:|:-:|-------------|
+| [Building with Claude API — Eval module](https://anthropic.skilljar.com/claude-with-the-anthropic-api) | 6 | 8 | Eval workflow: hypothesis → test → grade → fix |
+| [Codified Context](https://arxiv.org/abs/2602.20478) | 9 | — | Constitution model across 283 sessions at scale |
+| [AI Prompt Engineering: A Deep Dive](https://www.youtube.com/watch?v=T9aRN5JkmL8) | 2 | 6 | Zack Witten's self-diagnosis technique, edge case coverage |
 
 **Tier 3 — Reference:**
-- [ContextCov](https://arxiv.org/abs/2603.00822) — executable constraints from instruction files
-- [ACE — Agentic Context Engineering](https://arxiv.org/abs/2510.04618) — context as evolving playbook
-- [Where LLM Agents Fail](https://arxiv.org/abs/2509.25370) — error cascade taxonomy
-- [Building Effective Agents](https://www.anthropic.com/engineering/building-effective-agents) — evaluator-optimizer, poka-yoke
-- [Cookbooks — evaluator_optimizer.ipynb](https://github.com/anthropics/claude-cookbooks/tree/main/patterns/agents) — reference implementation
+
+| Resource | P | E | Key Insight |
+|----------|:-:|:-:|-------------|
+| [Agent SDK docs](https://docs.anthropic.com/en/docs/agent-sdk/overview) | 8 | 5 | settingSources gotcha, hooks as diagnostic infrastructure |
+| [ContextCov](https://arxiv.org/abs/2603.00822) | 8 | — | Executable constraints from instruction files, context drift detection |
+| [ACE — Agentic Context Engineering](https://arxiv.org/abs/2510.04618) | 8 | — | Context as evolving playbook, brevity bias + context collapse |
+| [Where LLM Agents Fail](https://arxiv.org/abs/2509.25370) | — | 7 | Error cascade taxonomy, AgentDebug framework |
+| [Building Effective Agents](https://www.anthropic.com/engineering/building-effective-agents) | 4 | 6 | Evaluator-optimizer pattern, poka-yoke, ACI design |
+| [Cookbooks — evaluator_optimizer.ipynb](https://github.com/anthropics/claude-cookbooks/tree/main/patterns/agents) | 6 | 7 | Reference implementation of eval loop |
+| [Agent Skills with Anthropic](https://www.deeplearning.ai/short-courses/agent-skills-with-anthropic/) | 6 | 2 | SKILL.md format, builds skills not fixes them |
+| [Zack Witten Prompt Workshop](https://www.youtube.com/watch?v=hkhDdcM5V94) | — | — | Live prompt editing, overlaps with Deep Dive |
+| [Interactive Tutorial](https://github.com/anthropics/prompt-eng-interactive-tutorial) | — | — | 13 Jupyter notebooks, basic prompt eng fundamentals |
 
 **Content hubs (bookmark for ongoing discovery):**
 
