@@ -37,6 +37,7 @@ Consolidated index for [Issue #373: AI Bulk Data Entry — Background Data Impor
 | Bulk Entry Spike | Team | [Agenda](https://mariuswilsch.github.io/public-wilsch-ai-pages/project/archibus-fm-assistant/bulk-entry-spike-agenda) |
 | AI Work Track Prioritization | All-Hands | [Agenda](https://mariuswilsch.github.io/public-wilsch-ai-pages/project/archibus-fm-assistant/all-hands-ai-work-track-prioritization) |
 | Monday Demo + Field Recommendations (Feb 24) | All-Hands | [Agenda](https://mariuswilsch.github.io/public-wilsch-ai-pages/project/archibus-fm-assistant/monday-meeting-agenda-feb24-demo-feedback) |
+| Data Clarification & Equipment Data Delivery | Ali | [Agenda](https://mariuswilsch.github.io/public-wilsch-ai-pages/project/archibus-fm-assistant/ali-meeting-agenda-data-clarification) |
 
 ---
 
@@ -52,6 +53,7 @@ Consolidated index for [Issue #373: AI Bulk Data Entry — Background Data Impor
 | cafm-asset-upload-sample.xlsx | Raw client input before transformation (201 rows) | [Google Drive](https://docs.google.com/spreadsheets/d/1CUaybsk8ZnvvKr3C37xn-md96hRLBKT4/edit) |
 | background-data-tables.xlsx | Bruce BEM background data reference tables | [Google Drive](https://docs.google.com/spreadsheets/d/1rNv4fDUMS7ve8ftbiZUiKbGebLesM54m/edit) |
 | fmm-asset-data-sample.xlsx | FMM Qatar asset data sample | [Google Drive](https://docs.google.com/spreadsheets/d/1yz1IfvUOIl0YcInT0WUYKvjlprDOk-0x/edit) |
+| Housekeeping Tracker Jan 2026 v1.xlsb | FMM Qatar housekeeping work orders — NOT equipment data. 5 sheets: WO Sheet, Tracker, staff list, pending summary, supporting. Contains locations (CONCOURSE A, PTC) but no assets. | Local: ~/Downloads/ |
 
 ### CSV / JSON (GitHub — renders natively)
 
@@ -131,4 +133,4 @@ When Chain 1B approaches deployment: **NVIDIA Orchestrator-8B** — tool-calling
 
 ---
 
-*Last updated: 2026-02-25*
+*Last updated: 2026-03-04*
