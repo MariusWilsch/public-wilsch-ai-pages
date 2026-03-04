@@ -296,20 +296,29 @@ Per-enum-field translation tables confirmed during Step 2. Every client value th
 
 **Transformation spec, not mutation.** The contract is a set of transformation rules applied over the immutable source Excel. The original data is never modified. With all three artifacts preserved (source Excel + contract + output JSON), every transformation is traceable and diffable.
 
-**AI/CLI boundary.** The contract separates the intelligent layer (Steps 1+2: semantic inference, interactive confirmation) from the programmatic layer (Step 3: tree building, API calls). The AI produces the contract; the CLI/MCP consumes it mechanically.
+**AI/tool boundary.** The contract separates the intelligent layer (Steps 1+2: semantic inference, interactive confirmation) from the programmatic layer (Step 3: tree building, API calls). The AI produces the contract; the Step 3 tool reads and applies it without interpretation.
 
 **Backpressure updates the contract.** When the BEM API rejects an enum value, the AI corrects the contract's enum rules — not just the individual JSON node. This fixes the root cause: all rows with that value get the corrected translation, including buildings not yet processed. Data-specific errors (e.g., name too long) are fixed per-node.
 
-**Contract consumption interface.** The three contract elements above (hierarchy assignments, field mappings, enum rules) reach Step 3 through a single-shot stateless interface. The same Python code powers both environments — CLI and MCP are thin wrappers around identical functions that read the contract and apply its rules mechanically.
+**Contract consumption interface.** The three contract elements reach Step 3 through a single-shot stateless [FastMCP](https://github.com/PrefectHQ/fastmcp) v3 tool. MCP-first architecture: the `@mcp.tool` function IS the implementation — no separate core module or wrapper layer. FastMCP v3's `generate-cli` auto-generates a typed CLI from the MCP tool schema, providing development convenience without maintaining a separate CLI codebase.
 
-| Environment | Interface | Invocation |
-|-------------|-----------|------------|
-| **Development** (Claude Code) | CLI command | `uv run archibus push data.xlsx --contract contract.json --building "Building A"` |
-| **Production** (BruceBEM chat) | MCP tool | AI calls `step3_execute(contract, excel, building, mode)` |
+| Environment | Interface | How |
+|-------------|-----------|-----|
+| **Production** (BruceBEM chat) | MCP tool | AI calls `step3_execute(contract, excel, building, mode)` via LibreChat mcpServer (streamable-http) |
+| **Development** (Claude Code) | MCP tool | Claude Code connects to the same FastMCP server directly |
+| **Scripted testing** | Auto-generated CLI | `fastmcp generate-cli` produces typed CLI from MCP tool schema |
 
-**Input (both interfaces):** mapping contract JSON (containing the hierarchy, field mappings, and enum rules defined in this section) + source Excel path + building name + mode (validate or import). **Output (both interfaces):** structured API response — success with import details, or error with `{field, value, reason, valid_values}` for AI self-correction.
+Bulk import runs as a **separate MCP server** from the existing BruceBEM work request tools — different user personas (FM implementers vs building occupants), different repos, independent deployment. LibreChat registers both servers; the AI agent accesses tools from all registered servers transparently.
 
-The backpressure loop lives in the AI layer, not in the tool. The tool executes one round trip: read the contract's rules → build JSON from them → send to API → return response. The AI reads the response, decides whether to correct the contract and retry, and calls the tool again if needed. The tool never modifies the contract — it consumes it mechanically on each invocation. *(Confirmed: David, Mar 3 2026 — extraction pass 6)*
+**Input:** mapping contract JSON (containing the hierarchy, field mappings, and enum rules defined in this section) + source Excel path + building name + mode (validate or import). **Output:** structured API response — success with import details, or error with `{field, value, reason, valid_values}` for AI self-correction.
+
+The backpressure loop lives in the AI layer, not in the tool. The tool executes one round trip: read the contract's rules → build JSON from them → send to API → return response. The AI reads the response, decides whether to correct the contract and retry, and calls the tool again if needed. The tool never modifies the contract — it reads and applies the rules on each invocation without interpretation or modification. The AI corrects the contract between invocations and passes the updated version. *(Confirmed: David, Mar 3 2026 — extraction pass 6. Updated: David, Mar 4 2026 — extraction pass 7)*
+
+#### Model Requirements
+
+The pipeline targets small-model compatibility for production deployment. Development uses Claude Sonnet for rapid iteration. Production targets Qwen 3.5 (9B preferred, 30B-A3B acceptable) via OpenRouter (development API access) or self-hosted on RunPod (production). FP8 quantization is the standard; FP4 is a future optimization on Blackwell-architecture GPUs.
+
+This model target constrains the design: API error responses must be structured and unambiguous (`{field, value, reason, valid_values}`) so a 9B model can execute the backpressure loop — reading errors, correcting the contract, and retrying — without large-model reasoning. The tool's structured output format serves both correctness (traceable errors) and small-model compatibility (no interpretation required). *(Source: Marius, Mar 4 2026 — #852 comment)*
 
 #### Data Type Detection (Step 0)
 
@@ -611,4 +620,7 @@ When the BEM database already contains location assets (buildings, floors, rooms
 - **Transcript:** [Rein <> Marius (Feb 27, 2026)](https://app.fireflies.ai/view/01KJFJ49ZFV2VWS7E811W7DJ6Z)
 - **Session:** /Users/verdant/.claude/projects/-Users-verdant-Documents-projects-billable-MariusWilsch--archibus-bulk-import/b1add1e7-2807-4c2b-9cc7-1df0be954eb9.jsonl
 - **Reference:** [Anthropic Skill Best Practices — Progressive Disclosure](https://platform.claude.com/docs/en/agents-and-tools/agent-skills/best-practices)
+- **Reference implementation:** [ARCHIBUS POC](https://github.com/MariusWilsch/ARCHIBUS__archibus-poc) — FastMCP server pattern, LibreChat integration, auth middleware, Docker deployment
+- **Reference:** [FastMCP v3 Documentation](https://gofastmcp.com/) — generate-cli, providers, authentication
 - **Session:** /Users/daveFem/.claude/projects/-Users-daveFem-Desktop-claude-projects-01-ARCHIBUS--deliverable/71694ab4-1303-48d1-8912-c2193b65802f.jsonl
+- **Session:** /Users/daveFem/.claude/projects/-Users-daveFem-Desktop-claude-projects-01-ARCHIBUS--deliverable/986d5873-591d-4309-b641-7feacf9378ef.jsonl
