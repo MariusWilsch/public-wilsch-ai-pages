@@ -93,7 +93,7 @@ Epic: "Improve fireflies-webhook"
 
 **Why hybrid:** GitHub provides frictionless capture (you're already on the issue). OpenClaw provides natural discussion (chat interface for confirmation). Each surface does what it's best at.
 
-**Infrastructure:** Moltbot container (OpenClaw predecessor) already runs on WILSCH-AI-SERVER (port 18789). Likely upgradable to OpenClaw.
+**Infrastructure:** The evidence-chain agent is built as a new handler within the existing Moltbot container on WILSCH-AI-SERVER (port 18789). A GitHub webhook delivers `/flag` events to Moltbot, which processes them using the shared `@langfuse/client` and sends WhatsApp confirmation messages to Marius's number. This avoids a separate deployment — Moltbot already handles webhook-to-WhatsApp flows.
 
 ### Part 4: Evidence Resolution Engine
 
@@ -105,11 +105,11 @@ The AI searches Langfuse using filters extracted from the `/flag` input:
 | Issue number | From GitHub comment context (if available) |
 | Time range | Recent by default |
 
-**Undefined:** Langfuse access mechanism — community MCP server or custom. → [Discussion Topic 1](evidence-chain-meeting-agenda#1-langfuse-mcp-selection)
+**Langfuse access:** Direct API via existing `@langfuse/client` SDK. The codebase already provides `queryTraces()` (search by time range, filter by agent name) and `queryChildObservations()` (get child spans for a trace) in `agents/shared/langfuse.ts`. No MCP layer needed — the evidence-chain agent uses the same client library as all other SDK agents.
 
-**Undefined:** Metadata reliability — is issueNumber consistently tagged? → [Discussion Topic 2](evidence-chain-meeting-agenda#2-search-strategy-and-metadata-reliability)
+**Search strategy:** Agents consistently tag `issueNumber` in span metadata via `logDecision()` (verified across action-bot, fireflies-webhook, email-sync, board-sync). The search is two-step: (1) fetch traces by agent name + time range using `queryTraces()`, (2) filter child spans by `metadata.issueNumber` using `queryChildObservations()`. If the user provides an issue number, the result set narrows to 1–2 traces. If not, the full recent set (typically 2–5 per agent per 48h) is returned. **Fallback:** When `issueNumber` is absent from a span, time-range-only search shows all recent traces for that agent — the user picks from the short list.
 
-**Undefined:** Multiple match handling. → [Discussion Topic 3](evidence-chain-meeting-agenda#3-multiple-match-handling)
+**Multiple match handling:** When multiple traces match, the agent presents a short numbered list with timestamp and action summary for each. The user picks by number. With the typical volume of 2–5 traces per agent per 48 hours, the list stays manageable without pagination or ranking logic.
 
 ### Part 5: Design Phases
 
@@ -119,9 +119,9 @@ The AI searches Langfuse using filters extracted from the `/flag` input:
 | **Phase 2: REVIEW** | Periodic agent activity digest | TBD |
 | **Phase 3: Surface abstraction** | Formalize interface contract | All surfaces |
 
-**Undefined:** Phase 2 REVIEW mechanism — possibly a UI with a list view, potentially using Claude Code `--sdk-url` for interactive chat over the digest. Needs more design. → [Discussion Topic 5](evidence-chain-meeting-agenda#5-review-mechanism-design)
+**Undefined:** Phase 2 REVIEW mechanism — possibly a UI with a list view, potentially using Claude Code `--sdk-url` for interactive chat over the digest. Needs more design. → [Discussion Topic 1](evidence-chain-meeting-agenda#1-review-mechanism-design)
 
-**Undefined:** Surface abstraction layer (Phase 3). → [Discussion Topic 6](evidence-chain-meeting-agenda#6-surface-abstraction-layer)
+**Undefined:** Surface abstraction layer (Phase 3). → [Discussion Topic 2](evidence-chain-meeting-agenda#2-surface-abstraction-layer)
 
 ---
 
@@ -129,6 +129,7 @@ The AI searches Langfuse using filters extracted from the `/flag` input:
 
 - **Issue:** [#851: Evidence Chain System](https://github.com/DaveX2001/deliverable-tracking/issues/851)
 - **Session:** /Users/verdant/.claude/projects/-Users-verdant-Documents-projects-00-WILSCH-AI-INTERNAL--soloforce/51421801-e902-49e7-b6ab-26bded59186f.jsonl
+- **Extraction Pass 1:** /Users/daveFem/.claude/projects/-Users-daveFem-Desktop-claude-projects-00-WILSCH-AI-INTERNAL--deliverable/80938c4d-2392-4485-b288-499c221a921d.jsonl
 - **Related docs:**
   - [System Engineer Position Agreement](https://mariuswilsch.github.io/public-wilsch-ai-pages/global/system-engineer-position-agreement-wilsch-ai-services)
   - [/improve-system Architecture](https://mariuswilsch.github.io/public-wilsch-ai-pages/global/improve-system-architecture)
