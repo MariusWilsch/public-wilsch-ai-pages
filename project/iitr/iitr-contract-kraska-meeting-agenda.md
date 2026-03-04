@@ -71,22 +71,21 @@ Beide Vertragsentwürfe (Wartungsvertrag + Werkvertrag-Rahmenvereinbarung) wurde
 **To resolve:** Offene Fragen oder Anpassungswünsche des Auftraggebers zu den
 Vertragsentwürfen identifizieren.
 
-### 4. Hetzner-Konto und Produktionsserver — Zugangsbereinigung
+### 4. Hetzner-Konto — Zugangsbereinigung
 ⏱️ 3 Min.
 
-Neben dem VPN existieren zwei weitere Zugangspunkte zum Produktionssystem: das
-Hetzner-Konto (Serververwaltung) und der direkte SSH-Zugang auf dem Server selbst.
-Das Hetzner-Konto ist durch Zwei-Faktor-Authentifizierung gesichert und liegt in
-IITRs Verantwortung als Kontoinhaber.
+Das Hetzner-Konto (Serververwaltung über Web-Konsole) ist durch
+Zwei-Faktor-Authentifizierung gesichert und liegt in IITRs Verantwortung
+als Kontoinhaber. Unabhängig vom VPN-Status ist zu klären, ob Roman
+Zugang zur Hetzner-Konsole hatte.
 
 - Repository- und Staging-Zugänge sind bereits gesperrt (3 Repos entzogen,
   Staging SSH key-only, veraltete Nutzer entfernt)
 - Hetzner-Kontoverwaltung liegt bei IITR — Passwortrotation dort ist eine IITR-Aufgabe
-- Server-Audit (SSH-Schlüssel, Nutzerkonten, Anwendungszugänge) kann erst nach
-  Wiederherstellung des VPN-Zugangs erfolgen
+- Hetzner-Zugang ist vom VPN unabhängig (Web-Interface, kein SSH)
 
-**To resolve:** Ob IITR die Hetzner-Zugangsdaten unabhängig prüft und rotiert, oder
-ob dies Teil des Server-Audits nach VPN-Wiederherstellung sein soll.
+**To resolve:** Ob Roman Zugang zur Hetzner-Konsole hatte und ob IITR
+die Zugangsdaten unabhängig prüft und rotiert.
 
 ### 5. SSL-VPN-Migration zu IPsec — Pilotnutzer-Phase abschließen
 ⏱️ 5 Min.
