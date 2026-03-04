@@ -142,6 +142,17 @@ The first diagnostic question in any fix session should be: **is this behavior b
 
 **Undefined:** The interaction between instruction layers (CLAUDE.md + skills + commands + output styles) is underspecified by Anthropic. When these conflict, which wins? This matters for diagnosing fix failures — the fix might be correct but overridden by a competing instruction.
 
+To decide which artifact type is the right fix, the methodology needs a mapping from failure domain to artifact type. Initial framing:
+
+| Artifact Type | What It Fixes | Example |
+|--------------|--------------|---------|
+| **Command** | Interactive workflow — the AI doesn't follow the right steps when the user triggers a specific process | /capture gate loop, /probe question format |
+| **Skill** | Manufacturing/production — the AI doesn't know HOW to build a specific kind of artifact | Prepackaged thinking for design docs, meeting agendas |
+| **Protocol** | Persistent behavior — the AI always does X wrong regardless of context or which command is running | Output formatting, git conventions, investigation delegation |
+| **Hook** | Enforcement — instruction-based compliance isn't reliable enough, need a structural guarantee | Blocking tool calls without prerequisites, auto-formatting |
+
+**Undefined:** This mapping is a first hypothesis. Each artifact type likely has sub-categories and edge cases. What belongs in a command vs. a protocol when the behavior spans multiple commands? What belongs in a skill vs. a command when the process is interactive AND produces an artifact? Need empirical validation from existing artifacts that work well (Developer position) vs. ones that don't (CCI #604).
+
 ### Part 3: The Evidence-to-Fix Methodology
 
 Current workflow: rubber-duck → clarity phases → micro-iteration → test. This is ad hoc. A systematic methodology needs three phases with clear questions at each step:
