@@ -49,8 +49,10 @@ After 5+ passes on CCI #604 Theme 1 (JA /probe auto-advance), the behavior persi
 
 ### Part 1: Methodology Foundation Refresh
 
-The original manage-artifact was built on two sources:
-- **ADR 001 + 002** (from [Prompting 101 | Code w/ Claude](https://www.youtube.com/watch?v=ysPbXH0LpIE), ~Aug 2025): prompt engineering principles, iterative development, 10-component template, 4-stage progression
+The original manage-artifact was built on three sources:
+- [Prompting 101 | Code w/ Claude](https://www.youtube.com/watch?v=ysPbXH0LpIE) (~Aug 2025): prompt engineering principles, iterative development, 10-component template, 4-stage progression
+- [ADR 001: Universal Prompt Engineering Principles](https://mariuswilsch.github.io/public-wilsch-ai-pages/global/universal-prompt-engineering-principles)
+- [ADR 002: Iterative Prompt Development Methodology](https://mariuswilsch.github.io/public-wilsch-ai-pages/global/iterative-prompt-development-methodology)
 - **Meincke et al. 2025**: persuasion principles (Authority, Commitment, Social Proof)
 
 Since December 2025, Anthropic has published updated guidance that may invalidate assumptions in the current methodology. Best practices may also shift with each model generation — what works for Claude 4.6 may behave differently on the next generation. The methodology needs to be model-aware, not model-locked.
@@ -102,7 +104,24 @@ Tier placement = combined score. Resources within a tier are ordered by combined
 | Anthropic GitHub | github.com/anthropics |
 | DeepLearning.AI (Anthropic filter) | deeplearning.ai → Anthropic courses |
 
-**Undefined:** Cross-reference findings from Tier 1 sources against ADR 001 + 002 and persuasion principles. Determine what to keep, update, or discard — and note which findings are model-generation-specific vs. universally applicable.
+**Tier 4 — From [CURATED-LINKS.md](https://github.com/DaveX2001/claude-code-improvements/blob/main/CURATED-LINKS.md) (unscored):**
+
+| Resource | Key Insight |
+|----------|-------------|
+| [Demystifying Evals for AI Agents](https://www.anthropic.com/engineering/demystifying-evals-for-ai-agents) | Anthropic's eval methodology — start with 20-50 tasks from real failures |
+| [Bloom: Automated Behavioral Evaluations](https://www.anthropic.com/research/bloom) | Anthropic's open-source framework for automated behavioral evals |
+| [Lessons from Building Claude Code](https://x.com/trq212/status/2027463795355095314) | Anthropic engineer on agent action space design, AskUserQuestion as sweet spot |
+| [Code Field (Inhibition Prompting)](https://github.com/NeoVertex1/context-field) | Claims "Do not X" beats "Do X" — contradicts Anthropic docs, worth investigating |
+| [AI Agents Need Memory Control (ACC)](https://arxiv.org/abs/2601.11653) | Separates artifact recall from state commitment, stable multi-turn behavior |
+| [Don't waste your back pressure](https://banay.me/dont-waste-your-backpressure/) | Build feedback loops so agents self-correct instead of manual validation |
+| [Agentic Design Patterns (424 pages)](https://docs.google.com/document/d/1rsaK53T3Lg5KoGwvf8ukOUvbELRtH-V0LnOIFDxBryE/preview) | 21 agentic patterns including reflection, planning, memory |
+| [Stanford/Harvard: Agent Adaptation](https://x.com/alex_prompter/status/2002348526341402979) | Why agentic AI fails: rigid tool use is a hidden failure mode |
+| [AGNE: Everything is Context](https://arxiv.org/abs/2512.05470) | File system abstraction for Context Engineering, MCP integration |
+| [Context Graphs: Trillion-Dollar Opportunity](https://foundationcapital.com/context-graphs-ais-trillion-dollar-opportunity/) | Decision traces > data — queryable precedent infrastructure |
+| [PAHF: Personalized Agents from Human Feedback](https://x.com/dair_ai/status/2025242624790331520) | Agents that learn preferences via pre-action clarification + post-action feedback |
+| [ByteDance Mole-Syn: CoT as Molecular Structure](https://x.com/bowang87/status/2025227673820176689) | Why LLMs fail at long reasoning — structure emerges from training, not prompting |
+
+**Undefined:** Cross-reference findings from Tier 1 sources against existing methodology and persuasion principles. Determine what to keep, update, or discard — and note which findings are model-generation-specific vs. universally applicable.
 
 ### Part 2: Artifact Type Physics
 
