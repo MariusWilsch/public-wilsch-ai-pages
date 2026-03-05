@@ -149,7 +149,7 @@ Beyond enforcement mechanism, each instruction-based artifact type governs a dif
 | **Skill** | Knowing | Domain knowledge, experience, reference | AI lacks knowledge to do its job |
 | **Hook** | Enforcement | Structural guarantees | Instructions can't reliably ensure compliance |
 
-**The principle: "When we get thinking right, we get behavior right."** The AI's decisions happen in the hidden thinking trace (native thinking, sequential thinking, interleaved reasoning) before visible output. Protocol shapes this layer. Commands shape what the AI does after thinking. Skills provide what the AI needs to know. When thinking is correct, doing follows naturally. When thinking is wrong, no amount of procedural instruction overrides it.
+**The principle: "When we get thinking right, we get behavior right."** The AI's decisions happen in the hidden thinking trace (native thinking, sequential thinking, interleaved reasoning) before visible output. Protocol shapes this layer. Commands shape what the AI does after thinking. Skills provide what the AI needs to know. When thinking is correct, doing follows naturally. **When thinking is wrong, no amount of procedural instruction overrides it.**
 
 **Evidence:** CCI #604 Theme 1 — five procedural fix passes targeting the /probe command failed to resolve JA auto-advance behavior. Conversation-reader analysis of two Session C conversations (9f14b021, 5459d299) revealed the AI's thinking trace explicitly reasoned: "This is resolved. Let me move to the next item." The belief ("user answered = item done") overrode the procedural instruction ("don't advance"). The fix needed to target protocol (thinking), not command (doing).
 
