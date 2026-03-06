@@ -10,7 +10,7 @@ publish: true
 Resolve remaining undefined elements of the Monthly Planning System. Extraction pass 3 defined: testable hypothesis, March docket (5 packages, 3 leads), shutdown ritual redesign (package-level selection, two tracks), and revenue model (10K/month agency target). Remaining items require deeper probing or empirical evidence from the first month's run.
 
 1. **Revenue & pipeline** — revenue target grounding, sales pipeline revival, pre-decisions
-2. **Operational gaps** — fire handling, forcing function integration, Traceline section, multi-terminal model
+2. **Operational gaps** — ~~fire handling~~, ~~forcing function integration~~, Traceline section, multi-terminal model
 3. **Strategy updates** — SO update, position transition methodology, month-end evaluation
 
 ## Pre-Read
@@ -111,31 +111,7 @@ The walkthrough (Part 3) produces a full landscape of project-position packages.
 
 **To resolve:** Whether the walkthrough-to-docket cut needs explicit selection criteria or remains a judgment call informed by the walkthrough data.
 
-### 8. Fire handling policy
-⏱️ 10 min
-
-The shutdown ritual redesign separates proactive (package selection) from reactive (fire scan). Fires are manager-time items that consume terminal slots — they do not break into maker time. The open question: how to prioritize fires within manager time when multiple compete for the same terminal slot.
-
-- Fires take up one of the manager-time terminal slots
-- Maker blocks are protected — fires never interrupt maker time
-- Multiple fires may compete for manager-time attention
-- Deferred to empirical — first month's run will produce evidence
-
-**To resolve:** Priority ordering of fires within manager-time terminal slots.
-
-### 9. Forcing function integration
-⏱️ 10 min
-
-External meeting cadences (weekly all-hands, daily syncs, biweekly meetings) emerged as the urgency mechanism per package — replacing deadlines on the stateless plan. The [Stakes Visibility framework](https://mariuswilsch.github.io/public-wilsch-ai-pages/global/stakes-visibility-forcing-function) describes five forcing function drivers.
-
-- Archibus: weekly all-hands (Thursday), UWI: daily sync, AVO/Rekers: biweekly meetings
-- SLA projects: reactive triage flow — the contract itself is the forcing function
-- Development projects need cadence; SLA projects need triage — two patterns
-- The forcing function document exists but isn't connected to the monthly plan methodology
-
-**To resolve:** How the stakes visibility framework maps to per-package meeting cadences and how this informs nightly package selection in the shutdown ritual.
-
-### 10. Sales pipeline revival
+### 8. Sales pipeline revival
 ⏱️ 10 min
 
 The monthly plan's leads section contains contract model targets but no conversion tracking. Conversion actions and next steps need a separate document. The [2025 Sales Pipeline GSheet](https://docs.google.com/spreadsheets/d/1zFrb-2B9KufHqOT0fafJoZbNenLNivgN4eYeE5DRMoQ/edit?usp=sharing) exists but is unused.
@@ -147,7 +123,7 @@ The monthly plan's leads section contains contract model targets but no conversi
 
 **To resolve:** Revived sales pipeline document format and how it feeds into the monthly planning walkthrough.
 
-### 11. Traceline as internal product
+### 9. Traceline as internal product
 ⏱️ 15 min
 
 Traceline was deferred from the March walkthrough as an undefined marker. It's unique: internal product, not a client project. The position mapping is System Engineer + Developer, but the relationship to the agency packages is unclear.
@@ -159,7 +135,7 @@ Traceline was deferred from the March walkthrough as an undefined marker. It's u
 
 **To resolve:** Traceline's place on the monthly plan — separate section, its own package type, or background activity that doesn't compete for maker blocks.
 
-### 12. Pre-decisions extraction
+### 10. Pre-decisions extraction
 ⏱️ 10 min
 
 Pre-decisions were removed from the first March plan because the revenue target isn't grounded yet. The design doc defines pre-decisions as binary choices made at month start. Beyond "new leads: yes/no," which recurring deliberations should become pre-decisions?
@@ -171,7 +147,7 @@ Pre-decisions were removed from the first March plan because the revenue target 
 
 **To resolve:** Which pre-decision categories to add after the first month's evidence.
 
-### 13. Lead strategy per lead
+### 11. Lead strategy per lead
 ⏱️ 20 min
 
 The lead triage (extraction pass 4) classified 11 leads by contract target (retainer/fixed-price) but did not extract the conversion strategy per lead — what meeting is next, what's the pitch, what makes each one a good or bad fit for the retainer model.
@@ -185,7 +161,7 @@ The lead triage (extraction pass 4) classified 11 leads by contract target (reta
 
 **To resolve:** Per-lead conversion path, timeline, and which leads justify retainer vs. fixed-price pursuit based on the three-filter framework (revenue gap, position fit, business viability).
 
-### 14. Selectivity gate formalization
+### 12. Selectivity gate formalization
 ⏱️ 10 min
 
 Current client selection includes an instinctive filter: "Can they prove to me they actually have a business?" This was articulated in the revenue reasoning conversation but is not formalized as a pipeline stage with criteria.
