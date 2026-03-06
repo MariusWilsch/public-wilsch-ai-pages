@@ -12,6 +12,14 @@ Entry point for all position-specific Operations Manuals at Wilsch AI Services. 
 
 ---
 
+## Monthly Plans
+
+| Month | Status | Plan | Design Doc |
+|-------|--------|------|-----------|
+| Feb 23 – Mar 31, 2026 | Active | [→ view](https://mariuswilsch.github.io/public-wilsch-ai-pages/project/soloforce/monthly-plan-2026-02-23-to-2026-03-31) | [Design](https://mariuswilsch.github.io/public-wilsch-ai-pages/project/soloforce/monthly-planning-system-design) |
+
+---
+
 ## Company-Wide (All Positions Read This)
 
 | Document | Status | Link |
@@ -83,14 +91,6 @@ Entry point for all position-specific Operations Manuals at Wilsch AI Services. 
 | [EMyth Systems Guide](https://mariuswilsch.github.io/public-wilsch-ai-pages/project/soloforce/emyth-chapters/emyth-systems-guide) | Stage 2: 9-step system documentation |
 | [EMyth Operations Manual Guide (MG-0080)](https://mariuswilsch.github.io/public-wilsch-ai-pages/project/soloforce/emyth-chapters/emyth-operations-manual-guide) | Stage 2: Building and maintaining the Operations Manual |
 | [Design Doc Methodology](https://mariuswilsch.github.io/public-wilsch-ai-pages/global/design-doc-methodology) | Design doc stable components + workflow |
-
----
-
-## Monthly Plans
-
-| Month | Status | Plan | Design Doc |
-|-------|--------|------|-----------|
-| Feb 23 – Mar 31, 2026 | Active | [→ view](https://mariuswilsch.github.io/public-wilsch-ai-pages/project/soloforce/monthly-plan-2026-02-23-to-2026-03-31) | [Design](https://mariuswilsch.github.io/public-wilsch-ai-pages/project/soloforce/monthly-planning-system-design) |
 
 ---
 
