@@ -600,6 +600,134 @@ When the BEM database already contains location assets (buildings, floors, rooms
 
 ---
 
+### Part 5: Test Rubric
+
+Defines how to witness the Setup Phase pipeline as a single end-to-end run. The rubric applies across all sub-issues (#1055, #1056, #1057, #1064) — one continuous conversation from file upload through contract assembly.
+
+**Two evaluation surfaces:**
+1. **Contract output** — the mapping contract JSON compared against a known-good "expected contract" for the CAFM sample
+2. **Conversation shape** — the AI's responses compared against the Happy Case Walkthrough (Messages 2–8 in Part 4) for interaction structure and quality
+
+#### Environment Setup
+
+Two environments, by artifact type:
+
+| What to test | Environment | Setup |
+|-------------|-------------|-------|
+| **MCP tool output** (BEM context data, Excel analysis structure) | MCP Inspector | Start server: `cd archibus-bulk-import && uv run fastmcp dev server.py`. Verify tool responses match BEM reference data |
+| **Prompt-driven conversation** (Steps 0→1→2a→2b) | Claude Code | Connect MCP server via `mcpServers` config (stdio). Load `prompts/step-0-1.md` as context. Reference test fixture file path |
+
+The Dev Lead executes the witness live — acting as the implementer, uploading the test file, and walking through the conversation. The Dev Lead verifies AI responses against the expected contract and the Happy Case message format.
+
+#### Test Fixtures
+
+| Fixture | Location | Purpose |
+|---------|----------|---------|
+| `cafm-asset-upload-sample.xlsx` | `data/` | Primary — happy case end-to-end (200 rows, 15 columns, 4 buildings) |
+| `fmm-qatar-housekeeping.xlsx` | `data/` | Optional — Step 0 rejection (non-equipment detection) |
+
+Both fixtures are checked into the repo. No external provisioning needed.
+
+#### Expected Contract (CAFM Sample)
+
+The "expected contract" is the ground truth mapping contract for the CAFM sample. The witness compares the AI's actual contract output against this reference.
+
+**Element 1 — Hierarchy:**
+```json
+{
+  "hierarchy": [
+    {"clientColumn": "Location",  "bemLevel": "Building"},
+    {"clientColumn": "Floor",     "bemLevel": "Floor"},
+    {"clientColumn": "Room No.",  "bemLevel": "Room"}
+  ]
+}
+```
+
+**Element 2 — Field Mappings (12 non-hierarchy columns):**
+
+| Client Column | → BEM Field | Category | Notes |
+|--------------|-------------|----------|-------|
+| Asset Name | Name | direct_passthrough | Mandatory field |
+| Serial No. | SerialNumber | direct_passthrough | |
+| Model | ModelSpecific | direct_passthrough | |
+| Manufacturer | BrandSpecific | direct_passthrough | |
+| Purchase Date | DatePurchased | direct_passthrough | |
+| Warranty Expiry | WarrantyTo | direct_passthrough | |
+| Asset Type | AssetType | enum_mapping | Resolved in Step 2b |
+| Status | Status | enum_mapping | Resolved in Step 2b |
+| Asset ID | StatusDetail | flagged_unmappable | Conflicts with Asset Name on Name field |
+| Condition | StatusDetail | flagged_unmappable | Status wins enum slot when both present |
+| Maintenance Frequency | *(excluded)* | excluded | No BEM field |
+| Assigned To | *(excluded)* | excluded | No BEM field for team labels |
+
+**Element 3 — Enum Rules:**
+```json
+{
+  "enumRules": {
+    "assetType": {
+      "map": {"Safety": "Safety Equipment", "HVAC": "HVAC equipment",
+              "IT Equipment": "IT Equipment", "Electrical": "Other EPE",
+              "Plumbing": "Plumbing equipment", "Mechanical": "Mechanical Equipment",
+              "Vertical Trans.": "Vertical Transportation"},
+      "default": "Equipment"
+    },
+    "status": {
+      "map": {"Active": "Active", "Inactive": "Out of Service"},
+      "default": "Unknown"
+    }
+  }
+}
+```
+
+The exact enum value mappings may vary based on AI semantic matching — the anchors are: (1) all 7 AssetType values resolved, (2) "Inactive" → "Out of Service" confirmed by Rein, (3) defaults assigned. Minor variations in fuzzy matches (e.g., "Electrical" → "Other EPE" vs "Electrical Equipment") are findings, not failures.
+
+#### Conversation Quality
+
+The AI's responses are evaluated against the Happy Case Walkthrough (Part 4, Messages 2–8). The rubric checks interaction structure, not exact wording.
+
+| Message | Step | What to verify |
+|---------|------|---------------|
+| **2** | Step 0 + Step 1 Beat 1 | Data type announced without gate. Hierarchy proposal in table format with BEM Level, Client Column, Sample Values, Confidence. Explicit question: "Does this match?" |
+| **3** | Step 1 Beat 2 | Name enrichment as **separate confirmation** (not combined with hierarchy). Table with Raw Value → Enriched Name → Rule. Three discrimination categories visible: pass-through, enrich, flag |
+| **4** | Step 2a fast lane | Batch table with all confident mappings. Hierarchy columns called back to Step 1. Flagged items listed with count. **One confirmation gate** for the batch (not per-column) |
+| **5** | Step 2b enum resolution | Per-field resolution table. Match types shown (Exact, Suggested, No match). Ranked suggestions for unmatched values. Sequential: one enum field at a time |
+| **6** | Step 2a slow lane | Individual flagged column presentation. Default recommendation (Exclude) with escape hatch (StatusDetail). One decision per column |
+| **7** | Contract summary | Hierarchy levels, mapped field count, enum resolution count, excluded columns. Final confirmation gate before Step 3 |
+
+**Key structural checks:**
+- No auto-advancing past confirmation gates
+- Progressive disclosure: confident work in batches, uncertain work 1-by-1
+- Fast lane before slow lane
+- Each enum field resolved sequentially (not batched across fields)
+
+#### Evaluation
+
+The witness run produces two artifacts for comparison:
+
+1. **Contract diff** — the AI's final mapping contract JSON compared field-by-field against the Expected Contract above. Mismatches are findings routed back to prompt refinement.
+
+2. **Message format check** — each AI response compared against the corresponding Happy Case Message for structural compliance (table format, gate placement, lane separation).
+
+A run **passes** when: (1) the contract output matches the expected contract on all anchor fields, and (2) the conversation follows the structural checks from the quality criteria above.
+
+A run **fails with findings** when: the contract deviates from anchors, or the conversation skips gates, batches what should be 1-by-1, or violates the fast-lane/slow-lane split. Findings route to prompt refinement — the Dev Lead never fixes the prompt directly.
+
+#### Optional Spot-Checks
+
+Beyond the primary happy case run, the Dev Lead may spot-check:
+
+| Spot-Check | How | What to verify |
+|------------|-----|---------------|
+| **Non-equipment rejection** | Upload `fmm-qatar-housekeeping.xlsx` | AI announces non-equipment data and stops — does not advance to hierarchy |
+| **Correction loop** | Intentionally disagree with one hierarchy mapping (e.g., "Location is actually a Campus, not a Building") | AI re-proposes with `*(updated)*` markers, accepts correction, loops until explicit confirmation |
+| **Multi-sheet handling** | Upload a multi-sheet Excel file | AI defaults to active sheet, notes available sheets, offers to switch |
+
+Spot-checks are optional — they cover scenarios already verified during development (#1056 AC2, AC4). The Dev Lead picks based on judgment.
+
+*(Source: Extraction pass 2026-03-08 — probing session on test rubric design. Resolutions: live execution witness, Claude Code + MCP Inspector environments, single end-to-end run, expected contract as ground truth, Happy Case Messages as conversation standard, optional correction loop spot-check.)*
+
+---
+
 ## Source
 
 - **Design docs:**
@@ -625,3 +753,4 @@ When the BEM database already contains location assets (buildings, floors, rooms
 - **Session:** /Users/daveFem/.claude/projects/-Users-daveFem-Desktop-claude-projects-01-ARCHIBUS--deliverable/71694ab4-1303-48d1-8912-c2193b65802f.jsonl
 - **Session:** /Users/daveFem/.claude/projects/-Users-daveFem-Desktop-claude-projects-01-ARCHIBUS--deliverable/986d5873-591d-4309-b641-7feacf9378ef.jsonl
 - **Session:** /Users/daveFem/.claude/projects/-Users-daveFem-Desktop-claude-projects-01-ARCHIBUS--deliverable/0914cc69-d3b3-4937-838c-d3140990c480.jsonl
+- **Session:** /Users/daveFem/.claude/projects/-Users-daveFem-Desktop-claude-projects-01-ARCHIBUS--deliverable/831e4df9-3e17-4516-87f3-e27d5cc65115.jsonl
