@@ -1,0 +1,472 @@
+---
+publish: true
+---
+
+# EasyBooks — Design Doc
+[[easybooks]]
+
+This document captures our shared understanding of the EasyBooks platform (formerly Livebook). It is a living document — evolved from v0.1 based on Stafford's formal RFP requesting build plan, timelines, and proof of capability for a four-engine narrative intelligence platform.
+
+**How to read this doc:** Sections marked **Undefined** link to the meeting agenda for SA-Stafford discussion. Everything else represents our current understanding based on two alignment meetings, Stafford's RFP (6 sections A-F), and two technical specification documents he provided.
+
+
+---
+
+## Problem Statement
+
+People's life stories go unpreserved. When someone dies, decades of experiences, achievements, and wisdom disappear with them. Children inherit a fraction of their parents' lives — the 40-50 years before they were born remain unknown unless someone deliberately captures them.
+
+No existing tool makes story capture feel like a genuine conversation. Forms feel like chores. Questionnaires feel clinical. Writing it down requires a patience most people don't have. But AI does — AI has the absolute patience to sit, listen, and meet someone at their level for as long as it takes. AI can be relatable, adapt its modality (text or voice), and never rush. The right trigger at the right moment, paired with a listener who never tires, is what unlocks genuine stories.
+
+**Preconditions:**
+- People have stories worth preserving but lack the mechanism to capture them naturally
+- Current tools (journals, memoir services, genealogy platforms) require effort that feels like work, not conversation
+- A relatable trigger is needed — people won't start unprompted
+- The capture experience must feel like two people going back and forth, not a data collection exercise
+
+EasyBooks extends this problem beyond personal legacy. Founders lose institutional memory. Corporate conversations go unstructured. Creative IP is buried in unorganised experiences. The same AI patience that captures a grandmother's story can extract a founder's journey, structure a corporate case study, or produce a podcast from a raw conversation. The four engines (Vulture, Plug, Opera, Shakespeare) address this at different stages of the narrative lifecycle.
+
+**Reference:** [Anthropic Interviewer](https://www.anthropic.com/research/anthropic-interviewer) — AI-powered interviews at scale, demonstrating that people open up to AI interviewers with 97.6% satisfaction when the experience feels like genuine conversation.
+
+**Additional Preconditions:**
+- The same extraction methodology applies across segments: personal legacy, founder journeys, corporate intelligence, creative IP
+- A platform approach (not a single-use tool) is needed to serve multiple audience segments from one narrative infrastructure
+
+---
+
+## Success Definition
+
+| Element | Definition |
+|---------|-----------|
+| **Goal** | A platform that turns lived experience into lasting books — through genuine AI conversation that feels like talking to a like-minded friend, not a clinical interviewer. The book becomes a person's legacy: something their grandchildren can read, something they're proud of. |
+| **Success** | A user opens the platform, sees their empty book visualized in front of their eyes — not a vague idea in their head, but a tangible artifact with empty pages. Something relatable from their day triggers them to talk. The AI meets them at their level, like a friend who genuinely cares. Their book becomes less empty. They come back because the book is never done. |
+| **Done test** | "Can the SA review this as a concrete RFP response framework — with recommended phasing, schema-level specs per engine, and clear Undefined markers routed to the meeting agenda?" → **YES.** This is v0.2 — evolved from Stafford's formal RFP. Undefined items route to SA-Stafford discussion. |
+
+---
+
+## Approach
+
+### Part 1: Product Identity & Audience
+
+**Product:** EasyBooks. A narrative intelligence platform that transforms human experience into structured books, media assets, podcasts, corporate intelligence, and tokenised digital property — through AI-powered conversation.
+
+**Four-engine architecture (evolved from Livebook's three-agent pipeline):**
+
+| Engine | Role | Evolved From |
+|--------|------|-------------|
+| **Vulture** | Cultural signal + growth intelligence — niche discovery, campaign generation, distribution, daily learning | NEW — not in Livebook v0.1 |
+| **Plug** | Funnel entry + conversion — micro-interviews, instant preview, tracking | Livebook's context collector |
+| **Opera** | Emotion-aware AI interview engine — bestseller-aware questioning, structured extraction | Livebook's smart interviewer |
+| **Shakespeare** | Narrative composition + print production — KDP-compliant exports, preflight validation | Livebook's book producer |
+
+**Core value proposition:**
+- "You drop dead tomorrow. This is your book. Would you be happy?"
+- *or:* "Your book is empty. Fill it."
+
+**Audience segments (initial, including but not limited to):**
+
+| Segment | Hook | Why it works |
+|---------|------|-------------|
+| **Young adults** | Aspirational — start building your legacy now | Pride in achievements, desire to be remembered |
+| **Elderly** | Preservation — capture what your grandchildren will never know | 40-50 years of life that children never witnessed |
+| **Children of aging parents** | Gift — give your parent a way to share their story | The sister-bought-dad-a-book pattern |
+
+**V1 beachhead:** Network School (NS) community — built-in audience, immediate feedback loop. NS Family Book is a pre-existing concierge MVP (no-tech, Stafford-led) that validates demand before the platform exists.
+
+**Expanded audience (from Stafford's Business Master Plan):**
+
+| Segment | Product |
+|---------|---------|
+| **Founders & entrepreneurs** | Founder Journey books, Company Story editions |
+| **Corporate B2B** | Customer intelligence, relationship strengthening, internal memory vault |
+| **Creators & thought leaders** | Podcast episodes, creative licensing |
+
+**Undefined:** Community books (Ladies Lounge, My Hometown) and expanded verticals (NFT, corporate, creative marketplace) relationship to V1 retainer scope. → [Meeting Agenda](#discussion-topics)
+
+---
+
+### Part 2: Engine Architecture — Vulture → Plug → Opera → Shakespeare
+
+Four single-responsibility engines form the platform pipeline. Each engine has one job and does it extremely well. Vulture feeds Plug, Plug feeds Opera, Opera feeds Shakespeare.
+
+```
+Vulture ──→ Plug ──→ Opera ──→ Shakespeare ──→ EasyBook
+(signal)    (entry)  (interview)  (composition)    (artifact)
+```
+
+#### 2.1 Vulture — Cultural Signal & Growth Intelligence Engine
+
+Vulture discovers audience opportunities and generates campaign creatives. It is the traffic engine — without Vulture, users must be acquired manually. Vulture makes acquisition systematic and self-improving.
+
+**Responsibilities:**
+- Detect cultural niche opportunities (trending topics, emotional moments, seasonal triggers)
+- Generate campaign creatives (hooks, scripts, video concepts) per niche
+- Distribute across platforms (Instagram, TikTok, LinkedIn, X, YouTube Shorts)
+- Measure performance and iterate daily — funnels become self-evolving
+
+**Core schemas:**
+
+```
+niches                    creatives                 campaigns
+------                    ---------                 ---------
+id (uuid)                 id (uuid)                 id (uuid)
+name                      niche_id (fk)             creative_id (fk)
+category                  type (hook/script/video)  platform
+score                     content                   status
+trend_signals             variant_label             budget
+created_at                performance_score         impressions
+                          created_at                clicks
+                                                    conversions
+                                                    created_at
+```
+
+**North Star Metric:** Click → Interview Start Rate (Vulture creative → Plug micro-interview)
+
+**Governance:**
+- Human approval gate for paid campaigns — no automated spend without review
+- Cultural sensitivity flags + escalation queue
+- Brand guardrails (no manipulative content, no sensitive-targeting abuse)
+- Rate-limit posting automation to avoid platform violations
+
+#### 2.2 Plug — Emotional Entry & Funnel Conversion Engine
+
+Plug converts attention into participation in under 5 minutes. It is a psychological activation system, not a landing page builder. Each funnel is a story trigger that reduces friction to near zero.
+
+**Five layers:**
+
+| Layer | Function |
+|-------|----------|
+| **1. Funnel Resolver** | Routes inbound users to correct narrative pathway based on niche_id, funnel_id, creative_id, platform_id |
+| **2. Identity Hook** | Activates identity — "Who are you in this story?" replaces generic onboarding |
+| **3. Micro Interview** | 2-5 minutes, 3-5 structured prompts, audio-first with text fallback |
+| **4. Instant Preview** | Formatted chapter preview, designed card, shareable snippet — creates ownership |
+| **5. Conversion Trigger** | "Continue Your Book" — no heavy upsell, they already started |
+
+**Core schemas:**
+
+```
+funnels                   question_sets             funnel_sessions
+-------                   -------------             ---------------
+id (uuid)                 id (uuid)                 id (uuid)
+name                      funnel_id (fk)            user_temp_id
+niche_id (fk)             question_1                funnel_id (fk)
+headline_template         question_2                creative_id
+identity_prompt_template  question_3                platform_id
+question_set_id (fk)      question_4                started_at
+cta_template              question_5                completed_at
+status                    audio_enabled (bool)      preview_generated (bool)
+created_at                max_duration_seconds       converted_to_app (bool)
+                                                    book_started (bool)
+```
+
+**North Star Metric:** Interview Start Rate → Interview Completion Rate → Preview Generated %
+
+**UX Principles:** < 5 minutes to start, audio-first, zero cognitive overload, emotionally safe, no negativity in first touch
+
+#### 2.3 Opera — Bestseller Interview & Narrative Intelligence Engine
+
+Opera is not a chatbot. Opera is an emotionally intelligent, commercially aware AI ghostwriter that interviews like a world-class biographer and extracts material capable of becoming a compelling, high-quality, commercially viable book.
+
+**Three intelligence layers:**
+
+| Layer | Function | Example |
+|-------|----------|---------|
+| **Emotional Intelligence** | Detect emotional cues, match tone, encourage vulnerability safely | "What did that moment cost you emotionally?" |
+| **Bestseller Intelligence** | Understand narrative structure — conflict, stakes, transformation, sensory detail | Score stories for depth, flag when missing conflict |
+| **Structural Intelligence** | Build character map, timeline, conflict map, transformation arc, theme clusters | Detect missing story elements and probe accordingly |
+
+**Five-phase questioning model:**
+
+| Phase | Focus | Example Question |
+|-------|-------|-----------------|
+| 1. Surface Context | Who, where, what | "Where were you when this happened?" |
+| 2. Emotional Inflection | Feelings, surprises | "What surprised you most about that?" |
+| 3. Stakes | Risk, sacrifice | "What could you have lost?" |
+| 4. Transformation | Change, growth | "How are you different now?" |
+| 5. Reflection | Wisdom, perspective | "What would your younger self think?" |
+
+**Core schemas:**
+
+```
+interview_sessions        entities                  events
+------------------        --------                  ------
+id (uuid)                 id (uuid)                 id (uuid)
+user_id (fk)              session_id (fk)           session_id (fk)
+funnel_context            name                      description
+phase                     type (person/place/org)    timestamp
+turn_count                                          entities (fk[])
+voice_profile_id
+
+claims                    emotion_markers           story_scores
+------                    ---------------           ------------
+id (uuid)                 id (uuid)                 id (uuid)
+event_id (fk)             session_id (fk)           session_id (fk)
+content                   type                      narrative_strength
+confidence                intensity                 emotional_depth
+source_link               trigger_question          conflict_density
+evidence_type                                       transformation_clarity
+                                                    cinematic_potential
+                                                    bestseller_readiness
+```
+
+**North Star Metric:** Story Quality Score (composite of narrative strength, emotional depth, conflict density)
+
+**Personality system:** Configurable tone — gentle biographer, direct interviewer, reflective listener, documentary journalist, warm conversationalist. Adapts to user age, emotional intensity, personality type, niche context.
+
+**Undefined:** Voice cloning as a modality for Opera — open-source TTS models (350M params, 26 languages) make this technically feasible. Avatar interview mode (AI host, voice-only, family-style). Scope for V1 TBD. → [Meeting Agenda](#discussion-topics)
+
+#### 2.4 Shakespeare — Narrative Composition & Print Production Engine
+
+Shakespeare transforms structured story architecture into beautifully written, commercially compelling, printer-ready books. If Opera is the ghostwriter-interviewer, Shakespeare is the author-composer-editor-publisher.
+
+**Ten-layer architecture:**
+
+| Layer | Function |
+|-------|----------|
+| 1. Voice Modelling | Write in user's tone, vocabulary, emotional rhythm |
+| 2. Narrative Composition | Expand structured events into flowing prose |
+| 3. Chapter Architecture | Determine chapter boundaries, titles, pacing |
+| 4. Stylistic Refinement | Sentence variation, emotional cadence, sensory detail |
+| 5. Layout Template | Locked templates per format (memoir, founder, yearbook) |
+| 6. Print Spec Resolver | Select printer profile (KDP 6x9 B&W, color, POD A5, etc.) |
+| 7. Spine Calculator | Dynamic spine width = page_count × 0.002252" (KDP B&W) |
+| 8. Cover Generator | Full wrap PDF — back + spine + front with bleed |
+| 9. Preflight Validation | Block export if margins, DPI, fonts, CMYK fail checks |
+| 10. Export | Printer-ready interior PDF, cover PDF, low-res preview, EPUB |
+
+**Core schemas:**
+
+```
+books                     chapters                  book_versions
+-----                     --------                  -------------
+id (uuid)                 id (uuid)                 id (uuid)
+user_id (fk)              book_id (fk)              book_id (fk)
+title                     title                     version_number
+template_id (fk)          content                   snapshot_hash
+voice_profile             order                     created_at
+status                    emotional_arc_position
+
+printer_profiles          export_jobs
+----------------          -----------
+id (uuid)                 id (uuid)
+name                      book_version_id (fk)
+trim_size                 printer_profile_id (fk)
+bleed                     status
+margin_rules              interior_pdf_url
+spine_formula             cover_pdf_url
+paper_type                preflight_passed (bool)
+ink_coverage_limits       created_at
+```
+
+**V1 starting point:** 6" × 9" KDP Black & White — widely supported, cost-effective, low complexity, large market. Additional profiles (color, hardback, yearbook) added in later phases.
+
+**Print compliance requirements:**
+- PDF with embedded fonts, CMYK color profile, 300 DPI images
+- Correct trim size, proper bleed (0.125"), no crop marks
+- Minimum 0.375" outer margin, 0.75" inside margin for thicker books
+- Dynamic spine calculation, barcode safe zone
+- Preflight validation blocks non-compliant exports
+
+**North Star Metric:** Reader Quality Score → Print Approval Success Rate
+
+#### 2.5 Integration Contracts (APIs Between Engines)
+
+| From → To | Data Passed |
+|-----------|-------------|
+| **Vulture → Plug** | `funnel_id`, `niche_id`, `creative_id`, `platform_id` in inbound URL |
+| **Plug → Opera** | Converts micro-interview into `InterviewSession` — initial transcript/audio + funnel context |
+| **Opera → Shakespeare** | Structured story graph: events, entities, claims, themes, emotion markers + voice profile + book intent (memoir/yearbook/founder) |
+| **Shakespeare → Outputs** | Export jobs to print/POD pipeline, podcast script generation, NFT snapshot creation |
+
+#### 2.6 Platform Services (Cross-Cutting)
+
+All engines share:
+- Identity & access management (IAM)
+- Consent & permissions service (versioned consent records, not checkboxes)
+- Data store + encryption at rest and in transit
+- Audit logging (every automated action traceable)
+- Content moderation + safety
+- Analytics + attribution (creative → funnel → install → book start → purchase)
+- Export control + redaction
+
+**Reference:**
+- [Anthropic Interviewer](https://www.anthropic.com/research/anthropic-interviewer) — AI interviews at scale (1,250 professionals, 97.6% satisfaction)
+
+---
+
+### Part 3: Revenue Model Principle
+
+**"Extraction is the value. Creation is free."**
+
+| Pipeline Stage | Cost | Rationale |
+|---------------|------|-----------|
+| **Plug** (triggers) | Free | Hooks them in, creates daily engagement habit |
+| **Opera** (interview) | Free | Builds emotional investment through genuine conversation. The interview IS the sales funnel — people invest their stories. |
+| **Shakespeare** (book output) | Paid | Extraction crystallizes value — turning conversation into a tangible artifact |
+
+The book is never done. Life keeps happening. Plug keeps triggering. Opera keeps interviewing. Shakespeare keeps producing new chapters. **Continuous extraction = subscription model.** Users don't pay for access — they pay for their book growing.
+
+**Expanded revenue streams (from Stafford's Business Master Plan):**
+
+| Stream | Engine | Stage |
+|--------|--------|-------|
+| SaaS subscription | Platform | Core |
+| Premium book creation fees | Shakespeare | Core |
+| Podcast generation credits | Opera → Shakespeare | Extension |
+| NFT minting fees | Platform | Extension |
+| NFT royalty percentage | Platform | Extension |
+| Corporate contracts | Opera (B2B) | Extension |
+| Creative licensing commissions | Platform | Extension |
+| Narrative consultancy | Opera | Extension |
+
+**Undefined:** Pricing specifics, revenue stream prioritization for V1 (core vs extension), success-based component structure. → [Meeting Agenda](#discussion-topics)
+
+---
+
+### Part 4: Delivery & Engagement
+
+**Engagement model:** Outsourced AI department — "I own the function, you own the results." Wilsch AI owns the delivery function (agents, systems, improvement loop). Stafford owns the results and outputs. Stafford trains his own operators.
+
+**Three-Slice Ownership (from [#847 Contract Strategy](https://github.com/DaveX2001/deliverable-tracking/issues/847)):**
+
+| Slice | Asset | Owned By |
+|-------|-------|----------|
+| **1. AI Function** | Built engines, agents, systems | Wilsch AI |
+| **2. Operators** | People trained to work with AI | Stafford (self-trained) |
+| **3. Improvement Loop** | System Engineer (continuous improvement) | Wilsch AI |
+
+**Team:** Marius (SA / delivery lead) + David (developer) + AI force multiplier. **Undefined:** Whether the AI-augmented team model is communicated to Stafford. → [Meeting Agenda](#discussion-topics)
+
+**Structure:** 3-month initial retainer, renewable if both sides happy. Base retainer + success-based component (concept — no numbers in this doc).
+
+**Undefined:** Commercial terms — retainer amount, success fee structure, space fee, duration specifics. → [Meeting Agenda](#discussion-topics)
+
+---
+
+### Part 5: Methodology Foundation
+
+Opera's interview methodology is adapted from a tested knowledge extraction approach used in AI-assisted design work — proven across multiple projects to produce genuine, structured output from conversational input.
+
+The core principles (same-level interaction, one element at a time, relatable triggers, adaptive probing) transfer from professional knowledge extraction to personal story extraction. The mechanism is identical; the domain and emotional tone differ.
+
+---
+
+### Part 6: Technical Architecture
+
+**Recommended tech stack (based on Stafford's requirements and team capability):**
+
+| Layer | Technology | Rationale |
+|-------|-----------|-----------|
+| Backend | FastAPI (Python) | Async-first, schema validation, team expertise |
+| Database | Supabase (PostgreSQL) | Row-level security, real-time, auth built-in |
+| Vector Store | pgvector (via Supabase) | Semantic search for story matching |
+| AI/LLM | Claude API | Tool-calling, structured outputs, conversation |
+| PDF Engine | Dedicated PDF library (not HTML-to-PDF) | Print compliance requires controlled rendering |
+| Audio/TTS | Whisper (STT) + open-source TTS | Audio-first input, voice output |
+| Frontend | React | Standard, Stafford's team can maintain |
+| Hosting | TBD per deployment model | Depends on data sovereignty requirements |
+
+**Canonical data model** (shared across all engines): User, Workspace/Tenant, Niche, Funnel, Creative, FunnelSession, InterviewSession, Entity, Event, Claim, Evidence, Theme, EmotionMarker, Book, Chapter, BookVersion, Snapshot, ExportJob, ConsentRecord, PolicyDecisionLog, AuditLog
+
+**Truth chain (traceability):** Every published statement in a book links back to: `Chapter Paragraph → Claims → Evidence/User statement → Interview segment → Timestamp`. This is essential for credibility, edits, and dispute handling — and a key requirement from Stafford's RFP (Section F).
+
+---
+
+### Part 7: Recommended Build Phases
+
+One recommended phasing based on team capacity (2 humans + AI, 3-month initial retainer).
+
+**Phase 1 — MVP (Weeks 1-6): Core Flow**
+- Plug micro-interview → Opera structured extraction → Shakespeare single-format book output
+- One locked printer profile (6x9 KDP B&W) with preflight validation
+- Consent + audit logging foundation
+- Attribution tagging (creative → funnel → install → book start)
+- Physical test print with KDP
+
+**Phase 2 — V1 (Weeks 7-12): Intelligence + Distribution**
+- Opera bestseller heuristic engine + story quality scoring
+- Shakespeare additional templates + color profile
+- Vulture basic niche discovery + creative generation (if capacity allows)
+- Analytics dashboard
+- Social content repurposing (shareable snippets from completed books)
+
+**Phase 3 — V2 (Post-retainer): Scale + Extensions**
+- Vulture full automation + daily learning loop
+- NFT/tokenisation layer (Legacy NFTs, Founder Journey NFTs, Conversation NFTs)
+- Corporate B2B division (customer intelligence, relationship engine, memory vault)
+- Voice cloning + avatar interview mode
+- Interesting Conversations (live-to-podcast engine)
+- Creative licensing marketplace
+
+**Undefined:** Vulture inclusion in Phase 1 vs Phase 2 — depends on whether manual traffic acquisition is acceptable for MVP. → [Meeting Agenda](#discussion-topics)
+
+---
+
+### Part 8: Compliance & Governance
+
+Stafford's RFP lists compliance as non-negotiable (Section F). Compliance is a feature, not a policy doc — enforced through data model constraints, permissioning, consent workflows, audit logs, and human approval gates.
+
+**Consent service (must exist from MVP):** Consent is not a checkbox — it is a versioned record. Types: data storage, audio recording, transcription, publishing (private/unlisted/public), voice clone, avatar, co-author contributor agreement, corporate interview, NFT mint (with permanence disclosure). All consent changes are audit logged. Consent must be scoped (what + where + how long) and revocable where feasible (except immutable NFT aspects, disclosed upfront).
+
+**Operational compliance by stage:**
+
+| Stage | Engine | Key Controls |
+|-------|--------|-------------|
+| Acquisition | Vulture | Paid campaigns require human approval, brand guardrails, cultural sensitivity flags |
+| Onboarding | Plug | Minimal data capture, clear consent, age gating (especially yearbooks) |
+| Story capture | Opera | Emotional safety + skip/pause/stop controls, no therapy claims, accurate extraction + confidence marking |
+| Publishing | Shakespeare | Preflight print validation, copyright/IP checks, redaction options, private vs public export |
+| Distribution | Extensions | Per-output permissions, contributor rights checks, permanent/irreversible actions gated and disclosed |
+
+**Privacy & security baseline:** Encryption at rest and in transit, role-based access control, tenant isolation (corporate), secure secret storage, data retention schedules (configurable by tenant), user export and deletion workflows (with blockchain exception disclosures for NFTs).
+
+**Safety and content moderation:** Automated filters + human review queue. Sensitive niche gating (grief, trauma). Prohibited content enforcement. "No therapy claims" language policy across all engines.
+
+---
+
+### Part 9: Proof of Capability
+
+Stafford's RFP Section D requests examples of similar work. Candidate projects for SA review:
+
+| Requirement | Candidate Project | Relevance |
+|-------------|------------------|-----------|
+| AI-agent systems (tool-calling, structured outputs) | TBD — SA selects | Direct parallel to Opera/Plug |
+| Growth/automation systems | TBD — SA selects | Relevant to Vulture |
+| Document generation (PDF, print-ready) | TBD — SA selects | Direct parallel to Shakespeare |
+| Audio/transcription | TBD — SA selects | Relevant to Opera voice mode |
+| Creative content automation | Paul Faceless YouTube | Content generation + automation pipeline |
+
+**Undefined:** Which VeloxForce projects to showcase — confidentiality constraints apply. SA makes final selection. → [Meeting Agenda](#discussion-topics)
+
+---
+
+## Source
+
+**Transcripts:**
+- [hmf-nphz-oeh](https://app.fireflies.ai/view/01KHRCZ9PFND0HC5Z4R5W1ZH5B) — 50 min, Feb 18 2026 — Product vision deep-dive with Stafford
+- [hhb-sesi-hsp](https://app.fireflies.ai/view/01KHRGHPQTBECRD3JRHTTGTQ7Y) — 14 min, Feb 18 2026 — Business relationship, VP delivery role, E-Myth
+- [euq-ocaj-ajd](https://app.fireflies.ai/view/01KHXJSM63VJB0JT88KS8E4NZJ) — 41 min, Feb 20 2026 — Compensation model, app scope, success fee discussion
+
+**RFP & Technical Specs (Stafford, March 2026):**
+- Stafford's formal RFP (6 sections A-F) — posted as [#874 comment 2026-03-08](https://github.com/DaveX2001/deliverable-tracking/issues/874#issuecomment-2707966123)
+- [EB Business Master Plan.docx](https://github.com/user-attachments/files/25821977/EB.-.My.2026.Business.Master.-.Easybooks.docx) — 8 revenue streams, NFT layer, corporate B2B, creative marketplace
+- [March Technical Lifecycle Plan.docx](https://github.com/user-attachments/files/25821978/March.Technical.Plug.opera.and.Shakesspeare.and.full.lifecycle.plan.docx) — Developer-ready specs per engine (Plug, Opera, Shakespeare, compliance framework)
+
+**Data Artifacts:**
+- `My_NS_Family_Book_Original_Drawings_and_UX_Plan.docx` — Original UX flow, design system, book templates
+- `My_NS_Family_Book_Updated_UX_Project_Reset.docx` — Updated UX with resolved feedback
+- 7x WhatsApp mockup images — Pick Your Story, Landing, Social Linking, Permissions, Profile, Sign In, Book Confirmation
+
+**Cross-references:**
+- [#874 — Epic: Livebook Pre-Sales](https://github.com/DaveX2001/deliverable-tracking/issues/874)
+- [#847 — Contract Strategy & Retainer Model](https://github.com/DaveX2001/deliverable-tracking/issues/847)
+- [#1078 — JA Design Doc Pass 1](https://github.com/DaveX2001/deliverable-tracking/issues/1078)
+
+**External References:**
+- [Anthropic Interviewer](https://www.anthropic.com/research/anthropic-interviewer) — AI-powered interviews research
+- [Stafford Proposal v1](https://mariuswilsch.github.io/public-wilsch-ai-pages/project/soloforce/stafford-plug-opera-proposal) — Previous strategic positioning (methodology-heavy)
+- [Monthly Plan Feb-Mar](https://mariuswilsch.github.io/public-wilsch-ai-pages/project/soloforce/monthly-plan-2026-02-23-to-2026-03-31) — Stafford = one additional retainer slot
+
+**Sessions:**
+- v0.1: `/Users/verdant/.claude/projects/-Users-verdant-Documents-projects-00-WILSCH-AI-INTERNAL--soloforce/ab077198-670d-47ef-b884-eca052c0b443.jsonl`
+- v0.2: `/Users/daveFem/.claude/projects/-Users-daveFem-Desktop-claude-projects-09-SALES-PIPELINE--deliverable/041422f6-c485-4011-af8c-edd509708a61.jsonl`
