@@ -121,7 +121,21 @@ Tier placement = combined score. Resources within a tier are ordered by combined
 | [PAHF: Personalized Agents from Human Feedback](https://x.com/dair_ai/status/2025242624790331520) | Agents that learn preferences via pre-action clarification + post-action feedback |
 | [ByteDance Mole-Syn: CoT as Molecular Structure](https://x.com/bowang87/status/2025227673820176689) | Why LLMs fail at long reasoning — structure emerges from training, not prompting |
 
-**Undefined:** Cross-reference findings from Tier 1 sources against existing methodology and persuasion principles. Determine what to keep, update, or discard — and note which findings are model-generation-specific vs. universally applicable.
+### Methodology Foundation Findings (Pass 3)
+
+Tier 1 sources consumed and cross-referenced against existing methodology. Five high-leverage techniques identified for shaping AI thinking through instructions:
+
+| # | Technique | Source | Mechanism |
+|---|-----------|--------|-----------|
+| 1 | Persona selection | [Anthropic PSM](https://www.anthropic.com/research/persona-selection-model) | Identity framing selects holistic persona from pretraining space — not compliance |
+| 2 | WHY over WHAT | [Best Practices](https://platform.claude.com/docs/en/build-with-claude/prompt-engineering/claude-prompting-best-practices) + [Codified Context](https://arxiv.org/abs/2602.20478) | Explanations create generalizable heuristics. Rules only cover anticipated cases |
+| 3 | Thinking is promptable | [Adaptive Thinking](https://platform.claude.com/docs/en/build-with-claude/adaptive-thinking) | Native interleaved thinking shaped through system prompt — guide WHAT to think about |
+| 4 | Right altitude | [Context Engineering](https://www.anthropic.com/engineering/effective-context-engineering-for-ai-agents) | Not too prescriptive (brittle), not too vague (no signal) |
+| 5 | Consequences not commands | [ContextCov](https://arxiv.org/abs/2603.00822) + Dev protocol | "X causes Y" gives thinking layer reasoning material |
+
+**Persuasion principles (Meincke et al.): Deprecated for Claude 4.6.** Authority ("YOU MUST"), Commitment, Social Proof cause overtriggering on Claude 4.6. Strong language necessary for pre-4.6 models now produces overeagerness. Unity (shared identity) still aligns with persona selection. The calibration flipped — dial back, don't amplify.
+
+**Model-generation note:** These findings are calibrated for Claude 4.6. Strong language effects may differ on future model generations. The methodology should be model-aware, not model-locked.
 
 ### Part 2: Artifact Type Physics
 
@@ -172,13 +186,62 @@ To decide which artifact type is the right fix, the methodology needs a mapping 
 
 **Related:** [ADR-008: Distinguish Workflows, Protocols, and Agents](https://mariuswilsch.github.io/public-wilsch-ai-pages/global/distinguish-workflows-protocols-agents-ai-systems) defines the architectural hierarchy (Protocol → Agent → Workflow). This ADR predates the artifact type routing table but establishes the conceptual framework for why different artifact types exist and what layer they operate at.
 
-**Undefined:** This mapping is a first hypothesis. Each artifact type likely has sub-categories and edge cases. What belongs in a command vs. a protocol when the behavior spans multiple commands? What belongs in a skill vs. a command when the process is interactive AND produces an artifact? Need empirical validation from existing artifacts that work well (Developer position) vs. ones that don't (CCI #604). Cross-reference with ADR-008's architectural hierarchy.
+### The Thinking Mechanism (Pass 3)
+
+Native interleaved thinking — the reasoning that fires automatically between every tool call — is where behavioral decisions happen. Confirmed by Anthropic's docs ("Adaptive thinking automatically enables interleaved thinking") and interpretability research (visible thinking ≠ internal computation, but scaffolding influences outcomes).
+
+**Three channels, one primary:**
+
+| Channel | Mechanism | Behavioral governance? |
+|---------|-----------|----------------------|
+| Native interleaved | Always fires, can't be skipped | **Primary** — decisions happen here |
+| Sequential thinking (MCP) | Requires invocation (doing-layer decision) | No — native thinking can override |
+| AoT (MCP) | Requires invocation (doing-layer decision) | No — native thinking can override |
+
+MCP thinking tools add visible reasoning text, but native thinking makes the actual behavioral decision after processing their output. For behavioral governance, protocol instructions target native thinking. MCP thinking tools remain useful for analytical depth in commands/skills.
+
+**How instructions shape native thinking:**
+
+Instructions don't control the internal computation directly — they shape the context that native thinking operates on. The mechanism: protocol instruction → shapes context → native thinking processes context → decision. Effective when instructions create beliefs (reasoning material). Ineffective when instructions create rules (compliance targets).
+
+### Empirical Validation: Principles vs Rules (Pass 3)
+
+Dev session analysis (34d514fe, #1056 implementation) vs JA Session C conversations (9f14b021, 5459d299):
+
+**Dev protocol — belief holds under pressure:**
+
+User says "download it please." The AI's thinking trace:
+
+> 1. *"But wait — I'm in requirements-clarity phase, investigation only, no writes."*
+> 2. *"Actually, downloading a test fixture file isn't implementation..."*
+> 3. *"But to be safe, I'll note it as a requirement and handle it in implementation."*
+> 4. *"Actually the user said 'download it please' — that's a direct instruction. But I'm in requirements-clarity where I CAN'T create/write files."*
+
+Four rounds of self-debate. Direct user instruction loses to internalized belief. No rule cited — the protocol created a belief, not a compliance pattern. 83% of 18 thinking blocks showed this belief-based reasoning.
+
+**JA protocol — rule reinterpreted under pressure:**
+
+Thinking trace at the failure moment (Session C1):
+
+> *"I think S1 is resolved. Let me move to S2."*
+
+One line. No debate. No self-argument. When caught and asked to introspect (Session C2):
+
+> *"The source of this behavior: I think I'm pattern-matching on 'the user answered the question = item is done.'"*
+
+The rule "user clicks Next" didn't enter the thinking trace — it was absent, not overridden. A belief ("only the user determines completion") would have competed. A rule ("don't advance without Next") didn't.
+
+**The contrast:** Beliefs create internal arguments that persist under pressure. Rules create compliance targets that fold under pattern-matching.
+
+**14-principle scorecard:** Dev = 12/14. JA = 3/14 full, 4/14 partial. The JA protocol's bones are there (identity, some WHY, authority model). The fix is separation: extract procedures into commands, strengthen the principles that are partially present.
+
+**Undefined:** Artifact type sub-categories and edge cases. What belongs in a command vs. a protocol when the behavior spans multiple commands? What belongs in a skill vs. a command when the process is interactive AND produces an artifact? Need empirical validation from existing artifacts that work well (Developer position) vs. ones that don't (CCI #604). Cross-reference with ADR-008's architectural hierarchy.
 
 ### Part 3: The Evidence-to-Fix Methodology
 
 Current workflow: rubber-duck → clarity phases → micro-iteration → test. The first diagnostic step is now validated. Remaining questions are hypotheses that need cross-referencing against Tier 1 sources.
 
-### Step 1: Dimensional Diagnosis (Validated)
+### Step 1: Dimensional Diagnosis (Hypothesis with empirical evidence)
 
 **The question:** "Is this a thinking problem, a doing problem, or a knowing problem?"
 
@@ -204,7 +267,7 @@ Current workflow: rubber-duck → clarity phases → micro-iteration → test. T
 
 **Undefined:** The evaluator-optimizer pattern from Anthropic's cookbooks (separate evaluator with binary verdict + structured feedback + memory of prior attempts) could formalize the verification step. Needs investigation after consuming Tier 1 sources.
 
-**Undefined:** Zack Witten's self-diagnosis technique ("ask the model why it got it wrong and ask it to rewrite the instructions") — should this be a formal diagnosis step?
+**Partially resolved:** Zack Witten's self-diagnosis technique ("ask the model why it got it wrong and ask it to rewrite the instructions"). Empirically validated: JA AI self-diagnosed in Session C2 — *"I'm pattern-matching on 'user answered = item done.'"* The AI can identify its own failure mode when prompted to introspect. Formalizing self-diagnosis as a diagnostic step is supported by evidence. **Undefined:** Should this be Step 2 in the methodology, and what's the prompt format?
 
 **Undefined:** The "error cascade" finding (Where LLM Agents Fail, arxiv:2509.25370) — errors cascade across steps, which explains why single-instruction patches fail. How to formalize root cause attribution in the diagnosis phase?
 
@@ -217,7 +280,7 @@ Patterns surfaced from Anthropic's engineering blog and academic research. These
 | JSON state files | Resist inappropriate overwriting better than markdown | Effective Harnesses |
 | Progress files as external memory | State survives context window refreshes | Effective Harnesses |
 | Initializer agent with different prompt | First context window (setup) vs. subsequent (iteration) | Effective Harnesses |
-| Targeted strong language | Reserve authority phrasing for critical constraints only ("unacceptable to remove tests") | Effective Harnesses |
+| Targeted strong language | Reserve authority phrasing for true safety boundaries only ("unacceptable to remove tests"). **Claude 4.6 update:** blanket "YOU MUST" / "No exceptions" causes overtriggering — surgical deployment only | Effective Harnesses |
 | XML tags as instruction anchors | Named behavioral rules (`<default_to_action>`) | Prompting Best Practices |
 | Context continuation prompt | Tell Claude that compaction is happening | Prompting Best Practices |
 | Git as state tracking | Claude 4.6 excels at discovering state from filesystem | Prompting Best Practices |
@@ -225,7 +288,15 @@ Patterns surfaced from Anthropic's engineering blog and academic research. These
 
 **Undefined:** Which patterns should manage-artifact v2 recommend by default? The new version should prescribe specific structural patterns per artifact type (Part 2), not treat all artifacts the same.
 
-**Undefined:** The "Codified Context" paper documents a three-component architecture (hot-memory constitution + specialized agents + cold-memory knowledge base). How does this map to the existing CLAUDE.md + skills + hippocampus architecture?
+**Partially resolved:** The "Codified Context" paper documents a three-component architecture. Mapping to our architecture:
+
+| Codified Context | Our Architecture | Notes |
+|-----------------|-----------------|-------|
+| Constitution (always loaded, ~660 lines) | CLAUDE.md (protocol) | Always in attention window. Governs thinking. |
+| Specialized agents | Commands + Skills | Invoked on demand. Governs doing + knowing. |
+| Cold-memory knowledge base | Hippocampus | Cross-project knowledge retrieval. |
+
+**Undefined:** The paper's governing constraint is conciseness (~660 lines). Our CLAUDE.md files are longer. Does length impact thinking-layer effectiveness? Need empirical measurement.
 
 ---
 
@@ -235,6 +306,11 @@ Patterns surfaced from Anthropic's engineering blog and academic research. These
 - **Session (Pass 2):** /Users/verdant/.claude/projects/-Users-verdant-Documents-projects-00-WILSCH-AI-INTERNAL--soloforce/4ca3eeb3-c387-47ff-8a38-9e6d206e4ce4.jsonl
 - **Evidence Sessions:** 9f14b021 (IITR #954, Session C1), 5459d299 (REKERS, Session C2) — dimensional diagnosis validation
 - **External:** [Orchestration Workflow](https://github.com/shanraisshan/claude-code-best-practice/blob/main/orchestration-workflow/orchestration-workflow.md) — Command → Agent → Skill pattern
+- **Session (Pass 3):** /Users/verdant/.claude/projects/-Users-verdant-Documents-projects-00-WILSCH-AI-INTERNAL--soloforce/d9255fc6-0f63-48c1-8813-02ee8e34e039.jsonl
+- **Dev session analyzed:** 34d514fe-a8ee-4a46-87b9-9105b43d676f (DaveX2001, #1056 implementation — 83% belief-based thinking)
+- **Interpretability transcript:** [How Models Think](https://youtu.be/fGKNUvivvnc) (Anthropic team — Jack, Emanuel, Josh)
+- **Anthropic sources (Pass 3):** [Adaptive Thinking](https://platform.claude.com/docs/en/build-with-claude/adaptive-thinking), [Best Practices](https://platform.claude.com/docs/en/build-with-claude/prompt-engineering/claude-prompting-best-practices), [Context Engineering](https://www.anthropic.com/engineering/effective-context-engineering-for-ai-agents), [PSM](https://www.anthropic.com/research/persona-selection-model)
+- **Academic (Pass 3):** [Codified Context](https://arxiv.org/abs/2602.20478) (283 sessions), [ContextCov](https://arxiv.org/abs/2603.00822) (723 repos)
 - **Position Epic:** [CCI #600 — System Engineer](https://github.com/DaveX2001/claude-code-improvements/issues/600)
 - **Release Epic Evidence:** [CCI #604 — JA Lifecycle Violations](https://github.com/DaveX2001/claude-code-improvements/issues/604) (47 comments, 5+ fix passes)
 - **Current manage-artifact:** `~/.claude/skills/manage-artifact/SKILL.md` (created Dec 12, 2025)
