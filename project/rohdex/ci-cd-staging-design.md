@@ -63,14 +63,16 @@ Staging and production run on separate servers. The Makefile is the single deplo
 | `make deploy` | RDX-APP-01 (prod) | VPN required | `docker-compose.prod.yml` |
 | `make staging` | Wilsch AI server | Direct SSH | `docker-compose.staging.yml` |
 
-#### Path A: rsync-push via Makefile (confirmed)
+#### Deployment Commands
 
-Each make target wraps the full deployment sequence: rsync code to the target server, SSH in, build the Docker image, and restart the container. The developer runs one command locally.
+Production and staging use different transfer mechanisms because of network constraints. The developer runs one command locally.
 
 ```
 make deploy    →  VPN pre-check → rsync to RDX-APP-01 → SSH → docker compose build + up
-make staging   →  rsync to Wilsch AI → SSH → docker compose build + up
+make staging   →  SSH to Wilsch AI → git pull → docker compose build + up
 ```
+
+**Why different mechanisms:** RDX-APP-01 has no outbound GitHub access (Gmelch IT firewall), so production requires rsync-push. Wilsch AI server has full internet access including git — staging deploys via git pull, which is simpler and ensures the server always matches a committed state.
 
 **Standard targets per ADR:**
 
@@ -83,7 +85,7 @@ logs            # SSH + docker compose logs -f
 status          # SSH + docker compose ps
 
 # Staging (Wilsch AI server, direct SSH)
-staging         # rsync + SSH + docker compose -f docker-compose.staging.yml up -d --build
+staging         # SSH + git pull + docker compose -f docker-compose.staging.yml up -d --build
 staging-logs    # SSH + docker compose logs -f
 staging-status  # SSH + docker compose ps
 
@@ -91,19 +93,15 @@ staging-status  # SSH + docker compose ps
 help            # Display available commands (DEFAULT)
 ```
 
-`.env` files are server-local — excluded from rsync (alongside `.git` and `__pycache__`). Each server maintains its own `.env` based on `.env.example`.
+`.env` files are server-local — not transferred during deployment (excluded from rsync for production, not tracked in git). Each server maintains its own `.env` based on `.env.example`.
 
 **Tradeoffs:** Simple, no external dependencies, works today. Deploy is tied to the commit via `/health` endpoint (`git_sha`). No audit trail beyond git history.
 
-#### Path B: git-pull (future improvement)
+#### Path B: git-pull for production (future improvement)
 
-If Gmelch IT opens outbound HTTPS access to `github.com` from RDX-APP-01, production deployment simplifies to `ssh RDX-APP-01 && git pull && make deploy` — eliminating the rsync step. GitHub Actions could further automate this on merge.
+Staging already uses git pull (Wilsch AI has internet access). Production still requires rsync because RDX-APP-01 has no outbound GitHub access. If Gmelch IT opens this access, production deployment simplifies to the same pattern as staging — eliminating the rsync step entirely. GitHub Actions could further automate this on merge.
 
-**Requirements for Gmelch IT:**
-- Outbound HTTPS (port 443) to `github.com` and `*.githubusercontent.com`
-- DNS resolution for these domains
-
-**Undefined:** Gmelch IT network change request — who initiates, through which channel, and how to frame the ask for Sikander. See [Meeting Agenda: Gmelch IT Network Access](ci-cd-staging-agenda).
+**Technical requirements for Gmelch IT:** See [Meeting Agenda: Gmelch IT Network Access](ci-cd-staging-agenda) for the exact network changes needed.
 
 #### Rollback
 
@@ -135,9 +133,9 @@ feature branch (issue-XXX)
   → merge → manual deploy to production
 ```
 
-**Review gate:** All PRs require Marius (SA) review before merge. This is the existing pattern from #1046 (PR #7 to staging).
+**Review gate:** PRs from staging → main require Marius (SA) review. Developer (David) has authority to merge feature branches to staging and deploy to staging independently. Marius only reviews the staging → main promotion.
 
-**Deploy is always manual.** After merge, the developer runs `make deploy` or `make staging` via Claude Code terminal. The Makefile handles rsync, SSH, and docker compose — the developer does not run these commands individually.
+**Deploy is always manual.** After merge, the developer runs `make deploy` or `make staging` via Claude Code terminal. The Makefile handles the full deployment sequence — the developer does not run rsync, SSH, or docker compose commands individually.
 
 #### Env Var Differences
 
