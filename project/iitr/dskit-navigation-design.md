@@ -75,17 +75,26 @@ Four phases, executed sequentially. Each phase produces a testable artifact befo
 
 ### 1. Infrastructure Setup
 
-Deploy the PageIndex + Ollama + OpenWebUI stack on IITR-STAGING:
+Deploy the PageIndex + Ollama + OpenWebUI stack on IITR-STAGING. PageIndex is not currently installed — this is a from-scratch deployment.
+
+**How PageIndex works:** PageIndex transforms documents into hierarchical JSON tree indexes (like a machine-readable table of contents with `title`, `text`, `page_index`, and nested `nodes`). At query time, the LLM receives the tree structure + user query and returns a `{thinking, node_list}` JSON identifying relevant nodes. The selected nodes' text becomes the context for answer generation. No vector database, no chunking — the LLM reasons through the document structure.
 
 - Clone PageIndex repo, apply tiktoken fallback patch for Qwen model names
 - Configure Ollama endpoint (`http://localhost:11436/v1`) as PageIndex backend
 - Set `OPENAI_BASE_URL` + dummy API key for PageIndex → Ollama routing
-- Deploy OpenWebUI with PageIndex as retrieval backend (pipeline filter)
+- Rewrite OpenWebUI pipeline filter for PageIndex (the existing `dskit_navigation_filter.py` is Typesense-based and non-functional — `DskitRagBase` import missing). New pipeline: load tree JSON → LLM tree search via Ollama → extract node text → generate answer with chapter references
+- Tree indexes stored as JSON files on disk. Multi-document loading strategy (all trees at once vs doc-level routing) depends on actual tree sizes — resolve during implementation
 - Build test harness: automated 29-question evaluation against expected answers from [test set](https://docs.google.com/spreadsheets/d/1gKLPVazIDCVQtpZaR509-NbiVZbjEnmkY44raMdbM2A/edit?gid=492982273)
 
 ### 2. Data Preparation
 
-Feed all source documents to PageIndex. PDFs go in directly (PageIndex handles PDF → tree natively). Non-PDF formats need conversion first. Ingest everything — full documents, not cherry-picked by question. Text-only extraction, no visual elements.
+Feed all source documents to PageIndex. PDFs go in directly (PageIndex handles PDF → tree natively). Non-PDF formats need conversion first. Ingest everything — full documents, not cherry-picked by question. Text-only extraction, no visual elements. Note: PageIndex warns that markdown converted from PDF/HTML often loses heading hierarchy — use `--pdf_path` for PDFs, reserve `--md_path` for natively structured markdown.
+
+**Data availability (as of 2026-03-09):**
+- Anwenderleitfaden PDF: on staging at `/home/shared/projects/IITR-RAG-V2/data/` and on [Google Drive](https://drive.google.com/file/d/1LzSc_X3yAlv1N55CvrWRAHsqGA7m2ISJ/view)
+- Masterfragen + Testfragen: on [Google Drive](https://drive.google.com/drive/folders/1gnxBulrnkGh-Oyly_jabofNo4SVivQhR) as Google Sheets
+- Templates: TBD — download from `core.iitr.de/tenant/3520/page/82177` (Keycloak auth required) or Marius provides
+- Web chapters 1-12: TBD — re-extraction needed as clean markdown (Pass 5). 7/29 test questions depend on these; first evaluation runs on available sources (22/29 questions)
 
 | Source | Format | Conversion | PageIndex Input |
 |--------|--------|------------|-----------------|
@@ -107,7 +116,7 @@ Run PageIndex on each prepared document to produce hierarchical tree indexes:
 
 ### 4. Evaluation & Iteration
 
-Run the test harness against the 29-question set with Quelle-mapped expected answers. Iterate on:
+Run the test harness against the 29-question set with Quelle-mapped expected answers. An existing test harness (`dskit_test_harness.py` on staging) provides reusable infrastructure: OpenWebUI API integration, LLM judge with German-language reasoning (Claude Sonnet via OpenRouter), and CORRECT/PARTIAL/INCORRECT scoring. Currently tests 14 questions — expand to the full 29-question set. The judge evaluates against expected key information per question. Iterate on:
 
 - Retrieval prompts (tree traversal instructions)
 - Answer generation prompts (format, language, detail level)
@@ -137,8 +146,9 @@ Target: ≥26/29 (>90%). Present sample answers to Stellmacher for qualitative r
 
 **Transcripts:**
 - [2026-01-15 Client Meeting](https://app.fireflies.ai/view/01KF0N6JDANZB4JGW9WEP4GNMC) — data gap discussion + dual-answer decision with Stellmacher/Kraska
-- [2026-03-04 Contract Meeting](https://drive.google.com/file/d/1wS9Z8jjH-hkeaCW5aQZ9aTXWBqIQ24H9/view) — Stellmacher "von bis" requirements, Kraska contract approval, Roman financial reset
+- [2026-03-04 Contract Meeting](https://drive.google.com/file/d/1wS9Z8jjH-hkeaCW5aQZ9aTXWBqIQ24H9/view) — Stellmacher cost corridor ("von bis") requirements for Contract 2, Kraska contract approval, Roman financial reset
 
 **Sessions:**
 - Original design: /Users/verdant/.claude/projects/-Users-verdant-Documents-projects-billable-IITR--IITR-NAVIGATION/46a000cb-3044-40d7-adaf-e30987553859.jsonl
 - Zielkorridor extraction: /Users/verdant/.claude/projects/-Users-verdant-Documents-projects-00-WILSCH-AI-INTERNAL--soloforce/a868fafa-95e4-413d-95c8-f50bd3ff3ed4.jsonl
+- Pass 1 extraction (Approach): /Users/daveFem/.claude/projects/-Users-daveFem-Desktop-claude-projects-03-IITR--deliverable/80abc9d7-5b68-42f4-8d65-c159fb0cb0e8.jsonl
