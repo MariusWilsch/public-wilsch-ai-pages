@@ -66,15 +66,15 @@ Each design doc links to its reference implementation (not embeds). The klimafol
 - Unblocks: #893 (DNS Subdomain Setup for UWI client apps)
 - Reference: existing `caddy-conf-subdomain-deployment-pattern.md`
 
-Design docs are stepping stones — they exist to get the content right and provide a validation surface for SA review. Once absorbed into the Operations Manual, they are archived.
+Design docs are active reference documents. They provide the full how/why/proof for each pattern — the Operations Manual links to them for detail but only embeds key commands. The design docs stay in hippocampus as living references, not stepping stones to discard.
 
 ### Part 3: Manual Absorption
 
 The Developer Operations Manual is the single source of truth after absorption. The design docs explain (Marius reviews). The manual section executes (AI follows steps).
 
-**Placement:** Fill Path B (Spec-Implement) gaps first. The manual already lists "staging environment setup" and "deploy procedures" as gaps in its deploy step. The 3 patterns fill these directly. If content doesn't fit Path B's flow, it gets a new section.
+**Placement:** Inline in Path B (Spec-Implement), step 7 (deploy to staging). The manual stays a pure workflow document — no separate reference sections. Deployment steps expand directly where the developer encounters them.
 
-**Routing table:** The manual adds a deployment routing section at the top of the deploy area:
+**Routing table:** Step 7 opens with a routing table:
 
 > When deploying, identify which patterns apply:
 > - Backend on VPS? → Docker Compose section
@@ -83,9 +83,7 @@ The Developer Operations Manual is the single source of truth after absorption. 
 >
 > Combining: Deploy services first (Docker/Vercel), then configure Caddy last (it needs a running target to proxy to).
 
-This handles cross-pattern projects (e.g., Invoice Agent uses all three) without each pattern needing to reference the others.
-
-**Key commands embedded inline** in the manual section — the manual is self-contained for AI execution. Links back to reference impls for working examples.
+**Content depth:** Key commands only (~20 lines total). Each pattern gets its essential commands (e.g., `make deploy`, `vercel deploy --prod`, `caddy reload`). The manual links to the design docs for full how/why/proof context. Self-contained for execution, not for understanding.
 
 ### Part 4: Deprecation & Cleanup
 
@@ -93,14 +91,15 @@ After absorption, source documents are cleaned up:
 
 | Document | Location | Action |
 |----------|----------|--------|
-| Makefile ADR | `velox-global-adrs` | Status → Deprecated + redirect to manual |
+| Makefile ADR (file 1) | `velox-global-adrs` | Status → Deprecated + redirect to manual |
+| Makefile ADR (file 2) | `velox-global-adrs` | Status → Deprecated + redirect to manual (identical duplicate) |
 | Caddy pattern doc | `velox-global-adrs` | Status → Deprecated + redirect to manual |
-| Vercel ADR (#011) | `velox-global-adrs` | Status → Deprecated + redirect to manual |
+| Vercel ADR (#011) | `velox-global-adrs` | Partial deprecation: deployment content → Deprecated + redirect. `/api` routing convention section stays active. |
 | Makefile ADR copy | `hippocampus/global` | Delete |
 | Caddy doc copy | `hippocampus/global` | Delete |
 | Vercel staging copy | `hippocampus/global` | Delete (if exists) |
 
-The `velox-global-adrs` copies stay as historical decision records with a redirect note: *"Superseded by Developer Operations Manual, Deployment Patterns section."* The hippocampus copies are deleted — the manual in hippocampus is the SSoT.
+The `velox-global-adrs` ADRs stay as historical decision records with deprecation notices: *"Superseded by Developer Operations Manual, Deployment Patterns section."* Exception: the Vercel ADR's `/api` routing convention remains active — developers working on frontends find it where they look. The hippocampus copies of deprecated ADRs are deleted. The 3 design docs (Docker Compose, Vercel Hobby, Caddy) stay in hippocampus as active reference documents linked from the manual.
 
 ---
 
@@ -111,4 +110,5 @@ The `velox-global-adrs` copies stay as historical decision records with a redire
 - **Reference Impls:** [klimafolgenschutz Vercel README](https://github.com/DaveX2001/klimafolgenschutz-website/blob/staging/README.VERCEL_DEPLOY_WITHOUT_PRO.MD), [ROHDEX Docker stack](https://github.com/MariusWilsch/rohdex/blob/main/docker-compose.yml), [ROHDEX Makefile](https://github.com/MariusWilsch/rohdex/blob/main/Makefile)
 - **Existing ADRs:** [Makefile ADR](https://github.com/veloxforce/velox-global-adrs/blob/main/docker-compose-makefile-targets-standardization.md), [Caddy pattern](https://github.com/veloxforce/velox-global-adrs/blob/main/caddy-conf-subdomain-deployment-pattern.md), [Vercel ADR](https://github.com/veloxforce/velox-global-adrs/blob/main/use-vercel-for-frontend-deployments-with-branch-environments.md)
 - **Operations Manual:** [Developer Operations Manual](https://mariuswilsch.github.io/public-wilsch-ai-pages/global/developer-operations-manual-wilsch-ai-services)
-- **Sessions:** [Rubber duck 620ef53e](https://github.com/MariusWilsch/claude-code-conversation-store/blob/main/projects/-Users-daveFem-Desktop-claude-projects-00-WILSCH-AI-INTERNAL--deliverable/620ef53e-c84d-49f9-8cf3-8312f72aff48.jsonl), [Probe cb31db0d](https://github.com/MariusWilsch/claude-code-conversation-store/blob/main/projects/-Users-daveFem-Desktop-claude-projects-00-WILSCH-AI-INTERNAL--deliverable/cb31db0d-980c-4200-8583-adee2c9328cb.jsonl)
+- **Design Docs:** [Docker Compose](https://mariuswilsch.github.io/public-wilsch-ai-pages/project/WILSCH-AI-INTERNAL/docker-compose-backend-deployment-design), [Vercel Hobby](https://mariuswilsch.github.io/public-wilsch-ai-pages/project/WILSCH-AI-INTERNAL/vercel-hobby-multi-dev-deploy), [Caddy Subdomain](https://mariuswilsch.github.io/public-wilsch-ai-pages/project/WILSCH-AI-INTERNAL/caddy-subdomain-routing-design)
+- **Sessions:** [Rubber duck 620ef53e](https://github.com/MariusWilsch/claude-code-conversation-store/blob/main/projects/-Users-daveFem-Desktop-claude-projects-00-WILSCH-AI-INTERNAL--deliverable/620ef53e-c84d-49f9-8cf3-8312f72aff48.jsonl), [Probe pass 1 cb31db0d](https://github.com/MariusWilsch/claude-code-conversation-store/blob/main/projects/-Users-daveFem-Desktop-claude-projects-00-WILSCH-AI-INTERNAL--deliverable/cb31db0d-980c-4200-8583-adee2c9328cb.jsonl), [Probe pass 2 (absorption) 223b6503](https://github.com/MariusWilsch/claude-code-conversation-store/blob/main/projects/-Users-daveFem-Desktop-claude-projects-00-WILSCH-AI-INTERNAL--deliverable/223b6503-c1e9-465f-9e55-bf2387888f11.jsonl)
