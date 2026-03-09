@@ -624,8 +624,9 @@ The Dev Lead opens a chat, uploads the test fixture, and walks through Steps 0�
 |---------|----------|---------|
 | `cafm-asset-upload-sample.xlsx` | `data/` | Primary — happy case end-to-end (200 rows, 15 columns, 4 buildings) |
 | `fmm-qatar-housekeeping.xlsx` | `data/` | Optional — Step 0 rejection (non-equipment detection) |
+| `Asset Data (1).xlsx` | [#852 attachment](https://github.com/DaveX2001/deliverable-tracking/issues/852) | Phase 2 — 3 sheets, 2,649 rows, dual Condition+Status enums, multi-sheet test (from Mujahid) |
 
-Both fixtures are checked into the archibus-bulk-import repo.
+Primary fixture and rejection fixture are checked into the archibus-bulk-import repo. Phase 2 fixture is an issue attachment pending repo commit.
 
 #### Expected Contract
 
@@ -668,7 +669,7 @@ The Step 2 prompt (`prompts/step-2.md`) serves as the managed artifact stand-in 
 
 These traits follow Anthropic's Persona Selection Model: the AI behaves like a competent human colleague in this environment. Designing interactions that match how you would brief a senior CAFM data engineer is effective, not naive.
 
-**Mechanical layer (10-section recipe):** The prompt follows Anthropic's prompt engineering structure:
+**Mechanical layer (10-section recipe):** The prompt TARGET follows Anthropic's prompt engineering structure. The current `prompts/step-0-1.md` (617 lines) partially implements this — see [prompt audit](https://github.com/DaveX2001/deliverable-tracking/blob/main/.claude/tracking/issue-1075/prompt-audit.md) for gap analysis. Gaps are addressed through iterative testing per ADR 002, not upfront rewrite.
 
 | Section | Content for Step 2 |
 |---------|-------------------|
@@ -687,7 +688,7 @@ These traits follow Anthropic's Persona Selection Model: the AI behaves like a c
 
 **XML structure:** All context sections use XML delimiters (`<bem_context>`, `<excel_analysis>`, `<mapping_rules>`) for clear boundaries and token efficiency.
 
-*(Source: Extraction pass 2026-03-09 — PSM behavioral model + Anthropic prompt engineering recipe. Miguel transcript: audience expectations.)*
+*(Source: Extraction pass 2026-03-09 — PSM behavioral model + Anthropic prompt engineering recipe. Miguel transcript: audience expectations. Prompt audit: extraction pass 2026-03-09 session ff776065.)*
 
 ---
 
@@ -722,3 +723,4 @@ These traits follow Anthropic's Persona Selection Model: the AI behaves like a c
 - **Reference:** [Anthropic PSM — Persona Selection Model](https://alignment.anthropic.com/2026/psm/) — behavioral layer for prompt architecture
 - **Reference:** [Anthropic Prompt Engineering Course](https://www.youtube.com/watch?v=ysPbXH0LpIE) — 10-section mechanical prompt recipe
 - **Session:** /Users/daveFem/.claude/projects/-Users-daveFem-Desktop-claude-projects-01-ARCHIBUS--deliverable/d39c2d40-a2af-4063-ae8e-ebacd36a83ae.jsonl
+- **Session:** /Users/daveFem/.claude/projects/-Users-daveFem-Desktop-claude-projects-01-ARCHIBUS--deliverable/ff776065-b200-4fda-98bf-c957873ae951.jsonl
