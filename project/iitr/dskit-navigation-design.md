@@ -33,7 +33,7 @@ This project rebuilds the navigation system using PageIndex — a vectorless, tr
 | **Success** | Test harness scores ≥26/29 (>90%) using PageIndex retrieval. Answers include chapter reference from tree traversal path. Stellmacher/Kraska validate answer quality via sample review. |
 | **Done test** | "Can I write a meeting agenda with open design questions?" → If NO → design is complete |
 
-**Test harness mechanism:** Sends each question through PageIndex tree traversal (Qwen 3.5, think:false) to retrieve relevant sections, then generates answer from retrieved context. An LLM judge evaluates semantic correctness against expected answers from the Quelle-mapped test set. PASS/FAIL per question with German-language reasoning.
+**Test harness mechanism:** Sends each question through PageIndex tree traversal (Qwen 3.5, think:false) to retrieve relevant sections, then generates answer from retrieved context. An LLM judge evaluates each answer across four dimensions (content accuracy, format, chapter reference, source traceability) defined in the Test Rubric section. PASS/FAIL per question with German-language reasoning.
 
 ---
 
@@ -149,6 +149,67 @@ Target: ≥26/29 (>90%). Present sample answers to Stellmacher for qualitative r
 
 ---
 
+## Test Rubric
+
+Every answer is evaluated across four dimensions by an LLM judge (Claude Sonnet via OpenRouter). The judge evaluates from the perspective of a non-specialist customer — someone who doesn't know the DS-Kit inside out and asks general questions. An answer that addresses the customer's intent is correct, even if it deviates from the pre-written expected answer.
+
+### Evaluation Dimensions
+
+| Dimension | What it measures | Example |
+|-----------|-----------------|---------|
+| **Content Accuracy** | Does the answer help the customer solve their problem? Judged by user intent, not keyword matching. | Q5: General "yes, annual training" answer passes — it addresses the customer's actual question about whether training is included. |
+| **Format** | Does the answer follow the dual-answer structure? Section 1: general answer to the question. Section 2: navigation hint pointing to where in the DS-Kit to find it (e.g., "Kapitel 11, Unterpunkt 2"). | "Ja, Sie erhalten Schulungen. Die Schulung sollte jährlich erfolgen. → Weitere Informationen finden Sie unter Kapitel 11 im Bereich eLearning." |
+| **Chapter Reference** | Does the answer cite the correct DS-Kit chapter? Verified at two levels: (1) the answer text mentions the right chapter, and (2) the PageIndex tree traversal navigated to the correct document section. Skip for questions without chapter mapping (e.g., FreeTools, general service questions). | Q21 citing "Kapitel 9" when the correct reference is "Kapitel 11.2" = false positive. |
+| **Source Traceability** | Is the answer grounded in actual source documents? Anti-hallucination check — the facts in the answer must exist in the indexed data, not be fabricated by the model. | Answer states "Kündigung ist 3 Monate" — verified: this fact exists in the Q&A CSV. |
+
+### Scoring
+
+**Binary: PASS or FAIL.** No partial scores.
+
+A question **passes** when:
+1. Content accuracy: the answer addresses the customer's intent (user-intent standard)
+2. No false chapter reference: the answer either cites the correct chapter, cites no chapter, or the question has no chapter mapping
+
+A question **fails** when:
+- The answer is factually wrong or doesn't address the customer's intent, OR
+- The answer cites a wrong chapter (false positive — actively misleads)
+
+**Format** and **source traceability** are diagnostic dimensions. They inform what to improve but do not determine PASS/FAIL for the accuracy target. A question can pass with a missing navigation hint — but a missing navigation hint is tracked as an improvement area.
+
+**Target: ≥26/29 (>90%) PASS.** Agreed with Rolnik (2026-01-15): deviations from expected answers count as correct when they address the question's intent from a non-specialist perspective.
+
+### Special Cases
+
+**Intentional non-answers (Q16, Q28):** Questions about pricing where the correct behavior is to redirect to support — not to answer. The "expected answer" for these questions is a support redirect (e.g., "Kontaktieren Sie uns unter dskit@iitr.de"). PASS = redirected without leaking a price. FAIL = gave a price or answered the question directly. Chapter reference and source traceability are N/A for redirect questions.
+
+**Decision source:** Kraska (2026-01-15): "Wollen wir überhaupt die Preise nennen? Eigentlich ja nicht."
+
+### Expected Answer Schema
+
+Each test question follows a three-column format. Stellmacher adds the Source column to the test set.
+
+| Column | Content | Example |
+|--------|---------|---------|
+| **Frage** | The customer's question | "Wo finde ich die Texte für die Webseitendatenschutzerklärung?" |
+| **Expected Answer** | The reference answer (key information) | "Texte für die Webseiten-Datenschutzerklärung finden Sie in Kapitel 8." |
+| **Source** | Where in the source data the answer lives | "Kapitel 8" or "CSV Zeile 1" |
+
+The Source column enables systematic validation: compare the PageIndex tree traversal path against the expected source location.
+
+### Test Infrastructure
+
+**Ownership (per Dev Lead Witness & Review System, Part 2):**
+
+| Role | Responsibility |
+|------|---------------|
+| **JA** | Defines the rubric — this section. What to evaluate, scoring rules, dimension definitions. |
+| **Dev Lead** | Provisions the authoritative expected answers. Ensures one version, accessible, up-to-date. |
+| **Developer** | Implements the judge prompt from this rubric. Builds and runs the test harness. |
+
+**Existing harness:** `dskit_test_harness.py` on IITR-STAGING provides reusable infrastructure — async OpenWebUI API integration, OpenRouter judge, JSON output. Rewrite the judge prompt to evaluate the four dimensions above. Change scoring from CORRECT/PARTIAL/INCORRECT to binary PASS/FAIL. Expand the test set from 14 to 29 questions. Fix Q10 chapter reference (Kapitel 09 → 11.2, per Stellmacher correction 2026-01-15).
+
+---
+
 ## Source
 
 **Data Files:**
@@ -175,3 +236,4 @@ Target: ≥26/29 (>90%). Present sample answers to Stellmacher for qualitative r
 - Zielkorridor extraction: /Users/verdant/.claude/projects/-Users-verdant-Documents-projects-00-WILSCH-AI-INTERNAL--soloforce/a868fafa-95e4-413d-95c8-f50bd3ff3ed4.jsonl
 - Pass 1 extraction (Approach): /Users/daveFem/.claude/projects/-Users-daveFem-Desktop-claude-projects-03-IITR--deliverable/80abc9d7-5b68-42f4-8d65-c159fb0cb0e8.jsonl
 - Pass 2 extraction (Current Deployment): /Users/daveFem/.claude/projects/-Users-daveFem-Desktop-claude-projects-03-IITR--deliverable/ca51af04-8bef-46c9-b294-b7a2c161da01.jsonl
+- Pass 3 extraction (Test Rubric): /Users/daveFem/.claude/projects/-Users-daveFem-Desktop-claude-projects-03-IITR--deliverable/42a08f93-6d0e-4049-8015-1e9910c597bb.jsonl
