@@ -494,12 +494,40 @@ Merge to staging branch. The worktree's draft PR (created during Implementation 
 
 **Step 7: Deploy to Staging**
 
-```bash
-ssh WILSCH-AI-SERVER
-cd ~/projects/billable/{project}/ && git pull && make staging
-```
+Identify which deployment pattern(s) apply, then execute:
 
-*(Gap: Staging environment setup is a prerequisite per project — containers, configs, so Developer can deploy without Marius)*
+| Project type | Pattern | Key command |
+|-------------|---------|-------------|
+| Backend on VPS | Docker Compose | `ssh {SERVER}` → `git pull` → `make staging` |
+| Frontend on Vercel | Vercel Hobby | Push to `staging` branch (GHA auto-deploys) |
+| Needs subdomain | Caddy | `sudo caddy validate` → `sudo systemctl reload caddy` |
+
+**Combining patterns:** Deploy services first (Docker Compose / Vercel), then configure Caddy last (it needs a running target to proxy to).
+
+**Docker Compose Backend:**
+```bash
+ssh {SERVER}
+cd ~/projects/{project}/ && git pull && make staging
+# Verify: make logs (check for errors)
+```
+→ Full pattern: [Docker Compose Design Doc](https://mariuswilsch.github.io/public-wilsch-ai-pages/project/WILSCH-AI-INTERNAL/docker-compose-backend-deployment-design)
+
+**Vercel Hobby Multi-Dev:**
+```bash
+git push origin staging  # GHA deploys automatically via deploy token
+# Verify: check GHA run status in GitHub Actions tab
+```
+→ Full pattern: [Vercel Hobby Design Doc](https://mariuswilsch.github.io/public-wilsch-ai-pages/project/WILSCH-AI-INTERNAL/vercel-hobby-multi-dev-deploy)
+
+**Caddy Subdomain (if new subdomain needed):**
+```bash
+ssh {SERVER}
+sudo nano /etc/caddy/conf.d/{SERVICE}.conf
+sudo caddy validate --config /etc/caddy/Caddyfile
+sudo systemctl reload caddy
+# Verify: curl -I https://{SERVICE}.wilsch-deployment.com
+```
+→ Full pattern: [Caddy Subdomain Design Doc](https://mariuswilsch.github.io/public-wilsch-ai-pages/project/WILSCH-AI-INTERNAL/caddy-subdomain-routing-design)
 
 ---
 
@@ -680,8 +708,8 @@ If approved → merge to production. Marius is the final gatekeeper.
 - [ ] Priority visibility in GitHub
 
 ### Infrastructure Gaps
-- [ ] **Staging environment setup** (prerequisite per project — containers, configs, so Developer can deploy without Marius)
-- [ ] Deploy to staging procedure (project-specific Makefile targets)
+- [x] ~~Staging environment setup~~ — filled by [Deployment Pattern Standardization](https://mariuswilsch.github.io/public-wilsch-ai-pages/project/WILSCH-AI-INTERNAL/deployment-pattern-standardization-design) (Step 7 routing table)
+- [x] ~~Deploy to staging procedure~~ — filled by Step 7 deployment patterns (Docker Compose, Vercel Hobby, Caddy)
 - [ ] Smoke test checklists (project-specific, per core flow)
 
 ### Company-Wide Gaps
