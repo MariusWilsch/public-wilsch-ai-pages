@@ -19,9 +19,8 @@ Rebuild the DS-Kit Navigation system using PageIndex (vectorless, tree-based ret
 
 ## Acceptance
 
-- ≥26/29 (>90%) correct answers on Quelle-mapped test set
 - Chapter-referenced answers (from PageIndex tree path)
-- Stellmacher/Kraska qualitative sample review
+- Stellmacher/Kraska qualitative review with iteration cycles within budget
 
 ---
 
