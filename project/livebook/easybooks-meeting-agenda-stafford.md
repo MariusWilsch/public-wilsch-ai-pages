@@ -7,14 +7,12 @@ publish: true
 
 ## Meeting Goal
 
-Lock V1 product scope by resolving the 5 configuration choices that determine how the EasyBooks core pipeline is positioned. The core build (Plug → Opera → Shakespeare) is constant — these choices shape the product around it. Additionally, resolve 3 SA-internal decisions required before the engagement can proceed.
+Lock V1 product scope by resolving the 4 configuration choices that determine how the EasyBooks core pipeline is positioned. The core build (Plug → Opera → Shakespeare) is constant — these choices shape the product around it.
 
 1. **V1 audience path** — which of 5 audience clusters is the V1 target
 2. **V1 revenue stream** — which of 10 streams funds V1
 3. **V1 product configuration** — template, voice style, output format
-4. **Team model transparency** — whether to communicate the AI-augmented delivery model
-5. **Commercial terms** — retainer structure and pricing
-6. **Proof of capability** — which projects to showcase in the RFP response
+4. **Delivery medium** — web app, mobile app, or API — determines app layer scope
 
 ## Pre-Read
 
@@ -68,47 +66,24 @@ Shakespeare supports 5 book templates, 6 voice styles, and 5 output formats. V1 
 
 **To resolve:** Which template and voice style match the V1 audience — selection follows directly from Topic 1's outcome.
 
-### 4. AI-augmented team model — reveal or internal
+### 4. Delivery medium — web app, mobile app, or API
 ⏱️ 10 min
 
-Stafford does not know that the team operates with AI as a force multiplier. In both transcripts (Feb 18 + Feb 20), he compares our pricing against traditional freelancers ($1,500-$3,000 per build). No mention of Claude Code, force multiplication, or AI-augmented development was made in any conversation.
+Stafford's two technical documents (EB Business Master, March Technical Lifecycle Plan) describe 4 engines with database schemas, layer architectures, and phase plans — all backend/engine specifications. Neither document specifies how users access the system: web app, mobile app, desktop app, or API-only. The older UX docs (My NS Family Book) have mockups but pre-date the EasyBooks 4-engine architecture.
 
-- The "Fractional AI Department" pitch from #847 positions AI as the competitive advantage — but that pitch was designed for the service model, not necessarily for every client
-- Explaining the model differentiates from the $1,500 freelancers he's comparing against
-- Not explaining means delivering faster than expected without revealing how
+- The EB Business Master describes what the engines DO, not how users interact with them
+- The March Technical Plan has developer-ready specs per engine but zero frontend specs
+- The app layer (landing page, audio recorder, interview UI, book viewer) is required for a working product
+- App complexity scales with audience path: operator dashboard (Path A) vs user-facing app (Path B) vs full platform (Path C)
+- This is significant build scope beyond the engine specs that must be accounted for in the 30-day commitment
 
-**To resolve:** Whether the AI force multiplier model is part of the Stafford pitch or remains an internal operational advantage.
-
-### 5. Commercial terms — retainer structure and pricing
-⏱️ 20 min
-
-No contract exists. Negotiation is ongoing. The Feb 21 position was "tending towards no" (retainer too low at 3.5K). The Feb 22 position shifted to "retainer + space fee for three months." Stafford responded with a formal RFP on Mar 8, suggesting the deal is alive. SA position: start with retainer + milestones, defer success-based fee until relationship is established.
-
-- The design doc deliberately contains no numbers — commercial terms are SA authority
-- The Three-Slice Ownership Model applies: Wilsch AI owns the function, Stafford owns the results
-- Retainer amount follows scope clarity — determined after V1 scope is locked (Topics 1-3)
-- Build cost is bundled in the retainer — not itemized per engine
-- Running costs (hosting, LLM inference, storage) are separable
-
-**To resolve:** The commercial structure (retainer amount, milestone definitions, payment terms) that Marius brings to Stafford.
-
-### 6. Proof of capability — project selection for RFP Section D
-⏱️ 15 min
-
-Stafford's RFP requests specific examples across four categories: AI-agent systems, growth/automation, document generation, and audio/transcription. Confidentiality constraints apply to most client projects.
-
-- Paul Faceless YouTube is a candidate (content generation + automation pipeline)
-- Each example needs: what was built, role, team size, timeline, budget range, what worked/what you'd change
-- The design doc has a placeholder table in Part 9 with "TBD — SA selects" entries
-- Traceline itself could serve as proof of the methodology
-
-**To resolve:** Which VeloxForce projects are shareable and map to Stafford's four capability categories.
+**To resolve:** The delivery medium for V1 — determines app layer build scope and whether additional frontend development is needed beyond the AI agents.
 
 ## Meeting Format
 
 - **Type:** SA review + Stafford alignment
 - **Expectation:** SA reviews design doc v0.3 holistically (Speechify), brings commercial position. Stafford needs to see the 5 audience clusters and 10 revenue streams — his choices drive everything downstream.
-- **Outcome:** V1 scope locked (Topics 1-3) → commercial terms decided (Topics 4-6) → engagement can proceed
+- **Outcome:** V1 scope locked (Topics 1-4) → engagement scope defined
 
 ## Related
 
