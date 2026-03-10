@@ -2,29 +2,29 @@
 publish: true
 ---
 
-# Meeting Agenda: VET DOCX + Invoice — Rohdex
+# Meetingagenda: VET DOCX + Rechnung — Rohdex
 [[project-rohdex]]
 
-**Date:** Tuesday, 2026-03-11, 12:30
-**Attendees:** Marius Wilsch, Konstantin Fitermann
+**Datum:** Dienstag, 2026-03-11, 12:30
+**Teilnehmer:** Marius Wilsch, Konstantin Fitermann
 
-## Meeting Goal
+## Meetingziel
 
-Two decisions that unblock next steps on the ROHDEX Dokumentenverarbeitung system.
+Zwei Entscheidungen die nächste Schritte am ROHDEX Dokumentenverarbeitungssystem freigeben.
 
-1. **VET output format decided** — whether the veterinary certificate needs DOCX output in addition to the current Excel, resolving the last open item in the design doc
-2. **Invoice timing agreed** — whether the €720 migration invoice goes out now or after the Tara bugfix is complete
+1. **VET-Ausgabeformat entschieden** — ob das Veterinärzertifikat zusätzlich zum Excel auch als DOCX generiert werden soll, letzter offener Punkt im Design Doc
+2. **Migrationsabnahme bestätigt** — Konstantin bestätigt dass Migration auf RDX-APP-01 abgeschlossen ist, Rechnung geht direkt raus
 
-## Pre-Read
+## Vorbereitungsmaterial
 
-- [Design Doc — Part 5: Bekannte Probleme](https://mariuswilsch.github.io/public-wilsch-ai-pages/project/rohdex/hosting-anforderungen) — VET section shows Undefined marker for output format
-- [SLA v4 Wartungsvertrag §1.1](https://mariuswilsch.github.io/public-wilsch-ai-pages/project/rohdex/sla-v4-wartungsvertrag) — migration scope (€720) and billing terms (§4.2)
+- [Design Doc — Part 5: Bekannte Probleme](https://mariuswilsch.github.io/public-wilsch-ai-pages/project/rohdex/hosting-anforderungen) — VET-Abschnitt mit Undefined-Marker für Ausgabeformat
+- [SLA v4 Wartungsvertrag §1.1](https://mariuswilsch.github.io/public-wilsch-ai-pages/project/rohdex/sla-v4-wartungsvertrag) — Migrationsumfang (€720) und Abrechnungsbedingungen (§4.2)
 
 ---
 
-## Discussion Topics
+## Diskussionsthemen
 
-*Starting points for discussion, not limited to these.*
+*Einstiegspunkte, nicht abschließend.*
 
 ### 1. VET-Ausgabeformat — Excel-only oder zusätzlich DOCX
 ⏱️ 10 min
@@ -37,39 +37,25 @@ Das System generiert alle 8 Dokumenttypen als Excel-Dateien. Im Dezember 2025 sa
 
 **To resolve:** Ob das VET-Ausgabeformat von Excel-only auf DOCX erweitert werden soll — und falls ja, ob Konstantin ein Template liefert oder wir eines erstellen.
 
-### 2. Rechnungsstellung Migration — jetzt oder nach Tara-Bugfix
+### 2. Migrationsabnahme und Rechnungsstellung
 ⏱️ 5 min
 
-Die Migration auf RDX-APP-01 ist seit dem 5. März live. SLA v4 §1.1 beziffert die Migration auf €720 (8h), inklusive ~1h für den Tara-Bugfix. Der Tara-Fix (Dezimalstellen-Fehler in der Packliste) ist noch offen — er benötigt die Staging-Umgebung.
+Die Migration auf RDX-APP-01 ist seit dem 5. März live. Das System verarbeitet E-Mails produktiv. SLA v4 §1.1 beziffert die Migration auf €720 (8h).
 
-- System verarbeitet E-Mails produktiv auf RDX-APP-01 (verifiziert 5. März)
-- Tara-Bugfix (~1h) blockiert durch Staging-Setup
+- System läuft produktiv auf RDX-APP-01 (verifiziert 5. März)
+- Tara-Bugfix (Dezimalstellen in Packliste) wird diese Woche ebenfalls deployed
 - SLA v4 §4.2: Rechnungsstellung monatlich zum 1., Zahlungsziel NET 14
 
-**To resolve:** Ob die €720-Migrationsrechnung jetzt gestellt wird (Tara separat als T&M) oder als Gesamtpaket nach Abschluss des Tara-Fixes.
+**To resolve:** Bestätigung dass die Migration abgeschlossen ist — Rechnung (€720) wird direkt im Anschluss gestellt.
 
-## Meeting Format
+## Meetingformat
 
-- **Type:** Discovery
-- **Duration:** ~15 min
-- **Expectation:** Konstantin entscheidet beide Punkte — keine Vorbereitung nötig
-- **Outcome:** Zwei Entscheidungen die nächste Schritte freigeben
+- **Typ:** Discovery
+- **Dauer:** ~15 min
+- **Erwartung:** Konstantin entscheidet beide Punkte — keine Vorbereitung nötig
+- **Ergebnis:** Zwei Entscheidungen die nächste Schritte freigeben
 
-## Reference: Kostenrahmen VET DOCX
-
-| Aufgabe | Aufwand |
-|---------|---------|
-| DOCX-Library + VetDocxStrategy | ~2h |
-| Template-Integration (Konstantin liefert Template) | ~1h |
-| Template-Erstellung (wir bauen von Grund auf) | ~2–3h |
-| Testing mit bestehenden Datensätzen | ~1–2h |
-| Integration in Dokumenten-Pipeline | ~0,5h |
-| **Gesamt (Template geliefert)** | **~4–5h = €360–450** |
-| **Gesamt (Template von Grund auf)** | **~5–7h = €450–630** |
-
-Abrechnung unter SLA v4 (§4.1: €90/h, 30-Min-Takte).
-
-## Related
+## Verweise
 
 - **Issue:** [#1037 — ROHDEX: Clarify VET DOCX output request](https://github.com/DaveX2001/deliverable-tracking/issues/1037)
 - **Design Doc:** [Hosting-Anforderungen — Part 5](https://mariuswilsch.github.io/public-wilsch-ai-pages/project/rohdex/hosting-anforderungen)
