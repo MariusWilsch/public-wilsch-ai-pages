@@ -438,8 +438,7 @@ Every item traces back to a specific section of Stafford's EB Business Master or
 | 6 | AI generates different preview designs per person | March Tech: Plug Phase 2 | | ❌ Out |
 | 7 | Share your book preview on social media | March Tech: Plug Phase 2 | | ❌ Out |
 | | **OPERA (AI Interviewer)** | | | |
-| 8 | AI responds to what you say and probes deeper | March Tech: Opera Phase 2 (pulled in) | Must | ✅ In |
-| 9 | AI matches your emotional tone (slows down, gets excited with you) | March Tech: Opera §Layer 1 | Should | ✅ In |
+| 8 | AI responds to what you say — probes deeper, matches your tone, reads the room | March Tech: Opera §Layer 1 + Phase 2 (pulled in) | Must | ✅ In |
 | 10 | AI knows what makes stories compelling and asks accordingly | March Tech: Opera §Layer 2 | Should | ✅ In |
 | 11 | AI tracks people, places, events — doesn't lose context | March Tech: Opera §Extraction | Must | ✅ In |
 | 12 | AI scores whether the interview is producing good book material | March Tech: Opera §Story Quality | Should | ✅ In |
@@ -475,7 +474,7 @@ Every item traces back to a specific section of Stafford's EB Business Master or
 | 39 | Admin panel for managing interviews and books | Required for operations | | ❌ Out |
 | 40 | Analytics dashboard | Required for optimization | | ❌ Out |
 
-**Score: 19 in (7 Must / 12 Should) · 21 out.** This table IS the 30-day commitment. If items from the "Out" column are required in the first engagement, the scope exceeds what can be delivered by April 23rd.
+**Score: 18 in (7 Must / 11 Should) · 21 out.** This table IS the 30-day commitment. If items from the "Out" column are required in the first engagement, the scope exceeds what can be delivered by April 23rd.
 
 **Build separation:** AI agents (Opera questioning, extraction, composition) and the application layer (frontend, audio recording, user flows, book viewer) are different skill sets built in parallel. The agents produce data and content; the application displays and interacts with it. Both are required for a working product.
 
