@@ -11,20 +11,19 @@ Design doc for an AI-powered service that extracts "pearls" (high-value teaching
 
 ## Problem Statement
 
-Omega Bone is a vocal coach with 25+ years of experience and 7,400+ students trained worldwide. She has accumulated a large library of educational singing content — a 10-track album ("Come With Me") and ~300 YouTube class recordings ("Learn to Sing with Omega", COVID era, 2-3h each) — that contains high-value moments buried in hours of raw footage.
+Omega Bone is a vocal coach with 25+ years of experience and 7,400+ students trained worldwide. She has accumulated ~300 YouTube class recordings ("Learn to Sing with Omega", COVID era, 2-3h each) containing high-value moments buried in hours of raw footage.
 
-These moments — coaching breakthroughs, authenticity discoveries, quotable teaching wisdom — are what Omega calls "pearls." She cannot efficiently identify and extract them manually: "sorting through them makes my brain and my eyes bleed." Generic clipping tools like Opus Clip fail because they detect topics and engagement signals, not the domain-specific coaching moments that constitute Omega's value. As her business advisor Anthony put it: "there's no topic" for generic tools to latch onto.
+These moments are what Omega calls **"pearls"** — high-value teaching moments where coaching breakthroughs, authenticity discoveries, and quotable wisdom surface naturally during lessons. Pearls follow a narrative arc: relatable starting point → coaching moment → breakthrough (see Part 3: Pearl Taxonomy for the full classification). She cannot efficiently identify and extract them manually: "sorting through them makes my brain and my eyes bleed." Generic clipping tools like Opus Clip fail because they detect topics and engagement signals, not the domain-specific coaching moments that constitute Omega's value. As her business advisor Anthony put it: "there's no topic" for generic tools to latch onto.
 
 Omega needs an AI-powered service that understands her teaching domain well enough to extract pearls from raw content and produce post-ready short-form clips for social media (YouTube Shorts, TikTok, Instagram Reels), feeding her marketing funnel: clips → website → discovery session → paid programme.
 
-This design doc does NOT cover: website development, pricing strategy, album production, or the programme structure itself.
+This design doc does NOT cover: website development, pricing strategy, album content processing, album production, or the programme structure itself.
 
 **Preconditions:**
-- "Come With Me" album exists (10 tracks, produced music videos on YouTube)
 - ~300 Learn to Sing class recordings exist on YouTube (Streamyard → YouTube)
 - Business funnel is defined (Figma website redesign, 3-tier programme structure)
-- Persona document describing the target avatar is pending from client
-- Album release date: March 29th (urgency driver)
+- Persona document with burden index: see [Omega Persona Doc] (separate artifact)
+- Client urgency: career transition — Omega faces potential job loss and needs her singing business to become viable income ("I need to be in business sooner than later")
 
 ---
 
@@ -33,7 +32,7 @@ This design doc does NOT cover: website development, pricing strategy, album pro
 | Element | Definition |
 |---------|-----------|
 | **Goal** | Omega has a managed AI service that extracts pearls from her content library and delivers post-ready short-form clips she can publish directly to social media. |
-| **Success** | Omega reviews a batch of AI-generated clips from her album and class recordings, finds them publishable without manual editing, and confirms they match her teaching philosophy — authenticity over technical perfection, "the next natural singer, not another Whitney Houston." |
+| **Success** | Omega reviews a batch of AI-generated clips from her class recordings, finds them publishable without manual editing, and confirms they match her teaching philosophy — authenticity over technical perfection, "the next natural singer, not another Whitney Houston." |
 | **Done test** | Can we write a meeting agenda with open design questions about how the clipping service works? If no → the design is complete and ready for implementation. |
 
 ---
@@ -42,28 +41,27 @@ This design doc does NOT cover: website development, pricing strategy, album pro
 
 ### Part 1: Data Sources & Input Types
 
-Two content types serve as input, both hosted on Omega's YouTube channel (@omegabone):
+One content type serves as input, hosted on Omega's YouTube channel (@omegabone):
 
-**Primary — "Come With Me" Album (10 tracks)**
-Produced music videos featuring nature footage with lyric overlays and Omega's original songs. Single-camera, already edited. Tracks: Beautiful, One, Top of the World, The Beast, I Am, Mirror, Dreams (Living in Love), Born Again, Light of GOD, Come With Me. Album release: March 29th.
-
-**Secondary — Learn to Sing Class Recordings (~300 videos)**
+**Learn to Sing Class Recordings (~300 videos)**
 COVID-era live-streamed classes via Streamyard, published to YouTube (mirrored on Facebook). Zoom-grid format with ~10-25 students on camera, 2-3 hours each. Individual students perform songs of their choice, Omega provides feedback. ~5 clippable moments per class.
 
-**Pending:** Persona document from client describing the target avatar in detail. To be integrated when received.
+**Excluded from scope:** Omega's "Come With Me" album (10 tracks, produced music videos) is not processed by this service. Album content may be discussed with the client for future inclusion as a top-of-funnel awareness channel. See [Meeting Agenda Topic 6](#6-album-clips-as-future-top-of-funnel).
 
 ### Part 2: Target Avatar & Content Strategy
 
 The target avatar is psychographic, not demographic: creative adults who carried a childhood dream of singing but never pursued it. Anthony (business advisor) defined the exclusions: not entrepreneurs, not parents — "there's no mention whatsoever of children, business, Entrepreneur on the YouTube channel." Omega clarified: "It's not feminine. It's the creator."
 
-Clips serve Omega's marketing funnel:
-- **Top of funnel:** Album clips drive awareness (album = "the top of the funnel" per Omega). Clip emotion: accessibility — "I could do that too."
-- **Mid funnel:** Class clips show transformation proof. Clip emotion: confidence — "look how far they came."
-- **Conversion:** All clips CTA to omegabone.com → free 30-min discovery session → 3-tier paid programme (30-day / 90-day / 3.5-month album).
+The full avatar with burden index (51 problems scored by severity and service relevance) is maintained as a separate persona document. See [Omega Persona Doc] (to be created).
+
+Class clips serve the entire marketing funnel — a single content type that drives both awareness and conversion:
+- **Awareness:** Clips showing Omega's coaching style and teaching philosophy attract the target avatar — people who see themselves in the students and think "I could do that too."
+- **Transformation proof (mid-funnel focus):** Clips showing student progression — from tentative first attempts to confident performance — provide the social proof that Omega's method works. This is the primary content priority.
+- **Conversion:** All clips CTA to omegabone.com → free 30-min discovery session → paid programme. Conversion path details (programme tiers, student journey) to be clarified. See [Meeting Agenda Topic 5](#5-programme-pricing-and-student-lifetime-value).
 
 ### Part 3: Pearl Taxonomy
 
-A "pearl" is a high-value moment worth extracting as a short-form clip. Omega's pearls follow a narrative arc: relatable starting point → coaching moment → breakthrough. This matches the testimonial format on her website redesign.
+A "pearl" is a high-value moment worth extracting as a short-form clip (see Problem Statement for the brief definition). Omega's pearls follow a narrative arc: relatable starting point → coaching moment → breakthrough. This matches the testimonial format on her website redesign.
 
 Four pearl categories identified from the discovery call:
 
@@ -73,6 +71,8 @@ Four pearl categories identified from the discovery call:
 4. **Tidbits** — Short, impactful teaching moments that stand alone
 
 **Undefined:** Pearl signal refinement — Omega needs to validate these four categories and define specific signals the AI should detect. See [Meeting Agenda Topic 4](#4-pearl-signal-definition-for-ai-detection).
+
+**Proof of concept:** Real pearl examples from Omega's existing YouTube content, matched against the four categories above, are being extracted as validation that the taxonomy captures actual clippable moments (see Source section for reference videos analyzed).
 
 ### Part 4: Processing Pipeline
 
@@ -144,6 +144,9 @@ Pricing mechanics (actual numbers, tiers, success fee percentages) are not in sc
   - [YouTube: Ep. 2 Learn to Sing (2021)](https://youtu.be/XxCaFDsWPfs) — Legacy class format example
   - [Epic #1071](https://github.com/DaveX2001/deliverable-tracking/issues/1071) | [Design Issue #1076](https://github.com/DaveX2001/deliverable-tracking/issues/1076)
   - [Contract Strategy & Retainer Model Design](https://mariuswilsch.github.io/public-wilsch-ai-pages/project/soloforce/contract-strategy-retainer-model-design) — engagement model framework (#847)
+  - [Evidence Chain System #851](https://github.com/DaveX2001/deliverable-tracking/issues/851) — prerequisite: surface-agnostic evidence capture for SDK agent failures (enables quality feedback loop on pearl detection)
+  - [Manage-Artifact v2 CCI-629](https://github.com/DaveX2001/claude-code-improvements/issues/629) — prerequisite: instruction-fixing methodology for the SDK agent that runs the clipping pipeline
 - **Sessions:**
   - /Users/daveFem/.claude/projects/-Users-daveFem-Desktop-claude-projects-00-WILSCH-AI-INTERNAL--deliverable/bc288ebc-dddf-4d6b-aeb6-39b09aac97f0.jsonl — Pass 1 (technical design)
   - /Users/verdant/.claude/projects/-Users-verdant-Documents-projects-00-WILSCH-AI-INTERNAL--soloforce/d8f852f9-f840-4054-8510-e80642a42466.jsonl — Pass 2 (commercial model)
+  - /Users/daveFem/.claude/projects/-Users-daveFem-Desktop-claude-projects-09-SALES-PIPELINE--deliverable/ed570609-3341-4b1e-9ce0-fb6ace67a3b3.jsonl — Pass 3 (SA feedback processing + pearl POC)

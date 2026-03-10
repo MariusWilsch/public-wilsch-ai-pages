@@ -9,12 +9,13 @@ Meeting agenda for resolving open design questions from the [design doc](https:/
 
 ## Meeting Goal
 
-Resolve five open design questions from the AI Video Clipping Service design doc before the proposal and implementation can begin.
+Resolve six open design questions from the AI Video Clipping Service design doc before the proposal and implementation can begin.
 
 1. **Pearl signal definition** — Omega validates the four pearl categories and defines what the AI should detect
 2. **Platform priority** — Decide scope for Pinterest (images) and LinkedIn
 3. **Content boundaries** — Clarify class structure and student consent for featured clips
 4. **Programme structure** — Understand programme tiers and student journey so the service proposal matches the business it supports
+5. **Album content** — Decide whether album clips should be included in a future phase
 
 ## Pre-Read
 
@@ -82,12 +83,24 @@ The clips feed a funnel: social media → omegabone.com → discovery session �
 
 **To resolve:** The pricing of each programme tier and how students typically progress through them, so the service proposal can be sized appropriately.
 
+### 6. Album clips as future top-of-funnel
+⏱️ 5 min
+
+The "Come With Me" album (10 tracks) exists as produced content on YouTube. The current service scope focuses exclusively on Learn to Sing class recordings. Album clips could serve as an awareness channel — bringing in listeners from different genres (hard rock, jazz) who discover Omega's teaching through the music.
+
+- Album = produced music videos, already edited (different format from raw classes)
+- Omega described the album as "the top of the funnel" during discovery call
+- Processing album content requires different pearl detection (no coaching moments)
+- "Maybe not right away" — SA review suggests album as a Phase 2 consideration
+
+**To resolve:** Whether album content should be included in a future phase of the clipping service, and if so, what pearl categories apply to produced music content vs. raw class recordings.
+
 ## Meeting Format
 
 - **Type:** Discovery / alignment
-- **Duration:** ~30 min
+- **Duration:** ~35 min
 - **Expectation:** Omega reviews the design doc Pre-Read beforehand, brings examples of "pearls" she's already identified in her content
-- **Outcome:** All five discussion topics resolved → design doc complete, proposal can be sent
+- **Outcome:** All six discussion topics resolved → design doc complete, proposal can be sent
 
 ## Related
 
