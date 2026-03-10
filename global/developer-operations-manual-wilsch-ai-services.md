@@ -494,11 +494,46 @@ Merge to staging branch. The worktree's draft PR (created during Implementation 
 
 **Step 7: Deploy to Staging**
 
+#### Server Directory Convention
+
+On **multi-user servers** (multiple deployers), projects live in a shared path — not user home directories:
+
+```
+/home/shared/{project}/     ← canonical project path
+├── .env                    ← server-specific config
+├── docker-compose.*.yml    ← compose files
+└── Makefile                ← deployment interface
+```
+
+**Why:** User home checkouts (`/home/marius/...`, `/home/david/...`) cause container name conflicts, permission issues, and stale Makefiles. One canonical path eliminates duplication.
+
+**Permissions:** Create a project-specific Unix group (e.g., `rohdex`), add all deployers, set the directory with setgid so new files inherit the group:
+
+```bash
+sudo groupadd {project}
+sudo usermod -aG {project} {user1} {user2}
+sudo mkdir -p /home/shared/{project}
+sudo chown root:{project} /home/shared/{project}
+sudo chmod 2775 /home/shared/{project}   # setgid
+```
+
+**Single-user servers** (e.g., RDX-APP-01 with one deployer): keep `~/projects/{project}/` — no shared path needed.
+
+**Migrating existing projects:**
+1. Create group + `/home/shared/{project}/` (permissions above)
+2. Clone repo into shared path, copy `.env` from old checkout
+3. Stop containers from old checkout
+4. Remove stale checkouts (all user home copies)
+5. Start containers from new path, verify `/health`
+6. Update Makefile `STAGING_DIR` / `PROD_DIR` to point to shared path
+
+---
+
 Identify which deployment pattern(s) apply, then execute:
 
 | Project type | Pattern | Key command |
 |-------------|---------|-------------|
-| Backend on VPS | Docker Compose | `ssh {SERVER}` → `git pull` → `make staging` |
+| Backend on VPS | Docker Compose | `make staging` (local — Makefile handles SSH + deploy) |
 | Frontend on Vercel | Vercel Hobby | Push to `staging` branch (GHA auto-deploys) |
 | Needs subdomain | Caddy | `sudo caddy validate` → `sudo systemctl reload caddy` |
 
@@ -506,9 +541,9 @@ Identify which deployment pattern(s) apply, then execute:
 
 **Docker Compose Backend:**
 ```bash
-ssh {SERVER}
-cd ~/projects/{project}/ && git pull && make staging
-# Verify: make logs (check for errors)
+make staging
+# Makefile SSHes to server, runs git pull + docker compose up in STAGING_DIR
+# Verify: curl health endpoint (Makefile prints URL on success)
 ```
 → Full pattern: [Docker Compose Design Doc](https://mariuswilsch.github.io/public-wilsch-ai-pages/project/WILSCH-AI-INTERNAL/docker-compose-backend-deployment-design)
 
