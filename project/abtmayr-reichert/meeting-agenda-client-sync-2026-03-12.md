@@ -6,79 +6,69 @@ publish: true
 
 [[project-abtmayr-reichert]]
 
-**Date:** Wednesday, 2026-03-12
-**Attendees:** Marius Wilsch, Michael Reichert
+**Datum:** Mittwoch, 2026-03-12
+**Teilnehmer:** Marius Wilsch, Michael Reichert
 
-## Meeting Goal
+## Ziel des Meetings
 
-Two blockers that prevent the Klimafolgenschutz website from completion. Everything else is built and live.
+Zwei Blocker verhindern die Fertigstellung der Klimafolgenschutz-Website. Alles andere ist gebaut und live.
 
-1. **Stripe Payment prerequisites clarified** — Vereinsregister status, blocker chain visibility, and expected timeline so we can plan the payment integration work
-2. **Zertifizierung content captured** — Michael explains the certification criteria and process for "klimaresiliente Gemeinde" verbally, we write the website copy from his explanation
-
-## Pre-Read
-
-- [Live Website — klimafolgenschutz.org](https://klimafolgenschutz.org) — show to Michael for pricing sign-off
-- [Investigation Findings (Issue #1084 comment)](https://github.com/DaveX2001/deliverable-tracking/issues/1084) — full project status audit
-- [Design Doc — Klimafolgenschutz Website](https://mariuswilsch.github.io/public-wilsch-ai-pages/project/abtmayr-reichert/design-doc-klimafolgenschutz-website) — original scoping
+1. **Stripe Payment — Voraussetzungen klären** — Aktueller Stand Vereinsregister, Blocker-Kette sichtbar machen und Zeithorizont einschätzen, damit wir die Zahlungsintegration planen können
+2. **Zertifizierung — Inhalte erfassen** — Kriterien und Ablauf der Zertifizierung „klimaresiliente Gemeinde" erklären oder als Dokument zuschicken, damit wir den Website-Text schreiben können
 
 ---
 
-## Discussion Topics
+## Gesprächsthemen
 
-*Starting points for discussion, not limited to these.*
+*Ausgangspunkte für die Diskussion, nicht abschließend.*
 
 ### 1. Stripe Payment Integration — Voraussetzungskette
 ⏱️ 15 min
 
-Die Zahlungsintegration (#762) ist das letzte große Feature. Die Website ist live, alle anderen Sections sind fertig. Wir sind blockiert durch eine Kette von Voraussetzungen, die nur Michael auslösen kann.
+Die Zahlungsintegration (#762) ist das letzte große Feature. Die Website ist live, alle anderen Sections sind fertig. Es gibt eine Kette von Voraussetzungen, die abgeschlossen sein müssen, bevor wir Stripe konfigurieren können.
 
 - **Blocker-Kette:** Vereinsregister → Bankkonto → IBAN → Gläubiger-ID (ca. 10 Tage) → Steuernummer
-- Im Februar-Meeting hieß es "1-2 Wochen" für den Vereinsregister — jetzt sind 3+ Wochen vergangen
+- Wie ist der aktuelle Stand beim Vereinsregister?
 - Ohne diese Kette können wir Stripe nicht konfigurieren (SEPA, Karte, Invoicing)
 - **Kleinunternehmerregelung:** Die ~€500/Jahr Gemeinde-Beiträge werden als Rechnung gestellt. Der Verein startet als Kleinunternehmer — keine MwSt auf Rechnungen. Sobald die Steuernummer da ist: mit Steuerberater bestätigen
 - **Downstream:** Impressum + Datenschutz brauchen ebenfalls die Vereinsregister-Adresse und VR-Nummer (für e-Recht24 Generatoren)
 
-**To resolve:** Status der gesamten Voraussetzungskette — wo steht der Vereinsregister-Eintrag, und was können wir als Zeithorizont erwarten. Wir sind blockiert, solange diese Schritte nicht abgeschlossen sind.
+**To resolve:** Aktueller Stand der gesamten Voraussetzungskette und ein realistischer Zeithorizont für die nächsten Schritte.
 
-### 2. Zertifizierung "Klimaresiliente Gemeinde" — Inhalte
+### 2. Zertifizierung „Klimaresiliente Gemeinde" — Inhalte
 ⏱️ 10 min
 
-Die Zertifizierungs-Section (#763) ist technisch fertig und ans CMS angebunden. Was fehlt: der Inhalt. Im Februar-Meeting wurde vereinbart, dass Michael die Kriterien und den Ablauf liefert.
+Die Zertifizierungs-Section (#763) ist technisch fertig und ans CMS angebunden. Was fehlt: der Inhalt.
 
-- Was genau macht eine Gemeinde zur "klimaresilienten Gemeinde"?
-- Wie läuft der Zertifizierungsprozess Schritt für Schritt ab?
-- Wie stark soll das auf der Website abgekürzt werden?
+- Erkläre uns den Zertifizierungsprozess im Meeting oder schick uns vorab ein Dokument — damit wir den Schritt-für-Schritt-Ablauf wirklich verstehen
+- Gibt es interaktive Elemente (z.B. Checklisten, Selbsttest für Gemeinden), die über statischen Text hinausgehen?
 - Geschätzter Aufwand für uns: 2-3 Stunden, sobald der Inhalt steht
 
-**To resolve:** Michael erklärt Kriterien und Ablauf der Zertifizierung mündlich — wir schreiben den Website-Text daraus.
+**To resolve:** Zertifizierungskriterien und -ablauf erfassen — entweder mündlich im Meeting oder als zugeschicktes Dokument — inklusive Klärung, ob interaktive Website-Elemente nötig sind.
 
-### 3. Falls Zeit: IONOS DNS-Zugangsdaten
+### 3. Falls Zeit: IONOS DNS-Weiterleitung
 ⏱️ 3 min
 
-klimafolgenschutz.com zeigt noch die alte IONOS-Seite (217.160.0.187) statt auf klimafolgenschutz.org weiterzuleiten. Für die Umleitung brauchen wir IONOS-Login-Daten von Michael.
+klimafolgenschutz.com zeigt noch die alte IONOS-Standardseite statt auf klimafolgenschutz.org weiterzuleiten. Für die Umleitung brauchen wir deine IONOS-Zugangsdaten.
 
-**To resolve:** IONOS-Zugangsdaten von Michael erhalten, damit .com auf .org weiterleitet.
+**To resolve:** IONOS-Zugangsdaten erhalten, damit .com auf .org weiterleitet.
 
-### 4. Falls Zeit: Mitgliedschafts-Preise bestätigen
-⏱️ 3 min
+## Ablauf
 
-Die Preisstufen für Gemeinde-Mitgliedschaften sind im CMS hinterlegt und auf der Website sichtbar. Michael sieht die Preise auf dem geteilten Bildschirm und bestätigt.
+- **Typ:** Discovery
+- **Dauer:** ~30 min
+- **Teilnehmer:** Marius Wilsch, Michael Reichert
+- **Vorbereitung:** Keine — alles wird im Meeting erklärt
+- **Ergebnis:** Klarheit über Vereinsregister-Zeithorizont und Zertifizierungsinhalt, damit die letzten zwei Features umgesetzt werden können
 
-**To resolve:** Visuelle Bestätigung der angezeigten Mitgliedschafts-Preise auf der Live-Website.
-
-## Meeting Format
-
-- **Type:** Discovery
-- **Duration:** ~30 min
-- **Attendees:** Marius Wilsch, Michael Reichert
-- **Expectation:** Michael braucht keine Vorbereitung — Fragen werden im Meeting erklärt
-- **Outcome:** Klarheit über Vereinsregister-Timeline und Zertifizierungsinhalt, damit die letzten zwei Features umgesetzt werden können
-
-## Related
+## Referenzen
 
 - **Issue:** [#1084 — Meeting Agenda Client Sync 2026-03-12](https://github.com/DaveX2001/deliverable-tracking/issues/1084)
 - **Epic:** [#726 — Klimafolgenschutz Website](https://github.com/DaveX2001/deliverable-tracking/issues/726)
-- **Blocked Issues:** [#762 — Stripe Payment](https://github.com/DaveX2001/deliverable-tracking/issues/762) | [#763 — Zertifizierung](https://github.com/DaveX2001/deliverable-tracking/issues/763)
+- **Blockierte Issues:** [#762 — Stripe Payment](https://github.com/DaveX2001/deliverable-tracking/issues/762) | [#763 — Zertifizierung](https://github.com/DaveX2001/deliverable-tracking/issues/763)
 - **Design Doc:** [Klimafolgenschutz Website](https://mariuswilsch.github.io/public-wilsch-ai-pages/project/abtmayr-reichert/design-doc-klimafolgenschutz-website)
-- **Prior Meeting Agenda:** [Payment Setup (Feb 12)](https://mariuswilsch.github.io/public-wilsch-ai-pages/project/abtmayr-reichert/meeting-agenda-klimafolgenschutz-payment-setup)
+- **Vorheriges Meeting:** [Payment Setup (Feb 12)](https://mariuswilsch.github.io/public-wilsch-ai-pages/project/abtmayr-reichert/meeting-agenda-klimafolgenschutz-payment-setup)
+
+## Quelle
+
+🗣️ [Session 2026-03-10](https://github.com/MariusWilsch/claude-code-conversation-store/blob/main/projects/-Users-daveFem-Desktop-claude-projects-06-ABTMAYR-REICHERT--deliverable/7db61213-f8a9-4c81-b493-66189db7f606.jsonl) — Extraction pass on Marius's feedback (5 items resolved)
