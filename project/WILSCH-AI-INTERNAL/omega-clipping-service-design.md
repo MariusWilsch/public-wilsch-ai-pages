@@ -100,15 +100,34 @@ Deliverable = post-ready short-form clips that Omega can publish directly.
 
 ### Part 6: Delivery Model
 
-Managed service — VeloxForce operates the clipping service, Omega is the client.
+Managed service — Wilsch AI Services operates the clipping service, Omega is the client.
 
 **Phase 1: Batch Processing**
-Process album content first (priority), then class recordings. AI extracts all potential clips. Omega curates — reviews staged clips and approves for publishing. No volume cap on extraction.
+Process the Learn to Sing class library (~300 videos). AI extracts all potential clips. Wilsch AI operates the pipeline, curates output, and presents clip batches to Omega for approval before publishing. No volume cap on extraction.
 
 **Phase 2: Ongoing Processing**
-Recurring content: Sunday group classes + 10 hours/week private lessons. Expected cadence: ~5 clips per class, ~1 clip per private lesson. Omega indicated a year-long engagement timeline.
+Recurring content: Sunday group classes + 10 hours/week private lessons. Expected cadence: ~5 clips per class, ~1 clip per private lesson. Year-long engagement timeline.
 
-Pricing is not in scope for this design doc — covered separately in the client proposal.
+**Operator Transition**
+
+The service transitions from managed to semi-automated as pearl detection quality improves:
+
+- **Managed phase** (months 1-3): Wilsch AI operates the pipeline, reviews raw AI output, curates clips before presenting to Omega. Higher operator involvement, higher service value.
+- **Auto + curate phase** (month 4+): Pipeline runs automatically on new content, stages clips directly. Omega curates from a staging area — approves or skips. Operator involvement decreases, retainer adjusts downward.
+
+The transition point depends on pearl detection accuracy. At 80%+ accuracy, Omega can curate directly without pre-filtering. Below that, managed operation prevents the exact pain she hired the service to eliminate ("sorting through them makes my brain and my eyes bleed").
+
+**Engagement Model**
+
+Flat monthly retainer from the start — the ongoing nature of content production (weekly classes, continuous lessons) makes a one-time fixed-price project structurally wrong. The 3-month initial term serves as the prove-first checkpoint: real engagement data from the managed phase informs whether to add a success component tied to commercial outcomes (student acquisition, programme enrollment driven by clips).
+
+Retainer entry is priced lower than a comparable fixed-price engagement. The trade-off: lower monthly commitment in exchange for Wilsch AI participating in the upside after the prove-first period. If the service demonstrably drives new students, the success component benefits both sides. If it doesn't, the retainer ends cleanly at the 3-month checkpoint.
+
+The proposal format is a Richtpreisangebot (indicative pricing) — a one-pager covering outcome and indicative price range, sent after programme pricing is established. The proposal leads with what Omega gets (post-ready clips, managed curation, improving quality), not how the system works internally.
+
+**Undefined:** The retainer price depends on programme pricing — what a new student is worth over the programme lifecycle. Without this, the service cannot be priced as a fraction of the value it creates. See [Meeting Agenda Topic 5](#5-programme-pricing-and-student-lifetime-value).
+
+Pricing mechanics (actual numbers, tiers, success fee percentages) are not in scope for this design doc — covered in the client proposal after the meeting.
 
 ---
 
@@ -124,4 +143,7 @@ Pricing is not in scope for this design doc — covered separately in the client
   - [YouTube: Learn 2 Sing with Audrey (live)](https://youtube.com/live/Odr_khKGmuc) — Recent class format example
   - [YouTube: Ep. 2 Learn to Sing (2021)](https://youtu.be/XxCaFDsWPfs) — Legacy class format example
   - [Epic #1071](https://github.com/DaveX2001/deliverable-tracking/issues/1071) | [Design Issue #1076](https://github.com/DaveX2001/deliverable-tracking/issues/1076)
-- **Session:** /Users/daveFem/.claude/projects/-Users-daveFem-Desktop-claude-projects-00-WILSCH-AI-INTERNAL--deliverable/bc288ebc-dddf-4d6b-aeb6-39b09aac97f0.jsonl
+  - [Contract Strategy & Retainer Model Design](https://mariuswilsch.github.io/public-wilsch-ai-pages/project/soloforce/contract-strategy-retainer-model-design) — engagement model framework (#847)
+- **Sessions:**
+  - /Users/daveFem/.claude/projects/-Users-daveFem-Desktop-claude-projects-00-WILSCH-AI-INTERNAL--deliverable/bc288ebc-dddf-4d6b-aeb6-39b09aac97f0.jsonl — Pass 1 (technical design)
+  - /Users/verdant/.claude/projects/-Users-verdant-Documents-projects-00-WILSCH-AI-INTERNAL--soloforce/d8f852f9-f840-4054-8510-e80642a42466.jsonl — Pass 2 (commercial model)

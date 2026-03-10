@@ -9,11 +9,12 @@ Meeting agenda for resolving open design questions from the [design doc](https:/
 
 ## Meeting Goal
 
-Resolve four open design questions from the AI Video Clipping Service design doc before implementation can begin.
+Resolve five open design questions from the AI Video Clipping Service design doc before the proposal and implementation can begin.
 
 1. **Pearl signal definition** — Omega validates the four pearl categories and defines what the AI should detect
 2. **Platform priority** — Decide scope for Pinterest (images) and LinkedIn
 3. **Content boundaries** — Clarify class structure and student consent for featured clips
+4. **Programme structure** — Understand programme tiers and student journey so the service proposal matches the business it supports
 
 ## Pre-Read
 
@@ -70,12 +71,23 @@ Four pearl categories were identified from the discovery call: coaching feedback
 
 **To resolve:** The specific observable signals Omega associates with each pearl category, grounded in examples from her own content.
 
+### 5. Programme pricing and student journey
+⏱️ 5 min
+
+The clips feed a funnel: social media → omegabone.com → discovery session → paid programme. Understanding the programme structure and what a student pays at each tier helps scope the service to match the business it supports.
+
+- Three programme tiers discussed (30-day / 90-day / 3.5-month album)
+- Discovery session is the entry point (free, 30 min)
+- Current student base: ~10 regular students across remote and in-person
+
+**To resolve:** The pricing of each programme tier and how students typically progress through them, so the service proposal can be sized appropriately.
+
 ## Meeting Format
 
 - **Type:** Discovery / alignment
-- **Duration:** ~25 min
+- **Duration:** ~30 min
 - **Expectation:** Omega reviews the design doc Pre-Read beforehand, brings examples of "pearls" she's already identified in her content
-- **Outcome:** All four Undefined markers in the design doc can be resolved → design complete
+- **Outcome:** All five discussion topics resolved → design doc complete, proposal can be sent
 
 ## Related
 
