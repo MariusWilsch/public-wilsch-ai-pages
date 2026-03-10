@@ -72,16 +72,37 @@ Four pearl categories identified from the discovery call:
 
 **Undefined:** Pearl signal refinement — Omega needs to validate these four categories and define specific signals the AI should detect. See [Meeting Agenda Topic 4](#4-pearl-signal-definition-for-ai-detection).
 
-**Proof of concept:** Real pearl examples from Omega's existing YouTube content, matched against the four categories above, are being extracted as validation that the taxonomy captures actual clippable moments (see Source section for reference videos analyzed).
+**Proof of concept:** Pearl examples identified from the discovery call transcript, where Omega describes specific moments from her classes:
+
+| Category | Example | Transcript Ref |
+|----------|---------|---------------|
+| Coaching feedback | "lean into his French accent and not to try to obscure it... little tidbits like that" | 22:55-23:10 |
+| Authenticity breakthrough | "I'm not looking for another Whitney Houston. I'm looking for the next natural singer" + "I help them craft the song so that it fits their own story" | 15:26-15:48 |
+| Transformation arc | Simon's concert programme — "several transformations from beginning to end" + "By April, I should have full story arcs" | 11:02, 16:37 |
+| Quotable wisdom | "the meat and potatoes. No salad, no garnish." | 01:54-02:00 |
+
+These are Omega *describing* pearls, not pearls extracted from footage. Full validation requires Whisper transcription of actual class recordings (YouTube videos lack auto-captions).
 
 ### Part 4: Processing Pipeline
 
-Abstract pipeline with Claude Code SDK as the chosen implementation approach:
+Claude Code SDK orchestrates the pipeline. The agent is "the handyman" — it coordinates specialized tools for each stage:
 
-1. **Ingest** — Download video from YouTube, extract audio track, generate transcript
-2. **Analyze** — AI reviews transcript + audio for pearl signals, identifies candidate clip timestamps. Domain knowledge (Omega's teaching philosophy, pearl taxonomy) is primed into the model context.
-3. **Clip** — Extract video segments at identified timestamps, add captions from transcript, format per platform specifications
-4. **Stage** — Output clips to staging area (unlisted YouTube or Google Drive) for Omega's review and approval before publishing
+| Stage | Tool | Function |
+|-------|------|----------|
+| **Download** | `yt-dlp` | Extract video from YouTube channel |
+| **Audio extraction** | `ffmpeg` | Separate audio track from video |
+| **Transcription** | `faster-whisper` (or FFmpeg 8.0 native Whisper) | Generate timestamped transcript, 4x faster than standard Whisper |
+| **Pearl detection** | Claude API (via SDK) | Analyze transcript with domain context (pearl taxonomy, teaching philosophy) → identify candidate timestamps |
+| **Clipping** | `ffmpeg` | Trim video at identified timestamps |
+| **Captioning** | `ffmpeg` subtitle burn-in | Auto-generate captions from transcript segments |
+| **Composition** | [Remotion](https://www.remotion.dev/docs/ai/mcp) (optional) | Programmatic overlays, branding, platform formatting via MCP integration |
+| **Staging** | Google Drive API / YouTube API | Upload to review area |
+
+**Tool selection rationale:**
+- **FFmpeg 8.0 + Whisper** is the core — a single tool chain for transcription AND clipping. Native Whisper support eliminates separate transcription services.
+- **Remotion MCP** is for CREATING polished video compositions (text overlays, branding, transitions), not for the clipping itself. Useful for the final polish stage when clips need platform-specific formatting.
+- **OpusClip** was explicitly rejected by client — "too generic, no topic" (Anthony). Domain-specific pearl detection requires custom AI, not engagement-signal tools.
+- [HuggingFace Video Generation Leaderboard](https://huggingface.co/spaces/ArtificialAnalysis/Video-Generation-Arena-Leaderboard) — for video generation, not relevant to clipping existing content. Tracked for future reference if generated content is needed.
 
 The approach is iterative: ship a first batch fast, Omega reviews ("you're gonna hate it, you're gonna love it"), feedback improves the model's understanding of what constitutes a pearl. Not a traditional software project — a primed AI agent that improves through use.
 
