@@ -68,9 +68,10 @@ Tier placement = combined score. Resources within a tier are ordered by combined
 
 | Resource | P | E | Key Insight |
 |----------|:-:|:-:|-------------|
+| [The Complete Guide to Building Skills for Claude](https://resources.anthropic.com/hubfs/The-Complete-Guide-to-Building-Skill-for-Claude.pdf) | 9 | 5 | Mechanical Bible — skill/command writing, 5 workflow patterns, progressive disclosure, troubleshooting. Supersedes Agent Skills course for skill-building |
 | [Prompting Best Practices](https://docs.anthropic.com/en/docs/build-with-claude/prompt-engineering/claude-prompting-best-practices) | 9 | 7 | Claude 4.6 behavioral changes, multi-context window workflows, named failure modes |
 | [Effective Harnesses for Long-Running Agents](https://www.anthropic.com/engineering/effective-harnesses-for-long-running-agents) | 10 | — | JSON > markdown, initializer agents, progress files, instruction persistence patterns |
-| [Intro to Agent Skills](https://anthropic.skilljar.com/introduction-to-agent-skills) | 9 | 7 | Skill troubleshooting guide, trigger design, progressive disclosure |
+| [Intro to Agent Skills](https://anthropic.skilljar.com/introduction-to-agent-skills) | 9 | 7 | ~~Superseded by Skills Guide for skill-building.~~ Retains value for Academy course structure and eval module integration |
 
 **Tier 2 — High value:**
 
@@ -137,18 +138,34 @@ Tier 1 sources consumed and cross-referenced against existing methodology. Five 
 
 **Model-generation note:** These findings are calibrated for Claude 4.6. Strong language effects may differ on future model generations. The methodology should be model-aware, not model-locked.
 
+### Methodology Foundation Findings (Pass 4)
+
+**The Two-Bible Model.** Instruction artifacts require two distinct reference frameworks depending on which dimension is being fixed:
+
+| Bible | Scope | Artifact Types | Persistence Mechanism |
+|-------|-------|---------------|----------------------|
+| [PSM](https://www.anthropic.com/research/persona-selection-model) (Behavioral) | How the AI thinks — persona, beliefs, psychology | Protocol (CLAUDE.md) | Beliefs enter native thinking, create self-debate under pressure |
+| [Skills Guide](https://resources.anthropic.com/hubfs/The-Complete-Guide-to-Building-Skill-for-Claude.pdf) (Mechanical) | How to write instructions — structure, patterns, triggers | Skills/Commands (merged by Anthropic) | Progressive disclosure, validation gates, explicit step ordering, specificity |
+
+**Evidence for separation:** The ARCHIBUS Setup agent (#629 witness observation, session e1a2095a) was written with mechanical patterns only (procedural steps, detection gates, checklists) and no PSM persona. Result: technically functional but template-following behavior — "Step 0 ✅" with checkmarks instead of the prescribed "senior CAFM colleague" behavior. Mechanical without behavioral = template agents.
+
+**Evidence for combination needed:** The CCI #604 auto-advance required a PSM fix (belief transformation, session 97b6ea37) after 5 mechanical fix passes failed. Conversely, a PSM-informed protocol still needs mechanical structure for workflow steps. Neither Bible alone is sufficient.
+
+**Command/Skill merger (Anthropic, 2026):** Official docs state: "Custom commands have been merged into skills." The `.claude/commands/` folder remains backward-compatible but skills are the recommended format. The [orchestration pattern](https://github.com/shanraisshan/claude-code-best-practice/blob/main/orchestration-workflow/orchestration-workflow.md) (Command → Agent → Skill) shows role separation persists in practice, but the writing format is unified. The Skills Guide PDF covers how to write both.
+
 ### Part 2: Artifact Type Physics
 
 With Claude Code, there are four artifact types that govern agent behavior, each with a different enforcement mechanism:
 
 | Type | Enforcement | Failure Mode |
 |------|------------|-------------|
-| **Command** | Direct invocation (user triggers) | Instruction ignored mid-execution |
-| **Skill** | Trigger matching (AI discovers) | Doesn't fire, or fires wrong |
+| **Skill** (includes commands) | Direct invocation (`/name`) or trigger matching (AI discovers) | Instruction ignored mid-execution, doesn't fire, or fires wrong |
 | **Protocol** | Persistent context (CLAUDE.md) | Decays over long sessions |
 | **Hook** | Automatic (code enforcement) | Config error — but no compliance needed |
 
-Hooks always work because they bypass instruction compliance entirely. Commands and protocols are the fragile types — they need the AI to keep following rules across many autonomous turns. The fix methodology should account for which type is being fixed, because the failure modes and fix approaches differ.
+Hooks always work because they bypass instruction compliance entirely. Skills and protocols are the fragile types — they need the AI to keep following rules across many autonomous turns. The fix methodology should account for which type is being fixed, because the failure modes and fix approaches differ.
+
+**Format merger note (Pass 4):** Anthropic's official docs state "Custom commands have been merged into skills." Both use the same SKILL.md format and YAML frontmatter. The `.claude/commands/` folder is backward-compatible. The dimensional distinction (Doing vs Knowing) still holds — a skill handling workflow steps serves a different behavioral function than a skill providing domain knowledge — but the engineering format is unified. The [Skills Guide PDF](https://resources.anthropic.com/hubfs/The-Complete-Guide-to-Building-Skill-for-Claude.pdf) covers how to write both.
 
 The first diagnostic question in any fix session should be: **is this behavior best addressed through instructions (command/skill/protocol) or enforcement (hook)?** Some behaviors may be structurally unfixable through instructions alone.
 
@@ -159,8 +176,8 @@ Beyond enforcement mechanism, each instruction-based artifact type governs a dif
 | Artifact Type | Dimension | Governs | Fix when... |
 |--------------|-----------|---------|-------------|
 | **Protocol** | Thinking | Beliefs, mental models, hidden reasoning | AI reasons toward the wrong action |
-| **Command** | Doing | Steps, gates, workflow lifecycle | AI skips a step or takes a shortcut |
-| **Skill** | Knowing | Domain knowledge, experience, reference | AI lacks knowledge to do its job |
+| **Skill (Doing)** | Doing | Steps, gates, workflow lifecycle | AI skips a step or takes a shortcut |
+| **Skill (Knowing)** | Knowing | Domain knowledge, experience, reference | AI lacks knowledge to do its job |
 | **Hook** | Enforcement | Structural guarantees | Instructions can't reliably ensure compliance |
 
 **The principle: "When we get thinking right, we get behavior right."** The AI's decisions happen in the hidden thinking trace (native thinking, sequential thinking, interleaved reasoning) before visible output. Protocol shapes this layer. Commands shape what the AI does after thinking. Skills provide what the AI needs to know. When thinking is correct, doing follows naturally. **When thinking is wrong, no amount of procedural instruction overrides it.**
@@ -273,7 +290,7 @@ Current workflow: rubber-duck → clarity phases → micro-iteration → test. T
 
 ### Part 4: Structural Patterns for Instruction Persistence
 
-Patterns surfaced from Anthropic's engineering blog and academic research. These need validation against the Tier 1 sources before adoption into the methodology:
+Patterns surfaced from Anthropic's engineering blog and academic research. These were convergence findings from Passes 1-3, predating the [Skills Guide PDF](https://resources.anthropic.com/hubfs/The-Complete-Guide-to-Building-Skill-for-Claude.pdf) (Pass 4). The Skills Guide carries more authority for skill-building patterns — its 5 workflow patterns (sequential orchestration, multi-MCP coordination, iterative refinement, context-aware tool selection, domain-specific intelligence) are Anthropic's consolidated guidance. The patterns below remain valid for persistence-specific concerns (state survival across context windows) but need re-evaluation against the Skills Guide where they overlap:
 
 | Pattern | What It Does | Source |
 |---------|-------------|--------|
@@ -317,3 +334,9 @@ Patterns surfaced from Anthropic's engineering blog and academic research. These
 - **Improve System Architecture:** `~/.claude/hippocampus/global/improve-system-architecture.md`
 - **Contract Strategy:** `~/.claude/hippocampus/project/soloforce/contract-strategy-retainer-model-design.md` — Part 6
 - **CCI Board Structure:** `~/.claude/hippocampus/project/soloforce/cci-board-structure-design.md` — §6
+- **Session (Pass 4):** /Users/verdant/.claude/projects/-Users-verdant-Documents-projects-00-WILSCH-AI-INTERNAL--soloforce/6f79e8bf-9154-4f23-b2eb-cfc82083b9f5.jsonl
+- **Mechanical Bible:** [The Complete Guide to Building Skills for Claude](https://resources.anthropic.com/hubfs/The-Complete-Guide-to-Building-Skill-for-Claude.pdf) (Anthropic, 30 pages)
+- **Anthropic docs (Pass 4):** [Skills documentation](https://docs.anthropic.com/en/docs/claude-code/skills) — "Custom commands have been merged into skills"
+- **Community reference (Pass 4):** [shanraisshan/claude-code-best-practice](https://github.com/shanraisshan/claude-code-best-practice) — Command → Agent → Skill orchestration, Billion Dollar Questions
+- **ARCHIBUS witness (Pass 4):** Session e1a2095a — mechanical-only skill producing template behavior (CCI #629 comment, 2026-03-10)
+- **CCI #604 observation (Pass 4):** PSM beliefs fold under internal convergence pressure — [comment](https://github.com/DaveX2001/claude-code-improvements/issues/604#issuecomment-4029318643)
