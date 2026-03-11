@@ -13,7 +13,7 @@ Rebuilding the DS-Kit Navigation system from scratch using PageIndex (vectorless
 
 IITR's DS-Kit product serves ~3,500 customers who regularly contact support with recurring questions (27-28/day per Stellmacher). A navigation system reduces this support load by answering common questions automatically.
 
-A previous prototype (Typesense + chunked RAG) scored 17/29 on the test harness. The chunking approach proved fragile — correct answers existed in the data but vector similarity retrieved wrong chunks. That implementation is being retired.
+A previous prototype (Typesense + chunked RAG) scored 17/29 on the test harness. The chunking approach proved fragile — vector-based RAG suffers from four structural limitations: lack of multi-hop reasoning, chunking breaking semantic integrity, low recall from embedding mismatch, and context confusion from redundant retrievals (see [RAG for Technical Manuals](https://pageindex.ai/blog/technical-manuals) for side-by-side evidence). That implementation is being retired.
 
 This project rebuilds the navigation system using PageIndex — a vectorless, tree-based retrieval framework that eliminates chunking entirely. The LLM reasons through a document tree index to find relevant sections, producing traceable, chapter-referenced answers.
 
@@ -42,7 +42,7 @@ Court Judgments and Masterfragen are not replaced by PageIndex — different pro
 | Element | Definition |
 |---------|-----------|
 | **Goal** | Navigation system is production-ready: accurate answers with chapter-referenced navigation on the 29-question test set |
-| **Success** | Test harness scores ≥26/29 (>90%) across 4 evaluation dimensions (see Test Rubric). Answers include chapter reference from tree traversal path. Stellmacher validates answer quality directly in the system (OpenWebUI). |
+| **Success** | Test harness scores ≥26/29 (>90%) across 4 evaluation dimensions (see Test Rubric). Answers include chapter reference from tree traversal path. Stellmacher/Kraska validate answer quality via sample review at bi-weekly meetings. |
 | **Done test** | Stellmacher sends a question to the navigation system, receives a chapter-referenced answer, and confirms it is correct — without developer involvement. |
 
 ---
@@ -61,12 +61,29 @@ Deploy the retrieval and serving infrastructure on IITR-STAGING. This is a from-
 | **Qwen 3.5 9B** via Ollama | Single model for all pipeline stages | Tree traversal (think:false, forced by Ollama structured output), answer generation (think:true, +25% instruction-following). Benchmarked on IITR hardware: 0.76s per traversal call, ~8.5s full pipeline. |
 | **OpenWebUI** | Chat frontend | Already deployed with IITR Keycloak SSO integration. Familiar to client (Stellmacher has used it). Pipeline filter system enables RAG backend integration. Reconfigure from retired Typesense backend to PageIndex. |
 | **RTX 4000 SFF Ada** (20 GB VRAM) | GPU inference | Available on IITR-STAGING. Sufficient for Qwen 3.5 9B inference. |
+| **Langfuse** | Observability + tracing | One OpenWebUI conversation = one Langfuse session. Traces every query through retrieval and generation. Enables improvement loop: identify failure patterns, measure iteration progress, provide evidence for client reviews. Already running on IITR-STAGING. |
 
-**Infrastructure prerequisite:** IITR-STAGING server cleanup (one environment per project principle). Remove abandoned experiments (~56 containers: Chunkr, SigNoz, OpenLIT, old DS-Kit prototypes, orphaned POCs). Retain: Navigation stack, Langfuse, OpenWebUI, MetaMCP.
+**Infrastructure prerequisite:** IITR-STAGING server cleanup. Architecture principle: one environment per project, separate compose stacks.
+
+| Action | Stack | Containers | Rationale |
+|--------|-------|-----------|-----------|
+| **Remove** | Chunkr | ~43 | Crash-looping, abandoned |
+| **Remove** | rag-dev | 4 | Dev experiment, not in use |
+| **Remove** | SigNoz + OpenLIT + OTEL | ~9 | Observability experiments, replaced by Langfuse |
+| **Remove** | langfuse-poc | 3 | POC instance, separate from production Langfuse |
+| **Remove** | typesense + dashboard | 2 | Old DS-Kit prototype, both unhealthy |
+| **Remove** | dskit-* (exited) | 5 | Old DS-Kit prototype, already stopped |
+| **Remove** | tei-qwen3 | 1 | Old embeddings experiment |
+| **Retain** | rag-staging | — | Masterfragen project stack (separate project, separate data) |
+| **Retain** | Langfuse | — | Production observability |
+| **Retain** | MetaMCP | — | MCP gateway |
+| **Retain** | OpenWebUI | — | Chat frontend (Keycloak SSO) |
 
 ### Part 2: Data Preparation
 
-Feed all source documents to PageIndex for tree index generation. Ingest full documents, not cherry-picked by question. Text-only extraction, no visual elements.
+**Baseline first:** Ingest immediately available documents (PDFs) as-is, generate tree indexes, run the test harness, get a baseline score. The baseline score determines where to invest optimization effort — don't block on converting all formats before measuring.
+
+After baseline, prepare remaining sources to expand coverage. Ingest full documents, not cherry-picked by question. Text-only extraction, no visual elements.
 
 **Universal principle:** All PageIndex input must have heading hierarchy. PageIndex `md_to_tree()` uses `#` characters to build the tree structure — flat text without headers produces a degenerate tree with poor retrieval. This applies to every source format: PDFs use `--pdf_path` (PageIndex handles structure natively), all other formats must be converted to markdown with proper heading hierarchy before ingestion.
 
@@ -74,49 +91,73 @@ Feed all source documents to PageIndex for tree index generation. Ingest full do
 
 | Source | Format | PageIndex Path | Notes |
 |--------|--------|---------------|-------|
-| Anwenderleitfaden | PDF | `--pdf_path` (native) | Primary knowledge base |
-| Templates (56 total) | PDF/Word/Excel | PDF: `--pdf_path`; Word/Excel: convert to structured markdown → `--md_path` | Download from core.iitr.de chapter 4 (Keycloak auth) |
-| Masterfragen | CSV/Excel | Convert to structured Q&A markdown → `--md_path` | 22 entries, knowledge source for 19/29 test questions |
-| core.iitr.de chapters 1-12 | Web | Extract → one combined markdown (H1 per chapter) → `--md_path` | 7/29 test questions depend on this. Chrome DevTools MCP as extraction tool (proven in [#798](https://github.com/DaveX2001/deliverable-tracking/issues/798)). Fallback: [agent-browser](https://github.com/vercel-labs/agent-browser). |
+| Anwenderleitfaden | PDF | `--pdf_path` (native) | **Baseline source.** Primary knowledge base — zero conversion needed |
+| Templates (56 total) | PDF/Word/Excel | PDF: `--pdf_path`; Word/Excel: convert to structured markdown → `--md_path` | Post-baseline. Download from core.iitr.de chapter 4 (Keycloak auth) |
+| Masterfragen | CSV/Excel | Convert to structured Q&A markdown → `--md_path` | Post-baseline. 22 entries, knowledge source for 19/29 test questions |
+| core.iitr.de chapters 1-12 | Web | Extract → one combined markdown with full heading hierarchy (H1/H2/H3+) → `--md_path` | Post-baseline. 7/29 test questions depend on this. Chrome DevTools MCP as extraction tool (proven in [#798](https://github.com/DaveX2001/deliverable-tracking/issues/798)). Fallback: [agent-browser](https://github.com/vercel-labs/agent-browser). Preserve native heading depth from core.iitr.de. |
 
 **Data availability:** [Source Data Inventory (Google Drive)](https://drive.google.com/drive/folders/1gnxBulrnkGh-Oyly_jabofNo4SVivQhR) — INPUT/ (knowledge base) and TEST_RUBRIK/ (evaluation rubric). Templates and web chapters require Keycloak authentication for download/extraction.
 
 ### Part 3: Test Rubric
 
-Automated evaluation of the navigation system against the 29-question test set using an LLM judge. LLM judge uses the existing [Testfragen CSV](https://docs.google.com/spreadsheets/d/1PDSzSH0zrwEVoJ2MirBpr0c6gTuWQlwn2K6cjVXxBjI/edit) (expected answers) and [Test Set with Quelle](https://docs.google.com/spreadsheets/d/1gKLPVazIDCVQtpZaR509-NbiVZbjEnmkY44raMdbM2A/edit?gid=492982273) (source mapping) as reference data.
+Automated evaluation of the navigation system against the 29-question test set. Build the test harness **from scratch** — the existing harness in IITR-RAG-Navigation is inspiration only, not a base to extend. Use Sonnet 4.5 via OpenRouter as the LLM judge (external model evaluates local Qwen output — no self-evaluation).
 
-**4 evaluation dimensions:**
+**Two-tier scoring:**
 
-| # | Dimension | Standard | PASS when |
-|---|-----------|----------|-----------|
-| 1 | **Content Accuracy** | User-intent standard (non-specialist perspective) | Key information present in the answer |
-| 2 | **Format** | Dual-answer structure (general answer + navigation hint) | Both parts present |
-| 3 | **Chapter Reference** | Answer text + tree traversal path verification | Chapter reference correct, no false positives. For questions where the correct answer has no chapter (e.g., "contact dskit@iitr.de"), PASS if no false chapter invented |
-| 4 | **Source Traceability** | Anti-hallucination grounding check | Answer grounded in source data |
+| Tier | Dimensions | CSV Source | Evaluator | Scoring |
+|------|-----------|------------|-----------|---------|
+| **Pass/Fail** | 1. Content Accuracy, 2. Format | Column B (expected answer) | AI (LLM judge — Sonnet 4.5) | Semantic match against expected answer. These dimensions determine the score. |
+| **Signal** | 3. Chapter Reference | Column C (Quelle) | Human (Stellmacher) | FAIL only if hallucinated. Otherwise Stellmacher judges correctness at bi-weekly review. |
+| **Signal** | 4. Source Traceability | Column C (Quelle) | AI (signal only) | Is the Quelle source present in retrieved tree nodes? Warning if not — does not independently fail a question. |
 
-**Scoring:** Binary PASS/FAIL per question across all 4 dimensions. A question passes only when all 4 dimensions pass.
+**Column D recommendation:** Add a `chapter-reference-expected` (yes/no) column to the test CSV. Questions that reference a specific DS-Kit chapter (e.g., "Kapitel 8", "Kapitel 11, Unterpunkt 3") get `yes`. Support redirects and procedural answers get `no`. This lets the judge skip chapter reference evaluation for questions where no chapter applies.
 
-**Evaluation split:**
-- **AI (LLM judge):** Scores all 4 dimensions per question automatically on every test run. Existing test harness infrastructure in [IITR-RAG-Navigation](https://github.com/WILSCH-AI-SERVICES/IITR__IITR-RAG-Navigation/tree/main/infrastructure/dskit-rag/test-harness) provides the base (LLM judge via OpenRouter, CSV output). Adapt from 14 → 29 questions, add 4-dimension scoring.
-- **Human (Stellmacher):** Reviews answers directly in the system (OpenWebUI) and provides feedback via email. Validates content accuracy (dim 1) and chapter reference (dim 3) holistically — "is this answer correct and pointing to the right place?" Format and source traceability are AI-only dimensions.
+**Golden example** — expected output format for a question WITH navigation hint:
 
-**Output artifact:** CSV report with columns per dimension. Two modes: internal (with PASS/FAIL per dimension) and client-facing (full answers, no scoring). Extends the existing dual-CSV pattern from the legacy test harness.
+```
+Frage: Wo finde ich die Texte für die Webseitengestaltung?
+
+Antwort: Texte für die Webseiten-Datenschutzerklärung finden Sie in Kapitel 8
+des Datenschutz-Kit. Dort erhalten Sie eine deutsche und englische Vorlage
+für die Erstellung einer Datenschutzerklärung.
+
+📍 Navigation: DS-Kit → Kapitel 8: Webseiten-Datenschutz
+```
+
+Navigation hint appears only when the answer references a specific DS-Kit chapter. For support redirects (e.g., "Bitte wenden Sie sich an dskit@iitr.de") and procedural answers, no navigation hint is generated.
+
+**Output artifact:** CSV report with columns per dimension, uploaded to Google Drive with date and time in filename (e.g., `dskit-nav-test-2026-03-15-14-30.csv`). Two modes: internal (with PASS/FAIL + signals per dimension) and client-facing (full answers, no scoring). Linked for Dev Lead witness review.
 
 **Special cases:** Q16 and Q28 redirect to support (no prices in DS-Kit) — intentional non-answers, scored as PASS if redirect is present.
 
-**Ownership** (per [Dev Lead Witness & Review System](https://mariuswilsch.github.io/public-wilsch-ai-pages/global/dev-lead-witness-review-system)): JA defines rubric dimensions and expected answers → Dev Lead provisions test infrastructure → Developer implements the LLM judge prompt and harness.
+**Ownership** (per [Dev Lead Witness & Review System](https://mariuswilsch.github.io/public-wilsch-ai-pages/global/dev-lead-witness-review-system)): JA defines rubric dimensions and expected answers → SA approves rubric definition → Developer creates the LLM judge harness → Dev Lead approves test results via witness review of CSV report.
 
 ### Part 4: Evaluation & Iteration
 
-Run the test harness, iterate toward ≥26/29. Tree index generation is a one-time step per document — regenerate only when source content changes. The iteration loop is:
+Run the test harness, iterate toward ≥26/29. Tree index generation is a one-time step per document — regenerate only when source content changes.
+
+**Dual-model option:** Tree *traversal* (runtime) uses Qwen 3.5 9B locally. Tree *creation* (one-time) may use a stronger model (e.g., Sonnet 4.5 via OpenRouter) for higher-quality tree structure. Better trees = better retrieval without changing the runtime model.
+
+**Expert knowledge injection** (highest-leverage optimization): PageIndex allows injecting domain-specific routing rules directly into the tree search prompt — no embedding fine-tuning needed. Example: "If query mentions Löschfristen, prioritize Kapitel 3." Build a set of IITR-specific routing rules from the 29 test questions and their Quelle column, then inject relevant rules per query. See [LLM Tree Search](https://docs.pageindex.ai/tutorials/tree-search/llm) for the prompt template and preference retrieval pattern.
+
+The iteration loop is:
 
 1. Generate tree indexes from all prepared documents
 2. Run test harness (29 questions × 4 dimensions)
-3. Analyze failures — retrieval issue (wrong tree nodes selected) vs generation issue (right context, wrong answer)
-4. Adjust: retrieval prompts (tree traversal instructions), answer generation prompts (format, language, detail level), or data preparation (heading hierarchy quality)
-5. Re-run until ≥26/29
+3. Analyze failures using the diagnostic chain (diagnose in this order):
 
-Present sample answers to Stellmacher for validation via OpenWebUI + email.
+| Failure Type | Meaning | Fix | Owner |
+|-------------|---------|-----|-------|
+| **Data Source** | Answer data doesn't exist in ingested sources | Flag → Dev Lead → client provides missing data | Developer escalates |
+| **Retrieval** | Data exists but tree search missed it | Expert knowledge rules, tree quality (regenerate with stronger model), or heading hierarchy fixes | Developer |
+| **Generation** | Right data retrieved, wrong answer produced | Prompt change (answer generation instructions) | Developer |
+
+Dependency: Data Source → Retrieval → Generation. Fix data gaps first, then retrieval, then generation. This is a universal RAG diagnostic pattern.
+
+4. Adjust based on failure type, re-run until ≥26/29
+5. If LLM-only tree search doesn't reach 26/29, evaluate [Hybrid Tree Search](https://docs.pageindex.ai/tutorials/tree-search/hybrid) (AlphaGo-inspired parallel retrieval — adds complexity via embedding model alongside LLM)
+
+Present sample answers to Stellmacher at bi-weekly meeting (Mar 17) for qualitative validation.
 
 ---
 
@@ -132,6 +173,9 @@ Present sample answers to Stellmacher for validation via OpenWebUI + email.
 **PageIndex:**
 - [GitHub repo](https://github.com/VectifyAI/PageIndex) — MIT, open-source, vectorless tree-based RAG
 - [Docs](https://docs.pageindex.ai/) — framework reference, cookbooks, tutorials
+- [LLM Tree Search](https://docs.pageindex.ai/tutorials/tree-search/llm) — prompt template + expert knowledge injection pattern (required reading)
+- [RAG for Technical Manuals](https://pageindex.ai/blog/technical-manuals) — validates PageIndex over vector RAG, 4 failure modes (required reading)
+- [Hybrid Tree Search](https://docs.pageindex.ai/tutorials/tree-search/hybrid) — AlphaGo-inspired parallel retrieval (optional — if LLM-only < 26/29)
 
 **IITR Repos:**
 - [IITR-RAG-Navigation](https://github.com/WILSCH-AI-SERVICES/IITR__IITR-RAG-Navigation) — DS-Kit Navigation (this project)
@@ -153,4 +197,4 @@ Present sample answers to Stellmacher for validation via OpenWebUI + email.
 - Zielkorridor extraction: /Users/verdant/.claude/projects/-Users-verdant-Documents-projects-00-WILSCH-AI-INTERNAL--soloforce/a868fafa-95e4-413d-95c8-f50bd3ff3ed4.jsonl
 - Pass 1-5 extractions: /Users/daveFem/.claude/projects/-Users-daveFem-Desktop-claude-projects-03-IITR--deliverable/{80abc9d7,ca51af04,96431cad,a084b417,d009a445}.jsonl
 - Design doc rewrite: /Users/daveFem/.claude/projects/-Users-daveFem-Desktop-claude-projects-03-IITR--deliverable/ebd33f3f-f258-4ab6-8ccd-5d8eef2061bd.jsonl
-- Test Rubric extraction pass: /Users/daveFem/.claude/projects/-Users-daveFem-Desktop-claude-projects-03-IITR--deliverable/aee1b92d-9944-4ce3-8e8b-b24a23fdb51f.jsonl
+- SA Review v2 pass: /Users/daveFem/.claude/projects/-Users-daveFem-Desktop-claude-projects-03-IITR--deliverable/99e9faee-c74a-40ab-ba0f-358b8537b16d.jsonl
