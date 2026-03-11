@@ -226,6 +226,56 @@ Every backend exposes a `/health` endpoint that serves two purposes: container h
 
 **Reference:** [ROHDEX /health endpoint](https://github.com/MariusWilsch/rohdex/blob/staging/app/main.py), [ROHDEX make build](https://github.com/MariusWilsch/rohdex/blob/staging/Makefile)
 
+### Part 6: CI/CD Auto-Deploy (Staging)
+
+An automation layer on top of Topology B. Instead of a developer SSHing into the server and running `make staging` manually, a GitHub Actions workflow does it automatically on push to the staging branch.
+
+**When to use:** The target server must be SSH-reachable from GitHub-hosted runners (public IP, port 22 open). VPN-only servers (e.g., RDX-APP-01) cannot use this pattern — they stay on manual Topology B.
+
+**What it automates:** Push to `staging` → GHA SSHes into server → runs `cd /home/shared/{project} && make staging`. The Makefile handles the full sequence (git pull → build → compose up → health check) — same as manual.
+
+**GHA Workflow Template:**
+
+```yaml
+name: Deploy to Staging
+
+on:
+  push:
+    branches: [staging]
+
+jobs:
+  deploy:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Deploy via SSH
+        uses: appleboy/ssh-action@v1
+        with:
+          host: ${{ secrets.STAGING_HOST }}
+          username: ${{ secrets.STAGING_USER }}
+          key: ${{ secrets.STAGING_SSH_KEY }}
+          script: |
+            cd /home/shared/${{ secrets.PROJECT_NAME }}
+            make staging
+```
+
+**Required GitHub Secrets:**
+
+| Secret | Value |
+|--------|-------|
+| `STAGING_HOST` | Server IP (e.g., `91.99.74.207`) |
+| `STAGING_USER` | SSH user (e.g., `david`) |
+| `STAGING_SSH_KEY` | Ed25519 private key for the server |
+| `PROJECT_NAME` | Directory name in `/home/shared/` |
+
+**Prerequisites:**
+- Project follows the Server Directory Convention (Part 3 of [Operations Manual](https://mariuswilsch.github.io/public-wilsch-ai-pages/global/developer-operations-manual-wilsch-ai-services)) — lives in `/home/shared/{project}/` with correct group permissions
+- SSH key pair generated and public key added to server's `~/.ssh/authorized_keys`
+- Server has outbound GitHub access (for `git pull` inside `make staging`)
+
+**Why staging only:** Production deploys require Marius's review of the staging → main PR. Auto-deploying production bypasses this gate. The same workflow can be copied for `main` if production auto-deploy is later desired.
+
+**Reference pattern:** [Vercel Hobby staging.yaml](https://github.com/DaveX2001/klimafolgenschutz-website/blob/staging/.github/workflows/staging.yaml) — same trigger model (push to branch → auto-deploy), different mechanism (Vercel CLI vs SSH).
+
 ---
 
 ## Source
@@ -237,3 +287,6 @@ Every backend exposes a `/health` endpoint that serves two purposes: container h
 - **Reference Impl (Topology B):** [MariusWilsch/rohdex](https://github.com/MariusWilsch/rohdex) — Dockerfile, docker-compose.prod.yml, docker-compose.staging.yml, Makefile | [MariusWilsch/call2tanss](https://github.com/MariusWilsch/call2tanss) — Makefile, docker-compose.yml, docker-compose.staging.yml
 - **ROHDEX CI/CD Design:** [ci-cd-staging-design](https://mariuswilsch.github.io/public-wilsch-ai-pages/project/rohdex/ci-cd-staging-design)
 - **Session:** [0d7eff70](https://github.com/MariusWilsch/claude-code-conversation-store/blob/main/projects/-Users-daveFem-Desktop-claude-projects-00-WILSCH-AI-INTERNAL--deliverable/0d7eff70-d608-42cf-a96b-b76081eeef5a.jsonl)
+- **CI/CD source:** [CCI #639](https://github.com/DaveX2001/claude-code-improvements/issues/639) — subdomain convention + CI/CD auto-deploy
+- **Witness evidence:** [#1075 Ceremony 2](https://github.com/DaveX2001/deliverable-tracking/issues/1075#issuecomment-4035850472) — code pushed but not deployed
+- **Session (CI/CD):** [133e8ee1](https://github.com/MariusWilsch/claude-code-conversation-store/blob/main/projects/-Users-daveFem-Desktop-claude-projects-00-WILSCH-AI-INTERNAL--deliverable/133e8ee1-73e7-475b-ab4d-880723cd5027.jsonl)

@@ -533,6 +533,7 @@ Identify which deployment pattern(s) apply, then execute:
 
 | Project type | Pattern | Key command |
 |-------------|---------|-------------|
+| Backend on VPS (auto) | Docker Compose + GHA | Push to `staging` branch (GHA auto-deploys via SSH) |
 | Backend on VPS | Docker Compose | `ssh {SERVER}` → `cd /home/shared/{project}` → `make staging` |
 | Frontend on Vercel | Vercel Hobby | Push to `staging` branch (GHA auto-deploys) |
 | Needs subdomain | Caddy | `sudo caddy validate` → `sudo systemctl reload caddy` |

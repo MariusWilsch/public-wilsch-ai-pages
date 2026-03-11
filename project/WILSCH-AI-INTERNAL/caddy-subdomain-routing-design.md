@@ -51,6 +51,8 @@ The architectural insight: wildcard DNS eliminates per-service DNS management. C
 | SSL | Automatic (Let's Encrypt) | Manual certbot setup + renewal cron |
 | External deps per service | Zero | DNS provider access needed |
 
+**Convention:** All services on the AI server (`91.99.74.207`) use `{service-name}.wilsch-deployment.com` as their subdomain. The wildcard DNS auto-resolves — no manual A records needed per service. Never use `wilsch-ai.com` for server-hosted services. `wilsch-ai.com` is the company domain (website, email); `wilsch-deployment.com` is the infrastructure domain (server-hosted services).
+
 ### Part 2: Step-by-Step Process
 
 Adding a new subdomain follows the same 4 steps every time:
@@ -196,3 +198,5 @@ ls /etc/caddy/conf.d/*.conf
 - **VPS configs:** `91.99.74.207:/etc/caddy/conf.d/` (22 active configs)
 - **Reference repos:** [Call2Tanss](https://github.com/MariusWilsch/Call2Tanss), [Aircall_Tanss_UI](https://github.com/MariusWilsch/Aircall_Tanss_UI), [uwi__invoice-agent](https://github.com/MariusWilsch/uwi__invoice-agent)
 - **Session:** [Probe b9343924](https://github.com/MariusWilsch/claude-code-conversation-store/blob/main/projects/-Users-daveFem-Desktop-claude-projects-00-WILSCH-AI-INTERNAL--deliverable/b9343924-6409-480a-a68c-5fd752158fb4.jsonl)
+- **Convention source:** [#1075 Finding 5](https://github.com/DaveX2001/deliverable-tracking/issues/1075#issuecomment-4035526463) — wrong apex domain used during witness
+- **Session (convention):** [133e8ee1](https://github.com/MariusWilsch/claude-code-conversation-store/blob/main/projects/-Users-daveFem-Desktop-claude-projects-00-WILSCH-AI-INTERNAL--deliverable/133e8ee1-73e7-475b-ab4d-880723cd5027.jsonl)
