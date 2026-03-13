@@ -316,7 +316,7 @@ The backpressure loop lives in the AI layer, not in the tool. The tool executes 
 
 #### Model Requirements
 
-The pipeline targets small-model compatibility for production deployment. Development uses Claude Sonnet for rapid iteration. Production targets Qwen 3.5 (9B preferred, 30B-A3B acceptable) via OpenRouter (development API access). Future: self-hosted on RunPod with FP8 quantization (standard) or FP4 (Blackwell-architecture GPUs). OpenRouter abstracts quantization — the design constraint is small-model compatibility (9B), not quantization specifics.
+The pipeline targets small-model compatibility for production deployment. Development uses Claude Sonnet for rapid iteration. Production targets Qwen 3.5 (9B preferred, 30B-A3B acceptable). Future: self-hosted on RunPod with FP8 quantization (standard) or FP4 (Blackwell-architecture GPUs). The design constraint is small-model compatibility (9B), not quantization specifics.
 
 This model target constrains the design: API error responses must be structured and unambiguous (`{id, field, value, reason, valid_values}`) so a 9B model can execute the backpressure loop — reading errors, correcting the contract, and retrying — without large-model reasoning. The tool's structured output format serves both correctness (traceable errors) and small-model compatibility (no interpretation required). *(Source: Marius, Mar 4 2026 — #852 comment)*
 
@@ -742,11 +742,11 @@ LibreChat → LiteLLM → Anthropic API. LiteLLM natively supports `container.sk
 **Option B — System prompt baking:**
 Embed skill instructions directly in the LibreChat agent's system prompt. No proxy needed. Trade-off: no progressive disclosure — the AI receives all instructions upfront, which may degrade behavior on smaller models. Acceptable for Claude Sonnet (demo model), potentially problematic for Qwen 3.5 (production target).
 
-**Undefined:** Which approach to use, and whether progressive disclosure works beyond Claude. Skills follow the Agent Skills open standard — in principle portable across runtimes. But `container.skills` is Anthropic-specific. For the production target (Qwen 3.5 via OpenRouter), it's unknown whether progressive disclosure is achievable or whether skills must be baked into the system prompt. This affects the entire skills architecture (§6.2) — may require a separate extraction pass to investigate OpenRouter/Qwen skill support before committing to an approach.
+**Undefined:** Which approach to use, and whether progressive disclosure works beyond Claude. Skills follow the Agent Skills open standard — in principle portable across runtimes. But `container.skills` is Anthropic-specific. For the production target (Qwen 3.5), it's unknown whether progressive disclosure is achievable or whether skills must be baked into the system prompt. This affects the entire skills architecture (§6.2) — may require a separate extraction pass to investigate skill support before committing to an approach.
 
 **Note:** Both options above assume LibreChat as the runtime. [#852](https://github.com/DaveX2001/deliverable-tracking/issues/852) asks the prior question: what runtime do we actually need? The answer may supersede both options — a different runtime (Agent SDK, a non-coding Claude Code equivalent, or something custom) could resolve skills delivery, file lifecycle, and contract state together. Resolve #852 before committing to an approach here.
 
-**File upload (demo requirement):** LibreChat's file upload feature must pass the uploaded Excel file path to the MCP tool. Today the file path is hardcoded in the container environment. The upload flow needs to connect LibreChat's file handling to the `excel_analysis` tool's `file_path` parameter. This is a deployment configuration task, not a design change — but it must work before the demo.
+**Undefined:** File upload — how an Excel file gets from the implementer to the AI's tools. This is part of the broader runtime question (#852): the file lifecycle depends on what runtime is chosen. Resolve as part of #852's design pass.
 
 *(Source: [LiteLLM Skills docs](https://docs.litellm.ai/docs/skills). Rein transcript 2026-03-11: "before the demo, you need to utilize the upload option." Gap analysis extraction pass 2026-03-12.)*
 
