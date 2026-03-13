@@ -700,23 +700,13 @@ Parts 1–5 designed the interactive mapping phase (Steps 0→2) and the executi
 
 The interactive phase (Steps 0→2) produces a mapping contract. The execution phase (Step 3) transforms data and submits to the BEM API. Today these phases run independently — Step 3 uses hardcoded column names and enum maps instead of consuming the contract. The bridge tool closes this gap.
 
-**What it does:** Takes a confirmed mapping contract + source Excel + a building name, and executes the full Step 3 pipeline (filter → hierarchy → deduplicate → generate locations → build JSON → validate/insert via API) using the contract's mappings instead of hardcoded values.
+**What it does:** Takes the confirmed mapping contract and source data, executes the [Step 3 pipeline](https://mariuswilsch.github.io/public-wilsch-ai-pages/project/archibus-fm-assistant/chain-1b-step3-design) (filter → hierarchy → deduplicate → generate locations → build JSON → validate/insert via API) using the contract's mappings instead of hardcoded values. Returns the API result — either success with importID or a structured error for the AI to act on.
 
-**Input:**
-- Mapping contract JSON (Elements 1+2+3 from Part 2)
-- Source Excel file path
-- Building name (one top-level element per call, per Step 3 Part 1)
-- Mode: validate (dry run) or import (live insert)
-
-**Output:**
-- On success: API response with importID + full tree with server-generated UUIDs
-- On error: structured error `{id, field, value, reason, valid_values}` — the AI reads this and decides whether to self-correct (enum mismatch → update contract rules) or escalate (data error → report to implementer)
-
-**Backpressure:** Enum errors update the contract's rules (root cause). Data errors fix the individual node. This distinction — contract-level vs node-level correction — is the same design principle from Part 5.
+**Backpressure:** The bridge tool implements the backpressure loop from the [Step 3 design](https://mariuswilsch.github.io/public-wilsch-ai-pages/project/archibus-fm-assistant/chain-1b-step3-design) — API errors feed back to the AI, which decides whether to self-correct (update the contract) or escalate to the implementer.
 
 **Form factor:** Registered as a FastMCP tool on the existing `archibus-bulk-import-tools` MCP server, alongside `bem_context` and `excel_analysis`.
 
-**Undefined:** How the bridge tool internally wires contract values to the existing CLI pipeline modules — which functions are reused, what's refactored, how the contract-to-hardcoded substitution works at the code level. Needs a developer extraction pass on the CLI codebase.
+**Undefined:** How the bridge tool internally wires contract values to the existing CLI pipeline modules — which functions are reused, what's refactored, how the contract-to-hardcoded substitution works at the code level. Needs a developer extraction pass on the CLI codebase and the [Step 3 design doc](https://mariuswilsch.github.io/public-wilsch-ai-pages/project/archibus-fm-assistant/chain-1b-step3-design).
 
 *(Source: Gap analysis extraction pass 2026-03-12.)*
 
@@ -730,13 +720,13 @@ The pipeline has two distinct modes: interactive (Steps 0→2, lots of back-and-
 |---|---|---|
 | **Persona** (system prompt) | PSM-derived behavioral identity — knows BEM deeply, adapts to arbitrary input, improves data intelligently. 5 beliefs + tone context. | Always present |
 | **Skill 1: bem-setup** (interactive) | Recipe for Steps 0→2. Guides the AI through detection → hierarchy → column mapping → enum resolution → contract assembly. Conversational, gates on implementer confirmation. | Loaded when implementer uploads Excel |
-| **Skill 2: step3-execute** (autonomous) | Recipe for Step 3. Consumes confirmed contract, calls bridge tool per building, reports progress. Autonomous — only escalates on unrecoverable errors. | Loaded when contract is confirmed |
+| **Skill 2: bem-backpressure** (autonomous) | Recipe for Step 3's backpressure loop. Teaches the AI how to interpret API errors, decide whether to self-correct the contract or escalate to the implementer, and retry. The bridge tool executes; this skill teaches the AI what to do with the results. | Loaded when contract is confirmed |
 
 **Design intent:** Skills follow Anthropic's progressive disclosure model — descriptions load light (~100 tokens), full content loads on invocation. This prevents the AI from being overburdened with instructions for both modes simultaneously. The persona stays constant; the active skill determines the AI's behavior.
 
 **MCP tools remain the same regardless of which skill is active:** `bem_context` (schema reference), `excel_analysis` (file profiling), `step3_execute` (bridge tool from §6.1). Skills tell the AI WHEN and HOW to use these tools. MCP provides the kitchen; skills provide the recipes.
 
-**Undefined:** Whether Skill 2 needs a full SKILL.md or collapses entirely into the bridge tool's description — if the tool description is sufficient to guide autonomous execution, a separate skill may be unnecessary. Empirical: test with and without, compare behavior quality.
+**Undefined:** The backpressure skill's content — what error interpretation rules, retry strategies, and escalation criteria the AI needs to handle the Step 3 loop effectively. The bridge tool returns structured errors; the skill teaches the AI what to do with them. Needs a developer extraction pass on the [Step 3 design doc's](https://mariuswilsch.github.io/public-wilsch-ai-pages/project/archibus-fm-assistant/chain-1b-step3-design) backpressure model.
 
 *(Source: [Anthropic Skills Guide PDF](https://resources.anthropic.com/hubfs/The-Complete-Guide-to-Building-Skill-for-Claude.pdf) Category 3 pattern. Gap analysis extraction pass 2026-03-12.)*
 
@@ -752,7 +742,7 @@ LibreChat → LiteLLM → Anthropic API. LiteLLM natively supports `container.sk
 **Option B — System prompt baking:**
 Embed skill instructions directly in the LibreChat agent's system prompt. No proxy needed. Trade-off: no progressive disclosure — the AI receives all instructions upfront, which may degrade behavior on smaller models. Acceptable for Claude Sonnet (demo model), potentially problematic for Qwen 3.5 (production target).
 
-**Undefined:** Which approach to use. Option A is architecturally cleaner (skills load on demand, same mechanism as Claude Code). Option B is deployment-simpler (no LiteLLM layer). Needs a deployment test: configure LiteLLM proxy, upload the two skills, verify LibreChat → LiteLLM → Anthropic passes through `container.skills` correctly.
+**Undefined:** Which approach to use, and whether progressive disclosure works beyond Claude. Skills follow the Agent Skills open standard — in principle portable across runtimes. But `container.skills` is Anthropic-specific. For the production target (Qwen 3.5 via OpenRouter), it's unknown whether progressive disclosure is achievable or whether skills must be baked into the system prompt. This affects the entire skills architecture (§6.2) — may require a separate extraction pass to investigate OpenRouter/Qwen skill support before committing to an approach.
 
 **File upload (demo requirement):** LibreChat's file upload feature must pass the uploaded Excel file path to the MCP tool. Today the file path is hardcoded in the container environment. The upload flow needs to connect LibreChat's file handling to the `excel_analysis` tool's `file_path` parameter. This is a deployment configuration task, not a design change — but it must work before the demo.
 
@@ -760,19 +750,13 @@ Embed skill instructions directly in the LibreChat agent's system prompt. No pro
 
 #### 6.4 PSM Persona — Behavioral Layer
 
-The AI's behavioral quality is demo-blocking. Miguel judges whether the AI acts intelligently — readable asset names, proactive semantic insights, no process leakage, no template-feeling rigidity. A rigid template-follower fails this bar regardless of correct output.
+The AI's behavioral quality is demo-blocking. Miguel judges whether the AI acts intelligently — readable asset names, proactive semantic insights, no process leakage, no template-feeling rigidity.
 
-**What was chosen:** The Persona Selection Model (PSM) from Anthropic research. Five beliefs define the AI's behavioral identity, separate from the mechanical SKILL.md instructions. The beliefs guide disposition (how to think) while the skill guides procedure (what to do).
+**Design approach:** The persona uses Anthropic's Persona Selection Model (PSM). Instead of procedural rules ("do X, then Y"), PSM derives core beliefs from the question "what kind of person would naturally do this well?" — then lets those beliefs guide behavior. Empirical evidence from CCI #629 showed that beliefs hold under pressure while rules get reinterpreted. The persona stays constant across both skills (§6.2) — the active skill changes the procedure, not the disposition.
 
-**Current state (as of 2026-03-12):**
-- System prompt: `prompts/system-prompt.md` — 5 PSM beliefs + tone context + audience definition
-- Skill: `skills/bem-setup/SKILL.md` — simplified (procedural rules and Beat/Step terminology removed)
-- Witness evidence: `evidence/psm-baseline-witness-2026-03-11.md` (without PSM) and `evidence/psm-with-skill-witness-2026-03-11.md` (with PSM)
-- Latest: Belief #5 (attention scarcity) added, gating contradiction resolved
+**Undefined:** The persona's current beliefs and identity. Three PSM passes have been completed on the ARCHIBUS Setup agent (#1094), but the beliefs are still iterating. The authoritative source is the system prompt (`prompts/system-prompt.md`), not this design doc.
 
-**Design principle:** The persona stays constant across both skills (§6.2). Whether the AI is in interactive mode (bem-setup) or autonomous mode (step3-execute), the same beliefs apply — the active skill changes the procedure, not the disposition.
-
-*(Source: [Anthropic PSM](https://alignment.anthropic.com/2026/psm/). Issue [#1094](https://github.com/DaveX2001/deliverable-tracking/issues/1094). Gap analysis extraction pass 2026-03-12.)*
+*(Source: [Anthropic PSM](https://alignment.anthropic.com/2026/psm/). [CCI #629](https://github.com/DaveX2001/claude-code-improvements/issues/629) — PSM methodology. Session `9e7fda08` — ARCHIBUS persona design. Session `24d94df5` — belief #5 addition. Issue [#1094](https://github.com/DaveX2001/deliverable-tracking/issues/1094).)*
 
 ---
 
