@@ -16,8 +16,7 @@ Demonstrate proof of concept, resolve open design questions, and align on next s
 3. **Class recording structure** — Understand class flow so AI can segment recordings
 4. **Platform priority** — Decide scope for Pinterest (images) and LinkedIn
 5. **Programme pricing** — Understand programme tiers and student journey so the service proposal matches the business it supports
-6. **Album content** — Decide whether album clips should be included in a future phase
-7. **Next steps** — Indicative pricing proposal within 24h
+6. **Next steps** — Indicative pricing proposal within 24h
 
 ## Pre-Read
 
@@ -85,19 +84,7 @@ The clips feed a funnel: social media → omegabone.com → discovery session �
 
 **To resolve:** The pricing of each programme tier and how students typically progress through them, so the service proposal can be sized appropriately.
 
-### 6. Album clips as future top-of-funnel
-⏱️ 5 min
-
-The "Come With Me" album (10 tracks) exists as produced content on YouTube. The current service scope focuses exclusively on Learn to Sing class recordings. Album clips could serve as an awareness channel — bringing in listeners from different genres (hard rock, jazz) who discover Omega's teaching through the music.
-
-- Album = produced music videos, already edited (different format from raw classes)
-- Omega described the album as "the top of the funnel" during discovery call
-- Processing album content requires different pearl detection (no coaching moments)
-- "Maybe not right away" — SA review suggests album as a Phase 2 consideration
-
-**To resolve:** Whether album content should be included in a future phase of the clipping service, and if so, what pearl categories apply to produced music content vs. raw class recordings.
-
-### 7. Next steps
+### 6. Next steps
 ⏱️ 5 min
 
 Wrap up with clear expectations for what happens after the meeting.
@@ -113,7 +100,7 @@ Wrap up with clear expectations for what happens after the meeting.
 - **Type:** Discovery / alignment + proof of concept demo
 - **Duration:** ~40 min
 - **Expectation:** Omega reviews the commercial design doc beforehand, brings any questions
-- **Outcome:** All seven discussion topics resolved → indicative pricing proposal sent within 24h
+- **Outcome:** All six discussion topics resolved → indicative pricing proposal sent within 24h
 
 ## Related
 
