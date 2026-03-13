@@ -81,7 +81,9 @@ Four pearl categories identified from the discovery call:
 | Transformation arc | Simon's concert programme — "several transformations from beginning to end" + "By April, I should have full story arcs" | 11:02, 16:37 |
 | Quotable wisdom | "the meat and potatoes. No salad, no garnish." | 01:54-02:00 |
 
-These are Omega *describing* pearls, not pearls extracted from footage. Full validation requires Whisper transcription of actual class recordings (YouTube videos lack auto-captions).
+These are Omega *describing* pearls, not pearls extracted from footage. Full validation requires transcription of actual class recordings (YouTube videos lack auto-captions).
+
+**POC validation (2026-03-13):** Three class recordings transcribed and analyzed — Carlos (34 min), Tina (42 min), Ira (81 min). Six pearls extracted across all four categories. The narrative arc (before → coaching → after) reliably identifies pearl moments in real content. Pearl density: ~2 strong candidates per 30-40 min class, consistent with the ~5 clippable moments per class estimate. Full results: [Pearl POC Results](https://mariuswilsch.github.io/public-wilsch-ai-pages/project/WILSCH-AI-INTERNAL/omega-pearl-poc-results).
 
 ### Part 4: Processing Pipeline
 
@@ -91,7 +93,7 @@ Claude Code SDK orchestrates the pipeline. The agent is "the handyman" — it co
 |-------|------|----------|
 | **Download** | `yt-dlp` | Extract video from YouTube channel |
 | **Audio extraction** | `ffmpeg` | Separate audio track from video |
-| **Transcription** | `faster-whisper` (or FFmpeg 8.0 native Whisper) | Generate timestamped transcript, 4x faster than standard Whisper |
+| **Transcription** | `faster-whisper` (or FFmpeg 8.0 native Whisper) | Generate timestamped transcript, 4x faster than standard Whisper. POC validated with AssemblyAI CLI as cloud alternative (handles upload/polling automatically) |
 | **Pearl detection** | Claude API (via SDK) | Analyze transcript with domain context (pearl taxonomy, teaching philosophy) → identify candidate timestamps |
 | **Clipping** | `ffmpeg` | Trim video at identified timestamps |
 | **Captioning** | `ffmpeg` subtitle burn-in | Auto-generate captions from transcript segments |
@@ -170,4 +172,5 @@ Pricing mechanics (actual numbers, tiers, success fee percentages) are not in sc
 - **Sessions:**
   - /Users/daveFem/.claude/projects/-Users-daveFem-Desktop-claude-projects-00-WILSCH-AI-INTERNAL--deliverable/bc288ebc-dddf-4d6b-aeb6-39b09aac97f0.jsonl — Pass 1 (technical design)
   - /Users/verdant/.claude/projects/-Users-verdant-Documents-projects-00-WILSCH-AI-INTERNAL--soloforce/d8f852f9-f840-4054-8510-e80642a42466.jsonl — Pass 2 (commercial model)
-  - /Users/daveFem/.claude/projects/-Users-daveFem-Desktop-claude-projects-09-SALES-PIPELINE--deliverable/ed570609-3341-4b1e-9ce0-fb6ace67a3b3.jsonl — Pass 3 (SA feedback processing + pearl POC)
+  - /Users/daveFem/.claude/projects/-Users-daveFem-Desktop-claude-projects-09-SALES-PIPELINE--deliverable/ed570609-3341-4b1e-9ce0-fb6ace67a3b3.jsonl — Pass 3 (SA feedback processing)
+  - /Users/daveFem/.claude/projects/-Users-daveFem-Desktop-claude-projects-09-SALES-PIPELINE--deliverable/5f02c86d-50d2-4bce-b021-4c592622dca8.jsonl — Pass 4 (Pearl POC + taxonomy update)
