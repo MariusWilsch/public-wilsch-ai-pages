@@ -43,7 +43,7 @@ Dadurch sind zwei aktive Kundenprojekte (AVO, REKERS) blockiert: KI-Entwicklung 
 
 **Decode** — Das Modell generiert die Antwort Token für Token, sequentiell. Jedes neue Wort hängt von allen vorherigen ab (autoregressive Generierung). Pro Token wird das gesamte Modell einmal aus dem Speicher gelesen — deshalb zählt hier **Speicherbandbreite** (GB/s), nicht Rechenleistung. Gemessen als **TPS** (Tokens per Second).
 
-**Warum diese Unterscheidung wichtig ist:** DGX Spark hat hohe Rechenleistung (100 TFLOPS) aber niedrige Bandbreite (273 GB/s) — ideal für Prefill. Mac Studio hat niedrige Rechenleistung (~26 TFLOPS) aber hohe Bandbreite (819 GB/s) — ideal für Decode. Kombiniert: jede Maschine macht, was sie am besten kann.
+**Warum diese Unterscheidung wichtig ist:** DGX Spark hat hohe Rechenleistung (100 TFLOPS) aber niedrige Bandbreite (273 GB/s) — ideal für Prefill. Mac Studio hat niedrige Rechenleistung aber hohe Bandbreite (M3 Ultra: 819 GB/s, M5 Ultra projiziert: ~1,1–1,2 TB/s) — ideal für Decode. Kombiniert: jede Maschine macht, was sie am besten kann.
 
 ### Phase 1: 2× NVIDIA DGX Spark (Sofortkauf)
 
