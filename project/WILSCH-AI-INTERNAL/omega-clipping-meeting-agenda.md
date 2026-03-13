@@ -9,13 +9,15 @@ Meeting agenda for resolving open design questions from the [design doc](https:/
 
 ## Meeting Goal
 
-Resolve six open design questions from the AI Video Clipping Service design doc before the proposal and implementation can begin.
+Demonstrate proof of concept, resolve open design questions, and align on next steps before sending the proposal.
 
-1. **Pearl signal definition** — Omega validates the four pearl categories and defines what the AI should detect
-2. **Platform priority** — Decide scope for Pinterest (images) and LinkedIn
-3. **Content boundaries** — Clarify class structure and student consent for featured clips
-4. **Programme structure** — Understand programme tiers and student journey so the service proposal matches the business it supports
-5. **Album content** — Decide whether album clips should be included in a future phase
+1. **Pearl POC demo** — Show real examples extracted from Omega's videos, then refine detection criteria together
+2. **Student consent** — Clarify consent framework for featuring individual students in marketing clips
+3. **Class recording structure** — Understand class flow so AI can segment recordings
+4. **Platform priority** — Decide scope for Pinterest (images) and LinkedIn
+5. **Programme pricing** — Understand programme tiers and student journey so the service proposal matches the business it supports
+6. **Album content** — Decide whether album clips should be included in a future phase
+7. **Next steps** — Indicative pricing proposal within 24h
 
 ## Pre-Read
 
@@ -60,17 +62,17 @@ Phase 1 covers video clips for YouTube Shorts, TikTok, and Instagram Reels. Two 
 
 **To resolve:** Which platforms beyond YT/TT/IG should be included in the service scope, and in what priority order.
 
-### 4. Pearl signal definition for AI detection
+### 4. Pearl POC demo + signal refinement
 ⏱️ 10 min
 
-Four pearl categories were identified from the discovery call: coaching feedback moments, authenticity breakthroughs, quotable wisdom, and tidbits. These describe WHAT a pearl is, but the AI needs specific signals to detect them — audio patterns, language cues, or structural markers in the recordings.
+We extracted real pearls from three of Omega's Learn to Sing class recordings using AI-powered content detection. This topic opens with showing those examples, then refining the detection criteria together.
 
-- "The meat and potatoes. No salad, no garnish." (Omega on what she wants)
-- "Lean into your French accent" — example of coaching feedback pearl
-- "I'm not looking for another Whitney Houston" — Omega's teaching philosophy
-- The website testimonial format shows the desired narrative arc
+- **Pearl examples:** TBD — link to POC results once extracted
+- Four pearl categories: coaching feedback, authenticity breakthrough, transformation arc, quotable wisdom
+- Each example includes the timestamp, transcript excerpt, and why it qualifies as a pearl
+- Omega and Anthony review: "Is this what you'd want to post? What's missing?"
 
-**To resolve:** The specific observable signals Omega associates with each pearl category, grounded in examples from her own content.
+**To resolve:** Validate that the AI finds the right moments. Refine what to detect more of, less of, or differently.
 
 ### 5. Programme pricing and student journey
 ⏱️ 5 min
@@ -95,12 +97,23 @@ The "Come With Me" album (10 tracks) exists as produced content on YouTube. The 
 
 **To resolve:** Whether album content should be included in a future phase of the clipping service, and if so, what pearl categories apply to produced music content vs. raw class recordings.
 
+### 7. Next steps
+⏱️ 5 min
+
+Wrap up with clear expectations for what happens after the meeting.
+
+- Indicative pricing proposal (Richtpreisangebot) sent within 24 hours
+- Proposal anchored on programme pricing discussed in Topic 5
+- Timeline for Phase 1 kickoff if both sides agree
+
+**To resolve:** Confirm Omega is comfortable with a 24h turnaround on the proposal and align on any remaining questions.
+
 ## Meeting Format
 
-- **Type:** Discovery / alignment
-- **Duration:** ~35 min
-- **Expectation:** Omega reviews the design doc Pre-Read beforehand, brings examples of "pearls" she's already identified in her content
-- **Outcome:** All six discussion topics resolved → design doc complete, proposal can be sent
+- **Type:** Discovery / alignment + proof of concept demo
+- **Duration:** ~40 min
+- **Expectation:** Omega reviews the commercial design doc beforehand, brings any questions
+- **Outcome:** All seven discussion topics resolved → indicative pricing proposal sent within 24h
 
 ## Related
 
