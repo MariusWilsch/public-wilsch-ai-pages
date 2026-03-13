@@ -744,6 +744,8 @@ Embed skill instructions directly in the LibreChat agent's system prompt. No pro
 
 **Undefined:** Which approach to use, and whether progressive disclosure works beyond Claude. Skills follow the Agent Skills open standard — in principle portable across runtimes. But `container.skills` is Anthropic-specific. For the production target (Qwen 3.5 via OpenRouter), it's unknown whether progressive disclosure is achievable or whether skills must be baked into the system prompt. This affects the entire skills architecture (§6.2) — may require a separate extraction pass to investigate OpenRouter/Qwen skill support before committing to an approach.
 
+**Note:** Both options above assume LibreChat as the runtime. [#852](https://github.com/DaveX2001/deliverable-tracking/issues/852) asks the prior question: what runtime do we actually need? The answer may supersede both options — a different runtime (Agent SDK, a non-coding Claude Code equivalent, or something custom) could resolve skills delivery, file lifecycle, and contract state together. Resolve #852 before committing to an approach here.
+
 **File upload (demo requirement):** LibreChat's file upload feature must pass the uploaded Excel file path to the MCP tool. Today the file path is hardcoded in the container environment. The upload flow needs to connect LibreChat's file handling to the `excel_analysis` tool's `file_path` parameter. This is a deployment configuration task, not a design change — but it must work before the demo.
 
 *(Source: [LiteLLM Skills docs](https://docs.litellm.ai/docs/skills). Rein transcript 2026-03-11: "before the demo, you need to utilize the upload option." Gap analysis extraction pass 2026-03-12.)*
