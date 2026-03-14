@@ -47,6 +47,8 @@ Dadurch sind zwei aktive Kundenprojekte (AVO, REKERS) blockiert: KI-Entwicklung 
 
 ### Phase 1: 2× NVIDIA DGX Spark (Sofortkauf)
 
+**Status (2026-03-14):** Kaufentscheidung durch UWI genehmigt. Bestellung am 17. März, Abholung am 18. März (lokaler Händler SG/MY). Ziel: einsatzbereit für FSO-Demo am 27. März.
+
 **Hardware:**
 
 | Eigenschaft | Pro Gerät | 2× Gesamt |
@@ -94,10 +96,13 @@ Quelle: [Exo Labs Blog](https://blog.exolabs.net/nvidia-dgx-spark/)
 
 Diese Hardware-Infrastruktur ermöglicht Workloads wie die REKERS-Kriterienextraktion (#1079): kleine Modelle (Qwen 4B–9B) lokal auf DGX Spark und IBM Power 10 ausführen, bei Qualitätsparität mit Frontier-Modellen. Der DGX Spark dient dabei als Benchmark-Plattform neben Power 10 — gleicher Workload, verschiedene Hardware, messbare Vergleiche.
 
+**FSO-Demo (27. März):** Die REKERS-Pipeline (#629) wird auf der FSO demonstriert. Konkret: Page Index Tree Generation und Tree Traversal (#1137) auf DGX Spark vs. Power 10 benchmarken — gleicher Workload, verschiedene Hardware, messbare Ergebnisse für Kundenentscheidung.
+
 ---
 
 ## Source
 
+- **Session (Extraction Pass 2):** 68e26b44-fcd5-4995-830d-b67616444ffe
 - **Issue:** [#929 — Rent Mac Studio Ultra 256/512GB RAM](https://github.com/DaveX2001/deliverable-tracking/issues/929)
 - **Bestehende Recherche:** [Mac Studio Beschaffung — Handlungsoptionen](https://mariuswilsch.github.io/public-wilsch-ai-pages/project/wilsch-group/mac-studio-beschaffung-recherche-2026-02)
 - **REKERS Feasibility:** [Part 7 — POC Validation](https://mariuswilsch.github.io/public-wilsch-ai-pages/project/rekers/design-doc-feasibility-report)
