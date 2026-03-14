@@ -256,9 +256,13 @@ The JA protocol's bones are there (identity, some WHY, authority model). The fix
 
 ### Part 3: The Evidence-to-Fix Methodology
 
-Current workflow: rubber-duck → clarity phases → micro-iteration → test. The first diagnostic step is now validated. Remaining questions are hypotheses that need cross-referencing against Tier 1 sources.
+Part 3 defines the manage-artifact v2 skill's core content — the diagnostic methodology that rubber-duck loads during /improve-system. The skill's role is not routing to fix types (skill-creator handles skill building/fixing). The role is providing the diagnostic lens: given a behavioral failure, determine what's wrong and where to fix it.
 
-### Step 1: Dimensional Diagnosis (Hypothesis with empirical evidence)
+The methodology follows a CBT (Cognitive Behavioral Therapy) parallel validated across two evidence sessions: observation → underlying belief → restructured belief (one abstraction level up) → generalization. The same flow applies whether creating an artifact from scratch or improving one after Session C evidence — only the starting point differs.
+
+Six steps, each validated against empirical evidence:
+
+### Step 1: Dimensional Diagnosis (Validated)
 
 **The question:** "Is this a thinking problem, a doing problem, or a knowing problem?"
 
@@ -266,27 +270,98 @@ Current workflow: rubber-duck → clarity phases → micro-iteration → test. T
 
 **Classification signals:**
 
-| Signal | Thinking (Protocol) | Doing (Command) | Knowing (Skill) |
+| Signal | Thinking (Protocol) | Doing (Skill) | Knowing (Skill references) |
 |--------|-------------------|-----------------|-----------------|
 | Thinking trace | AI reasoned TOWARD wrong action | No reasoning — just skipped | AI searched but couldn't find |
 | Fix persistence | Procedural fixes don't stick | Procedural fix works immediately | Adding reference resolves it |
 | In-session correction | Adjusts after told WHY | Adjusts after shown WHAT | Adjusts after given knowledge |
 
-**Validated against:** Two Session C conversations from CCI #604 (9f14b021, 5459d299). Both showed the AI reasoning "this is resolved, let me move on" in the thinking trace — a thinking problem misdiagnosed as a doing problem for 5 fix passes.
+**Validated against:** Two Session C conversations from CCI #604 (9f14b021, 5459d299) — thinking problem misdiagnosed as doing for 5 fix passes. Session a19f6dde — compound thinking+doing failure (JA /probe convergence: "answer = completion" belief amplified by "Next X/N" counter). Session 24d94df5 — system prompt contradicting SKILL.md on gating, PSM correctly predicted belief-layer wins over rule-layer.
 
-### Step 2+: Remaining Diagnostic Questions (Hypotheses)
+### Step 2: Self-Diagnosis (Validated — prompt format Undefined)
 
-- Which artifact type should fix this? (→ Part 2 dimensional mapping)
-- Is this an instruction problem, a tool contract problem, or a model capability ceiling?
-- If instruction: is it phrasing, placement, or structural?
-- How minimal can the change be while still being attributable in Session C?
-- Is the current [prompt template](https://github.com/veloxforce/claude-user-configs/blob/main/templates/anthropic-prompt-template.md) (10-component Anthropic structure) still the right framework, or does it need updating for Claude 4.6 and agentic contexts?
+After reading the thinking trace (Step 1), ask the failing model why it behaved that way. This produces a different signal from retrospective trace analysis: the model's own explanation of its reasoning pattern.
 
-**Undefined:** The evaluator-optimizer pattern from Anthropic's cookbooks (separate evaluator with binary verdict + structured feedback + memory of prior attempts) could formalize the verification step. Needs investigation after consuming Tier 1 sources.
+**Evidence:** JA AI self-diagnosed in Session C2 — *"I'm pattern-matching on 'user answered = item done.'"* This directly named the belief that 5 procedural fix passes had missed. The model identified its own failure mode when prompted to introspect.
 
-**Partially resolved:** Zack Witten's self-diagnosis technique ("ask the model why it got it wrong and ask it to rewrite the instructions"). Empirically validated: JA AI self-diagnosed in Session C2 — *"I'm pattern-matching on 'user answered = item done.'"* The AI can identify its own failure mode when prompted to introspect. Formalizing self-diagnosis as a diagnostic step is supported by evidence. **Undefined:** Should this be Step 2 in the methodology, and what's the prompt format?
+**Source:** [Zack Witten's self-diagnosis technique](https://www.youtube.com/watch?v=T9aRN5JkmL8) (Tier 2) — "ask the model why it got it wrong and ask it to rewrite the instructions."
+
+**Undefined:** The exact prompt format for self-diagnosis. Current evidence suggests open-ended ("Why did you advance?") outperforms specific ("Did you follow rule X?"), but this needs formalization.
+
+**Undefined:** A sub-agent implementation — load the Session C conversation into an agent (reproducing the original context window up to the failure point), then ask it to introspect. This would let you "ask past you" with the full original context preserved, rather than relying on retrospective analysis. Needs prototyping.
+
+### Step 3: CBT/PSM Reframing (Validated)
+
+The core transformation. Parallels Cognitive Behavioral Therapy: don't fix the behavior directly — fix the belief that produces it. Changed beliefs generalize to situations the observations never covered.
+
+**The 4-step transformation:**
+
+1. **Observe** the specific behavior (from Step 1 thinking trace)
+2. **Identify the underlying belief** (from Step 2 self-diagnosis or trace analysis)
+3. **Go UP one abstraction level** — PSM question: "What kind of person would behave correctly?" This forces an answer at the trait level, not the rule level. Don't negate the old belief ("don't advance") — find the higher belief that makes the old behavior unnecessary ("every answer opens territory I haven't explored yet")
+4. **The restructured belief generalizes** — it covers the specific observed failures AND novel situations the observations never mentioned
+
+**Evidence — JA /probe convergence (session a19f6dde):**
+
+| Step | Concrete |
+|------|----------|
+| Observe | AI advances after answers without probing deeper |
+| Belief | "answer = slot filled = advance" (from thinking trace: "that's enough") |
+| Go UP | "What question does this answer give me? If nothing comes to mind, I haven't listened carefully enough" |
+| Generalizes | Prevents premature advancing, batch-resolving, throughput pressure, AND covers novel situations |
+
+**Evidence — ARCHIBUS Setup (session 24d94df5):**
+
+| Step | Concrete |
+|------|----------|
+| Observe | Agent acknowledges gates but doesn't execute them |
+| Belief | System prompt: "no gates" contradicts SKILL.md: "wait for confirmation" |
+| Go UP | "The implementer's attention is scarce — never ask them to decide two things in one exchange" |
+| Generalizes | Covers hierarchy gating, enum pacing, fast/slow lane — all from one belief |
+
+**Compound detection:** After identifying the belief, check: is there mechanical scaffolding amplifying it? If yes, the fix requires BOTH PSM (change the belief) AND Skills Guide (remove the structure causing the belief). Both sessions showed compound failures — mechanical structures contradicting protocol beliefs.
+
+**Why beliefs over rules:** PSM theory + empirical evidence. Dev protocol belief created 4 rounds of self-debate in thinking traces (83% of blocks). JA protocol rule was absent from thinking — not overridden, absent. Beliefs create internal arguments that persist under pressure. Rules create compliance targets that fold under pattern-matching.
+
+### Step 4: Structural Cause Analysis
+
+Skills Guide question: "What instruction or structure is causing or amplifying the unwanted belief?"
+
+For thinking-layer fixes, this is the compound check — does mechanical scaffolding reinforce the wrong behavior? For doing-layer fixes, this IS the primary diagnosis — which structural element needs changing?
+
+**Two mechanisms for one goal (behavior):**
+- **PSM:** Change/add the belief → direct behavioral change
+- **Skills Guide:** Remove/restructure the instruction causing the belief → indirect behavioral change by removing the cause
+
+Behavior is always the frame. Mechanics serve behavior. A "mechanical fix" that doesn't serve a behavioral goal is noise.
+
+### Step 5: Fix Execution
+
+| Dimension | Artifact | Execution Tool |
+|-----------|----------|----------------|
+| **Thinking** | Protocol (CLAUDE.md) | PSM/CBT methodology → inline edit |
+| **Doing** | Skill (workflow patterns) | skill-creator |
+| **Knowing** | Skill (references/ folder) | skill-creator |
+| **Compound** | Protocol + Skill | PSM first (thinking governs doing), then skill-creator |
+
+For compound fixes: both changes in one commit for attributable testing in Session C. If you split across commits, you can't distinguish which change produced the behavioral shift.
+
+### Step 6: Session C Criteria
+
+Define one testable behavior before testing: "After [trigger], the AI should [desired action] instead of [old action]." Post to the issue before running Session C.
+
+**Minimal attributable change:** The fix should be small enough that if behavior improves, you can attribute it to THIS change. Large fixes with multiple variables make Session C results uninterpretable.
+
+### Remaining Hypotheses (Pass 5+)
+
+**Undefined:** The evaluator-optimizer pattern from Anthropic's cookbooks (separate evaluator with binary verdict + structured feedback + memory of prior attempts) could formalize the verification step. Needs investigation.
 
 **Undefined:** The "error cascade" finding (Where LLM Agents Fail, arxiv:2509.25370) — errors cascade across steps, which explains why single-instruction patches fail. How to formalize root cause attribution in the diagnosis phase?
+
+**Resolved hypotheses (moved to Steps above):**
+- ~~Which artifact type should fix this?~~ → Step 5 routing table
+- ~~Self-diagnosis as Step 2?~~ → Yes, Step 2 (prompt format still Undefined)
+- ~~How minimal can the change be?~~ → Step 6 (minimal attributable change)
 
 ### Part 4: Structural Patterns for Instruction Persistence
 
@@ -340,3 +415,8 @@ Patterns surfaced from Anthropic's engineering blog and academic research. These
 - **Community reference (Pass 4):** [shanraisshan/claude-code-best-practice](https://github.com/shanraisshan/claude-code-best-practice) — Command → Agent → Skill orchestration, Billion Dollar Questions
 - **ARCHIBUS witness (Pass 4):** Session e1a2095a — mechanical-only skill producing template behavior (CCI #629 comment, 2026-03-10)
 - **CCI #604 observation (Pass 4):** PSM beliefs fold under internal convergence pressure — [comment](https://github.com/DaveX2001/claude-code-improvements/issues/604#issuecomment-4029318643)
+- **Session (Pass 5 — creation mode):** a19f6dde-d274-4681-95f0-d9dc412e04ca — CBT parallel crystallized, /improve-system full diagnostic pass, compound fix (belief #1 + /probe structural removal)
+- **Session (Pass 5 — improvement mode):** 24d94df5-c52d-438d-ba50-a13e4cce1c48 — ARCHIBUS Setup pass 3, system prompt contradiction diagnosis, belief #5 (attention scarcity) + SKILL.md simplification
+- **CBT seed:** [CCI #629 comment](https://github.com/DaveX2001/claude-code-improvements/issues/629#issuecomment-4019317575) (2026-03-08) — PSM quote + "CBT could help"
+- **CBT crystallization:** [CCI #629 comment](https://github.com/DaveX2001/claude-code-improvements/issues/629#issuecomment-4046795013) (2026-03-12) — observation → belief → restructured belief → generalization
+- **Session (Pass 5 — extraction):** b0269523-6613-4303-9cf0-8c04d564b462 — this session, JA extraction encoding Part 3 methodology into design doc
