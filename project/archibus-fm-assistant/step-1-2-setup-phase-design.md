@@ -738,7 +738,9 @@ The pipeline has two distinct modes: interactive (Steps 0→2, lots of back-and-
 
 **Authoring format:** Skills are authored in the [agentskills.io](https://agentskills.io) open standard — a directory-based format (`SKILL.md` + optional `scripts/`, `references/`, `assets/`). This format is portable across 32+ tools including Claude Code, Cursor, Gemini CLI, and OpenHands. The agent loads only the `description` field at startup (~100 tokens), then loads the full body on invocation. The `allowed-tools` field (experimental) pre-approves MCP tools the skill can invoke.
 
-**Skill transition:** The runtime switches from `bem-setup` to `bem-backpressure` when the contract is confirmed and saved (§6.1). In Claude Code, this is native mid-session skill switching. In other runtimes, transition is either a new agent invocation with the backpressure skill loaded, or a system prompt swap — mechanism depends on runtime choice (§6.3).
+**Skill loading mechanism:** The AI controls when skills load — not the runtime. The system prompt includes short skill descriptions (~100 tokens each). When the AI determines it needs a skill's full recipe, it invokes a `load_skill` tool. The runtime reads the skill's `SKILL.md` and includes its content in the system prompt for subsequent turns. This matches Claude Code's native behavior: the AI sees descriptions, decides to invoke, and the full content appears in context.
+
+**Skill accumulation:** Loaded skills remain in context — no unloading. The AI can reference both `bem-setup` and `bem-backpressure` simultaneously if needed. Context window management is a future optimization, not a design constraint. The Anthropic API sends `system=` fresh with every request, so the runtime can include any combination of loaded skills per turn.
 
 **Undefined:** The backpressure skill's content — what error interpretation rules, retry strategies, and escalation criteria the AI needs to handle the Step 3 loop effectively. The bridge tool returns structured errors; the skill teaches the AI what to do with them. Needs a developer extraction pass on the [Step 3 design doc's](https://mariuswilsch.github.io/public-wilsch-ai-pages/project/archibus-fm-assistant/chain-1b-step3-design) backpressure model.
 
@@ -746,7 +748,23 @@ The pipeline has two distinct modes: interactive (Steps 0→2, lots of back-and-
 
 #### 6.3 Deployment — Runtime & File Lifecycle
 
-The pipeline needs a runtime that provides: file upload (Excel → MCP tool), MCP tool calling (stdio transport), skill/instruction loading, conversation persistence, and a web UI for non-developer implementers.
+The complete pipeline requires capabilities across five layers. Most are commodity — the interesting question is which layer has unsolved gaps.
+
+| Layer | What it provides | Status |
+|-------|-----------------|--------|
+| **Runtime** | Web UI, auth, file upload, session management, model routing, skill loading | **Gap — see below** |
+| **MCP Server** | Tool calling (bem_context, excel_analysis, bridge), structured errors, progress | Exists (archibus-bulk-import-tools) |
+| **System Prompt** | PSM persona — always-on behavioral identity (§6.4) | Exists (prompts/system-prompt.md) |
+| **Skills** | On-demand recipes loaded by AI — bem-setup, bem-backpressure (§6.2) | Content partially written |
+| **Model** | Reasoning, semantic matching, multi-turn coherence | Claude (demo), Qwen (production target) |
+
+The runtime layer has three gap primitives — capabilities that coding-oriented tools (Claude Code, Cursor) provide natively but web-deployable runtimes do not:
+
+1. **Bidirectional file I/O** — browser upload becomes a filesystem path the MCP tool reads; tool output becomes a downloadable file
+2. **Progressive skill loading** — the AI loads/swaps instruction sets mid-conversation based on workflow state
+3. **Long-running tool support** — tool calls that exceed ~60s without framework-imposed timeout
+
+This gap is not unique to ARCHIBUS. Any team deploying MCP tools for non-developer end users hits the same three primitives — it is an unspoken market category without a packaged solution.
 
 ##### 6.3.1 File Lifecycle
 
@@ -754,9 +772,19 @@ The `excel_analysis` MCP tool expects a local filesystem path (`file_path` param
 
 **LibreChat gap (confirmed March 2026):** LibreChat stores uploads to `./uploads/` (Docker volume mounted at `/app/uploads/`) but does NOT pass file paths to MCP tools. Three GitHub issues confirm the gap (#10739 closed without fix, #8060 open, PR #11094 unmerged). The `@modelcontextprotocol/server-filesystem` workaround requires the unmerged PR to expose `filepath` in LLM context — a three-point failure surface with no official documentation.
 
-**Chainlit resolution:** Chainlit's `AskFileMessage` returns uploaded files with a `.path` attribute — the actual filesystem path. The MCP tool receives this path directly as an argument. No workaround needed. Stdio MCP is natively supported.
+**Chainlit resolution:** Chainlit's `AskFileMessage` returns uploaded files with a `.path` attribute — the actual filesystem path. No workaround needed. Stdio MCP is natively supported.
 
-**Docker volume pattern (interim):** Both the runtime container and MCP server mount the same host directory (`./uploads:/app/uploads/`). This works for co-located deployments but requires the LLM to know the upload path convention.
+**Path injection — "tell the AI":** The runtime injects uploaded file paths into conversation context. When the implementer uploads files, the runtime appends path metadata (filename → filesystem path) to the message. The AI uses the correct path when calling MCP tools. This works because the AI has semantic understanding of which file is what — it can distinguish the main data file from reference files by name and content.
+
+**Multi-file uploads:** Implementers bring multiple files — the primary data file plus reference files (asset types, enum mappings). The runtime surfaces all file paths; the AI determines which file goes to which tool.
+
+**Three deployment options for file I/O:**
+
+| Option | How it works | Path certainty | Complexity |
+|--------|-------------|----------------|-----------|
+| **In-process** | Runtime + MCP server in same Python process (FastMCP in-memory transport). Shared filesystem — `.path` is directly accessible. | Exact (programmatic) | Lowest — single container |
+| **Docker shared volume** | Runtime and MCP server in separate containers, mounting the same host directory (`./uploads:/app/uploads/`). Runtime injects the path into conversation context. | Exact (programmatic) | Medium — two containers, volume config |
+| **Convention-based** | AI knows filenames from chat, assumes uploads land at a known directory (e.g., `/uploads/{filename}`). No path injection needed. | Inferred (fragile if runtime renames files) | Lowest code — but fragile |
 
 *(Source: LibreChat issues [#10739](https://github.com/danny-avila/LibreChat/issues/10739), [#8060](https://github.com/danny-avila/LibreChat/issues/8060), [PR #11094](https://github.com/danny-avila/LibreChat/pull/11094). Rein transcript 2026-03-11: "before the demo, you need to utilize the upload option." Runtime harness research, session 802ad55e.)*
 
@@ -769,6 +797,10 @@ LiteLLM does NOT support Agent Skills — `container.skills` and `/v1/skills` ar
 **LibreChat Agent Skills** (the native progressive disclosure feature) is on the Q1 2026 roadmap ([Issue #11106](https://github.com/danny-avila/LibreChat/issues/11106)) with no active PR — likely slips to Q2 2026.
 
 **Chainlit** handles skills via Python code — the developer programmatically loads skill instructions based on conversation state. Full control, no waiting on upstream features.
+
+**Resolved mechanism — AI-controlled loading (Pattern B):** The system prompt includes short skill descriptions. The AI invokes a `load_skill` tool when it determines the full recipe is needed. The runtime reads the skill file and includes its content in the system prompt for subsequent API calls. The Anthropic API sends `system=` fresh with every request — the runtime can include any combination of loaded skills per turn without framework constraints. This matches Claude Code's native skill behavior: descriptions loaded at startup, full content on invocation, skills accumulate in context.
+
+**LibreChat alternative:** System prompt baking — embed both skill instructions upfront. Viable for Claude (context window accommodates both). For Qwen 3.5 (production target), one LibreChat agent per mode (setup vs. execution) avoids instruction-following degradation. No progressive loading — all instructions present from the start.
 
 ##### 6.3.3 Runtime Candidates
 
@@ -786,9 +818,13 @@ Three runtimes were evaluated against the full requirements stack:
 
 **Rejected:** Claude Agent SDK (no built-in web UI, Anthropic models only), Open WebUI (MCP via proxy only, no file→MCP forwarding), Claude Code (not self-hostable).
 
-**Architectural note:** Dify is strongest when the UX is a guided workflow (upload → validate → map → import) rather than free-form conversation. If Miguel's demo expectation is conversational ("help me with this import"), Dify's workflow paradigm creates friction. If the expectation is deterministic ("process this file"), Dify's HITL nodes are architecturally cleaner than a chat interface.
+**UX paradigm — conversational, not workflow:** Miguel's demo expectation is the interactive ETL — the AI reads the implementer's data, proposes mappings, and the implementer confirms through conversation. This is free-form conversational, not deterministic workflow. Dify's guided workflow paradigm creates friction for this interaction pattern.
 
-**Undefined:** Runtime selection — which candidate to use for the demo and whether demo architecture commits the production path. Research recommendation: demo on Chainlit (proves MCP tools work, Python orchestration reusable), evaluate LibreChat for production when Q2 2026 features land. SA decides.
+**FastMCP v3 — complementary layer, not runtime:** FastMCP v3 added Client (programmatic MCP client with Anthropic/OpenAI/Gemini sampling handlers), Apps (interactive UIs rendered in conversation), and Elicitation (structured user input mid-tool). These are powerful MCP-layer primitives but explicitly "building blocks for higher-level systems" — not a web UI or conversation runtime. FastMCP provides the MCP server and client; the runtime provides the conversation shell around it.
+
+**Critical path — bridge tool first, then runtime:** The demo blocker is the bridge tool (contract → pipeline execution), not the runtime. Build order: (1) bridge tool, (2) golden example validation with CAFEM contract, (3) backpressure loop testing, (4) skills content. The runtime decision feeds into this path but does not block step 1.
+
+**Undefined:** Runtime selection — requires a validation spike before committing. Spike scope: build a minimal Chainlit app that uploads a file, injects the path into context, calls `excel_analysis`, and returns a result. Primary test: does the "tell the AI" file path pattern work end-to-end? Fallback: convention-based path in LibreChat (AI constructs path from filename + known upload directory). Spike validates whether Chainlit's native primitives justify the migration cost from LibreChat.
 
 *(Source: [LibreChat 2026 Roadmap](https://www.librechat.ai/blog/2026-02-18_2026_roadmap). [Chainlit MCP docs](https://docs.chainlit.io/advanced-features/mcp). [Dify v1.6.0 MCP](https://dify.ai/blog/v1-6-0-built-in-two-way-mcp-support). [agentskills.io](https://agentskills.io). Runtime harness research, session 802ad55e.)*
 
@@ -846,3 +882,9 @@ The AI's behavioral quality is demo-blocking. Miguel judges whether the AI acts 
 - **Reference:** [LibreChat file→MCP gap Issue #8060](https://github.com/danny-avila/LibreChat/issues/8060) — signed URL proposal, unresolved
 - **Reference:** [Chainlit MCP documentation](https://docs.chainlit.io/advanced-features/mcp) — native stdio/SSE/HTTP, `.path` attribute
 - **Reference:** [Dify v1.6.0 two-way MCP](https://dify.ai/blog/v1-6-0-built-in-two-way-mcp-support) — HTTP transport only
+- **Reference:** [Chainlit Ask User API](https://docs.chainlit.io/advanced-features/ask-user) — AskFileMessage, AskElementMessage (consent-gated forms)
+- **Reference:** [Chainlit Commands](https://docs.chainlit.io/concepts/command) — dynamic UI actions, set_commands()
+- **Reference:** [Chainlit MCP Cookbook](https://github.com/Chainlit/cookbook/tree/main/mcp) — end-to-end MCP + Claude integration example
+- **Reference:** [FastMCP v3 Apps](https://gofastmcp.com/apps/overview) — interactive UIs rendered in conversation
+- **Reference:** [FastMCP v3 Sampling](https://gofastmcp.com/clients/sampling) — built-in Anthropic/OpenAI/Gemini handlers
+- **Session:** /Users/verdant/.claude/projects/-Users-verdant-Documents-projects-billable-MariusWilsch--archibus-bulk-import/82c5d45b-eb25-4f94-a806-e081fc46d0cb.jsonl
