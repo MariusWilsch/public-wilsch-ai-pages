@@ -22,8 +22,8 @@ Präsentationsmaterial für das FSO-Seminar am 27. März 2026. Erklärt die leis
 
 > **Erste Frage vor jeder Hardware-Entscheidung:** Habe ich mehr Einlese- oder mehr Auslese-Aufgaben?
 >
-> - **Rekers (Dokumentenverarbeitung):** 95% Prefill → Rechenleistung entscheidend
-> - **Chatbot (Dialogsystem):** 80% Decode → Speicherbandbreite entscheidend
+> - **Dokumentenverarbeitung** (z.B. PDF-Analyse, Bildverarbeitung): 95% Prefill → Rechenleistung entscheidend
+> - **Chatbot / Dialogsystem:** 80% Decode → Speicherbandbreite entscheidend
 
 ### Hardware-Kennzahlen
 
@@ -66,7 +66,7 @@ Jede Hardware kann ein FP04-Modell **laden und speichern** — das spart Speiche
 >
 > Das ist der eigentliche Vorteil der NVIDIA Tensor Cores: nicht nur weniger Speicher, sondern auch **15x schnellere Berechnung** bei FP04 im Vergleich zu FP16.
 >
-> **Wann ist das relevant?** Bei **Prefill** (Einlesen) — dort ist die Rechenleistung der Engpass. Bei Decode (Auslesen) ist die Speicherbandbreite der Engpass, und die Rechenleistung reicht auf allen Systemen aus. Für Anwendungen wie REKERS (95% Prefill) ist der Unterschied zwischen nativer FP04-Berechnung und Upcast daher **entscheidend**.
+> **Wann ist das relevant?** Bei **Prefill** (Einlesen) — dort ist die Rechenleistung der Engpass. Bei Decode (Auslesen) ist die Speicherbandbreite der Engpass, und die Rechenleistung reicht auf allen Systemen aus. Für Anwendungen mit hohem Einlese-Anteil (z.B. Dokumentenverarbeitung, PDF-Analyse) ist der Unterschied zwischen nativer FP04-Berechnung und Upcast daher **entscheidend**.
 
 ---
 
@@ -80,33 +80,38 @@ Jede Hardware kann ein FP04-Modell **laden und speichern** — das spart Speiche
 | **Kerne (Art)** | POWER10 (VSX + MMA) | POWER11 (VSX + MMA) | Blackwell (CUDA + Tensor) | Apple GPU |
 | **Rechenleistung (FP16)** | ~2 TFLOPS | ~8 TFLOPS | 2x 125 = **250 TFLOPS** | 65,5 TFLOPS |
 | **RAM** | 128 GB DDR4 | 1.024 GB DDR5 | 2x 128 = 256 GB LPDDR5x | 256 GB LPDDR5x |
-| **RAM Bandbreite** | 137 GB/s (gemessen) | ~1.200 GB/s (Herstellerangabe) | 2x 273 = 546 GB/s | 819 GB/s |
+| **RAM Bandbreite (theoretisch)** | ~400 GB/s | ~1.200 GB/s | 2x 273 = 546 GB/s | 819 GB/s |
+| **Effektive Bandbreite** | **137 GB/s** (gemessen, ~34%) | TBD | ~460 GB/s (~85%) | ~700 GB/s (~85%) |
 | **Speicher (SSD/HDD)** | 500 GB SAS | TBD | 2x 4 TB NVMe | 1–8 TB NVMe |
 | **Betriebssystem** | AlmaLinux 10.0 | TBD | Ubuntu / DGX OS | macOS |
 | **Architektur** | ppc64le | ppc64le | ARM (aarch64) | ARM (aarch64) |
 | **Stückzahl** | 1 (vorhanden) | 1 (verfügbar) | 2 (geplant) | 1 (Referenz) |
 | **Preis** | ~50.000–100.000 € (Enterprise-Lease) | ~50.000–100.000 € | 2x ~3.700 € = **~7.400 €** | ~4.000–10.000 € |
 
-### Benchmark-Ergebnisse (REKERS-Projekt, Qwen 3-VL 8B)
+### Benchmark-Ergebnisse (PDF-Dokumentenverarbeitung, Qwen 3-VL 8B)
 
 | | IBM Power 10 | IBM Power 11 | 2x DGX Spark | Mac Studio M3 Ultra |
 |--|--|--|--|--|
 | **TTFT (Prefill)** | ~90 s/Seite | TBD | TBD | TBD |
 | **TPS (Decode)** | 12,4 tok/s | TBD | TBD | TBD |
 | **240 Seiten** | ~6 Stunden | TBD | TBD | TBD |
-| **Kriterien gefunden** | 9/9 (100%) | TBD | TBD | TBD |
 
-> **Hinweis:** Power 10 Werte sind gemessen (Projekt 35764, 240 Seiten, Qwen 3-VL 8B). Werte für andere Systeme stehen aus — Benchmark wird nach Inbetriebnahme der DGX Spark nachgeholt.
+> **Hinweis:** Power 10 Werte sind gemessen (240 PDF-Seiten, Qwen 3-VL 8B). Werte für andere Systeme stehen aus — Benchmark wird nach Inbetriebnahme der DGX Spark nachgeholt.
 
-### Warum der Geschwindigkeitsunterschied?
+### Warum ist die effektive Bandbreite so unterschiedlich?
 
-| Faktor | IBM Power 10 | DGX Spark / Mac Studio |
-|--------|-------------|----------------------|
-| **GPU vorhanden?** | Nein — reine CPU-Verarbeitung | Ja — dedizierte KI-Hardware |
-| **Bandbreite nutzbar** | ~20–30% (CPU-Architektur) | ~85% (GPU-Architektur) |
-| **Analogie** | LKW auf einer Landstraße | Rennwagen auf der Autobahn |
+Die theoretische Bandbreite (GB/s) ist bei allen Systemen auf dem Papier vergleichbar. Der Unterschied liegt darin, **wie viele gleichzeitige Speicheranfragen** die Hardware erzeugen kann:
 
-> Die IBM Power 10 ist eine Enterprise-Datenbank-Maschine, die KI als Nebenaufgabe ausführt. Die DGX Spark und Mac Studio wurden für KI-Aufgaben gebaut.
+| | IBM Power 10 (CPU) | DGX Spark / Mac Studio (GPU) |
+|--|--|--|
+| **Kerne** | 5 CPU-Kerne | 6.144 / 80 GPU-Kerne |
+| **Gleichzeitige Speicheranfragen** | ~50–100 | Tausende |
+| **Effektive Nutzung** | ~34% der theoretischen Bandbreite | ~85% der theoretischen Bandbreite |
+| **Analogie** | Autobahn mit 8 Spuren, aber nur 50 Autos | Autobahn mit 8 Spuren und 6.000 Autos |
+
+> Eine CPU ist für **schnellen Zugriff auf einzelne Daten** optimiert (Datenbanken, ERP). Eine GPU ist für **massiven Datendurchsatz** optimiert (KI, Grafikverarbeitung). Dieselbe Bandbreite auf dem Papier, aber die GPU kann sie tatsächlich ausnutzen.
+>
+> **Gemessen auf unserer Power 10:** 137 GB/s von 400 GB/s theoretisch = 34% Nutzung. Nicht weil der Speicher langsam ist, sondern weil 5 CPU-Kerne einfach nicht genug gleichzeitige Anfragen erzeugen können, um den Speicherbus auszulasten.
 
 ---
 
@@ -128,7 +133,7 @@ Jede Hardware kann ein FP04-Modell **laden und speichern** — das spart Speiche
 
 Alle 6–12 Monate erreichen kleine Modelle das Intelligenzniveau von großen Modellen der Vorgängergeneration — ohne die Parameteranzahl zu ändern.
 
-**Aktuell:** Qwen 3.5 9B (10 GB) ist so intelligent wie GPT-OS 120B (vor 12 Monaten)
+**Aktuell:** Qwen 3.5 9B (2026, 10 GB) ist so intelligent wie GPT-OSS 120B (2025, 240 GB) — ein Modell mit **13x mehr Parametern**, erschienen nur ein Jahr zuvor. ([Quelle: VentureBeat](https://venturebeat.com/technology/alibabas-small-open-source-qwen3-5-9b-beats-openais-gpt-oss-120b-and-can-run))
 
 > **Gleiche Intelligenz, viel weniger Hardware.**
 > Das bedeutet: Die Hardware-Anforderungen für den Betrieb sinken kontinuierlich.
@@ -138,9 +143,9 @@ Alle 6–12 Monate erreichen kleine Modelle das Intelligenzniveau von großen Mo
 | System | Kleine Modelle (< 9B) | Große Modelle (> 9B) |
 |--------|----------------------|---------------------|
 | IBM Power 10 (128 GB) | ✅ Möglich | ⚠️ Möglich, aber sehr langsam |
-| IBM Power 11 (1.024 GB) | ✅ Möglich | ✅ Möglich (z.B. MiniMax 230B bei FP08) |
+| IBM Power 11 (1.024 GB) | ✅ Möglich | ⚠️ Passt in RAM, aber CPU-only — sehr langsam |
 | 2x DGX Spark (256 GB) | ✅ Möglich | ✅ Möglich (z.B. MiniMax 230B bei FP04) |
-| Mac Studio M3 Ultra (128 GB) | ✅ Möglich | ⚠️ Nur bis ~70B bei FP16 |
+| Mac Studio M3 Ultra (256 GB) | ✅ Möglich | ✅ Möglich (z.B. MiniMax 230B bei FP08 = 220 GB) |
 
 ---
 
