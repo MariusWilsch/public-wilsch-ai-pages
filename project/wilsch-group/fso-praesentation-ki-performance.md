@@ -79,6 +79,7 @@ Jede Hardware kann ein FP04-Modell **laden und speichern** — das spart Speiche
 | **Kerne** | 5 CPU | 15 CPU | 2x 6.144 GPU | 80 GPU |
 | **Kerne (Art)** | POWER10 (VSX + MMA) | POWER11 (VSX + MMA) | Blackwell (CUDA + Tensor) | Apple GPU |
 | **Rechenleistung (FP16)** | ~2 TFLOPS | ~8 TFLOPS | 2x 125 = **250 TFLOPS** | 65,5 TFLOPS |
+| **Rechenleistung (FP04)** | — (nicht unterstützt) | — (nicht unterstützt) | 2x 500 = **1.000 TFLOPS** | — (Upcast zu FP16) |
 | **RAM** | 128 GB DDR4 | 1.024 GB DDR5 | 2x 128 = 256 GB LPDDR5x | 256 GB LPDDR5x |
 | **RAM Bandbreite (theoretisch)** | ~400 GB/s | ~1.200 GB/s | 2x 273 = 546 GB/s | 819 GB/s |
 | **Effektive Bandbreite** | **137 GB/s** (gemessen, ~34%) | TBD | ~460 GB/s (~85%) | ~700 GB/s (~85%) |
