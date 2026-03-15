@@ -37,17 +37,33 @@ Präsentationsmaterial für das FSO-Seminar am 27. März 2026. Erklärt die leis
 
 ### Präzision über Quantifizierung
 
-Modelle bestehen aus Milliarden von Zahlen mit Nachkommastellen. Je mehr Nachkommastellen, umso genauer — aber auch umso mehr Speicher wird benötigt.
+Jeder Parameter eines Modells ist eine Zahl (z.B. `0.0472`). Diese Zahl wird mit einer bestimmten Anzahl von **Bits** gespeichert — je mehr Bits, desto genauer die Darstellung, aber auch desto mehr Speicher wird benötigt.
 
-| Präzision | Nachkommastellen | Speicher pro 8B-Modell | Genauigkeit |
-|-----------|-----------------|----------------------|-------------|
-| **FP32** | 32 Bit | 32 GB | Höchste Präzision |
-| **FP16** | 16 Bit | 16 GB | Standardpräzision |
-| **FP08** | 8 Bit | 8 GB | Leicht gerundet |
-| **FP04** | 4 Bit | 4 GB | Stark gerundet — für die meisten Anwendungen ausreichend |
+| Präzision | Bits pro Zahl | Speicher pro 8B-Modell | Genauigkeit |
+|-----------|--------------|----------------------|-------------|
+| **FP32** | 32 Bit (4 Bytes) | 32 GB | Höchste Präzision |
+| **FP16** | 16 Bit (2 Bytes) | 16 GB | Standardpräzision |
+| **FP08** | 8 Bit (1 Byte) | 8 GB | Leicht gerundet |
+| **FP04** | 4 Bit (0,5 Byte) | 4 GB | Gerundet — für die meisten Anwendungen ausreichend |
 
 > **Halbe Präzision = halber Speicher = doppelte Geschwindigkeit.**
 > Die Qualität der Ergebnisse bleibt bei FP04 für Textverarbeitung nahezu gleich.
+
+### Entscheidender Unterschied: Native Berechnung
+
+Jede Hardware kann ein FP04-Modell **laden und speichern** — das spart Speicher auf allen Systemen. Der entscheidende Unterschied liegt in der **Berechnung**:
+
+| | Modell laden (FP04) | Berechnung durchführen |
+|--|--|--|
+| **DGX Spark (Blackwell)** | ✅ 4 GB | ✅ **Nativ bei FP04** — 1.000 TFLOPS |
+| **Mac Studio (M3 Ultra)** | ✅ 4 GB | ⬆️ Umwandlung zu FP16 — 65 TFLOPS |
+| **IBM Power 10** | ✅ 4 GB | ⬆️ Umwandlung zu BF16 — 2 TFLOPS |
+
+> **Alle sparen Speicher.** Aber nur NVIDIA kann bei niedrigerer Präzision auch **schneller rechnen**. Apple und IBM müssen die Zahlen intern wieder vergrößern (Upcast), bevor sie rechnen können — kein Geschwindigkeitsvorteil bei der Berechnung.
+>
+> Das ist der eigentliche Vorteil der NVIDIA Tensor Cores: nicht nur weniger Speicher, sondern auch **15x schnellere Berechnung** bei FP04 im Vergleich zu FP16.
+>
+> **Wann ist das relevant?** Bei **Prefill** (Einlesen) — dort ist die Rechenleistung der Engpass. Bei Decode (Auslesen) ist die Speicherbandbreite der Engpass, und die Rechenleistung reicht auf allen Systemen aus. Für Anwendungen wie REKERS (95% Prefill) ist der Unterschied zwischen nativer FP04-Berechnung und Upcast daher **entscheidend**.
 
 ---
 
