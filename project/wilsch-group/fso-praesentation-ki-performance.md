@@ -79,7 +79,7 @@ Jede Hardware kann ein FP04-Modell **laden und speichern** — das spart Speiche
 | **Kerne** | 5 CPU | 15 CPU | 2x 6.144 GPU | 80 GPU |
 | **Kerne (Art)** | POWER10 (VSX + MMA) | POWER11 (VSX + MMA) | Blackwell (CUDA + Tensor) | Apple GPU |
 | **Rechenleistung (FP16)** | ~2 TFLOPS | ~8 TFLOPS | 2x 125 = **250 TFLOPS** | 65,5 TFLOPS |
-| **Rechenleistung (FP04)** | — (nicht unterstützt) | — (nicht unterstützt) | 2x 500 = **1.000 TFLOPS** | — (Upcast zu FP16) |
+| **Rechenleistung (FP04)** | — (nicht unterstützt) | — (nicht unterstützt) | 2x 500 = **1.000 TFLOPS** | — (Upcast zu FP16)¹ |
 | **RAM** | 128 GB DDR4 | 1.024 GB DDR5 | 2x 128 = 256 GB LPDDR5x | 256 GB LPDDR5x |
 | **RAM Bandbreite (theoretisch)** | ~400 GB/s | ~1.200 GB/s | 2x 273 = 546 GB/s | 819 GB/s |
 | **Effektive Bandbreite** | **137 GB/s** (gemessen, ~34%) | TBD | ~460 GB/s (~85%) | ~700 GB/s (~85%) |
@@ -88,6 +88,8 @@ Jede Hardware kann ein FP04-Modell **laden und speichern** — das spart Speiche
 | **Architektur** | ppc64le | ppc64le | ARM (aarch64) | ARM (aarch64) |
 | **Stückzahl** | 1 (vorhanden) | 1 (verfügbar) | 2 (geplant) | 1 (Referenz) |
 | **Preis** | ~50.000–100.000 € (Enterprise-Lease) | ~50.000–100.000 € | 2x ~3.700 € = **~7.400 €** | ~4.000–10.000 € |
+
+> ¹ **Hinweis M5:** Apple's M5-Generation (Oktober 2025) hat mit den „GPU Neural Accelerators" erstmals native FP04-Berechnung in Hardware. Der hier verglichene M3 Ultra hat diese Fähigkeit noch nicht. Ein zukünftiger M5 Ultra könnte den Abstand zu NVIDIA bei FP04 deutlich verringern.
 
 ### Benchmark-Ergebnisse (PDF-Dokumentenverarbeitung, Qwen 3-VL 8B)
 
@@ -180,3 +182,20 @@ Alle 6–12 Monate erreichen kleine Modelle das Intelligenzniveau von großen Mo
 > **Amerikanische Hersteller** (OpenAI, Anthropic) bieten in der Regel nur Cloud-Modelle an.
 > **Chinesische Hersteller** (Alibaba/Qwen, MiniMax) bieten lokale Open-Source-Modelle an.
 > Für Datensouveränität bei unseren Kunden setzen wir auf lokale Modelle.
+
+---
+
+## Quellen
+
+- [Qwen 3.5 9B schlägt GPT-OSS 120B — VentureBeat](https://venturebeat.com/technology/alibabas-small-open-source-qwen3-5-9b-beats-openais-gpt-oss-120b-and-can-run)
+- [NVIDIA DGX Spark Hardware-Spezifikationen](https://docs.nvidia.com/dgx/dgx-spark/hardware.html)
+- [LMSYS DGX Spark In-Depth Review](https://lmsys.org/blog/2025-10-13-nvidia-dgx-spark/)
+- [Apple M3 Ultra Announcement](https://www.apple.com/newsroom/2025/03/apple-reveals-m3-ultra-taking-apple-silicon-to-a-new-extreme/)
+- [Apple M5 — Native FP4 via GPU Neural Accelerators](https://www.apple.com/newsroom/2025/10/apple-unleashes-m5-the-next-big-leap-in-ai-performance-for-apple-silicon/)
+- [Apple ML Research — LLMs mit MLX und M5 Neural Accelerators](https://machinelearning.apple.com/research/exploring-llms-mlx-m5)
+- [Unabhängiger M5 Neural Accelerator Benchmark](https://tzakharko.github.io/apple-neural-accelerators-benchmark/)
+- [Apple Silicon vs NVIDIA CUDA: AI Comparison 2025](https://scalastic.io/en/apple-silicon-vs-nvidia-cuda-ai-2025/) — bestätigt: M3 hat kein natives FP4/FP8
+- [IBM POWER10 Architektur — NextPlatform](https://www.nextplatform.com/2020/09/03/the-memory-area-network-at-the-heart-of-ibms-power10/)
+- [IBM Power11 Announcement — NextPlatform](https://www.nextplatform.com/compute/2025/07/16/the-worlds-most-powerful-server-embiggens-a-bit-with-power11/)
+- [MLX FP4/FP8 Upcast-Verhalten — GitHub Issue #2962](https://github.com/ml-explore/mlx/issues/2962)
+- [MLX nvfp4/mxfp8 Quantize/Dequantize — PR #2688](https://github.com/ml-explore/mlx/pull/2688)
