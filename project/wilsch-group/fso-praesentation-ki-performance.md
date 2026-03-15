@@ -46,7 +46,10 @@ Jeder Parameter eines Modells ist eine Zahl (z.B. `0.0472`). Diese Zahl wird mit
 | **FP08** | 8 Bit (1 Byte) | 8 GB | Leicht gerundet |
 | **FP04** | 4 Bit (0,5 Byte) | 4 GB | Gerundet — für die meisten Anwendungen ausreichend |
 
-> **Halbe Präzision = halber Speicher = doppelte Geschwindigkeit.**
+> **Halbe Präzision = halber Speicher.** Ob das auch doppelte Geschwindigkeit bedeutet, hängt von der Verarbeitungsart ab:
+> - **Decode (Auslesen):** Ja — halbes Modell = halb so viele Daten aus dem Speicher laden = doppelte Geschwindigkeit (auf allen Systemen)
+> - **Prefill (Einlesen):** Nur auf NVIDIA — dort kann die Hardware nativ mit kleineren Zahlen rechnen. Apple und IBM rechnen intern immer mit FP16, egal wie klein das Modell geladen wurde.
+>
 > Die Qualität der Ergebnisse bleibt bei FP04 für Textverarbeitung nahezu gleich.
 
 ### Entscheidender Unterschied: Native Berechnung
@@ -76,7 +79,7 @@ Jede Hardware kann ein FP04-Modell **laden und speichern** — das spart Speiche
 | **Kerne** | 5 CPU | 15 CPU | 2x 6.144 GPU | 80 GPU |
 | **Kerne (Art)** | POWER10 (VSX + MMA) | POWER11 (VSX + MMA) | Blackwell (CUDA + Tensor) | Apple GPU |
 | **Rechenleistung (FP16)** | ~2 TFLOPS | ~8 TFLOPS | 2x 125 = **250 TFLOPS** | 65,5 TFLOPS |
-| **RAM** | 128 GB DDR4 | 1.024 GB DDR5 | 2x 128 = 256 GB LPDDR5x | 128 GB LPDDR5x |
+| **RAM** | 128 GB DDR4 | 1.024 GB DDR5 | 2x 128 = 256 GB LPDDR5x | 256 GB LPDDR5x |
 | **RAM Bandbreite** | 137 GB/s (gemessen) | ~1.200 GB/s (Herstellerangabe) | 2x 273 = 546 GB/s | 819 GB/s |
 | **Speicher (SSD/HDD)** | 500 GB SAS | TBD | 2x 4 TB NVMe | 1–8 TB NVMe |
 | **Betriebssystem** | AlmaLinux 10.0 | TBD | Ubuntu / DGX OS | macOS |
