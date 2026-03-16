@@ -179,7 +179,7 @@ CCI is internal work. It lacks the natural forcing function that drives delivera
 
 The forcing function for CCI is ownership. Client work moves because the client creates external pressure. CCI work moves when someone's job IS the improvement loop — their daily attention replaces the client meeting date. Without a dedicated SE, CCI competes with client work for the founder's attention, and client work's stronger forcing function always wins.
 
-**Interim model:** The founder holds the SE role part-time (~1 day/week), supported by signal amplification: observation counts visible during grooming, pass counters on release epics, dependency flags between release epics. These are signals, not forcing functions — they inform priority but do not create deadline pressure.
+**Interim model:** The founder holds the SE role ad hoc — while doing client work across multiple terminals, 1-2 terminal sessions are allocated to position/CCI work interleaved with project work. There is no dedicated time block. Signal amplification (observation counts visible during grooming, pass counters on release epics, dependency flags between release epics) informs which terminal session to allocate, but these are signals, not forcing functions — they inform priority but do not create deadline pressure.
 
 **Target model:** A dedicated System Engineer whose sole accountability is the improvement loop. The [SE Position Agreement](https://mariuswilsch.github.io/public-wilsch-ai-pages/global/system-engineer-position-agreement-wilsch-ai-services) defines the work listing. The SE Operations Manual (this design doc's end deliverable) defines the procedures. Hiring for this role is a separate business decision outside this design doc's scope.
 
