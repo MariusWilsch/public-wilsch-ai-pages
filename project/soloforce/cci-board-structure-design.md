@@ -149,9 +149,47 @@ The primary tooling change replaces flag-for-improvement's capture function with
 
 ### 6. Deployment Pipeline
 
-The CCI improvement cycle follows a position pipeline that mirrors CI/CD for code: observations accumulate, cluster, get designed, get implemented, and deploy through stability stages.
+The CCI improvement cycle follows a two-path model that mirrors the developer's Path A (spec-design) / Path B (spec-implement) split:
 
-**Partially defined:** The pipeline — observations → SE monitors pressure → release epic → `/improve-system` at theme level → organic verification — was surfaced across two extraction passes. For instruction artifacts, conversations are the design material (not design docs or tracking.md). The JA design doc step does not apply — the SE runs `/improve-system` Session B directly against deduplicated conversations. See [/improve-system architecture](https://mariuswilsch.github.io/public-wilsch-ai-pages/global/improve-system-architecture) for the theme-level workflow. **Remaining open questions:** how the SE's "pressure threshold" judgment works in practice, and how stability gates between deployment stages (Marius R&D → team → product) are formalized. → Meeting agenda topic.
+**Path A — Observation Collection.** Observations accumulate on position epics as comments. Themes do not exist at this stage — observations are unstructured evidence. The SE monitors accumulation, looking for clusters of observations that point at the same behavioral pattern. When enough observations cluster around a coherent concern, the SE creates a release epic and transfers the cluster. The transfer is the moment observations become structured into themes.
+
+**Path B — Fix Cycle.** The release epic drives the fix-and-verify loop:
+
+1. **Theme clustering** — SE names themes from transferred observations
+2. **Session B** — `/improve-system` diagnoses from deduplicated conversations, applies fix. Session B comment posted on release epic with commit link. See [/improve-system architecture](https://mariuswilsch.github.io/public-wilsch-ai-pages/global/improve-system-architecture) for the theme-level workflow.
+3. **Session C** — Organic verification. The fixed behavior gets triggered naturally in real work sessions. Each occurrence is a Session C data point: pass (behavior correct) or fail (regression). Session C comments posted on release epic, tagged to their theme.
+4. **Theme closing** — When Session C instances consistently pass with zero failures, the theme is verified-closed. A disposition comment records the verdict. Exact pass threshold is empirical — determined through use, not pre-defined.
+5. **Release epic closing** — All themes dispositioned (verified-closed, transferred to another release epic, or deferred). SE closes the issue.
+
+**Observation routing during Path B:** While a release epic is open, new observations of the same behavior go to the release epic as Session C evidence (pass or fail), tagged to the relevant theme. After the release epic closes, new observations of the same behavior go to the position epic as new evidence for potential future clustering.
+
+For instruction artifacts, conversations are the design material (not design docs or tracking.md). The JA design doc step does not apply — the SE runs `/improve-system` Session B directly against deduplicated conversations.
+
+#### Forcing Function
+
+CCI is internal work. It lacks the natural forcing function that drives deliverable-tracking (client meeting dates with financial and social consequences). Analysis against the [Stakes Visibility framework](https://mariuswilsch.github.io/public-wilsch-ai-pages/global/stakes-visibility-forcing-function) — five drivers scored for CCI:
+
+| Driver | CCI Status |
+|--------|-----------|
+| Financial Incentives | Indirect — improves capacity across all projects, not quantifiable per fix |
+| Social Consequences | Absent — no external stakeholder creating pressure |
+| Structural Clarity | Emerging — position epics, release epics, /improve-system exist |
+| Visibility | Solvable — board retrofit provides at-a-glance status |
+| Ownership | **Key driver** — a dedicated person whose job is the improvement loop |
+
+The forcing function for CCI is ownership. Client work moves because the client creates external pressure. CCI work moves when someone's job IS the improvement loop — their daily attention replaces the client meeting date. Without a dedicated SE, CCI competes with client work for the founder's attention, and client work's stronger forcing function always wins.
+
+**Interim model:** The founder holds the SE role part-time (~1 day/week), supported by signal amplification: observation counts visible during grooming, pass counters on release epics, dependency flags between release epics. These are signals, not forcing functions — they inform priority but do not create deadline pressure.
+
+**Target model:** A dedicated System Engineer whose sole accountability is the improvement loop. The [SE Position Agreement](https://mariuswilsch.github.io/public-wilsch-ai-pages/global/system-engineer-position-agreement-wilsch-ai-services) defines the work listing. The SE Operations Manual (this design doc's end deliverable) defines the procedures. Hiring for this role is a separate business decision outside this design doc's scope.
+
+**Undefined:** Pressure threshold — how the SE judges when enough observations have clustered to justify a release epic. The "atmospheric pressure" metaphor describes the principle (accumulation → threshold → discharge) but not the mechanism. → Next extraction pass.
+
+**Undefined:** Milestone strategy — what temporal container, if any, scopes CCI work cycles. Deadlines are the wrong frame for CCI (no external date). Candidates: count-based (N observations triggers action), capacity-based (allocated time block), or purely ownership-driven (SE decides based on judgment). → Next extraction pass.
+
+**Undefined:** Stability gates — how fixes move between deployment stages (Marius R&D → team → Traceline product). Not immediately relevant while all CCI work is founder-operated. Becomes relevant when the SE role is staffed and fixes deploy to other operators. → Next extraction pass.
+
+**Undefined:** Operator → position routing bridge — when an operator observation describes a problem ("AI didn't push") but the fix lives in a position artifact (Developer AI instructions), where does the release epic form? Under the operator epic (where the pain is) or the position epic (where the fix belongs)? Joint triage in grooming Step 4 determines root cause, but the epic formation rule is unresolved. → Next extraction pass.
 
 ### 7. Operator Epics
 
@@ -200,3 +238,8 @@ The deliverable-tracking board retrofit (#904) established the pattern: ILR v2 d
 - **ILR v2:** [Issue Lifecycle Router](https://mariuswilsch.github.io/public-wilsch-ai-pages/global/issue-lifecycle-router)
 - **Monthly Plan:** [Monthly Plan Feb 23 – Mar 31](https://mariuswilsch.github.io/public-wilsch-ai-pages/project/soloforce/monthly-plan-2026-02-23-to-2026-03-31)
 - **GROOMING.md:** DaveX2001/deliverable-tracking/GROOMING.md (Step 4: Operator Observations Review)
+- **Session (extraction pass 4 — deployment pipeline, forcing function, closing model):** /Users/verdant/.claude/projects/-Users-verdant-Documents-projects-00-WILSCH-AI-INTERNAL--soloforce/fd39d236-f976-468e-9e54-fad00dabab59.jsonl
+- **Stakes Visibility:** [Stakes Visibility: Forcing Function](https://mariuswilsch.github.io/public-wilsch-ai-pages/global/stakes-visibility-forcing-function) — five-driver framework for task prioritization
+- **SE Position Agreement:** [System Engineer PA](https://mariuswilsch.github.io/public-wilsch-ai-pages/global/system-engineer-position-agreement-wilsch-ai-services) — result statement, work listing, standards
+- **Developer Operations Manual:** [Developer Ops Manual](https://mariuswilsch.github.io/public-wilsch-ai-pages/global/developer-operations-manual-wilsch-ai-services) — Path A/B closing model reference
+- **Live evidence:** #615 theme-by-theme review in this session — closing ceremony gap surfaced empirically
