@@ -706,7 +706,7 @@ The interactive phase (Steps 0→2) produces a mapping contract. The execution p
 
 **Form factor:** Registered as a FastMCP tool on the existing `archibus-bulk-import-tools` MCP server, alongside `bem_context` and `excel_analysis`.
 
-**Contract handoff:** The interactive phase (Steps 0→2) saves the confirmed contract to disk via a `save_contract` MCP tool at a deterministic path (e.g., `contracts/{session_id}.json`). The bridge tool receives a `contract_id` argument and reads the contract from disk — the conversation context carries a lightweight reference (~50 bytes), not the full object. This ensures the contract survives session drops, MCP reconnections, and phase transitions.
+**Contract handoff:** The interactive phase (Steps 0→2) saves the confirmed contract to disk via the filesystem MCP's `write_file` tool at a session-scoped path (`/app/uploads/{session_id}/contracts/confirmed.json`). No custom `save_contract` tool needed — a generic file write with a path convention in the skill instructions replaces the purpose-built tool. The bridge tool receives a `contract_id` argument and reads from the same shared volume. The conversation context carries a lightweight reference (~50 bytes), not the full object. This ensures the contract survives session drops, MCP reconnections, and phase transitions. *(Updated: Spike validation 2026-03-16 — `save_contract` is `write_file` in disguise. Marius, Mar 16 2026.)*
 
 **Golden contract (dev testing):** The `data/expected-contract.json` file serves dual purpose: Part 5's test rubric evaluation surface AND a bridge tool input fixture that bypasses Steps 0–2. Its schema is identical to what `save_contract` produces — the bridge tool reads both via `contract_id` without code bifurcation. For dev testing, place the golden contract at `contracts/golden.json` and pass `contract_id="golden"`. *(Confirmed: Extraction pass 2026-03-15.)*
 
@@ -738,7 +738,7 @@ The pipeline has two distinct modes: interactive (Steps 0→2, lots of back-and-
 
 **Authoring format:** Skills are authored in the [agentskills.io](https://agentskills.io) open standard — a directory-based format (`SKILL.md` + optional `scripts/`, `references/`, `assets/`). This format is portable across 32+ tools including Claude Code, Cursor, Gemini CLI, and OpenHands. The agent loads only the `description` field at startup (~100 tokens), then loads the full body on invocation. The `allowed-tools` field (experimental) pre-approves MCP tools the skill can invoke.
 
-**Skill loading mechanism:** The AI controls when skills load — not the runtime. The system prompt includes short skill descriptions (~100 tokens each). When the AI determines it needs a skill's full recipe, it invokes a `load_skill` tool. The runtime reads the skill's `SKILL.md` and includes its content in the system prompt for subsequent turns. This matches Claude Code's native behavior: the AI sees descriptions, decides to invoke, and the full content appears in context.
+**Skill loading mechanism:** The AI controls when skills load — not the runtime. FastMCP v3's `SkillsDirectoryProvider` serves skill directories as MCP resources. The `ResourcesAsTools` transform bridges tool-only clients (like LibreChat) by exposing `list_resources` and `read_resource` as callable tools. The AI calls `list_resources` → sees skill names with descriptions (~100 tokens). When the AI determines it needs a full recipe, it calls `read_resource("skill://bem-backpressure/SKILL.md")` → the full skill content enters the conversation as a tool response. This is progressive disclosure at the MCP layer — no custom `load_skill` tool, no runtime framework support required. *(Spike validated 2026-03-16: 3 lines of Python — `SkillsDirectoryProvider` + `ResourcesAsTools` — produce working `list_resources` and `read_resource` tools. Tool-only clients discover and load skills.)*
 
 **Skill accumulation:** Loaded skills remain in context — no unloading. The AI can reference both `bem-setup` and `bem-backpressure` simultaneously if needed. Context window management is a future optimization, not a design constraint. The Anthropic API sends `system=` fresh with every request, so the runtime can include any combination of loaded skills per turn.
 
@@ -788,7 +788,27 @@ The `excel_analysis` MCP tool expects a local filesystem path (`file_path` param
 | **Docker shared volume** | Runtime and MCP server in separate containers, mounting the same host directory (`./uploads:/app/uploads/`). Runtime injects the path into conversation context. | Exact (programmatic) | Medium — two containers, volume config |
 | **Convention-based** | AI knows filenames from chat, assumes uploads land at a known directory (e.g., `/uploads/{filename}`). No path injection needed. | Inferred (fragile if runtime renames files) | Lowest code — but fragile |
 
-*(Source: LibreChat issues [#10739](https://github.com/danny-avila/LibreChat/issues/10739), [#8060](https://github.com/danny-avila/LibreChat/issues/8060), [PR #11094](https://github.com/danny-avila/LibreChat/pull/11094). Rein transcript 2026-03-11: "before the demo, you need to utilize the upload option." Runtime harness research, session 802ad55e.)*
+**Filesystem MCP — validated approach (2026-03-16):** A standard filesystem MCP server (e.g., `@modelcontextprotocol/server-filesystem` or equivalent FastMCP tools) mounted on the shared Docker volume provides `write_file`, `read_file`, `list_directory`, and `create_directory` tools. The AI discovers uploaded files via `list_directory` rather than requiring the runtime to pass file paths — this sidesteps LibreChat's file→MCP gap entirely.
+
+**Session-scoped directories:** Each conversation writes to `/app/uploads/{session_id}/`. The AI knows its session ID (from system prompt or runtime context) and calls `list_directory` to discover files within its scope. No cross-session leakage, no filename guessing.
+
+```
+/app/uploads/
+  ├── {session_A}/
+  │   ├── cafm-sample.xlsx      ← uploaded by implementer
+  │   └── contracts/
+  │       └── confirmed.json     ← written by AI via write_file
+  ├── {session_B}/
+  │   └── another-file.xlsx
+```
+
+**Impact on save_contract:** Replaced. The `save_contract` MCP tool from the original design is a `write_file` call with a path convention (`{session_id}/contracts/confirmed.json`). The path convention lives in the skill instructions, not in custom tool code. No schema validation at write time — validation happens when the bridge tool sends data to the API (backpressure).
+
+**Impact on excel_analysis:** Fixed. The broken `excel_analysis` tool (which requires a filesystem path) works when the AI discovers the uploaded file via `list_directory` and passes the path as an argument.
+
+**Remaining L2 validation:** Docker compose integration — does LibreChat write uploads to the shared volume path? Does the AI receive uploaded filenames in conversation context? *(Spike validated L1 only — local Python, not Docker.)*
+
+*(Source: LibreChat issues [#10739](https://github.com/danny-avila/LibreChat/issues/10739), [#8060](https://github.com/danny-avila/LibreChat/issues/8060), [PR #11094](https://github.com/danny-avila/LibreChat/pull/11094). Rein transcript 2026-03-11: "before the demo, you need to utilize the upload option." Runtime harness research, session 802ad55e. Updated: Spike validation 2026-03-16.)*
 
 ##### 6.3.2 Skills Delivery
 
@@ -797,6 +817,12 @@ LiteLLM does NOT support Agent Skills — `container.skills` and `/v1/skills` ar
 **System prompt baking** remains viable for the demo: embed skill instructions in the LibreChat agent's system prompt. For Claude Sonnet (demo model), context window is not a constraint. For Qwen 3.5 (production target), baking both skills may exceed the model's reliable instruction-following capacity — one agent per mode is the workaround (implementer selects the right LibreChat agent).
 
 **LibreChat Agent Skills** (the native progressive disclosure feature) is on the Q1 2026 roadmap ([Issue #11106](https://github.com/danny-avila/LibreChat/issues/11106)) with no active PR — likely slips to Q2 2026.
+
+**FastMCP SkillsDirectoryProvider — validated approach (2026-03-16):** FastMCP v3's `ResourcesAsTools` transform solves the skill delivery gap at the MCP layer, independent of the runtime. Skills authored as `SKILL.md` files are served as MCP resources. The transform generates `list_resources` and `read_resource` tools — any tool-capable client (including LibreChat) can discover and load skills without native resource support. Progressive disclosure works: `list_resources` returns names and descriptions only; `read_resource` loads the full recipe on demand.
+
+**Demo vs. production path:** For the demo, system prompt baking remains viable (one skill, Claude Sonnet, large context window). For production with Qwen 3.5, the FastMCP skill provider enables progressive loading — the AI loads only the skill it needs, keeping context lean. This eliminates the need for separate LibreChat agents per mode.
+
+**Behavioral gap (unvalidated):** Skill content delivered as a tool response (not system prompt) may have reduced persistence in very long conversations. For the backpressure loop (2-5 turns), tool response delivery is sufficient. For multi-skill sessions spanning 30+ turns, persistence needs empirical testing.
 
 **Chainlit** handles skills via Python code — the developer programmatically loads skill instructions based on conversation state. Full control, no waiting on upstream features.
 
@@ -810,9 +836,9 @@ Three runtimes were evaluated against the full requirements stack:
 
 | Criterion | LibreChat | Chainlit | Dify |
 |-----------|-----------|----------|------|
-| File → MCP tool | ❌ Broken (no fix merged) | ✅ Native `.path` | ⚠️ HTTP MCP only |
+| File → MCP tool | ⚠️ Solvable (filesystem MCP + shared volume, spike validated L1) | ✅ Native `.path` | ⚠️ HTTP MCP only |
 | MCP transport | ✅ stdio/SSE/HTTP | ✅ stdio/SSE/HTTP | ⚠️ HTTP only (no stdio) |
-| Skills loading | ⚠️ Q2 2026 roadmap | ✅ Code-defined | ⚠️ Workflow nodes |
+| Skills loading | ✅ Solvable (FastMCP SkillsDirectoryProvider, spike validated) | ✅ Code-defined | ⚠️ Workflow nodes |
 | Web UI | ✅ Polished, ChatGPT-like | ⚠️ Framework (build required) | ✅ Visual workflow builder |
 | Non-developer UX | ✅ Best | ⚠️ Depends on build quality | ✅ Good (workflow paradigm) |
 | Qwen 3.5 support | ✅ OpenAI-compatible | ✅ Any model | ✅ Any model |
@@ -826,7 +852,7 @@ Three runtimes were evaluated against the full requirements stack:
 
 **Critical path — bridge tool first, then runtime:** The demo blocker is the bridge tool (contract → pipeline execution), not the runtime. Build order: (1) bridge tool, (2) golden example validation with CAFEM contract, (3) backpressure loop testing, (4) skills content. The runtime decision feeds into this path but does not block step 1.
 
-**Undefined:** Runtime selection — requires a validation spike before committing. Spike scope: build a minimal Chainlit app that uploads a file, injects the path into context, calls `excel_analysis`, and returns a result. Primary test: does the "tell the AI" file path pattern work end-to-end? Fallback: convention-based path in LibreChat (AI constructs path from filename + known upload directory). Spike validates whether Chainlit's native primitives justify the migration cost from LibreChat.
+**Undefined (narrowed):** Runtime selection — LibreChat's two critical gaps (file→MCP and skill loading) are now solvable via FastMCP primitives (spike validated L1, 2026-03-16). Remaining validation: L2 Docker integration test — does LibreChat write uploads to the shared volume path? Does the AI receive uploaded filenames in conversation context? If L2 passes, LibreChat + FastMCP becomes the demo runtime without migration to Chainlit. Chainlit remains the fallback if L2 reveals blocking issues. *(Narrowed from "which runtime?" to "does LibreChat + FastMCP work end-to-end in Docker?")*
 
 *(Source: [LibreChat 2026 Roadmap](https://www.librechat.ai/blog/2026-02-18_2026_roadmap). [Chainlit MCP docs](https://docs.chainlit.io/advanced-features/mcp). [Dify v1.6.0 MCP](https://dify.ai/blog/v1-6-0-built-in-two-way-mcp-support). [agentskills.io](https://agentskills.io). Runtime harness research, session 802ad55e.)*
 
@@ -891,3 +917,6 @@ The AI's behavioral quality is demo-blocking. Miguel judges whether the AI acts 
 - **Reference:** [FastMCP v3 Sampling](https://gofastmcp.com/clients/sampling) — built-in Anthropic/OpenAI/Gemini handlers
 - **Session:** /Users/verdant/.claude/projects/-Users-verdant-Documents-projects-billable-MariusWilsch--archibus-bulk-import/82c5d45b-eb25-4f94-a806-e081fc46d0cb.jsonl
 - **Session:** /Users/daveFem/.claude/projects/-Users-daveFem-Desktop-claude-projects-01-ARCHIBUS--deliverable/73f6fb9f-3b9f-46d2-9da7-473a46f593d3.jsonl
+- **Session:** /Users/daveFem/.claude/projects/-Users-daveFem-Desktop-claude-projects-01-ARCHIBUS--deliverable/a9e661cd-8665-48d9-84f9-fb97a68e973d.jsonl
+- **Spike:** FastMCP SkillsDirectoryProvider + ResourcesAsTools (L1 validated, 2026-03-16)
+- **Spike:** Filesystem MCP + shared volume simulation (L1 validated, 2026-03-16)
