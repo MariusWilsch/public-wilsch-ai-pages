@@ -46,7 +46,7 @@ Two options — same AI architect, same system, same quality control:
 
 | | **Extraction Only** | **Extraction + Developer** |
 |--|---------------------|---------------------------|
-| **Price** | €2,000/month | €3,000/month |
+| **Price** | €2,500/month | €3,500/month |
 | **Includes** | AI architect: specs, design, system access, quality control, continuous improvement | Everything in Extraction Only + a developer building through the system |
 | **Developer** | You provide your own | Included — runs through the same system |
 
