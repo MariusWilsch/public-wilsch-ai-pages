@@ -7,10 +7,12 @@ publish: true
 
 ## Meetingziel
 
-DS-Kit Navigation Fortschritt präsentieren und Stellmachers Validierungs-Input für den nächsten Entwicklungszyklus einholen.
+DS-Kit Navigation Fortschritt präsentieren, Validierungs-Input einholen und nächsten Meilenstein abstimmen.
 
-1. **Antwortqualität validieren** — 2-3 Live-Antworten mit verbessertem Ausgabeformat (Golden Prompt) demonstrieren, anschließend die vollständige 29-Fragen-CSV zur asynchronen Prüfung übergeben
-2. **Nächsten Meilenstein abstimmen** — Datenaufnahme + Staging-Konsolidierung als Weg zur Systemübergabe beim nächsten Bi-Weekly bestätigen
+1. **Aktueller Stand** — 2-3 Live-Antworten mit verbessertem Ausgabeformat demonstrieren, CSV zur asynchronen Prüfung übergeben
+2. **Staging-Konsolidierung** — Ein Zugang, eine Domain, drei Systeme als Auswahl
+3. **Nächste Schritte** — Retrieval-Optimierung und Datenaufnahme als Weg zur Systemübergabe beim nächsten Bi-Weekly
+4. **Singapur** — Kurze Rückmeldung zur Datenschutz-Marktlage, [ausführliche Analyse](https://mariuswilsch.github.io/public-wilsch-ai-pages/project/iitr/singapore-datenschutz-market-research) bei Interesse
 
 ---
 
