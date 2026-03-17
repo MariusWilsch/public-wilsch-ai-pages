@@ -62,6 +62,25 @@ Die Marktanalyse zum Datenschutzrecht in Singapur ist abgeschlossen und geprüft
 
 **Zu klären:** Ob eine Besprechung der Ergebnisse gewünscht ist oder die Analyse als Dokument ausreicht.
 
+## Live-Demo Beispiele
+
+### Erfolgsbeispiel — Direkte Antwort mit Navigation
+
+**Frage:** Wie häufig sollte ich meine Mitarbeiterinnen und Mitarbeiter schulen?
+
+**Antwort:** Die Datenschutz-Schulung der Mitarbeiter sollte mindestens einmal im Jahr erfolgen. Dies ergibt sich aus der Erwartung der deutschen Datenschutz-Aufsichtsbehörden.
+📍 Navigation: DS-Kit → Kapitel FAQ #6
+
+### Fehlerbeispiel — Ehrliche Weiterleitung
+
+**Frage:** Stellen Sie auch englischsprachige Zertifikate zur Verfügung?
+
+**Antwort:** Zu Ihrer Frage bezüglich englischsprachiger Zertifikate habe ich im DS-Kit keine passenden Informationen gefunden. Bitte wenden Sie sich für eine fachliche Beratung direkt an dskit@iitr.de.
+
+### Framing — Warum mehr Zeit für Retrieval nötig ist
+
+Das Ausgabeformat funktioniert jetzt — kurze Antworten, Kapitelverweise, keine langen Listen mehr. Die Herausforderung liegt jetzt bei der Datenabdeckung: Wir haben heterogene Quellen (PDF, FAQ-CSV, Web-Inhalte aus core.iitr.de), und jede Quelle hat eine andere Struktur. Wir müssen verschiedene Retrieval-Ansätze testen, um sicherzustellen, dass das System die richtige Stelle auch tatsächlich findet. Die Infrastruktur und das Format stehen — als nächstes kommen die zusätzlichen Datenquellen und die Feinabstimmung der Suche. Die CSV mit allen 29 Fragen und Antworten stellen wir zur asynchronen Validierung bereit.
+
 ## Meetingformat
 
 - **Typ:** Fortschrittsbericht + Live-Demo
