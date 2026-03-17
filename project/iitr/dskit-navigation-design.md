@@ -70,9 +70,9 @@ Deploy the retrieval and serving infrastructure on IITR-STAGING.
 
 | Component | Role | Why |
 |-----------|------|-----|
-| **[Chonkie](https://docs.chonkie.ai)** | Semantic chunking | Start with SemanticChunker. Try different chunkers via test harness to optimize retrieval quality. |
-| **[Chroma](https://docs.chonkie.ai/oss/handshakes/chroma-handshake)** | Vector database | Native Chonkie handshake. Stores and retrieves embedded chunks. |
-| **Qwen3-Embedding** | Embedding model | [Qwen3-Embedding-8B](https://huggingface.co/collections/Qwen/qwen3-embedding) (MTEB #1 at 70.58, 32K context). Fallback: Qwen3-Embedding-4B. Baseline: [BAAI/bge-m3](https://huggingface.co/BAAI/bge-m3) (MIT, 2.1 GB). |
+| **[Typesense](https://typesense.org/)** | Hybrid search (keyword + vector) | Proven at 17/29 (58.6%) with BGE-M3 embeddings. Hybrid search combines BM25 keyword matching with vector similarity — outperformed Chroma (2/29) on same data. |
+| **[BAAI/bge-m3](https://huggingface.co/BAAI/bge-m3)** | Embedding model | MIT, 1024d, served via HuggingFace TEI. Matched V1 baseline score. Replaced Qwen3-Embedding-4B (2560d) which underperformed on German domain text. |
+| **[Docling HybridChunker](https://ds4sd.github.io/docling/)** | Document chunking | Preserves heading hierarchy during chunking. Replaced Chonkie SemanticChunker which destroyed document structure (0/4 test answers). |
 
 **Track A Components (parallel if bandwidth):**
 
