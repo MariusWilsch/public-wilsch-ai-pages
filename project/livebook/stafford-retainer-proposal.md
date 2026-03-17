@@ -70,9 +70,17 @@ Both options are below my usual rate. I'm pricing this way because this engageme
 - Whether to continue, adjust scope, or end cleanly
 - Success fee structure (defined from actual results, not projections)
 
-**Non-exclusive:** I serve multiple clients concurrently. This is what enables the pricing — the system distributes capacity. EasyBooks gets dedicated sprint focus during each bi-weekly cycle.
+**Non-exclusive:** I serve multiple clients concurrently.
 
 **Exit:** Either side can end at the 3-month mark. No lock-in beyond that. If it's not working, we part cleanly. You keep everything produced.
+
+**Your obligations (Mitbringpflichten):** The retainer requires your active participation. Specifically:
+- Attend the bi-weekly design sprint / demo (2-3 hours per sprint)
+- Make scope decisions when presented with options — unresolved decisions block the sprint
+- Provide access to documents, data, and stakeholders as needed
+- Respond to async questions within 48 hours
+
+If milestones are blocked because these obligations aren't met, the retainer applies regardless.
 
 ---
 
