@@ -58,7 +58,7 @@ Aktuell laufen die drei IITR-Systeme (Navigation, Masterfragen, Urteile) auf get
 
 Das Ausgabeformat steht — Antworten sind jetzt kurz, präzise und mit Kapitelnavigation versehen. Die verbleibenden 16 Fehler entstehen nicht durch falsche Antworten, sondern weil das System die richtige Stelle in den Dokumenten noch nicht zuverlässig findet. Der Grund: Die Datenquellen sind sehr unterschiedlich aufgebaut — PDF-Leitfaden, FAQ-Tabellen und Web-Inhalte aus core.iitr.de haben jeweils eine andere Struktur. Das Retrieval muss für diese Vielfalt optimiert werden.
 
-- **Retrieval-Optimierung:** Verschiedene Suchmethoden werden getestet, damit das System über alle Quelltypen hinweg die richtige Stelle findet — das ist der größte Hebel für die verbleibenden 16 Fragen
+- **Bewährte Optimierungstechniken** stehen als nächster Hebel bereit — verschiedene Suchmethoden werden getestet, damit das System über alle Quelltypen (PDF, FAQ, Web) hinweg die richtige Stelle findet
 - **Datenaufnahme:** Zusätzliche Quellen (Templates, weitere Webinhalte) werden eingebunden, um die Abdeckung zu erhöhen
 - **Staging-Konsolidierung:** Die drei Systeme werden in eine einzige Oberfläche zusammengeführt — ein Zugang, eine Domain, Systemauswahl per Menü
 - **Ziel nächstes Bi-Weekly:** Sie testen das System selbst — eigener Zugang, eigene Fragen, ohne Entwicklerbeteiligung
