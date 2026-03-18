@@ -104,9 +104,7 @@ Your 300 existing recordings become a content library that feeds your marketing 
 
 ## What's Next
 
-We'd love to walk you through the full approach — including more pearl examples from your content — and discuss how this fits your teaching practice.
-
-**Let's talk.**
+We'll walk through the approach together and clarify a couple of discussion topics from the meeting agenda. Within 24 hours, you'll have a proposal.
 
 ---
 
