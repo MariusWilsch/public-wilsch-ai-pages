@@ -704,6 +704,8 @@ The interactive phase (Steps 0→2) produces a mapping contract. The execution p
 
 **Backpressure:** The bridge tool implements the backpressure loop from the [Step 3 design](https://mariuswilsch.github.io/public-wilsch-ai-pages/project/archibus-fm-assistant/chain-1b-step3-design) — API errors feed back to the AI, which decides whether to self-correct (update the contract) or escalate to the implementer.
 
+**Backpressure correction mechanism:** When the API rejects an enum value, the AI corrects the contract on disk using the filesystem MCP's `edit_file` tool — a surgical diff-based text replacement validated in Spike A (#1167). The bridge tool re-reads the corrected file on the next invocation. This keeps the bridge tool simple (always reads from file, single code path) and is compatible with Qwen 3.5 (9B production target) — the AI writes a targeted edit (e.g., `"Inactive"` → `"Out of Service"`), not a full contract JSON serialization. The corrected contract persists on disk, surviving session drops and enabling audit trails. *(Confirmed: Extraction pass 2026-03-18 — edit_file validated in Spike A Finding 2 revision.)*
+
 **Form factor:** Registered as a FastMCP tool on the existing `archibus-bulk-import-tools` MCP server, alongside `bem_context` and `excel_analysis`.
 
 **Contract handoff:** The interactive phase (Steps 0→2) saves the confirmed contract to disk via the filesystem MCP's `write_file` tool at a session-scoped path (`/app/uploads/{session_id}/contracts/confirmed.json`). No custom `save_contract` tool needed — a generic file write with a path convention in the skill instructions replaces the purpose-built tool. The bridge tool receives a `contract_id` argument and reads from the same shared volume. The AI passes `contract_id` to the bridge tool. Path resolution (`/app/uploads/{contract_id}/contracts/confirmed.json`) is internal to the tool — the conversation carries only the identifier, not the path or object. This ensures the contract survives session drops, MCP reconnections, and phase transitions. *(Updated: Spike validation 2026-03-16 — `save_contract` is `write_file` in disguise. Marius, Mar 16 2026.)*
@@ -739,6 +741,8 @@ The pipeline has two distinct modes: interactive (Steps 0→2, lots of back-and-
 **Authoring format:** Skills are authored in the [agentskills.io](https://agentskills.io) open standard — a directory-based format (`SKILL.md` + optional `scripts/`, `references/`, `assets/`). This format is portable across 32+ tools including Claude Code, Cursor, Gemini CLI, and OpenHands. The agent loads only the `description` field at startup (~100 tokens), then loads the full body on invocation. The `allowed-tools` field (experimental) pre-approves MCP tools the skill can invoke.
 
 **Skill loading mechanism:** The AI controls when skills load — not the runtime. FastMCP v3's `SkillsDirectoryProvider` serves skill directories as MCP resources. The `ResourcesAsTools` transform bridges tool-only clients (like LibreChat) by exposing `list_resources` and `read_resource` as callable tools. The AI calls `list_resources` → sees skill names with descriptions (~100 tokens). When the AI determines it needs a full recipe, it calls `read_resource("skill://bem-backpressure/SKILL.md")` → the full skill content enters the conversation as a tool response. This is progressive disclosure at the MCP layer — no custom `load_skill` tool, no runtime framework support required. *(Spike validated 2026-03-16: 3 lines of Python — `SkillsDirectoryProvider` + `ResourcesAsTools` — produce working `list_resources` and `read_resource` tools. Tool-only clients discover and load skills.)*
+
+**Frontloaded context (Spike A optimization):** The system prompt frontloads skill metadata — name, description, and trigger condition for each skill — plus the workspace path (`/app/uploads`). This eliminates 2 tool calls (`list_allowed_directories` + `list_resources`) that otherwise repeat identically at the start of every conversation. The AI calls `read_resource` directly when it recognizes a trigger condition, without needing to discover what skills exist first. This matches Claude Code's native behavior: skill metadata is always present in the system prompt, full content loads on demand. The `list_resources` mechanism remains available as a fallback for runtime flexibility. *(Confirmed: Extraction pass 2026-03-18 — Spike A witness Findings 3+4.)*
 
 **Skill accumulation:** Loaded skills remain in context — no unloading. The AI can reference both `bem-setup` and `bem-backpressure` simultaneously if needed. Context window management is a future optimization, not a design constraint. The Anthropic API sends `system=` fresh with every request, so the runtime can include any combination of loaded skills per turn.
 
@@ -856,37 +860,29 @@ Four runtimes were evaluated against the full requirements stack:
 
 **Critical path — bridge tool first, then runtime:** The demo blocker is the bridge tool (contract → pipeline execution), not the runtime. Build order: (1) bridge tool, (2) golden example validation with CAFEM contract, (3) backpressure loop testing, (4) skills content. The runtime decision feeds into this path but does not block step 1.
 
-**Runtime Bake-Off — Spike Plan (2026-03-17)**
+**Runtime Bake-Off — Results (2026-03-18)**
 
-Two spikes compare the leading candidates side-by-side. Each spike is a one-day issue (spec → implement → deploy). Deliverable = deployed environment the Dev Lead can log into and test. Not code snippets or screenshots — a running thing to witness. Spikes are a JA primitive — the Dev Lead witnesses the deployed spike before the design doc says "validated."
+Two spikes compared the leading candidates. Dev Lead witnessed both deployed environments.
 
-**Gold standard:** Claude Code's native skill + file behavior. Each spike proves how close the alternative gets.
+| Spike | Runtime | Result | Evidence |
+|-------|---------|--------|----------|
+| A ([#1167](https://github.com/DaveX2001/deliverable-tracking/issues/1167)) | LibreChat + FastMCP + Filesystem MCP | **ALL 6 PASS** | S1-S3 skills + F1-F3 filesystem + F4 convention-based |
+| B ([#1168](https://github.com/DaveX2001/deliverable-tracking/issues/1168)) | OpenWebUI + Open Terminal + FastMCP | **FAIL** | MCP Streamable HTTP incompatible — missing Accept header → 406 |
 
-| Spike | Runtime | Deploy | Port |
-|-------|---------|--------|------|
-| A | LibreChat + FastMCP + Filesystem MCP | Wilsch-AI VPS | `:3020` |
-| B | OpenWebUI + Open Terminal + FastMCP MCP | Wilsch-AI VPS | `:3010` |
+**Decision: LibreChat + FastMCP selected as demo runtime.** Spike B not pursued — under time pressure, pursuing a failing candidate adds no value. All 6 witness criteria pass for Spike A. The mechanism differs from Claude Code (tool-mediated vs. native), but the outcomes match.
 
-**Skills criteria — progressive disclosure ([Anthropic best practices](https://platform.claude.com/docs/en/agents-and-tools/agent-skills/best-practices)):**
-- Metadata-only pre-load (name + description, not full content)
-- On-demand full content loading via tool mechanism
-- Multi-file skill directories (SKILL.md + references)
-- AI selects which skill to load based on context
+**5 witness findings incorporated:**
+1. Spike research trail — tracking.md needs tool evaluation documentation, not just pass/fail
+2. Edit gap does NOT exist — `edit_file` is native to `@modelcontextprotocol/server-filesystem` (surgical diff-based replacement)
+3. System prompt guidance needed — AI must know WHEN to use skill discovery (→ frontloaded metadata, see §6.2)
+4. Frontload static context — workspace path + skill list in system prompt eliminates 2 discovery calls per conversation (→ §6.2)
+5. Session isolation achievable — `{{LIBRECHAT_BODY_CONVERSATIONID}}` resolves in MCP headers during tool calls (undocumented but functional)
 
-**Filesystem criteria:**
+**Session isolation — demo vs production:**
+- **Demo:** Convention-based (`/app/uploads/{session_id}/`). Single-user demo to Miguel — concurrent session conflicts are not a risk.
+- **Production:** FastMCP MCP Proxy Provider wraps Filesystem MCP — receives conversation ID via header, scopes all file operations to `/app/uploads/{conversationId}/`. ~20 lines of Python. Deferred until multi-user deployment.
 
-| # | Prove this |
-|---|-----------|
-| 1 | AI writes files to a session-scoped path |
-| 2 | AI discovers uploaded files without being told the exact path |
-| 3 | AI chains: discover file → get path → pass to another MCP tool |
-| 4 | Two sessions can't see each other's files |
-
-**Exit condition:** Dev Lead witnesses both spikes, comparison documented. Winner becomes demo runtime. If neither passes all criteria, Chainlit remains fallback.
-
-*(Source: Marius, Mar 17 2026 — [#852 comment](https://github.com/DaveX2001/deliverable-tracking/issues/852). Extraction pass 2026-03-17.)*
-
-*(Source: [LibreChat 2026 Roadmap](https://www.librechat.ai/blog/2026-02-18_2026_roadmap). [Chainlit MCP docs](https://docs.chainlit.io/advanced-features/mcp). [Dify v1.6.0 MCP](https://dify.ai/blog/v1-6-0-built-in-two-way-mcp-support). [agentskills.io](https://agentskills.io). Runtime harness research, session 802ad55e.)*
+*(Source: [Spike A witness ceremony](https://github.com/DaveX2001/deliverable-tracking/issues/1167#issuecomment-4080694147). [Spike B findings](https://github.com/DaveX2001/deliverable-tracking/issues/1168). [LibreChat 2026 Roadmap](https://www.librechat.ai/blog/2026-02-18_2026_roadmap). [Chainlit MCP docs](https://docs.chainlit.io/advanced-features/mcp). [Dify v1.6.0 MCP](https://dify.ai/blog/v1-6-0-built-in-two-way-mcp-support). [agentskills.io](https://agentskills.io). Runtime harness research, session 802ad55e. Extraction pass 2026-03-18.)*
 
 #### 6.4 PSM Persona — Behavioral Layer
 
@@ -952,6 +948,9 @@ The AI's behavioral quality is demo-blocking. Miguel judges whether the AI acts 
 - **Session:** /Users/daveFem/.claude/projects/-Users-daveFem-Desktop-claude-projects-01-ARCHIBUS--deliverable/a9e661cd-8665-48d9-84f9-fb97a68e973d.jsonl
 - **Spike:** FastMCP SkillsDirectoryProvider + ResourcesAsTools (L1 validated, 2026-03-16)
 - **Spike:** Filesystem MCP + shared volume simulation (L1 validated, 2026-03-16)
+- **Session:** /Users/daveFem/.claude/projects/-Users-daveFem-Desktop-claude-projects-01-ARCHIBUS--deliverable/6903d780-ce27-47c8-8d92-df316aebc5bc.jsonl
+- **Spike A implementation:** [issue-1167 worktree](https://github.com/DaveX2001/deliverable-tracking/tree/issue-1167/spike-a) — LibreChat + FastMCP Docker setup (ALL 6 PASS)
+- **Spike B implementation:** [issue-1168 worktree](https://github.com/DaveX2001/deliverable-tracking/tree/issue-1168/spike-b) — OpenWebUI + FastMCP Docker setup (FAIL)
 - **Session:** /Users/daveFem/.claude/projects/-Users-daveFem-Desktop-claude-projects-01-ARCHIBUS--deliverable/fabb74be-8370-4ad2-8074-b7b1b207a765.jsonl
 - **Reference:** [OpenWebUI Skills](https://docs.openwebui.com/features/ai-knowledge/skills) — native `view_skill` lazy loading, markdown-based skills
 - **Reference:** [OpenWebUI MCP](https://docs.openwebui.com/features/extensibility/mcp) — Streamable HTTP only, native since v0.6.31
