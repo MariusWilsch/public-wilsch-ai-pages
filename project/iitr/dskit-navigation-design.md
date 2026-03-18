@@ -214,7 +214,7 @@ One OpenWebUI instance serves all three projects. Each project is a pipeline fil
 
 **Standard pattern:** All projects use OpenWebUI pipeline filters. Masterfragen's legacy Flask proxy (`simple_app.py`) will be converted to a pipeline filter to standardize the serving pattern.
 
-**Per-model access control:** Each Model has visibility settings — clients see only their project's Model(s). Stellmacher and Kraska see "DS-Kit Navigation" only. Internal users (Wilsch AI) see all Models for testing and development.
+**Per-model access control:** Each Model has visibility settings managed via OpenWebUI admin. By default, clients (Stellmacher, Kraska) see all production-ready Models across all three projects. Models under active development are hidden from clients until ready. Internal users (Wilsch AI) see all Models at all times.
 
 #### Directory Structure & Cleanup
 
@@ -320,3 +320,4 @@ Order matters: infrastructure first, then project stacks (they depend on shared 
 - SA Decision + Track B extraction: /Users/daveFem/.claude/projects/-Users-daveFem-Desktop-claude_projects-03-IITR--deliverable/a1ca960f-e5da-47cd-bfcf-7a59d1ce8859.jsonl
 - Pass 6 (Unified Infrastructure): /Users/daveFem/.claude/projects/-Users-daveFem-Desktop-claude-projects-03-IITR--deliverable/5347bf5c-62cd-49e1-83dd-fdda0c893b26.jsonl
 - Pass 7 (Vector B + monorepo update): /Users/daveFem/.claude/projects/-Users-daveFem-Desktop-claude-projects-03-IITR--deliverable/3deb3c69-4606-426f-9f23-0a0af76ede45.jsonl
+- Pass 8 (SA review — access control fix): /Users/daveFem/.claude/projects/-Users-daveFem-Desktop-claude-projects-03-IITR--deliverable/65c03d49-b808-4011-b16e-7607e99f1b9a.jsonl
