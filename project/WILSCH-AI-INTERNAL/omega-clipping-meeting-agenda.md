@@ -72,6 +72,7 @@ The clips funnel into omegabone.com → discovery session → paid programme. To
 - **Do students stay or progress** — one-time programme or ongoing relationship?
 - **How many active students** currently
 - **How new students find Omega today** — current path before clips exist
+- **The funnel** — where does someone go after they see a clip? Is there a path from social media to booking a discovery session, or does that need to be built?
 - **The vision:** Starts as a managed service (we operate the pipeline, curate clips, present for approval). Over time, the system learns and the pipeline runs itself — fresh clips appear in a staging area, Omega reviews and publishes
 
 **To resolve:** Programme pricing data to anchor the proposal around one incremental student per month.
