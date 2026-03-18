@@ -33,7 +33,7 @@ Proof of concept: AI pearl detection from Omega's Learn to Sing class recordings
 
 **Context:** Carlos chose a Spanish love song. Omega pushes him past imitation into personal expression — who is he singing to? A real person. The coaching builds from technique (choose your person) to philosophy (the singer's job is permission-giving). Carlos visibly shifts from performing to connecting.
 
-**Why this is a pearl:** Demonstrates the before→coaching→after arc. Carlos arrives shy ("I can't do this"), receives deep personalized coaching, and by the end Omega celebrates: "here you are on TV for the whole world to see." Shows Omega's method in action.
+**Why this is a pearl:** Demonstrates the before→coaching→after arc. Carlos starts uncertain, receives deep personalized coaching, and by the end Omega celebrates: "here you are on TV for the whole world to see." Shows Omega's method in action.
 
 ---
 
@@ -89,7 +89,7 @@ Proof of concept: AI pearl detection from Omega's Learn to Sing class recordings
 
 **Context:** Ira is singing from a screen, still reading lyrics instead of performing. Omega's instruction to handwrite = physicalize the song, move it from the screen into muscle memory. Then she defines two vocal characters: slippery Major Tom (floating in space) vs marchy Ground Control (grounded authority). This gives Ira a clear performance framework.
 
-**Why this is a pearl:** Concrete, actionable coaching that transforms an okay performance into a dramatic one. "Put the lyrics inside your body" is standalone quotable. The Major Tom / Ground Control contrast is the kind of specific, domain-expert coaching that generic clipping tools cannot detect.
+**Why this is a pearl:** Concrete, actionable coaching that transforms an early read-through into a dramatic one. "Put the lyrics inside your body" is standalone quotable. The Major Tom / Ground Control contrast is the kind of specific, domain-expert coaching that generic clipping tools cannot detect.
 
 ---
 

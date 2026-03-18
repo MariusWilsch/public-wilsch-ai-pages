@@ -1,10 +1,10 @@
 ---
 publish: true
-title: "Your Teaching Moments, Found by AI"
+title: "Omega's Teaching Moments, Found by AI"
 description: "How Omega Bone's 300+ class recordings become post-ready social media clips — without sorting through a single hour of footage."
 ---
 
-# Your Teaching Moments, Found by AI
+# Omega's Teaching Moments, Found by AI
 
 ---
 
@@ -29,7 +29,7 @@ So the pearls stay buried. Your students' transformations go unseen. The content
 The people who find you carry fears they rarely say out loud:
 
 - *"What if I'm too old to start now?"*
-- *"What if I just suck and everyone has been too kind to tell me?"*
+- *"What if I'm not good enough and everyone has been too kind to tell me?"*
 - *"Life is too short to die with this dream still inside me."*
 
 **85% of these fears are answerable by your existing content.** Every class you've ever recorded contains moments that — if they could just *see* them — would make someone pick up the phone and book a discovery session.
@@ -46,13 +46,27 @@ It found them.
 
 ---
 
-### "I don't want you to try to sing. I want you to communicate the song."
+### Carlos Finds His Own Voice
 
-**Lana's lesson** — You collapsed the entire difference between performing and connecting into one sentence. Lana shifted from technique-anxiety to presence. The class watched it happen.
+**Carlos chose a Spanish love song — and started by imitating Alejandro Fernandez.** You stopped him. You asked him who he was singing to — a real person, not a performance. Then you told him his job as a singer isn't to impress, it's to give permission — so that everyone in the room can feel the same way.
 
-*AI extracted this from a 35-minute class recording in under 2 minutes.*
+By the end, Carlos wasn't performing anymore. He was connecting. The class watched it happen in real time.
 
-[Watch the moment →](https://youtube.com/watch?v=a7UUjpDpPkc&t=1750)
+*AI extracted this from a 34-minute class recording.*
+
+[Watch the moment →](https://youtube.com/watch?v=dfw6GavSAKU&t=942)
+
+---
+
+### Bettina's Accent as Superpower
+
+**Bettina is German, learning to sing in English.** Instead of correcting her accent, you reframed it as her superpower — the thing that makes her irreplaceable, especially in a world where AI voices are everywhere. Your message: be yourself, not a copy of someone else.
+
+Your teaching philosophy in one moment. The anti-AI angle makes it timely. The message makes it timeless.
+
+*AI extracted this from a 42-minute class recording.*
+
+[Watch the moment →](https://youtube.com/watch?v=J7EN-wrqWig&t=779)
 
 ---
 
@@ -60,11 +74,7 @@ It found them.
 
 **Ira chose David Bowie's "Space Oddity" for her concert.** When you asked what the song meant to her, she revealed her recovery story — Major Tom floating away was the dissociation of addiction, Ground Control was reality calling her back.
 
-> "I had a dark chapter in my life where I was using a lot of drugs. For me this song is about leaving this drug addict personality."
-
-You didn't flinch. You connected her story to the audience:
-
-> "I love that because you telling how good life can be after — that's going to help someone else find their acceptance with their Major Tom moments."
+You didn't flinch. You connected her story to the audience — telling her that sharing how good life can be after would help someone else find their own acceptance with their Major Tom moments.
 
 This is the moment that makes someone watching think: *this is not just singing lessons.*
 
@@ -74,24 +84,10 @@ This is the moment that makes someone watching think: *this is not just singing 
 
 ---
 
-### "Hear your accent shining through."
-
-**Bettina is German, learning to sing in English.** Instead of correcting her accent, you reframed it as her superpower:
-
-> "Classical teachers will hate that. But they want everyone to sound the same. I'm more interested in you being your unique sound because — in AI, people are going to get tired of the AI voice. And we're going to be able to tell that that's a real person singing."
-
-Your teaching philosophy in one moment. The anti-AI angle makes it timely. The message makes it timeless: *be yourself, not a copy.*
-
-*AI extracted this from a 42-minute class recording.*
-
-[Watch the moment →](https://youtube.com/watch?v=J7EN-wrqWig&t=779)
-
----
-
 ## How It Works
 
 1. **We transcribe your class recordings** — every word, timestamped
-2. **AI trained on your teaching philosophy finds the pearls** — coaching breakthroughs, authenticity moments, transformation arcs, quotable wisdom
+2. **AI with preliminary training on your teaching philosophy finds the pearls** — coaching breakthroughs, authenticity moments, transformation arcs, quotable wisdom
 3. **You get post-ready clips — just publish**
 
 No sorting. No editing. No brain-bleeding.
@@ -100,7 +96,7 @@ No sorting. No editing. No brain-bleeding.
 
 ## What Changes
 
-You stop being the bottleneck between your best teaching moments and the people who need to see them.
+Your best teaching moments reach the people who need to see them — on their own.
 
 Your 300 existing recordings become a content library that feeds your marketing funnel — clips → omegabone.com → discovery session → programme. New classes get processed automatically. Every week, fresh clips appear in your staging area. You review, approve, publish.
 
@@ -118,4 +114,3 @@ We'd love to walk you through the full approach — including more pearl example
 
 *Wilsch AI Services — AI that understands your domain, not just your data.*
 
-WILSCH AI SERVICES OÜ | Harju maakond, Tallinn, Sepapaja tn 6, 15551
