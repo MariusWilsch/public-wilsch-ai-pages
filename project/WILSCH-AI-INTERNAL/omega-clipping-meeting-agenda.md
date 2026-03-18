@@ -11,8 +11,8 @@ Meeting agenda for resolving open design questions from the [design doc](https:/
 
 Demonstrate proof of concept, resolve open design questions, and align on next steps before sending the proposal.
 
-1. **Pearl demo** — Walk through real examples, refine detection criteria together
-2. **Class recording structure** — Understand class flow so AI can segment recordings
+1. **Pearl demo** — Walk through real examples, refine detection criteria, confirm consent
+2. **Class formats** — Understand the different recording types and how they flow
 3. **Platform priority** — Decide scope for Pinterest (images) and LinkedIn
 4. **Programme pricing** — Understand programme tiers and student journey so the service proposal matches the business it supports
 5. **Next steps** — Indicative pricing proposal within 24h
@@ -30,22 +30,26 @@ Demonstrate proof of concept, resolve open design questions, and align on next s
 ### 1. Pearl demo + signal refinement
 ⏱️ 10 min
 
-Walk through real pearl examples extracted from Omega's class recordings. See [Omega's Teaching Moments, Found by AI](https://mariuswilsch.github.io/public-wilsch-ai-pages/project/WILSCH-AI-INTERNAL/omega-commercial-design-doc).
+Walk through real pearl examples, then validate the detection categories together.
 
-Since the classes were public YouTube live streams, consent for using clips in marketing should already be covered — but worth a quick confirmation.
+- **Pearl examples:** [Omega's Teaching Moments, Found by AI](https://mariuswilsch.github.io/public-wilsch-ai-pages/project/WILSCH-AI-INTERNAL/omega-commercial-design-doc)
+- **Pearl taxonomy:** [Part 3 — 4 categories](https://mariuswilsch.github.io/public-wilsch-ai-pages/project/WILSCH-AI-INTERNAL/omega-clipping-service-design#part-3-pearl-taxonomy) (coaching feedback, authenticity, transformation arc, quotable wisdom)
+- **Consent:** Classes were public YouTube live streams — confirm this covers clip usage
 
-**To resolve:** Validate that the AI finds the right moments. Refine what to detect more of, less of, or differently.
+**To resolve:** Are these the right categories? What should the AI detect more of, less of, or differently?
 
-### 2. Class recording structure
+### 2. Class formats
 ⏱️ 5 min
 
-The AI needs to segment 2-3 hour class recordings into clippable units. The working assumption is: student performs → Omega gives feedback → next student, with ~5 performances per class. Additional structural elements (warm-up, group exercises, introductions) would change how the AI identifies segment boundaries.
+We know about group classes and private lessons — are there other recording formats? How does each one flow from start to finish? Is it continuous or structured in segments?
 
-- Current classes (e.g., "Learn 2 Sing with Audrey") run ~42 minutes
-- Legacy classes (COVID era) ran 2-2.5 hours with ~25 students
-- Students choose their own songs
+Understanding the different content types helps the AI know what to expect across the library.
 
-**To resolve:** The typical flow of a class recording from start to finish, including any recurring segments beyond individual performances.
+- Group classes: multiple students, Zoom grid, how does coaching rotate?
+- Private lessons: 1-on-1, presumably a continuous coaching arc
+- Are there other formats (workshops, concerts, masterclasses)?
+
+**To resolve:** A picture of the different recording types Omega produces and how they differ.
 
 ### 3. Platform priority beyond video clips
 ⏱️ 5 min
@@ -85,7 +89,7 @@ Wrap up with clear expectations for what happens after the meeting.
 - **Type:** Discovery / alignment + proof of concept demo
 - **Duration:** ~30 min
 - **Expectation:** Omega reviews the commercial design doc beforehand, brings any questions
-- **Outcome:** All five discussion topics resolved → indicative pricing proposal sent within 24h
+- **Outcome:** All 5 topics resolved → indicative pricing proposal sent within 24h
 
 ## Related
 
