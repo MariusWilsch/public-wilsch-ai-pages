@@ -209,8 +209,8 @@ Die Verarbeitungszeit pro Seite besteht aus drei Phasen:
 
 | Phase | Was passiert | Dauer pro Seite | Anteil |
 |-------|-------------|----------------|--------|
-| **Bilderkennung** | PDF-Seite wird als Bild verarbeitet | ~40 Sekunden | ~45% |
-| **Prefill** | Modell liest Bild + Prompt ein | ~36 Sekunden | ~40% |
+| **Bilderkennung (Vision Encoder)** | Modell „sieht" die Seite — wandelt Pixel in Zahlen um, die das Sprachmodell versteht | ~40 Sekunden | ~45% |
+| **Prefill** | Sprachmodell liest die umgewandelten Daten + Aufgabenstellung ein | ~36 Sekunden | ~40% |
 | **Decode** | Modell generiert strukturierte Antwort | ~14 Sekunden | ~15% |
 | **Gesamt** | | **~90 Sekunden** | 100% |
 
