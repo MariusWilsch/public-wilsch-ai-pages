@@ -196,7 +196,11 @@ Per SA directive ("why always deploy another one?"), cross-project services run 
 | Service | Container | Port | Notes |
 |---------|-----------|------|-------|
 | Ollama | rag-staging-ollama | 11436:11434 | Single GPU instance, all projects |
+| OpenWebUI | dskit-openwebui | 3006:8080 | Chat frontend, serves all 3 projects via Models. Keycloak SSO. |
+| Pipelines | dskit-pipelines | 9299:9099 | Pipeline filter sidecar. All projects contribute filters. |
 | Langfuse | langfuse-web + 5 backing | 3003:3000 | Observability for all projects |
+
+Currently OpenWebUI + Pipelines are deployed in the Navigation compose stack — migration to shared infra compose pending as part of monorepo transition (#1191).
 
 **Layer 2 — Per-Project** (`/home/shared/projects/{project}/`):
 
@@ -205,8 +209,6 @@ Per SA directive ("why always deploy another one?"), cross-project services run 
 | IITR-RAG-Navigation | Typesense, TEI | `iitr-shared-network` |
 | IITR-RAG-V1 (Masterfragen) | Qdrant, pipeline filter (future) | `iitr-shared-network` |
 | IITR-RAG-V2 (Court-Judgments) | Pipeline filter (future) | `iitr-shared-network` |
-
-OpenWebUI + Pipelines are shared infrastructure. Currently deployed in the Navigation compose stack — migration to `iitr-infrastructure/` pending as part of monorepo transition. All projects contribute pipeline filters mounted into the Pipelines sidecar.
 
 #### Serving Layer
 
@@ -253,15 +255,14 @@ TEI (text-embeddings-inference) serves BAAI/bge-m3 (1024d) for Typesense vector 
 
 #### Caddy Routing
 
-Per-project subdomains, all pointing to one OpenWebUI backend:
+Two domains. Project separation happens via OpenWebUI Models, not Caddy routing.
 
-| Subdomain | Project | Target |
-|-----------|---------|--------|
-| `rag-staging.iitr-cloud.de` | Navigation | localhost:3006 |
-| `urteile.iitr-cloud.de` | Court-Judgments | localhost:3006 |
+| Domain | Service | Target |
+|--------|---------|--------|
+| `rag-staging.iitr-cloud.de` | OpenWebUI (all 3 projects) | localhost:3006 |
 | `langfuse.iitr-cloud.de` | Langfuse | localhost:3003 |
 
-Add `masterfragen.iitr-cloud.de` when Masterfragen pipeline filter is restored. Remove stale `qdrant-staging.iitr-cloud.de` entry (internal service, should not be publicly exposed).
+Stale entries to remove: `qdrant-staging.iitr-cloud.de` (internal service), `urteile.iitr-cloud.de` (redundant — Court Judgments served via OpenWebUI Model selection, not separate subdomain).
 
 #### Deployment Contract
 
