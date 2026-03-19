@@ -3,7 +3,7 @@ publish: true
 ---
 
 # DGX Spark Infrastructure Platform
-[[client-08_rekers]]
+[[client-rekers]]
 
 Design doc for setting up two DGX Spark units as a model-agnostic inference platform serving REKERS benchmarks and AVO MiniMax workloads.
 
