@@ -220,29 +220,31 @@ One OpenWebUI instance serves all three projects. Each project is a pipeline fil
 
 #### Directory Structure & Cleanup
 
-Canonical path: `/home/shared/projects/`. Per [Ops Manual](https://mariuswilsch.github.io/public-wilsch-ai-pages/global/developer-operations-manual-wilsch-ai-services) convention, each project has its own directory with compose + Makefile.
+Canonical path: `/home/shared/projects/`. After mono-repo migration (#1191), the four source repos merge into `iitr-platform/` with subproject directories. Per [Ops Manual](https://mariuswilsch.github.io/public-wilsch-ai-pages/global/developer-operations-manual-wilsch-ai-services) convention, compose + Makefile per subproject.
 
-**Retain:**
+**Target state:**
 
 | Directory | Purpose |
 |-----------|---------|
-| `iitr-infrastructure/` | Shared services (Ollama, Langfuse) |
-| `IITR-RAG-Navigation/` | Navigation (canonical name) |
-| `IITR-RAG-V1/` | Masterfragen (Qdrant data) |
+| `iitr-platform/` | Mono-repo (infrastructure + navigation + court-judgments + masterfragen) |
 | `metamcp/` | MCP gateway |
 
-**Remove:**
+**Remove during migration:**
 
 | Directory | Reason |
 |-----------|--------|
+| `iitr-infrastructure/` | Absorbed into mono-repo |
+| `IITR-RAG-Navigation/` | Absorbed into mono-repo |
+| `IITR-RAG-V1/` | Absorbed into mono-repo |
+| `IITR-RAG-V2/` | Absorbed into mono-repo (verify not duplicate first) |
+| `IITR-RAG-V2-issue-1112/` | Worktree leftover |
 | `typesense/` | Retired approach |
-| `langfuse/` | Absorbed into iitr-infrastructure |
+| `langfuse/` | Absorbed into shared infra |
 | `openlit/` | No running containers |
 | `signoz/` | No running containers |
 | `mcp-proxy/` | No running containers |
-| `IITR-RAG-V2-issue-1112/` | Worktree leftover |
 
-**Resolve:** `IITR-RAG-V2/` — verify if redundant with IITR-RAG-Navigation, remove if duplicate. Kill duplicate Ollama (`iitr-rag-v1-ollama` from V1 compose) — single instance runs from iitr-infrastructure.
+Kill duplicate Ollama (`iitr-rag-v1-ollama` from V1 compose) — single instance runs from shared infra.
 
 #### Vector Stores
 
