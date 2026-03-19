@@ -16,11 +16,11 @@ Two DGX Spark units (GB10 Blackwell, 128 GB unified memory each) need to become 
 This is NOT about the extraction pipeline logic, model architecture selection, or client-specific application code. This is infrastructure: how the Sparks serve models, how they're reached, and how they scale.
 
 **Preconditions:**
-- Two DGX Spark units acquired (NVIDIA reference design, GB10 Blackwell, 128 GB LPDDR5x each)
-- SSH access established via Tailscale (IP 100.85.150.22, persistent across networks)
-- CUDA 13.0, Docker 29.1.3, Ollama 0.18.0 pre-installed on Spark 1
-- Spark 2 in partial setup state (OS installed, not fully configured)
-- QSFP112 inter-node cable not yet purchased (seller identified)
+- Two DGX Spark units acquired (NVIDIA reference design, GB10 Blackwell, 128 GB unified LPDDR5x each)
+- Persistent remote access via Tailscale (network-independent SSH)
+- CUDA, Docker, Ollama pre-installed on Spark 1
+- Spark 2 in partial setup state
+- Inter-node cable not yet purchased (seller identified)
 - Memory bandwidth (273 GB/s LPDDR5x) is the performance ceiling — not compute or VRAM
 
 ---
@@ -39,33 +39,21 @@ This is NOT about the extraction pipeline logic, model architecture selection, o
 
 ### Part 1 — Hardware & Connectivity
 
-**Spark 1 (gx10-017d) — verified via SSH 2026-03-19:**
+**Spark 1 — verified 2026-03-19:**
 
 | Component | Spec |
 |-----------|------|
-| Hostname | gx10-017d |
-| GPU | NVIDIA GB10 (Blackwell SM121, Device 2e12) |
+| GPU | NVIDIA GB10 (Blackwell SM121) |
 | Memory | 128 GB unified LPDDR5x (119 GB usable), 273 GB/s bandwidth |
 | Disk | 1.8 TB NVMe |
-| CPU | 20 cores: 10× Cortex-X925 + 10× Cortex-A725 (ARM big.LITTLE, aarch64), 1 thread/core |
-| CUDA | 13.0 (`/usr/local/cuda-13.0`), Driver 580.126.09 |
-| OS | Ubuntu 24.04.4 LTS (Noble Numbat), Kernel 6.17.0-1008-nvidia |
-| Docker | 29.1.3 |
-| Ollama | 0.18.0 |
-| Tailscale | 1.96.2 |
-| NICs | 2× Mellanox ConnectX-7 (4 ports total across 2 PCIe buses: 0001 + 0002) |
+| CPU | 20 ARM cores (Cortex-X925 + A725, big.LITTLE), aarch64 |
+| NICs | 2× Mellanox ConnectX-7 (4 ports total) |
 
-**Remote access:** Tailscale (IP `100.85.150.22`, `ssh DGX-SPARK`). Persistent across network changes. No VPN or local network dependency. Fallback: TP-Link Ethernet bridge at `192.168.1.2`.
+**Remote access:** Tailscale — persistent SSH across any network. No VPN or local network dependency. Implementation details (IPs, interface names, SSH config) in project CLAUDE.md.
 
-**Network interfaces:**
-- `enP7s7` — Ethernet (TP-Link fallback)
-- `enp1s0f0np0` / `enp1s0f1np1` — ConnectX-7 bus 0001 (inter-node QSFP, future)
-- `enP2p1s0f0np0` / `enP2p1s0f1np1` — ConnectX-7 bus 0002 (second NIC, 2 additional ports)
-- `wlP9s9` — WiFi (primary internet)
+**Inter-node (future):** QSFP56 200G DAC or QSFP112 400G via ConnectX-7. Direct point-to-point, no switch needed for 2 nodes. Creates 256 GB unified pool. 4-node supported since March 2026 (requires RoCE switch).
 
-**Inter-node (future):** QSFP56 200G DAC or QSFP112 400G — both work on ConnectX-7. Direct point-to-point, no switch needed for 2 nodes. Creates 256 GB unified pool. 4-node supported since March 2026 (requires RoCE switch).
-
-**Spark 2:** OS installed, partially configured. Same setup procedure: Ethernet to TP-Link, install Tailscale, authenticate, add SSH config.
+**Spark 2:** Same hardware, partially configured. Same setup procedure as Spark 1.
 
 ### Part 2 — Serving Engine Strategy
 
@@ -73,19 +61,19 @@ The GB10's bottleneck is memory bandwidth (273 GB/s), not compute (1 PFLOP FP4 t
 
 **Engine ladder (simplest → maximum utilization):**
 
-| Engine | When to use | Quantization | Docker image |
-|--------|------------|--------------|-------------|
-| **Ollama** | Quick validation, apples-to-apples benchmarks vs Power 10 | Q4_K_M, Q8_0, MXFP4 (MoE only) | Pre-installed, no container needed |
-| **eugr/spark-vllm-docker** | Primary platform — any model, single or dual node, vision support | FP8, AWQ, GGUF | `eugr/spark-vllm-docker` (updated daily, Spark-optimized) |
-| **SGLang** | Maximum single-node speed — NVFP4 + EAGLE3 speculative decoding | NVFP4, MXFP4, FP8 | `lmsysorg/sglang:spark` or `scitrera/dgx-spark-sglang:0.5.9-t5` |
-| **TensorRT-LLM** | Production — NVIDIA's own kernel optimizations, pre-quantized NVFP4 models | NVFP4, FP8 | `nvcr.io/nvidia/tensorrt-llm/release:1.2.0rc6` |
+| Engine | When to use | Quantization | Docker |
+|--------|------------|--------------|--------|
+| [**Ollama**](https://ollama.com/blog/nvidia-spark-performance) | Quick validation, apples-to-apples benchmarks vs Power 10 | Q4_K_M, Q8_0, MXFP4 (MoE only) | Pre-installed |
+| [**vLLM**](https://build.nvidia.com/spark/vllm) | Primary platform — any model, single or dual node, vision | FP8, AWQ, GGUF | [`eugr/spark-vllm-docker`](https://github.com/eugr/spark-vllm-docker) |
+| [**SGLang**](https://build.nvidia.com/spark/sglang) | Maximum single-node speed — NVFP4 + EAGLE3 speculative decoding | NVFP4, MXFP4, FP8 | [`lmsysorg/sglang:spark`](https://hub.docker.com/r/lmsysorg/sglang) |
+| [**TensorRT-LLM**](https://build.nvidia.com/spark/trt-llm) | Production — NVIDIA kernel optimizations, pre-quantized NVFP4 | NVFP4, FP8 | [`nvcr.io/nvidia/tensorrt-llm`](https://catalog.ngc.nvidia.com/orgs/nvidia/containers/tensorrt-llm) |
 
-**eugr/spark-vllm-docker** is the recommended platform container because:
-1. Model-agnostic — swap model path in one command (`vllm serve <model>`)
+**vLLM (eugr/spark-vllm-docker)** is the recommended platform because:
+1. Model-agnostic — swap model path in one command
 2. DGX Spark-specific optimizations (fastsafetensors, unified memory management)
 3. Dual-node ready via Ray (when cable arrives)
-4. Vision models tested (Qwen3-VL is the primary README demo)
-5. Updated daily, 618 stars, active community
+4. Vision models actively tested by maintainer
+5. Active community, updated daily
 
 **Quantization pairing:**
 
@@ -105,28 +93,36 @@ Run the same extraction pipeline from #1132 on the DGX Spark via Ollama. Produce
 - Risk: thermal throttling on extended 240-page run (monitor `nvidia-smi` temps)
 - Output: fills TBD values in FSO presentation (#1081)
 
-**Phase 2 — Optimized Baseline**
+**Phase 2 — vLLM Platform**
 
-Install eugr/spark-vllm-docker as the permanent serving platform. Validate Qwen3-VL via vLLM, test EAGLE3 speculative decoding via SGLang. This produces "optimized" numbers alongside the Ollama baseline.
+Install eugr/spark-vllm-docker as the permanent serving platform. Validate vision models via vLLM, confirm model-agnostic serving (swap model path, same container).
 
 - Engine: eugr/spark-vllm-docker (single-node `--solo` mode)
-- Test: same extraction, then a second unrelated model → validates "swap model path" capability
-- Explore: SGLang + EAGLE3 for ~2× decode speed
+- Test: same extraction pipeline, then a second unrelated model → validates "swap model path" capability
 - Dependency: none (can start immediately after Phase 1)
 
 **Phase 3 — AVO MiniMax & Dual-Node**
 
-Deploy MiniMax M2.5 for AVO workload (scope TBD). Start single-node with FP8+INT4-AWQ (~92.5 GB), expand to dual-node for larger quantizations or longer context.
+Deploy MiniMax M2.5 for AVO. Start single-node with [FP8+INT4-AWQ](https://huggingface.co/mratsim/MiniMax-M2.5-FP8-INT4-AWQ) (~92.5 GB), expand to dual-node for larger quantizations or longer context.
 
 - Engine: eugr/spark-vllm-docker (same container, `TP=2` via Ray for dual-node)
 - Reference: [wshobson/minimax-dgx-spark](https://github.com/wshobson/minimax-dgx-spark) — dedicated MiniMax inference server
-- Dependency: AVO scope definition, QSFP cable purchase (for dual-node)
+- Dependency: QSFP cable purchase (for dual-node)
 - Known issue: vLLM TP=2 + Qwen3-VL-30B has engine init failure (active NVIDIA forum thread)
 
+**Phase 4 — Performance Optimization**
+
+Squeeze maximum throughput from the hardware. SGLang with EAGLE3 speculative decoding (~2× decode speed), NVFP4 quantization for MoE models, CUDA 13.2 upgrade (up to 3× improvement for FP4/FP8 workloads).
+
+- Engine: SGLang or TensorRT-LLM for NVFP4-optimized serving
+- Explore: speculative decoding, batching strategies, thermal management for sustained runs
+- Dependency: Phase 2 baseline established
+
 **Undefined:**
-- **NSC Datacenter:** Timeline, power/cooling requirements, persistent networking at NSC. Tailscale handles connectivity regardless — placement logistics TBD.
+- **Dual-Node Operations:** How are two nodes managed? One Tailscale entry per node or a cluster abstraction? Which node is the Ray head? How does SSH access work (one jump host or two independent entries)? Workaround strategy for known vLLM TP=2 + Qwen3-VL engine init failure.
+- **Midburg School Datacenter (NSC):** Timeline, power/cooling requirements, persistent networking. Tailscale handles connectivity regardless — placement logistics TBD.
 - **Docker Workflow:** Container management, model storage persistence across reboots, restart policies.
-- **Monitoring:** `ateska/dgx-spark-prometheus` for GPU temp, power, throughput metrics. Relevant for sustained benchmark runs and NSC production.
+- **Monitoring:** Prometheus exporter for GPU temp, power, throughput metrics. Relevant for sustained benchmark runs and production.
 
 ### Part 4 — Ecosystem Intelligence
 
