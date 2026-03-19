@@ -83,26 +83,30 @@ from session context]
 
 **Undefined:** The origin auto-resolution mechanism — how the capture skill determines whether an observation comes from a Traceline user, a team member, or Marius. Candidates: GitHub username (github.actor from workflow dispatch), project context (soloforce = internal, plugin = traceline), or explicit user input. → Meeting agenda topic.
 
-### 3. Two-Level Hierarchy
+**Undefined:** Post-mortem as release epic creation trigger — a second path to release creation alongside atmospheric pressure. At milestone end, a structured post-mortem discussion surfaces project-specific learnings that become release epics. This is a different methodology from observation accumulation and requires its own design thinking. Evidence: [Grooming + Shutdown Ritual 2026-03-17](https://app.fireflies.ai/view/01KKXKGJB20Q1K0XDHXMH77BVM) — ITA post-mortem discussion revealed decomposition and spike gaps.
 
-The board has two structural levels:
+### 3. Three-Level Hierarchy
 
-| Level | Type | Lifecycle | Purpose |
-|-------|------|-----------|---------|
-| **Level 1** | Position epic | Permanent (never closes) | Collects observations as they arrive |
-| **Level 2** | Release epic (sub-issue) | Time-bound (created → worked → closed) | Groups observations selected for a work cycle |
+The board has three structural levels:
+
+| Level | Primitive | Lifecycle | Purpose |
+|-------|-----------|-----------|---------|
+| **Level 1** | Position epic (issue) | Permanent (never closes) | Collects observations as they arrive |
+| **Level 2** | Release (milestone) | Time-bound (touchpoint date) | Groups themed work for a work cycle |
+| **Level 3** | Theme (milestoned issue) | Short-lived (Working → Review → Done) | Unit of work — Session B fix + Session C verification |
 
 **Flow:**
 1. Observations accumulate on the position epic (Level 1) as comments
-2. When ready to work: create a release epic as a sub-issue of the position epic (Level 2)
-3. Transfer relevant observations from position epic to release epic
-4. Work the release epic to completion, then close it
-5. Remove transferred observations from the position epic
+2. When ready to work: SE creates a release milestone and theme issues from observation clusters
+3. Transfer relevant observations from position epic to theme issues as comments
+4. Work each theme issue through the fix-and-verify cycle (Session B → Session C)
+5. Theme issue closes when verified. Milestone closes when all themes close.
 
-State tracking is implicit — no marking mechanism needed:
-- **In position epic** = unaddressed (backlog)
-- **In release epic** = being worked on (in-progress)
-- **Release epic closed** = done
+State tracking maps to existing board primitives:
+- **On position epic** = unaddressed (backlog)
+- **Theme issue milestoned** = being worked (flows through Work Board columns)
+- **Theme issue closed** = verified done
+- **Milestone closed** = release complete
 
 **Accumulation threshold:** A release epic is not created for a single observation. Observations accumulate on the position epic like atmospheric pressure building. Each new observation adds context that makes the others more actionable — the AI gets a richer evidence base for diagnosis. When enough observations cluster around a coherent concern, the pressure crosses a threshold and a release epic forms to discharge them. The more observations, the better the fix — because explaining behavior problems is hard for humans, but pattern-matching across multiple evidence sources is where AI excels.
 
@@ -110,11 +114,11 @@ State tracking is implicit — no marking mechanism needed:
 
 Artifact grouping (which commands, skills, or protocols are affected) happens during release planning, not as a structural level. This keeps the hierarchy flat at two levels.
 
-**Transfer mechanism:** When a release epic is created, the System Engineer selects a cluster of observations from the position epic and batch-transfers them: re-post each observation as a comment on the release epic, then delete the original from the position epic.
+**Transfer mechanism:** When a release milestone is created, the System Engineer selects a cluster of observations from the position epic and transfers them to the corresponding theme issues: re-post each observation as a comment on its theme issue, then delete the original from the position epic. This keeps the position epic clean — only unaddressed observations remain.
 
-This keeps the position epic clean — only unaddressed observations remain. The release epic stays open until the improve-system B→C loop verifies all observations in the cluster are resolved. No partial closure: if one observation in the release isn't fixed, the cycle continues.
+**Position epic hygiene:** Position epics contain observations only — no extraction pass handoffs, session links, commit references, or work context. These artifacts belong on theme issues or in the conversation store. This separation ensures the position epic remains a clean signal of unaddressed behavioral patterns.
 
-The System Engineer names the release epic after the concern the cluster addresses. This framing — a short title describing the behavioral pattern — is the SE's only addition beyond the observations themselves. The release epic then routes to execution — for instruction artifacts, this is `/improve-system` at theme level (Session B reads deduplicated conversations, diagnoses, fixes). See [/improve-system architecture](https://mariuswilsch.github.io/public-wilsch-ai-pages/global/improve-system-architecture) Theme-Level Workflow.
+The System Engineer names the release milestone after the concern the cluster addresses (e.g., `[CCI-DEV] Developer Release 1`). Theme issues within the milestone are named after specific behavioral patterns. Each theme routes to execution — for instruction artifacts, this is `/improve-system` at theme level (Session B reads deduplicated conversations, diagnoses, fixes). See [/improve-system architecture](https://mariuswilsch.github.io/public-wilsch-ai-pages/global/improve-system-architecture) Theme-Level Workflow.
 
 ### 4. Routing
 
@@ -157,11 +161,35 @@ The CCI improvement cycle follows a two-path model that mirrors the developer's 
 
 1. **Theme clustering** — SE names themes from transferred observations
 2. **Session B** — `/improve-system` diagnoses from deduplicated conversations, applies fix. Session B comment posted on release epic with commit link. See [/improve-system architecture](https://mariuswilsch.github.io/public-wilsch-ai-pages/global/improve-system-architecture) for the theme-level workflow.
-3. **Session C** — Organic verification. The fixed behavior gets triggered naturally in real work sessions. Each occurrence is a Session C data point: pass (behavior correct) or fail (regression). Session C comments posted on release epic, tagged to their theme.
-4. **Theme closing** — When Session C instances consistently pass with zero failures, the theme is verified-closed. A disposition comment records the verdict. Exact pass threshold is empirical — determined through use, not pre-defined.
-5. **Release epic closing** — All themes dispositioned (verified-closed, transferred to another release epic, or deferred). SE closes the issue.
+3. **Session C** — Organic verification. The fixed behavior gets triggered naturally in real work sessions. The user — not the AI — is the observer. The AI does not know it is being verified (observer effect would compromise organic verification). When the user notices fixed behavior working (or still failing), they record a Session C marker on the theme issue.
 
-**Observation routing during Path B:** While a release epic is open, new observations of the same behavior go to the release epic as Session C evidence (pass or fail), tagged to the relevant theme. After the release epic closes, new observations of the same behavior go to the position epic as new evidence for potential future clustering.
+   **Session C closing heuristic:** A theme is closeable when:
+   - At least **1 organic Session C pass** is recorded (explicit evidence the fix works)
+   - **No new observations** of the same behavioral pattern appear on the position epic since the Session B fix
+
+   The observation protocol already captures bad behavior continuously. If the fix didn't work, new observations of the same pattern will land on the position epic — the absence of new bad observations is itself a passive "no fail" signal. One explicit pass plus observation stream silence = theme closeable.
+
+4. **Theme closing** — SE reviews themes meeting the closing heuristic and closes the theme issue. The disposition comment records the Session C evidence and observation silence period.
+
+5. **Release closing** — All theme issues in the milestone closed → SE closes the milestone. The milestone's progress bar (X/Y themes) provides at-a-glance status.
+
+**Session C capture ceremony (needs spike):** A post-session prompt in the Claude Launcher asks the user about behavioral observations after each Claude session. The launcher survives Claude's exit (`subprocess.run` instead of `execvpe`), checks open release milestones, and presents a terminal prompt. Implementation details (config file vs dynamic lookup, UX) require a spike before building. See `~/.claude/lib/claude_launcher.py`.
+
+**Observation routing and classification:** Every observation carries a session type marker:
+- **Session A** (default) — new behavioral failure. Routes to position epic.
+- **Session B** — diagnosis and fix. Implicit when running `/improve-system`. Routes to theme issue with commit link.
+- **Session C** — verification pass or fail on a known fix. Routes to theme issue.
+
+The observation protocol asks two questions at capture time: (1) destination — AI suggests a target, user confirms or provides issue number; (2) classification — Session A or Session C. Session B is auto-detected from `/improve-system` context. The session type marker appears in the observation format:
+
+```
+**Session A** / **Session C: PASS ✅** / **Session C: FAIL ❌**
+
+**Hook:** [behavior description]
+**Source:** 🗒️ Session {id}
+```
+
+While a release milestone is open, new observations of the same behavior route to the theme issue as Session C evidence. After the milestone closes, new observations route to the position epic as Session A evidence for potential future clustering.
 
 For instruction artifacts, conversations are the design material (not design docs or tracking.md). The JA design doc step does not apply — the SE runs `/improve-system` Session B directly against deduplicated conversations.
 
@@ -212,20 +240,28 @@ When an operator flags a problem ("AI didn't push"), the SE triages root cause d
 
 ### 8. Board Infrastructure
 
-The CCI board (GitHub Project P3) requires retrofit to match the ILR v2 column model. Current state (2026-03-13):
+The CCI board (GitHub Project P3) is dissolved. Its structural function is replaced by the existing two-board architecture from deliverable-tracking:
 
-| Aspect | Current | Target |
-|--------|---------|--------|
-| **Columns** | Backlog → Todo → In Progress → Review → Done | Backlog → Working → Review → Done |
-| **Milestones** | None (zero exist) | Aligned to a forcing function cadence (undefined) |
-| **Issues** | 35 open, all in Backlog, all unmilestoned | Release epic sub-issues milestoned and flowing |
-| **Position epics** | Visible on board (backlog) | Invisible — not tracked for throughput |
+| Level | Primitive | Board | Lifecycle |
+|-------|-----------|-------|-----------|
+| **Position epic** | Issue | Commitments Board | Permanent (never closes) |
+| **Release** | Milestone | — (groups theme issues) | Time-bound (touchpoint date) |
+| **Theme** | Issue (milestoned) | Work Board | Short-lived (Working → Review → Done) |
 
-Position epics are the CCI equivalent of client epics on the Commitment Board. They represent the company's commitment to making each position work — the capacity signal is: "how many positions are we actively improving?" Release epics are sub-issues of position epics, and their sub-issues flow through the Work Board. This mirrors deliverable-tracking: client epics on Commitment Board, sub-issues on Work Board.
+**Why dissolve P3:** Position epics are long-lived commitments — the same category as client epics on the Commitments Board. Keeping them on a separate CCI board hides them from the capacity signal ("how many positions are we actively improving?"). The Commitments Board already separates long-lived commitments from short-lived work. A separate board creates a place nobody looks at — the same visibility problem as unmilestoned backlog items.
 
-The deliverable-tracking board retrofit (#904) established the pattern: ILR v2 defines columns, milestones tied to forcing functions, daily grooming fills and prioritizes. The same pattern applies to CCI, but the forcing function source differs — deliverable-tracking uses client meetings, CCI's forcing function is undefined.
+**Release as milestone:** Each release is a GitHub milestone on `DaveX2001/claude-code-improvements` (e.g., `[CCI-DEV] Developer Release 1`). Multiple release milestones can coexist — the SE picks which themes to work on. The milestone's touchpoint date is the SE's 1:1 cadence with the manager, following the same pattern as deliverable-tracking milestones tied to client syncs. The [ILR milestone lifecycle](https://mariuswilsch.github.io/public-wilsch-ai-pages/global/issue-lifecycle-router) applies directly: CREATION → FILLING → ACTIVE → TOUCHPOINT → CLOSING.
 
-**Milestone strategy:** CCI milestones align to the SE's 1:1 cadence with the manager (see Part 6: Milestone strategy). The 1:1 review session is the forcing function ceremony — same structure as deliverable-tracking milestones tied to client sync meetings.
+**Theme issues on Work Board:** Theme issues from CCI release milestones flow through the same Work Board columns (Backlog → Working → Review → Done) alongside deliverable-tracking sub-issues. CCI themes carry position labels for filtering. The Sprint view groups them by milestone — CCI milestones appear alongside client milestones. This is the same board, same grooming ceremony, same columns. No separate CCI workflow.
+
+**Decomposition discipline:** Theme issues follow the same starting-point principle as deliverable-tracking sub-issues: create only the themes that can be worked now. Fix one theme, verify (Session C), then create the next. Do not create all themes upfront if the first theme's fix might invalidate assumptions in later themes. This principle is universal — it applies to both CCI themes and deliverable-tracking sub-issues. See [ILR: Starting-Point Sub-Issues](https://mariuswilsch.github.io/public-wilsch-ai-pages/global/issue-lifecycle-router).
+
+**Migration from P3:** Existing CCI issues fall into three categories:
+- Position epics → move to Commitments Board
+- Release epic issues (#604, #616) → convert to milestones, their sub-issues become milestoned theme issues
+- Standalone CCI issues → triage during grooming (milestone or close)
+
+**Undefined:** Spike issue format — timebox validation ("can it do X?") before decomposing further. Referenced in ITA post-mortem discussion but format not yet designed. The spike serves as the validation gate between decomposition batches.
 
 ---
 
@@ -254,3 +290,11 @@ The deliverable-tracking board retrofit (#904) established the pattern: ILR v2 d
 - **Live evidence:** #615 theme-by-theme review in this session — closing ceremony gap surfaced empirically
 - **Session (extraction pass 5 — forcing function mechanism, David-as-SE hypothesis, driver ranking, milestone cadence):** /Users/verdant/.claude/projects/-Users-verdant-Documents-projects-00-WILSCH-AI-INTERNAL--soloforce/e8d8d641-093a-4e43-87a7-4290f40f9a28.jsonl
 - **JA Position Epic (#589):** Observations analyzed for forcing function grounding — 20 most recent comments reviewed
+- **Session (extraction pass 6 — board lifecycle, release-as-milestone, Session C closing, observation classification):** /Users/verdant/.claude/projects/-Users-verdant-Documents-projects-00-WILSCH-AI-INTERNAL--soloforce/c4c32879-9c6a-4d54-b915-2663e554b5c0.jsonl
+- **Grooming + Shutdown Ritual (2026-03-17):** [Transcript](https://app.fireflies.ai/view/01KKXKGJB20Q1K0XDHXMH77BVM) — primary source for board lifecycle, decomposition discipline, spike concept, post-mortem ceremony
+- **JA Release Epic (#604):** 20 observations reviewed for JA behavioral calibration (RESOLVE probing discipline)
+- **Ship with Confidence:** [Published](https://mariuswilsch.github.io/public-wilsch-ai-pages/global/ship-with-confidence) — reference for "when is done" parallel
+- **Improve-System Architecture:** [Published](https://mariuswilsch.github.io/public-wilsch-ai-pages/global/improve-system-architecture) — Session A/B/C model reference
+- **Issue Lifecycle Router:** [Published](https://mariuswilsch.github.io/public-wilsch-ai-pages/global/issue-lifecycle-router) — milestone lifecycle, starting-point sub-issues, decomposition discipline
+- **Claude Code Hooks:** [Official docs](https://code.claude.com/docs/en/hooks) — SessionEnd/Stop hook feasibility for Session C ceremony
+- **Claude Launcher:** `~/.claude/lib/claude_launcher.py` — post-session Session C prompt mechanism
