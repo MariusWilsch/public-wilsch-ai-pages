@@ -59,7 +59,7 @@ The proof point is context-dependent:
 | **Client decision** | "Will they accept vector RAG over tree-based?" | Direction is approved |
 | **Runtime capability** | "Can LibreChat execute FastMCP tools?" | Target environment works |
 
-The decomposer (JA) identifies the biggest unknown in the pipeline and draws the trunk boundary there. Everything after the proof point stays in the design doc — not on the board.
+The Developer identifies the biggest unknown in the pipeline during decomposition and draws the trunk boundary there. This is a Developer concern, not a JA concern — the JA designs from sources and doesn't have the dependency-tree context to determine which assumption blocks the most downstream work. The Developer, creating the issue dependency tree, sees which issue failure would make everything downstream stale. Everything after the proof point stays in the design doc — not on the board.
 
 **After the proof point passes:** decompose the next 2–3 issues. Repeat until the full pipeline is implemented. Each cycle is: decompose → validate → decompose further.
 
@@ -95,7 +95,16 @@ This is a human decision, not an AI gate. The AI can suggest proof points and fl
 - Spike deliverable: knowledge or a running environment. Not screenshots.
 - Label: `maker/spike` (no ACs required — the spike validates whether ACs can be written)
 
-**Lifecycle:** Design doc approved → JA decomposes mentally → identifies proof point → spike-or-issues decision → if spike: create spike issue, validate, then decompose further with validated constraints → if confident: create trunk issues, implement to proof point.
+**Spike board flow:**
+- Single-cycle label — no spec/implement flip (unlike dev/design → dev/implement)
+- Board path: Backlog → Working → Review (spike witness) → Done
+- Spike witness tests **primitives**, not ACs — "does the runtime support this capability?"
+- Verdict output: a proven-vs-assumed map. What the spike validated vs. what's still assumed.
+- This map feeds directly into the Developer's next decomposition — ACs can only be written for capabilities the spike proved.
+
+**Archibus evidence (#1167):** Dev Lead witnessed 6 primitives (skill discovery, skill loading, file write, discovery+chaining, field editing, session isolation). All 6 passed. The `edit_file` capability was discovered mid-ceremony — invalidating a prior assumption that surgical editing wasn't available. Proven vs. assumed separation prevented false confidence in capabilities the spike didn't test.
+
+**Lifecycle:** Design doc approved → Developer decomposes mentally → identifies proof point → spike-or-issues decision → if spike: create spike issue, validate, then decompose further with validated constraints → if confident: create trunk issues, implement to proof point.
 
 **Archibus evidence:** Spike A (#1167) validated LibreChat + FastMCP runtime in one day. Caught #1154 AC staleness before implementation. The spike primitive was invented from the IITR post-mortem during the Archibus timeline — and immediately proved its value.
 
@@ -127,6 +136,31 @@ When staging config works, write it to CLAUDE.md or compose immediately — not 
 
 **Archibus evidence:** F9 (missing deployment identity in CLAUDE.md) and F11 (test data missing from rebuilt container) — both instances of config knowledge dying between sessions. Each witness ceremony that surfaced these could have been avoided by persisting working config during the implementation session.
 
+### Part 5: Position Accountability
+
+Decomposition touches multiple positions in the VP/Delivery path. Each position has distinct context that determines their role.
+
+| Position | Decomposition Role | Context Owned |
+|----------|-------------------|---------------|
+| **Developer** | Full mental decomposition → trunk boundary identification → issue creation | Issue dependency tree — sees which assumption blocks the most downstream work |
+| **JA** | Design doc extraction. Recognizes "needs empirical validation" during extraction | Source material — transcripts, conversations, data artifacts |
+| **Dev Lead** | Witnesses spikes via spike-specific ceremony (primitives, proven-vs-assumed) | Review queue — quality gate authority |
+
+**Developer as decomposer:** The Developer reads the design doc and decomposes — full mental issue tree, then identifies the trunk boundary. This is operationalized as a skill (similar to AC-create): the skill guides the Developer through decomposition and trunk boundary identification, not as a belief to internalize from reading a design doc.
+
+**JA spike recognition:** During extraction passes, the JA encounters moments where design reaches an empirical ceiling — "this can only be proven by building/testing it." Two paths:
+
+- **Validation** (small, in-session): the JA can spike immediately. Install a tool, run a command, check a web resource. Write the result into the design doc as proven fact. Example: validating MiniMax M2.5 memory fit on DGX Spark via web search, or installing Tailscale to confirm persistent SSH access.
+- **Construction** (large, needs Developer): the JA marks it for the Developer. Building a test pipeline, reading source code to validate a library's capabilities, or running integration tests. Example: "Does PageIndex OSS support retrieval?" — requires inspecting the codebase, not just reading documentation.
+
+The threshold is validation vs. construction: quick checks that answer yes/no stay in the JA pass. Building something to test it goes to the Developer.
+
+**Undefined:** VP/Delivery and SA roles in decomposition — VP/Delivery creates epics and routes to JA or Developer, SA reviews design doc quality. Their specific accountability in the trunk-first flow (proof point decisions, design doc update authority) is not yet defined.
+
+**Undefined:** Decomposition skill mechanics — the exact process by which the skill guides the Developer through full decomposition → trunk boundary identification. Pending empirical evidence from first skill application.
+
+**Undefined:** Spike witness ceremony format — the detailed structure of how the Dev Lead witnesses a spike (which primitives to test, success criteria table structure, proven-vs-assumed map format). Evidence from Archibus #1167 is sufficient for the Developer to work from; formal design deferred.
+
 ---
 
 ## Source
@@ -151,5 +185,15 @@ When staging config works, write it to CLAUDE.md or compose immediately — not 
 **Issue:**
 - [#1181](https://github.com/DaveX2001/deliverable-tracking/issues/1181) — Project Post-Mortem → General Decomposition Design Doc
 
-**Session:**
+**Position Epic:**
+- [#657](https://github.com/DaveX2001/claude-code-improvements/issues/657) — Trunk-First Decomposition (observations + live application evidence)
+- [#605](https://github.com/DaveX2001/claude-code-improvements/issues/605) — Dev Lead Position Epic (spike witness observations)
+
+**Evidence Sessions (position accountability extraction):**
+- c4c32879 — CCI Board Structure extraction (Session C closure, spike signal during JA pass)
+- e489c708 — DGX Spark infrastructure extraction (Tailscale spike mid-JA-pass, validation vs. construction)
+- 91c2aad3 — Archibus spike witness ceremony (#1167, 6 primitives, proven-vs-assumed)
+
+**Sessions:**
 - /Users/daveFem/.claude/projects/-Users-daveFem-Desktop-claude-projects-00-WILSCH-AI-INTERNAL--deliverable/367cbb0b-aaba-4bc1-8ae3-521edf7d3b55.jsonl
+- /Users/verdant/.claude/projects/-Users-verdant-Documents-projects-00-WILSCH-AI-INTERNAL--soloforce/e75e684b-1190-4897-9b27-90939fb9f5b2.jsonl
