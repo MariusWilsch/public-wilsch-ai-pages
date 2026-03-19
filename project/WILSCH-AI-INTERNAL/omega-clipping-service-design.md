@@ -21,8 +21,10 @@ This design doc does NOT cover: website development, pricing strategy, album con
 
 **Preconditions:**
 - ~300 Learn to Sing class recordings exist on YouTube (Streamyard → YouTube)
-- Business funnel is defined (Figma website redesign, 3-tier programme structure)
-- Persona document with burden index: see [Omega Persona Doc] (separate artifact)
+- Business funnel is defined (Figma website redesign, product matrix: $1k–$10.5k LTV)
+- Persona document exists ([Burden Index, 52 problems](https://mariuswilsch.github.io/public-wilsch-ai-pages/project/WILSCH-AI-INTERNAL/omega-persona-burden-index))
+- 2026 1-on-1 lessons confirmed as primary content source (recorded at NS)
+- Pearl detection POC validated (6 pearls from 3 videos, narrative arc signal)
 - Client urgency: career transition — Omega faces potential job loss and needs her singing business to become viable income ("I need to be in business sooner than later")
 
 ---
@@ -41,12 +43,16 @@ This design doc does NOT cover: website development, pricing strategy, album con
 
 ### Part 1: Data Sources & Input Types
 
-One content type serves as input, hosted on Omega's YouTube channel (@omegabone):
+Three content types serve the service, each with a distinct role:
 
-**Learn to Sing Class Recordings (~300 videos)**
-COVID-era live-streamed classes via Streamyard, published to YouTube (mirrored on Facebook). Zoom-grid format with ~10-25 students on camera, 2-3 hours each. Individual students perform songs of their choice, Omega provides feedback. ~5 clippable moments per class.
+**Primary (Pearl Source) — 2026 1-on-1 Lessons**
+Current individual sessions recorded at Network School (NS). One student per session, ~42 minutes. Higher video and audio quality than legacy recordings. Structure: Omega's intro song → standard welcome → student introduction (background + why they're here) → song selection → warm-up → performance → coaching feedback. The student introduction segment naturally surfaces problem identification pearls (stage fright, vocal struggles, dream outcomes). The perform→coach→breakthrough arc is the same as group classes but with deeper, longer interactions per student.
 
-**Excluded from scope:** Omega's "Come With Me" album (10 tracks, produced music videos) is not processed by this service. Album content may be discussed with the client for future inclusion as a top-of-funnel awareness channel. See [Meeting Agenda Topic 6](#6-album-clips-as-future-top-of-funnel).
+**Secondary (Pearl Source, Deprioritized) — Learn to Sing Group Classes (~300 videos)**
+COVID-era live-streamed classes via Streamyard, published to YouTube (mirrored on Facebook). Zoom-grid format with ~10-25 students on camera, 2-3 hours each. Deprioritized due to low video quality — participants joined from Southeast Asia, Central and South Africa with limited internet bandwidth (2020 era). ~5 clippable moments per class, but clip quality constrained by source quality.
+
+**Branding Element — "Come With Me" Album (10 tracks)**
+Produced music videos featuring nature footage with lyric overlays and Omega's original songs. Album release: March 29th, $150/download, vinyl + merch kit at 1,000 sales. The album is NOT a pearl extraction source — it provides outro clips for short-form videos (every clip ends with an album song snippet for brand recognition) and sits in Omega's product stack as a standalone monetization stream.
 
 ### Part 2: Target Avatar & Content Strategy
 
@@ -57,20 +63,31 @@ The full avatar with burden index (52 problems scored by severity and service re
 Class clips serve the entire marketing funnel — a single content type that drives both awareness and conversion:
 - **Awareness:** Clips showing Omega's coaching style and teaching philosophy attract the target avatar — people who see themselves in the students and think "I could do that too."
 - **Transformation proof (mid-funnel focus):** Clips showing student progression — from tentative first attempts to confident performance — provide the social proof that Omega's method works. This is the primary content priority.
-- **Conversion:** All clips CTA to omegabone.com → free 30-min discovery session → paid programme. Conversion path details (programme tiers, student journey) to be clarified. See [Meeting Agenda Topic 5](#5-programme-pricing-and-student-lifetime-value).
+- **Conversion:** All clips CTA to "book a free vocal analysis call" (Omega's "diagnostics") via scheduling link or QR code — NOT to omegabone.com (website is being rebuilt). Sales call → product matrix.
+
+**Product Matrix (all three personas funnel into one package):**
+
+| Tier | Price | Content |
+|------|-------|---------|
+| Downsell | $1,000/mo | 1 song, vocal training |
+| Main | $5,000 | 12-week concert programme — 6 songs, culminates in live concert |
+| + Recording | +$2,500 | Concert recording / album |
+| + Songwriting | +$3,000 | Original songwriting training |
+| **Max LTV** | **$10,500** | |
 
 ### Part 3: Pearl Taxonomy
 
 A "pearl" is a high-value moment worth extracting as a short-form clip (see Problem Statement for the brief definition). Omega's pearls follow a narrative arc: relatable starting point → coaching moment → breakthrough. This matches the testimonial format on her website redesign.
 
-Four pearl categories identified from the discovery call:
+Five pearl categories confirmed across two meetings (discovery call + in-person meeting 2026-03-18):
 
 1. **Coaching feedback moments** — Omega giving specific, actionable advice (e.g., "lean into your French accent, don't try to obscure it")
 2. **Authenticity breakthroughs** — A student singing naturally for the first time, finding their own voice ("I'm looking for the next natural singer")
-3. **Transformation arcs** — Visible before→after progression within a class: tentative start → coaching moment → breakthrough performance (e.g., Simon's concert programme — "several transformations from beginning to end")
-4. **Quotable wisdom** — One-liners suitable for text overlay or Pinterest images ("You didn't lose the ability to sing. You just never had someone show you how.")
+3. **Transformation arcs** — The before→coaching→after journey showing a student's progression (e.g., Ira's recovery story woven into "Space Oddity" performance)
+4. **Quotable wisdom** — One-liners suitable for text overlay or Pinterest images ("A baby can hoop and holler all day and not get hoarse. Because they're screaming on their breath.")
+5. **Problem identification** — Students articulating their vocal struggles, failed attempts, and dream outcomes. Follows a sales framework: problem → what they've tried → struggles → aspirational goal. Naturally surfaces during the student introduction segment of 1-on-1 lessons (e.g., "I wanted to get over my stage fright and be able to sing in front of other people").
 
-**Undefined:** Pearl signal refinement — categories defined, threshold established (narrative arc: before → coaching → after). Client validates by reviewing POC output at the meeting. See [Meeting Agenda Topic 4](#4-pearl-poc-demo--signal-refinement).
+**Detection signal:** The narrative arc (relatable starting point → coaching moment → breakthrough) reliably identifies pearls across all 5 categories. Validated by POC: 6 pearls extracted from 3 class recordings, ~2 strong candidates per 30-40 min session. Problem identification (category 5) validated against 1-on-1 lesson format — the student introduction segment contains natural problem/dream outcome framing.
 
 **Proof of concept:** Pearl examples identified from the discovery call transcript, where Omega describes specific moments from her classes:
 
@@ -117,16 +134,26 @@ Deliverable = post-ready short-form clips that Omega can publish directly.
 - TikTok (shorter than 60s, vertical)
 - Instagram Reels (vertical, up to 90s)
 
-**Clip format:** Video segment + auto-generated captions/subtitles + platform-appropriate formatting (aspect ratio, duration limits).
+**Clip format (confirmed 2026-03-18):**
+1. **No intro** — start immediately with hook
+2. **Hook** (first 2 seconds) — pearl moment OR student stating their problem
+3. **Content** — pearl / teaching moment
+4. **Outro** — album song clip (brand recognition, fills to ~60s if pearl is shorter)
+5. **Branding** — purple / lavender frame throughout all videos
+6. **Duration** — ~60 seconds target
+7. **CTA** — "Book a free vocal analysis call" via description link + QR code overlay linking to Omega's scheduling calendar
+8. **No background music** — teaching content stays clean. Album outro is foreground music (brand recognition).
 
-**Undefined:** Platform priority for Pinterest (image + text, not video) and LinkedIn (Omega's highest revenue platform). See [Meeting Agenda Topic 3](#3-platform-priority-beyond-video-clips).
+**Consent:** All source videos are public YouTube recordings — no separate consent required. Sensitive content (e.g., personal stories involving recovery, health) is curated by Omega during the staging/approval step.
+
+**Deferred platforms:** Pinterest (quote graphics from legacy class recordings) and LinkedIn (highest revenue platform) are not in current scope. Omega's priority is revenue-generating platforms first (YT/TT/IG). Pinterest and LinkedIn may be added in a future phase.
 
 ### Part 6: Delivery Model
 
 Managed service — Wilsch AI Services operates the clipping service, Omega is the client.
 
 **Phase 1: Batch Processing**
-Process the Learn to Sing class library (~300 videos). AI extracts all potential clips. Wilsch AI operates the pipeline, curates output, and presents clip batches to Omega for approval before publishing. No volume cap on extraction.
+Process 2026 1-on-1 lessons first (priority), then legacy class recordings as quality permits. AI extracts all potential clips. Wilsch AI operates the pipeline, curates output, and presents clip batches to Omega for approval before publishing. No volume cap on extraction.
 
 **Phase 2: Ongoing Processing**
 Recurring content: Sunday group classes + 10 hours/week private lessons. Expected cadence: ~5 clips per class, ~1 clip per private lesson. Year-long engagement timeline.
@@ -148,9 +175,7 @@ Retainer entry is priced lower than a comparable fixed-price engagement. The tra
 
 The proposal format is a Richtpreisangebot (indicative pricing) — a one-pager covering outcome and indicative price range, sent after programme pricing is established. The proposal leads with what Omega gets (post-ready clips, managed curation, improving quality), not how the system works internally.
 
-**Undefined:** The retainer price depends on programme pricing — what a new student is worth over the programme lifecycle. Without this, the service cannot be priced as a fraction of the value it creates. See [Meeting Agenda Topic 5](#5-programme-pricing-and-student-lifetime-value).
-
-Pricing mechanics (actual numbers, tiers, success fee percentages) are not in scope for this design doc — covered in the client proposal after the meeting.
+Programme pricing now confirmed (see Part 2 Product Matrix: $1k–$10.5k LTV). Retainer priced as fraction of student lifetime value. Specific pricing in the [commercial doc](https://mariuswilsch.github.io/public-wilsch-ai-pages/project/WILSCH-AI-INTERNAL/omega-commercial-design-doc).
 
 ---
 
@@ -160,6 +185,7 @@ Pricing mechanics (actual numbers, tiers, success fee percentages) are not in sc
   - [Discovery Call 2026-03-08 (52 min)](https://drive.google.com/file/d/1xnIw-xMsN-KZXO72BA4z6DyYAq37wtBd/view) — Omega + Anthony + Marius
   - [Grooming 2026-03-08](https://drive.google.com/file/d/1fwumO3pBf5tRiCy08BU_qoPtxnzaj-m4/view)
   - [Fireflies Transcript](https://app.fireflies.ai/view/01KK6JXB75WTRS613Y4S56T5Z8)
+  - [In-Person Meeting 2026-03-18 (~1h)](https://drive.google.com/file/d/1h-YrcQda38girPmoor3Ndsb8hqQM2jrk/view) — Omega + Marius at NS
 - **Commercial Doc:**
   - [Commercial Design Doc — "Omega's Teaching Moments, Found by AI"](https://mariuswilsch.github.io/public-wilsch-ai-pages/project/WILSCH-AI-INTERNAL/omega-commercial-design-doc) — client-facing version (Pass 5)
 - **Artifacts:**
@@ -177,3 +203,4 @@ Pricing mechanics (actual numbers, tiers, success fee percentages) are not in sc
   - /Users/daveFem/.claude/projects/-Users-daveFem-Desktop-claude-projects-09-SALES-PIPELINE--deliverable/ed570609-3341-4b1e-9ce0-fb6ace67a3b3.jsonl — Pass 3 (SA feedback processing)
   - /Users/daveFem/.claude/projects/-Users-daveFem-Desktop-claude-projects-09-SALES-PIPELINE--deliverable/5f02c86d-50d2-4bce-b021-4c592622dca8.jsonl — Pass 4 (Pearl POC + taxonomy update)
   - /Users/daveFem/.claude/projects/-Users-daveFem-Desktop-claude-projects-09-SALES-PIPELINE--deliverable/057bbeb9-4f11-4d2d-bdad-89b70cbea0b0.jsonl — Pass 5 (Commercial design doc + fresh transcriptions)
+  - /Users/daveFem/.claude/projects/-Users-daveFem-Desktop-claude-projects-09-SALES-PIPELINE--deliverable/ffc1ee74-f0a9-4f7a-804c-cc74126b0ea1.jsonl — Pass 6 (2026-03-18 meeting integration, 13 resolutions)
