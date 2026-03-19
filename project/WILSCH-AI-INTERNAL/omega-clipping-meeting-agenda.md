@@ -2,22 +2,24 @@
 publish: true
 ---
 
-# Omega AI Video Clipping Service — Meeting Agenda
-[[omega-clipping-meeting-agenda]]
+# Omega's Video Clipping Service — Meeting Agenda
+[[client-omega]]
 
 Meeting agenda for resolving open design questions from the [design doc](https://mariuswilsch.github.io/public-wilsch-ai-pages/project/WILSCH-AI-INTERNAL/omega-clipping-service-design).
 
 ## Meeting Goal
 
-✅ **Meeting held 2026-03-18 at NS.** All four design questions resolved — resolutions integrated into design doc Pass 5.
+Demonstrate proof of concept, resolve open design questions, and align on next steps before sending the proposal.
 
-1. ✅ **Pearl signal definition** — 5 categories confirmed (coaching feedback, authenticity, transformation arcs, quotable wisdom, problem identification). POC validated narrative arc detection.
-2. ✅ **Platform priority** — YT/TT/IG confirmed. Pinterest/LinkedIn deferred.
-3. ✅ **Content boundaries** — Public YouTube = fair game. Omega curates sensitive content in staging. 1-on-1 format documented.
+1. **Pearl demo** — Walk through real examples, refine detection criteria, confirm consent
+2. **Class formats** — Understand the different recording types and how they flow
+3. **Platform priority** — Decide scope for Pinterest (images) and LinkedIn
+4. **Programme pricing** — What a new student is worth, so the service pays for itself
+5. **Next steps** — Indicative pricing proposal within 24h
 
 ## Pre-Read
 
-- [Omega AI Video Clipping Service — Design Doc](https://mariuswilsch.github.io/public-wilsch-ai-pages/project/WILSCH-AI-INTERNAL/omega-clipping-service-design) — specifically the **Undefined** markers in Part 3 (Pearl Taxonomy) and Part 5 (Output Specification)
+- [Omega's Video Clipping Service — Design Doc](https://mariuswilsch.github.io/public-wilsch-ai-pages/project/WILSCH-AI-INTERNAL/omega-clipping-service-design) — specifically the **Undefined** markers in Part 3 (Pearl Taxonomy) and Part 5 (Output Specification)
 
 ---
 
@@ -25,36 +27,33 @@ Meeting agenda for resolving open design questions from the [design doc](https:/
 
 *Starting points for discussion, not limited to these.*
 
-### 1. Student consent for featured clips
+### 1. Pearl demo + signal refinement
+⏱️ 10 min
+
+Walk through real pearl examples, then validate the detection categories together.
+
+- **Pearl examples:** [Omega's Teaching Moments, Found by AI](https://mariuswilsch.github.io/public-wilsch-ai-pages/project/WILSCH-AI-INTERNAL/omega-commercial-design-doc)
+- **Pearl taxonomy:** [Part 3 — 4 categories](https://mariuswilsch.github.io/public-wilsch-ai-pages/project/WILSCH-AI-INTERNAL/omega-clipping-service-design#part-3-pearl-taxonomy) (coaching feedback, authenticity, transformation arc, quotable wisdom)
+- **Consent:** Classes were public YouTube live streams — confirm this covers clip usage
+- **The anchor:** Imagine someone scrolling TikTok sees this — do you think this brings you one more student per month?
+
+**To resolve:** Are these the right categories? What should the AI detect more of, less of, or differently?
+
+### 2. Class formats
 ⏱️ 5 min
 
-✅ **Resolved:** Public YouTube live streams = no consent issue. Sensitive content (personal stories) curated by Omega during clip approval. No formal consent process with individual students needed.
+We know about group classes and private lessons — are there other recording formats? How does each one flow from start to finish? Is it continuous or structured in segments?
 
-The Learn to Sing classes were public live streams on YouTube — students joined knowing they were recorded. Using individual students as featured subjects in marketing clips (especially transformation arcs tracking one person across sessions) is a different use case than the original class recording.
+Understanding the different content types helps the AI know what to expect across the library.
 
-- Classes had 10-25 students on camera in Zoom grid format
-- Transformation arcs require identifying and featuring specific individuals
-- Three students (Simon, Anthony, Ira) are in an active concert program producing story arcs by April
+- Group classes: multiple students, Zoom grid, how does coaching rotate?
+- Private lessons: 1-on-1, presumably a continuous coaching arc
+- Are there other formats (workshops, concerts, masterclasses)?
 
-**To resolve:** The consent framework for featuring individual students in marketing clips derived from class recordings.
-
-### 2. Class recording structure
-⏱️ 5 min
-
-✅ **Resolved:** 1-on-1 format confirmed as primary source. Structure: intro song → welcome → student intro → song → warmup → perform → coach. ~42 min per session. Group class structure deprioritized (quality).
-
-The AI needs to segment 2-3 hour class recordings into clippable units. The working assumption is: student performs → Omega gives feedback → next student, with ~5 performances per class. Additional structural elements (warm-up, group exercises, introductions) would change how the AI identifies segment boundaries.
-
-- Current classes (e.g., "Learn 2 Sing with Audrey") run ~42 minutes
-- Legacy classes (COVID era) ran 2-2.5 hours with ~25 students
-- Students choose their own songs
-
-**To resolve:** The typical flow of a class recording from start to finish, including any recurring segments beyond individual performances.
+**To resolve:** A picture of the different recording types Omega produces and how they differ.
 
 ### 3. Platform priority beyond video clips
 ⏱️ 5 min
-
-✅ **Resolved:** YouTube Shorts + TikTok + Instagram Reels confirmed. Pinterest/LinkedIn deferred — "focus on what's going to make more money."
 
 Phase 1 covers video clips for YouTube Shorts, TikTok, and Instagram Reels. Two additional platforms were discussed but not prioritized: Pinterest requires image + text posts (not video), and LinkedIn is where Omega reported making the most money — yet it wasn't discussed as a clip destination.
 
@@ -64,26 +63,36 @@ Phase 1 covers video clips for YouTube Shorts, TikTok, and Instagram Reels. Two 
 
 **To resolve:** Which platforms beyond YT/TT/IG should be included in the service scope, and in what priority order.
 
-### 4. Pearl signal definition for AI detection
-⏱️ 10 min
+### 4. Programme pricing
+⏱️ 5 min
 
-✅ **Resolved:** 5 pearl categories confirmed. Narrative arc (before→coaching→after) validated by POC as primary detection signal. Problem identification (5th category) grounded in 1-on-1 student intro segment.
+The clips funnel into omegabone.com → discovery session → paid programme. To size the proposal so the service pays for itself from one additional student per month.
 
-Four pearl categories were identified from the discovery call: coaching feedback moments, authenticity breakthroughs, quotable wisdom, and tidbits. These describe WHAT a pearl is, but the AI needs specific signals to detect them — audio patterns, language cues, or structural markers in the recordings.
+- **Which programmes exist** and what each costs
+- **Do students stay or progress** — one-time programme or ongoing relationship?
+- **How many active students** currently
+- **How new students find Omega today** — current path before clips exist
+- **The funnel** — where does someone go after they see a clip? Is there a path from social media to booking a discovery session, or does that need to be built?
+- **The vision:** Starts as a managed service (we operate the pipeline, curate clips, present for approval). Over time, the system learns and runs itself
 
-- "The meat and potatoes. No salad, no garnish." (Omega on what she wants)
-- "Lean into your French accent" — example of coaching feedback pearl
-- "I'm not looking for another Whitney Houston" — Omega's teaching philosophy
-- The website testimonial format shows the desired narrative arc
+**To resolve:** Programme pricing data to anchor the proposal around one incremental student per month.
 
-**To resolve:** The specific observable signals Omega associates with each pearl category, grounded in examples from her own content.
+### 5. Next steps
+⏱️ 5 min
+
+Walk through the approach together, align on the discussion topics, and wrap up.
+
+- Proposal sent within 24 hours based on what we clarify today
+- Timeline for Phase 1 kickoff if both sides agree
+
+**To resolve:** Any remaining questions before the proposal goes out.
 
 ## Meeting Format
 
-- **Type:** Discovery / alignment
-- **Duration:** ~25 min
-- **Expectation:** Omega reviews the design doc Pre-Read beforehand, brings examples of "pearls" she's already identified in her content
-- **Outcome:** All four Undefined markers in the design doc can be resolved → design complete
+- **Type:** Discovery / alignment + proof of concept demo
+- **Duration:** ~30 min
+- **Expectation:** Omega reviews the commercial design doc beforehand, brings any questions
+- **Outcome:** All 5 topics resolved → indicative pricing proposal sent within 24h
 
 ## Related
 
