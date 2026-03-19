@@ -24,8 +24,8 @@ IITR operates three separate RAG projects, each with distinct data and purpose. 
 | Project | Purpose | Data Input |
 |---------|---------|------------|
 | **DS-Kit Navigation** (this doc) | Support navigation — answer recurring customer questions with chapter references | Anwenderleitfaden PDF + 56 templates + core.iitr.de ch.1-12 + 29 test Q&A |
-| [Court Judgments](https://github.com/WILSCH-AI-SERVICES/IITR__IITR-RAG-Court-Judgments) | Court rulings RAG (Urteile) | German legal documents |
-| [Masterfragen](https://github.com/WILSCH-AI-SERVICES/IITR__IITR-RAG-Masterfragen) | GDPR Q&A (Masterfragen) | 22 Masterfragen CSV |
+| [Court Judgments](https://github.com/WILSCH-AI-SERVICES/iitr-platform/tree/main/court-judgments) | Court rulings RAG (Urteile) | German legal documents |
+| [Masterfragen](https://github.com/WILSCH-AI-SERVICES/iitr-platform/tree/main/masterfragen) | GDPR Q&A (Masterfragen) | 22 Masterfragen CSV |
 
 Court Judgments and Masterfragen are separate projects with different data and retrieval — this design doc covers Navigation only.
 
@@ -36,7 +36,7 @@ However, all three projects share IITR-STAGING infrastructure. The Unified Infra
 - Vector RAG baseline established: Typesense + BGE-M3 + Docling at 17/29 on IITR-STAGING (RTX 4000 SFF Ada, 20 GB VRAM)
 - Target architecture: monorepo with trunk-based development (see [#1182](https://github.com/DaveX2001/deliverable-tracking/issues/1182))
 - Financial reset: prior work uninvoiced, clean start with direct client relationship (Stellmacher as technical contact, Kraska as business contact)
-- IITR-STAGING infrastructure consolidated — two-layer compose model with shared services (iitr-infrastructure) and per-project stacks connected via shared Docker network (see Unified Infrastructure)
+- IITR-STAGING infrastructure consolidated — two-layer compose model with shared services (iitr-platform/infrastructure) and per-project stacks connected via shared Docker network (see Unified Infrastructure)
 
 ---
 
@@ -118,7 +118,7 @@ Extract text from all sources, chunk with Docling HybridChunker (preserves headi
 
 ### Test Rubric
 
-Automated evaluation of the navigation system against the 29-question test set. Build the test harness **from scratch** — the existing harness in IITR-RAG-Navigation is inspiration only, not a base to extend. Use Sonnet 4.6 via OpenRouter as the LLM judge (external model evaluates local Qwen output — no self-evaluation).
+Automated evaluation of the navigation system against the 29-question test set. Build the test harness **from scratch** — the existing harness in iitr-platform/navigation is inspiration only, not a base to extend. Use Sonnet 4.6 via OpenRouter as the LLM judge (external model evaluates local Qwen output — no self-evaluation).
 
 **Two-tier scoring:**
 
@@ -189,9 +189,9 @@ IITR-STAGING hosts three RAG projects that share infrastructure. This part defin
 
 Per SA directive ("why always deploy another one?"), cross-project services run as single shared instances. Project-specific services (pipeline filters, vector stores) live in their respective repos.
 
-**Target architecture: Mono repo with trunk-based development** ([#1182](https://github.com/DaveX2001/deliverable-tracking/issues/1182)). The four current repos (`iitr-infrastructure`, `IITR-RAG-Navigation`, `IITR-RAG-Court-Judgments`, `IITR-RAG-Masterfragen`) are already deployment-coupled via `iitr-shared-network` — multi-repo adds git overhead without isolation benefit. Mono repo enables single CLAUDE.md with subproject routing, eliminates port conflicts from duplicate service definitions, and simplifies developer onboarding. Migration is the first infrastructure proof point.
+**Architecture: Mono-repo with trunk-based development** ([iitr-platform](https://github.com/WILSCH-AI-SERVICES/iitr-platform), [#1182](https://github.com/DaveX2001/deliverable-tracking/issues/1182)). Four source repos consolidated into `iitr-platform/` with subproject directories: `infrastructure/`, `navigation/`, `court-judgments/`, `masterfragen/`. Migration completed via [#1191](https://github.com/DaveX2001/deliverable-tracking/issues/1191).
 
-**Layer 1 — Shared Infrastructure** (`/home/shared/projects/iitr-infrastructure/`):
+**Layer 1 — Shared Infrastructure** (`/home/shared/projects/iitr-platform/infrastructure/`):
 
 | Service | Notes |
 |---------|-------|
@@ -200,15 +200,15 @@ Per SA directive ("why always deploy another one?"), cross-project services run 
 | Pipelines | Pipeline filter sidecar. All projects contribute filters. |
 | Langfuse | Observability for all projects |
 
-Currently OpenWebUI + Pipelines are deployed in the Navigation compose stack — migration to shared infra compose pending as part of monorepo transition (#1191).
+OpenWebUI + Pipelines are deployed in the shared infrastructure compose stack.
 
-**Layer 2 — Per-Project** (`/home/shared/projects/{project}/`):
+**Layer 2 — Per-Project** (subdirectories within `iitr-platform/`):
 
 | Project | Owns | Connects to shared via |
 |---------|------|----------------------|
-| IITR-RAG-Navigation | Typesense, TEI | `iitr-shared-network` |
-| IITR-RAG-V1 (Masterfragen) | Qdrant, pipeline filter (future) | `iitr-shared-network` |
-| IITR-RAG-V2 (Court-Judgments) | Pipeline filter (future) | `iitr-shared-network` |
+| `navigation/` | Typesense, TEI | `iitr-shared-network` |
+| `masterfragen/` | Qdrant, pipeline filter (future) | `iitr-shared-network` |
+| `court-judgments/` | Pipeline filter (future) | `iitr-shared-network` |
 
 #### Serving Layer
 
@@ -220,31 +220,14 @@ One OpenWebUI instance serves all three projects. Each project is a pipeline fil
 
 #### Directory Structure & Cleanup
 
-Canonical path: `/home/shared/projects/`. After mono-repo migration (#1191), the four source repos merge into `iitr-platform/` with subproject directories. Per [Ops Manual](https://mariuswilsch.github.io/public-wilsch-ai-pages/global/developer-operations-manual-wilsch-ai-services) convention, compose + Makefile per subproject.
+Canonical path: `/home/shared/projects/`. Mono-repo migration completed ([#1191](https://github.com/DaveX2001/deliverable-tracking/issues/1191)) — four source repos consolidated into `iitr-platform/` with subproject directories. Per [Ops Manual](https://mariuswilsch.github.io/public-wilsch-ai-pages/global/developer-operations-manual-wilsch-ai-services) convention, compose + Makefile per subproject.
 
-**Target state:**
+**Current state:**
 
 | Directory | Purpose |
 |-----------|---------|
 | `iitr-platform/` | Mono-repo (infrastructure + navigation + court-judgments + masterfragen) |
 | `metamcp/` | MCP gateway |
-
-**Remove during migration:**
-
-| Directory | Reason |
-|-----------|--------|
-| `iitr-infrastructure/` | Absorbed into mono-repo |
-| `IITR-RAG-Navigation/` | Absorbed into mono-repo |
-| `IITR-RAG-V1/` | Absorbed into mono-repo |
-| `IITR-RAG-V2/` | Absorbed into mono-repo (verify not duplicate first) |
-| `IITR-RAG-V2-issue-1112/` | Worktree leftover |
-| `typesense/` | Retired approach |
-| `langfuse/` | Absorbed into shared infra |
-| `openlit/` | No running containers |
-| `signoz/` | No running containers |
-| `mcp-proxy/` | No running containers |
-
-Kill duplicate Ollama (`iitr-rag-v1-ollama` from V1 compose) — single instance runs from shared infra.
 
 #### Vector Stores
 
@@ -270,9 +253,10 @@ Stale entries to remove: `qdrant-staging.iitr-cloud.de` (internal service), `urt
 
 `docker compose up -d` from each directory brings up that layer:
 
-1. `cd /home/shared/projects/iitr-infrastructure && docker compose up -d` → shared services
-2. `cd /home/shared/projects/IITR-RAG-Navigation && docker compose up -d` → Navigation serving layer
-3. Masterfragen/Court-Judgments compose files start their project-specific services
+1. `cd /home/shared/projects/iitr-platform/infrastructure && docker compose up -d` → shared services
+2. `cd /home/shared/projects/iitr-platform/navigation && docker compose up -d` → Navigation serving layer
+3. `cd /home/shared/projects/iitr-platform/masterfragen && docker compose up -d` → Masterfragen services
+4. `cd /home/shared/projects/iitr-platform/court-judgments && docker compose up -d` → Court Judgments services
 
 Order matters: infrastructure first, then project stacks (they depend on shared network + Ollama).
 
@@ -294,9 +278,9 @@ Order matters: infrastructure first, then project stacks (they depend on shared 
 - [OpenWebUI Models](https://docs.openwebui.com/features/ai-knowledge/models) — per-project preset system (Filter, Knowledge, Access Control binding)
 
 **IITR Repos:**
-- [IITR-RAG-Navigation](https://github.com/WILSCH-AI-SERVICES/IITR__IITR-RAG-Navigation) — DS-Kit Navigation (this project)
-- [IITR-RAG-Court-Judgments](https://github.com/WILSCH-AI-SERVICES/IITR__IITR-RAG-Court-Judgments) — Court rulings RAG
-- [IITR-RAG-Masterfragen](https://github.com/WILSCH-AI-SERVICES/IITR__IITR-RAG-Masterfragen) — GDPR Q&A
+- [iitr-platform/navigation](https://github.com/WILSCH-AI-SERVICES/iitr-platform/tree/main/navigation) — DS-Kit Navigation (this project)
+- [iitr-platform/court-judgments](https://github.com/WILSCH-AI-SERVICES/iitr-platform/tree/main/court-judgments) — Court rulings RAG
+- [iitr-platform/masterfragen](https://github.com/WILSCH-AI-SERVICES/iitr-platform/tree/main/masterfragen) — GDPR Q&A
 
 **Reference Documents:**
 - [Test Analysis](https://mariuswilsch.github.io/public-wilsch-ai-pages/project/iitr/dskit-rag-test-analysis) — question-by-question verification (prior Typesense attempt)
@@ -324,3 +308,4 @@ Order matters: infrastructure first, then project stacks (they depend on shared 
 - Pass 6 (Unified Infrastructure): /Users/daveFem/.claude/projects/-Users-daveFem-Desktop-claude-projects-03-IITR--deliverable/5347bf5c-62cd-49e1-83dd-fdda0c893b26.jsonl
 - Pass 7 (Vector B + monorepo update): /Users/daveFem/.claude/projects/-Users-daveFem-Desktop-claude-projects-03-IITR--deliverable/3deb3c69-4606-426f-9f23-0a0af76ede45.jsonl
 - Pass 8 (SA review — access control fix): /Users/daveFem/.claude/projects/-Users-daveFem-Desktop-claude-projects-03-IITR--deliverable/65c03d49-b808-4011-b16e-7607e99f1b9a.jsonl
+- Pass 10 (mono-repo reference update): /Users/daveFem/.claude/projects/-Users-daveFem-Desktop-claude-projects-03-IITR--deliverable/e2d015aa-d5c4-4c0b-9372-9a83783d9d3f.jsonl
