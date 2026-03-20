@@ -83,6 +83,8 @@ from session context]
 
 **Undefined:** The origin auto-resolution mechanism — how the capture skill determines whether an observation comes from a Traceline user, a team member, or Marius. Candidates: GitHub username (github.actor from workflow dispatch), project context (soloforce = internal, plugin = traceline), or explicit user input. → Meeting agenda topic.
 
+**Undefined:** Observation routing UX — when multiple targets exist (position epic, release milestone themes, tooling issues), how does the AI narrow candidates and present options? The two-question protocol (destination + classification) establishes the logic, but the practical "which of these 5 issues?" experience needs design. Evidence: #623 (Witness Skill), #648 (Witness Ceremony Release), #605 (Dev Lead Position Epic) — all valid targets for the same observation domain.
+
 **Undefined:** Post-mortem as release epic creation trigger — a second path to release creation alongside atmospheric pressure. At milestone end, a structured post-mortem discussion surfaces project-specific learnings that become release epics. This is a different methodology from observation accumulation and requires its own design thinking. Evidence: [Grooming + Shutdown Ritual 2026-03-17](https://app.fireflies.ai/view/01KKXKGJB20Q1K0XDHXMH77BVM) — ITA post-mortem discussion revealed decomposition and spike gaps.
 
 ### 3. Three-Level Hierarchy
