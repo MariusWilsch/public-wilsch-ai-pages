@@ -161,6 +161,8 @@ The threshold is validation vs. construction: quick checks that answer yes/no st
 
 **Undefined:** Spike witness ceremony format — the detailed structure of how the Dev Lead witnesses a spike (which primitives to test, success criteria table structure, proven-vs-assumed map format). Evidence from Archibus #1167 is sufficient for the Developer to work from; formal design deferred.
 
+**Undefined:** Proof point ownership split — the Developer should own defining WHAT the proof point is, WHAT the gemba is (how to test it), and WHAT constitutes "proven." The Dev Lead only WITNESSES the execution. Currently the Position Accountability table assigns the Dev Lead "primitives, proven-vs-assumed" without clarifying that the Developer defines these criteria and the Dev Lead validates them. Evidence: CCI #605 and #648 observations on proof point witnessing and question-level attribution.
+
 ---
 
 ## Source
