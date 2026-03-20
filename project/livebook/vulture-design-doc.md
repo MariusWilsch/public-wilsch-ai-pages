@@ -133,3 +133,8 @@ Marius does not position as a developer for Vulture. Two reasons:
 - [#847 — Contract Strategy & Retainer Model](https://github.com/DaveX2001/deliverable-tracking/issues/847)
 
 **Session:** `55a34059-8fd8-484f-b664-b559f5c604c5`
+
+---
+
+© 2026 Wilsch AI Services OÜ. All rights reserved. Licensed under [CC BY-NC-ND 4.0](https://creativecommons.org/licenses/by-nc-nd/4.0/).
+

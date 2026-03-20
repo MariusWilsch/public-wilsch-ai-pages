@@ -185,3 +185,8 @@ Target: ≥26/29 (>90%). Present sample answers to Stellmacher for qualitative r
 - Pass 2 extraction (Current Deployment): /Users/daveFem/.claude/projects/-Users-daveFem-Desktop-claude-projects-03-IITR--deliverable/ca51af04-8bef-46c9-b294-b7a2c161da01.jsonl
 - Pass 4 extraction (Qwen Model): /Users/daveFem/.claude/projects/-Users-daveFem-Desktop-claude-projects-03-IITR--deliverable/a084b417-c473-471e-8ff2-5c647ccc572a.jsonl
 - Pass 5 extraction (Web Extraction): /Users/daveFem/.claude/projects/-Users-daveFem-Desktop-claude-projects-03-IITR--deliverable/d009a445-ce7e-4d6b-a939-cf18d2024374.jsonl
+
+---
+
+© 2026 Wilsch AI Services OÜ. All rights reserved. Licensed under [CC BY-NC-ND 4.0](https://creativecommons.org/licenses/by-nc-nd/4.0/).
+

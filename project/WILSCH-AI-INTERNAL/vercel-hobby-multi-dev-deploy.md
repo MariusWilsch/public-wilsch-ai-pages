@@ -107,3 +107,8 @@ The preview workflow additionally captures the deployment URL and posts it as a 
 - **External Reference:** [DaviZCodes/vercel-hobby-collaboration](https://github.com/DaviZCodes/vercel-hobby-collaboration-github-actions-workflow)
 - **Meta Design Doc:** [Deployment Pattern Standardization](https://mariuswilsch.github.io/public-wilsch-ai-pages/project/WILSCH-AI-INTERNAL/deployment-pattern-standardization-design)
 - **Session:** [Probe bcd7a662](https://github.com/MariusWilsch/claude-code-conversation-store/blob/main/projects/-Users-daveFem-Desktop-claude-projects-00-WILSCH-AI-INTERNAL--deliverable/bcd7a662-a2ff-469c-b20b-4e01c1ac4c5e.jsonl)
+
+---
+
+© 2026 Wilsch AI Services OÜ. All rights reserved. Licensed under [CC BY-NC-ND 4.0](https://creativecommons.org/licenses/by-nc-nd/4.0/).
+

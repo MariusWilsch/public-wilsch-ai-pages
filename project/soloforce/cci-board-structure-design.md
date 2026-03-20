@@ -300,3 +300,8 @@ The CCI board (GitHub Project P3) is dissolved. Its structural function is repla
 - **Issue Lifecycle Router:** [Published](https://mariuswilsch.github.io/public-wilsch-ai-pages/global/issue-lifecycle-router) — milestone lifecycle, starting-point sub-issues, decomposition discipline
 - **Claude Code Hooks:** [Official docs](https://code.claude.com/docs/en/hooks) — SessionEnd/Stop hook feasibility for Session C ceremony
 - **Claude Launcher:** `~/.claude/lib/claude_launcher.py` — post-session Session C prompt mechanism
+
+---
+
+© 2026 Wilsch AI Services OÜ. All rights reserved. Licensed under [CC BY-NC-ND 4.0](https://creativecommons.org/licenses/by-nc-nd/4.0/).
+

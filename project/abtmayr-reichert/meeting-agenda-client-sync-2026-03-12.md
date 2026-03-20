@@ -72,3 +72,8 @@ klimafolgenschutz.com zeigt noch die alte IONOS-Standardseite statt auf klimafol
 ## Quelle
 
 🗣️ [Session 2026-03-10](https://github.com/MariusWilsch/claude-code-conversation-store/blob/main/projects/-Users-daveFem-Desktop-claude-projects-06-ABTMAYR-REICHERT--deliverable/7db61213-f8a9-4c81-b493-66189db7f606.jsonl) — Extraction pass on Marius's feedback (5 items resolved)
+
+---
+
+© 2026 Wilsch AI Services OÜ. All rights reserved. Licensed under [CC BY-NC-ND 4.0](https://creativecommons.org/licenses/by-nc-nd/4.0/).
+

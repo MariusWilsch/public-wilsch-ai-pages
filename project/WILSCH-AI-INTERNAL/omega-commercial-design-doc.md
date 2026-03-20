@@ -110,3 +110,8 @@ We'll walk through the approach together and clarify a couple of discussion topi
 
 *Wilsch AI Services — AI that understands your domain, not just your data.*
 
+
+---
+
+© 2026 Wilsch AI Services OÜ. All rights reserved. Licensed under [CC BY-NC-ND 4.0](https://creativecommons.org/licenses/by-nc-nd/4.0/).
+

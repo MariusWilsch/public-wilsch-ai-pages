@@ -199,3 +199,8 @@ The threshold is validation vs. construction: quick checks that answer yes/no st
 **Sessions:**
 - /Users/daveFem/.claude/projects/-Users-daveFem-Desktop-claude-projects-00-WILSCH-AI-INTERNAL--deliverable/367cbb0b-aaba-4bc1-8ae3-521edf7d3b55.jsonl
 - /Users/verdant/.claude/projects/-Users-verdant-Documents-projects-00-WILSCH-AI-INTERNAL--soloforce/e75e684b-1190-4897-9b27-90939fb9f5b2.jsonl
+
+---
+
+© 2026 Wilsch AI Services OÜ. All rights reserved. Licensed under [CC BY-NC-ND 4.0](https://creativecommons.org/licenses/by-nc-nd/4.0/).
+

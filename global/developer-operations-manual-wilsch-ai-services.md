@@ -800,3 +800,8 @@ If approved → merge to production. Marius is the final gatekeeper.
 - E-Myth Management Strategy interview (2026-02-06) — Path B Implementation Session corrections + Verification Session
 - Framework: Michael Gerber, *The E-Myth Revisited*, Chapter 15
 - Template: E-Myth Operations Manual Guide (MG-0080)
+
+---
+
+© 2026 Wilsch AI Services OÜ. All rights reserved. Licensed under [CC BY-NC-ND 4.0](https://creativecommons.org/licenses/by-nc-nd/4.0/).
+

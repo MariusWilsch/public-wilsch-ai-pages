@@ -98,3 +98,8 @@ Entry point for all position-specific Operations Manuals at Wilsch AI Services. 
 
 - E-Myth Management Strategy interview (2026-02-15, 2026-02-16)
 - Framework: Michael Gerber, *The E-Myth Revisited*, Chapters 14, 15, 18
+
+---
+
+© 2026 Wilsch AI Services OÜ. All rights reserved. Licensed under [CC BY-NC-ND 4.0](https://creativecommons.org/licenses/by-nc-nd/4.0/).
+

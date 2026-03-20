@@ -60,3 +60,8 @@ Die Migration auf RDX-APP-01 ist seit dem 5. März live. Das System verarbeitet 
 - **Issue:** [#1037 — ROHDEX: Clarify VET DOCX output request](https://github.com/DaveX2001/deliverable-tracking/issues/1037)
 - **Design Doc:** [Hosting-Anforderungen — Part 5](https://mariuswilsch.github.io/public-wilsch-ai-pages/project/rohdex/hosting-anforderungen)
 - **Epic:** [#909 — Dokumentenverarbeitung SLA & Wartung](https://github.com/DaveX2001/deliverable-tracking/issues/909)
+
+---
+
+© 2026 Wilsch AI Services OÜ. All rights reserved. Licensed under [CC BY-NC-ND 4.0](https://creativecommons.org/licenses/by-nc-nd/4.0/).
+

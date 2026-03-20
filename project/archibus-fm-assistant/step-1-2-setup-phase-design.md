@@ -956,3 +956,8 @@ The AI's behavioral quality is demo-blocking. Miguel judges whether the AI acts 
 - **Reference:** [OpenWebUI MCP](https://docs.openwebui.com/features/extensibility/mcp) — Streamable HTTP only, native since v0.6.31
 - **Reference:** [OpenWebUI Open Terminal](https://docs.openwebui.com/features/extensibility/open-terminal/) — full OS access via Docker
 - **Reference:** [mcpo proxy](https://github.com/open-webui/mcpo) — stdio→HTTP bridge, v0.0.20, production-ready
+
+---
+
+© 2026 Wilsch AI Services OÜ. All rights reserved. Licensed under [CC BY-NC-ND 4.0](https://creativecommons.org/licenses/by-nc-nd/4.0/).
+

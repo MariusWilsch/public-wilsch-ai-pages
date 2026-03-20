@@ -77,3 +77,8 @@ Three different ownership models across two calls: (A) Stafford gets Vulture bui
 All quotes are verbatim from [Vulture Source Compilation](https://mariuswilsch.github.io/public-wilsch-ai-pages/project/livebook/vulture-source-compilation).
 
 WILSCH AI SERVICES OÜ | Harju maakond, Tallinn, Sepapaja tn 6, 15551
+
+---
+
+© 2026 Wilsch AI Services OÜ. All rights reserved. Licensed under [CC BY-NC-ND 4.0](https://creativecommons.org/licenses/by-nc-nd/4.0/).
+

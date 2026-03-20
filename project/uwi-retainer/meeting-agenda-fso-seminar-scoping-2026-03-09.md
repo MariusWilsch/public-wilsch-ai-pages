@@ -76,3 +76,8 @@ Drei Secondhand-Angebote stehen zur Auswahl. Wenn die Mac Studio als Live-Demo i
 - **Letztes Seminar:** [FSO 6. Feb Transcript](https://app.fireflies.ai/view/01KGS021VPV39W9J7XTC5A6PM9)
 - **Source:** 🗒️ Session ff224ad1
 
+
+---
+
+© 2026 Wilsch AI Services OÜ. All rights reserved. Licensed under [CC BY-NC-ND 4.0](https://creativecommons.org/licenses/by-nc-nd/4.0/).
+

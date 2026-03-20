@@ -85,3 +85,8 @@ Five breakdowns compounded the root cause:
 - **CCI Observations:** [#600](https://github.com/DaveX2001/claude-code-improvements/issues/600) (SE Epic), [#635](https://github.com/DaveX2001/claude-code-improvements/issues/635) (Operator Epic) — 6 IITR-related observations
 - **Spike Reference:** [#852](https://github.com/DaveX2001/deliverable-tracking/issues/852) — Archibus spike format definition
 - **Post-Mortem Issue:** [#1169](https://github.com/DaveX2001/deliverable-tracking/issues/1169)
+
+---
+
+© 2026 Wilsch AI Services OÜ. All rights reserved. Licensed under [CC BY-NC-ND 4.0](https://creativecommons.org/licenses/by-nc-nd/4.0/).
+

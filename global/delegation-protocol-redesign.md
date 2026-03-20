@@ -169,3 +169,8 @@ The delegation protocol was originally designed for this context — parallel we
 - **Triage conversations:** cbafca1d (CCI Board), 85783996 (Call2Tanss incident), aee03387 (ARCHIBUS extraction), a0f1d235 (JA proposal), e3be12f1 (JA proposal cont.), 91c2aad3 (Dev Lead witness)
 - **Reference:** [Manage-Artifact v2 Design Doc](https://mariuswilsch.github.io/public-wilsch-ai-pages/global/manage-artifact-v2-design)
 - **Reference:** [/improve-system Architecture](https://mariuswilsch.github.io/public-wilsch-ai-pages/global/improve-system-architecture)
+
+---
+
+© 2026 Wilsch AI Services OÜ. All rights reserved. Licensed under [CC BY-NC-ND 4.0](https://creativecommons.org/licenses/by-nc-nd/4.0/).
+

@@ -93,3 +93,8 @@ If milestones are blocked because these obligations aren't met, the retainer app
 - [Vulture Retainer Meeting Agenda](https://mariuswilsch.github.io/public-wilsch-ai-pages/project/livebook/vulture-retainer-meeting-agenda) — Discussion topics for alignment
 
 WILSCH AI SERVICES OÜ | Harju maakond, Tallinn, Sepapaja tn 6, 15551
+
+---
+
+© 2026 Wilsch AI Services OÜ. All rights reserved. Licensed under [CC BY-NC-ND 4.0](https://creativecommons.org/licenses/by-nc-nd/4.0/).
+

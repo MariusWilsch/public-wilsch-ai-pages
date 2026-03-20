@@ -431,3 +431,8 @@ Patterns surfaced from Anthropic's engineering blog and academic research. These
 - **CBT seed:** [CCI #629 comment](https://github.com/DaveX2001/claude-code-improvements/issues/629#issuecomment-4019317575) (2026-03-08) — PSM quote + "CBT could help"
 - **CBT crystallization:** [CCI #629 comment](https://github.com/DaveX2001/claude-code-improvements/issues/629#issuecomment-4046795013) (2026-03-12) — observation → belief → restructured belief → generalization
 - **Session (Pass 5 — extraction):** b0269523-6613-4303-9cf0-8c04d564b462 — this session, JA extraction encoding Part 3 methodology into design doc
+
+---
+
+© 2026 Wilsch AI Services OÜ. All rights reserved. Licensed under [CC BY-NC-ND 4.0](https://creativecommons.org/licenses/by-nc-nd/4.0/).
+

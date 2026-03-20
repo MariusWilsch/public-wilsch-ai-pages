@@ -309,3 +309,8 @@ Order matters: infrastructure first, then project stacks (they depend on shared 
 - Pass 7 (Vector B + monorepo update): /Users/daveFem/.claude/projects/-Users-daveFem-Desktop-claude-projects-03-IITR--deliverable/3deb3c69-4606-426f-9f23-0a0af76ede45.jsonl
 - Pass 8 (SA review — access control fix): /Users/daveFem/.claude/projects/-Users-daveFem-Desktop-claude-projects-03-IITR--deliverable/65c03d49-b808-4011-b16e-7607e99f1b9a.jsonl
 - Pass 10 (mono-repo reference update): /Users/daveFem/.claude/projects/-Users-daveFem-Desktop-claude-projects-03-IITR--deliverable/e2d015aa-d5c4-4c0b-9372-9a83783d9d3f.jsonl
+
+---
+
+© 2026 Wilsch AI Services OÜ. All rights reserved. Licensed under [CC BY-NC-ND 4.0](https://creativecommons.org/licenses/by-nc-nd/4.0/).
+

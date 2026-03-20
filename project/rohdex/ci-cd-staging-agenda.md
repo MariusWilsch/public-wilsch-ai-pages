@@ -69,3 +69,8 @@ git clone https://github.com/MariusWilsch/rohdex.git /tmp/test-clone
 
 - **Design Doc:** [CI/CD & Staging Design](ci-cd-staging-design) — Part 2: Path B
 - **Issue:** [#1067](https://github.com/DaveX2001/deliverable-tracking/issues/1067)
+
+---
+
+© 2026 Wilsch AI Services OÜ. All rights reserved. Licensed under [CC BY-NC-ND 4.0](https://creativecommons.org/licenses/by-nc-nd/4.0/).
+

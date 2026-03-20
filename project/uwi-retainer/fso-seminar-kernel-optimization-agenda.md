@@ -43,3 +43,8 @@ The feasibility quadrant shows each infrastructure as a dot (speed × quality). 
 - **Issue:** [#713 — IBM Power AI Inference Optimization](https://github.com/DaveX2001/deliverable-tracking/issues/713)
 - **Design Doc:** [FSO Seminar Feasibility Graph](https://mariuswilsch.github.io/public-wilsch-ai-pages/project/uwi-retainer/fso-seminar-feasibility-graph) — Part 5 (Undefined marker)
 - **Parent:** [#1083 — FSO Seminar March 27](https://github.com/DaveX2001/deliverable-tracking/issues/1083)
+
+---
+
+© 2026 Wilsch AI Services OÜ. All rights reserved. Licensed under [CC BY-NC-ND 4.0](https://creativecommons.org/licenses/by-nc-nd/4.0/).
+

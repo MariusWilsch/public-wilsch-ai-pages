@@ -350,3 +350,8 @@ Full sequence:
 > Slice 1: AI Function — Built engines, agents, systems — Owned by Wilsch AI
 > Slice 2: Operators — People trained to work with AI — Owned by Stafford (self-trained)
 > Slice 3: Improvement Loop — System Engineer (continuous improvement) — Owned by Wilsch AI"
+
+---
+
+© 2026 Wilsch AI Services OÜ. All rights reserved. Licensed under [CC BY-NC-ND 4.0](https://creativecommons.org/licenses/by-nc-nd/4.0/).
+

@@ -359,3 +359,7 @@ In the first case, dishonesty is grounded in the psychology of a persona. In the
 [\[3\]](#ftnt_ref3) This is a special case of our earlier discussion of anthropomorphic reasoning about AI assistants. We might say more generally that PSM recommends treating AI assistants in ways that motivate them to behave as intended.
 [\[4\]](#ftnt_ref4) We elide discussion of especially extreme views in which even the pre-trained LLM is an agent which operates a predictive model for its own ends. In other words, these views consider pre-trained LLMs to already be shoggoths and the predictive model to be a sort of mask.
 [\[5\]](#ftnt_ref5) Though as discussed [above](#complicating-evidence), “bugs” in the simulation engine could still affect the fidelity of the simulated Assistant.
+---
+
+© 2026 Wilsch AI Services OÜ. All rights reserved. Licensed under [CC BY-NC-ND 4.0](https://creativecommons.org/licenses/by-nc-nd/4.0/).
+

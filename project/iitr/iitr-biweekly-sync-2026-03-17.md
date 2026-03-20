@@ -91,3 +91,8 @@ Wie beim letzten Termin besprochen: Wir haben uns in Singapur umgehört und eine
 - **Design Doc:** [DS-Kit Navigation — Production Readiness Design](https://mariuswilsch.github.io/public-wilsch-ai-pages/project/iitr/dskit-navigation-design)
 - **Zielkorridor:** [24-32h Kostenrahmen](https://mariuswilsch.github.io/public-wilsch-ai-pages/project/iitr/dskit-navigation-rag-estimate)
 - **Singapore Research:** [Datenschutz-Marktanalyse Singapur](https://mariuswilsch.github.io/public-wilsch-ai-pages/project/iitr/singapore-datenschutz-market-research)
+
+---
+
+© 2026 Wilsch AI Services OÜ. All rights reserved. Licensed under [CC BY-NC-ND 4.0](https://creativecommons.org/licenses/by-nc-nd/4.0/).
+

@@ -101,3 +101,8 @@ In Singapur gibt es PDPA-Compliance-Anbieter (Privacy Ninja, Straits Interactive
   - [Forrester APAC Privacy Survey 2024](https://www.forrester.com/blogs/gdpr-isnt-enough-navigate-privacy-regulations-in-apac/)
   - [EU-Kommission Angemessenheitsbeschlüsse](https://commission.europa.eu/law/law-topic/data-protection/international-dimension-data-protection/adequacy-decisions_en)
 - **Session:** /Users/daveFem/.claude/projects/-Users-daveFem-Desktop-claude-projects-03-IITR--deliverable/695448d6-5b73-4f82-a4d0-f37ef65e97f5.jsonl
+
+---
+
+© 2026 Wilsch AI Services OÜ. All rights reserved. Licensed under [CC BY-NC-ND 4.0](https://creativecommons.org/licenses/by-nc-nd/4.0/).
+

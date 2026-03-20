@@ -160,3 +160,8 @@ Squeeze maximum throughput from the hardware. SGLang with EAGLE3 speculative dec
 - **Issue:** [#1080 — DGX Spark benchmark](https://github.com/DaveX2001/deliverable-tracking/issues/1080)
 - **Issue comment (preliminary research):** 2026-03-19 by MariusWilsch — MiniMax M2.5 deployment paths, key resources
 - **CLAUDE.md:** Updated with DGX-SPARK SSH config, hardware specs, Tailscale setup
+
+---
+
+© 2026 Wilsch AI Services OÜ. All rights reserved. Licensed under [CC BY-NC-ND 4.0](https://creativecommons.org/licenses/by-nc-nd/4.0/).
+

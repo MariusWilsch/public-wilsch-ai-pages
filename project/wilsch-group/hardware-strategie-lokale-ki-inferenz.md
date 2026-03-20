@@ -110,3 +110,8 @@ Diese Hardware-Infrastruktur ermöglicht Workloads wie die REKERS-Kriterienextra
 - **Spark Arena:** [Benchmark Leaderboard](https://spark-arena.com/leaderboard)
 - **NVIDIA Precision:** [TensorRT-LLM DeepSeek-R1 Blog](https://nvidia.github.io/TensorRT-LLM/blogs/tech_blog/blog1_Pushing_Latency_Boundaries_Optimizing_DeepSeek-R1_Performance_on_NVIDIA_B200_GPUs.html)
 - **Session:** 69f54bd9-6bd4-40dd-9cca-07326fa49ce8
+
+---
+
+© 2026 Wilsch AI Services OÜ. All rights reserved. Licensed under [CC BY-NC-ND 4.0](https://creativecommons.org/licenses/by-nc-nd/4.0/).
+

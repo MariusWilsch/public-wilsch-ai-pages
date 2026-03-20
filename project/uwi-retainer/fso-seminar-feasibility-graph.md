@@ -176,3 +176,8 @@ Quality (criteria hit rate %)
 
 **Session:**
 - /Users/daveFem/.claude/projects/-Users-daveFem-Desktop-claude-projects-02-UWI--deliverable/61b87280-92ac-488b-8aa6-526eeba5ea2b.jsonl (extraction pass 1 — 7 uncertainties resolved)
+
+---
+
+© 2026 Wilsch AI Services OÜ. All rights reserved. Licensed under [CC BY-NC-ND 4.0](https://creativecommons.org/licenses/by-nc-nd/4.0/).
+

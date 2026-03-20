@@ -290,3 +290,8 @@ jobs:
 - **CI/CD source:** [CCI #639](https://github.com/DaveX2001/claude-code-improvements/issues/639) — subdomain convention + CI/CD auto-deploy
 - **Witness evidence:** [#1075 Ceremony 2](https://github.com/DaveX2001/deliverable-tracking/issues/1075#issuecomment-4035850472) — code pushed but not deployed
 - **Session (CI/CD):** [133e8ee1](https://github.com/MariusWilsch/claude-code-conversation-store/blob/main/projects/-Users-daveFem-Desktop-claude-projects-00-WILSCH-AI-INTERNAL--deliverable/133e8ee1-73e7-475b-ab4d-880723cd5027.jsonl)
+
+---
+
+© 2026 Wilsch AI Services OÜ. All rights reserved. Licensed under [CC BY-NC-ND 4.0](https://creativecommons.org/licenses/by-nc-nd/4.0/).
+

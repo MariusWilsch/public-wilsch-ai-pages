@@ -61,3 +61,8 @@ Marius positions as the orchestrator of EasyBooks' AI development — not as a s
 - **Issue:** [#1078 — JA Design Doc Pass 1](https://github.com/DaveX2001/deliverable-tracking/issues/1078)
 - **Epic:** [#874 — Livebook Pre-Sales](https://github.com/DaveX2001/deliverable-tracking/issues/874)
 - **Design Doc:** [Vulture Design Doc](https://mariuswilsch.github.io/public-wilsch-ai-pages/project/livebook/vulture-design-doc)
+
+---
+
+© 2026 Wilsch AI Services OÜ. All rights reserved. Licensed under [CC BY-NC-ND 4.0](https://creativecommons.org/licenses/by-nc-nd/4.0/).
+

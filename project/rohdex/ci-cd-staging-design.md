@@ -191,3 +191,8 @@ The private repo requires a deploy key for git pull access. Setup steps:
 - **SA review session:** [3509ecb1](https://github.com/MariusWilsch/claude-code-conversation-store/blob/main/projects/-Users-daveFem-Desktop-claude-projects-04-ROHDEX--deliverable/3509ecb1-9381-4268-a4f3-0d0657eb8b30.jsonl)
 - **v2 extraction pass:** [a96ef05d](https://github.com/MariusWilsch/claude-code-conversation-store/blob/main/projects/-Users-daveFem-Desktop-claude-projects-04-ROHDEX--deliverable/a96ef05d-75d8-48f5-9e4b-233a9fab939a.jsonl)
 - **v3 AC session:** [6aea89cf](https://github.com/MariusWilsch/claude-code-conversation-store/blob/main/projects/-Users-daveFem-Desktop-claude-projects-04-ROHDEX--deliverable/6aea89cf-a05b-4794-88cb-fd310118856f.jsonl)
+
+---
+
+© 2026 Wilsch AI Services OÜ. All rights reserved. Licensed under [CC BY-NC-ND 4.0](https://creativecommons.org/licenses/by-nc-nd/4.0/).
+

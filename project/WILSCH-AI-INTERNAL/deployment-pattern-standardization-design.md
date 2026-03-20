@@ -112,3 +112,8 @@ The `velox-global-adrs` ADRs stay as historical decision records with deprecatio
 - **Operations Manual:** [Developer Operations Manual](https://mariuswilsch.github.io/public-wilsch-ai-pages/global/developer-operations-manual-wilsch-ai-services)
 - **Design Docs:** [Docker Compose](https://mariuswilsch.github.io/public-wilsch-ai-pages/project/WILSCH-AI-INTERNAL/docker-compose-backend-deployment-design), [Vercel Hobby](https://mariuswilsch.github.io/public-wilsch-ai-pages/project/WILSCH-AI-INTERNAL/vercel-hobby-multi-dev-deploy), [Caddy Subdomain](https://mariuswilsch.github.io/public-wilsch-ai-pages/project/WILSCH-AI-INTERNAL/caddy-subdomain-routing-design)
 - **Sessions:** [Rubber duck 620ef53e](https://github.com/MariusWilsch/claude-code-conversation-store/blob/main/projects/-Users-daveFem-Desktop-claude-projects-00-WILSCH-AI-INTERNAL--deliverable/620ef53e-c84d-49f9-8cf3-8312f72aff48.jsonl), [Probe pass 1 cb31db0d](https://github.com/MariusWilsch/claude-code-conversation-store/blob/main/projects/-Users-daveFem-Desktop-claude-projects-00-WILSCH-AI-INTERNAL--deliverable/cb31db0d-980c-4200-8583-adee2c9328cb.jsonl), [Probe pass 2 (absorption) 223b6503](https://github.com/MariusWilsch/claude-code-conversation-store/blob/main/projects/-Users-daveFem-Desktop-claude-projects-00-WILSCH-AI-INTERNAL--deliverable/223b6503-c1e9-465f-9e55-bf2387888f11.jsonl)
+
+---
+
+© 2026 Wilsch AI Services OÜ. All rights reserved. Licensed under [CC BY-NC-ND 4.0](https://creativecommons.org/licenses/by-nc-nd/4.0/).
+

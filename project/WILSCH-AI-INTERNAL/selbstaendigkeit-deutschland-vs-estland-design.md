@@ -538,3 +538,8 @@ BEI AUSWANDERUNG: Estland aktivieren
 Dieses Dokument basiert auf öffentlich zugänglichen Quellen (Gesetzestexte, Behörden-Websites, Steuerberater-Blogs, Reddit, Erfahrungsberichte) und stellt **keine Steuer- oder Rechtsberatung** dar. Für verbindliche Auskünfte → Steuerberater mit IT/Freelancer-Spezialisierung konsultieren.
 
 🤖
+
+---
+
+© 2026 Wilsch AI Services OÜ. All rights reserved. Licensed under [CC BY-NC-ND 4.0](https://creativecommons.org/licenses/by-nc-nd/4.0/).
+

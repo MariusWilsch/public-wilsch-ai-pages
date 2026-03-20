@@ -187,3 +187,8 @@ Einnahmen aus Selbständigkeit werden NICHT auf ALG I angerechnet.
 - **Issue:** [#1138](https://github.com/DaveX2001/deliverable-tracking/issues/1138)
 - **Rechtsgrundlage IBAN:** EU-Verordnung 260/2012, Art. 9 (IBAN-Diskriminierungsverbot)
 - **Arbeitsagentur:** [Gründungszuschuss](https://www.arbeitsagentur.de/arbeitslos-arbeit-finden/arbeitslosengeld/gruendungszuschuss-beantragen)
+
+---
+
+© 2026 Wilsch AI Services OÜ. All rights reserved. Licensed under [CC BY-NC-ND 4.0](https://creativecommons.org/licenses/by-nc-nd/4.0/).
+

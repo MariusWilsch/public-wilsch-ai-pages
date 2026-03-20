@@ -200,3 +200,8 @@ ls /etc/caddy/conf.d/*.conf
 - **Session:** [Probe b9343924](https://github.com/MariusWilsch/claude-code-conversation-store/blob/main/projects/-Users-daveFem-Desktop-claude-projects-00-WILSCH-AI-INTERNAL--deliverable/b9343924-6409-480a-a68c-5fd752158fb4.jsonl)
 - **Convention source:** [#1075 Finding 5](https://github.com/DaveX2001/deliverable-tracking/issues/1075#issuecomment-4035526463) — wrong apex domain used during witness
 - **Session (convention):** [133e8ee1](https://github.com/MariusWilsch/claude-code-conversation-store/blob/main/projects/-Users-daveFem-Desktop-claude-projects-00-WILSCH-AI-INTERNAL--deliverable/133e8ee1-73e7-475b-ab4d-880723cd5027.jsonl)
+
+---
+
+© 2026 Wilsch AI Services OÜ. All rights reserved. Licensed under [CC BY-NC-ND 4.0](https://creativecommons.org/licenses/by-nc-nd/4.0/).
+

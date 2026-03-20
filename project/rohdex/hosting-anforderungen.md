@@ -355,3 +355,8 @@ Vier weitere Felder im BUSAN-Dokument (Empfänger/Consignee, Lieferbedingungen/C
 - **Session (Extraction Pass 4 — BUSAN #585):** /Users/daveFem/.claude/projects/-Users-daveFem-Desktop-claude-projects-04-ROHDEX--deliverable/8c4a1a6d-6f2f-4e45-9588-1f321e7027c6.jsonl
 - **Session (Extraction Pass 5 — SA Feedback):** /Users/daveFem/.claude/projects/-Users-daveFem-Desktop-claude-projects-04-ROHDEX--deliverable/290d1003-c3e9-443c-99f3-bfb8b3a81bb0.jsonl
 - **Session (Extraction Pass 6 — Meeting Agenda Reformat + Undefined B Correction):** /Users/daveFem/.claude/projects/-Users-daveFem-Desktop-claude-projects-04-ROHDEX--deliverable/3060c61b-9d4e-4f7d-8f2f-eb6a9b170fec.jsonl
+
+---
+
+© 2026 Wilsch AI Services OÜ. All rights reserved. Licensed under [CC BY-NC-ND 4.0](https://creativecommons.org/licenses/by-nc-nd/4.0/).
+

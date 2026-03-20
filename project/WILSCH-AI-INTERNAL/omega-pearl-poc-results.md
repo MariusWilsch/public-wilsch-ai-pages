@@ -117,3 +117,8 @@ Proof of concept: AI pearl detection from Omega's Learn to Sing class recordings
 - **Design Doc:** [Omega AI Video Clipping Service](https://mariuswilsch.github.io/public-wilsch-ai-pages/project/WILSCH-AI-INTERNAL/omega-clipping-service-design)
 - **Persona:** [Burden Index (52 problems)](https://mariuswilsch.github.io/public-wilsch-ai-pages/project/WILSCH-AI-INTERNAL/omega-persona-burden-index)
 - **Session:** 🗒️ Session `5f02c86d-50d2-4bce-b021-4c592622dca8`
+
+---
+
+© 2026 Wilsch AI Services OÜ. All rights reserved. Licensed under [CC BY-NC-ND 4.0](https://creativecommons.org/licenses/by-nc-nd/4.0/).
+

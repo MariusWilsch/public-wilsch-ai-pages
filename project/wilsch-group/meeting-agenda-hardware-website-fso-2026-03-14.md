@@ -107,3 +107,8 @@ Die Website hat aktuell 11 Landingpage-Sektionen, 3 live Case Studies (Legal Bot
 - **FSO-Demo Pipeline:** [#629 — KI Projektähnlichkeit POC](https://github.com/DaveX2001/deliverable-tracking/issues/629)
 - **Website Repo:** [DaveX2001/wilsch-ai-site](https://github.com/DaveX2001/wilsch-ai-site)
 - **Session:** 68e26b44-fcd5-4995-830d-b67616444ffe
+
+---
+
+© 2026 Wilsch AI Services OÜ. All rights reserved. Licensed under [CC BY-NC-ND 4.0](https://creativecommons.org/licenses/by-nc-nd/4.0/).
+

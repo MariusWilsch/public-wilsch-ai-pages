@@ -172,3 +172,8 @@ These are the raw problems the offer solves:
 - **Burden index scoring:** Pass 3 session analysis based on service scope from [design doc](https://mariuswilsch.github.io/public-wilsch-ai-pages/project/WILSCH-AI-INTERNAL/omega-clipping-service-design)
 - **Related:** [Design Issue #1076](https://github.com/DaveX2001/deliverable-tracking/issues/1076) | [Epic #1071](https://github.com/DaveX2001/deliverable-tracking/issues/1071)
 - **Session:** /Users/daveFem/.claude/projects/-Users-daveFem-Desktop-claude-projects-09-SALES-PIPELINE--deliverable/ed570609-3341-4b1e-9ce0-fb6ace67a3b3.jsonl — Pass 3
+
+---
+
+© 2026 Wilsch AI Services OÜ. All rights reserved. Licensed under [CC BY-NC-ND 4.0](https://creativecommons.org/licenses/by-nc-nd/4.0/).
+

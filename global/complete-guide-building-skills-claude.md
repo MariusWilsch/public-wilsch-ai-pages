@@ -1217,3 +1217,8 @@ Use this checklist to validate your skill before and after upload. If you want a
 - [ ] Collect user feedback
 - [ ] Iterate on description and instructions
 - [ ] Update version in metadata
+
+---
+
+© 2026 Wilsch AI Services OÜ. All rights reserved. Licensed under [CC BY-NC-ND 4.0](https://creativecommons.org/licenses/by-nc-nd/4.0/).
+

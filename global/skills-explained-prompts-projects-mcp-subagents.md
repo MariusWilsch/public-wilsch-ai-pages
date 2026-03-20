@@ -179,3 +179,8 @@ Yes. In Claude Code and the Agent SDK, subagents can access and use Skills just 
 **Claude Code users:**
 - Install Skills via plugin marketplaces
 - Check out the skills cookbook
+
+---
+
+© 2026 Wilsch AI Services OÜ. All rights reserved. Licensed under [CC BY-NC-ND 4.0](https://creativecommons.org/licenses/by-nc-nd/4.0/).
+

@@ -247,3 +247,8 @@ Die Verarbeitungszeit pro Seite besteht aus drei Phasen:
 - [#1132 — Power 10 Extraction Runs (3 Modelle × 240 Seiten)](https://github.com/DaveX2001/deliverable-tracking/issues/1132)
 - [#929 — DGX Spark Research & Hardware-Strategie](https://github.com/DaveX2001/deliverable-tracking/issues/929)
 - [#1081 — Commercial Feasibility Artifact](https://github.com/DaveX2001/deliverable-tracking/issues/1081)
+
+---
+
+© 2026 Wilsch AI Services OÜ. All rights reserved. Licensed under [CC BY-NC-ND 4.0](https://creativecommons.org/licenses/by-nc-nd/4.0/).
+

@@ -204,3 +204,8 @@ Programme pricing now confirmed (see Part 2 Product Matrix: $1k–$10.5k LTV). R
   - /Users/daveFem/.claude/projects/-Users-daveFem-Desktop-claude-projects-09-SALES-PIPELINE--deliverable/5f02c86d-50d2-4bce-b021-4c592622dca8.jsonl — Pass 4 (Pearl POC + taxonomy update)
   - /Users/daveFem/.claude/projects/-Users-daveFem-Desktop-claude-projects-09-SALES-PIPELINE--deliverable/057bbeb9-4f11-4d2d-bdad-89b70cbea0b0.jsonl — Pass 5 (Commercial design doc + fresh transcriptions)
   - /Users/daveFem/.claude/projects/-Users-daveFem-Desktop-claude-projects-09-SALES-PIPELINE--deliverable/ffc1ee74-f0a9-4f7a-804c-cc74126b0ea1.jsonl — Pass 6 (2026-03-18 meeting integration, 13 resolutions)
+
+---
+
+© 2026 Wilsch AI Services OÜ. All rights reserved. Licensed under [CC BY-NC-ND 4.0](https://creativecommons.org/licenses/by-nc-nd/4.0/).
+

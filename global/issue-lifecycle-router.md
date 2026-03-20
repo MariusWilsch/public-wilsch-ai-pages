@@ -677,3 +677,8 @@ The JA's ja/design sub-issue closes when the design doc is complete. The design 
 - Sub-issue lifecycle extraction pass (2026-02-28) — two-gate transition model, dual-cycle diagram, position-specific labels (ja/design, dev/design, dev/implement), Developer triple role (decompose/design/implement), grooming question framings, sub-issue quality criteria (empirical)
 - Session: /Users/verdant/.claude/projects/-Users-verdant-Documents-projects-00-WILSCH-AI-INTERNAL--soloforce/a38692bf-0233-4e71-ac7f-6e4f7d00d5a8.jsonl
 - Evidence: Empirical analysis of 41 open deliverable-tracking issues, Developer PA gap analysis (4 points missing/contradicted)
+
+---
+
+© 2026 Wilsch AI Services OÜ. All rights reserved. Licensed under [CC BY-NC-ND 4.0](https://creativecommons.org/licenses/by-nc-nd/4.0/).
+

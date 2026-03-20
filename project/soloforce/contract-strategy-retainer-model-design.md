@@ -305,3 +305,8 @@ The legal framework for this delivery model is validated: [Mayer Brown's "Contra
 - `/Users/verdant/.claude/projects/-Users-verdant-Documents-projects-00-WILSCH-AI-INTERNAL--soloforce/9715c300-2036-4389-882d-e9a3af2eb55a.jsonl` — second extraction pass
 - `/Users/verdant/.claude/projects/-Users-verdant-Documents-projects-00-WILSCH-AI-INTERNAL--soloforce/fe55b5ce-9f72-49c8-8348-99f48176ae27.jsonl` — fourth extraction pass (methodology section)
 - `/Users/verdant/.claude/projects/-Users-verdant-Documents-projects-00-WILSCH-AI-INTERNAL--soloforce/44fc742b-6b54-4abb-8624-f9992d7e69dd.jsonl` — fifth extraction pass (Stafford pitch dissection, three-slice ownership model)
+
+---
+
+© 2026 Wilsch AI Services OÜ. All rights reserved. Licensed under [CC BY-NC-ND 4.0](https://creativecommons.org/licenses/by-nc-nd/4.0/).
+

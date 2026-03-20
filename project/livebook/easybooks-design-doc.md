@@ -573,3 +573,8 @@ Stafford's RFP Section D requests examples of similar work. Candidate projects f
 - v0.1: `/Users/verdant/.claude/projects/-Users-verdant-Documents-projects-00-WILSCH-AI-INTERNAL--soloforce/ab077198-670d-47ef-b884-eca052c0b443.jsonl`
 - v0.2: `/Users/daveFem/.claude/projects/-Users-daveFem-Desktop-claude-projects-09-SALES-PIPELINE--deliverable/041422f6-c485-4011-af8c-edd509708a61.jsonl`
 - v0.3 (SA extraction): `/Users/verdant/.claude/projects/-Users-verdant-Documents-projects-00-WILSCH-AI-INTERNAL--soloforce/905c048c-84e0-4dd0-ab8c-af065edc87c8.jsonl`
+
+---
+
+© 2026 Wilsch AI Services OÜ. All rights reserved. Licensed under [CC BY-NC-ND 4.0](https://creativecommons.org/licenses/by-nc-nd/4.0/).
+

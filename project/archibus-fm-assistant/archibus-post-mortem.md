@@ -99,3 +99,8 @@ Three breakdowns compounded the root cause:
 * **IITR Post-Mortem (template):** [Published doc](https://mariuswilsch.github.io/public-wilsch-ai-pages/project/iitr/iitr-post-mortem) | [#1169](https://github.com/DaveX2001/deliverable-tracking/issues/1169)
 * **Post-Mortem Issue:** [#1179](https://github.com/DaveX2001/deliverable-tracking/issues/1179)
 * **Session:** cc40a672-9d21-45a7-93ff-476e302a3800
+
+---
+
+© 2026 Wilsch AI Services OÜ. All rights reserved. Licensed under [CC BY-NC-ND 4.0](https://creativecommons.org/licenses/by-nc-nd/4.0/).
+

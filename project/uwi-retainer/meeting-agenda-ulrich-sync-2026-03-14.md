@@ -95,3 +95,8 @@ WISO IP wird abgeschaltet. Aktuelle Situation: Dialpad wurde im Februar als Prov
 - **Ostermann Doku:** [#866](https://github.com/DaveX2001/deliverable-tracking/issues/866)
 - **Anthropic Account:** [#1063](https://github.com/DaveX2001/deliverable-tracking/issues/1063)
 - **VoIP Migration:** [#784](https://github.com/DaveX2001/deliverable-tracking/issues/784)
+
+---
+
+© 2026 Wilsch AI Services OÜ. All rights reserved. Licensed under [CC BY-NC-ND 4.0](https://creativecommons.org/licenses/by-nc-nd/4.0/).
+

@@ -615,3 +615,8 @@ Same Ollama runtime on all systems. Same extraction script and prompt. The varia
 - `/Users/verdant/.claude/projects/-Users-verdant-Documents-projects-billable-REKERS--poc/5459d299-6d80-466e-aca9-bedb19f41f8f.jsonl` (Part 7 extraction pass 2 — model selection, architecture, Power 10 SSH benchmarks, file inventory)
 - `/Users/verdant/.claude/projects/-Users-verdant-Documents-projects-billable-REKERS--poc/50ea279f-b40e-4985-80cb-26f328aa43f5.jsonl` (Part 7 extraction pass 3 — POC validation script design, three-lane architecture, 35764 file inventory + hash dedup)
 - `/Users/verdant/.claude/projects/-Users-verdant-Documents-projects-billable-REKERS--poc/f0df4a4a-830c-490c-8124-b7ea4a878756.jsonl` (Run 1 retrospective + Run 2 design — extraction quality analysis, super-linear scaling discovery, 30s Ollama overhead finding, Systemvergleich framing)
+
+---
+
+© 2026 Wilsch AI Services OÜ. All rights reserved. Licensed under [CC BY-NC-ND 4.0](https://creativecommons.org/licenses/by-nc-nd/4.0/).
+
