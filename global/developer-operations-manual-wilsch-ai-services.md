@@ -83,6 +83,29 @@ For now, reference:
 
 ---
 
+### Step 0: Decompose from Epic
+
+**When:** You pick up an epic with a published JA design doc — no sub-issues exist yet. At least one grooming session has passed since the JA sub-issue closed.
+
+**Purpose:** Break the design doc into actionable sub-issues using trunk-first decomposition. Maximum 2-3 issues to the first proof point.
+
+```
+/decompose → reads design doc → trunk boundary → spike or issues
+```
+
+**The `/decompose` skill guides you through:**
+1. Read the design doc (mentally build the full issue tree)
+2. Identify the biggest unknown (trunk boundary)
+3. Spike-or-issues decision (human judgment: "confident or spike first?")
+4. Create 2-3 sub-issues (dev/design) up to the proof point
+
+After the proof point passes or fails, the human decides: decompose further or route back to JA for design revision.
+
+→ Methodology: [ILR — Starting-Point Sub-Issues](https://mariuswilsch.github.io/public-wilsch-ai-pages/global/issue-lifecycle-router#starting-point-sub-issues)
+→ Evidence: [IITR Post-Mortem](https://mariuswilsch.github.io/public-wilsch-ai-pages/project/iitr/iitr-post-mortem), [Archibus Post-Mortem](https://mariuswilsch.github.io/public-wilsch-ai-pages/project/archibus-fm-assistant/archibus-post-mortem)
+
+---
+
 ### Path A: Spec-Design Issue
 
 **Purpose:** Transform unclear requirements into clear, implementable specification.
