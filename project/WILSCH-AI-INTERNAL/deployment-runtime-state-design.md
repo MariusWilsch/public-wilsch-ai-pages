@@ -159,7 +159,7 @@ Coolify and Dokploy both provide the preview environment primitive. Kamal does n
 
 **Undefined:** Development topology — does the developer work locally (worktree) with a remote preview on the server? Or does development happen on the server directly? GPU-dependent services (IITR Ollama) cannot run locally — the preview environment on the server must provide them. Hybrid model likely needed.
 
-**Undefined:** Platform selection — Coolify vs Dokploy requires a spike. Evaluation criteria: preview environment quality, Docker Compose support, CLI/API access, resource overhead on WILSCH-AI-SERVER.
+**Undefined:** Platform selection — requires a spike. Prior experience: Coolify was used in 2025 and abandoned due to unreliable deployments ("stuff just not deploying"). Root cause unclear — may have been a Layer 3 problem (no recipe) rather than a Coolify problem. Nixpacks angle: platforms using Nixpacks (Coolify, Railway) auto-detect language and build without Dockerfiles — convention-over-configuration for the build step, which combined with the recipe convention for seeding could deliver push → build → seed → preview URL with zero configuration. Evaluation criteria: preview environment quality, Docker Compose support, Nixpacks reliability, CLI/API access, resource overhead on WILSCH-AI-SERVER.
 
 **Undefined:** Recipe debugging — when the platform-triggered recipe fails, the developer needs a local escape hatch (`make seed` locally). How does the developer get visibility into platform-side failures? Logs, error reporting, fallback to manual execution.
 
