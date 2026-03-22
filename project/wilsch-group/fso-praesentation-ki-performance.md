@@ -259,7 +259,7 @@ Die GPU kann 8 Seiten gleichzeitig verarbeiten — der Durchsatz steigt von 1.31
 
 ## Folie 6: Kaufentscheidung — Drei Wege zur lokalen KI
 
-![Infrastruktur-Vergleich: Kompakte KI-Appliance vs. IBM Spyre-System](kaufentscheidung-infra-vergleich.png)
+<img src="kaufentscheidung-infra-vergleich.png" alt="Infrastruktur-Vergleich: Kompakte KI-Appliance vs. IBM Spyre-System" width="100%">
 
 ### Kernaussage
 
