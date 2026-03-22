@@ -264,30 +264,37 @@ Six steps, each validated against empirical evidence:
 
 ### Step 1: Dimensional Diagnosis (Validated)
 
-**The question:** "Is this a thinking problem, a doing problem, or a knowing problem?"
+**The question:** "Is this a thinking problem, a doing problem, a knowing problem, a noise problem, or an output format problem?"
 
-**Method:** Use conversation-reader to extract the thinking trace from the failure moment in the Session C conversation. Read the AI's hidden reasoning (native thinking, sequential thinking, interleaved thinking) immediately before the failure.
+**Method:** Use conversation-reader to extract the thinking trace from the failure moment in the Session C conversation. Read the AI's hidden reasoning immediately before the failure. Walk through each dimension sequentially — each gets its own moment.
 
-**Three diagnostic tests.** Each test gives a different signal depending on which dimension the failure belongs to. Run them in order — the first test that gives a clear signal is usually enough.
+**The sequential walk (dependency-driven order):**
 
-**Test 1 — What does the thinking trace look like at the failure moment?**
-- **→ Thinking:** The AI actively reasoned itself into the wrong action. Deliberate but wrong logic. Example: *"That's enough to resolve item 1. Let me move on."*
-- **→ Doing:** The AI didn't reason at all — just skipped the step. The step is absent from thinking, not argued against.
-- **→ Knowing:** The AI tried but couldn't find what it needed. Searching behavior — wanted to do the right thing but lacked information.
+**1. Thinking** — Is the AI actively reasoning toward the wrong action?
+- Signal: deliberate but wrong logic in the trace. Example: *"That's enough to resolve item 1. Let me move on."*
+- If yes → PSM/CBT reframing (Step 3). This is the most common root cause and has the highest blast radius.
 
-**Test 2 — What happens when you add a procedural fix?**
-- **→ Thinking:** The fix doesn't stick. The underlying belief overrides it. You write "don't advance" but the AI advances again next session.
-- **→ Doing:** The fix works immediately. The AI just didn't know the step existed.
-- **→ Knowing:** Adding reference material resolves it. Missing information, not wrong reasoning.
+**2. Noise** — Is correct reasoning being overridden by a competing instruction?
+- Signal: the trace shows the AI considered the right action, then pivoted due to another instruction or convention conflict.
+- If yes → find and remove the competing instruction (Step 4). Depends on first seeing correct reasoning — comes after thinking.
 
-**Test 3 — What does the AI respond to when corrected live?**
-- **→ Thinking:** Responds to WHY — "because every answer opens territory." The belief shifts.
-- **→ Doing:** Responds to WHAT — "here's the step you missed." Shows the procedure.
-- **→ Knowing:** Responds to the knowledge itself — "here's the schema you need."
+**3. Doing** — Is a step absent from the trace entirely?
+- Signal: the AI didn't reason about the step at all — it's missing, not argued against.
+- If yes → add the procedure to the skill (Step 5 via skill-creator).
 
-**Shortcut:** If procedural fixes keep failing, it's thinking. If a procedural fix works first try, it's doing. If the AI was searching for something, it's knowing.
+**4. Knowing** — Is the AI searching but can't find what it needs?
+- Signal: searching behavior — the AI wanted to do the right thing but lacked information.
+- If yes → add reference material to the skill's references/ folder (Step 5 via skill-creator).
 
-**Validated against:** Two Session C conversations from CCI #604 (9f14b021, 5459d299) — thinking problem misdiagnosed as doing for 5 fix passes. Session a19f6dde — compound thinking+doing failure (JA /probe convergence: "answer = completion" belief amplified by "Next X/N" counter). Session 24d94df5 — system prompt contradicting SKILL.md on gating, PSM correctly predicted belief-layer wins over rule-layer.
+**5. Output format** — Is reasoning correct AND steps followed, but output wrong?
+- Signal: the AI's thinking and procedure were right, but the produced output doesn't match the desired form.
+- If yes → add examples/templates ([Prompting Best Practices](https://platform.claude.com/docs/en/build-with-claude/prompt-engineering/claude-prompting-best-practices)). Depends on ruling out thinking + doing first — comes last.
+
+**Shortcut:** If procedural fixes keep failing, it's thinking. If a procedural fix works first try, it's doing. If the AI was searching for something, it's knowing. If correct reasoning was overridden, it's noise. If everything is right except the output form, it needs examples.
+
+**Validated against:** Two Session C conversations from CCI #604 (9f14b021, 5459d299) — thinking problem misdiagnosed as doing for 5 fix passes. Session a19f6dde — compound thinking+doing failure (JA /probe convergence: "answer = completion" belief amplified by "Next X/N" counter). Session 24d94df5 — system prompt contradicting SKILL.md on gating, PSM correctly predicted belief-layer wins over rule-layer. CCI #619 — output format failure despite correct beliefs (compound: belief + template fix).
+
+**Provenance note (Pass 6):** Tests 2 and 3 from the original three-test model were cut — traced to Pass 5 extraction session (b0269523), where they were constructed to fill a classification table rather than extracted from distinct evidence. Applying the Augment pruning rubric to the methodology itself: they weren't failure-backed. The single-test sequential walk replaces them.
 
 ### Step 2: Self-Diagnosis (Validated — prompt format Undefined)
 
@@ -427,6 +434,88 @@ Part 3 defines what to do per pattern. This part defines how to orchestrate a fu
 | Read artifacts | Diagnosed L14 vs L46 from conversation memory (0667ce35) | Artifact could have changed since those sessions. User redirected: "Read current CLAUDE.md first." |
 | 6-step discipline | Disposition walk with mechanical options (e856612d) | Had PSM dimensions upfront but abandoned them during the walk. Fix approach should depend on dimension, but dimensions weren't used to determine fix type. |
 
+**Resolved (Pass 6):** Fourth dimension (examples/templates) — not a separate dimension. Output format is the fifth signal in Step 1. Examples are part of the writing principles layer (Part 6).
+
+**Resolved (Pass 6):** Reference front-loading — the three reference documents (PSM, Skills Guide, Prompting Best Practices) map to artifact types, not steps. Each serves both diagnostic and writing roles. See Part 6.
+
+**Undefined:** Pruning placement — should the practitioner prune the artifact BEFORE the diagnostic walk (generic audit: "does each line prevent a failure?") or AFTER diagnosis informs what to prune (targeted removal based on diagnostic findings)? Step 2 (Read artifacts) is a natural pruning opportunity. Step 3 (Meta-diagnostic) already prunes failed prior fixes. Broad Augment-style auditing vs targeted diagnostic pruning needs empirical validation from a real Session B.
+
+---
+
+### Part 6: Writing Principles for Instruction Artifacts
+
+Part 3 defines the diagnostic lens — WHAT's wrong. This part defines the writing principles — HOW to write the fix artifact so it actually holds. Like SOLID for code, these principles govern the quality of instruction artifacts (CLAUDE.md, SKILL.md, hooks). All principles are design hypotheses pending empirical validation through Session B/C cycles.
+
+The methodology has two distinct layers. The diagnostic lens (Part 3) figures out what's broken. The writing principles (this part) govern what comes out. A correct diagnosis with a poorly-written fix still fails.
+
+#### Three References, Three Artifact Types
+
+Each reference document governs a different artifact type and serves both diagnostic and writing roles for its domain:
+
+| Reference | Artifact Type | Location | Diagnostic Role | Writing Role |
+|-----------|--------------|----------|-----------------|--------------|
+| [PSM](https://alignment.anthropic.com/2026/psm/) | Persona CLAUDE.md | `~/.claude/personas/{pos}/CLAUDE.md` | "What kind of person would behave this way?" | Write beliefs that condition persona traits |
+| [Skills Guide](https://mariuswilsch.github.io/public-wilsch-ai-pages/global/complete-guide-building-skills-claude) | SKILL.md | `~/.claude/skills/{name}/SKILL.md` | "Which workflow pattern is broken?" | Progressive disclosure, 5 patterns, structure. Key tool: skill-creator |
+| [Prompting Best Practices](https://platform.claude.com/docs/en/build-with-claude/prompt-engineering/claude-prompting-best-practices) | Crosses both | Both locations | "Is reasoning correct but output wrong?" | Examples, WHY over WHAT, format control |
+
+The [Skills Explained](https://mariuswilsch.github.io/public-wilsch-ai-pages/global/skills-explained-prompts-projects-mcp-subagents) taxonomy backs the separation: Skills = procedural knowledge ("here's how to do things"), Projects = background knowledge ("here's what you need to know").
+
+#### Separation of Concerns
+
+Each artifact layer has one job. Fixing one layer doesn't require touching another.
+
+| Layer | Concern | Artifact | Changes when... |
+|-------|---------|----------|-----------------|
+| **WHO** | Position identity, beliefs, persona traits | Persona CLAUDE.md | The position's identity or behavioral principles change |
+| **WHAT** | Cross-position conventions | Global CLAUDE.md | A convention that applies to ALL positions changes |
+| **WHERE** | Business context, system access | Project CLAUDE.md | Project facts or client context changes (TBD — CCI #646) |
+| **HOW** | Procedures, workflows, steps | SKILL.md | The procedure for that specific task changes |
+| **MUST** | Deterministic guarantees | [Hooks](https://docs.anthropic.com/en/docs/claude-code/hooks) | The enforcement logic or blocked pattern changes |
+
+**Position-based, not project-based.** The persona layer carries identity — each position (JA, Developer, Dev Lead, System Engineer) has its own persona CLAUDE.md. Skills serve positions, not projects. Project CLAUDE.md is minimal context. See the [plugin architecture](https://github.com/WILSCH-AI-SERVICES/wilsch-ai-team-plugin) for the physical layout.
+
+**Skills inherit persona from CLAUDE.md — they don't carry their own beliefs.** A skill executes WITHIN the persona context that CLAUDE.md provides. The ARCHIBUS Setup agent (session e1a2095a) demonstrated what happens without persona: mechanically correct but template-following behavior. The Developer protocol (pure beliefs in CLAUDE.md, procedures in skills) works nearly perfectly — proof that separation works.
+
+#### Approved Best Practices
+
+Four principles from [Prompting Best Practices](https://platform.claude.com/docs/en/build-with-claude/prompt-engineering/claude-prompting-best-practices) (General Principles + Output/Formatting sections), applicable when writing any fix artifact:
+
+| Principle | Source Section | Mechanism | Status |
+|-----------|--------------|-----------|--------|
+| **WHY over WHAT** | General Principles: "Add context to improve performance" | Providing motivation makes instructions generalizable. Same mechanism as PSM — beliefs generalize, rules don't. | Confirmed |
+| **Use examples (3-5)** | General Principles: "Use examples effectively" | "Most reliable way to steer output format, tone, and structure." The cross-cutting fix for output drift. CCI #619 proof: belief + template compound. | Confirmed |
+| **Tell what to do, not what not to do** | Output/Formatting: "Control the format of responses" | Positive framing avoids the compliance/negation trap. Connects to Pass 3 finding: persuasion principles deprecated for Claude 4.6 — aggressive negation causes overtriggering. | Confirmed |
+| **Match prompt style to output style** | Output/Formatting: "Control the format of responses" | The artifact's own formatting is an implicit example of the output format it produces. | Hypothesis — needs validation |
+
+**Deeper investigation needed:** Prompting Best Practices sections 3-5 (Tool Use, Thinking/Reasoning, Agentic Systems) contain named failure modes and structural patterns relevant to the methodology. Marked for future extraction passes.
+
+#### Pruning Rubric
+
+From practitioner evidence — [Augment](https://www.augmentcode.com/blog/your-agents-context-is-a-junk-drawer), [Vercel](https://vercel.com/blog/agents-md-outperforms-skills-in-our-agent-evals), [Wortmann](https://www.wordman.dev/blog/agent-instructions). Convergent finding: instruction density degrades performance. Every line you add pushes something else out.
+
+For each line in an instruction artifact, ask ([Wortmann's rubric](https://www.wordman.dev/blog/agent-instructions)):
+
+- **Failure-backed?** Did this prevent a real issue? Connects to the observation system — a fix without a source observation is noise.
+- **Tool-enforceable?** Could a [hook](https://docs.anthropic.com/en/docs/claude-code/hooks) handle this instead? Code is deterministic; language interpretation isn't ([Skills Guide](https://mariuswilsch.github.io/public-wilsch-ai-pages/global/complete-guide-building-skills-claude), Troubleshooting section).
+- **Decision-encoding?** Does this capture domain judgment the agent can't derive from code? Layer-dependent: persona beliefs vs project gotchas vs architecture decisions (deeper definition connects to CCI #646).
+- **Triggerable?** Does it include a condition, not just a value statement? Connects to progressive disclosure — "When X, read Y" not just "See Y."
+
+If it fails all four, delete it.
+
+**Status:** Confirmed as writing principle. **Undefined** as diagnostic tool — using the rubric to diagnose WHY an instruction failed (not just whether to keep it) needs empirical validation.
+
+#### Coding Principles for Instruction Artifacts (Design Hypotheses)
+
+Five software engineering principles that transfer to instruction artifact design. All are design hypotheses pending empirical validation.
+
+| Principle | Code Meaning | Instruction Artifact Meaning | Evidence |
+|-----------|-------------|------------------------------|----------|
+| **Separation of Concerns** | Each module has one job | Beliefs in persona CLAUDE.md, procedures in SKILL.md, enforcement in hooks | JA protocol mixed thinking+doing → 5 failed fix passes. Developer protocol separates them → works. |
+| **Single Responsibility** | Each class has one reason to change | Each artifact changes for one reason only | See table above (WHO/WHAT/WHERE/HOW/MUST) |
+| **YAGNI** | Don't build for hypothetical requirements | Don't write instructions for hypothetical failures. Wait for observations, then write. | Augment: "every line pushes something else out" |
+| **Convention over Configuration** | Follow conventions, only configure deviations | Don't instruct what Claude already knows from pre-training. Persona level: standard roles don't need over-specification. Procedure level: known workflows don't need skills. | Vercel: "prefer retrieval-led reasoning over pre-training-led reasoning" — 100% pass rate. DHH: "convention set 20+ years of training data" |
+| **Composition over Inheritance** | Compose behavior from small pieces | A position's behavior = persona + global + project + multiple skills, not one monolithic config | Prevents regression toward monolithic CLAUDE.md files |
+
 ---
 
 ## Source
@@ -459,7 +548,11 @@ Part 3 defines what to do per pattern. This part defines how to orchestrate a fu
 - **Session (Pass 5 — improvement mode):** 24d94df5-c52d-438d-ba50-a13e4cce1c48 — ARCHIBUS Setup pass 3, system prompt contradiction diagnosis, belief #5 (attention scarcity) + SKILL.md simplification
 - **CBT seed:** [CCI #629 comment](https://github.com/DaveX2001/claude-code-improvements/issues/629#issuecomment-4019317575) (2026-03-08) — PSM quote + "CBT could help"
 - **CBT crystallization:** [CCI #629 comment](https://github.com/DaveX2001/claude-code-improvements/issues/629#issuecomment-4046795013) (2026-03-12) — observation → belief → restructured belief → generalization
-- **Session (Pass 5 — extraction):** b0269523-6613-4303-9cf0-8c04d564b462 — this session, JA extraction encoding Part 3 methodology into design doc
+- **Session (Pass 5 — extraction):** b0269523-6613-4303-9cf0-8c04d564b462 — JA extraction encoding Part 3 methodology into design doc
+- **Session (Pass 6 — diagnostic + writing principles):** c10c3e10-1482-4e06-b1d5-769b6fdf50fd — Step 1 simplified (5 sequential dimensions), Part 6 writing principles layer, three-reference model, separation of concerns, coding principles transfer, pruning rubric
+- **Practitioner evidence (Pass 6):** [Vercel — AGENTS.md outperforms skills](https://vercel.com/blog/agents-md-outperforms-skills-in-our-agent-evals), [Augment — junk drawer](https://www.augmentcode.com/blog/your-agents-context-is-a-junk-drawer), [Wortmann — agent instructions](https://www.wordman.dev/blog/agent-instructions)
+- **Prompting Best Practices (Pass 6):** [Full document saved](/tmp/prompting-best-practices.md) via markitdown — JS-rendered page, read_website returns empty. Context7 used as fallback for partial content.
+- **Conversation provenance (Pass 6):** b0269523 chunk 2-3 read via conversation-reader — traced Tests 2/3 origin to Pass 5 table construction (not evidence-backed)
 
 ---
 
