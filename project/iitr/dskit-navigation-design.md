@@ -62,7 +62,7 @@ Deploy the retrieval and serving infrastructure on IITR-STAGING.
 
 | Component | Role | Why |
 |-----------|------|-----|
-| **Qwen 3.5 9B** via Ollama + OpenRouter | Single model for answer generation | think:true for instruction-following (+25%). Benchmarked on IITR hardware. OpenRouter as inference fallback — eliminates Ollama timeout issues, ~4min for full 29-question test run. |
+| **Qwen 3.5 9B** via Ollama | Single model for answer generation | think:false + temperature:0 for deterministic RAG inference. Benchmarked on IITR hardware: 0.76s per call (RTX 4000 SFF Ada, 20 GB VRAM). |
 | **OpenWebUI** | Chat frontend | Already deployed with IITR Keycloak SSO integration. Familiar to client (Stellmacher has used it). Pipeline filter system enables RAG backend integration. |
 | **RTX 4000 SFF Ada** (20 GB VRAM) | GPU inference | Available on IITR-STAGING. Sufficient for Qwen 3.5 9B inference. |
 | **Langfuse** | Observability + tracing | One OpenWebUI conversation = one Langfuse session. Traces every query through retrieval and generation. Enables improvement loop: identify failure patterns, measure iteration progress, provide evidence for client reviews. Already running on IITR-STAGING. |
@@ -185,32 +185,39 @@ Dependency: Data Source → Retrieval → Generation. Fix data gaps first, then 
 
 IITR-STAGING hosts three RAG projects that share infrastructure. This part defines the ownership model, deployment contract, and serving architecture so that changes to one project cannot break another.
 
-#### Two-Layer Compose Model
+#### Infra/App Compose Convention
 
-Per SA directive ("why always deploy another one?"), cross-project services run as single shared instances. Project-specific services (pipeline filters, vector stores) live in their respective repos.
+Per SA directive ("why always deploy another one?") and [CCI #646 deployment convention](https://mariuswilsch.github.io/public-wilsch-ai-pages/project/WILSCH-AI-INTERNAL/deployment-runtime-state-design), the system splits into two compose files. The infra compose runs shared services (one instance, never duplicated per branch). The app compose runs the serving layer (isolated per branch for preview environments).
 
 **Architecture: Mono-repo with trunk-based development** ([iitr-platform](https://github.com/WILSCH-AI-SERVICES/iitr-platform), [#1182](https://github.com/DaveX2001/deliverable-tracking/issues/1182)). Four source repos consolidated into `iitr-platform/` with subproject directories: `infrastructure/`, `navigation/`, `court-judgments/`, `masterfragen/`. Migration completed via [#1191](https://github.com/DaveX2001/deliverable-tracking/issues/1191).
 
-**Layer 1 — Shared Infrastructure** (`/home/shared/projects/iitr-platform/infrastructure/`):
+**`docker-compose.infra.yml`** — Shared infrastructure (`infrastructure/`). Runs once on the server:
 
-| Service | Notes |
-|---------|-------|
-| Ollama | Single GPU instance, all projects |
-| OpenWebUI | Chat frontend, serves all 3 projects via Models. Keycloak SSO. |
-| Pipelines | Pipeline filter sidecar. All projects contribute filters. |
-| Langfuse | Observability for all projects |
-| Typesense | Hybrid search (keyword + vector). All projects use separate collections via one instance. |
-| TEI (bge-m3) | BAAI/bge-m3 (1024d) embedding service. Single endpoint for all projects. |
+| Service | Port | Notes |
+|---------|------|-------|
+| Ollama | 11436 | Single GPU instance, all projects. Qwen 3.5 9B + 6 other models. |
+| TEI (bge-m3) | 8080 | BAAI/bge-m3 (1024d) embedding service. Single endpoint for all projects. |
+| Typesense | 8109 | Hybrid search (keyword + vector). All projects use separate collections via one instance. |
+| Langfuse | — | Observability for all projects (web + worker + clickhouse + minio + redis + postgres). |
 
-OpenWebUI + Pipelines are deployed in the shared infrastructure compose stack.
+Creates the `iitr-infra` network. App compose connects to this network as external.
 
-**Layer 2 — Per-Project** (subdirectories within `iitr-platform/`):
+**`docker-compose.yml`** — Serving layer (app, isolated per branch via `COMPOSE_PROJECT_NAME`):
+
+| Service | Port | Notes |
+|---------|------|-------|
+| OpenWebUI | 3006 | Chat frontend, serves all 3 projects via Models. Keycloak SSO. |
+| Pipelines | — | Pipeline filter sidecar. All projects contribute filters via bind-mount. |
+
+Staging runs one app instance. Preview environments get additional instances on separate ports (see Preview Environments).
+
+**Per-Project Code** (subdirectories within `iitr-platform/`):
 
 | Project | Owns | Connects to shared via |
 |---------|------|----------------------|
-| `navigation/` | Pipeline filter, collection `dskit_navigation` | `iitr-shared-network` |
-| `masterfragen/` | Pipeline filter, collection `dskit_masterfragen` | `iitr-shared-network` |
-| `court-judgments/` | Pipeline filter, collection `urteile` | `iitr-shared-network` |
+| `navigation/` | Pipeline filter + prompts, collection `dskit_navigation` | Bind-mount into Pipelines |
+| `masterfragen/` | Pipeline filter + prompts, collection `dskit_masterfragen` | Bind-mount into Pipelines |
+| `court-judgments/` | Pipeline filter + prompts, collection `urteile` | Bind-mount into Pipelines |
 
 #### Serving Layer
 
@@ -256,14 +263,74 @@ Two domains. Project separation happens via OpenWebUI Models, not Caddy routing.
 
 #### Deployment Contract
 
-`docker compose up -d` from each directory brings up that layer:
+Git push is the only deployment interface. No SSH, no manual Docker commands. Per [CCI #646](https://mariuswilsch.github.io/public-wilsch-ai-pages/project/WILSCH-AI-INTERNAL/deployment-runtime-state-design): the push IS the deployment.
 
-1. `cd /home/shared/projects/iitr-platform/infrastructure && docker compose up -d` → shared services
-2. `cd /home/shared/projects/iitr-platform/navigation && docker compose up -d` → Navigation serving layer
-3. `cd /home/shared/projects/iitr-platform/masterfragen && docker compose up -d` → Masterfragen services
-4. `cd /home/shared/projects/iitr-platform/court-judgments && docker compose up -d` → Court Judgments services
+**Startup order:** Infra first (Ollama, TEI, Typesense, Langfuse), then app (OpenWebUI, Pipelines). Services depend on the `iitr-infra` network + GPU services.
 
-Order matters: infrastructure first, then project stacks (they depend on shared network + Ollama).
+**GHA workflow (3 triggers):**
+
+| Trigger | Action | Script |
+|---------|--------|--------|
+| Push to feature branch | Deploy preview | `scripts/deploy-preview.sh` |
+| PR closed/merged | Tear down preview | `scripts/cleanup-preview.sh` |
+| Push to staging branch | Update staging | `scripts/deploy-staging.sh` |
+
+**SSH enforcement:** Read-only for investigation (logs, inspect). All writes go through git push → GHA. The AI's SSH config uses a restricted `agent` user.
+
+#### Health Checks
+
+Back pressure per [CCI #646](https://mariuswilsch.github.io/public-wilsch-ai-pages/project/WILSCH-AI-INTERNAL/deployment-runtime-state-design). Each level returns an exit code — GHA reads it: 0 = success, non-zero = failure.
+
+| Level | Check | What it catches |
+|-------|-------|-----------------|
+| 1 | `docker compose config` | Invalid compose file |
+| 2 | `docker compose up --wait` | Container startup failures |
+| 3 | `curl -f localhost:8109/health` | Typesense not responding |
+| 4 | `curl -f localhost:8080/health` | TEI (BGE-M3) not loaded |
+| 5 | `curl -f localhost:11436/api/tags` | Ollama models not available |
+| 6 | `curl -f localhost:3006` | OpenWebUI not reachable |
+| 7 | Smoke test: 1 question through pipeline filter | End-to-end RAG broken |
+
+Pipeline filter startup depends on Typesense — if Typesense is not ready, the filter scores 0/29 silently. Level 3 gates Level 7.
+
+#### Data Ingestion
+
+Source data lives in git. GHA runs ingestion scripts when data files change. The commit that added data IS the audit trail.
+
+| Project | Data in git | Size | Ingestion script | Trigger |
+|---------|------------|------|-----------------|---------|
+| Navigation | Templates, web chapter markdown, PDF, Q&A | ~5 MB | `navigation/scripts/ingest.py` | GHA on `navigation/data/**` change |
+| Masterfragen | CSV (22 Q&A entries) | ~50 KB | `masterfragen/scripts/ingest.py` | GHA on `masterfragen/data/**` change |
+| Court Judgments | `Urteile-DSGVO.zip` (2,635 HTML/PDF) | ~40 MB | `court-judgments/scripts/ingest.py` | GHA on `court-judgments/data/**` change |
+
+CJ pipeline design is tracked in [#1234](https://github.com/DaveX2001/deliverable-tracking/issues/1234). The original Chunkr-based pipeline is gone — replacement uses lightweight HTML parsing (BeautifulSoup) since source files are HTML, not scanned PDFs.
+
+#### Preview Environments
+
+Per CCI #646 Part 4: every push to a feature branch triggers a preview environment on the server.
+
+```
+Server
+├── infra (always running, one instance)
+│   ├── Ollama (GPU, port 11436)
+│   ├── TEI (BGE-M3, port 8080)
+│   ├── Typesense (port 8109)
+│   └── Langfuse
+│
+├── staging (app compose, main branch)
+│   ├── OpenWebUI (port 3006)
+│   └── Pipelines (mounts all project filters)
+│
+└── preview-issue-1234 (app compose, worktree branch)
+    ├── OpenWebUI (port auto-assigned)
+    └── Pipelines (mounts modified filters from branch)
+```
+
+Preview and staging share the same infra services (same Ollama, same Typesense collections, same TEI). The app compose clones OpenWebUI volumes from staging on first deploy. Pipeline filter code comes from the branch's working directory.
+
+**Preview URL:** `issue-{number}.iitr-cloud.de` — Caddy config generated by deploy script, committed to git.
+
+**Undefined:** Volume state promotion — when a preview's OpenWebUI volume contains state the developer wants on staging (e.g., new model configuration), how does it transfer on PR merge? Requires a real case to evaluate.
 
 ---
 
@@ -300,6 +367,10 @@ Order matters: infrastructure first, then project stacks (they depend on shared 
 - [2026-03-17 KI-Update IITR](https://app.fireflies.ai/view/01KKB4PD373XWHY3K0B0PDZMSC) — client sync: format confirmed, CSV feedback loop, staging consolidation
 - [2026-03-18 Strategy Meeting](https://app.fireflies.ai/view/01KM0CAF30PJ3V27S2RDB15BHQ) — Vector B confirmed as approach, monorepo + trunk-based, issue cleanup
 - [2026-03-18 Grooming](https://app.fireflies.ai/view/01KM0732PDYDAT62D5DFDAHV01) — trunk-first decomposition, spike pattern, design docs updated only after proof points
+- [2026-03-22 Grooming](https://app.fireflies.ai/view/01KMB243RF95QP9ZFG9VGBWFX9) — CJ data loss discovered, CCI #646 deployment convention assignment, MF Typesense consolidation
+
+**Deployment Convention:**
+- [CCI #646 Design Doc — Deployment & Runtime State](https://mariuswilsch.github.io/public-wilsch-ai-pages/project/WILSCH-AI-INTERNAL/deployment-runtime-state-design) — infra/app convention, GHA deploy, read-only SSH
 
 **Sessions:**
 - Original design: /Users/verdant/.claude/projects/-Users-verdant-Documents-projects-billable-IITR--IITR-NAVIGATION/46a000cb-3044-40d7-adaf-e30987553859.jsonl
@@ -315,6 +386,7 @@ Order matters: infrastructure first, then project stacks (they depend on shared 
 - Pass 8 (SA review — access control fix): /Users/daveFem/.claude/projects/-Users-daveFem-Desktop-claude-projects-03-IITR--deliverable/65c03d49-b808-4011-b16e-7607e99f1b9a.jsonl
 - Pass 10 (mono-repo reference update): /Users/daveFem/.claude/projects/-Users-daveFem-Desktop-claude-projects-03-IITR--deliverable/e2d015aa-d5c4-4c0b-9372-9a83783d9d3f.jsonl
 - Pass 11 (MF Typesense consolidation): /Users/daveFem/.claude/projects/-Users-daveFem-Desktop-claude-projects-03-IITR--deliverable/85060f90-01bf-4532-9e1e-5425e5ccd92e.jsonl
+- Pass 12 (CCI #646 deployment convention): /Users/daveFem/.claude/projects/-Users-daveFem-Desktop-claude-projects-03-IITR--deliverable/d13491e9-d102-4b36-a846-54774834c414.jsonl
 
 ---
 
