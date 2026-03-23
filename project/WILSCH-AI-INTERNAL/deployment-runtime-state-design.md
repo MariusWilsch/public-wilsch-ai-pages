@@ -133,7 +133,6 @@ Server
 | Project | Infra (shared) | App (isolated per branch) |
 |---------|---------------|--------------------------|
 | **IITR** | Ollama, TEI, Langfuse | OpenWebUI, Pipelines, Typesense |
-| **Archibus fm-assistant** | LibreChat, MongoDB, MeiliSearch, pgvector | FastMCP |
 | **Archibus bulk-import** | — (none) | LibreChat, MongoDB, FastMCP |
 | **Simple backend** | Postgres (or nothing) | FastAPI service |
 
@@ -231,10 +230,22 @@ Each level returns an exit code. GHA reads it: 0 = success, non-zero = failure. 
 
 **Caddy configs live in git** — not `/etc/caddy/`. The deploy script generates a config file, commits it, syncs to server. Every route change is a git commit → issue-commit-linker captures it.
 
-**Read-only SSH enforcement:** Three server users:
-- `agent` — restricted, investigation only (logs, inspect, read files)
-- `deploy` — full access, GHA only (key in GitHub Secrets)
-- `marius`/`david` — full access, human emergency use
+**Read-only SSH enforcement — 6-layer structural design:**
+
+Three server users, each structurally limited:
+
+| User | Docker | Filesystem | Git | SSH access |
+|------|--------|------------|-----|------------|
+| `agent` | Read-only via socket proxy | Read code, no `.env`, no write | Read-only (safe.directory) | AI sessions |
+| `deploy` | Full (docker group) | Full write | Full | GHA runner only |
+| `marius`/`david` | Full (docker group) | Full write | Full | Personal keys, emergency |
+
+**Agent user restrictions (structural, not convention):**
+
+- **Docker:** [LinuxServer docker-socket-proxy](https://github.com/linuxserver/docker-socket-proxy) runs on `127.0.0.1:2375`. Agent's `DOCKER_HOST=tcp://localhost:2375`. Proxy configured: `POST=0` (master read-only switch), `CONTAINERS=1`, `IMAGES=1`, `NETWORKS=1`, `VOLUMES=1`. Agent can `docker ps`, `docker logs`, `docker inspect` — cannot `docker stop`, `docker rm`, `docker exec` (403 Forbidden).
+- **Filesystem:** Agent not in `dev-team` group. Project dirs are `drwxrwsr-x root:dev-team` — agent can read code (world-readable) but cannot write. `.env` files tightened to `640 :dev-team` — agent cannot read credentials.
+- **Git:** Git's `safe.directory` check blocks non-owner operations. Repo owned by `marius:dev-team`, agent is neither — git refuses all operations including `git pull`. Read-only file access still permits `git log` and `git show` via direct object reads.
+- **SSH config:** AI's `~/.ssh/config` points `WILSCH-AI-SERVER` to `User agent`. Onboarding bootstrap surfaces this host — the AI sees only the restricted user.
 
 The AI's SSH config only sees the `agent` user. Deployment via SSH is structurally impossible — it can only happen through git push → GHA. Same "no decision point" principle: remove the wrong choice entirely.
 
@@ -284,6 +295,33 @@ This aligns with #659's router principle: CLAUDE.md routes to source files where
 
 The JA designs the split. The Developer writes the compose files and project-specific scripts. The Dev Lead checks that the convention was followed. The compose files are code — maintained as part of the implementation, same as application code.
 
+### Part 6 — Branch Protection: Org-Level Rulesets
+
+Parts 1–5 enforce the convention on the server. This part enforces it at the git layer — preventing code from reaching the server through unauthorized paths.
+
+No branch protection exists on any repository today. GitHub Free does not support branch protection on private repos. The fix: upgrade the existing `WILSCH-AI-SERVICES` organization to Team plan ($4/user/month) and create a single org-level ruleset.
+
+**Org-level ruleset (set once, covers all repos):**
+
+| Setting | Value |
+|---------|-------|
+| Target | All repositories (current + future) |
+| Branches | `staging`, `main` |
+| Require PR before merge | Yes — forces worktree→PR→merge flow |
+| Block force push | Yes — prevents history destruction |
+| Require status checks | Deferred — added when GHA CI pipelines exist |
+| Require reviews | Optional — solo developer context |
+
+The ruleset auto-applies to every repo transferred to the org, including repos created in the future. No per-repo configuration, no automation scripts, no manual setup.
+
+**Migration path:**
+1. Upgrade `WILSCH-AI-SERVICES` to Team plan
+2. Transfer client repos from `MariusWilsch` personal account
+3. Create org-level ruleset (one API call or Settings UI)
+4. Every repo inherits protection immediately
+
+This closes the last gap in the enforcement chain. Without branch protection, the AI can `git push` directly to staging from the local machine — bypassing the worktree→PR→GHA flow that Parts 1–5 depend on. With the ruleset, direct push returns 403. The only path to staging is: worktree branch → PR → merge → GHA deploys.
+
 ---
 
 ## Source
@@ -329,10 +367,21 @@ The JA designs the split. The Developer writes the compose files and project-spe
 - [Organization Chart — Wilsch AI Services](https://mariuswilsch.github.io/public-wilsch-ai-pages/global/organization-chart-wilsch-ai-services) — VP/Delivery path: JA designs → Developer builds → Dev Lead checks
 - [CodeRabbit git-worktree-runner](https://github.com/coderabbitai/git-worktree-runner) — evaluated, not needed (push IS the trigger)
 
+**Pass 3 Evidence (Archibus exemplar):**
+- [#646 comment — side-by-side compose comparison](https://github.com/DaveX2001/claude-code-improvements/issues/646#issuecomment-4109938814) — bulk-import (clean) vs FM-Assistant (organic)
+- [#1237 — Compose Refactor](https://github.com/DaveX2001/deliverable-tracking/issues/1237) (merged, Archibus first exemplar)
+
+**Pass 3 Research:**
+- [LinuxServer docker-socket-proxy](https://github.com/linuxserver/docker-socket-proxy) — read-only Docker API proxy, actively maintained (74 releases)
+- [Tecnativa docker-socket-proxy](https://github.com/Tecnativa/docker-socket-proxy) — reference baseline, stale
+- [OPA Docker AuthZ plugin](https://github.com/open-policy-agent/opa-docker-authz) — evaluated, overkill for this use case
+- [GitHub org-level rulesets](https://docs.github.com/en/organizations/managing-organization-settings/creating-rulesets-for-repositories-in-your-organization) — Team plan, all-repo coverage
+
 **Sessions:**
 - 🗒️ Session 6fd2a15f (Pass 1 — design doc extraction)
 - 🗒️ Session b3ede71b (Pass 2 — real project grounding + conversation evidence)
 - 🗒️ Session aa9eb012 (Pass 3 — Archibus exemplar validation + CI/CD testing model)
+- 🗒️ Session e8fef0b2 (Pass 3 — Archibus server cleanup + SSH enforcement design + branch protection)
 
 ---
 
