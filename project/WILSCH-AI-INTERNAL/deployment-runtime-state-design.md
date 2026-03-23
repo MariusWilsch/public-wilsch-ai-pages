@@ -333,6 +333,8 @@ The ruleset auto-applies to every repo transferred to the org, including repos c
 
 This closes the last gap in the enforcement chain. Without branch protection, the AI can `git push` directly to staging from the local machine — bypassing the worktree→PR→GHA flow that Parts 1–5 depend on. With the ruleset, direct push returns 403. The only path to staging is: worktree branch → PR → merge → GHA deploys.
 
+**Undefined:** AI git identity and bypass model — the AI and human currently share one git identity (`marius`), making it structurally impossible to distinguish AI pushes from human pushes. A separate machine user (`claude-wilsch-ai`) in the org would enable: (a) org ruleset bypass for humans only — AI must always PR, humans can push directly, (b) unambiguous audit trail — every commit shows who authored it, (c) server-side mapping — the `agent` SSH user maps to the AI's GitHub identity. Requires one additional Team seat ($4/mo). Alternative: GitHub App (no seat cost, different auth model). The exact identity model — machine user vs GitHub App, key management, `Co-Authored-By` conventions — needs a spike against one real project.
+
 ### Part 7 — Scaling the Convention
 
 Parts 1–6 validated the mechanism against one project (Archibus bulk-import). Scaling to all projects raises four concerns, scoped for the GHA automation trunk:
