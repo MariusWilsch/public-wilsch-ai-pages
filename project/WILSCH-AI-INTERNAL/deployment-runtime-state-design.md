@@ -133,16 +133,38 @@ Server
 | Project | Infra (shared) | App (isolated per branch) |
 |---------|---------------|--------------------------|
 | **IITR** | Ollama, TEI, Langfuse | OpenWebUI, Pipelines, Typesense |
-| **Archibus** | LibreChat, MongoDB, MeiliSearch, pgvector | FastMCP (fm-assistant, bulk-import) |
+| **Archibus fm-assistant** | LibreChat, MongoDB, MeiliSearch, pgvector | FastMCP |
+| **Archibus bulk-import** | — (none) | LibreChat, MongoDB, FastMCP |
 | **Simple backend** | Postgres (or nothing) | FastAPI service |
+
+Archibus bulk-import is fully self-contained — no shared infrastructure with fm-assistant. The only shared element (BEM auth logic) is code-level, not runtime. Blast radius isolation: touching bulk-import never breaks fm-assistant. This means no `docker-compose.infra.yml` — the convention degrades gracefully.
 
 Simple projects don't need an infra file. The convention degrades gracefully — if no `docker-compose.infra.yml` exists, the app compose runs standalone.
 
 **The compose file is the handoff point** between human decisions and automated execution. Everything upstream (JA design, Developer implementation) is design. Everything downstream (deploy script, GHA) is deterministic. The compose file carries all design decisions — the script just reads them.
 
+**COMPOSE_PROJECT_NAME is the naming convention.** Docker Compose auto-prefixes containers, networks, and volumes with `COMPOSE_PROJECT_NAME`. The convention: never override this behavior.
+
+| Anti-pattern | Why banned | Convention |
+|-------------|-----------|-----------|
+| `container_name:` in compose | Overrides auto-naming, causes collisions | Let Docker name containers: `{project}-{service}-{N}` |
+| `external: true` on networks | Creates invisible cross-stack wiring | Let compose manage networks: `{project}_default` |
+| `network_mode: host` | Bypasses network isolation | Use compose-managed networks |
+| Hardcoded volume names | Not scoped to project | Use relative names: `{project}_{volume}` |
+
+The compose file + one env var (`COMPOSE_PROJECT_NAME`) = complete project identity. No manual naming, no external networks, no `docker network connect`.
+
 **Volume cloning replaces seed scripts.** On first preview deploy, app volumes are cloned from staging. No seed directory, no seed.sh, no Makefile. The staging system IS the seed. For bootstrap (first deploy with no staging), app services create their own state on first run — OpenWebUI creates its DB, Typesense starts empty, ingestion runs via GHA.
 
-**Undefined:** Volume state promotion — when a preview's volumes contain state the developer wants on staging (e.g., new agent config tested in preview), how does it transfer on PR merge? Options: export-to-git before merge, volume swap, or manual recreation. Requires a real case to evaluate.
+**Volume state promotion:** State changes that should survive a preview must enter git before PR merge. The preview volume itself is ephemeral — deleted on cleanup.
+
+| State type | Codification path |
+|-----------|------------------|
+| Agent config (system prompt, MCP connections, model) | Migration script: `scripts/migrations/NNN-description.js` |
+| Pipeline prompts / skill files | Already in git (bind-mounted) — no promotion needed |
+| Search index config | Ingestion script in git — re-runs on deploy |
+
+**Undefined:** Agent config export/import mechanism — LibreChat stores agents in MongoDB. The exact export path (mongoexport, LibreChat API, or manual recreation) needs a spike against one real project (Archibus bulk-import) to evaluate feasibility and developer friction.
 
 ### Part 4 — Push = Preview
 
@@ -197,12 +219,13 @@ INPUT: branch name
 
 | Level | Check | What it catches |
 |-------|-------|----------------|
+| 0 | Compose lint (convention validator) | `container_name:`, `external: true`, missing `healthcheck:` |
 | 1 | `docker compose config` | Invalid compose file |
 | 2 | `docker compose up --wait` | Health check failures |
 | 3 | `curl -f $PREVIEW_URL` | Routing/reachability broken |
 | 4 | `docker compose logs \| grep error` | Runtime errors in logs |
 
-Each level returns an exit code. GHA reads it: 0 = success, non-zero = failure. Binary, deterministic, no AI interpretation.
+Each level returns an exit code. GHA reads it: 0 = success, non-zero = failure. Binary, deterministic, no AI interpretation. Level 0 is static — runs in CI on every PR without needing the server. The compose validator codifies the naming convention (Part 3) into a machine-checkable artifact. Same principle as read-only SSH: remove the wrong choice instead of documenting against it.
 
 **Deploy-linker:** GHA step that posts deployment status to the issue: `📦 Preview deployed: URL` on success, `❌ Preview failed` on failure. Extracts issue number from branch name. Automatic.
 
@@ -216,6 +239,15 @@ Each level returns an exit code. GHA reads it: 0 = success, non-zero = failure. 
 The AI's SSH config only sees the `agent` user. Deployment via SSH is structurally impossible — it can only happen through git push → GHA. Same "no decision point" principle: remove the wrong choice entirely.
 
 **Data operations (ingestion):** Read-only SSH forces all writes through git. Data files go in the repo, GHA runs ingestion scripts on push. The commit that added data IS the audit trail. For UI-level state changes (agent configured via OpenWebUI), a volume manifest cron detects size changes and commits notifications to git.
+
+**Testing model — two-stage:**
+
+| Stage | Where | What it answers |
+|-------|-------|----------------|
+| **Preview** | Isolated clone of staging | "Does my code work?" (AC verification) |
+| **Staging** | Shared, latest state | "Does it work in context?" (automatic via merge queue) |
+
+Before final testing on the preview, the developer rebases code AND re-clones volumes from staging — minimizing divergence. PRs merge sequentially; GHA deploys staging + health check after each merge. If the health check fails, the last merge is the culprit. No race condition — each merge is the only variable.
 
 **Undefined:** Data ingestion pipeline design — the trigger mechanism for "data changed in git → GHA runs ingestion on server" needs a concrete implementation pattern. Related to the dbt/Flyway model (declarative files + reconciliation loop).
 
@@ -300,6 +332,7 @@ The JA designs the split. The Developer writes the compose files and project-spe
 **Sessions:**
 - 🗒️ Session 6fd2a15f (Pass 1 — design doc extraction)
 - 🗒️ Session b3ede71b (Pass 2 — real project grounding + conversation evidence)
+- 🗒️ Session aa9eb012 (Pass 3 — Archibus exemplar validation + CI/CD testing model)
 
 ---
 
