@@ -46,7 +46,7 @@ This is a data pipeline problem, not a serving problem. The goal is to build a n
 | **HTML** (5 format families) | 106 | 4% | Federal portals, CURIA, state courts | Format-specific extraction |
 | **PDF** | 6 | <1% | BGH, OLG originals | Docling |
 
-**TXT files** are the main corpus. Each is a complete court ruling in plain text. Line 1 contains the citation string (e.g., "BGH, Urteil vom 14.02.2023 — 1 BvR 2683/16"). Filenames are base64-encoded openJur URLs with `.raw.txt` extension — the citation URL is recoverable by decoding the filename.
+**TXT files** are the main corpus. Each is a complete court ruling in plain text. Line 1 contains the citation string (e.g., "BGH, Urteil vom 14.02.2023 — 1 BvR 2683/16") — verified on staging (#1241). Filenames are base64-encoded openJur URLs with `.raw.txt` extension — decode filename to recover source URL. No openjur.de scraping needed for the main corpus.
 
 **HTML files** come from 5 distinct source systems, each with different DOM structures:
 
@@ -67,7 +67,7 @@ Three parsers handle the three file types. All produce the same intermediate out
 
 **TXT parser (2,506 files):** Read file content directly. Extract citation string from Line 1. Decode filename (base64 → openJur URL) for the source link. No HTML parsing, no conversion — the text is ready for chunking.
 
-**HTML parser (106 files):** Detect source system from DOM markers (see Data Inventory table), then extract using format-specific selectors:
+**HTML parser (106 files):** Use Docling `DocumentConverter` as the primary content extractor. If Docling returns 0 chunks (e.g., deeply nested or non-standard DOM), fall back to BeautifulSoup `get_text()` with boilerplate stripping. Metadata (court, case number, source URL) is always extracted via format-specific selectors — independent of the content extraction path:
 
 | Source System | Content selector | Metadata extraction |
 |---------------|-----------------|-------------------|
@@ -77,9 +77,9 @@ Three parsers handle the three file types. All produce the same intermediate out
 | rechtsprechung-im-internet | `div.docLayoutText` | `table.documentHeader` cells: Gericht, AZ, ECLI |
 | openJur HTML | `div.cnt#econtent` | `<title>` tag, `<meta keywords>`, canonical URL |
 
-For the 19 long-tail files (BAG, BGH press releases, etc.): apply a generic fallback — BeautifulSoup `get_text()` with boilerplate stripping. Metadata extraction is best-effort from `<title>` and `<meta>` tags.
+For the 19 long-tail files (BAG, BGH press releases, etc.): BeautifulSoup `get_text()` fallback applies. Metadata extraction is best-effort from `<title>` and `<meta>` tags.
 
-**PDF parser (6 files):** Use Docling `DocumentConverter` (same as Navigation templates). Extract text and headings. Metadata from filename patterns (e.g., `vi_zr_109-23.pdf` → case number `VI ZR 109/23`).
+**PDF parser (6 files):** Use Docling `DocumentConverter`. Extract text and headings. Metadata from filename patterns (e.g., `vi_zr_109-23.pdf` → case number `VI ZR 109/23`).
 
 ### 3. Section-Aware Chunking
 
@@ -169,6 +169,8 @@ Urteile-DSGVO.zip
 
 All scripts live in `court-judgments/services/rag/`. One-time batch execution — not a continuous pipeline. Run on IITR-STAGING where TEI and Typesense are accessible.
 
+**Implementation results (2026-03-23):** Pipeline executed on staging. 170,382 chunks indexed to `urteile_bge_m3_2026-03-23`. All 6 ACs verified ([#1241](https://github.com/DaveX2001/deliverable-tracking/issues/1241) closed). CJ model returns cited court judgment answers on staging (CURIA C-46-23, LG Aschaffenburg 15 O 46/20, LG Münster 11 O 530/20). Source URLs (`source_url`) populated in Typesense — surfacing in LLM response addressed by [#1252](https://github.com/DaveX2001/deliverable-tracking/issues/1252).
+
 ---
 
 ## Source
@@ -192,11 +194,15 @@ All scripts live in `court-judgments/services/rag/`. One-time batch execution �
 - [DS-Kit Navigation Design](https://mariuswilsch.github.io/public-wilsch-ai-pages/project/iitr/dskit-navigation-design) — Navigation system design (parallel project)
 
 **Issues:**
-- [#1234](https://github.com/DaveX2001/deliverable-tracking/issues/1234) — this design doc's tracking issue
-- [#1214](https://github.com/DaveX2001/deliverable-tracking/issues/1214) — CJ Pipeline Filter + Housekeeping (serving layer, blocked by this)
+- [#1234](https://github.com/DaveX2001/deliverable-tracking/issues/1234) — this design doc's tracking issue (closed)
+- [#1241](https://github.com/DaveX2001/deliverable-tracking/issues/1241) — CJ Indexing + Serving Integration (closed — witness passed 6/6 ACs)
+- [#1252](https://github.com/DaveX2001/deliverable-tracking/issues/1252) — CJ Prompt Restoration + Langfuse Tracing (next step)
+- [#1214](https://github.com/DaveX2001/deliverable-tracking/issues/1214) — CJ Pipeline Filter + Housekeeping (serving layer)
 - [#959](https://github.com/DaveX2001/deliverable-tracking/issues/959) — parent epic
 
-**Session:** This design doc was produced in extraction pass session `ffc4b751-d331-48af-9caf-2811a5e2c5ae`
+**Sessions:**
+- `ffc4b751-d331-48af-9caf-2811a5e2c5ae` — original extraction pass (design doc produced)
+- `655f06bf-8060-449b-b7bd-e7bd7e01023f` — this update pass (Docling override, TXT verification, implementation results)
 
 ---
 
