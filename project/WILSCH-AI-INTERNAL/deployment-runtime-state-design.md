@@ -258,6 +258,8 @@ Three server users, each structurally limited:
 - **Docker:** [LinuxServer docker-socket-proxy](https://github.com/linuxserver/docker-socket-proxy) runs on `127.0.0.1:2375`. Agent's `DOCKER_HOST=tcp://localhost:2375`. Proxy configured: `POST=0` (master read-only switch), `CONTAINERS=1`, `IMAGES=1`, `NETWORKS=1`, `VOLUMES=1`. Agent can `docker ps`, `docker logs`, `docker inspect` — cannot `docker stop`, `docker rm`, `docker exec` (403 Forbidden).
 - **Filesystem:** Agent not in `dev-team` group. Project dirs are `drwxrwsr-x root:dev-team` — agent can read code (world-readable) but cannot write. `.env` files tightened to `640 :dev-team` — agent cannot read credentials.
 - **Git:** Git's `safe.directory` check blocks non-owner operations. Repo owned by `marius:dev-team`, agent is neither — git refuses all operations including `git pull`. Read-only file access still permits `git log` and `git show` via direct object reads.
+
+**Undefined:** `safe.directory` may be redundant — filesystem permissions (agent not in `dev-team`) already prevent writes, and SSH restrictions prevent push. Removing `safe.directory` would enable native `git log`/`git show` without direct object reads. Needs a spike on WILSCH-AI-SERVER to verify that filesystem perms + SSH restrictions alone produce the desired read-only git behavior.
 - **SSH config:** AI's `~/.ssh/config` points `WILSCH-AI-SERVER` to `User agent`. Onboarding bootstrap surfaces this host — the AI sees only the restricted user.
 
 The AI's SSH config only sees the `agent` user. Deployment via SSH is structurally impossible — it can only happen through git push → GHA. Same "no decision point" principle: remove the wrong choice entirely.
