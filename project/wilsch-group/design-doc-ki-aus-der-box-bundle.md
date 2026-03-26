@@ -11,18 +11,18 @@ Design doc for the DGX Spark bundle product section on the FSO seminar website �
 
 ## Problem Statement
 
-The FSO seminar website (ki-performance page) ends with a generic CTA — "Vergleichstest anfragen" — that offers no concrete product, no price, and no commitment path. Seminar attendees see benchmark results (DGX Spark 200x faster than Power 10) but have no actionable next step beyond "contact us."
+The FSO seminar website (ki-performance page) ends with a generic CTA — "Vergleichstest anfragen" *(request comparison test)* — that offers no concrete product, no price, and no commitment path. Seminar attendees see benchmark results (DGX Spark 200x faster than Power 10) but have no actionable next step beyond "contact us."
 
-This design doc defines the DGX Spark bundle — "KI aus der Box" — as a packaged product with hardware, software expertise, and setup services at a concrete price point. The bundle section replaces or augments the current "Nächster Schritt" footer on the KI-Performance page.
+This design doc defines the DGX Spark bundle — "KI aus der Box" *(AI out of the Box)* — as a packaged product with hardware, software expertise, and setup services at a concrete price point. The bundle section replaces or augments the current "Nächster Schritt" *(Next Step)* footer on the KI-Performance page.
 
 This is NOT about the KI-Performance page content (benchmarks, hardware comparison, analogies) — that already exists. This is about the commercial proposition at the end: what the customer buys, what it costs, and what they get.
 
 **Preconditions:**
 - FSO seminar is 2026-03-27 — the bundle section must be live before the event
-- DGX Spark hardware is available at ~€5,000 (Richtpreis, volatile — IBM raised Spyre component prices 55% in March)
+- DGX Spark hardware is available at ~€5,000 (Richtpreis *(indicative price)*, volatile — IBM raised Spyre component prices 55% in March)
 - Two DGX Sparks are operational with vLLM, benchmarks completed (Rekers pipeline: 1,319 pages/hr)
-- KI-Performance page exists at /ki-performance with sections: Hero → ComparisonTable → Benchmark → WarumSoSchnell → Kaufentscheidung → PageFooter
-- Existing CTA infrastructure: "Jetzt anrufen" + "Gespräch vereinbaren" on homepage, "Vergleichstest anfragen" on KI-Performance page
+- KI-Performance page exists at /ki-performance with sections: Hero → ComparisonTable → Benchmark → WarumSoSchnell *(WhySoFast)* → Kaufentscheidung *(Purchase Decision)* → PageFooter
+- Existing CTA infrastructure: "Jetzt anrufen" *(Call now)* + "Gespräch vereinbaren" *(Book a meeting)* on homepage, "Vergleichstest anfragen" *(Request comparison test)* on KI-Performance page
 
 ---
 
@@ -31,8 +31,8 @@ This is NOT about the KI-Performance page content (benchmarks, hardware comparis
 | Element | Definition |
 |---------|-----------|
 | **Goal** | A concrete, priced product offering on the FSO website that gives seminar attendees a clear next step — from "interesting benchmarks" to "I want this" |
-| **Success** | Attendees see the bundle, understand what they get (hardware + software + setup), see the price (~€10K), and pick up the phone or book a Gespräch. Ulrich can point at it during the seminar and say: "KI aus der Box — 5.000 Euro Hardware, 5 Tage Einrichtung, läuft." |
-| **Done test** | Can Ulrich walk a Geschäftsführer through the bundle section in 30 seconds and get a "tell me more"? If YES → the section works. |
+| **Success** | Attendees see the bundle, understand what they get (hardware + software + setup), see the price (~€10K), and pick up the phone or book a Gespräch *(meeting)*. Ulrich can point at it during the seminar and say: "KI aus der Box — 5.000 Euro Hardware, 5 Tage Einrichtung *(setup)*, läuft *(it runs)*." |
+| **Done test** | Can Ulrich walk a Geschäftsführer *(CEO/Managing Director)* through the bundle section in 30 seconds and get a "tell me more"? If YES → the section works. |
 
 ---
 
@@ -40,27 +40,27 @@ This is NOT about the KI-Performance page content (benchmarks, hardware comparis
 
 ### Part 1 — Bundle Structure
 
-The bundle follows Ulrich's 40-year IBM sales pattern: Hardware + Betriebssoftware + Dienstleistung. Three layers, one price.
+The bundle follows Ulrich's 40-year IBM sales pattern: Hardware + Betriebssoftware *(operating software)* + Dienstleistung *(services)*. Three layers, one price.
 
 | Layer | What the customer gets | Price |
 |-------|----------------------|-------|
-| **1 — Hardware** | NVIDIA DGX Spark (GB10 Blackwell, 128 GB RAM, 2 TB NVMe). Runs models up to 200B parameters locally. Fits on a desk (150×150×50mm, 1.2 kg). | ~€5.000 (Richtpreis) |
+| **1 — Hardware** | NVIDIA DGX Spark (GB10 Blackwell, 128 GB RAM, 2 TB NVMe). Runs models up to 200B parameters locally. Fits on a desk (150×150×50mm, 1.2 kg). | ~€5.000 (Richtpreis *(indicative price)*) |
 | **2 — Software Expertise** | Production serving engine (vLLM), chat interface (Open WebUI / LibreChat), data connectors (MCP, Vector DB, DB Toolkits), authentication — configured for the customer's environment. | Included in setup |
-| **3 — Einrichtung** | 5 Manntage: infrastructure setup, platform + connectors, validation with real data, user training + handover. | ~€5.000 |
+| **3 — Einrichtung** *(Setup)* | 5 Manntage *(person-days)*: infrastructure setup, platform + connectors, validation with real data, user training + handover. | ~€5.000 |
 
 **Bundle total: ~€10.000** — versus €250.000+ for IBM Spyre + Power 11.
 
 **Framing:** Not "a GPU box" — it's your local platform for making data accessible. The DGX Spark is the sovereign engine; MCP + the software stack is what connects it to your SQL, Confluence, PIM, and file servers. Cloud option available — mentioned but not the lead.
 
-**Product name:** "KI aus der Box" — triple meaning: physically a box, works out of the box, and the surprise factor ("DAS ist die KI-Maschine?").
+**Product name:** "KI aus der Box" *(AI out of the Box)* — triple meaning: physically a box, works out of the box, and the surprise factor ("DAS ist die KI-Maschine?" *(THAT is the AI machine?)*).
 
 ### Part 2 — Software Expertise (Layer 2)
 
-The selling point is not the specific tool — it's that we've already figured it out across 4+ client projects. "Sie profitieren davon, dass Sie sich nicht selbständig mit diesen Neuerungen herumplagen."
+The selling point is not the specific tool — it's that we've already figured it out across 4+ client projects. "Sie profitieren davon, dass Sie sich nicht selbständig mit diesen Neuerungen herumplagen." *(You benefit from not having to struggle with these innovations yourself.)*
 
 **Serving Engine:** vLLM via eugr/spark-vllm-docker. Production-grade, model-agnostic — swap any model in one command. Nightly builds, tested before publish. Two advantages over the pre-installed Ollama: (1) 1.4x faster per request while running a 7.5x bigger model, and (2) continuous batching — 8 users can query simultaneously while Ollama queues them one at a time. Same hardware, the difference is software expertise. Addresses the staleness fear: new model drops tomorrow, one command to update.
 
-**Clustering (add-on):** "Was ist, wenn das Modell nicht auf eine Box passt?" — two DGX Sparks linked via ConnectX-7 → 256 GB unified memory, runs models up to 397B parameters (Qwen3.5-397B confirmed). +€5K for the second unit. We know how to set it up — launch-cluster.sh handles the orchestration.
+**Clustering (add-on):** "Was ist, wenn das Modell nicht auf eine Box passt?" *(What if the model doesn't fit on one box?)* — two DGX Sparks linked via ConnectX-7 → 256 GB unified memory, runs models up to 397B parameters (Qwen3.5-397B confirmed). +€5K for the second unit. We know how to set it up — launch-cluster.sh handles the orchestration.
 
 **Chat Interface:** Both leading open-source ChatGPT-like chat interfaces are included:
 
@@ -90,54 +90,54 @@ We know both platforms and pick the right one for the customer's environment. Al
 | DB Toolkits (MindsDB) | Legacy databases, many connectors OOB | AS/400, Access via ODBC |
 | Skills | Company knowledge as structured instructions | Product catalog logic, naming conventions, internal processes — the AI knows your company |
 
-**Analogy — Dolmetscher:**
+**Analogy — Dolmetscher *(Interpreter)*:**
 
-Ulrich's one-liner: *"Ihre Daten sprechen sechs Sprachen — wir liefern den Dolmetscher, der alle versteht."*
+Ulrich's one-liner: *"Ihre Daten sprechen sechs Sprachen — wir liefern den Dolmetscher, der alle versteht."* *(Your data speaks six languages — we provide the interpreter who understands them all.)*
 
-Extended: SQL spricht Deutsch, Confluence spricht Englisch, Ihre PDFs sprechen Bildsprache, die AS/400 spricht Plattdeutsch. Bisher mussten Sie selbst übersetzen — in jedem System einzeln suchen. Die KI ist der Dolmetscher. Wir liefern die Wörterbücher mit — und wissen, welches wo hingehört.
+Extended: SQL spricht Deutsch, Confluence spricht Englisch, Ihre PDFs sprechen Bildsprache, die AS/400 spricht Plattdeutsch *(Low German dialect)*. Bisher mussten Sie selbst übersetzen — in jedem System einzeln suchen. Die KI ist der Dolmetscher. Wir liefern die Wörterbücher *(dictionaries)* mit — und wissen, welches wo hingehört. *(Until now you had to translate yourself — searching each system one by one. The AI is the interpreter. We provide the dictionaries — and know which one goes where.)*
 
-**Berechtigungskonzept:** Three auth layers, all mapping to patterns enterprises already use:
+**Berechtigungskonzept *(Access Control Concept)*:** Three auth layers, all mapping to patterns enterprises already use:
 1. Chat UI groups — Open WebUI RBAC (Admin/User/Pending, group-based model access)
 2. MCP DB permissions — restricted database user, same auth the customer already has
 3. Vector metadata filtering — document sensitivity tags, C-level content filtered by role
 
 **Licensing:** LibreChat = MIT (fully rebrandable). Open WebUI = BSD + branding restriction (≤50 users exempt, enterprise license for larger).
 
-### Part 3 — Einrichtung (Layer 3)
+### Part 3 — Einrichtung *(Setup)* (Layer 3)
 
-5 Manntage, configurable. Day 1 and 5 are fixed; days 2-4 are the "build your own" zone.
+5 Manntage *(person-days)*, configurable. Day 1 and 5 are fixed; days 2-4 are the "build your own" zone.
 
 | Tag | Category | Output |
 |-----|----------|--------|
 | 1 | **Infrastructure** | Box online, Tailscale remote access, vLLM serving, first model pulled |
 | 2-3 | **Platform + Connectors** | Chat UI deployed, SSO/auth configured, base data sources wired (2-3 connectors) |
 | 4 | **Validation** | Real customer data, end-to-end use case tested internally, then demoed to customer |
-| 5 | **Einweisung + Handover** | Admin training (model management, user admin), user training (how to chat), handover documentation |
+| 5 | **Einweisung *(Training)* + Handover** | Admin training (model management, user admin), user training (how to chat), handover documentation |
 
 **Base vs. Add-ons:**
-- **Base bundle:** DGX Spark + vLLM + Chat UI + 2 Manntage (infra + Einweisung) = "Private ChatGPT, lokal"
+- **Base bundle:** DGX Spark + vLLM + Chat UI + 2 Manntage *(person-days)* (infra + Einweisung *(training)*) = "Private ChatGPT, lokal" *(Private ChatGPT, local)*
 - **Recommended:** Full 5 Manntage with connectors + auth + validation = ~€10K total
-- **Add-ons:** Additional connectors beyond base (extra Manntage per source), second DGX Spark for clustering (+€5K), ongoing Betreuungsvertrag (separate)
+- **Add-ons:** Additional connectors beyond base (extra Manntage per source), second DGX Spark for clustering (+€5K), ongoing Betreuungsvertrag *(maintenance contract)* (separate)
 
-**Ongoing maintenance:** "Permanente Aktualisierung verfügbar" — model updates, new connectors, performance tuning. Scoped per customer in Workshop 1 (free). Not priced on the website — signals availability, kills the staleness objection.
+**Ongoing maintenance:** "Permanente Aktualisierung verfügbar" *(Permanent updates available)* — model updates, new connectors, performance tuning. Scoped per customer in Workshop 1 (free). Not priced on the website — signals availability, kills the staleness objection.
 
-**Reference case:** Ein Kunde aus der Fertigungsindustrie — 294 Seiten Dokumentenverarbeitung: 5 Tage auf Power 10, 13 Minuten auf DGX Spark. Faktor 200.
+**Reference case:** Ein Kunde aus der Fertigungsindustrie *(A manufacturing industry customer)* — 294 Seiten Dokumentenverarbeitung *(pages of document processing)*: 5 Tage auf Power 10 *(5 days on Power 10)*, 13 Minuten auf DGX Spark. Faktor 200.
 
 ### Part 4 — Website Integration
 
-**Position:** Replaces or augments the current "Nächster Schritt" section (PageFooter component) on /ki-performance. The bundle section sits after Kaufentscheidung — the natural next question after "which hardware?" is "what does it cost to get started?"
+**Position:** Replaces or augments the current "Nächster Schritt" *(Next Step)* section (PageFooter component) on /ki-performance. The bundle section sits after Kaufentscheidung *(Purchase Decision)* — the natural next question after "which hardware?" is "what does it cost to get started?"
 
 **Irresistible offer framing ($100M Offers pattern):**
 - Price anchor with alternatives: IBM Spyre + Power 11 (€250K+), 300 ChatGPT accounts (€XX.000/Jahr), then the bundle (~€10K once)
 - Value stack: all three layers visible (Hardware + Software + Setup)
-- Price disclaimer: "Aktueller Richtpreis, kann sich ändern"
+- Price disclaimer: "Aktueller Richtpreis, kann sich ändern" *(Current indicative price, subject to change)*
 - Urgency: seminar-specific framing
 
-**Scarcity:** "Nur 3 Pakete verfügbar" — or similar limited availability framing. Real constraint: Marius's setup capacity is finite (5 Manntage per customer).
+**Scarcity:** "Nur 3 Pakete verfügbar" *(Only 3 packages available)* — or similar limited availability framing. Real constraint: Marius's setup capacity is finite (5 Manntage per customer).
 
 **Entry point:** Workshop 1 (free, 1-1.5 hours) is the natural next step after seeing the bundle. Customer calls → free workshop → bundle scoped to their environment. Already the standard sales process — the bundle gives it a concrete anchor.
 
-**CTA:** Links to existing infrastructure — "Jetzt anrufen" + "Gespräch vereinbaren." No new flow needed.
+**CTA:** Links to existing infrastructure — "Jetzt anrufen" *(Call now)* + "Gespräch vereinbaren" *(Book a meeting)*. No new flow needed.
 
 **Copy/headlines:** Deferred to David — direction is "KI aus der Box" as headline, value stack as body, price anchor as persuasion layer. Specific German copy to be written during implementation.
 
