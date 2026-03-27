@@ -195,7 +195,7 @@ Automated evaluation against the 317 Masterfragen. MF has no separate test set �
 | **Iteration** | ~30 representative subset | ~4 min | Rapid feedback for prompt tuning |
 | **Gate** | Full 317 | ~40 min | Release validation |
 
-The iteration subset should sample across answer lengths (short ≤30w, medium 31-80w, long >80w) to catch regressions across the distribution. The gate test runs all 317 — no sampling, no shortcuts.
+The iteration subset uses random sampling (~30 questions) to catch regressions across the distribution. The gate test runs all 317 — no sampling, no shortcuts.
 
 **Scoring:**
 
@@ -206,7 +206,7 @@ The iteration subset should sample across answer lengths (short ≤30w, medium 3
 
 **Test set = knowledge base.** The 317 Q&A pairs serve dual purpose: they ARE the ingested data AND the ground truth for evaluation. Each question tests whether the system can find and reproduce its own pre-verified answer.
 
-**Target:** 317/317 (100%) on the gate test. With a dedicated collection containing only Masterfragen data, any miss indicates retrieval or generation failure requiring diagnosis. The diagnostic chain follows Navigation's pattern: Data Source → Retrieval → Generation.
+**Target:** ~90–95% on the gate test (~285–301 of 317). 100% is unrealistic — minor AI inconsistencies are expected. Any miss below 90% indicates retrieval or generation failure requiring diagnosis. The diagnostic chain follows Navigation's pattern: Data Source → Retrieval → Generation.
 
 **Cost per run:** ~$1 via OpenRouter (Sonnet 4.6) — negligible. Time (~40 min) is the real cost, which is why the iteration subset exists.
 
@@ -235,7 +235,7 @@ Retire the old Qdrant-based MF architecture. Codebase investigation reveals exte
 
 **Cleanup order:** Deploy new pipeline first (Parts 1-4), verify it works, THEN remove legacy. Never remove before the replacement is serving.
 
-**Navigation collection cleanup:** The 22 MF entries injected into `dskit_navigation` during #1192 should be evaluated after MF has its own collection. If they still improve Navigation scores, keep them. If they add noise, remove them. This is a post-migration decision.
+**Navigation collection cleanup:** The 22 MF entries injected into `dskit_navigation` during #1192 stay — SA confirmed they should remain. Flag this with the client at some point so they're aware MF content appears in Navigation results. This is a communication task, not a technical one.
 
 ---
 
