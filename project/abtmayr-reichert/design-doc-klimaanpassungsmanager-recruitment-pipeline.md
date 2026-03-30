@@ -19,13 +19,6 @@ Klimafolgenschutz e.V. adressiert diese Lücke durch die Schaffung einer neuen S
 
 > *"Wie bei Tesla — Autos und Ladestation gleichzeitig."* — Michael Reichert
 
-**Voraussetzungen:**
-- KAnG ist in Kraft — Kommunen sind gesetzlich zum Handeln verpflichtet
-- DAS-Förderfenster geschlossen (Aug 2025), Förderrichtlinie gültig bis Dez 2026
-- PIK/UBA stellen kostenlose Methodik-Tools bereit (Klimalotse 3.0, GERICS, Anpassungsscanner)
-- Klimafolgenschutz e.V. ist operativ (Website live, Bankkonto, Vereinsregister)
-- Die Stellenkategorie „KAM-Werkstudent" existiert am aktuellen Markt nicht
-
 ---
 
 ## Erfolgsdefinition
