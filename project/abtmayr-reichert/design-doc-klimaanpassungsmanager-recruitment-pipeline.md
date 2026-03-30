@@ -17,7 +17,7 @@ Kommunen stehen vor einem dreifachen Problem: gesetzliche Verpflichtung, fehlend
 
 Klimafolgenschutz e.V. adressiert diese Lücke durch die Schaffung einer neuen Stellenkategorie: Werkstudenten als Klimaanpassungsmanager. Der e.V. rekrutiert Studierende, stellt den methodischen Rahmen bereit (abgeleitet von PIK/UBA-Tools) und verbindet sie mit Kommunen — Angebot und Nachfrage gleichzeitig.
 
-> *"Wie bei Tesla — Autos und Ladestation gleichzeitig."*
+Das Modell folgt dem Prinzip, Angebot und Nachfrage parallel aufzubauen — Studierende rekrutieren und gleichzeitig Kommunen als Einsatzorte gewinnen.
 
 ---
 
@@ -47,7 +47,7 @@ Die Rekrutierungs-Pipeline operiert innerhalb des deutschen Ökosystems zur Klim
 | Begriff | Definition |
 |---------|-----------|
 | **KAnG** (Klimaanpassungsgesetz) | Bundesgesetz (Nov 2023), das jede Kommune zur Erstellung eines Klimaanpassungskonzepts verpflichtet. Länder müssen bis 31. Jan 2027 Anpassungsstrategien vorlegen. Keine expliziten Sanktionen — gesetzliche Verpflichtung ohne Durchsetzungsmechanismus, erzeugt aber politischen Druck und Haushaltsbegründung. |
-| **DAS** (Deutsche Anpassungsstrategie) | Bundesförderprogramm zur Finanzierung von KAM-Stellen und Anpassungskonzepten. Budget seit Aug 2025 erschöpft; Förderrichtlinie gültig bis Dez 2026. „Gültig aber erschöpft" = Regeln bestehen, neue Förderfenster geplant aber nicht terminiert. |
+| **DAS** (Deutsche Anpassungsstrategie) | Bundesförderprogramm zur Finanzierung von KAM-Stellen und Anpassungskonzepten. Budget seit Aug 2025 erschöpft; Förderrichtlinie gültig bis Dez 2026. Die Regeln bestehen weiterhin, neue Förderfenster sind geplant aber nicht terminiert. |
 | **NKI** (Nationale Klimaschutzinitiative) | Parallelprogramm für Klima*schutz* (Mitigation), nicht Anpassung. Finanziert Klimaschutzmanager-Stellen. Gleicher Träger (ZUG), anderer Zweck. |
 | **TVöD EG 10–11** | Tarifliche Eingruppierung für professionelle KAMs: ~3.500–4.500 €/Monat brutto. Relevant als Positionierungs-Benchmark — Werkstudenten kosten einen Bruchteil. |
 | **Klimaanpassungskonzept** | Das Dokument, das Kommunen gemäß KAnG erstellen müssen: eine formale Klimarisikoanalyse, Anpassungsstrategie und Umsetzungsplan. |
@@ -116,7 +116,7 @@ Die Agenda präsentiert den Klimalotse-Lebenszyklus, angepasst auf den Werkstude
 
 **Was Studierende NICHT tun:** Politische Mandatsverhandlung, Leitung von Stakeholder-Workshops (sie unterstützen und dokumentieren), finale Risikobewertungsentscheidungen, Fördermittelantragstellung (Studierende bereiten vor, Kommune unterzeichnet).
 
-**Unterstützungsinfrastruktur:** Das ZKA bietet kostenlose Schulungsseminare (2,5 Tage, 6x/Jahr), ein Mentoring-Programm (Peer-Matching) und eine digitale Plattform für KAMs. Der Zugang für Werkstudenten zu diesen Programmen ist nicht explizit ausgeschlossen, aber nicht getestet — Anmeldeformulare enthalten die Felder „Sonstiges" und „Stellenumfang in %".
+**Unterstützungsinfrastruktur:** Das ZKA bietet kostenlose Schulungsseminare (2,5 Tage, 6x/Jahr), ein Mentoring-Programm (Peer-Matching) und eine digitale Plattform für KAMs. Der Zugang für Werkstudenten zu diesen Programmen ist nicht explizit ausgeschlossen, aber nicht getestet — Anmeldeformulare erlauben flexible Angaben zu Stellenart und -umfang.
 
 ### Teil 2: Stellenbeschreibung
 
@@ -137,7 +137,7 @@ Deutsche Stellenbeschreibung für die Werkstudentenstelle. Inhaltlich abgeleitet
 |---------|--------|
 | **Typ** | Werkstudent (max. 20 Std./Woche im Semester) |
 | **Fachrichtungen** | Tiefbauingenieurwesen, Wasserwirtschaft, Geographie, Umweltwissenschaften, BWL/Ökonomie |
-| **Einsatzort** | Vor Ort in der Kommune — *„der läuft praktisch in der Gemeinde rum"* |
+| **Einsatzort** | Vor Ort in der Kommune — direkter Einsatz in der Verwaltung |
 | **Geltungsbereich** | Bundesweit — keine geografische Einschränkung |
 | **Abschlussarbeit** | Optional — Studierende können ihre Bachelorarbeit zum Einsatzthema schreiben |
 
@@ -149,7 +149,7 @@ Deutsche Stellenbeschreibung für die Werkstudentenstelle. Inhaltlich abgeleitet
 - **Dein Profil:** Fachrichtungsanforderungen, Interesse an Klimaanpassung, strukturierte Arbeitsweise, Deutsch fließend, GIS von Vorteil
 - **Wir bieten:** Praxiserfahrung, Bachelorarbeit-Möglichkeit, ZKA-Netzwerkzugang, flexible Arbeitszeiten, direkter kommunaler Impact
 
-**Marktpositionierung:** Der „KAM-Werkstudent" existiert am aktuellen Arbeitsmarkt nicht. Die Differenzierung gegenüber professionellen KAM-Ausschreibungen: niedrigere Einstiegshürde (Student, kein Abschluss erforderlich), Abschlussarbeit-Integration, strukturierte Methodik über die Agenda und ZKA-Netzwerkzugang über die e.V.-Anbindung.
+**Marktpositionierung:** Der KAM-Werkstudent existiert am aktuellen Arbeitsmarkt nicht. Die Differenzierung gegenüber professionellen KAM-Ausschreibungen: niedrigere Einstiegshürde (Student, kein Abschluss erforderlich), Abschlussarbeit-Integration, strukturierte Methodik über die Agenda und ZKA-Netzwerkzugang über die e.V.-Anbindung.
 
 ### Teil 3: LinkedIn Unternehmensseite + Content-Strategie
 
@@ -171,7 +171,7 @@ Neue organisationale LinkedIn-Seite für Klimafolgenschutz e.V. — bisher exist
 | Säule | Anteil | Zielgruppe | Beispiel |
 |-------|--------|------------|---------|
 | **Klima-Wissen** | ~30% | Beide | GERICS Klimaausblick-Highlights, Schwammstadt-Erklärer |
-| **Karriere** | ~30% | Studierende | „Was macht ein/e KAM?", Werkstudenten-Stellen |
+| **Karriere** | ~30% | Studierende | Berufsfeld KAM erklären, Werkstudenten-Stellen |
 | **Gemeinden** | ~25% | Kommunen | KAnG-Pflichten, DAS-Förder-Updates, Erfolgsgeschichten |
 | **Verein** | ~15% | Beide | e.V.-Meilensteine, PIK/UBA-Kontakt-Updates |
 
@@ -191,23 +191,16 @@ Neue organisationale LinkedIn-Seite für Klimafolgenschutz e.V. — bisher exist
 |---------|---------|-----|
 | **Abschnittstitel** | Klimafolgenschutzmanager | **Klimaanpassungsmanager** |
 | **CTA-Button** | Interesse bekunden → mailto:info@klimafolgenschutz.org | Interesse bekunden → **LinkedIn Stellenanzeige URL** |
-| **Badge** | „Bald verfügbar" | **Entfernen** |
-| **Subtext** | „im Aufbau" | **Entfernen** |
+| **Badge** | Verfügbarkeitshinweis | **Entfernen** |
+| **Subtext** | Aufbauhinweis | **Entfernen** |
 
-**Umbenennungsumfang:** Seitenweit — jede Instanz von „Klimafolgenschutzmanager" wird zu „Klimaanpassungsmanager". Begründung: *„Klimaanpassungsmanager ist die Begrifflichkeit, die die Behörde bereits eingeführt hat."*
+**Umbenennungsumfang:** Seitenweit — jede Instanz von Klimafolgenschutzmanager wird zu Klimaanpassungsmanager. Begründung: Klimaanpassungsmanager ist die behördlich etablierte Begrifflichkeit.
 
 **Abhängigkeit:** Teil 3 (LinkedIn-Seite + Stellenanzeige) muss live sein, bevor der CTA darauf verweisen kann.
 
 ```
 Teil 3 (LinkedIn-Seite live) ──→ Teil 4 (CTA-URL tauschen)
 ```
-
-**Zurückgestellte Punkte:**
-
-| Punkt | Begründung | Wann |
-|-------|-----------|------|
-| **/wissen-Seite** | Kein konkreter Scope — *„kann sich ja entwickeln noch"* | Nachdem Agenda-Inhalte ausgereift sind |
-| **Zertifizierung** | *„Warten wir damit ab bis zum Schluss"* | Nach ersten Einsätzen des Programms |
 
 ---
 
