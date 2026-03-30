@@ -4,7 +4,6 @@ publish: true
 
 # Design Doc: Rekrutierungs-Pipeline Klimaanpassungsmanager
 
-[[client-abtmayr-reichert]]
 
 Rekrutierungs-Pipeline für Klimafolgenschutz e.V.: Wie der Verein Kommunen mit Werkstudenten als Klimaanpassungsmanager verbindet — auf Basis bundesweiter Methodik-Rahmenwerke.
 
@@ -34,8 +33,7 @@ Klimafolgenschutz e.V. adressiert diese Lücke durch die Schaffung einer neuen S
 | Element | Definition |
 |---------|-----------|
 | **Ziel** | Michael kann Klimaanpassungsmanager (Werkstudenten) für Kommunen über eine einheitliche Pipeline rekrutieren — von der Stellenbeschreibung über die LinkedIn-Präsenz bis zur Website-Integration |
-| **Erfolg** | Ein veröffentlichtes Design Doc, das Marius in Entwickler-Teilaufgaben für alle 4 Liefergegenstände zerlegen kann — mit ausreichender Spezifität, sodass die Umsetzung keine weitere Design-Session erfordert |
-| **Done-Test** | Kann ich eine Meetingagenda mit offenen Designfragen schreiben? Wenn NEIN → Design ist vollständig |
+| **Erfolg** | Ein veröffentlichtes Design Doc, das alle 4 Liefergegenstände mit ausreichender Spezifität beschreibt, sodass die Umsetzung keine weitere Design-Session erfordert |
 
 ---
 
@@ -176,7 +174,7 @@ Neue organisationale LinkedIn-Seite für Klimafolgenschutz e.V. — Michael hat 
 | **Tagline** | *Gemeinden stärken. Klima anpassen. Zukunft sichern.* |
 | **Website** | klimafolgenschutz.com |
 | **E-Mail** | info@klimafolgenschutz.org |
-| **Admin** | Marius erstellt die Seite, Michael erhält Admin-Zugang |
+| **Admin** | Michael erhält Admin-Zugang |
 
 **Content-Säulen:**
 
@@ -225,24 +223,15 @@ Teil 3 (LinkedIn-Seite live) ──→ Teil 4 (CTA-URL tauschen)
 
 ## Quellen
 
-- **Transkripte:** [Fireflies 2026-03-23](https://app.fireflies.ai/view/01KMDCMMAF48SP1FBQ0JWW51R7) — Primäre Anforderungen (Michael, Marius, David)
-- **E-Mail:** [PIK-Links von Michael](https://mail.google.com/mail/u/0/#all/19d1ae8a29c64a84) — UBA Kompass + GERICS
-- **Artefakte:**
-  - [DAS-Förderrichtlinie 2021 (PDF)](https://www.z-u-g.org/fileadmin/zug/Dateien/Foerderprorgamme/DAS_Anpassung_an_den_Klimawande/25-01-DAS-Foerderrichtlinie_2021_ab_06.11.24_bf.pdf) — Bundesförderregeln für KAM
-  - [KAnG (Bundestag)](https://www.bundestag.de/dokumente/textarchiv/2023/kw46-de-bundesklimaanpassungsgesetz-976584) — Kommunale gesetzliche Verpflichtung
-  - [UBA Klimalotse 3.0](https://www.umweltbundesamt.de/themen/klimalotse-30-aktualisierter-leitfaden-zur) — 5-Modul-Methodik
-  - [GERICS Klimaausblicke](https://www.gerics.de/products_and_publications/fact_sheets/landkreise/index.php.de) — 17 Indikatoren pro Landkreis
-  - [UBA Anpassungsscanner](https://www.umweltbundesamt.de/node/118272) — Excel-Selbstbewertung
-  - [KLiVO Portal](https://www.klivoportal.de) — Regierungs-Tool-Aggregator
-  - [ZKA KAM Beruf](https://zentrum-klimaanpassung.de/wissen/beruf-klimaanpassungsmanagerin/beruf-klimaanpassungsmanagerin) — Rollendefinition
-  - [NKI / DAS Förderung](https://www.z-u-g.org/das/) — Bundesprogramm-Übersicht
-  - [NKI Kommunalagentur](https://www.klimaschutz.de/de/foerderung-der-nki/ueber-die-nki-dashboard/agentur-fuer-kommunalen-klimaschutz) — Beratung für Kommunen
-- **Sessions:**
-  - [Rubber-duck #1317](https://github.com/MariusWilsch/claude-code-conversation-store/blob/main/projects/-Users-verdant-Documents-projects-billable-klimafolgenschutz-website/44abeabd-6d82-4c29-bb50-72c46a609995.jsonl) — Konsolidierungsbegründung (#1242 + #1243 → #1317)
-  - [JA Extraction #1319](https://github.com/MariusWilsch/claude-code-conversation-store/blob/main/projects/-Users-daveFem-Desktop-claude-projects-06-ABTMAYR-REICHERT--deliverable/75a1bfd3-0f96-431d-93d5-61121cf5ef2e.jsonl) — Initiale Design-Doc-Session
-  - [JA Terminology Pass #1319](https://github.com/MariusWilsch/claude-code-conversation-store/blob/main/projects/-Users-daveFem-Desktop-claude-projects-06-ABTMAYR-REICHERT--deliverable/105fe43b-af01-4fcf-bc33-d701510b5f4e.jsonl) — Grundlagen-Glossar + kundengerechte Aufbereitung
-
-*Ersetzt: #1317 (geschlossen), #1242 (LinkedIn Content Strategy), #1243 (PIK Research Integration) — alle geschlossen als „not planned."*
+- [DAS-Förderrichtlinie 2021 (PDF)](https://www.z-u-g.org/fileadmin/zug/Dateien/Foerderprorgamme/DAS_Anpassung_an_den_Klimawande/25-01-DAS-Foerderrichtlinie_2021_ab_06.11.24_bf.pdf) — Bundesförderregeln für KAM
+- [KAnG (Bundestag)](https://www.bundestag.de/dokumente/textarchiv/2023/kw46-de-bundesklimaanpassungsgesetz-976584) — Kommunale gesetzliche Verpflichtung
+- [UBA Klimalotse 3.0](https://www.umweltbundesamt.de/themen/klimalotse-30-aktualisierter-leitfaden-zur) — 5-Modul-Methodik
+- [GERICS Klimaausblicke](https://www.gerics.de/products_and_publications/fact_sheets/landkreise/index.php.de) — 17 Indikatoren pro Landkreis
+- [UBA Anpassungsscanner](https://www.umweltbundesamt.de/node/118272) — Excel-Selbstbewertung
+- [KLiVO Portal](https://www.klivoportal.de) — Regierungs-Tool-Aggregator
+- [ZKA KAM Beruf](https://zentrum-klimaanpassung.de/wissen/beruf-klimaanpassungsmanagerin/beruf-klimaanpassungsmanagerin) — Rollendefinition
+- [NKI / DAS Förderung](https://www.z-u-g.org/das/) — Bundesprogramm-Übersicht
+- [NKI Kommunalagentur](https://www.klimaschutz.de/de/foerderung-der-nki/ueber-die-nki-dashboard/agentur-fuer-kommunalen-klimaschutz) — Beratung für Kommunen
 
 ---
 
