@@ -19,25 +19,48 @@ Klimafolgenschutz e.V. adressiert diese Lücke durch die Schaffung einer neuen S
 
 Das Modell folgt dem Prinzip, Angebot und Nachfrage parallel aufzubauen — Studierende rekrutieren und gleichzeitig Kommunen als Einsatzorte gewinnen.
 
+**Voraussetzungen:**
+- KAnG in Kraft — Kommunen sind gesetzlich zum Handeln verpflichtet
+- DAS-Förderfenster geschlossen (Aug 2025), Förderrichtlinie gültig bis Dez 2026
+- PIK/UBA stellen kostenlose Methodik-Tools bereit (Klimalotse 3.0, GERICS, Anpassungsscanner)
+- Klimafolgenschutz e.V. ist voll operativ — Website live, Bankkonto, Vereinsregister, Steuernummer erhalten, Spendenquittungs-Berechtigung erteilt (Stand März 2026)
+- Stellenkategorie „KAM-Werkstudent" existiert am aktuellen Markt nicht
+
+**Organisation:**
+
+| Rolle | Person | Verantwortung |
+|-------|--------|---------------|
+| **Ambassador** | Michael Reichert | Vision, PIK/UBA-Netzwerk, politische Kontakte, Kommunen-Beziehungen |
+| **Geschäftsführer (designiert)** | Ralph Loser | Operatives Management, technische/organisatorische Umsetzung. Softwareentwickler, selbstständig, Kontakt über VCon-Netzwerk |
+| **Technischer Partner** | Marius Wilsch / Wilsch AI Services | Design, Entwicklung, KI-Automatisierung, Content-Produktion |
+
+Der e.V. operiert als schlankes Team mit KI-gestützten Workflows. Enge Zusammenarbeit zwischen Ralph und Marius in der Umsetzung.
+
 ---
 
 ## Erfolgsdefinition
 
-- **Ziel:** Klimafolgenschutz e.V. kann Klimaanpassungsmanager (Werkstudenten) für Kommunen über eine einheitliche Pipeline rekrutieren — von der Stellenbeschreibung über die LinkedIn-Präsenz bis zur Website-Integration
+- **Ziel:** Klimafolgenschutz e.V. kann Klimaanpassungsmanager (Werkstudenten) für Kommunen über eine einheitliche Pipeline rekrutieren — von der Stellenbeschreibung über die LinkedIn-Präsenz bis zur Website-Integration — und gleichzeitig Kommunen als Einsatzpartner gewinnen
+- **Gemeinsames Verständnis:** Michael, Ralph und Marius teilen dasselbe Verständnis von Scope, Liefergegenständen und Verantwortlichkeiten. Dieses Dokument dient als gemeinsame Referenz für Brainstorming und laufende Umsetzung
+- **Umsetzungsreife:** Das Dokument ist detailliert genug, um daraus konkrete Arbeitsaufträge abzuleiten, ohne dass eine weitere Design-Sitzung nötig ist
 
 ---
 
 ## Vorgehen
 
-Die Pipeline besteht aus vier Teilen, die aufeinander aufbauen:
+Die Pipeline besteht aus zwei parallelen Spuren — Studierenden-Rekrutierung und Kommunen-Akquise — verbunden über die Matching-Plattform. Fünf Teile:
 
 ```
-PIK/UBA-Recherche ──→ Agenda ──→ Stellenbeschreibung ──→ LinkedIn ──→ Website-CTA
+STUDIERENDEN-SPUR:  Agenda ──→ Stellenbeschreibung ──→ LinkedIn ──→ Website-CTA
+                                                                        ↕
+KOMMUNEN-SPUR:      Kommunen-Akquise ──────────────────────→ Website-CTA (Gemeinde)
 ```
 
 ### Teil 1: Klimaanpassungsmanager Agenda
 
-Ein Dokument mit doppeltem Zweck: Es zeigt Kandidaten, was sie im Einsatz tun werden, und gibt Kommunen Vertrauen in die Methodik. Abgeleitet vom bundesweiten Klimalotse 3.0 Rahmenwerk (UBA), nicht von Grund auf neu erfunden.
+Ein internes Onboarding-Dokument, das Kandidaten nach der Annahme ausgehändigt wird. Es zeigt ihnen, was sie im Einsatz tun werden, und gibt Kommunen Vertrauen in die Methodik. Abgeleitet vom bundesweiten Klimalotse 3.0 Rahmenwerk (UBA), nicht von Grund auf neu erfunden.
+
+**Auslieferung:** Kandidat bewirbt sich → wird angenommen → erhält die Agenda als Arbeitshandbuch. Die Agenda ist kein Bestandteil der Stellenanzeige — sie ist das operative Handbuch für eingesetzte KAMs.
 
 **Struktur: Klimalotse 5-Modul-Rahmenwerk**
 
@@ -52,6 +75,10 @@ Die Agenda präsentiert den Klimalotse-Lebenszyklus, angepasst auf den Werkstude
 | **5. Monitoring** | Umsetzung verfolgen, Ergebnisse evaluieren | Indikatorsets pflegen, Fortschrittsberichte erstellen |
 
 **Schwerpunktbereiche:** Gewässerschutz, Hitzeschutz, Bepflanzung, Innenstadtgestaltung — typische kommunale Bedarfe, keine Einschränkung des Rahmenwerks.
+
+**Produktpaket-Vision:** Die am häufigsten geförderten Bundesmaßnahmen sollen identifiziert und als konkrete „Produkte" für Kommunen verpackt werden — z.B. Rückhaltebecken-Vergrößerung mit Umfang, benötigten Gewerken, Architektenleistungen und Förderquote nach Bundesland. Beim Berliner Kontakt (PIK) wurden die Top-3 der meistgeförderten Klimafolgenbearbeitungs-Maßnahmen bundesweit angefragt. **Daten ausstehend** — Michael übernimmt diese Recherche. Nach Erhalt werden diese zu den Ankerprodukten, die sowohl die Agenda als auch das Kommunen-Angebot strukturieren.
+
+**PIK/UBA als Wissensdatenbank:** Das Klimalotse-Rahmenwerk strukturiert die Arbeit der Studierenden. Die PIK/UBA-Forschung dient als Hintergrundwissen — für Argumentation und Fördermittel-Begründung, nicht als Curriculum der Studierenden. Ziel ist praxisorientierte Umsetzung, nicht wissenschaftliche Problematisierung.
 
 **Tools, die Studierende nutzen:**
 
@@ -78,17 +105,29 @@ Deutsche Stellenbeschreibung für die Werkstudentenstelle. Inhaltlich abgeleitet
 | **Arbeitgeber** | Kommune (nicht der e.V.) |
 | **Vermittler** | Klimafolgenschutz e.V. — findet und verbindet Kandidaten |
 | **Methodik** | Die Agenda (Teil 1) leitet die Arbeit der Studierenden |
-| **Finanzierung** | **Ungeklärt:** DAS-Förderfähigkeit für Werkstudenten ist nicht getestet |
+| **Finanzierung** | **Ausstehend:** DAS-Förderfähigkeit für Werkstudenten/Übungsleiter ist nicht getestet. Es wird recherchiert, ob die Finanzierung über Kommunen läuft oder direkt vom e.V. beantragt werden kann. |
+
+**Beschäftigungsmodelle (zwei Optionen):**
+
+| Modell | Stunden | Vergütung | Einsatzfall |
+|--------|---------|-----------|-------------|
+| **Werkstudent** | Max. 20 Std./Woche im Semester | Standard-Werkstudentenvergütung | Studierende mit fortlaufendem Engagement neben dem Studium |
+| **Übungsleiter / Minijob** | ~10–12 Std./Woche | 400–500 €/Monat (Minijob-Basis) | Leichterer Einstieg, niedrigere Einstiegsschwelle |
+
+Das Modell kann von Fall zu Fall variieren.
 
 **Zielkandidaten:**
 
 | Merkmal | Detail |
 |---------|--------|
-| **Typ** | Werkstudent (max. 20 Std./Woche im Semester) |
-| **Fachrichtungen** | Tiefbauingenieurwesen, Wasserwirtschaft, Geographie, Umweltwissenschaften, BWL/Ökonomie |
-| **Einsatzort** | Vor Ort in der Kommune — direkter Einsatz in der Verwaltung |
+| **Typ** | Werkstudent oder Übungsleiter (siehe Beschäftigungsmodelle oben) |
+| **Fachrichtungen** | Tiefbauingenieurwesen, Wasserwirtschaft, Geographie, Umweltwissenschaften, BWL/Ökonomie, Bauingenieurwesen, Architektur |
+| **Einstieg** | Ab ca. 2. Semester — früher Einstieg mit Blick auf die Bachelorarbeit |
+| **Einsatzort** | Vor Ort in der Kommune (im Umkreis von 50–100 km) — direkter Einsatz in der Verwaltung |
 | **Geltungsbereich** | Bundesweit — keine geografische Einschränkung |
+| **Einsatzdauer** | Bis zu 3 Jahre pro Kommunen-Einsatz |
 | **Abschlussarbeit** | Optional — Studierende können ihre Bachelorarbeit zum Einsatzthema schreiben |
+| **Praktikum** | Studierende mit Pflichtpraktikum können dieses über den Einsatz erfüllen — ein natürlicher Rekrutierungskanal neben Abschlussarbeit und bezahlter Arbeit |
 
 **Stellenbeschreibung Inhalt (Entwurfsstruktur):**
 
@@ -113,7 +152,7 @@ Neue organisationale LinkedIn-Seite für Klimafolgenschutz e.V. — bisher exist
 | **Tagline** | *Gemeinden stärken. Klima anpassen. Zukunft sichern.* |
 | **Website** | klimafolgenschutz.com |
 | **E-Mail** | info@klimafolgenschutz.org |
-| **Admin** | Vereinsvorstand erhält Admin-Zugang |
+| **Admin** | Michael + Ralph erhalten Admin-Zugang, Marius erstellt die Seite |
 
 **Content-Säulen:**
 
@@ -126,7 +165,9 @@ Neue organisationale LinkedIn-Seite für Klimafolgenschutz e.V. — bisher exist
 
 **Posting-Frequenz:** 1–2x pro Woche (Regelbetrieb).
 
-**Content-Freigabe:** **Ungeklärt:** Prüft der Vereinsvorstand Beiträge vor der Veröffentlichung?
+**Content-Produktion:** Marius/Team produziert Content. Ralph erhält alle Dokumente vollständig (Einarbeitungsphase) und wird zunehmend in die Content-Zusammenarbeit eingebunden.
+
+**Content-Freigabe:** Das Team veröffentlicht eigenständig. Kein formaler Freigabe-Prozess vor Veröffentlichung erforderlich. Mit Ralphs wachsendem Domänenwissen kann sich eine regelmäßige Content-Abstimmung natürlich entwickeln.
 
 **Tonalität:** Professionell aber zugänglich — behördennahe Glaubwürdigkeit mit studierendenfreundlicher Sprache. Nur Deutsch (DACH-Fokus).
 
@@ -145,11 +186,33 @@ Neue organisationale LinkedIn-Seite für Klimafolgenschutz e.V. — bisher exist
 
 **Umbenennungsumfang:** Seitenweit — jede Instanz von Klimafolgenschutzmanager wird zu Klimaanpassungsmanager. Begründung: Klimaanpassungsmanager ist die behördlich etablierte Begrifflichkeit.
 
-**Abhängigkeit:** Teil 3 (LinkedIn-Seite + Stellenanzeige) muss live sein, bevor der CTA darauf verweisen kann.
+**Kommunen-Pfad:** Die Website benötigt zusätzlich einen kommunenseitigen CTA — Kommunen sollen ihr Interesse an einem KAM signalisieren können. Das genaue Format und der Ablauf hängen von Teil 5 (Kommunen-Akquise) ab. Mindestens: ein Bereich oder eine Seite, auf der Kommunen ihr Interesse registrieren können.
+
+**Abhängigkeiten:**
 
 ```
-Teil 3 (LinkedIn-Seite live) ──→ Teil 4 (CTA-URL tauschen)
+Teil 3 (LinkedIn-Seite live) ──→ Teil 4 (Studierenden-CTA-URL tauschen)
+Teil 5 (Kommunen-Akquise definiert) ──→ Teil 4 (Kommunen-CTA hinzufügen)
 ```
+
+**Skalierungsvision:** Das Langzeitziel ist eine vollautomatisierte Matching-Plattform — Studierende bewerben sich, KI prüft Qualifikationen, nahegelegene Kommunen werden zugeordnet, Zuweisungen erfolgen ohne manuellen Aufwand. Dies ist das langfristige Architekturziel, nicht der unmittelbare Scope — aber jeder Teil sollte mit Automatisierungsbereitschaft konzipiert werden.
+
+### Teil 5: Kommunen-Akquise (Parallele Spur)
+
+Kernprinzip: Angebot und Nachfrage gleichzeitig aufbauen. Während die Teile 1–4 die Studierenden-Pipeline schaffen, baut Teil 5 die Kommunen-Pipeline auf. Keines soll auf das andere warten.
+
+**Modell:** Der e.V. operiert als Matching-Plattform — Studierende auf der einen Seite, Kommunen auf der anderen. Der e.V. rekrutiert beide und verbindet sie basierend auf Geografie (50–100 km Umkreis) und Themenschwerpunkt.
+
+**Wertversprechen für Kommunen:** Die Kommune erhält einen KAM ohne vollständiges TVöD-Einstellungsverfahren. Der Studierende kommt mit strukturierter Methodik (die Agenda), unterstützt durch PIK/UBA-Tools, und der e.V. übernimmt Rekrutierung und Einarbeitung. Für Kommunen, die noch nicht mit ihrem Klimaanpassungskonzept begonnen haben (wozu das KAnG jetzt verpflichtet), ist dies ein niedrigschwelliger Einstiegspunkt.
+
+**Bekannte Anforderungen:**
+- Kommunen müssen ihr Interesse registrieren können (Website oder Direktansprache)
+- Geografisches Matching: Studierende werden innerhalb pendelbarer Entfernung zugewiesen
+- Gemeinderatsbeschluss kann erforderlich sein, bevor eine Kommune einen KAM aufnehmen kann — dies verlängert die Vorlaufzeit
+- Die Produktpakete aus Teil 1 (meistgeförderte Maßnahmen) werden zum Kommunen-Angebot
+
+**Was definiert ist:** Das Konzept, das Wertversprechen, das Matching-Modell.
+**Was nicht definiert ist:** Kommunen-Ansprachekanal, Onboarding-Prozess für Kommunen, Vertragsstruktur zwischen e.V. und Kommune, Zeitplan. → Wird im Donnerstags-Brainstorming (2026-04-03) erarbeitet.
 
 ---
 
@@ -206,6 +269,9 @@ Nachschlagewerk zu den im Vorgehen referenzierten Institutionen, rechtlichen Rah
 
 ## Quellen
 
+- **Transkripte:**
+  - [Kundengespräch 2026-03-23](https://app.fireflies.ai/view/01KMDCMMAF48SP1FBQ0JWW51R7) — Primäre Anforderungserhebung (Michael, Marius, David)
+  - [Kundengespräch 2026-03-30](https://app.fireflies.ai/view/01KMZ8E02X2RGB29M3DSFQJVP1) — Sync mit Ralph Loser (neuer Geschäftsführer), Beschäftigungsmodell-Erweiterung, parallele Kommunen-Akquise, Projektplan-Diskussion
 - [DAS-Förderrichtlinie 2021 (PDF)](https://www.z-u-g.org/fileadmin/zug/Dateien/Foerderprorgamme/DAS_Anpassung_an_den_Klimawande/25-01-DAS-Foerderrichtlinie_2021_ab_06.11.24_bf.pdf) — Bundesförderregeln für KAM
 - [KAnG (Bundestag)](https://www.bundestag.de/dokumente/textarchiv/2023/kw46-de-bundesklimaanpassungsgesetz-976584) — Kommunale gesetzliche Verpflichtung
 - [UBA Klimalotse 3.0](https://www.umweltbundesamt.de/themen/klimalotse-30-aktualisierter-leitfaden-zur) — 5-Modul-Methodik

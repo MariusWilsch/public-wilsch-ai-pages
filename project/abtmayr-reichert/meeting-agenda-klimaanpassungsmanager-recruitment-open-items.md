@@ -2,20 +2,28 @@
 publish: true
 ---
 
-# Meetingagenda: Rekrutierungs-Pipeline Klimaanpassungsmanager — Offene Punkte
+# Meetingagenda: Rekrutierungs-Pipeline Klimaanpassungsmanager — Brainstorming & Projektplan
 [[client-abtmayr-reichert]]
 
 ## Meetingziel
 
-Die offenen Designfragen aus dem Design Doc zur Rekrutierungs-Pipeline klären, damit die Umsetzung ohne Mehrdeutigkeiten fortschreiten kann:
-
-1. **Finanzierungsmodell klären** — bestätigen, ob DAS Werkstudentenstellen abdeckt, oder den alternativen Finanzierungsweg identifizieren
-2. **Content-Workflow** — festlegen, ob Michael LinkedIn-Beiträge vor der Veröffentlichung prüft
-3. **Vergütungsstruktur** — den Übergang von Stundensatz zu Retainer-Modell anstoßen
+Einen Projektplan mit Zielen, Meilensteinen, Verantwortlichkeiten und einem September-2026-Ziel erstellen — vom Design-Alignment zur Umsetzung.
 
 ## Vorab-Lektüre
 
-- [Design Doc: Rekrutierungs-Pipeline Klimaanpassungsmanager](https://mariuswilsch.github.io/public-wilsch-ai-pages/project/abtmayr-reichert/design-doc-klimaanpassungsmanager-recruitment-pipeline) — speziell Teil 2 (Stellenbeschreibung, Finanzierungsmodell) und Teil 3 (LinkedIn, Content-Freigabe)
+- [Design Doc: Rekrutierungs-Pipeline Klimaanpassungsmanager](https://mariuswilsch.github.io/public-wilsch-ai-pages/project/abtmayr-reichert/design-doc-klimaanpassungsmanager-recruitment-pipeline) — aktualisiert mit den Ergebnissen des Meetings vom 30.03.2026 (Teil 5: Kommunen-Akquise hinzugefügt, Beschäftigungsmodell erweitert, Organisationsstruktur ergänzt)
+
+## Kontext aus dem Meeting vom 30. März
+
+**Geklärt:**
+- ✅ Content-Freigabe — Team veröffentlicht eigenständig
+- ✅ Ralphs Rolle — designierter Geschäftsführer, enge Zusammenarbeit mit Marius, Einarbeitungsphase
+- ✅ Beschäftigungsmodell — zwei Spuren: Werkstudent (20 Std.) + Übungsleiter/Minijob (400–500 €)
+- ✅ Agenda-Nutzung — internes Dokument, ausgehändigt nach Annahme, nicht Teil der Stellenanzeige
+
+**Noch offen:**
+- ⏳ DAS-Finanzierungsweg — Michael recherchiert (Kommune vs. Direktantrag)
+- ⏳ Top-3-Fördermaßnahmen — Berliner Kontakt hat noch nicht geliefert
 
 ---
 
@@ -23,45 +31,76 @@ Die offenen Designfragen aus dem Design Doc zur Rekrutierungs-Pipeline klären, 
 
 *Ausgangspunkte für die Diskussion, nicht darauf beschränkt.*
 
-### 1. DAS-Förderfähigkeit für Werkstudenten-KAM-Stellen
+### 1. Projektplan: Meilensteine & September-Ziel
+⏱️ 30 Min.
+
+Das Design Doc hat nun 5 Teile — diese benötigen Reihenfolge, Meilensteine und Verantwortliche.
+
+**Vorgeschlagene Meilenstein-Struktur (zur Diskussion):**
+
+| Phase | Liefergegenstand | Verantwortlich | Ziel |
+|-------|-----------------|----------------|------|
+| **April** | Stellenbeschreibung live, LinkedIn-Seite erstellt | Marius + Ralph | April 2026 |
+| **April–Mai** | Erste Studierenden-Bewerbungen, Agenda finalisiert | Ralph + Michael | Mai 2026 |
+| **Mai–Juni** | Kommunen-Ansprache beginnt, erste Matches | Michael + Ralph | Juni 2026 |
+| **Juli–Sep** | Erste Einsätze, Prozess-Stabilisierung | Alle | Sep 2026 |
+
+**Zu diskutieren:** Ist das die richtige Reihenfolge? Was muss vor was passieren?
+
+### 2. Kommunen-Akquise — Parallele Spur scopen
 ⏱️ 15 Min.
 
-Die DAS-Förderrichtlinie fördert „Fachpersonal" in „befristete Stelle für Klimaanpassungsmanagement." Die formale Studienabschluss-Anforderung ist mit „Oft" eingeleitet — nicht verpflichtend. Das Programm ist jedoch eindeutig auf Vollzeit-Fachkräfte auf TVöD EG 10–11 ausgelegt. Das aktuelle Förderfenster ist seit August 2025 geschlossen (Mittel erschöpft), das BMUKN plant jedoch künftige Fenster.
+Design Doc Teil 5 erfasst das Konzept (Matching-Plattform, geografische Zuweisung, Produktpakete). Details müssen erarbeitet werden:
 
-- Die Förderrichtlinie verbietet Werkstudentenstellen nicht explizit
-- ZKA-Qualifikationsseite: „Oft wird ein abgeschlossenes Studium vorausgesetzt" — die Kommune legt eigene Anforderungen fest
-- Michaels UBA/PIK-Kontakt (Ulrich von Lampe, PIK Leiter Kommunikation) könnte Einblicke in nicht-traditionelle KAM-Arrangements haben
-- Falls DAS Werkstudenten nicht abdeckt, finanziert die Kommune aus eigenem Haushalt — was das Wertversprechen erheblich verändert
+- **Ansprachekanal:** Wie erreicht der e.V. Kommunen? Direktansprache? Verbände (Gemeindebund)? LinkedIn Gemeinden-Säule?
+- **Interessensregistrierung:** Was übermittelt eine Kommune, um Interesse zu signalisieren?
+- **Vertragsstruktur:** Welche Vereinbarung gibt es zwischen e.V. und Kommune bei Studierenden-Zuweisung?
+- **Gemeinderatsbeschluss:** Ist ein formaler Ratsbeschluss erforderlich? Wie lange dauert das typischerweise?
 
-**Zu klären:** Der Finanzierungsweg für die Werkstudenten-KAM-Stelle — ob DAS, kommunaler Haushalt oder ein Hybridmodell — und was Michaels UBA/PIK-Kontakte raten.
+**Zu diskutieren:** Michaels Erfahrung mit Kommunen — was ist realistisch für erste Kontakte?
 
-### 2. LinkedIn Content-Freigabe-Workflow
-⏱️ 5 Min.
-
-Marius/Team produziert LinkedIn-Content für die Klimafolgenschutz e.V. Unternehmensseite. Michael gab Carte blanche für die Content-Erstellung — *„kannst du ruhig was überlegen"* — aber der Freigabe-Workflow vor Veröffentlichung wurde nie besprochen.
-
-- Content-Säulen sind definiert (Klima-Wissen, Karriere, Gemeinden, Verein)
-- Posting-Frequenz: 1–2x pro Woche
-- Manche Beiträge referenzieren Michaels PIK-Kontakte und kommunale Partnerschaften — diese könnten seine Prüfung erfordern
-
-**Zu klären:** Ob Michael Beiträge vor der Veröffentlichung sehen und freigeben möchte, oder ob das Team eigenständig publiziert mit regelmäßiger Abstimmung.
-
-### 3. Vergütungsstruktur — Übergang von Stundensatz zu Retainer
+### 3. Finanzierungs-Update
 ⏱️ 10 Min.
 
-Das aktuelle Engagement mit Michael läuft auf T&M-Basis zu 120 €/Std. Mit zunehmender Reife der Zusammenarbeit und wiederkehrenden Arbeitsströmen (LinkedIn-Content, Rekrutierungs-Pipeline-Betrieb, Website-Pflege) könnte ein Retainer-Modell beiden Seiten besser dienen — planbare Kosten für Michael, planbare Einnahmen für Wilsch AI.
+Es wird recherchiert, ob DAS-Förderung über Kommunen läuft oder direkt vom e.V. beantragt werden kann. Das beeinflusst das gesamte Wertversprechen:
+- **Falls DAS deckt:** Kommune erhält subventionierten KAM — einfacher Verkauf
+- **Falls kommunaler Haushalt:** Kommune zahlt aus eigenem Budget — schwieriger, anderes Angebot nötig
+
+**Zu diskutieren:** Updates vom Berliner Kontakt? Alternative Finanzierungswege entdeckt?
+
+### 4. Verantwortlichkeiten & Arbeitsrhythmus
+⏱️ 10 Min.
+
+Vier Personen, unterschiedliche Fähigkeiten und Verfügbarkeit. Klare Zuständigkeiten benötigt:
+
+| Bereich | Vorgeschlagen |
+|---------|---------------|
+| Studierenden-Rekrutierung (LinkedIn, Stellenbeschreibung) | Marius/Team |
+| Kommunen-Ansprache | Michael + Ralph |
+| Methodik / Agenda-Inhalt | Michael (Domäne) + Marius (Produktion) |
+| Technische Plattform / Automatisierung | Marius/Team |
+| Finanzierungs-Recherche | Michael |
+
+**Zu diskutieren:** Passt das? Worauf möchte Ralph sich fokussieren?
+
+### 5. Vergütungsstruktur — Übergang von Stundensatz zu Retainer
+⏱️ 10 Min.
+
+Das aktuelle Engagement läuft auf T&M-Basis zu 120 €/Std. Mit zunehmender Reife der Zusammenarbeit und wiederkehrenden Arbeitsströmen (LinkedIn-Content, Rekrutierungs-Pipeline-Betrieb, Website-Pflege) könnte ein Retainer-Modell beiden Seiten besser dienen — planbare Kosten für Michael, planbare Einnahmen für Wilsch AI.
 
 - Aktuelles Modell: Stundenabrechnung, variabler Scope pro Monat
 - Entstehende wiederkehrende Streams: Content-Produktion (1–2x/Woche), Pipeline-Betrieb, Website-Updates
 - Keine sofortige Zusage erwartet — Vorstellung des Konzepts für zukünftige Diskussion
 
-**Zu klären:** Ob Michael offen ist, eine Retainer-Struktur zu erkunden, und welcher Scope/Rhythmus aus seiner Sicht attraktiv wäre.
+**Zu klären:** Ob Offenheit besteht, eine Retainer-Struktur zu erkunden, und welcher Scope/Rhythmus attraktiv wäre.
 
 ## Meetingformat
 
-- **Typ:** Discovery (Kundensync)
-- **Erwartung:** Michael bringt Updates von seinen PIK/UBA-Kontakten bzgl. KAM-Förderung für nicht-traditionelle Arrangements
-- **Ergebnis:** Finanzierungsmodell bestätigt oder Alternative identifiziert; LinkedIn-Freigabe-Workflow vereinbart; Retainer-Konzept eingeführt
+- **Typ:** Brainstorming + Planung
+- **Datum:** Donnerstag 2026-04-03, 13:30 Uhr MEZ
+- **Teilnehmer:** Michael Reichert, Ralph Loser, Marius Wilsch, David Eberle
+- **Erwartung:** Alle haben das Design Doc gelesen. Ralph und Michael bringen Feedback. Michael bringt Finanzierungs-Update falls verfügbar.
+- **Ergebnis:** Projektplan v1 mit Meilensteinen, Verantwortlichen und September-Ziel
 
 ## Verknüpfungen
 
