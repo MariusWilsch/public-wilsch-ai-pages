@@ -27,57 +27,6 @@ Das Modell folgt dem Prinzip, Angebot und Nachfrage parallel aufzubauen — Stud
 
 ---
 
-## Grundlagen: Institutionen & Begriffsreferenz
-
-Die Rekrutierungs-Pipeline operiert innerhalb des deutschen Ökosystems zur Klimaanpassung auf Bundesebene. Dieser Abschnitt verankert die Institutionen, rechtlichen Rahmenbedingungen, Methodik-Tools und fachlichen Begriffe, die im gesamten Vorgehen referenziert werden.
-
-### Institutionelle Landschaft
-
-| Institution | Vollständiger Name | Rolle | Relevanz |
-|-------------|-------------------|-------|----------|
-| **UBA** | Umweltbundesamt | Entwickelt Methodik-Tools (Klimalotse, Anpassungsscanner, Tatenbank) | Quelle des operativen Rahmenwerks, das Studierende nutzen |
-| **PIK** | Potsdam-Institut für Klimafolgenforschung | Produziert Klimawissenschaft und -projektionen | Staatlich gefördert, Inhalte sind öffentlich lizenziert — 1:1 wiederverwendbar für die Agenda |
-| **GERICS** | Climate Service Center Germany (Helmholtz) | Übersetzt Wissenschaft in kommunenspezifische Klimaberichte (Klimaausblicke) | Ein PDF pro Landkreis mit lokalen Projektionen — die Ausgangsdaten der Studierenden |
-| **ZKA** | Zentrum KlimaAnpassung (betrieben von adelphi für BMUKN) | Unterstützt angestellte KAMs: Schulungen (2,5-Tage-Seminare, 6x/Jahr), Mentoring, 100-Tage-Einarbeitungsleitfaden | Kostenlos für geförderte KAMs; Werkstudenten-Berechtigung nicht getestet |
-| **ZUG** | Zukunft – Umwelt – Gesellschaft | Verteilt Bundesfördermittel (DAS für Anpassung, NKI für Klimaschutz) | Projektträger — verwaltet die Mittel, nicht die Methodik |
-| **KLiVO** | Deutsches Klimavorsorgeportal | Regierungs-Metaportal, das alle Bundestools zur Klimaanpassung indexiert | Suchmaschine, kein Tool — findet Klimalotse, Anpassungsscanner, Tatenbank an einem Ort |
-
-### Rechts- & Förderrahmen
-
-| Begriff | Definition |
-|---------|-----------|
-| **KAnG** (Klimaanpassungsgesetz) | Bundesgesetz (Nov 2023), das jede Kommune zur Erstellung eines Klimaanpassungskonzepts verpflichtet. Länder müssen bis 31. Jan 2027 Anpassungsstrategien vorlegen. Keine expliziten Sanktionen — gesetzliche Verpflichtung ohne Durchsetzungsmechanismus, erzeugt aber politischen Druck und Haushaltsbegründung. |
-| **DAS** (Deutsche Anpassungsstrategie) | Bundesförderprogramm zur Finanzierung von KAM-Stellen und Anpassungskonzepten. Budget seit Aug 2025 erschöpft; Förderrichtlinie gültig bis Dez 2026. Die Regeln bestehen weiterhin, neue Förderfenster sind geplant aber nicht terminiert. |
-| **NKI** (Nationale Klimaschutzinitiative) | Parallelprogramm für Klima*schutz* (Mitigation), nicht Anpassung. Finanziert Klimaschutzmanager-Stellen. Gleicher Träger (ZUG), anderer Zweck. |
-| **TVöD EG 10–11** | Tarifliche Eingruppierung für professionelle KAMs: ~3.500–4.500 €/Monat brutto. Relevant als Positionierungs-Benchmark — Werkstudenten kosten einen Bruchteil. |
-| **Klimaanpassungskonzept** | Das Dokument, das Kommunen gemäß KAnG erstellen müssen: eine formale Klimarisikoanalyse, Anpassungsstrategie und Umsetzungsplan. |
-| **Ratsbeschluss** | Gemeinderatsbeschluss — die politische Verabschiedung der Klimaanpassungsstrategie. Erforderlich zur Formalisierung der Strategie. |
-
-### Methodik-Begriffe
-
-| Begriff | Definition |
-|---------|-----------|
-| **Klimalotse 3.0** | UBA-Schritt-für-Schritt-Anpassungsleitfaden (Website + herunterladbares PDF). Fünf aufeinanderfolgende Module mit Vorlagen und Checklisten. Kein Rechentool — ein strukturierter Workflow, der die Grundlage für ein Klimaanpassungskonzept liefert. |
-| **Wirkungsketten** | Kausalketten, die Klimatreiber → Exposition → Empfindlichkeit → Auswirkung abbilden. Beispiel: *Steigende Temperaturen → Hitzewellen → Städtische Oberflächen strahlen Wärme ab → Erhöhte Hitzesterblichkeit.* Werden in Modul 2 verwendet, um systematisch betroffene Sektoren zu identifizieren. |
-| **Anpassungsscanner** | UBA-Excel-Selbstbewertung zur Messung der institutionellen Bereitschaft (nicht des physischen Risikos). Fünf Dimensionen: (1) Werte & Ziele, (2) Wissenszugang, (3) Zusammenarbeit, (4) Ressourcen, (5) Strategien. Ergebnis: Score von 0–100. |
-| **GERICS Klimaausblicke** | Automatisch generierte PDFs mit Klimaprojektionen pro Landkreis über drei RCP-Szenarien. Indikatoren umfassen: Jahresmitteltemperatur, Heiße Tage (≥30°C), Tropennächte, Frosttage, Starkniederschlag, Trockenperioden, Schneebedeckung. |
-| **RCP-Szenarien** | Standardisierte Emissionspfade: RCP 2.6 (starke Mitigation, ~+1,5–2°C), RCP 4.5 (moderat, ~+2–3°C), RCP 8.5 (Business as usual, ~+3,5–5°C). Verwendet in allen GERICS-Projektionen. |
-| **Tatenbank** | UBA-Datenbank mit 432 realen Anpassungsprojekten. Good-Practice-Bibliothek, durchsuchbar nach Handlungsfeld, Klimaauswirkung und Region. Studierende nutzen sie in Modul 3 zur Identifikation bewährter Maßnahmen. |
-| **DIN EN ISO 14091** | Internationaler Standard für Klimarisikoanalyse (2021). Best Practice, nicht verpflichtend — wird aber zunehmend in formalen Konzepten und Ausschreibungen referenziert. |
-| **Schwammstadt** | Stadtplanungskonzept: Regenwasser aufnehmen, speichern und verzögert abgeben statt in die Kanalisation zu leiten. Konkrete Elemente: wasserdurchlässige Beläge, Gründächer, Mulden-Rigolen, Stadtbäume, Entsiegelung. |
-| **Maßnahmensteckbriefe** | Standardisierte Maßnahmenprofile zur Dokumentation einzelner Anpassungsmaßnahmen — Was, Wo, Kosten, Zeitplan. Studierende erstellen diese in Modul 3. |
-| **Fördermittelantragstellung** | Fördermittel-Antragsprozess. Studierende recherchieren Programme und bereiten Anträge vor; die Kommune unterzeichnet und reicht ein. |
-
-### Professionelle Landschaft
-
-| Begriff | Definition |
-|---------|-----------|
-| **Klimaschutzmanager** (~2.500 bundesweit) | Kommunale Rolle mit Fokus auf Klima*schutz* — CO₂-Emissionen reduzieren (Solar, Sanierung, Mobilität). Gefördert durch NKI. |
-| **Klimaanpassungsmanager** (~300 bundesweit) | Kommunale Rolle mit Fokus auf Klima*anpassung* — Vorbereitung auf bereits eintretende Auswirkungen (Hitze, Überflutung, Dürre). Gefördert durch DAS. Die neuere, unterversorgte Rolle. |
-| **KAM-Werkstudent** | Die Stellenkategorie, die diese Pipeline schafft. Existiert am aktuellen Markt nicht — niedrigere Einstiegshürde als professioneller KAM (Student, kein Abschluss erforderlich), mit Abschlussarbeit-Integration und strukturierter Methodik über die Agenda. |
-
----
-
 ## Vorgehen
 
 Die Pipeline besteht aus vier Teilen, die aufeinander aufbauen:
@@ -201,6 +150,57 @@ Neue organisationale LinkedIn-Seite für Klimafolgenschutz e.V. — bisher exist
 ```
 Teil 3 (LinkedIn-Seite live) ──→ Teil 4 (CTA-URL tauschen)
 ```
+
+---
+
+## Anhang: Institutionen & Begriffsreferenz
+
+Nachschlagewerk zu den im Vorgehen referenzierten Institutionen, rechtlichen Rahmenbedingungen und Fachbegriffen.
+
+### Institutionelle Landschaft
+
+| Institution | Vollständiger Name | Rolle | Relevanz |
+|-------------|-------------------|-------|----------|
+| **UBA** | Umweltbundesamt | Entwickelt Methodik-Tools (Klimalotse, Anpassungsscanner, Tatenbank) | Quelle des operativen Rahmenwerks, das Studierende nutzen |
+| **PIK** | Potsdam-Institut für Klimafolgenforschung | Produziert Klimawissenschaft und -projektionen | Staatlich gefördert, Inhalte sind öffentlich lizenziert — 1:1 wiederverwendbar für die Agenda |
+| **GERICS** | Climate Service Center Germany (Helmholtz) | Übersetzt Wissenschaft in kommunenspezifische Klimaberichte (Klimaausblicke) | Ein PDF pro Landkreis mit lokalen Projektionen — die Ausgangsdaten der Studierenden |
+| **ZKA** | Zentrum KlimaAnpassung (betrieben von adelphi für BMUKN) | Unterstützt angestellte KAMs: Schulungen (2,5-Tage-Seminare, 6x/Jahr), Mentoring, 100-Tage-Einarbeitungsleitfaden | Kostenlos für geförderte KAMs; Werkstudenten-Berechtigung nicht getestet |
+| **ZUG** | Zukunft – Umwelt – Gesellschaft | Verteilt Bundesfördermittel (DAS für Anpassung, NKI für Klimaschutz) | Projektträger — verwaltet die Mittel, nicht die Methodik |
+| **KLiVO** | Deutsches Klimavorsorgeportal | Regierungs-Metaportal, das alle Bundestools zur Klimaanpassung indexiert | Suchmaschine, kein Tool — findet Klimalotse, Anpassungsscanner, Tatenbank an einem Ort |
+
+### Rechts- & Förderrahmen
+
+| Begriff | Definition |
+|---------|-----------|
+| **KAnG** (Klimaanpassungsgesetz) | Bundesgesetz (Nov 2023), das jede Kommune zur Erstellung eines Klimaanpassungskonzepts verpflichtet. Länder müssen bis 31. Jan 2027 Anpassungsstrategien vorlegen. Keine expliziten Sanktionen — gesetzliche Verpflichtung ohne Durchsetzungsmechanismus, erzeugt aber politischen Druck und Haushaltsbegründung. |
+| **DAS** (Deutsche Anpassungsstrategie) | Bundesförderprogramm zur Finanzierung von KAM-Stellen und Anpassungskonzepten. Budget seit Aug 2025 erschöpft; Förderrichtlinie gültig bis Dez 2026. Die Regeln bestehen weiterhin, neue Förderfenster sind geplant aber nicht terminiert. |
+| **NKI** (Nationale Klimaschutzinitiative) | Parallelprogramm für Klima*schutz* (Mitigation), nicht Anpassung. Finanziert Klimaschutzmanager-Stellen. Gleicher Träger (ZUG), anderer Zweck. |
+| **TVöD EG 10–11** | Tarifliche Eingruppierung für professionelle KAMs: ~3.500–4.500 €/Monat brutto. Relevant als Positionierungs-Benchmark — Werkstudenten kosten einen Bruchteil. |
+| **Klimaanpassungskonzept** | Das Dokument, das Kommunen gemäß KAnG erstellen müssen: eine formale Klimarisikoanalyse, Anpassungsstrategie und Umsetzungsplan. |
+| **Ratsbeschluss** | Gemeinderatsbeschluss — die politische Verabschiedung der Klimaanpassungsstrategie. Erforderlich zur Formalisierung der Strategie. |
+
+### Methodik-Begriffe
+
+| Begriff | Definition |
+|---------|-----------|
+| **Klimalotse 3.0** | UBA-Schritt-für-Schritt-Anpassungsleitfaden (Website + herunterladbares PDF). Fünf aufeinanderfolgende Module mit Vorlagen und Checklisten. Kein Rechentool — ein strukturierter Workflow, der die Grundlage für ein Klimaanpassungskonzept liefert. |
+| **Wirkungsketten** | Kausalketten, die Klimatreiber → Exposition → Empfindlichkeit → Auswirkung abbilden. Beispiel: *Steigende Temperaturen → Hitzewellen → Städtische Oberflächen strahlen Wärme ab → Erhöhte Hitzesterblichkeit.* Werden in Modul 2 verwendet, um systematisch betroffene Sektoren zu identifizieren. |
+| **Anpassungsscanner** | UBA-Excel-Selbstbewertung zur Messung der institutionellen Bereitschaft (nicht des physischen Risikos). Fünf Dimensionen: (1) Werte & Ziele, (2) Wissenszugang, (3) Zusammenarbeit, (4) Ressourcen, (5) Strategien. Ergebnis: Score von 0–100. |
+| **GERICS Klimaausblicke** | Automatisch generierte PDFs mit Klimaprojektionen pro Landkreis über drei RCP-Szenarien. Indikatoren umfassen: Jahresmitteltemperatur, Heiße Tage (≥30°C), Tropennächte, Frosttage, Starkniederschlag, Trockenperioden, Schneebedeckung. |
+| **RCP-Szenarien** | Standardisierte Emissionspfade: RCP 2.6 (starke Mitigation, ~+1,5–2°C), RCP 4.5 (moderat, ~+2–3°C), RCP 8.5 (Business as usual, ~+3,5–5°C). Verwendet in allen GERICS-Projektionen. |
+| **Tatenbank** | UBA-Datenbank mit 432 realen Anpassungsprojekten. Good-Practice-Bibliothek, durchsuchbar nach Handlungsfeld, Klimaauswirkung und Region. Studierende nutzen sie in Modul 3 zur Identifikation bewährter Maßnahmen. |
+| **DIN EN ISO 14091** | Internationaler Standard für Klimarisikoanalyse (2021). Best Practice, nicht verpflichtend — wird aber zunehmend in formalen Konzepten und Ausschreibungen referenziert. |
+| **Schwammstadt** | Stadtplanungskonzept: Regenwasser aufnehmen, speichern und verzögert abgeben statt in die Kanalisation zu leiten. Konkrete Elemente: wasserdurchlässige Beläge, Gründächer, Mulden-Rigolen, Stadtbäume, Entsiegelung. |
+| **Maßnahmensteckbriefe** | Standardisierte Maßnahmenprofile zur Dokumentation einzelner Anpassungsmaßnahmen — Was, Wo, Kosten, Zeitplan. Studierende erstellen diese in Modul 3. |
+| **Fördermittelantragstellung** | Fördermittel-Antragsprozess. Studierende recherchieren Programme und bereiten Anträge vor; die Kommune unterzeichnet und reicht ein. |
+
+### Professionelle Landschaft
+
+| Begriff | Definition |
+|---------|-----------|
+| **Klimaschutzmanager** (~2.500 bundesweit) | Kommunale Rolle mit Fokus auf Klima*schutz* — CO₂-Emissionen reduzieren (Solar, Sanierung, Mobilität). Gefördert durch NKI. |
+| **Klimaanpassungsmanager** (~300 bundesweit) | Kommunale Rolle mit Fokus auf Klima*anpassung* — Vorbereitung auf bereits eintretende Auswirkungen (Hitze, Überflutung, Dürre). Gefördert durch DAS. Die neuere, unterversorgte Rolle. |
+| **KAM-Werkstudent** | Die Stellenkategorie, die diese Pipeline schafft. Existiert am aktuellen Markt nicht — niedrigere Einstiegshürde als professioneller KAM (Student, kein Abschluss erforderlich), mit Abschlussarbeit-Integration und strukturierter Methodik über die Agenda. |
 
 ---
 
