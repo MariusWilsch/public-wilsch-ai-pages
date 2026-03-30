@@ -144,15 +144,15 @@ Simple projects don't need an infra file. The convention degrades gracefully —
 
 **COMPOSE_PROJECT_NAME is the naming convention.** Docker Compose auto-prefixes containers, networks, and volumes with `COMPOSE_PROJECT_NAME`. The convention: never override this behavior.
 
-| Anti-pattern | Why banned | Convention |
-|-------------|-----------|-----------|
-| `container_name:` in compose | Overrides auto-naming, causes collisions | Let Docker name containers: `{project}-{service}-{N}` |
-| `external: true` on networks | Creates invisible cross-stack wiring | Let compose manage networks: `{project}_default` |
-| `network_mode: host` | Bypasses network isolation | Use compose-managed networks |
-| Hardcoded volume names | Not scoped to project | Use relative names: `{project}_{volume}` |
-| `:latest` or missing tag on stateful images | `--pull always` jumps major versions, breaking data directories | Pin major version: `postgres:17`, `mongo:7`. Patches auto-update. |
+| Anti-pattern | Scope | Why banned | Convention |
+|-------------|-------|-----------|-----------|
+| `container_name:` | App only | Overrides auto-naming, causes collisions between previews | Let Docker name containers: `{project}-{service}-{N}`. Expected in infra (stable references). |
+| `external: true` on networks | App only | Creates invisible cross-stack wiring | App connects to infra network via `external: true` — this is the ONE allowed use. Ad-hoc `docker network connect` is banned. |
+| `network_mode: host` | Both | Bypasses network isolation | Use compose-managed networks |
+| Hardcoded volume names | App only | Not scoped to project, collides between previews | Use relative names: `{project}_{volume}`. Infra volumes use stable names (singleton). |
+| `:latest` or missing tag on stateful images | Both | `--pull always` jumps major versions, breaking data directories | Pin major version: `postgres:17`, `mongo:7`. Patches auto-update. |
 
-The compose file + one env var (`COMPOSE_PROJECT_NAME`) = complete project identity. No manual naming, no external networks, no `docker network connect`.
+The compose file + one env var (`COMPOSE_PROJECT_NAME`) = complete project identity for app compose. Infra compose uses stable names by design — it runs once, referenced by name from app composes.
 
 **Volume cloning replaces seed scripts.** On first preview deploy, app volumes are cloned from staging. No seed directory, no seed.sh, no Makefile. The staging system IS the seed. For bootstrap (first deploy with no staging), app services create their own state on first run — OpenWebUI creates its DB, Typesense starts empty, ingestion runs via GHA.
 
@@ -273,8 +273,6 @@ Human operators (marius, david) access deploy-owned directories via `dev-team` g
 **Update mode (subsequent pushes).** The first push to a branch clones staging volumes and creates a new preview. Subsequent pushes to the same branch skip volume cloning — they pull new code and restart services. Volumes persist across updates: agent configurations, test data, and database state survive code deployments. The deploy script detects whether the preview already exists (`docker compose ps`) and routes to the appropriate path: first deploy (clone + start) or update (pull + restart).
 
 **Staging deploy path.** The deploy script detects the `staging` branch and takes a different path: no volume cloning (staging IS the volume source), no Caddy config generation (staging has a permanent route). Staging deploy is: `git pull → docker compose up -d → health check`. For two-phase staging (see infra deployment cadence above), the GHA workflow runs `docker compose -f docker-compose.infra.yml up -d` first, then the app compose.
-
-**Workflow dedup.** A single `deploy.yml` handles all three triggers (preview, cleanup, staging). The spike-era `deploy-preview.yml` has been deleted — both workflows matched `issue-*` branches, causing duplicate GHA runs.
 
 **Deploy-linker:** Absorbed into the reusable workflow — no longer a separate per-project GHA step. Posts deployment status to the issue: `📦 Preview deployed: URL` on success, `❌ Preview failed` on failure, `🧹 Preview cleaned up` on PR merge. Extracts issue number from branch name. Uses a second App token scoped to `DaveX2001` org (where deliverable-tracking lives) — eliminates `ISSUE_LINKER_TOKEN` as a separate credential. Self-healing preflight actions are included in the deploy-linker comment (`🆕 First deploy — bootstrapped project directory`).
 
@@ -421,22 +419,45 @@ The reusable workflow absorbs: routing (detect action from trigger context), Lev
 | 1 | Create repo in WILSCH-AI-SERVICES org (inherits branch protection) | Any org member |
 | 2 | Copy 12-line `deploy.yml`, set `ssh-host` (domain-suffix is convention: `wilsch-deployment.com`) | Developer |
 | 3 | Write convention-compliant compose files + `.env.config` | Developer |
-| 4 | Set project secrets via `gh secret set` (repo-level for project-specific credentials) | Developer with repo admin |
-| 5 | Push → self-healing preflight bootstraps directory + clone + generates `.env` | Automated |
+| 4 | Provide project credentials (mechanism Undefined — see secrets injection below) | Developer |
+| 5 | Push → self-healing preflight bootstraps directory + clone | Automated |
 
 Org secrets (APP_ID, APP_PRIVATE_KEY, DEPLOY_SSH_KEY) are inherited — zero per-repo secret setup for projects deploying to the default server.
 
 **Monorepo (resolved).** IITR decomposition resolved the monorepo question: single root compose with `COMPOSE_PROJECT_NAME` scoping. Docker Compose selectively restarts only changed services. Infra/app split handles shared GPU services. Pipelines coupling (filter startup depends on Typesense readiness) is handled by compose healthcheck dependencies.
 
-**Operator onboarding.** Three layers: (1) one-time global setup — SSH config (`User agent`), GitHub org membership, team plugin, operations manual + Position Agreement; (2) per-project — mostly automated via self-healing preflight, developer sets secrets for new external services; (3) ongoing — team plugin distributes conventions every session, worktree flow, observation loop. Test credentials for deployed services follow: create → document to issue → discoverable.
+**Operator onboarding.**
 
-**Undefined:** Operator domain knowledge path — how a new operator acquires project-specific understanding (JA design doc, mediated summary, or task-first pull). The gap between "has access" and "can productively work" on a specific project needs definition. Let #1325 (David onboarding) generate empirical evidence before designing.
+*Once per operator (global setup):*
+
+| Step | What | Who |
+|------|------|-----|
+| 1 | SSH config: `Host WILSCH-AI-SERVER` with `User agent` | Operator (local machine) |
+| 2 | SSH pub key → `agent@server:~/.ssh/authorized_keys` | Marius (server admin) |
+| 3 | GitHub org membership: WILSCH-AI-SERVICES | Marius (org admin) |
+| 4 | `gh auth login` | Operator |
+| 5 | Team plugin: `claude plugin add WILSCH-AI-SERVICES/wilsch-ai-team-plugin` | Operator |
+| 6 | Operations manual + Position Agreement | Operator (read + sign) |
+
+*Per project:*
+
+| Step | What | Who |
+|------|------|-----|
+| 1 | Self-healing preflight bootstraps directory + clone on first push | Automated |
+| 2 | Project credentials provided (mechanism Undefined — see secrets injection) | Developer |
+| 3 | Read project CLAUDE.md + `.env.config` + compose files for context | Operator / AI |
+
+*Ongoing (every session):* Team plugin distributes conventions automatically. Worktree → PR → merge flow. Flag AI deviations → CCI observations. Daily grooming review. Test credentials for deployed services follow: create → document to issue → discoverable.
+
+**Undefined:** Repo template — a WILSCH-AI-SERVICES template repo containing the 12-line `deploy.yml`, `.env.config` skeleton, `.env.example` (config/secret schema), convention-compliant compose skeleton, and CLAUDE.md with standard deployment section. Eliminates "copy deploy.yml" as a manual step and solves the AI discovery mechanism (template carries the conventions). New project = GitHub "Use Template" → set `ssh-host` → push.
 
 **Undefined:** Config/secret split discovery — the `.env.config` (git) + GitHub Secrets (credentials) + derived `.env` (server) convention needs an AI discovery mechanism so new sessions know the split. Likely resolved via repo template + project CLAUDE.md standard section + team plugin update.
 
 **Undefined:** Secrets injection mechanism — how project-specific secrets flow from GitHub Secrets through the reusable workflow to the deploy script → merged `.env`. The merge script (`.env.config` + environment variables → `.env`) needs detailed design of how secret names are declared and passed through the SSH transport layer.
 
 **Undefined:** Version upgrade workflow — major version upgrades for stateful services (e.g., Postgres 17→18) require data migration beyond a compose tag change. The scope boundary between Docker image versioning (this convention) and application-level dependency management is undefined.
+
+**Note:** The back-pressure levels (Part 4) will undergo a major overhaul after DaveX2001/deliverable-tracking#1273 (deploy-linker back-pressure detection) is completed. Current levels are directional — the implementation will refine check specifics, exit codes, and deploy-linker integration.
 
 ---
 
