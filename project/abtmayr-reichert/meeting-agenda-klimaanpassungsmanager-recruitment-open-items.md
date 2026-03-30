@@ -2,71 +2,71 @@
 publish: true
 ---
 
-# Meeting Agenda: Klimaanpassungsmanager Recruitment Pipeline — Open Items
+# Meetingagenda: Rekrutierungs-Pipeline Klimaanpassungsmanager — Offene Punkte
 [[client-abtmayr-reichert]]
 
-## Meeting Goal
+## Meetingziel
 
-Resolve the two open design questions from the recruitment pipeline design doc so that implementation can proceed without ambiguity:
+Die offenen Designfragen aus dem Design Doc zur Rekrutierungs-Pipeline klären, damit die Umsetzung ohne Mehrdeutigkeiten fortschreiten kann:
 
-1. **Funding model clarity** — confirm whether DAS covers Werkstudent positions or identify the alternative funding path
-2. **Content workflow** — establish whether Michael reviews LinkedIn posts before publishing
-3. **Finance structure** — plant the seed for transitioning from hourly to retainer engagement
+1. **Finanzierungsmodell klären** — bestätigen, ob DAS Werkstudentenstellen abdeckt, oder den alternativen Finanzierungsweg identifizieren
+2. **Content-Workflow** — festlegen, ob Michael LinkedIn-Beiträge vor der Veröffentlichung prüft
+3. **Vergütungsstruktur** — den Übergang von Stundensatz zu Retainer-Modell anstoßen
 
-## Pre-Read
+## Vorab-Lektüre
 
-- [Design Doc: Klimaanpassungsmanager Recruitment Pipeline](https://mariuswilsch.github.io/public-wilsch-ai-pages/project/abtmayr-reichert/design-doc-klimaanpassungsmanager-recruitment-pipeline) — specifically Part 2 (Stellenbeschreibung, funding model) and Part 3 (LinkedIn, content approval)
+- [Design Doc: Rekrutierungs-Pipeline Klimaanpassungsmanager](https://mariuswilsch.github.io/public-wilsch-ai-pages/project/abtmayr-reichert/design-doc-klimaanpassungsmanager-recruitment-pipeline) — speziell Teil 2 (Stellenbeschreibung, Finanzierungsmodell) und Teil 3 (LinkedIn, Content-Freigabe)
 
 ---
 
-## Discussion Topics
+## Diskussionsthemen
 
-*Starting points for discussion, not limited to these.*
+*Ausgangspunkte für die Diskussion, nicht darauf beschränkt.*
 
-### 1. DAS Funding Eligibility for Werkstudent KAM Positions
-⏱️ 15 min
+### 1. DAS-Förderfähigkeit für Werkstudenten-KAM-Stellen
+⏱️ 15 Min.
 
-The DAS-Förderrichtlinie funds "Fachpersonal" in "befristete Stelle für Klimaanpassungsmanagement." The formal degree requirement is prefixed with "Oft" (often) — not mandatory. However, the program is clearly designed for full-time professionals at TVöD EG 10–11. The current funding window has been closed since August 2025 (funds exhausted), though BMUKN plans future windows.
+Die DAS-Förderrichtlinie fördert „Fachpersonal" in „befristete Stelle für Klimaanpassungsmanagement." Die formale Studienabschluss-Anforderung ist mit „Oft" eingeleitet — nicht verpflichtend. Das Programm ist jedoch eindeutig auf Vollzeit-Fachkräfte auf TVöD EG 10–11 ausgelegt. Das aktuelle Förderfenster ist seit August 2025 geschlossen (Mittel erschöpft), das BMUKN plant jedoch künftige Fenster.
 
-- The Förderrichtlinie does not explicitly prohibit Werkstudent positions
-- ZKA qualification page says "Oft wird ein abgeschlossenes Studium vorausgesetzt" — municipality sets its own requirements
-- Michael's UBA/PIK contact (Ulrich von Lampe, PIK Head of Communications) may have insight into non-traditional KAM arrangements
-- If DAS doesn't cover Werkstudenten, the municipality would fund from own budget — changing the value proposition significantly
+- Die Förderrichtlinie verbietet Werkstudentenstellen nicht explizit
+- ZKA-Qualifikationsseite: „Oft wird ein abgeschlossenes Studium vorausgesetzt" — die Kommune legt eigene Anforderungen fest
+- Michaels UBA/PIK-Kontakt (Ulrich von Lampe, PIK Leiter Kommunikation) könnte Einblicke in nicht-traditionelle KAM-Arrangements haben
+- Falls DAS Werkstudenten nicht abdeckt, finanziert die Kommune aus eigenem Haushalt — was das Wertversprechen erheblich verändert
 
-**To resolve:** The funding path for the Werkstudent KAM position — whether DAS, municipal budget, or a hybrid model — and what Michael's UBA/PIK contacts advise.
+**Zu klären:** Der Finanzierungsweg für die Werkstudenten-KAM-Stelle — ob DAS, kommunaler Haushalt oder ein Hybridmodell — und was Michaels UBA/PIK-Kontakte raten.
 
-### 2. LinkedIn Content Approval Workflow
-⏱️ 5 min
+### 2. LinkedIn Content-Freigabe-Workflow
+⏱️ 5 Min.
 
-Marius/team will produce LinkedIn content for the Klimafolgenschutz e.V. company page. Michael gave carte blanche on content creation — *"kannst du ruhig was überlegen"* — but the approval workflow before publishing was never discussed.
+Marius/Team produziert LinkedIn-Content für die Klimafolgenschutz e.V. Unternehmensseite. Michael gab Carte blanche für die Content-Erstellung — *„kannst du ruhig was überlegen"* — aber der Freigabe-Workflow vor Veröffentlichung wurde nie besprochen.
 
-- Content pillars are defined (Klima-Wissen, Karriere, Gemeinden, Verein)
-- Posting cadence is 1–2x per week
-- Some posts reference Michael's PIK contacts and municipal partnerships — these may need his review
+- Content-Säulen sind definiert (Klima-Wissen, Karriere, Gemeinden, Verein)
+- Posting-Frequenz: 1–2x pro Woche
+- Manche Beiträge referenzieren Michaels PIK-Kontakte und kommunale Partnerschaften — diese könnten seine Prüfung erfordern
 
-**To resolve:** Whether Michael wants to see and approve posts before they go live, or whether the team publishes autonomously with periodic review.
+**Zu klären:** Ob Michael Beiträge vor der Veröffentlichung sehen und freigeben möchte, oder ob das Team eigenständig publiziert mit regelmäßiger Abstimmung.
 
-### 3. Finance Structure Transition — Hourly to Retainer
-⏱️ 10 min
+### 3. Vergütungsstruktur — Übergang von Stundensatz zu Retainer
+⏱️ 10 Min.
 
-The current engagement with Michael is T&M at €120/hr. As the relationship matures and recurring work streams emerge (LinkedIn content, recruitment pipeline operations, website maintenance), a retainer model may better serve both parties — predictable cost for Michael, predictable revenue for Wilsch AI.
+Das aktuelle Engagement mit Michael läuft auf T&M-Basis zu 120 €/Std. Mit zunehmender Reife der Zusammenarbeit und wiederkehrenden Arbeitsströmen (LinkedIn-Content, Rekrutierungs-Pipeline-Betrieb, Website-Pflege) könnte ein Retainer-Modell beiden Seiten besser dienen — planbare Kosten für Michael, planbare Einnahmen für Wilsch AI.
 
-- Current model: hourly billing, variable scope per month
-- Emerging recurring streams: content production (1–2x/week), pipeline operations, website updates
-- Not expecting immediate commitment — introducing the concept for future discussion
+- Aktuelles Modell: Stundenabrechnung, variabler Scope pro Monat
+- Entstehende wiederkehrende Streams: Content-Produktion (1–2x/Woche), Pipeline-Betrieb, Website-Updates
+- Keine sofortige Zusage erwartet — Vorstellung des Konzepts für zukünftige Diskussion
 
-**To resolve:** Whether Michael is open to exploring a retainer structure, and what scope/cadence would make it attractive from his side.
+**Zu klären:** Ob Michael offen ist, eine Retainer-Struktur zu erkunden, und welcher Scope/Rhythmus aus seiner Sicht attraktiv wäre.
 
-## Meeting Format
+## Meetingformat
 
-- **Type:** Discovery (client sync)
-- **Expectation:** Michael brings any updates from his PIK/UBA contacts regarding KAM funding for non-traditional arrangements
-- **Outcome:** Funding model confirmed or alternative identified; LinkedIn approval flow agreed; retainer concept introduced
+- **Typ:** Discovery (Kundensync)
+- **Erwartung:** Michael bringt Updates von seinen PIK/UBA-Kontakten bzgl. KAM-Förderung für nicht-traditionelle Arrangements
+- **Ergebnis:** Finanzierungsmodell bestätigt oder Alternative identifiziert; LinkedIn-Freigabe-Workflow vereinbart; Retainer-Konzept eingeführt
 
-## Related
+## Verknüpfungen
 
 - **Issue:** [DaveX2001/deliverable-tracking#1319](https://github.com/DaveX2001/deliverable-tracking/issues/1319)
-- **Design Doc:** [Klimaanpassungsmanager Recruitment Pipeline](https://mariuswilsch.github.io/public-wilsch-ai-pages/project/abtmayr-reichert/design-doc-klimaanpassungsmanager-recruitment-pipeline)
+- **Design Doc:** [Rekrutierungs-Pipeline Klimaanpassungsmanager](https://mariuswilsch.github.io/public-wilsch-ai-pages/project/abtmayr-reichert/design-doc-klimaanpassungsmanager-recruitment-pipeline)
 - **Parent Epic:** [DaveX2001/deliverable-tracking#726](https://github.com/DaveX2001/deliverable-tracking/issues/726)
 
 ---
