@@ -150,6 +150,7 @@ Simple projects don't need an infra file. The convention degrades gracefully —
 | `external: true` on networks | Creates invisible cross-stack wiring | Let compose manage networks: `{project}_default` |
 | `network_mode: host` | Bypasses network isolation | Use compose-managed networks |
 | Hardcoded volume names | Not scoped to project | Use relative names: `{project}_{volume}` |
+| `:latest` or missing tag on stateful images | `--pull always` jumps major versions, breaking data directories | Pin major version: `postgres:17`, `mongo:7`. Patches auto-update. |
 
 The compose file + one env var (`COMPOSE_PROJECT_NAME`) = complete project identity. No manual naming, no external networks, no `docker network connect`.
 
@@ -159,8 +160,8 @@ The compose file + one env var (`COMPOSE_PROJECT_NAME`) = complete project ident
 
 | Compose | Validated for | Why |
 |---------|--------------|-----|
-| **App** (`docker-compose.yml`) | Isolation — no `container_name:`, no `external: true`, env-var ports, `deploy.entry` label present | Must coexist as multiple branch-scoped copies |
-| **Infra** (`docker-compose.infra.yml`) | Stability — healthchecks on every service, credentials in `.env` (not inline), creates the network app composes expect | Singleton — stable names and networks are correct here |
+| **App** (`docker-compose.yml`) | Isolation — no `container_name:`, no `external: true`, env-var ports, `deploy.entry` label present, stateful images pinned | Must coexist as multiple branch-scoped copies |
+| **Infra** (`docker-compose.infra.yml`) | Stability — healthchecks on every service, credentials in `.env` (not inline), creates the network app composes expect, stateful images pinned | Singleton — stable names and networks are correct here |
 
 `container_name:` is banned in app compose (breaks `COMPOSE_PROJECT_NAME` isolation) but expected in infra compose (GPU services referenced by stable name). The same directive is a violation in one context and correct in the other.
 
@@ -251,20 +252,20 @@ The script reads `deploy.entry` from compose config, finds the labeled service, 
 | Level | Check | What it catches |
 |-------|-------|----------------|
 | 0 | Compose lint (convention validator) | `container_name:`, `external: true`, missing `healthcheck:`, missing `deploy.entry` |
-| 0s | Server pre-flight | Remote is HTTPS (not SSH), deploy user doesn't own checkout, git can't fetch origin, `.env` missing, Docker daemon inaccessible |
+| 0s | Server pre-flight (self-healing) | Creates missing project directory, clones repo, sets `safe.directory` — auto-fixes infrastructure prerequisites. Fails only on human-required items (`.env` missing, Docker daemon inaccessible). Reports actions taken to deploy-linker for audit trail. |
 | 1 | `docker compose config` | Invalid compose file |
 | 2 | `docker compose up --wait` | Health check failures |
 | 3 | `curl -f $PREVIEW_URL` | Routing/reachability broken |
 | 4 | `docker compose logs \| grep error` | Runtime errors in logs |
 
-Each level returns an exit code. GHA reads it: 0 = success, non-zero = failure. Binary, deterministic, no AI interpretation. Level 0 is static — runs in CI on every PR without needing the server. Level 0s runs on the server before any deployment — it catches infrastructure prerequisites that would otherwise produce confusing errors ("Repository not found" when deploy keys are disabled, permission denied when ownership is wrong). Level 0s turns the 4 stacked infrastructure blockers discovered during Archibus adoption (#1251) into automated checks with clear error messages and remediation instructions.
+Each level returns an exit code. GHA reads it: 0 = success, non-zero = failure. Binary, deterministic, no AI interpretation. Level 0 is static — runs in CI on every PR without needing the server. Level 0s runs on the server before any deployment — it self-heals infrastructure prerequisites that are automatable (directory creation, git clone, `safe.directory`) and fails only on items requiring human input (`.env` with project-specific credentials). Actions taken during self-healing are reported to the deploy-linker comment for audit trail (`🆕 First deploy — bootstrapped project directory`). This means a brand new project's first push auto-bootstraps — the only manual step is creating the `.env` with credentials. Level 0 + 0s together validate: compose convention compliance (CI-side) and server readiness (deploy-side), with 8 empirical prerequisites validated from Archibus (#1251) and IITR (#1291) adoption.
 
-**Deploy-owned checkout model.** The deploy user clones all project repos to `/home/deploy/projects/{repo-name}` via SSH. Directory permissions: `deploy:dev-team 2775` (setgid ensures new files inherit `dev-team` group). This eliminates three infrastructure blockers that stacked during Archibus adoption:
+**Deploy-owned checkout model.** The deploy user owns all project repos at `/home/deploy/projects/{repo-name}`, bootstrapped automatically by the self-healing preflight (Level 0s) on first deploy. Directory permissions: `deploy:dev-team 2775` (setgid ensures new files inherit `dev-team` group). This eliminates three infrastructure blockers that stacked during Archibus adoption:
 
 | Blocker | Root cause | How deploy-owned eliminates it |
 |---------|-----------|-------------------------------|
 | `git safe.directory` | Repo owned by marius, deploy can't pull | Deploy owns the checkout — ownership matches |
-| SSH vs HTTPS remote | Marius cloned via HTTPS, deploy has no HTTPS credentials | Deploy clones via SSH — remote matches auth method |
+| Git auth method | Marius cloned via HTTPS, deploy had no credentials | App token injected at deploy time — HTTPS with ephemeral 1hr token, no permanent git credentials on server |
 | File group ownership | Files owned by `marius:marius`, deploy can't write | Deploy creates files as `deploy:dev-team` — setgid propagates |
 
 Human operators (marius, david) access deploy-owned directories via `dev-team` group membership — same read/write/Docker capabilities as today, different ownership direction. Emergency "break glass" access works via group permissions without sudo.
@@ -273,9 +274,9 @@ Human operators (marius, david) access deploy-owned directories via `dev-team` g
 
 **Staging deploy path.** The deploy script detects the `staging` branch and takes a different path: no volume cloning (staging IS the volume source), no Caddy config generation (staging has a permanent route). Staging deploy is: `git pull → docker compose up -d → health check`. For two-phase staging (see infra deployment cadence above), the GHA workflow runs `docker compose -f docker-compose.infra.yml up -d` first, then the app compose.
 
-**Workflow dedup.** A single `deploy.yml` handles all three triggers (preview, cleanup, staging). The spike-era `deploy-preview.yml` (single-purpose) must be deleted — both workflows match `issue-*` branches, causing duplicate GHA runs and confusing issue comments (one success, one failure on the same push).
+**Workflow dedup.** A single `deploy.yml` handles all three triggers (preview, cleanup, staging). The spike-era `deploy-preview.yml` has been deleted — both workflows matched `issue-*` branches, causing duplicate GHA runs.
 
-**Deploy-linker:** GHA step that posts deployment status to the issue: `📦 Preview deployed: URL` on success, `❌ Preview failed` on failure. Extracts issue number from branch name. Automatic.
+**Deploy-linker:** Absorbed into the reusable workflow — no longer a separate per-project GHA step. Posts deployment status to the issue: `📦 Preview deployed: URL` on success, `❌ Preview failed` on failure, `🧹 Preview cleaned up` on PR merge. Extracts issue number from branch name. Uses a second App token scoped to `DaveX2001` org (where deliverable-tracking lives) — eliminates `ISSUE_LINKER_TOKEN` as a separate credential. Self-healing preflight actions are included in the deploy-linker comment (`🆕 First deploy — bootstrapped project directory`).
 
 **Caddy configs are ephemeral on the server.** The deploy script generates a config file in `/etc/caddy/conf.d/`, the cleanup script removes it. Preview configs are temporary by definition — they exist while the preview runs and disappear on PR merge. The deploy-linker posts the preview URL to the issue (audit trail). Committing preview configs to git was evaluated and rejected: each preview's config would only be visible on its own branch, creating no central overview of active routes. Periodic filesystem sweep (`ls /etc/caddy/conf.d/preview-*`) catches orphaned configs from abandoned branches or failed cleanups.
 
@@ -382,18 +383,60 @@ The ruleset auto-applies to every repo transferred to the org, including repos c
 
 This closes the last gap in the enforcement chain. Without branch protection, the AI can `git push` directly to staging from the local machine — bypassing the worktree→PR→GHA flow that Parts 1–5 depend on. With the ruleset, direct push returns 403. The only path to staging is: worktree branch → PR → merge → GHA deploys.
 
-**AI git identity: GitHub App.** The Undefined is resolved — GitHub App replaces both deploy keys and the machine user proposal. One App installed on the WILSCH-AI-SERVICES org provides: (a) org-wide repo access without per-repo deploy key setup, (b) distinct identity for audit trail — commits via the App are attributable to automation, not a human, (c) 1-hour auto-expiring tokens (no permanent credentials on the server), (d) no additional Team seat cost ($4/mo saved vs machine user). The App's installation token is generated via JWT helper script on the server, used for `git pull` during GHA deploys. The deploy-linker already runs as a GitHub App (the issue-commit-linker) — deploy access follows the same pattern. Server-side mapping: the `deploy` SSH user uses the App's credentials for git operations; the `agent` SSH user remains read-only (no git write access regardless of identity).
+**AI git identity: GitHub App (proven).** The `wilsch-ai-deploy` App is installed on both WILSCH-AI-SERVICES and DaveX2001 orgs. Token generation is GHA-side via `actions/create-github-app-token` — no server-side JWT helper, no permanent git credentials on any server. Two tokens per deploy run: (1) org-scoped token for `git pull` (HTTPS + ephemeral 1hr token replaces SSH deploy keys), (2) `DaveX2001`-scoped token for deploy-linker issue comments (eliminates `ISSUE_LINKER_TOKEN`). Credential surface: 3 org secrets (APP_ID, APP_PRIVATE_KEY, DEPLOY_SSH_KEY), zero per-repo secrets or deploy keys. Server-side: deploy scripts set `git remote set-url origin https://x-access-token:${TOKEN}@github.com/${REPO}.git` transiently per run — no stored credentials survive the deploy. The `agent` SSH user remains read-only (no git write access regardless of identity).
+
+**Undefined:** Local git identity split — branch protection blocks AI sessions from pushing directly to staging (correct behavior). Emergency bypass requires the human operator's GitHub identity (MariusWilsch as ruleset bypass actor), structurally gated so the AI cannot self-escalate. Mechanism: two auth identities on one machine (restricted default for AI, elevated for human-authorized bypass), mirroring the server's agent/marius split at the git credential layer. Needs design pass.
 
 ### Part 7 — Scaling the Convention
 
-Parts 1–6 validated the mechanism against one project (Archibus bulk-import). Scaling to all projects requires resolving distribution, validation, and adoption. The Archibus exemplar proved the mechanism for the simple case (self-contained stack, no shared infra). Pass 5 absorbed implementation learnings to prepare for multi-project adoption.
+Parts 1–6 validated against two projects: Archibus bulk-import (self-contained, no shared infra) and IITR (monorepo, infra/app split, multi-server). The mechanism is proven. Scaling requires distribution, validation, and adoption.
 
-- **Distribution: Custom GitHub Action.** Convention tooling lives in `WILSCH-AI-SERVICES/deploy-action` as a custom GitHub Action. Projects write their own workflows (own triggers, project-specific steps like data ingestion) and reference the action: `uses: WILSCH-AI-SERVICES/deploy-action@v1`. The action receives inputs (`action: deploy-preview|cleanup|deploy-staging`, `compose-file`, `branch`). Version pinning via tags — projects upgrade at their own pace. This was chosen over reusable workflows because projects need different triggers and project-specific steps that a shared workflow can't accommodate.
-- **Convention linter:** `docker compose config` validates syntax, not convention compliance. A CI linter on compose changes would structurally enforce: healthcheck blocks present, env-var ports, no external networks, self-contained stacks. Same principle as read-only SSH — remove the wrong choice.
-- **Adoption path:** How a project opts into push=preview. Convention-compliant compose → add GHA reference → first deploy establishes staging. The checklist needs definition.
-- **CI gate:** Whether PRs modifying `docker-compose.yml` should be validated against the convention before merge. Related to the convention linter — the linter is the tool, the CI gate is where it runs.
+**Distribution: Reusable Workflow.** Convention tooling lives in `WILSCH-AI-SERVICES/deploy-action` as a reusable workflow (not a composite action — the original design chose composite action, but implementation proved projects were duplicating identical job structures, deploy-linker logic, and issue extraction). Projects provide a ~12-line `deploy.yml` with two values:
 
-**Undefined:** Monorepo deploy strategy — single root compose (deploy everything on every push) vs per-subproject compose (path-filtered GHA jobs). Docker Compose selectively restarts only changed services, minimizing the risk of "deploy everything." However, volume cloning cost on first preview deploy scales with the number of volumes across all subprojects. Needs a spike with actual IITR compose to measure deploy time and disk usage before deciding. The convention default is one compose file per deploy unit — a monorepo either consolidates into one compose or treats each subproject as an independent deploy unit with path-filtered triggers.
+```yaml
+name: Deploy
+on:
+  push:
+    branches: ['issue-*', 'staging']
+  pull_request:
+    types: [closed]
+    branches: [staging]
+jobs:
+  deploy:
+    uses: WILSCH-AI-SERVICES/deploy-action/.github/workflows/deploy.yml@2026-03-29
+    with:
+      domain-suffix: wilsch-deployment.com
+      ssh-host: 91.99.74.207
+    secrets: inherit
+```
+
+The reusable workflow absorbs: routing (detect action from trigger context), Level 0 convention validation, App token generation, SSH transport, deploy script execution, and deploy-linker comments. Date-based versioning (`@2026-03-29`) — projects pin to a specific release. Triggers remain project-side (GHA limitation — `on:` blocks can't be inherited). `domain-suffix` is a convention constant (`wilsch-deployment.com` for all projects); `ssh-host` varies only for projects on non-default servers (IITR-STAGING overrides the default WILSCH-AI-SERVER IP).
+
+**Convention linter (Level 0, absorbed).** The convention validator runs inside the reusable workflow as a CI step on every PR. Checks: no `container_name:`, no `external: true`, healthchecks on every service, `.env.example` exists, `deploy.entry` label present, stateful images pinned. Same principle as read-only SSH — remove the wrong choice. No per-project setup — the validator travels with the workflow.
+
+**Adoption path (empirical).** Two projects adopted the convention. The checklist emerged from failures, not upfront design:
+
+| Step | What | Who |
+|------|------|-----|
+| 1 | Create repo in WILSCH-AI-SERVICES org (inherits branch protection) | Any org member |
+| 2 | Copy 12-line `deploy.yml`, set `ssh-host` (domain-suffix is convention: `wilsch-deployment.com`) | Developer |
+| 3 | Write convention-compliant compose files + `.env.config` | Developer |
+| 4 | Set project secrets via `gh secret set` (repo-level for project-specific credentials) | Developer with repo admin |
+| 5 | Push → self-healing preflight bootstraps directory + clone + generates `.env` | Automated |
+
+Org secrets (APP_ID, APP_PRIVATE_KEY, DEPLOY_SSH_KEY) are inherited — zero per-repo secret setup for projects deploying to the default server.
+
+**Monorepo (resolved).** IITR decomposition resolved the monorepo question: single root compose with `COMPOSE_PROJECT_NAME` scoping. Docker Compose selectively restarts only changed services. Infra/app split handles shared GPU services. Pipelines coupling (filter startup depends on Typesense readiness) is handled by compose healthcheck dependencies.
+
+**Operator onboarding.** Three layers: (1) one-time global setup — SSH config (`User agent`), GitHub org membership, team plugin, operations manual + Position Agreement; (2) per-project — mostly automated via self-healing preflight, developer sets secrets for new external services; (3) ongoing — team plugin distributes conventions every session, worktree flow, observation loop. Test credentials for deployed services follow: create → document to issue → discoverable.
+
+**Undefined:** Operator domain knowledge path — how a new operator acquires project-specific understanding (JA design doc, mediated summary, or task-first pull). The gap between "has access" and "can productively work" on a specific project needs definition. Let #1325 (David onboarding) generate empirical evidence before designing.
+
+**Undefined:** Config/secret split discovery — the `.env.config` (git) + GitHub Secrets (credentials) + derived `.env` (server) convention needs an AI discovery mechanism so new sessions know the split. Likely resolved via repo template + project CLAUDE.md standard section + team plugin update.
+
+**Undefined:** Secrets injection mechanism — how project-specific secrets flow from GitHub Secrets through the reusable workflow to the deploy script → merged `.env`. The merge script (`.env.config` + environment variables → `.env`) needs detailed design of how secret names are declared and passed through the SSH transport layer.
+
+**Undefined:** Version upgrade workflow — major version upgrades for stateful services (e.g., Postgres 17→18) require data migration beyond a compose tag change. The scope boundary between Docker image versioning (this convention) and application-level dependency management is undefined.
 
 ---
 
@@ -474,6 +517,8 @@ Parts 1–6 validated the mechanism against one project (Archibus bulk-import). 
 - 🗒️ Session e8fef0b2 (Pass 3 — Archibus server cleanup + SSH enforcement design + branch protection)
 - 🗒️ Session 20e0c452 (Pass 4 — resolve Undefined markers + proof point absorption)
 - 🗒️ Session ce6cc685 (Pass 5 — Archibus retrospective, IITR generalization, 12 resolutions)
+- 🗒️ Session f1e6ffec (composite→reusable workflow decision, App token flow, adoption ceremony)
+- 🗒️ Session 3e79f44a (Pass 6 — post-Pass-5 learnings: reusable workflow, self-healing preflight, config/secret split, version pinning, operator onboarding, 5 new Undefineds)
 
 ---
 
