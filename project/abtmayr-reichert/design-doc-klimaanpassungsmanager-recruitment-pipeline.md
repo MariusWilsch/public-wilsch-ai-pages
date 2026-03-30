@@ -78,7 +78,7 @@ Deutsche Stellenbeschreibung für die Werkstudentenstelle. Inhaltlich abgeleitet
 | **Arbeitgeber** | Kommune (nicht der e.V.) |
 | **Vermittler** | Klimafolgenschutz e.V. — findet und verbindet Kandidaten |
 | **Methodik** | Die Agenda (Teil 1) leitet die Arbeit der Studierenden |
-| **Finanzierung** | **Ungeklärt:** DAS-Förderfähigkeit für Werkstudenten ist nicht getestet — siehe [Meetingagenda, Thema 1](#1-das-förderfähigkeit-für-werkstudenten-kam-stellen) |
+| **Finanzierung** | **Ungeklärt:** DAS-Förderfähigkeit für Werkstudenten ist nicht getestet |
 
 **Zielkandidaten:**
 
