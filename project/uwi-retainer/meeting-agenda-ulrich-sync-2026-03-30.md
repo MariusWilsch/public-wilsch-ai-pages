@@ -7,7 +7,7 @@ publish: true
 
 ## Meeting-Ziel
 
-Acht Punkte besprechen: Neuer Vertrag ab April, offene Rechnungen, Seminar-Ergebnisse nutzen, und fünf operative Themen abarbeiten.
+Neun Punkte besprechen: Neuer Vertrag ab April, offene Rechnungen, Seminar-Ergebnisse nutzen, und sechs operative Themen abarbeiten.
 
 1. **Vertrag** — Neuen Rahmenvertrag für April besprechen
 2. **Rechnungen** — Rekers + DGX Spark abrechnen
@@ -17,6 +17,7 @@ Acht Punkte besprechen: Neuer Vertrag ab April, offene Rechnungen, Seminar-Ergeb
 6. **IBM Power / Kernel-Entwickler** — Ralph einbinden
 7. **KI aus der Box + Rekers** — Demo-Status und Preisschätzung
 8. **Newsletter** — Richtung festlegen
+9. **Malaysia-Expansion** — Go/No-Go mit Kate
 
 ## Vorab-Lektüre
 
@@ -115,6 +116,15 @@ Vier offene Punkte:
 Parallel wurde eine duale Vertriebsstrategie vorgeschlagen: Self-Service-Tools für kleinere Firmen + individuelle Betreuung für größere Kunden.
 
 **Zu klären:** Ist der Newsletter noch Priorität? Falls ja: welcher inhaltliche Schwerpunkt? Soll Ulrichs Kundennetzwerk für den Verteiler genutzt werden?
+
+### 9. Malaysia-Expansion — Kate
+⏱️ 5 min
+
+Kate (Singapur) recherchiert seit März den malaysischen Markt für IBM-Hardware-Wiederverkauf. Ihr Vertrag läuft Ende April aus. Eine Geschäftsreise ist für April/Mai geplant.
+
+**Marktsituation:** IBM-SSD-Preise um 15–55 % gestiegen, chinesische Einkäufer gestoppt — Malaysia zeigt aktive Nachfrage.
+
+**Zu klären:** Macht die Expansion geschäftlich Sinn? Welches Budget? Vertrag mit Kate verlängern? Geschäftsreise genehmigen?
 
 ---
 
