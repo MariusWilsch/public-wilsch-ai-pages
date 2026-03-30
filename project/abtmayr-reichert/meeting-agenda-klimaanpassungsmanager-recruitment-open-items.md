@@ -11,6 +11,7 @@ Resolve the two open design questions from the recruitment pipeline design doc s
 
 1. **Funding model clarity** — confirm whether DAS covers Werkstudent positions or identify the alternative funding path
 2. **Content workflow** — establish whether Michael reviews LinkedIn posts before publishing
+3. **Finance structure** — plant the seed for transitioning from hourly to retainer engagement
 
 ## Pre-Read
 
@@ -45,11 +46,22 @@ Marius/team will produce LinkedIn content for the Klimafolgenschutz e.V. company
 
 **To resolve:** Whether Michael wants to see and approve posts before they go live, or whether the team publishes autonomously with periodic review.
 
+### 3. Finance Structure Transition — Hourly to Retainer
+⏱️ 10 min
+
+The current engagement with Michael is T&M at €120/hr. As the relationship matures and recurring work streams emerge (LinkedIn content, recruitment pipeline operations, website maintenance), a retainer model may better serve both parties — predictable cost for Michael, predictable revenue for Wilsch AI.
+
+- Current model: hourly billing, variable scope per month
+- Emerging recurring streams: content production (1–2x/week), pipeline operations, website updates
+- Not expecting immediate commitment — introducing the concept for future discussion
+
+**To resolve:** Whether Michael is open to exploring a retainer structure, and what scope/cadence would make it attractive from his side.
+
 ## Meeting Format
 
 - **Type:** Discovery (client sync)
 - **Expectation:** Michael brings any updates from his PIK/UBA contacts regarding KAM funding for non-traditional arrangements
-- **Outcome:** Funding model confirmed or alternative identified; LinkedIn approval flow agreed
+- **Outcome:** Funding model confirmed or alternative identified; LinkedIn approval flow agreed; retainer concept introduced
 
 ## Related
 

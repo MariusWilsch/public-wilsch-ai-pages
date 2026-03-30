@@ -39,6 +39,57 @@ Klimafolgenschutz e.V. addresses this gap by creating a new position category: W
 
 ---
 
+## Foundation: Institutional & Terminology Reference
+
+The recruitment pipeline operates within Germany's federal climate adaptation ecosystem. This section grounds the institutions, legal frameworks, methodology tools, and professional terminology referenced throughout the Approach.
+
+### Institutional Landscape
+
+| Institution | Full Name | Role | Relevance |
+|-------------|-----------|------|-----------|
+| **UBA** | Umweltbundesamt (Federal Environment Agency) | Builds methodology tools (Klimalotse, Anpassungsscanner, Tatenbank) | Source of the operational framework students use |
+| **PIK** | Potsdam-Institut für Klimafolgenforschung | Produces climate science and projections | State-funded, content is publicly licensed — reusable 1:1 for the Agenda |
+| **GERICS** | Climate Service Center Germany (Helmholtz) | Translates science into municipality-specific climate reports (Klimaausblicke) | One PDF per Landkreis with local projections — the student's starting data |
+| **ZKA** | Zentrum KlimaAnpassung (run by adelphi for BMUKN) | Supports hired KAMs: training (2.5-day seminars, 6x/year), mentoring, 100-day onboarding guide | Free for funded KAMs; Werkstudent eligibility untested |
+| **ZUG** | Zukunft – Umwelt – Gesellschaft | Distributes federal funding (DAS for adaptation, NKI for mitigation) | Project carrier — administers the money, not the methodology |
+| **KLiVO** | Deutsches Klimavorsorgeportal | Government meta-portal indexing all federal adaptation tools | Search engine, not a tool — finds Klimalotse, Anpassungsscanner, Tatenbank in one place |
+
+### Legal & Funding Framework
+
+| Term | Definition |
+|------|-----------|
+| **KAnG** (Klimaanpassungsgesetz) | Federal law (Nov 2023) requiring every municipality to create a Klimaanpassungskonzept. States must submit adaptation strategies by Jan 31, 2027. No explicit penalties — legal obligation without enforcement mechanism, but creates political pressure and budget justification. |
+| **DAS** (Deutsche Anpassungsstrategie) | Federal grant program funding KAM positions and adaptation concepts. Budget exhausted since Aug 2025; Förderrichtlinie valid until Dec 2026. "Valid but exhausted" = rules exist, new funding windows planned but unscheduled. |
+| **NKI** (Nationale Klimaschutzinitiative) | Parallel program for climate *protection* (mitigation), not adaptation. Funds Klimaschutzmanager positions. Same carrier (ZUG), different purpose. |
+| **TVöD EG 10–11** | Public sector pay scale for professional KAMs: ~€3,500–4,500/month gross. Relevant as positioning benchmark — Werkstudenten cost a fraction. |
+| **Klimaanpassungskonzept** | The document municipalities must produce per KAnG: a formal climate risk assessment, adaptation strategy, and implementation plan. |
+| **Ratsbeschluss** | Municipal council resolution — the political adoption of the Klimaanpassungsstrategie. Required to formalize the strategy. |
+
+### Methodology Terms
+
+| Term | Definition |
+|------|-----------|
+| **Klimalotse 3.0** | UBA's step-by-step adaptation guide (website + downloadable PDF). Five sequential modules with templates and checklists. Not a calculator — a structured workflow that produces the basis for a Klimaanpassungskonzept. |
+| **Wirkungsketten** (Impact Chains) | Causal chains mapping climate driver → exposure → sensitivity → impact. Example: *Rising temperatures → Heat waves → Urban surfaces radiate heat → Increased heat mortality.* Used in Module 2 to systematically identify which sectors are affected. |
+| **Anpassungsscanner** | UBA Excel self-assessment measuring institutional readiness (not physical risk). Five dimensions: (1) Values & goals, (2) Knowledge access, (3) Collaboration, (4) Resources, (5) Strategies. Outputs a 0–100 score. |
+| **GERICS Klimaausblicke** | Auto-generated PDFs with climate projections per Landkreis across three RCP scenarios. Indicators include: annual mean temperature, hot days (≥30°C), tropical nights, frost days, heavy precipitation, drought periods, snow cover. |
+| **RCP Scenarios** | Standardized emissions trajectories: RCP 2.6 (strong mitigation, ~+1.5–2°C), RCP 4.5 (moderate, ~+2–3°C), RCP 8.5 (business as usual, ~+3.5–5°C). Used in all GERICS projections. |
+| **Tatenbank** | UBA database of 432 real-world adaptation projects. Good-practice library searchable by action area, climate impact, and region. Students use it in Module 3 to find proven measures. |
+| **DIN EN ISO 14091** | International standard for climate risk assessment (2021). Best practice, not mandatory — but increasingly referenced in formal concepts and procurement specs. |
+| **Schwammstadt** (Sponge City) | Urban planning concept: absorb, store, and slowly release rainwater instead of piping to sewers. Concrete elements: permeable pavements, green roofs, bioswales, urban trees, de-sealing. |
+| **Maßnahmensteckbriefe** | Standardized measure profiles documenting individual adaptation measures — what, where, cost, timeline. Students draft these in Module 3. |
+| **Fördermittelantragstellung** | Funding application process. Students research programs and prepare applications; the municipality signs and submits. |
+
+### Professional Landscape
+
+| Term | Definition |
+|------|-----------|
+| **Klimaschutzmanager** (~2,500 nationwide) | Municipal role focused on climate *protection* — reducing CO₂ emissions (solar, retrofitting, mobility). Funded by NKI. |
+| **Klimaanpassungsmanager** (~300 nationwide) | Municipal role focused on climate *adaptation* — preparing for impacts already occurring (heat, flooding, drought). Funded by DAS. The newer, undersupplied role. |
+| **KAM-Werkstudent** | The position type this pipeline creates. Does not exist in the current market — lower barrier than professional KAM (student, not degree required), with thesis integration and structured methodology via Agenda. |
+
+---
+
 ## Approach
 
 The pipeline has four parts, each building on the previous:
@@ -136,9 +187,7 @@ New organizational LinkedIn page for Klimafolgenschutz e.V. — Michael has a pe
 | **Gemeinden** | ~25% | Municipalities | KAnG obligations, DAS funding updates, success stories |
 | **Verein** | ~15% | Both | e.V. milestones, PIK/UBA contact updates |
 
-**Posting cadence:** 1–2x per week (steady state). The existing doc proposed daily — too aggressive for current bandwidth.
-
-**Content production:** Marius/team produces content. Michael confirmed: *"Kannst du das mit übernehmen?"* — *"Ja, können wir machen."*
+**Posting cadence:** 1–2x per week (steady state).
 
 **Content approval:** **Undefined:** Does Michael review posts before publishing? — see [Meeting Agenda, Topic 2](#2-linkedin-content-approval-workflow)
 
@@ -190,7 +239,8 @@ Part 3 (LinkedIn page live) ──→ Part 4 (swap CTA URL)
   - [NKI Municipal Agency](https://www.klimaschutz.de/de/foerderung-der-nki/ueber-die-nki-dashboard/agentur-fuer-kommunalen-klimaschutz) — Advisory for municipalities
 - **Sessions:**
   - [Rubber-duck #1317](https://github.com/MariusWilsch/claude-code-conversation-store/blob/main/projects/-Users-verdant-Documents-projects-billable-klimafolgenschutz-website/44abeabd-6d82-4c29-bb50-72c46a609995.jsonl) — Consolidation rationale (#1242 + #1243 → #1317)
-  - [JA Extraction #1319](https://github.com/MariusWilsch/claude-code-conversation-store/blob/main/projects/-Users-daveFem-Desktop-claude-projects-06-ABTMAYR-REICHERT--deliverable/75a1bfd3-0f96-431d-93d5-61121cf5ef2e.jsonl) — This session
+  - [JA Extraction #1319](https://github.com/MariusWilsch/claude-code-conversation-store/blob/main/projects/-Users-daveFem-Desktop-claude-projects-06-ABTMAYR-REICHERT--deliverable/75a1bfd3-0f96-431d-93d5-61121cf5ef2e.jsonl) — Initial design doc session
+  - [JA Terminology Pass #1319](https://github.com/MariusWilsch/claude-code-conversation-store/blob/main/projects/-Users-daveFem-Desktop-claude-projects-06-ABTMAYR-REICHERT--deliverable/105fe43b-af01-4fcf-bc33-d701510b5f4e.jsonl) — Foundation glossary + client-facing cleanup
 
 *Supersedes: #1317 (closed), #1242 (LinkedIn Content Strategy), #1243 (PIK Research Integration) — all closed as "not planned."*
 
