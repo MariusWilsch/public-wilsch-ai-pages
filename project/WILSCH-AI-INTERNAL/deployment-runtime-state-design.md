@@ -96,7 +96,7 @@ Two principles, equally important:
 | Search indexes (Typesense, Meili) | Volume clone + ingestion via GHA | Partial — ingestion scripts in git |
 
 **What cannot be codified (irreducible):**
-- **Credentials** — `.env` files, gitignored. Injected from secrets management or manual setup.
+- **Credentials** — currently in `.env` files on server (gitignored). **Undefined:** config/secret split designed but not implemented — `.env.config` (config, in git) + GitHub Secrets (credentials) + derived `.env` (server). See Part 7 Undefineds.
 - **GPU hardware** — Ollama on IBM Power or dedicated GPU servers. Physical constraint.
 - **External service state** — IMAP inboxes, third-party API state. Real-world dependency.
 
@@ -358,7 +358,7 @@ The JA designs the split. The Developer writes the compose files and project-spe
 
 Parts 1–5 enforce the convention on the server. This part enforces it at the git layer — preventing code from reaching the server through unauthorized paths.
 
-No branch protection exists on any repository today. GitHub Free does not support branch protection on private repos. The fix: upgrade the existing `WILSCH-AI-SERVICES` organization to Team plan ($4/user/month) and create a single org-level ruleset.
+Branch protection is now enforced via org-level ruleset on WILSCH-AI-SERVICES (Team plan, $4/user/month). All repos — current and future — inherit protection automatically.
 
 **Org-level ruleset (set once, covers all repos):**
 
@@ -410,7 +410,7 @@ jobs:
 
 The reusable workflow absorbs: routing (detect action from trigger context), Level 0 convention validation, App token generation, SSH transport, deploy script execution, and deploy-linker comments. Date-based versioning (`@2026-03-29`) — projects pin to a specific release. Triggers remain project-side (GHA limitation — `on:` blocks can't be inherited). `domain-suffix` is a convention constant (`wilsch-deployment.com` for all projects). `ssh-host` is explicit configuration — every project declares which server it deploys to, visible in git. No silent defaults or inheritance. Open the file, see the target.
 
-**Convention linter (Level 0, absorbed).** The convention validator runs inside the reusable workflow as a CI step on every PR. Checks: no `container_name:`, no `external: true`, healthchecks on every service, `.env.example` exists, `deploy.entry` label present, stateful images pinned. Same principle as read-only SSH — remove the wrong choice. No per-project setup — the validator travels with the workflow.
+**Convention linter (Level 0, absorbed).** The convention validator runs inside the reusable workflow as a CI step on every PR. Checks: no `container_name:` in app compose (expected in infra), no ad-hoc `external: true` in app compose (infra network connection is the one allowed use), healthchecks on every service, `.env.example` exists, `deploy.entry` label present, stateful images pinned. Same principle as read-only SSH — remove the wrong choice. No per-project setup — the validator travels with the workflow.
 
 **Adoption path (empirical).** Two projects adopted the convention. The checklist emerged from failures, not upfront design:
 
