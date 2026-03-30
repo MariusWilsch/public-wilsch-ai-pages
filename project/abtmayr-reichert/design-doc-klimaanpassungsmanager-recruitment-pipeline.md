@@ -17,16 +17,13 @@ Kommunen stehen vor einem dreifachen Problem: gesetzliche Verpflichtung, fehlend
 
 Klimafolgenschutz e.V. adressiert diese Lücke durch die Schaffung einer neuen Stellenkategorie: Werkstudenten als Klimaanpassungsmanager. Der e.V. rekrutiert Studierende, stellt den methodischen Rahmen bereit (abgeleitet von PIK/UBA-Tools) und verbindet sie mit Kommunen — Angebot und Nachfrage gleichzeitig.
 
-> *"Wie bei Tesla — Autos und Ladestation gleichzeitig."* — Michael Reichert
+> *"Wie bei Tesla — Autos und Ladestation gleichzeitig."*
 
 ---
 
 ## Erfolgsdefinition
 
-| Element | Definition |
-|---------|-----------|
-| **Ziel** | Michael kann Klimaanpassungsmanager (Werkstudenten) für Kommunen über eine einheitliche Pipeline rekrutieren — von der Stellenbeschreibung über die LinkedIn-Präsenz bis zur Website-Integration |
-| **Erfolg** | Ein veröffentlichtes Design Doc, das alle 4 Liefergegenstände mit ausreichender Spezifität beschreibt, sodass die Umsetzung keine weitere Design-Session erfordert |
+- **Ziel:** Klimafolgenschutz e.V. kann Klimaanpassungsmanager (Werkstudenten) für Kommunen über eine einheitliche Pipeline rekrutieren — von der Stellenbeschreibung über die LinkedIn-Präsenz bis zur Website-Integration
 
 ---
 
@@ -105,7 +102,7 @@ Die Agenda präsentiert den Klimalotse-Lebenszyklus, angepasst auf den Werkstude
 | **4. Strategiedokument** | Klimaanpassungsstrategie veröffentlichen, Ratsbeschluss einholen | Redaktionelle Unterstützung, Monitoring-Rahmenwerk aufbauen, erste Maßnahmen koordinieren |
 | **5. Monitoring** | Umsetzung verfolgen, Ergebnisse evaluieren | Indikatorsets pflegen, Fortschrittsberichte erstellen |
 
-**Schwerpunktbereiche** (Michaels Betonung): Gewässerschutz, Hitzeschutz, Bepflanzung, Innenstadtgestaltung — typische kommunale Bedarfe, keine Einschränkung des Rahmenwerks.
+**Schwerpunktbereiche:** Gewässerschutz, Hitzeschutz, Bepflanzung, Innenstadtgestaltung — typische kommunale Bedarfe, keine Einschränkung des Rahmenwerks.
 
 **Tools, die Studierende nutzen:**
 
@@ -156,7 +153,7 @@ Deutsche Stellenbeschreibung für die Werkstudentenstelle. Inhaltlich abgeleitet
 
 ### Teil 3: LinkedIn Unternehmensseite + Content-Strategie
 
-Neue organisationale LinkedIn-Seite für Klimafolgenschutz e.V. — Michael hat bisher nur ein persönliches Profil. Die Seite bedient gleichzeitig zwei Zielgruppen (Tesla-Modell): Studierende auf der Suche nach Möglichkeiten und Kommunen auf der Suche nach Personallösungen.
+Neue organisationale LinkedIn-Seite für Klimafolgenschutz e.V. — bisher existiert keine Vereinspräsenz auf LinkedIn. Die Seite bedient gleichzeitig zwei Zielgruppen (Tesla-Modell): Studierende auf der Suche nach Möglichkeiten und Kommunen auf der Suche nach Personallösungen.
 
 **Seiteneinrichtung:**
 
@@ -167,7 +164,7 @@ Neue organisationale LinkedIn-Seite für Klimafolgenschutz e.V. — Michael hat 
 | **Tagline** | *Gemeinden stärken. Klima anpassen. Zukunft sichern.* |
 | **Website** | klimafolgenschutz.com |
 | **E-Mail** | info@klimafolgenschutz.org |
-| **Admin** | Michael erhält Admin-Zugang |
+| **Admin** | Vereinsvorstand erhält Admin-Zugang |
 
 **Content-Säulen:**
 
@@ -180,7 +177,7 @@ Neue organisationale LinkedIn-Seite für Klimafolgenschutz e.V. — Michael hat 
 
 **Posting-Frequenz:** 1–2x pro Woche (Regelbetrieb).
 
-**Content-Freigabe:** **Ungeklärt:** Prüft Michael Beiträge vor der Veröffentlichung? — siehe [Meetingagenda, Thema 2](#2-linkedin-content-freigabe-workflow)
+**Content-Freigabe:** **Ungeklärt:** Prüft der Vereinsvorstand Beiträge vor der Veröffentlichung?
 
 **Tonalität:** Professionell aber zugänglich — behördennahe Glaubwürdigkeit mit studierendenfreundlicher Sprache. Nur Deutsch (DACH-Fokus).
 
@@ -197,7 +194,7 @@ Neue organisationale LinkedIn-Seite für Klimafolgenschutz e.V. — Michael hat 
 | **Badge** | „Bald verfügbar" | **Entfernen** |
 | **Subtext** | „im Aufbau" | **Entfernen** |
 
-**Umbenennungsumfang:** Seitenweit — jede Instanz von „Klimafolgenschutzmanager" wird zu „Klimaanpassungsmanager". Michaels Begründung: *„Vielleicht benennen wir das um den Klimaanpassungsmanager, weil das die Begrifflichkeit ist, die die Behörde schon eingeführt hat."*
+**Umbenennungsumfang:** Seitenweit — jede Instanz von „Klimafolgenschutzmanager" wird zu „Klimaanpassungsmanager". Begründung: *„Klimaanpassungsmanager ist die Begrifflichkeit, die die Behörde bereits eingeführt hat."*
 
 **Abhängigkeit:** Teil 3 (LinkedIn-Seite + Stellenanzeige) muss live sein, bevor der CTA darauf verweisen kann.
 
@@ -209,8 +206,8 @@ Teil 3 (LinkedIn-Seite live) ──→ Teil 4 (CTA-URL tauschen)
 
 | Punkt | Begründung | Wann |
 |-------|-----------|------|
-| **/wissen-Seite** | Michael: *„kann sich ja entwickeln noch"* — kein konkreter Scope | Nachdem Agenda-Inhalte ausgereift sind |
-| **Zertifizierung** | Michael: *„warten wir damit ab bis zum Schluss"* | Nach ersten Einsätzen des Programms |
+| **/wissen-Seite** | Kein konkreter Scope — *„kann sich ja entwickeln noch"* | Nachdem Agenda-Inhalte ausgereift sind |
+| **Zertifizierung** | *„Warten wir damit ab bis zum Schluss"* | Nach ersten Einsätzen des Programms |
 
 ---
 
