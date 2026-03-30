@@ -94,20 +94,20 @@ Standardized pattern: `{client}-{project}` (lowercase, hyphen-separated). Refere
 |---------|------|-------|--------|-------------|
 | archibus-bulk-import | `/home/deploy/projects/` | deploy:dev-team | WILSCH-AI-SERVICES ✅ | ✅ Yes |
 | archibus-bulk-import (dup) | `/home/shared/projects/` | marius:dev-team | WILSCH-AI-SERVICES | Legacy copy |
-| archibus_full-stack | `/home/shared/projects/` | marius:dev-team | MariusWilsch/ARCHIBUS__archibus-poc | ❌ Legacy |
+| archibus_full-stack (FM Assistant) | `/home/shared/projects/` | marius:dev-team | MariusWilsch/ARCHIBUS__archibus-poc | ❌ Active, needs convention adopt |
 | archibus-deploy | `/home/marius/projects/billable/` | marius | No remote (LibreChat upstream clone) | ❌ Legacy |
 | call2tanss_full-stack | `/home/marius/projects/billable/` | marius | MariusWilsch/Call2Tanss | ❌ No |
 | invoice-agent_backend | `/home/marius/projects/billable/` | marius | MariusWilsch/uwi__invoice-agent | ❌ No |
 | rohdex | `/home/shared/` | ? | MariusWilsch/rohdex | ❌ No |
 
-#### Server — Running Containers (29 total, grouped)
+#### Server — Running Containers (grouped)
 
 **Convention-compliant (auto-ports, healthchecks):**
 - `archibus-bulk-import-*` (3 containers) — staging
 
-**Legacy Archibus (hardcoded ports):**
-- `LibreChat-staging` (:3081), `LibreChat-dev` (:3080) — old Archibus chat UI
-- `archibus_fastmcp_staging` (:8001) — old Archibus MCP
+**FM Assistant / Archibus (hardcoded ports):**
+- `LibreChat-staging` (:3081), `LibreChat-dev` (:3080) — Archibus FM Assistant chat UI
+- `archibus_fastmcp_staging` (:8001) — Archibus FM Assistant MCP
 - `chat-mongodb-*`, `rag_api-*`, `vectordb-*`, `chat-meilisearch-*` — supporting services
 
 **Client projects (hardcoded ports):**
