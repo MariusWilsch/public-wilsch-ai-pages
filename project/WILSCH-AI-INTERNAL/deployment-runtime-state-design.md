@@ -408,7 +408,7 @@ jobs:
     secrets: inherit
 ```
 
-The reusable workflow absorbs: routing (detect action from trigger context), Level 0 convention validation, App token generation, SSH transport, deploy script execution, and deploy-linker comments. Date-based versioning (`@2026-03-29`) — projects pin to a specific release. Triggers remain project-side (GHA limitation — `on:` blocks can't be inherited). `domain-suffix` is a convention constant (`wilsch-deployment.com` for all projects); `ssh-host` varies only for projects on non-default servers (IITR-STAGING overrides the default WILSCH-AI-SERVER IP).
+The reusable workflow absorbs: routing (detect action from trigger context), Level 0 convention validation, App token generation, SSH transport, deploy script execution, and deploy-linker comments. Date-based versioning (`@2026-03-29`) — projects pin to a specific release. Triggers remain project-side (GHA limitation — `on:` blocks can't be inherited). `domain-suffix` is a convention constant (`wilsch-deployment.com` for all projects). `ssh-host` is explicit configuration — every project declares which server it deploys to, visible in git. No silent defaults or inheritance. Open the file, see the target.
 
 **Convention linter (Level 0, absorbed).** The convention validator runs inside the reusable workflow as a CI step on every PR. Checks: no `container_name:`, no `external: true`, healthchecks on every service, `.env.example` exists, `deploy.entry` label present, stateful images pinned. Same principle as read-only SSH — remove the wrong choice. No per-project setup — the validator travels with the workflow.
 
