@@ -20,7 +20,7 @@ A simplified pseudonymization script exists (`masterfragen/package/pseudonymize_
 
 **Preconditions:**
 - IITR uses Keycloak SSO (`sso.iitr.de`) for OpenWebUI authentication — real PII enters through OIDC tokens
-- OpenWebUI is a closed-source container — user registration cannot be intercepted at the application middleware level
+- OpenWebUI is deployed as an unmodified upstream container — PII enters at OIDC login and is written to SQLite before the Flask proxy can intercept
 - The masterfragen Flask proxy already extracts user identity headers on every request but passes them through unhashed
 - GDPR compliance requires pseudonymization of non-admin user data before broader rollout
 
@@ -43,7 +43,7 @@ A simplified pseudonymization script exists (`masterfragen/package/pseudonymize_
 The existing `pseudonymize_simple.py` (104 lines) provides the core logic: copy SQLite DB from Docker container → SHA-256 hash non-whitelisted user names/emails → copy DB back. Three changes make it production-ready:
 
 **1a. Environment parameterization:**
-- Container name derived from environment: `rag-{env}-openwebui` (matches the Makefile project naming convention: `rag-dev`, `rag-staging`, `rag-prod`)
+- Container name derived from `COMPOSE_PROJECT_NAME` env var: `${COMPOSE_PROJECT_NAME}-openwebui-1` (e.g., `iitr-staging-openwebui-1`, `iitr-prod-openwebui-1`)
 - `PSEUDONYMIZE_ENV` env var (already exists in the script) selects the whitelist
 - DB working path: `/tmp/webui_{env}.db` (transient) — backup path: `/home/shared/backups/` (persistent, survives reboots)
 
@@ -87,7 +87,7 @@ Both the batch script and the Flask proxy need a shared whitelist of protected u
 - `fabian.doerringer@tngtech.com` — IITR Admin
 - `test@test.de`, `admin@admin.de` — test accounts
 
-**Note:** Roman Rolnik removed (no longer active). David's email and any additional IITR users to be confirmed before production deployment.
+**Undefined:** Whitelist pending update from Marius (2026-03-30). Current list is a snapshot — final protected user set to be confirmed before production deployment. Roman Rolnik already removed (no longer active).
 
 ### Part 4: Deployment & Rollback
 
@@ -120,6 +120,7 @@ Deployment follows the established `deploy-action` GHA pattern (SSH-based, two-p
 - **Issue:** [#1100](https://github.com/DaveX2001/deliverable-tracking/issues/1100)
 - **Epic:** [#959](https://github.com/DaveX2001/deliverable-tracking/issues/959) — IITR Contract Extension & Stabilization
 - **Session:** `75e3c02c-7e7a-406d-bbc4-e3798445e438` (2026-03-29 extraction pass)
+- **Session:** `fc34fe77-e32c-40e2-a23d-211273428f1f` (2026-03-30 SA feedback resolution — F1: closed-source→upstream, F2: Makefile→COMPOSE_PROJECT_NAME, F3: whitelist Undefined)
 
 ---
 
