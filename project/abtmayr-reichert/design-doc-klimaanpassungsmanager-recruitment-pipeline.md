@@ -2,278 +2,219 @@
 publish: true
 ---
 
-# Design Doc: Klimaanpassungsmanager Recruitment Pipeline
+# Design Doc: Rekrutierungs-Pipeline Klimaanpassungsmanager
 
-[[client-abtmayr-reichert]]
 
-Recruitment pipeline for Klimafolgenschutz e.V.: how the association connects municipalities with Werkstudenten as Klimaanpassungsmanager, using federal methodology frameworks.
-
----
-
-## Problem Statement
-
-Since July 2024, Germany's Klimaanpassungsgesetz (KAnG) requires every municipality to create a Klimaanpassungskonzept. The staffing gap is severe: only ~300 Klimaanpassungsmanager (KAM) are employed nationwide — compared to ~2,500 Klimaschutzmanager. The primary federal funding mechanism (DAS) has exhausted its budget since August 2025, with future funding windows planned but unscheduled.
-
-Municipalities face a triple bind: legal obligation, no staff, limited funding. The professional KAM market cannot scale fast enough — formal positions require completed degrees and compete at TVöD EG 10–11 salary levels (~€3,500–4,500/month).
-
-Klimafolgenschutz e.V. addresses this gap by creating a new position category: Werkstudenten as Klimaanpassungsmanager. The e.V. recruits students, provides the methodology framework (derived from PIK/UBA tools), and connects them with municipalities — supply and demand simultaneously.
-
-> *"Wie bei Tesla — Autos und Ladestation gleichzeitig."* — Michael Reichert
-
-**Preconditions:**
-- KAnG is in force — municipalities have a legal obligation to act
-- DAS funding window closed (Aug 2025), Förderrichtlinie valid until Dec 2026
-- PIK/UBA provide free methodology tools (Klimalotse 3.0, GERICS, Anpassungsscanner)
-- Klimafolgenschutz e.V. is operational (website live, bank account, Vereinsregister)
-- No "KAM-Werkstudent" position type exists in the current market
+Rekrutierungs-Pipeline für Klimafolgenschutz e.V.: Wie der Verein Kommunen mit Werkstudenten als Klimaanpassungsmanager verbindet — auf Basis bundesweiter Methodik-Rahmenwerke.
 
 ---
 
-## Success Definition
+## Problemstellung
 
-| Element | Definition |
-|---------|-----------|
-| **Goal** | Michael can recruit Klimaanpassungsmanager (Werkstudenten) for municipalities through a unified pipeline — from job description to LinkedIn presence to website integration |
-| **Success** | A published design doc that Marius can decompose into developer sub-issues covering all 5 pipeline parts, with enough specificity that implementation doesn't require another design session |
-| **Done test** | Can I write a meeting agenda with open design questions? If NO → design is complete |
+Seit Juli 2024 verpflichtet das Klimaanpassungsgesetz (KAnG) jede Kommune zur Erstellung eines Klimaanpassungskonzepts. Die Personallücke ist gravierend: Bundesweit sind nur ~300 Klimaanpassungsmanager (KAM) beschäftigt — im Vergleich zu ~2.500 Klimaschutzmanagern. Der primäre Bundesfördermechanismus (DAS) hat sein Budget seit August 2025 ausgeschöpft; künftige Förderfenster sind geplant, aber nicht terminiert.
 
----
+Kommunen stehen vor einem dreifachen Problem: gesetzliche Verpflichtung, fehlendes Personal, begrenzte Finanzierung. Der professionelle KAM-Markt kann nicht schnell genug skalieren — formale Stellen erfordern abgeschlossene Studiengänge und konkurrieren auf TVöD EG 10–11 Gehaltsniveau (~3.500–4.500 €/Monat).
 
-## Team
+Klimafolgenschutz e.V. adressiert diese Lücke durch die Schaffung einer neuen Stellenkategorie: Werkstudenten als Klimaanpassungsmanager. Der e.V. rekrutiert Studierende, stellt den methodischen Rahmen bereit (abgeleitet von PIK/UBA-Tools) und verbindet sie mit Kommunen — Angebot und Nachfrage gleichzeitig.
 
-| Role | Person | Responsibility |
-|------|--------|---------------|
-| **Ambassador** | Michael Reichert | Vision, PIK/UBA network, municipal contacts, funding research |
-| **Geschäftsführer (designiert)** | Ralph Loser | Operations, project planning, organizational structure |
-| **Technical Lead** | Marius Wilsch / Wilsch AI | Platform development, content production, AI automation |
-| **Technical Support** | David Eberle | Implementation support |
-
-Ralph joined the project via V-Con network (March 2026). Weekly team meetings established. Detailed project plan — milestones, responsibilities, September 2026 target — to be created at brainstorming session (2026-04-03).
+Das Modell folgt dem Prinzip, Angebot und Nachfrage parallel aufzubauen — Studierende rekrutieren und gleichzeitig Kommunen als Einsatzorte gewinnen.
 
 ---
 
-## Approach
+## Erfolgsdefinition
 
-The pipeline has five parts. Parts 1–4 build the student recruitment side. Part 5 runs in parallel — the municipal acquisition side. Both converge at the platform (Part 4).
+- **Ziel:** Klimafolgenschutz e.V. kann Klimaanpassungsmanager (Werkstudenten) für Kommunen über eine einheitliche Pipeline rekrutieren — von der Stellenbeschreibung über die LinkedIn-Präsenz bis zur Website-Integration
+
+---
+
+## Vorgehen
+
+Die Pipeline besteht aus vier Teilen, die aufeinander aufbauen:
 
 ```
-PIK/UBA Research ──→ Agenda ──→ Stellenbeschreibung ──→ LinkedIn ──→ Platform + Automation
-                                                                          ↕
-                                                               Municipal Acquisition (Part 5)
+PIK/UBA-Recherche ──→ Agenda ──→ Stellenbeschreibung ──→ LinkedIn ──→ Website-CTA
 ```
 
-### Part 1: Klimaanpassungsmanager Agenda
+### Teil 1: Klimaanpassungsmanager Agenda
 
-An internal document given to accepted applicants after they pass the application process. It defines their work scope — what they'll do when deployed to a municipality. Derived from the federal Klimalotse 3.0 framework (UBA), not invented from scratch. Municipalities receive separate product-focused materials (see Part 5).
+Ein Dokument mit doppeltem Zweck: Es zeigt Kandidaten, was sie im Einsatz tun werden, und gibt Kommunen Vertrauen in die Methodik. Abgeleitet vom bundesweiten Klimalotse 3.0 Rahmenwerk (UBA), nicht von Grund auf neu erfunden.
 
-**Structure: Klimalotse 5-Module Framework**
+**Struktur: Klimalotse 5-Modul-Rahmenwerk**
 
-The agenda presents the Klimalotse lifecycle adapted for the Werkstudent scope. Each module describes the overall municipal process and what the student specifically contributes:
+Die Agenda präsentiert den Klimalotse-Lebenszyklus, angepasst auf den Werkstudenten-Scope. Jedes Modul beschreibt den übergreifenden kommunalen Prozess und den spezifischen Beitrag der Studierenden:
 
-| Module | Municipal Process | Student's Contribution |
-|--------|------------------|----------------------|
-| **1. Orientierung** | Secure political mandate, appoint KAM, establish governance | Map stakeholder landscape, research past weather events, compile GERICS climate projections, run UBA Anpassungsscanner |
-| **2. Klimarisikoanalyse** | Formal risk assessment per DIN EN ISO 14091, stakeholder workshops | Develop Wirkungsketten (impact chains), gather sensitivity/exposure data, pre-fill risk matrices, document workshop results |
-| **3. Maßnahmenentwicklung** | Define adaptation goals, select and prioritize measures | Review UBA Tatenbank, draft Maßnahmensteckbriefe, research funding programs, support applications |
-| **4. Strategiedokument** | Publish Klimaanpassungsstrategie, secure Ratsbeschluss | Editorial support, build monitoring framework, coordinate first measures |
-| **5. Monitoring** | Track implementation, evaluate outcomes | Maintain indicator sets, prepare progress reports |
+| Modul | Kommunaler Prozess | Beitrag der Studierenden |
+|-------|-------------------|-------------------------|
+| **1. Orientierung** | Politisches Mandat sichern, KAM benennen, Governance etablieren | Stakeholder-Landschaft kartieren, vergangene Wetterereignisse recherchieren, GERICS-Klimaprojektionen zusammenstellen, UBA Anpassungsscanner durchführen |
+| **2. Klimarisikoanalyse** | Formale Risikobewertung nach DIN EN ISO 14091, Stakeholder-Workshops | Wirkungsketten entwickeln, Empfindlichkeits-/Expositionsdaten erheben, Risikomatrizen vorausfüllen, Workshop-Ergebnisse dokumentieren |
+| **3. Maßnahmenentwicklung** | Anpassungsziele definieren, Maßnahmen auswählen und priorisieren | UBA Tatenbank auswerten, Maßnahmensteckbriefe erstellen, Förderprogramme recherchieren, Anträge unterstützen |
+| **4. Strategiedokument** | Klimaanpassungsstrategie veröffentlichen, Ratsbeschluss einholen | Redaktionelle Unterstützung, Monitoring-Rahmenwerk aufbauen, erste Maßnahmen koordinieren |
+| **5. Monitoring** | Umsetzung verfolgen, Ergebnisse evaluieren | Indikatorsets pflegen, Fortschrittsberichte erstellen |
 
-**Priority areas** (Michael's emphasis): Gewässerschutz, Hitzeschutz, Bepflanzung, Innenstadtgestaltung — these are typical municipal needs, not a narrowing of the framework.
+**Schwerpunktbereiche:** Gewässerschutz, Hitzeschutz, Bepflanzung, Innenstadtgestaltung — typische kommunale Bedarfe, keine Einschränkung des Rahmenwerks.
 
-**Tools the student uses:**
+**Tools, die Studierende nutzen:**
 
-| Tool | Purpose | Access |
-|------|---------|--------|
-| [Klimalotse 3.0](https://www.umweltbundesamt.de/node/33047) | Step-by-step adaptation methodology | Free, downloadable |
-| [GERICS Klimaausblicke](https://www.gerics.de/products_and_publications/fact_sheets/landkreise/index.php.de) | 17 climate indicators per Landkreis, 3 RCP scenarios | Free, 401 Landkreise |
-| [UBA Anpassungsscanner](https://www.umweltbundesamt.de/node/118272) | Excel self-assessment across 5 dimensions | Free (since Sep 2025) |
-| [KLiVO Portal](https://www.klivoportal.de) | Meta-tool aggregating all federal adaptation tools | Free |
-| [ZKA 100-Tage Guide](https://zentrum-klimaanpassung.de/wissen-klimaanpassung/beruf-klimaanpassungsmanagerin/die-ersten-100-tage-im-klimaanpassungsmanagement) | Onboarding playbook for new KAMs | Free, public download |
+| Tool | Zweck | Zugang |
+|------|-------|--------|
+| [Klimalotse 3.0](https://www.umweltbundesamt.de/node/33047) | Schritt-für-Schritt Anpassungsmethodik | Kostenlos, herunterladbar |
+| [GERICS Klimaausblicke](https://www.gerics.de/products_and_publications/fact_sheets/landkreise/index.php.de) | 17 Klimaindikatoren pro Landkreis, 3 RCP-Szenarien | Kostenlos, 401 Landkreise |
+| [UBA Anpassungsscanner](https://www.umweltbundesamt.de/node/118272) | Excel-Selbstbewertung über 5 Dimensionen | Kostenlos (seit Sep 2025) |
+| [KLiVO Portal](https://www.klivoportal.de) | Meta-Tool, das alle Bundestools zur Anpassung bündelt | Kostenlos |
+| [ZKA 100-Tage Guide](https://zentrum-klimaanpassung.de/wissen-klimaanpassung/beruf-klimaanpassungsmanagerin/die-ersten-100-tage-im-klimaanpassungsmanagement) | Einarbeitungsleitfaden für neue KAMs | Kostenlos, öffentlich verfügbar |
 
-**What students do NOT do:** Political mandate negotiation, leading stakeholder workshops (they support and document), final risk assessment decisions, Fördermittelantragstellung (students prepare, municipality signs).
+**Was Studierende NICHT tun:** Politische Mandatsverhandlung, Leitung von Stakeholder-Workshops (sie unterstützen und dokumentieren), finale Risikobewertungsentscheidungen, Fördermittelantragstellung (Studierende bereiten vor, Kommune unterzeichnet).
 
-**Support infrastructure:** ZKA offers free training seminars (2.5 days, 6x/year), a mentoring program (peer matching), and a digital platform for KAMs. Werkstudent access to these programs is not explicitly excluded but untested — registration forms include "Sonstiges" and "Stellenumfang in %" fields.
+**Unterstützungsinfrastruktur:** Das ZKA bietet kostenlose Schulungsseminare (2,5 Tage, 6x/Jahr), ein Mentoring-Programm (Peer-Matching) und eine digitale Plattform für KAMs. Der Zugang für Werkstudenten zu diesen Programmen ist nicht explizit ausgeschlossen, aber nicht getestet — Anmeldeformulare erlauben flexible Angaben zu Stellenart und -umfang.
 
-### Part 2: Stellenbeschreibung
+### Teil 2: Stellenbeschreibung
 
-German job description for the Werkstudent position. Content derived from the Agenda — the Stellenbeschreibung is the Agenda translated into a recruitment format.
+Deutsche Stellenbeschreibung für die Werkstudentenstelle. Inhaltlich abgeleitet von der Agenda — die Stellenbeschreibung ist die Agenda übersetzt in ein Rekrutierungsformat.
 
-**Employment model:**
+**Beschäftigungsmodell:**
 
-| Role | Actor |
-|------|-------|
-| **Employer** | Municipality (not the e.V.) |
-| **Recruiter** | Klimafolgenschutz e.V. — sources and connects candidates |
-| **Methodology** | The Agenda (Part 1) guides the student's work |
-| **Funding** | **Undefined:** DAS eligibility for Werkstudenten is untested — see [Meeting Agenda, Topic 1](#1-das-funding-eligibility-for-werkstudent-kam-positions) |
+| Rolle | Akteur |
+|-------|--------|
+| **Arbeitgeber** | Kommune (nicht der e.V.) |
+| **Vermittler** | Klimafolgenschutz e.V. — findet und verbindet Kandidaten |
+| **Methodik** | Die Agenda (Teil 1) leitet die Arbeit der Studierenden |
+| **Finanzierung** | **Ungeklärt:** DAS-Förderfähigkeit für Werkstudenten ist nicht getestet |
 
-**Employment paths (case-by-case):**
+**Zielkandidaten:**
 
-| Path | Hours | Compensation | Use case |
-|------|-------|-------------|----------|
-| **Werkstudent** | max. 20h/week (semester) | Hourly, above Minijob | Primary track — longer engagements, Bachelorarbeit |
-| **Übungsleiter** | 10–12h/week | 400–500€/month (pauschal) | Lighter engagement, entry-level |
-| **Pflichtpraktikum** | Per university requirement | Per arrangement | Students with mandatory internship requirements |
+| Merkmal | Detail |
+|---------|--------|
+| **Typ** | Werkstudent (max. 20 Std./Woche im Semester) |
+| **Fachrichtungen** | Tiefbauingenieurwesen, Wasserwirtschaft, Geographie, Umweltwissenschaften, BWL/Ökonomie |
+| **Einsatzort** | Vor Ort in der Kommune — direkter Einsatz in der Verwaltung |
+| **Geltungsbereich** | Bundesweit — keine geografische Einschränkung |
+| **Abschlussarbeit** | Optional — Studierende können ihre Bachelorarbeit zum Einsatzthema schreiben |
 
-The employment path is determined case-by-case during the matching process. One Stellenbeschreibung covers all three paths.
+**Stellenbeschreibung Inhalt (Entwurfsstruktur):**
 
-**Target candidates:**
+- **Titel:** Werkstudent/in Klimaanpassungsmanagement (m/w/d)
+- **Über Klimafolgenschutz e.V.:** Vereinsmission, kommunale Anbindung
+- **Deine Aufgaben:** Abgeleitet aus Agenda-Modulen 1–4
+- **Dein Profil:** Fachrichtungsanforderungen, Interesse an Klimaanpassung, strukturierte Arbeitsweise, Deutsch fließend, GIS von Vorteil
+- **Wir bieten:** Praxiserfahrung, Bachelorarbeit-Möglichkeit, ZKA-Netzwerkzugang, flexible Arbeitszeiten, direkter kommunaler Impact
 
-| Attribute | Detail |
-|-----------|--------|
-| **Type** | Werkstudent, Übungsleiter, or Pflichtpraktikant (see employment paths above) |
-| **Semester** | Ab dem 2. Semester — targeting students early enough for Bachelorarbeit integration |
-| **Faculties** | Tiefbauingenieurwesen, Wasserwirtschaft, Geographie, Umweltwissenschaften, BWL/Ökonomie |
-| **Location** | On-site at municipality — *"der läuft praktisch in der Gemeinde rum"* |
-| **Scope** | Bundesweit — no geographic restriction |
-| **Thesis** | Optional — students may write their Bachelorarbeit on the deployment topic |
+**Marktpositionierung:** Der KAM-Werkstudent existiert am aktuellen Arbeitsmarkt nicht. Die Differenzierung gegenüber professionellen KAM-Ausschreibungen: niedrigere Einstiegshürde (Student, kein Abschluss erforderlich), Abschlussarbeit-Integration, strukturierte Methodik über die Agenda und ZKA-Netzwerkzugang über die e.V.-Anbindung.
 
-**Stellenbeschreibung content (draft structure):**
+### Teil 3: LinkedIn Unternehmensseite + Content-Strategie
 
-- **Title:** Werkstudent/in Klimaanpassungsmanagement (m/w/d)
-- **Über Klimafolgenschutz e.V.:** Association mission, municipal connection
-- **Deine Aufgaben:** Derived from Agenda modules 1–4
-- **Dein Profil:** Faculty requirements, interest in Klimaanpassung, structured working style, German fluency, GIS von Vorteil
-- **Wir bieten:** Praxiserfahrung, Bachelorarbeit possibility, Pflichtpraktikum-Anrechnung, ZKA network access, flexible hours (Werkstudent or Übungsleiter), direct municipal impact
+Neue organisationale LinkedIn-Seite für Klimafolgenschutz e.V. — bisher existiert keine Vereinspräsenz auf LinkedIn. Die Seite bedient gleichzeitig zwei Zielgruppen (Tesla-Modell): Studierende auf der Suche nach Möglichkeiten und Kommunen auf der Suche nach Personallösungen.
 
-**Market positioning:** No "KAM-Werkstudent" exists in the current job market. This differentiates from professional KAM postings by: lower barrier (student, not degree required), thesis integration, structured methodology via Agenda, and ZKA network access through the e.V. connection.
+**Seiteneinrichtung:**
 
-### Part 3: LinkedIn Company Page + Content Strategy
-
-New organizational LinkedIn page for Klimafolgenschutz e.V. — Michael has a personal account only. The page serves two audiences simultaneously (Tesla model): students looking for opportunities and municipalities looking for staffing solutions.
-
-**Page setup:**
-
-| Attribute | Value |
-|-----------|-------|
-| **Page name** | Klimafolgenschutz e.V. |
-| **Category** | Nonprofit Organization |
+| Attribut | Wert |
+|----------|------|
+| **Seitenname** | Klimafolgenschutz e.V. |
+| **Kategorie** | Gemeinnützige Organisation |
 | **Tagline** | *Gemeinden stärken. Klima anpassen. Zukunft sichern.* |
 | **Website** | klimafolgenschutz.com |
-| **Email** | info@klimafolgenschutz.org |
-| **Admin** | Marius creates page, Michael gets admin access |
-| **Additional admin** | Ralph Loser (Geschäftsführer) — access level TBD |
+| **E-Mail** | info@klimafolgenschutz.org |
+| **Admin** | Vereinsvorstand erhält Admin-Zugang |
 
-**Content pillars:**
+**Content-Säulen:**
 
-| Pillar | Share | Audience | Example |
-|--------|-------|----------|---------|
-| **Klima-Wissen** | ~30% | Both | GERICS Klimaausblick highlights, Schwammstadt explainer |
-| **Karriere** | ~30% | Students | "Was macht ein/e KAM?", Werkstudent opportunities |
-| **Gemeinden** | ~25% | Municipalities | KAnG obligations, DAS funding updates, success stories |
-| **Verein** | ~15% | Both | e.V. milestones, PIK/UBA contact updates |
+| Säule | Anteil | Zielgruppe | Beispiel |
+|-------|--------|------------|---------|
+| **Klima-Wissen** | ~30% | Beide | GERICS Klimaausblick-Highlights, Schwammstadt-Erklärer |
+| **Karriere** | ~30% | Studierende | Berufsfeld KAM erklären, Werkstudenten-Stellen |
+| **Gemeinden** | ~25% | Kommunen | KAnG-Pflichten, DAS-Förder-Updates, Erfolgsgeschichten |
+| **Verein** | ~15% | Beide | e.V.-Meilensteine, PIK/UBA-Kontakt-Updates |
 
-**Posting cadence:** 1–2x per week (steady state). The existing doc proposed daily — too aggressive for current bandwidth.
+**Posting-Frequenz:** 1–2x pro Woche (Regelbetrieb).
 
-**Content production:** Marius/team produces content. Michael confirmed: *"Kannst du das mit übernehmen?"* — *"Ja, können wir machen."*
+**Content-Freigabe:** **Ungeklärt:** Prüft der Vereinsvorstand Beiträge vor der Veröffentlichung?
 
-**Content approval:** **Undefined:** Does Michael review posts before publishing? Ralph's role in content review is also undefined. — see [Meeting Agenda, Topic 2](#2-linkedin-content-approval-workflow)
+**Tonalität:** Professionell aber zugänglich — behördennahe Glaubwürdigkeit mit studierendenfreundlicher Sprache. Nur Deutsch (DACH-Fokus).
 
-**Tone:** Professional but accessible — government-adjacent credibility with student-friendly language. German only (DACH focus).
+### Teil 4: Website-CTA-Integration
 
-### Part 4: Platform + Automation
+Änderungen am bestehenden Klimaanpassungsmanager-Bereich auf klimafolgenschutz.com. Dies ist der einfachste Liefergegenstand — eine Umbenennung, ein Link-Tausch und Badge-Entfernung.
 
-The existing Klimaanpassungsmanager section on klimafolgenschutz.com transforms from a static interest form into an automated recruitment and matching platform. This happens in two phases: immediate CTA changes (current), then full platform build (target).
+**Änderungen:**
 
-**Phase 1: Website CTA changes (immediate)**
-
-| Element | Current | New |
+| Element | Aktuell | Neu |
 |---------|---------|-----|
-| **Section title** | Klimafolgenschutzmanager | **Klimaanpassungsmanager** |
-| **CTA button** | Interesse bekunden → mailto:info@klimafolgenschutz.org | Interesse bekunden → **LinkedIn job posting URL** |
-| **Badge** | "Bald verfügbar" | **Remove** |
-| **Subtext** | "im Aufbau" | **Remove** |
+| **Abschnittstitel** | Klimafolgenschutzmanager | **Klimaanpassungsmanager** |
+| **CTA-Button** | Interesse bekunden → mailto:info@klimafolgenschutz.org | Interesse bekunden → **LinkedIn Stellenanzeige URL** |
+| **Badge** | Verfügbarkeitshinweis | **Entfernen** |
+| **Subtext** | Aufbauhinweis | **Entfernen** |
 
-**Rename scope:** Site-wide — every instance of "Klimafolgenschutzmanager" becomes "Klimaanpassungsmanager." The term aligns with the official federal designation used by UBA and ZKA.
+**Umbenennungsumfang:** Seitenweit — jede Instanz von Klimafolgenschutzmanager wird zu Klimaanpassungsmanager. Begründung: Klimaanpassungsmanager ist die behördlich etablierte Begrifflichkeit.
 
-**Dependency:** Part 3 (LinkedIn page + job posting) must be live before the CTA can point to it.
+**Abhängigkeit:** Teil 3 (LinkedIn-Seite + Stellenanzeige) muss live sein, bevor der CTA darauf verweisen kann.
 
 ```
-Part 3 (LinkedIn page live) ──→ Part 4 Phase 1 (swap CTA URL) ──→ Phase 2 (platform)
+Teil 3 (LinkedIn-Seite live) ──→ Teil 4 (CTA-URL tauschen)
 ```
-
-**Phase 2: Automated application pipeline (target)**
-
-A fully KI-driven recruitment and matching system where no personal interviews or phone calls are required.
-
-**Student-side flow:**
-1. Student finds opportunity (LinkedIn, university, website)
-2. Clicks through to application page on klimafolgenschutz.com
-3. Uploads: Studentenausweis, Studienverlauf, qualifications, motivation
-4. KI validates eligibility (semester, faculty, location)
-5. System matches with nearby municipalities (radius-based)
-6. Accepted applicant receives Agenda (Part 1) + onboarding materials
-
-**Municipality-side flow:**
-1. Municipality registers need for KAM support (see Part 5)
-2. System matches available students within commutable radius
-3. Automated assignment or self-selection by student
-
-**Key design principle:** The platform replaces manual coordination at scale — no personal calls, no interview scheduling, no manual matching. KI handles validation and assignment so the team focuses on pipeline growth, not case-by-case management.
-
-**Undefined:** Specific KI validation rules, matching algorithm, radius parameters, and rejection handling — these require data from initial applicants before specification. See Meeting Agenda.
-
-**Deferred items:**
-
-| Item | Reason | When |
-|------|--------|------|
-| **/wissen page** | No concrete scope yet | After Agenda content matures |
-| **Zertifizierung** | Wait until program runs | After first deployments |
-
-### Part 5: Municipal Acquisition + Product Packaging
-
-The demand side of the pipeline — running in parallel with student recruitment (Parts 1–4). Municipalities are the paying customers; students are the deployed workforce. Both sides must grow simultaneously.
-
-**Acquisition approach:**
-
-Municipalities face a legal obligation (KAnG) but lack staff. The e.V. positions itself as the staffing solution: pre-trained Werkstudenten deployed with a proven methodology (Klimalotse). The value proposition is concrete — not consulting, but actual capacity.
-
-**Product packaging:**
-
-The website offers municipalities concrete "products" — packaged adaptation measures with scope, cost, and funding information. Think project tiles (like the existing E-Bike Ladestation on the website), but for climate adaptation.
-
-**Undefined:** The specific products depend on data Michael is requesting from his Berlin contact (PIK/UBA) — the three most frequently funded adaptation measures nationwide. Candidates include:
-
-- Gewässerschutz (water protection)
-- Hitzeschutz (heat protection)
-- Rückhaltebecken-Vergrößerung (retention basin expansion)
-- Ausgleichsflächen (compensation areas)
-- Bepflanzung / Innenstadtgestaltung (greening / urban design)
-
-Each product would include: measure description, typical municipal scope (Gemeindegröße), required disciplines (Baufirmen, Architekten), estimated effort, and applicable Förderquote by Bundesland.
-
-**Undefined:** Product definitions — waiting on Michael's Berlin contact for top 3 funded measures. See [Meeting Agenda, Topic 3](#3-municipal-product-packaging).
-
-**Municipality registration flow:**
-
-Municipalities register their interest through the website (see Part 4 Phase 2, municipality-side flow). The system captures: Gemeindegröße, location, priority areas, existing Klimaanpassungskonzept status.
-
-**Undefined:** Municipality application form fields, qualification criteria, and onboarding process. These will be defined after the first product packages are specified.
 
 ---
 
-## Source
+## Anhang: Institutionen & Begriffsreferenz
 
-- **Transcripts:**
-  - [Fireflies 2026-03-23](https://app.fireflies.ai/view/01KMDCMMAF48SP1FBQ0JWW51R7) — Primary requirements (Michael, Marius, David)
-  - [Fireflies 2026-03-30](https://app.fireflies.ai/view/01KMZ8E02X2RGB29M3DSFQJVP1) — Client sync with Ralph Loser, Michael Reichert (team structure, municipal products, employment paths, automation vision)
-- **Email:** [PIK Links from Michael](https://mail.google.com/mail/u/0/#all/19d1ae8a29c64a84) — UBA Kompass + GERICS
-- **Artifacts:**
-  - [DAS-Förderrichtlinie 2021 (PDF)](https://www.z-u-g.org/fileadmin/zug/Dateien/Foerderprorgamme/DAS_Anpassung_an_den_Klimawande/25-01-DAS-Foerderrichtlinie_2021_ab_06.11.24_bf.pdf) — Federal KAM funding rules
-  - [KAnG (Bundestag)](https://www.bundestag.de/dokumente/textarchiv/2023/kw46-de-bundesklimaanpassungsgesetz-976584) — Municipal legal obligation
-  - [UBA Klimalotse 3.0](https://www.umweltbundesamt.de/themen/klimalotse-30-aktualisierter-leitfaden-zur) — 5-module methodology
-  - [GERICS Klimaausblicke](https://www.gerics.de/products_and_publications/fact_sheets/landkreise/index.php.de) — 17 indicators per Landkreis
-  - [UBA Anpassungsscanner](https://www.umweltbundesamt.de/node/118272) — Excel self-assessment
-  - [KLiVO Portal](https://www.klivoportal.de) — Government tool aggregator
-  - [ZKA KAM Profession](https://zentrum-klimaanpassung.de/wissen/beruf-klimaanpassungsmanagerin/beruf-klimaanpassungsmanagerin) — Role definition
-  - [NKI / DAS Funding](https://www.z-u-g.org/das/) — Federal program overview
-  - [NKI Municipal Agency](https://www.klimaschutz.de/de/foerderung-der-nki/ueber-die-nki-dashboard/agentur-fuer-kommunalen-klimaschutz) — Advisory for municipalities
-- **Sessions:**
-  - [Rubber-duck #1317](https://github.com/MariusWilsch/claude-code-conversation-store/blob/main/projects/-Users-verdant-Documents-projects-billable-klimafolgenschutz-website/44abeabd-6d82-4c29-bb50-72c46a609995.jsonl) — Consolidation rationale (#1242 + #1243 → #1317)
-  - [JA Extraction #1319](https://github.com/MariusWilsch/claude-code-conversation-store/blob/main/projects/-Users-daveFem-Desktop-claude-projects-06-ABTMAYR-REICHERT--deliverable/75a1bfd3-0f96-431d-93d5-61121cf5ef2e.jsonl) — Initial extraction pass
-  - [JA Extraction #1319 Pass 2](https://github.com/MariusWilsch/claude-code-conversation-store/blob/main/projects/-Users-daveFem-Desktop-claude-projects-06-ABTMAYR-REICHERT--deliverable/d6ef71e6-291d-4d98-81d5-f21864cf0bc3.jsonl) — Meeting integration pass (2026-03-30 transcript)
+Nachschlagewerk zu den im Vorgehen referenzierten Institutionen, rechtlichen Rahmenbedingungen und Fachbegriffen.
 
-*Supersedes: #1317 (closed), #1242 (LinkedIn Content Strategy), #1243 (PIK Research Integration) — all closed as "not planned."*
+### Institutionelle Landschaft
+
+| Institution | Vollständiger Name | Rolle | Relevanz |
+|-------------|-------------------|-------|----------|
+| **UBA** | Umweltbundesamt | Entwickelt Methodik-Tools (Klimalotse, Anpassungsscanner, Tatenbank) | Quelle des operativen Rahmenwerks, das Studierende nutzen |
+| **PIK** | Potsdam-Institut für Klimafolgenforschung | Produziert Klimawissenschaft und -projektionen | Staatlich gefördert, Inhalte sind öffentlich lizenziert — 1:1 wiederverwendbar für die Agenda |
+| **GERICS** | Climate Service Center Germany (Helmholtz) | Übersetzt Wissenschaft in kommunenspezifische Klimaberichte (Klimaausblicke) | Ein PDF pro Landkreis mit lokalen Projektionen — die Ausgangsdaten der Studierenden |
+| **ZKA** | Zentrum KlimaAnpassung (betrieben von adelphi für BMUKN) | Unterstützt angestellte KAMs: Schulungen (2,5-Tage-Seminare, 6x/Jahr), Mentoring, 100-Tage-Einarbeitungsleitfaden | Kostenlos für geförderte KAMs; Werkstudenten-Berechtigung nicht getestet |
+| **ZUG** | Zukunft – Umwelt – Gesellschaft | Verteilt Bundesfördermittel (DAS für Anpassung, NKI für Klimaschutz) | Projektträger — verwaltet die Mittel, nicht die Methodik |
+| **KLiVO** | Deutsches Klimavorsorgeportal | Regierungs-Metaportal, das alle Bundestools zur Klimaanpassung indexiert | Suchmaschine, kein Tool — findet Klimalotse, Anpassungsscanner, Tatenbank an einem Ort |
+
+### Rechts- & Förderrahmen
+
+| Begriff | Definition |
+|---------|-----------|
+| **KAnG** (Klimaanpassungsgesetz) | Bundesgesetz (Nov 2023), das jede Kommune zur Erstellung eines Klimaanpassungskonzepts verpflichtet. Länder müssen bis 31. Jan 2027 Anpassungsstrategien vorlegen. Keine expliziten Sanktionen — gesetzliche Verpflichtung ohne Durchsetzungsmechanismus, erzeugt aber politischen Druck und Haushaltsbegründung. |
+| **DAS** (Deutsche Anpassungsstrategie) | Bundesförderprogramm zur Finanzierung von KAM-Stellen und Anpassungskonzepten. Budget seit Aug 2025 erschöpft; Förderrichtlinie gültig bis Dez 2026. Die Regeln bestehen weiterhin, neue Förderfenster sind geplant aber nicht terminiert. |
+| **NKI** (Nationale Klimaschutzinitiative) | Parallelprogramm für Klima*schutz* (Mitigation), nicht Anpassung. Finanziert Klimaschutzmanager-Stellen. Gleicher Träger (ZUG), anderer Zweck. |
+| **TVöD EG 10–11** | Tarifliche Eingruppierung für professionelle KAMs: ~3.500–4.500 €/Monat brutto. Relevant als Positionierungs-Benchmark — Werkstudenten kosten einen Bruchteil. |
+| **Klimaanpassungskonzept** | Das Dokument, das Kommunen gemäß KAnG erstellen müssen: eine formale Klimarisikoanalyse, Anpassungsstrategie und Umsetzungsplan. |
+| **Ratsbeschluss** | Gemeinderatsbeschluss — die politische Verabschiedung der Klimaanpassungsstrategie. Erforderlich zur Formalisierung der Strategie. |
+
+### Methodik-Begriffe
+
+| Begriff | Definition |
+|---------|-----------|
+| **Klimalotse 3.0** | UBA-Schritt-für-Schritt-Anpassungsleitfaden (Website + herunterladbares PDF). Fünf aufeinanderfolgende Module mit Vorlagen und Checklisten. Kein Rechentool — ein strukturierter Workflow, der die Grundlage für ein Klimaanpassungskonzept liefert. |
+| **Wirkungsketten** | Kausalketten, die Klimatreiber → Exposition → Empfindlichkeit → Auswirkung abbilden. Beispiel: *Steigende Temperaturen → Hitzewellen → Städtische Oberflächen strahlen Wärme ab → Erhöhte Hitzesterblichkeit.* Werden in Modul 2 verwendet, um systematisch betroffene Sektoren zu identifizieren. |
+| **Anpassungsscanner** | UBA-Excel-Selbstbewertung zur Messung der institutionellen Bereitschaft (nicht des physischen Risikos). Fünf Dimensionen: (1) Werte & Ziele, (2) Wissenszugang, (3) Zusammenarbeit, (4) Ressourcen, (5) Strategien. Ergebnis: Score von 0–100. |
+| **GERICS Klimaausblicke** | Automatisch generierte PDFs mit Klimaprojektionen pro Landkreis über drei RCP-Szenarien. Indikatoren umfassen: Jahresmitteltemperatur, Heiße Tage (≥30°C), Tropennächte, Frosttage, Starkniederschlag, Trockenperioden, Schneebedeckung. |
+| **RCP-Szenarien** | Standardisierte Emissionspfade: RCP 2.6 (starke Mitigation, ~+1,5–2°C), RCP 4.5 (moderat, ~+2–3°C), RCP 8.5 (Business as usual, ~+3,5–5°C). Verwendet in allen GERICS-Projektionen. |
+| **Tatenbank** | UBA-Datenbank mit 432 realen Anpassungsprojekten. Good-Practice-Bibliothek, durchsuchbar nach Handlungsfeld, Klimaauswirkung und Region. Studierende nutzen sie in Modul 3 zur Identifikation bewährter Maßnahmen. |
+| **DIN EN ISO 14091** | Internationaler Standard für Klimarisikoanalyse (2021). Best Practice, nicht verpflichtend — wird aber zunehmend in formalen Konzepten und Ausschreibungen referenziert. |
+| **Schwammstadt** | Stadtplanungskonzept: Regenwasser aufnehmen, speichern und verzögert abgeben statt in die Kanalisation zu leiten. Konkrete Elemente: wasserdurchlässige Beläge, Gründächer, Mulden-Rigolen, Stadtbäume, Entsiegelung. |
+| **Maßnahmensteckbriefe** | Standardisierte Maßnahmenprofile zur Dokumentation einzelner Anpassungsmaßnahmen — Was, Wo, Kosten, Zeitplan. Studierende erstellen diese in Modul 3. |
+| **Fördermittelantragstellung** | Fördermittel-Antragsprozess. Studierende recherchieren Programme und bereiten Anträge vor; die Kommune unterzeichnet und reicht ein. |
+
+### Professionelle Landschaft
+
+| Begriff | Definition |
+|---------|-----------|
+| **Klimaschutzmanager** (~2.500 bundesweit) | Kommunale Rolle mit Fokus auf Klima*schutz* — CO₂-Emissionen reduzieren (Solar, Sanierung, Mobilität). Gefördert durch NKI. |
+| **Klimaanpassungsmanager** (~300 bundesweit) | Kommunale Rolle mit Fokus auf Klima*anpassung* — Vorbereitung auf bereits eintretende Auswirkungen (Hitze, Überflutung, Dürre). Gefördert durch DAS. Die neuere, unterversorgte Rolle. |
+| **KAM-Werkstudent** | Die Stellenkategorie, die diese Pipeline schafft. Existiert am aktuellen Markt nicht — niedrigere Einstiegshürde als professioneller KAM (Student, kein Abschluss erforderlich), mit Abschlussarbeit-Integration und strukturierter Methodik über die Agenda. |
+
+---
+
+## Quellen
+
+- [DAS-Förderrichtlinie 2021 (PDF)](https://www.z-u-g.org/fileadmin/zug/Dateien/Foerderprorgamme/DAS_Anpassung_an_den_Klimawande/25-01-DAS-Foerderrichtlinie_2021_ab_06.11.24_bf.pdf) — Bundesförderregeln für KAM
+- [KAnG (Bundestag)](https://www.bundestag.de/dokumente/textarchiv/2023/kw46-de-bundesklimaanpassungsgesetz-976584) — Kommunale gesetzliche Verpflichtung
+- [UBA Klimalotse 3.0](https://www.umweltbundesamt.de/themen/klimalotse-30-aktualisierter-leitfaden-zur) — 5-Modul-Methodik
+- [GERICS Klimaausblicke](https://www.gerics.de/products_and_publications/fact_sheets/landkreise/index.php.de) — 17 Indikatoren pro Landkreis
+- [UBA Anpassungsscanner](https://www.umweltbundesamt.de/node/118272) — Excel-Selbstbewertung
+- [KLiVO Portal](https://www.klivoportal.de) — Regierungs-Tool-Aggregator
+- [ZKA KAM Beruf](https://zentrum-klimaanpassung.de/wissen/beruf-klimaanpassungsmanagerin/beruf-klimaanpassungsmanagerin) — Rollendefinition
+- [NKI / DAS Förderung](https://www.z-u-g.org/das/) — Bundesprogramm-Übersicht
+- [NKI Kommunalagentur](https://www.klimaschutz.de/de/foerderung-der-nki/ueber-die-nki-dashboard/agentur-fuer-kommunalen-klimaschutz) — Beratung für Kommunen
 
 ---
 
