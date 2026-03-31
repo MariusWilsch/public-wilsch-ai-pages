@@ -20,7 +20,9 @@ This is NOT about the extraction pipeline logic, model architecture selection, o
 - Persistent remote access via Tailscale (network-independent SSH)
 - CUDA, Docker, Ollama pre-installed on Spark 1
 - Spark 2 in partial setup state
-- Inter-node cable not yet purchased (seller identified)
+- QSFP 400G cable acquired (March 30, 2026) — ConnectX-7 ports operate at 200G
+- DGX hardware owned by Thomas Erhard; Marius re-invoices via Estonian entity (Weiterberechnung)
+- Data sovereignty constraint: Rekers and AVO require local-only development — no cloud API usage for client code
 - Memory bandwidth (273 GB/s LPDDR5x) is the performance ceiling — not compute or VRAM
 
 ---
@@ -101,13 +103,21 @@ Install eugr/spark-vllm-docker as the permanent serving platform. Validate visio
 - Test: same extraction pipeline, then a second unrelated model → validates "swap model path" capability
 - Dependency: none (can start immediately after Phase 1)
 
-**Phase 3 — AVO MiniMax & Dual-Node**
+**Phase 3 — Local Coding Model (MiniMax M2.5 Dual-Node)**
 
-Deploy MiniMax M2.5 for AVO. Start single-node with [FP8+INT4-AWQ](https://huggingface.co/mratsim/MiniMax-M2.5-FP8-INT4-AWQ) (~92.5 GB), expand to dual-node for larger quantizations or longer context.
+MiniMax M2.5 (229B MoE, 10B active) serves as the local coding model for all data-sovereignty-bound client work — primarily Rekers and AVO. This is a development tool: Marius codes with it, not a production endpoint clients hit. Cloud API usage is prohibited for these clients' codebases.
 
-- Engine: eugr/spark-vllm-docker (same container, `TP=2` via Ray for dual-node)
-- Reference: [wshobson/minimax-dgx-spark](https://github.com/wshobson/minimax-dgx-spark) — dedicated MiniMax inference server
-- Dependency: QSFP cable purchase (for dual-node)
+**Why dual-node:** The full FP8+INT4-AWQ quantization (~92.5 GB) fits on a single 128 GB node, but leaves insufficient headroom for 128k context KV cache. On dual-node (256 GB pool), the same quantization provides ~163 GB for KV cache — enabling repo-level coding context. REAP quantization (25% expert pruning) was evaluated and rejected: MoE expert removal measurably degrades code reasoning.
+
+**Model validation (March 2026):** MiniMax M2.5 remains the strongest open-source model for real-world software engineering (SWE-bench Verified 80.2%). MiniMax M2.7 (released March 18) exceeds M2.5 on several benchmarks but is proprietary and API-only — not locally deployable.
+
+- Engine: eugr/spark-vllm-docker — vLLM with Ray TP=2 distributed backend
+- Quantization: [FP8+INT4-AWQ](https://huggingface.co/mratsim/MiniMax-M2.5-FP8-INT4-AWQ) (FP8 attention, INT4 MoE experts)
+- Context: 128k tokens (repo-level coding)
+- Reference: [example-vllm-minimax.sh](https://github.com/eugr/spark-vllm-docker/blob/main/examples/example-vllm-minimax.sh) — community launch script
+- Physical setup: [NVIDIA "Connect Two Sparks" playbook](https://github.com/NVIDIA/dgx-spark-playbooks/tree/main/nvidia/connect-two-sparks)
+- Dependency: Spark 2 reachable and configured (currently unknown state — needs physical access)
+- Timeline: Set up at current location; Thomas moves hardware to datacenter in April
 
 **Phase 4 — Performance Optimization**
 
@@ -118,8 +128,10 @@ Squeeze maximum throughput from the hardware. SGLang with EAGLE3 speculative dec
 - Dependency: Phase 2 baseline established
 
 **Undefined:**
-- **Dual-Node Operations:** How are two nodes managed? One Tailscale entry per node or a cluster abstraction? Which node is the Ray head? How does SSH access work (one jump host or two independent entries)? Workaround strategy for known vLLM TP=2 + Qwen3-VL engine init failure.
-- **Midburg School Datacenter (NSC):** Timeline, power/cooling requirements, persistent networking. Tailscale handles connectivity regardless — placement logistics TBD.
+- **Spark 2 Initial State:** Never successfully connected. Needs physical access (monitor + keyboard) to determine what's configured. Prerequisite for all clustering work.
+- **Dual-Node Operations:** eugr/spark-vllm-docker auto-detects head/worker roles via IP. Remaining: Tailscale setup on Spark 2 for remote access post-clustering. The vLLM TP=2 + Qwen3-VL engine init failure is Qwen-specific — MiniMax MoE compatibility unvalidated.
+- **Datacenter Migration:** Thomas moves both units to his datacenter in April. Clustering set up at current location first. Reconnection procedure after physical move undefined — Tailscale persists SSH regardless of network, but QSFP cable + netplan need reconfiguration at new site.
+- **Coding Workflow Integration:** How Marius uses the local model day-to-day — IDE integration, API endpoint routing, context management for repo-level coding sessions.
 - **Docker Workflow:** Container management, model storage persistence across reboots, restart policies.
 - **Monitoring:** [Prometheus exporter](https://github.com/ateska/dgx-spark-prometheus) for GPU temp, power, throughput metrics. Relevant for sustained benchmark runs and production.
 
@@ -128,6 +140,8 @@ Squeeze maximum throughput from the hardware. SGLang with EAGLE3 speculative dec
 **NVIDIA Official:**
 - [build.nvidia.com/spark](https://build.nvidia.com/spark) — 39 playbooks (inference, fine-tuning, clustering, tools)
 - [NVIDIA/dgx-spark-playbooks](https://github.com/NVIDIA/dgx-spark-playbooks) — GitHub repo with step-by-step guides (594 stars)
+- [Connect Two Sparks](https://github.com/NVIDIA/dgx-spark-playbooks/tree/main/nvidia/connect-two-sparks) — QSFP cable, netplan, SSH setup for dual-node
+- [NCCL for Two Sparks](https://github.com/NVIDIA/dgx-spark-playbooks/tree/main/nvidia/nccl) — NCCL communication validation across nodes
 - [DGX Spark Performance FAQ](https://forums.developer.nvidia.com/t/dgx-spark-performance-faq/359456) — expected tok/s and config gotchas
 
 **Community Containers:**
@@ -136,6 +150,7 @@ Squeeze maximum throughput from the hardware. SGLang with EAGLE3 speculative dec
 - [wshobson/minimax-dgx-spark](https://github.com/wshobson/minimax-dgx-spark) — MiniMax inference server (10 stars)
 
 **Benchmarks & Optimization:**
+- [REAP-172B-NVFP4-GB10](https://huggingface.co/saricles/MiniMax-M2.5-REAP-172B-A10B-NVFP4-GB10) — single-node MiniMax via 25% expert pruning (evaluated, rejected for coding quality)
 - [Ollama Spark benchmarks](https://ollama.com/blog/nvidia-spark-performance) — official Ollama perf numbers
 - [LMSYS In-Depth Review](https://lmsys.org/blog/2025-10-13-nvidia-dgx-spark/) — SGLang benchmarks, EAGLE3, thermal analysis
 - [PrimitiveContext/blackwell](https://github.com/PrimitiveContext/blackwell) — 49 benchmarked models, custom CUTLASS kernels
@@ -157,8 +172,12 @@ Squeeze maximum throughput from the hardware. SGLang with EAGLE3 speculative dec
 ## Source
 
 - **Session:** `e489c708-db82-48a3-821f-36faae983e8c`
+- **Session (Phase 3 update):** `ed061086-8201-4344-bea4-e2865446d98e`
 - **Issue:** [#1080 — DGX Spark benchmark](https://github.com/DaveX2001/deliverable-tracking/issues/1080)
+- **Issue:** [#1312 — Ulrich Meeting Agenda](https://github.com/DaveX2001/deliverable-tracking/issues/1312)
 - **Issue comment (preliminary research):** 2026-03-19 by MariusWilsch — MiniMax M2.5 deployment paths, key resources
+- **Ulrich Sync Design Doc:** [2026-03-30](https://mariuswilsch.github.io/public-wilsch-ai-pages/project/uwi-retainer/design-doc-ulrich-sync-2026-03-30) — DGX ownership, cable arrival, AVO timeline
+- **Transcripts (Ulrich Sync):** [Transcript 1](https://app.fireflies.ai/view/01KMT67DGFRWFQABVPQXJS4TG8) · [Transcript 2](https://app.fireflies.ai/view/01KMZHD5KNYE528RKCYD02V9J8)
 - **CLAUDE.md:** Updated with DGX-SPARK SSH config, hardware specs, Tailscale setup
 
 ---
