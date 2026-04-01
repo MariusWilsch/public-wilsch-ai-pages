@@ -8,14 +8,16 @@ publish: true
 
 ## Meeting-Ziel
 
-Follow-up zum 30. März: Fünf offene Punkte abarbeiten — Vertrag, NDA, Kate, Kundendaten, Newsletter. Dazu Status-Runde zu den erledigten Action Items.
+Follow-up zum 30. März: Fünf offene Punkte abarbeiten — Vertrag, NDA, Kate, Kundendaten, Newsletter. Zwei neue Themen dazu: Ostermann (Doku + Testumgebung) und Angebotsautomatisierung. Dazu Status-Runde zu den erledigten Action Items.
 
 1. **Vertrag** — Design-Partner-Modell besprechen, Vertragsbedingungen klären
 2. **NDA David** — Vorgehen ohne Lemke abstimmen
 3. **Kate/Malaysia** — Ergebnis von Ulrichs Gespräch auswerten
 4. **Kundendaten** — Repository-Lösung besprechen (GitLab?)
 5. **Newsletter** — Richtung und Zeitplan festlegen
-6. **Status-Runde** — Rechnungen, FSO-Kontakte, KI aus der Box
+6. **Ostermann** — Doku-Status klären + Testumgebung besprechen
+7. **Angebotsautomatisierung** — Priorisierung mit Ulrich
+8. **Status-Runde** — Rechnungen, FSO-Kontakte, KI aus der Box
 
 ## Vorab-Lektüre
 
@@ -90,7 +92,29 @@ Am 30. März als „begraben" markiert (3–6 Monate). Korrektur: Nicht begraben
 
 **Zu klären:** Monetarisierungsrahmen und Verantwortlichkeit für den Newsletter-Piloten festlegen.
 
-### 6. Status-Runde
+### 6. Ostermann: Doku + Testumgebung
+
+⏱️ 5 min
+
+Zwei offene Themen zu Ostermann, kombiniert:
+
+**Dokumentation (#866):** Ulrich sollte die Roh-Dokumentation senden (Passwörter raus), damit David die Doku per AI aufwerten kann — gleicher Ansatz wie beim Design Doc. Seit Feb. 19 wartend.
+
+**Testumgebung (#1059):** Ostermann-Maschine als zweite Testumgebung für UWI-Retainer-Arbeit einrichten. Ermöglicht paralleles Testen ohne Konflikte auf der Primärumgebung.
+
+**Zu klären:**
+- Hat Ulrich die Roh-Dokumentation vorbereitet?
+- Zugang zur Ostermann-Maschine: Credentials, Scope, was soll darauf getestet werden?
+
+### 7. Angebotsautomatisierung — Portal Wilsch
+
+⏱️ 5 min
+
+Thomas Erhard schreibt jedes Hosting-Angebot von Hand — viele Abschnitte wiederholen sich kundenübergreifend (#640). Drei bestehende Angebote liegen als PDFs vor (Hellmann, Holz Henkel, OSM). Möglicher AI/Template-Ansatz könnte den Prozess beschleunigen.
+
+**Zu klären:** Ist Angebotsautomatisierung aktuell Priorität für Ulrich, oder parken wir das?
+
+### 8. Status-Runde
 
 ⏱️ 10 min
 
@@ -118,9 +142,9 @@ Kurzer Check der Action Items vom 30. März:
 ## Meeting-Format
 
 - **Typ:** Follow-up Sync / Offene Punkte
-- **Dauer:** 60 Minuten (07:00–08:00)
+- **Dauer:** 65 Minuten (07:00–08:05)
 - **Teilnehmer:** Ulrich Wilsch, Thomas Erhard, Marius Wilsch, David Eberle
-- **Erwartung:** Entscheidungen zu Vertrag und NDA, Status-Update Kate, Klärung Kundendaten und Newsletter
+- **Erwartung:** Entscheidungen zu Vertrag und NDA, Status-Update Kate, Klärung Kundendaten und Newsletter, Ostermann-Status, Angebotsautomatisierung-Prio
 - **Ergebnis:** Action Items pro Thema mit Verantwortlichen
 
 ---
