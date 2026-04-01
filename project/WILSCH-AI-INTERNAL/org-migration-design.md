@@ -136,7 +136,7 @@ Each project gets one of three migration paths:
 | **iitr-platform** | `03_IITR__iitr-platform` | ✅ Done | On IITR-STAGING server | ✅ Done | Yes (GPU services + Langfuse) | — | Separate server |
 | **invoice-agent** | `02_UWI__invoice-agent` | MariusWilsch → org | `/home/marius/...` → `/home/deploy/` | Adopt | No — standalone FastAPI backend | High | Marius: "block invoice-agent davon" |
 | **call2tanss** | `02_UWI__call2tanss` | MariusWilsch → org | `/home/marius/...` → `/home/deploy/` | Adopt | No — standalone Flask/FastAPI | Medium | UWI telephony integration |
-| **archibus-fm-assistant** | `01_ARCHIBUS__archibus-fm-assistant` | MariusWilsch → org | `/home/shared/` → `/home/deploy/` | Adopt | Recommended: Chromote + MongoDB = infra, LibreChat + FastMCP = app | **First candidate** | First migration to validate approach. Absorbs #1061 (documentation deliverable for client ops still outstanding) |
+| **archibus-fm-assistant** | `01_ARCHIBUS__archibus-fm-assistant` | ✅ Done | `/home/shared/` → `/home/deploy/` | Adopt | Recommended: Chromote + MongoDB = infra, LibreChat + FastMCP = app | **First candidate** | First migration to validate approach. Absorbs #1061 (documentation deliverable for client ops still outstanding) |
 | **rohdex** | `04_ROHDEX__rohdex` | MariusWilsch → org | `/home/shared/` → `/home/deploy/` | Adopt | No — standalone backend | Low | Benefits from convention (auto-ports, healthchecks) |
 | **klimafolgenschutz** | `06_ABTMAYR-REICHERT__klimafolgenschutz-website` | ✅ Done (#1338) | `/home/david/...` → `/home/deploy/` | Adopt | No — Payload CMS + dedicated Postgres | Low | Benefits from convention (auto-ports, healthchecks, push=preview) |
 | **wilsch-ai-site** | `00_WILSCH-AI-INTERNAL__wilsch-ai-site` | ✅ Done (#1338) | No server component | N/A | N/A | Low | Company website |
@@ -211,7 +211,7 @@ Phase 0: Org Infrastructure
 └── DaveX2001 org invite
 
 Phase 1: Client repos (MariusWilsch → org)
-├── ARCHIBUS__archibus-poc → 01_ARCHIBUS__archibus-fm-assistant (transfer + adopt) — FIRST CANDIDATE
+├── ARCHIBUS__archibus-poc → 01_ARCHIBUS__archibus-fm-assistant — ✅ Transferred (adopt pending) — FIRST CANDIDATE
 ├── uwi__invoice-agent → 02_UWI__invoice-agent (transfer + adopt) — HIGH
 ├── Call2Tanss → 02_UWI__call2tanss (transfer + adopt) — MEDIUM
 ├── rohdex → 04_ROHDEX__rohdex (transfer + adopt) — LOW
