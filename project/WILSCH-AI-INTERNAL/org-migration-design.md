@@ -71,7 +71,7 @@ Repositories and server deployments are scattered across three GitHub accounts a
 
 **DaveX2001** (stay on personal account):
 - `deliverable-tracking` — **Deferred indefinitely.** 1300+ issues, all agents reference it, highest redirect risk, low ROI now.
-- `claude-code-improvements` — Stays on DaveX2001. Continues after CCI-600 completes.
+- `claude-code-improvements` — Stays on DaveX2001. Will be retired when CCI-600 completes.
 - `public-wilsch-ai-pages` — Hippocampus mirror (non-canonical)
 
 **Out of scope:** vibe-marketing, eberle-plugins, moltbot — personal/non-client repos stay in personal accounts.
@@ -124,7 +124,7 @@ Each project gets one of three migration paths:
 
 | Path | What it means | Example |
 |------|--------------|---------|
-| **Transfer only** | Move repo to org + checkout to `/home/deploy`. No compose changes. | klimafolgenschutz-website |
+| **Transfer only** | Move repo to org + checkout to `/home/deploy`. No compose changes. | wilsch-ai-site |
 | **Transfer + adopt** | Move repo + restructure to convention (compose split where needed) + wire deploy-action. | invoice-agent, call2tanss, rohdex |
 | **Already done** | Already in org and convention-compliant. | archibus-bulk-import, iitr-platform |
 
@@ -138,7 +138,7 @@ Each project gets one of three migration paths:
 | **call2tanss** | `02_UWI__call2tanss` | MariusWilsch → org | `/home/marius/...` → `/home/deploy/` | Adopt | No — standalone Flask/FastAPI | Medium | UWI telephony integration |
 | **archibus-fm-assistant** | `01_ARCHIBUS__archibus-fm-assistant` | MariusWilsch → org | `/home/shared/` → `/home/deploy/` | Adopt | Recommended: Chromote + MongoDB = infra, LibreChat + FastMCP = app | **First candidate** | First migration to validate approach. Absorbs #1061 (documentation deliverable for client ops still outstanding) |
 | **rohdex** | `04_ROHDEX__rohdex` | MariusWilsch → org | `/home/shared/` → `/home/deploy/` | Adopt | No — standalone backend | Low | Benefits from convention (auto-ports, healthchecks) |
-| **klimafolgenschutz** | `06_ABTMAYR-REICHERT__klimafolgenschutz-website` | ✅ Done (#1338) | Has CMS container | Transfer only | No | Low | CMS container stays as-is |
+| **klimafolgenschutz** | `06_ABTMAYR-REICHERT__klimafolgenschutz-website` | ✅ Done (#1338) | `/home/david/...` → `/home/deploy/` | Adopt | No — Payload CMS + dedicated Postgres | Low | Benefits from convention (auto-ports, healthchecks, push=preview) |
 | **wilsch-ai-site** | `00_WILSCH-AI-INTERNAL__wilsch-ai-site` | ✅ Done (#1338) | No server component | N/A | N/A | Low | Company website |
 
 **Not transferring (deferred or staying):**
@@ -146,7 +146,7 @@ Each project gets one of three migration paths:
 | Project | Decision | Rationale |
 |---------|----------|-----------|
 | `deliverable-tracking` | **Deferred indefinitely** | 1300+ issues, all agents reference it, highest redirect risk, low ROI now |
-| `claude-code-improvements` | **Stays on DaveX2001** | Continues after CCI-600 completes |
+| `claude-code-improvements` | **Stays on DaveX2001** | Will be retired when CCI-600 completes |
 | `public-wilsch-ai-pages` | **Stays on MariusWilsch** | Will be replaced by new publishing workflow |
 | `claude-code-conversation-store` | **Stays on MariusWilsch** | Audit trail, no transfer benefit |
 | `00_WILSCH-AI-INTERNAL__soloforce` | **Stays on MariusWilsch** | Marius's working directory |
@@ -215,7 +215,7 @@ Phase 1: Client repos (MariusWilsch → org)
 ├── uwi__invoice-agent → 02_UWI__invoice-agent (transfer + adopt) — HIGH
 ├── Call2Tanss → 02_UWI__call2tanss (transfer + adopt) — MEDIUM
 ├── rohdex → 04_ROHDEX__rohdex (transfer + adopt) — LOW
-├── klimafolgenschutz-website → ✅ Done (#1338)
+├── klimafolgenschutz-website → 06_ABTMAYR-REICHERT__klimafolgenschutz-website (transfer + adopt) — LOW
 └── wilsch-ai-site → ✅ Done (#1338)
 
 Phase 2: Server-side consolidation (parallel with Phase 1)
