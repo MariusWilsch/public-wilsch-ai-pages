@@ -38,39 +38,94 @@ GitHub Issues is a proven tool for project/deliverable tracking but lacks CRM pr
 
 ## Approach
 
-### Part 1: Tooling Fit — CLI-Native Lead Management Platform
+### Part 1: Tooling Fit — What the Agent Needs
 
-The current system (GitHub Issues with `lead` label + `Active Leads` milestone) lacks CRM primitives. A separate, purpose-built tool is needed — one that is CLI-native (operable from terminal) and AI-native (structured data accessible to Claude Code).
+Pass 1 evaluated CRM tools in isolation. The question has since shifted: not "which CRM?" but "what does a Lead Agent need underneath it — and does GitHub already provide enough?"
 
-**Requirements:**
-1. **CLI-first** — create, update, query, and move leads from terminal (not just "has an API")
-2. **AI-native** — structured data model + MCP or agent-readable output for Claude Code reasoning
-3. **Pipeline management** — visual/queryable lead stages with customizable lifecycle
-4. **Preferably open source and self-hostable** (nice-to-have, not hard constraint)
+#### The agent is the product
 
-**Evaluated tools:**
+The position epic is called Lead System **Agent**, not Lead System CRM. The problem statement identifies the system as "purely reactive — nobody drives lead lifecycle transitions." The success definition requires the pipeline to "actively surface what needs attention." Both point to the same fix: an agent that scans leads, tracks follow-up commitments, checks for evidence (emails, transcripts, issue comments), and pushes reminders when commitments go overdue. No tool switch fixes inaction — an agent does. The agent is present in every architecture below. The variable is what data layer it reads from.
 
-| Tool | CLI | MCP | Open Source | Self-host | Pipeline | Fit |
-|------|-----|-----|-------------|-----------|----------|-----|
-| **Twenty CRM** | `twenty-cli` (community, `agent` output format, pending official merge) | 3 community implementations (25 tools) | AGPL-3.0, 43k stars | Docker Compose, $12-20/mo VPS | Kanban, custom stages | ★★★★ |
-| **Attio** | `attio-cli` (community, 10 stars) + curl | Official hosted MCP at `mcp.attio.com` (35 tools) | Closed source | Cloud only | Kanban, deals object | ★★★☆ |
-| **HubSpot + hubspot-cli** | `hubspot-cli` (community, dual CLI+MCP binary) | Same binary serves as MCP server | Closed source | Cloud only | Mature (1 pipeline on free) | ★★☆☆ |
-| **crm-cli** | Terminal-only (IS the product) | None | Open source, 72 stars | Local JSON | No pipeline | ★☆☆☆ |
+#### GitHub Projects: what it already covers
 
-**Twenty CRM** is the strongest match:
-- Open source (AGPL-3.0), 43k GitHub stars, 604 contributors, v1.19.0 (March 2026)
-- CLI has `--help-json` for agent discovery and `agent` output format for AI pipelines
-- Self-hostable via Docker Compose on a $12-20/month VPS (2 GB RAM minimum)
-- Custom objects supported — can define a "Lead" object if the default People+Opportunities model doesn't fit
-- GraphQL + REST APIs, community MCP servers for Claude integration
+GitHub Projects v2 can model a basic lead pipeline today:
 
-**Attio** is the strongest AI integration:
-- Official first-party MCP server (rare — almost no CRM offers this)
-- Object-relational data model excellent for structured AI queries
-- Free tier covers 3 seats with 50k records
-- Risk: closed source, 3 custom objects on free tier, enriched data doesn't export
+| Capability | How GitHub does it |
+|---|---|
+| Pipeline stages | Single-select custom field (New → Qualified → Engaged → Converted → Dead), Kanban board columns |
+| Lead metadata | Up to 50 custom fields: Company (text), Deal Value (number), Follow-up Date (date), Source (single-select) |
+| Filtered views | Saved views with field filters — e.g., `follow-up:<=@today` shows overdue leads |
+| CLI access | `gh project item-list`, `item-edit`, `item-create` — full CRUD, ID-driven |
+| Automation | Built-in workflows (auto-set status on close) + GitHub Actions for custom logic |
+| Capacity | 50,000 items per project — no scale concern |
+| AI-readiness | `gh` CLI is 5+ years old, deeply embedded in pre-training data. Claude operates it natively without documentation lookup. |
 
-**Undefined:** Final tool selection depends on hands-on evaluation. Twenty and Attio are the two candidates for deeper POC testing.
+#### The single gap: relational data
+
+GitHub Projects is a flat item list with metadata fields — not a relational database. There is no concept of "Person belongs to Company."
+
+**What this means concretely:** The FSO-Seminar (March 2026) produced 4 interested contacts — Pöckemöller, Hasloff, Arndt, and one unnamed. In GitHub, each becomes an issue. When Pöckemöller says "loop in my colleague at the same company," that colleague becomes issue #5 with no structural link to issue #1. The agent cannot query "show me all contacts at Pöckemöller's company." It also cannot cascade updates — changing a company name means editing every person issue individually.
+
+At 15-20 leads with a team of 2-3, this gap is manageable with discipline. At 50+ leads, the flat model breaks down.
+
+CRM tools solve this by design. Twenty CRM's very first release (v0.1.0, June 2023) shipped with Person and Company table views as foundational features — the relational data model is what a CRM IS.
+
+#### What purpose-built CRM tools add
+
+Beyond the relational model, CRM tools offer:
+
+| Capability | GitHub | CRM (Twenty/Attio) | Agent can provide? |
+|---|---|---|---|
+| Person → Company → Deal model | No | Yes (foundational) | On lightweight index: yes |
+| Typed interaction timeline | No (unstructured comments) | Yes (call, email, meeting types) | Partially — agent can tag comments |
+| Pipeline Kanban board | Yes | Yes | N/A |
+| CLI access | `gh` (5+ years, deep pre-training) | Community CLIs (newer, less pre-trained) | N/A |
+| MCP integration | None (`gh` CLI is the integration) | Attio: official first-party MCP (20-21 tools). Twenty: 4 community MCPs (up to 29 tools) | N/A |
+| Contact enrichment | No | Partial (Attio) | No |
+| `/llms.txt` for AI consumption | No | Both Twenty and Attio provide it | N/A |
+| Browser dashboard | GitHub Projects (basic) | Full CRM UI | Not needed — agent is the UI |
+
+The capture pipeline (email-sync → GitHub issues, transcript-sync → GitHub issues) already flows interaction data into the system. The CRM doesn't add new data — it structures existing data relationally.
+
+#### AI-readiness comparison
+
+| Dimension | GitHub CLI | Twenty CRM | Attio CRM |
+|---|---|---|---|
+| **Pre-training depth** | 5+ years, every model knows `gh` | ~3 years, 43k stars, moderate | Newer, smaller community |
+| **Documentation** | Extensive, stable | ~120 pages, `/llms.txt`, auto-generated API docs (4/5) | 85 endpoint pages, `/llms.txt`, OpenAPI 3.1.0 spec (4/5) |
+| **CLI maturity** | Official, battle-tested | Community `twenty-cli` — `--help-json`, agent output format, pending official merge | Community `attio-cli` — 11 stars, functional |
+| **MCP** | None | 4 community servers, no official | **Official first-party** MCP (rare) |
+| **AI signal** | Pre-training dominance | `/llms.txt` + agent-native CLI | `/llms.txt` + OpenAPI + official MCP |
+
+Marius's heuristic: "If there's no documentation, no easy way for AI to find this out — already a bad sign." Both Twenty and Attio pass this test with `/llms.txt` endpoints. Attio's official first-party MCP is the strongest AI integration signal in the CRM space. GitHub's pre-training advantage is unmatched but comes without CRM data primitives.
+
+#### Three architectures
+
+The agent is the constant. The variable is the data layer.
+
+**Architecture A — Agent + GitHub (start here)**
+Lead Agent operates on GitHub Issues in a dedicated Sales Pipeline project. Custom fields model pipeline stages, contact info, and follow-up dates. The agent scans for staleness, tracks commitments from transcripts and emails, pushes reminders. Zero new tools — existing `gh` commands, existing capture pipeline.
+*Limitation:* No person-company relational queries. The agent works with flat issues.
+
+**Architecture C — Agent + Lightweight Data Index**
+Same agent, same GitHub Issues for tracking. Additionally, the agent maintains a small structured index (Supabase tables or YAML) mapping Person → Company → Issue. The relational layer exists for the agent to reason about ("all contacts at Maschinenfabrik"), but Marius doesn't learn a new tool — same `gh` commands, same workflow. The agent is the only consumer of the index.
+*Limitation:* No human-facing dashboard for relational data. The agent IS the UI.
+
+**Architecture B — Agent + CRM (graduation path)**
+Lead data moves to Twenty or Attio. The agent reads from the CRM API instead of GitHub Issues. Full relational model with browser UI if wanted. The existing capture pipeline (email-sync, transcript-sync) reroutes to CRM instead of GitHub. Conversion event: agent creates GitHub milestone from CRM record.
+*Limitation:* New tool to learn. Capture pipeline needs rerouting. Higher operational complexity.
+
+#### Recommendation: A → C → B progression
+
+Start with Architecture A. The agent is the highest-value, lowest-risk first deliverable — it solves the behavioral problem ("we see but don't act") regardless of data layer. Build the agent on GitHub, where everything already works.
+
+When the relational gap proves limiting in practice — when Marius asks "who else is at Pöckemöller's company?" and the answer requires manual searching — graduate to Architecture C. The agent adds a lightweight relational index. No new tools for the team.
+
+If the team or lead volume grows to the point where a browser dashboard, contact enrichment, or full CRM workflows become necessary, graduate to Architecture B. At that point, Attio (strongest AI integration via official MCP) and Twenty (strongest open-source/self-host story) are the two candidates for POC evaluation.
+
+**Undefined:** Specific graduation triggers — what signals indicate Architecture A is insufficient and it's time to move to C or B. This will be informed by real-world usage of the agent on GitHub.
+
+**Undefined:** Final CRM selection for Architecture B — Twenty vs Attio. Depends on POC evaluation when graduation is triggered. Twenty leads on open-source/self-hosting. Attio leads on AI integration (official MCP, OpenAPI, free tier covering 3 seats).
 
 ### Part 2: Lead Lifecycle — From Reactive to Defined Stages
 
@@ -175,6 +230,10 @@ POC work (like Omega #1247) happens during pre-sales but involves implementation
 - **Research:** Deep dives on Twenty CRM, Attio, HubSpot CLI, crm-cli (4 parallel agents, March 2026)
 - **Data:** `lead` label query (16 issues) + `Active Leads` milestone query (16 issues) — zero overlap confirmed
 - **Session:** 764ddbc2-9bc8-4655-a8f4-bbda0f2a9351
+- **Feedback:** [Marius comment — GitHub vs CRM comparison request](https://github.com/DaveX2001/deliverable-tracking/issues/1336#issuecomment-4167229026), [Part 2 needs product-line pass](https://github.com/DaveX2001/deliverable-tracking/issues/1336#issuecomment-4167231574), [Focus order](https://github.com/DaveX2001/deliverable-tracking/issues/1336#issuecomment-4167233205), [UWI Part 3 as lead tracking example](https://github.com/DaveX2001/deliverable-tracking/issues/1336#issuecomment-4167360268)
+- **Research (Pass 2):** GitHub Projects v2 documentation, Twenty CRM docs + `/llms.txt` + CLI + MCP ecosystem, Attio CRM docs + `/llms.txt` + OpenAPI + official MCP (3 parallel agents, April 2026)
+- **Evidence:** [UWI Design Doc — Ulrich Sync 2026-03-30, Part 3: FSO-Seminar Follow-up](https://mariuswilsch.github.io/public-wilsch-ai-pages/project/uwi-retainer/design-doc-ulrich-sync-2026-03-30) — 4 contacts as concrete test case for lead tracking
+- **Session (Pass 2):** b7dd95c0-be39-420f-a383-f6565350dab7
 
 ---
 
