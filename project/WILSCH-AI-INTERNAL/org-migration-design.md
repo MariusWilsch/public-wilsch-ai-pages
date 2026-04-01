@@ -357,6 +357,7 @@ WILSCH-AI-SERVICES template repo seeded with:
   - /Users/daveFem/.claude/projects/-Users-daveFem-Desktop-claude-projects-00-WILSCH-AI-INTERNAL--deliverable/0a41eb45-8096-4c51-a4a6-641a48cf808b.jsonl (review feedback incorporation)
   - [Session 7e9dc88b (MariusWilsch)](https://github.com/MariusWilsch/claude-code-conversation-store/blob/main/projects/-Users-verdant-Documents-projects-00-WILSCH-AI-INTERNAL--soloforce/7e9dc88b-4d23-45ba-a216-a90a2ef4d407.jsonl) — SA review session (2026-04-01)
   - /Users/daveFem/.claude/projects/-Users-daveFem-Desktop-claude-projects-00-WILSCH-AI-INTERNAL--deliverable/cbd361ea-cc30-4b62-9369-601a70312b47.jsonl (v3 extraction pass)
+  - /Users/daveFem/.claude/projects/-Users-daveFem-Desktop-claude-projects-00-WILSCH-AI-INTERNAL--deliverable/8bef9005-45f4-4e1d-b958-78bba8264eb9.jsonl (v4 corrections — klimafolgenschutz reclassification, CCI retirement, FM Assistant transfer status)
 
 ---
 
