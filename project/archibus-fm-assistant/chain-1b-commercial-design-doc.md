@@ -6,16 +6,16 @@ publish: true
 
 [[client-01_archibus]]
 
-A commercial overview of Wilsch AI's bulk data entry pipeline for Bruce BEM —
-turning partner data reformatting from high-effort, low-margin work into an
-AI-automated process.
+Streamline client onboarding with automated bulk data entry for BruceBEM —
+turning data reformatting from high-effort, low-margin work into an
+automated process.
 
 ---
 
 ## The Problem You Already Know
 
 Every new client onboarding starts the same way. A partner receives an Excel
-file — sometimes clean, usually not — containing hundreds of assets that need
+file — sometimes clean, usually not — containing thousands of assets that need
 to enter Bruce BEM. Buildings, floors, rooms, equipment. Each column named
 differently. Each client's hierarchy structured their own way.
 
@@ -48,10 +48,10 @@ an AI can handle.
 
 ---
 
-## We Ran Your Data
+## Proven on Real Data
 
-We took a real CAFM asset spreadsheet — the kind partners receive from clients
-every week — and fed it to the pipeline.
+A real CAFM asset spreadsheet — the kind partners receive from clients
+every week — was fed to the pipeline.
 
 The AI read the column headers, inferred the building hierarchy from the data,
 and mapped every field to the BEM schema. Seven asset types. Two status values.
@@ -61,7 +61,7 @@ itself.
 
 No manual intervention. No re-mapping. No second attempt by a person.
 
-_On March 24th 2026, Rein confirmed the imported data was correct in BruceBEM._
+_The imported data was confirmed correct in BruceBEM by an implementation partner._
 
 ---
 
@@ -103,30 +103,10 @@ adapts.
 
 ---
 
-## What's Next
+## See It in Action
 
-See it work on your data. Bring a client spreadsheet — any format, any column
-naming, any hierarchy depth — and watch the pipeline process it live.
-
----
-
-_Wilsch AI Services — AI that understands your domain, not just your data._
-
----
-
-## Source
-
-- **Demo:** Rein demo 2026-03-24 — first live AI bulk import, data integrity confirmed in BruceBEM
-- **Design Docs:**
-  - [Chain 1B Alignment Document](https://mariuswilsch.github.io/public-wilsch-ai-pages/project/archibus-fm-assistant/chain-1b-bulk-entry-client)
-  - [Chain 1B Design Doc](https://mariuswilsch.github.io/public-wilsch-ai-pages/project/archibus-fm-assistant/chain-1b-bulk-entry-design)
-  - [Step 1+2 Setup Phase](https://mariuswilsch.github.io/public-wilsch-ai-pages/project/archibus-fm-assistant/step-1-2-setup-phase-design)
-  - [Step 3 Import Design](https://mariuswilsch.github.io/public-wilsch-ai-pages/project/archibus-fm-assistant/chain-1b-step3-design)
-- **Transcript:** [Grooming 2026-03-13](https://app.fireflies.ai/view/01KKKMC8YQP6G8M1R69YPQNFN7) — commercial doc assignment
-- **Demo Transcript:** [Rein Demo 2026-03-24](https://app.fireflies.ai/view/01KMFZ2BS660P300ASWPJHG4FR)
-- **Template Reference:** [Omega Commercial Design Doc](https://mariuswilsch.github.io/public-wilsch-ai-pages/project/WILSCH-AI-INTERNAL/omega-commercial-design-doc)
-- **Epic:** [#373 — AI Bulk Data Entry](https://github.com/DaveX2001/deliverable-tracking/issues/373)
-- **Session:** /Users/daveFem/.claude/projects/-Users-daveFem-Desktop-claude-projects-01-ARCHIBUS--deliverable/6700225e-7f44-4284-b2a4-3313be138d51.jsonl
+Bring a client spreadsheet — any format, any column naming, any hierarchy
+depth — and see the pipeline process it live.
 
 ---
 
