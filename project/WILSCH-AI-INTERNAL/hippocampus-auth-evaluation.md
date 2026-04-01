@@ -123,8 +123,8 @@ Site-wide password protection (single shared password, no user accounts) is also
 
 **Migration:**
 - 334 markdown files transfer with frontmatter intact (VitePress reads YAML frontmatter natively)
-- Replace `{% include %}` Liquid tags with Vue components in markdown
-- Replace `{% raw %}...{% endraw %}` blocks with `::: v-pre` directives
+- Replace Liquid `include` tags with Vue components in markdown
+- Replace Liquid `raw/endraw` blocks with `::: v-pre` directives
 - Remove `layout:` frontmatter field (VitePress handles layouts via config)
 - Install `vitepress-plugin-mermaid` for diagram support (one npm install + 3 lines config)
 - Rewrite `default.html` as a VitePress custom theme (Vue components instead of HTML + Liquid)
