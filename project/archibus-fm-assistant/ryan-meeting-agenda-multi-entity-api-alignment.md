@@ -12,6 +12,14 @@ Align the AI pipeline roadmap with Rein's API Action Plan Stage 3 — entity by 
 1. **Entity priority** — which background data tables to tackle next, based on commercial demo value and API readiness
 2. **Work stream sequencing** — does Rein build clean import endpoints first (enabling multi-entity), or search/lookup first (enabling conditional imports), and how does the AI pipeline track that sequence?
 
+**Key uncertainties:**
+- Entity priority for next client demo is undefined
+- Clean import vs. search/lookup sequencing on Rein's side
+- Cross-entity foreign key resolution mechanism (AI queries UUID, or API resolves by name)
+- Per-entity schema details — field counts, enums, required/optional splits
+- Import ordering across dependent tables
+- Demoable scope within the next 2 weeks vs. longer horizon
+
 ## Pre-Read
 
 - [Post-Demo Landscape](https://mariuswilsch.github.io/public-wilsch-ai-pages/project/archibus-fm-assistant/post-demo-multi-entity-landscape) — gap analysis, per-entity table, three work streams
