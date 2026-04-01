@@ -96,7 +96,7 @@ Two principles, equally important:
 | Search indexes (Typesense, Meili) | Volume clone + ingestion via GHA | Partial — ingestion scripts in git |
 
 **What cannot be codified (irreducible):**
-- **Credentials** — currently in `.env` files on server (gitignored). **Undefined:** config/secret split designed but not implemented — `.env.config` (config, in git) + GitHub Secrets (credentials) + derived `.env` (server). See Part 7 Undefineds.
+- **Credentials** — split into config (git) and secrets (GitHub Secrets). `.env.config` is committed to git and contains non-sensitive configuration (`LIBRECHAT_PORT=3082`, `MODEL_NAME=gpt-4o`). GitHub Secrets (repo-level) holds credentials (`OPENROUTER_KEY`, `MONGO_PASSWORD`). At deploy time, the GHA reusable workflow assembles a `.env` file by merging `.env.config` with matched secrets from `.env.example` (the schema), then ships it to the server via `scp`. The deploy script runs `docker compose up` — Compose reads `.env` natively. `.env.example` serves as the machine-readable schema: keys with values = config (goes in `.env.config`), keys without values = secrets (injected from GitHub Secrets). Adding a new secret follows a ceremony: `gh secret set` + commit the key to `.env.example` — the issue-commit-linker captures the schema change as the audit trail. GitHub Team plan org audit log (180-day retention) provides who/when for secret value changes.
 - **GPU hardware** — Ollama on IBM Power or dedicated GPU servers. Physical constraint.
 - **External service state** — IMAP inboxes, third-party API state. Real-world dependency.
 
@@ -148,11 +148,15 @@ Simple projects don't need an infra file. The convention degrades gracefully —
 |-------------|-------|-----------|-----------|
 | `container_name:` | App only | Overrides auto-naming, causes collisions between previews | Let Docker name containers: `{project}-{service}-{N}`. Expected in infra (stable references). |
 | `external: true` on networks | App only | Creates invisible cross-stack wiring | App connects to infra network via `external: true` — this is the ONE allowed use. Ad-hoc `docker network connect` is banned. |
+
+**Infra network membership must be minimized.** When multiple app composes (staging + preview) run simultaneously, services with the same name on the shared infra network collide via Docker DNS round-robin. `COMPOSE_PROJECT_NAME` only isolates the default network, not shared external networks. Principle: only app services that directly call infra services (Ollama, TEI, shared databases) should join the infra network. Other app services reach each other via the default compose network. The JA design doc's deployment topology section specifies which services join infra, per project.
 | `network_mode: host` | Both | Bypasses network isolation | Use compose-managed networks |
 | Hardcoded volume names | App only | Not scoped to project, collides between previews | Use relative names: `{project}_{volume}`. Infra volumes use stable names (singleton). |
 | `:latest` or missing tag on stateful images | Both | `--pull always` jumps major versions, breaking data directories | Pin major version: `postgres:17`, `mongo:7`. Patches auto-update. |
 
 The compose file + one env var (`COMPOSE_PROJECT_NAME`) = complete project identity for app compose. Infra compose uses stable names by design — it runs once, referenced by name from app composes.
+
+**COMPOSE_PROJECT_NAME must be explicit in `.env.config`.** Docker's default derives COMPOSE_PROJECT_NAME from the directory name. Directory renames (e.g., `iitr-platform` → `03_IITR__iitr-platform`) orphan all volumes when the name changes. Setting it explicitly in `.env.config` decouples volume identity from directory naming. Evidence: IITR directory rename survived only because COMPOSE_PROJECT_NAME was set in `.env` — luck, not convention. Level 0 validator enforces: `.env.config` must contain an explicit `COMPOSE_PROJECT_NAME` entry.
 
 **Volume cloning replaces seed scripts.** On first preview deploy, app volumes are cloned from staging. No seed directory, no seed.sh, no Makefile. The staging system IS the seed. For bootstrap (first deploy with no staging), app services create their own state on first run — OpenWebUI creates its DB, Typesense starts empty, ingestion runs via GHA.
 
@@ -243,22 +247,21 @@ services:
 
 The script reads `deploy.entry` from compose config, finds the labeled service, queries its auto-assigned host port via `docker compose port`, and generates the Caddy config. No hardcoded service names or ports in the script — it works for any project.
 
-**Port auto-assignment convention.** Compose files default published ports to 0 (`${PORT_VAR:-0}:container_port`). Docker auto-assigns an available host port, preventing collisions between preview and staging. Local development uses `.env` to override with a stable port (e.g., `LIBRECHAT_PORT=3020`). The server has no port override — 0 kicks in, Docker picks a free port. The Level 0 validator checks: at least one service has `deploy.entry`. Zero = fail (no entry point declared).
+**Port convention — three-layer override.** Compose files declare a sensible default for local development (`${LIBRECHAT_PORT:-3020}:3080`). Staging `.env` sets fixed ports matching Caddy's permanent routes (`LIBRECHAT_PORT=3082`). The preview deploy script exports `PORT_VAR=0` in the shell environment — Docker Compose's precedence (shell env > `.env` > compose default) makes Docker auto-assign an ephemeral port, preventing collisions with staging. The script discovers the assigned port via `docker compose port` and generates the Caddy config. This three-layer mechanism (compose default → `.env` → shell override) is what makes staging and preview coexist: staging has fixed ports for permanent Caddy routing, previews have ephemeral ports for dynamic routing. Evidence: #1326 — staging `.env` was set to `PORT=0`, Docker assigned ephemeral port 32836, Caddy proxied to fixed 3082 — staging unreachable for 4 days. The convention: staging `.env` MUST have real ports. Only the preview deploy script injects 0. **Undefined:** enforcement mechanism for port convention — spike needed. The Level 0 validator checks: at least one service has `deploy.entry`. Zero = fail (no entry point declared).
 
 **Undefined:** Multi-entry-point routing — when multiple services have `deploy.entry`, each gets its own Caddy route using the service name as subdomain prefix (`{service}-{branch}.wilsch-deployment.com`). The script loops through all labeled services, queries each auto-assigned port, generates a route per service. Mechanically straightforward but untested — needs a spike to validate DNS wildcard, Caddy config generation, and deploy-linker output (which URL to post to the issue when multiple exist).
 
 **Back pressure (script-level, not AI-level):**
 
-| Level | Check | What it catches |
-|-------|-------|----------------|
-| 0 | Compose lint (convention validator) | `container_name:`, `external: true`, missing `healthcheck:`, missing `deploy.entry` |
-| 0s | Server pre-flight (self-healing) | Creates missing project directory, clones repo, sets `safe.directory` — auto-fixes infrastructure prerequisites. Fails only on human-required items (`.env` missing, Docker daemon inaccessible). Reports actions taken to deploy-linker for audit trail. |
-| 1 | `docker compose config` | Invalid compose file |
-| 2 | `docker compose up --wait` | Health check failures |
-| 3 | `curl -f $PREVIEW_URL` | Routing/reachability broken |
-| 4 | `docker compose logs \| grep error` | Runtime errors in logs |
+| Level | Exit code | Check | What it catches | Scope |
+|-------|-----------|-------|----------------|-------|
+| 0 | `exit 1` (separate GHA job) | Convention validator — two rulesets (app isolation + infra stability) | `container_name:` in app compose, ad-hoc `external: true`, missing `healthcheck:`, missing `deploy.entry`, stateful images not pinned, hardcoded volume `name:`, missing `.env.example`, missing `COMPOSE_PROJECT_NAME` in `.env.config` | CI — every PR |
+| 1 | `exit 11` | Server pre-flight (self-healing) | Creates missing project directory, clones repo, sets `safe.directory` dynamically from actual repo path. Fails on human-required items (`.env` missing, Docker daemon inaccessible). Reports actions to deploy-linker. | Server — before deploy |
+| 2 | `exit 12` | Deployment preparation | `docker compose config --quiet`, missing `deploy.entry` label, staging branch name collision, git pull failure (staging path) | Server — before start |
+| 3 | `exit 13` | Service health | `docker compose up -d --wait --pull always`. Two-phase for staging: infra health first, then app health (separate detail messages). On failure: clean up partial container state so next push gets a clean slate. **Undefined:** rollback to previous state — edge cases (cached images, two-phase infra, data migrations) need spike. | Server — after start |
+| 4 | `exit 14` | External access | `curl -sf --max-time 10` with 3 retries, 5s sleep. Verifies the deployed URL returns HTTP 200. | Server — after health |
 
-Each level returns an exit code. GHA reads it: 0 = success, non-zero = failure. Binary, deterministic, no AI interpretation. Level 0 is static — runs in CI on every PR without needing the server. Level 0s runs on the server before any deployment — it self-heals infrastructure prerequisites that are automatable (directory creation, git clone, `safe.directory`) and fails only on items requiring human input (`.env` with project-specific credentials). Actions taken during self-healing are reported to the deploy-linker comment for audit trail (`🆕 First deploy — bootstrapped project directory`). This means a brand new project's first push auto-bootstraps — the only manual step is creating the `.env` with credentials. Level 0 + 0s together validate: compose convention compliance (CI-side) and server readiness (deploy-side), with 8 empirical prerequisites validated from Archibus (#1251) and IITR (#1291) adoption.
+Each level returns a structured exit code (11-14 for L1-L4). GHA reads `$?` directly. Error detail transport: script echoes `DEPLOY_ERROR:LEVEL=N:DETAIL=...` before exit — deploy-linker greps the log for this line. L0 runs as a separate GHA job with its own linker path. L1-L4 run sequentially on the server. All levels apply to both staging and preview paths — L4 curls the staging URL (permanent Caddy route) or the preview URL (generated route). `set -o pipefail` is required in every GHA Run step — without it, `cmd | tee` silently masks script exit codes. Level 0 validates compose convention compliance (CI-side). Level 1 validates server readiness (deploy-side). Together they cover 8 empirical prerequisites validated from Archibus (#1251) and IITR (#1291) adoption.
 
 **Deploy-owned checkout model.** The deploy user owns all project repos at `/home/deploy/projects/{repo-name}`, bootstrapped automatically by the self-healing preflight (Level 0s) on first deploy. Directory permissions: `deploy:dev-team 2775` (setgid ensures new files inherit `dev-team` group). This eliminates three infrastructure blockers that stacked during Archibus adoption:
 
@@ -303,9 +306,7 @@ Three server users, each structurally limited:
 
 - **Docker:** [LinuxServer docker-socket-proxy](https://github.com/linuxserver/docker-socket-proxy) runs on `127.0.0.1:2375`. Agent's `DOCKER_HOST=tcp://localhost:2375`. Proxy configured: `POST=0` (master read-only switch), `CONTAINERS=1`, `IMAGES=1`, `NETWORKS=1`, `VOLUMES=1`. Agent can `docker ps`, `docker logs`, `docker inspect` — cannot `docker stop`, `docker rm`, `docker exec` (403 Forbidden).
 - **Filesystem:** Agent not in `dev-team` group. Project dirs are `drwxrwsr-x root:dev-team` — agent can read code (world-readable) but cannot write. `.env` files tightened to `640 :dev-team` — agent cannot read credentials.
-- **Git:** Git's `safe.directory` check blocks non-owner operations. Repo owned by `marius:dev-team`, agent is neither — git refuses all operations including `git pull`. Read-only file access still permits `git log` and `git show` via direct object reads.
-
-**Undefined:** `safe.directory` may be redundant — filesystem permissions (agent not in `dev-team`) already prevent writes, and SSH restrictions prevent push. Removing `safe.directory` would enable native `git log`/`git show` without direct object reads. Needs a spike on WILSCH-AI-SERVER to verify that filesystem perms + SSH restrictions alone produce the desired read-only git behavior.
+- **Git:** Git's `safe.directory` check blocks non-owner operations. Repo owned by `deploy:dev-team`, agent is neither — git refuses all operations including `git log` without `safe.directory`. The deploy-side preflight (Level 1) sets `safe.directory` dynamically from the actual repo path on each deploy — no stale entries after directory renames. `safe.directory` is not redundant: filesystem permissions prevent writes, SSH prevents push, but `safe.directory` prevents git from refusing ALL operations (including reads) for non-owners. Additionally, `safe.directory` protects against execution of malicious `.git/hooks/` — the agent user is persistent (unlike ephemeral GHA runners), so defense-in-depth matters. Wildcard (`safe.directory = *`) was evaluated and rejected: it removes the hook execution protection layer that per-repo entries preserve.
 - **SSH config:** AI's `~/.ssh/config` points `WILSCH-AI-SERVER` to `User agent`. Onboarding bootstrap surfaces this host — the AI sees only the restricted user.
 
 The AI's SSH config only sees the `agent` user. Deployment via SSH is structurally impossible — it can only happen through git push → GHA. Same "no decision point" principle: remove the wrong choice entirely.
@@ -385,6 +386,15 @@ This closes the last gap in the enforcement chain. Without branch protection, th
 
 **Undefined:** Local git identity split — branch protection blocks AI sessions from pushing directly to staging (correct behavior). Emergency bypass requires the human operator's GitHub identity (MariusWilsch as ruleset bypass actor), structurally gated so the AI cannot self-escalate. Mechanism: two auth identities on one machine (restricted default for AI, elevated for human-authorized bypass), mirroring the server's agent/marius split at the git credential layer. Needs design pass.
 
+**Convention instruction system — two-layer prevention + enforcement.** Parts 1–6 enforce conventions structurally (read-only SSH, branch protection, Level 0 validator). But structural enforcement catches violations at CI time — after the developer wrote the non-compliant code. A prevention layer catches violations at authoring time, before the code is written. Claude Code's `.claude/rules/` system provides path-scoped rule files that load only when the AI touches matching files. Deployment conventions are expressed as rules scoped to compose and env files:
+
+| Rule file | `paths:` scope | Content |
+|-----------|---------------|---------|
+| `deployment-compose.md` | `**/docker-compose*.yml` | Healthcheck convention (microcheck for images without curl/wget), `env_file: .env` required on every service, no `container_name:` in app compose, pinned image tags, `deploy.entry` label |
+| `deployment-env.md` | `**/.env*` | Explicit `COMPOSE_PROJECT_NAME` required, config/secret split convention, `.env.example` as schema |
+
+Rules load when the AI reads a matching file — not on every session. This eliminates priority saturation (conventions competing with unrelated instructions in CLAUDE.md). Safety-critical rules (those where violation is catastrophic) use no `paths:` frontmatter and load every session. The Level 0 validator remains the structural enforcement — rules are contextual guidance that prevents violations before they reach CI. Two layers: `.claude/rules/` (authoring-time prevention) + Level 0 (CI-time enforcement). The microcheck healthcheck convention is the first test case for this system.
+
 ### Part 7 — Scaling the Convention
 
 Parts 1–6 validated against two projects: Archibus bulk-import (self-contained, no shared infra) and IITR (monorepo, infra/app split, multi-server). The mechanism is proven. Scaling requires distribution, validation, and adoption.
@@ -451,13 +461,11 @@ Org secrets (APP_ID, APP_PRIVATE_KEY, DEPLOY_SSH_KEY) are inherited — zero per
 
 **Undefined:** Repo template — a WILSCH-AI-SERVICES template repo containing the 12-line `deploy.yml`, `.env.config` skeleton, `.env.example` (config/secret schema), convention-compliant compose skeleton, and CLAUDE.md with standard deployment section. Eliminates "copy deploy.yml" as a manual step and solves the AI discovery mechanism (template carries the conventions). New project = GitHub "Use Template" → set `ssh-host` → push.
 
-**Undefined:** Config/secret split discovery — the `.env.config` (git) + GitHub Secrets (credentials) + derived `.env` (server) convention needs an AI discovery mechanism so new sessions know the split. Likely resolved via repo template + project CLAUDE.md standard section + team plugin update.
+**`env_file: .env` required on every service.** All app compose services must declare `env_file: .env`. This eliminates per-service, per-variable decisions about which env vars to pass — the assembled `.env` (config + secrets) is the single source. Additional `environment:` entries are allowed alongside for compose-level interpolation. Level 0 validator enforces: every service has `env_file:`. Intra-project isolation is irrelevant — services within a project cooperate and share credentials. The isolation boundary is between projects (repo-scoped GitHub Secrets).
 
-**Undefined:** Secrets injection mechanism — how project-specific secrets flow from GitHub Secrets through the reusable workflow to the deploy script → merged `.env`. The merge script (`.env.config` + environment variables → `.env`) needs detailed design of how secret names are declared and passed through the SSH transport layer.
+**Repo rename is an operational event.** Deploy-action derives the server path from `github.repository`. A rename orphans the existing server directory while GHA targets a new path. Requires manual coordination: `mv` old directory, `git remote set-url`, redeploy. **Undefined:** repo rename runbook — the manual steps need documentation as an operations manual entry.
 
 **Undefined:** Version upgrade workflow — major version upgrades for stateful services (e.g., Postgres 17→18) require data migration beyond a compose tag change. The scope boundary between Docker image versioning (this convention) and application-level dependency management is undefined.
-
-**Note:** The back-pressure levels (Part 4) will undergo a major overhaul after DaveX2001/deliverable-tracking#1273 (deploy-linker back-pressure detection) is completed. Current levels are directional — the implementation will refine check specifics, exit codes, and deploy-linker integration.
 
 ---
 
@@ -528,6 +536,14 @@ Org secrets (APP_ID, APP_PRIVATE_KEY, DEPLOY_SSH_KEY) are inherited — zero per
 **Pass 3 Research:**
 - [LinuxServer docker-socket-proxy](https://github.com/linuxserver/docker-socket-proxy) — read-only Docker API proxy, actively maintained (74 releases)
 - [Tecnativa docker-socket-proxy](https://github.com/Tecnativa/docker-socket-proxy) — reference baseline, stale
+
+**Pass 7 Evidence (back-pressure v2 + secrets + conventions):**
+- [#1273 — Fix back-pressure level detection](https://github.com/DaveX2001/deliverable-tracking/issues/1273) (closed, 9/9 DoD, 7/7 ACs — structured exit codes, two-ruleset validator, pipefail fix)
+- [#1326 — Staging deployed with ephemeral port](https://github.com/DaveX2001/deliverable-tracking/issues/1326) (closed — PORT=0 in staging .env, 4-day outage, staging L4 gap)
+- [#1306 — MF intermittent filter invocation](https://github.com/DaveX2001/deliverable-tracking/issues/1306) (Docker DNS collision evidence — staging + preview `pipelines` round-robin)
+- [Rick Hightower: Claude Code Rules](https://medium.com/@richardhightower/claude-code-rules-stop-stuffing-everything-into-one-claude-md-0b3732bca433) — path-scoped `.claude/rules/` system, priority saturation concept
+- [Docker Compose secrets spec](https://github.com/compose-spec/compose-spec/blob/main/09-secrets.md) — `environment:` source works without Swarm (v2.6.0+), evaluated for secrets injection
+- [Session cb5f0018](https://github.com/MariusWilsch/claude-code-conversation-store/blob/main/projects/-Users-verdant-Documents-projects-00-WILSCH-AI-INTERNAL--soloforce/cb5f0018-648b-41f6-aa76-45ec0fb2aaa6.jsonl) — Pass 7 extraction (secrets, back-pressure overhaul, DNS collision, port convention, .claude/rules convention system)
 - [OPA Docker AuthZ plugin](https://github.com/open-policy-agent/opa-docker-authz) — evaluated, overkill for this use case
 - [GitHub org-level rulesets](https://docs.github.com/en/organizations/managing-organization-settings/creating-rulesets-for-repositories-in-your-organization) — Team plan, all-repo coverage
 
