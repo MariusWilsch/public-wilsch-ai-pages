@@ -48,12 +48,13 @@ Repositories and server deployments are scattered across three GitHub accounts a
 
 #### GitHub — Repos by Account
 
-**WILSCH-AI-SERVICES** (8 repos, already in org):
-- `iitr-platform` — IITR chat + RAG (convention-compliant)
-- `archibus-bulk-import` — Archibus bulk data entry (convention-compliant, proven)
-- `deploy-action` — Reusable GHA deployment workflow (public)
-- `wilsch-ai-team-plugin` — Claude Code team plugin
-- `IITR__IITR-RAG-Navigation`, `IITR__IITR-RAG-Court-Judgments`, `IITR__IITR-RAG-Masterfragen`, `IITR__iitr-infrastructure` — IITR RAG subprojects
+**WILSCH-AI-SERVICES** (9 repos, already in org):
+- `03_IITR__iitr-platform` — IITR chat + RAG (convention-compliant)
+- `01_ARCHIBUS__archibus-bulk-import` — Archibus bulk data entry (convention-compliant, proven)
+- `deploy-action` — Reusable GHA deployment workflow (infra, public)
+- `issue-commit-linker` — Commit-to-issue linking (infra)
+- `wilsch-ai-team-plugin` — Claude Code team plugin (infra)
+- `IITR__IITR-RAG-Navigation`, `IITR__IITR-RAG-Court-Judgments`, `IITR__IITR-RAG-Masterfragen`, `IITR__iitr-infrastructure` — IITR RAG subprojects (**archived**, old naming convention)
 
 **MariusWilsch** (client repos to transfer):
 - `uwi__invoice-agent` — UWI invoice processing → rename to `uwi-invoice-agent`
@@ -70,23 +71,30 @@ Repositories and server deployments are scattered across three GitHub accounts a
 
 **DaveX2001** (stay on personal account):
 - `deliverable-tracking` — **Deferred indefinitely.** 1300+ issues, all agents reference it, highest redirect risk, low ROI now.
-- `claude-code-improvements` — Stays. Will be retired when CCI-600 completes.
+- `claude-code-improvements` — Stays on DaveX2001. Continues after CCI-600 completes.
 - `public-wilsch-ai-pages` — Hippocampus mirror (non-canonical)
 
 **Out of scope:** vibe-marketing, eberle-plugins, moltbot — personal/non-client repos stay in personal accounts.
 
 #### Repository Naming Convention
 
-Standardized pattern: `{client}-{project}` (lowercase, hyphen-separated). Reference: [WILSCH-AI-SERVICES/iitr-platform](https://github.com/WILSCH-AI-SERVICES/iitr-platform).
+Standardized pattern: `{NN}_{CLIENT}__{project}` — client repos use the numbered prefix matching the deliverable-tracking label scheme. Infra repos (no client owner) have no prefix.
+
+| Type | Pattern | Example |
+|------|---------|---------|
+| **Client repo** | `{NN}_{CLIENT}__{project}` | `03_IITR__iitr-platform` |
+| **Infra repo** | `{project}` (no prefix) | `deploy-action`, `issue-commit-linker` |
+
+Active org repos already follow this convention. Transfers adopt it on arrival.
 
 | Current Name | New Name (in org) | Rationale |
 |-------------|-------------------|-----------|
-| `uwi__invoice-agent` | `uwi-invoice-agent` | Client + project |
-| `Call2Tanss` | `call2tanss` | Lowercase standardization |
-| `ARCHIBUS__archibus-poc` | `archibus-fm-assistant` | Not a PoC — it's the FM Assistant product |
-| `rohdex` | `rohdex` | Already follows pattern |
-| `klimafolgenschutz-website` | `klimafolgenschutz-website` | Already follows pattern |
-| `wilsch-ai-site` | `wilsch-ai-site` | Already follows pattern |
+| `uwi__invoice-agent` | `02_UWI__invoice-agent` | UWI client + project |
+| `Call2Tanss` | `02_UWI__call2tanss` | UWI telephony integration |
+| `ARCHIBUS__archibus-poc` | `01_ARCHIBUS__archibus-fm-assistant` | Not a PoC — it's the FM Assistant product |
+| `rohdex` | `04_ROHDEX__rohdex` | Rohdex client |
+| `klimafolgenschutz-website` | ✅ Already renamed: `06_ABTMAYR-REICHERT__klimafolgenschutz-website` | Done via #1338 |
+| `wilsch-ai-site` | ✅ Already renamed: `00_WILSCH-AI-INTERNAL__wilsch-ai-site` | Done via #1338 |
 
 #### Server — Project Checkouts (as of 2026-03-29)
 
@@ -100,27 +108,15 @@ Standardized pattern: `{client}-{project}` (lowercase, hyphen-separated). Refere
 | invoice-agent_backend | `/home/marius/projects/billable/` | marius | MariusWilsch/uwi__invoice-agent | ❌ No |
 | rohdex | `/home/shared/` | ? | MariusWilsch/rohdex | ❌ No |
 
-#### Server — Running Containers (grouped)
+#### Server — Running Containers
 
-**Convention-compliant (auto-ports, healthchecks):**
-- `archibus-bulk-import-*` (3 containers) — staging
+Port assignments and container counts are JIT-discoverable via `docker ps` — not maintained here. Grouped by convention status:
 
-**FM Assistant / Archibus (hardcoded ports):**
-- `LibreChat-staging` (:3081), `LibreChat-dev` (:3080) — Archibus FM Assistant chat UI
-- `archibus_fastmcp_staging` (:8001) — Archibus FM Assistant MCP
-- `chat-mongodb-*`, `rag_api-*`, `vectordb-*`, `chat-meilisearch-*` — supporting services
-
-**Client projects (hardcoded ports):**
-- `invoice-production-backend` (:8081) — UWI production
-- `rohdex-staging` (:9000)
-- `call2tanss` (:5000), `call2tanss-dev` (:5001), `call2tanss-staging` (:5002)
-
-**Client projects (hardcoded ports, continued):**
-- `klimafolgenschutz-cms` (:3100) — Klimafolgenschutz CMS
-
-**Out of scope (stay as-is):**
-- `moltbot-*` (:18789-90) — personal project
-- `docker-socket-proxy`, `buildkit`, `buildx_buildkit_*`, `metamcp-pg` — infrastructure
+| Group | Projects | Status |
+|-------|----------|--------|
+| **Convention-compliant** | archibus-bulk-import | ✅ Auto-ports, healthchecks |
+| **Needs convention adopt** | FM Assistant, invoice-agent, call2tanss, rohdex, klimafolgenschutz-cms | ❌ Hardcoded ports |
+| **Out of scope** | moltbot, docker-socket-proxy, buildkit | Personal / infrastructure |
 
 ### Part 2: Per-Project Migration Classification
 
@@ -136,21 +132,21 @@ Each project gets one of three migration paths:
 
 | Project | New Org Name | GitHub Transfer | Server Migration | Convention Adopt | Infra Compose? | Priority | Notes |
 |---------|-------------|----------------|-----------------|-----------------|----------------|----------|-------|
-| **archibus-bulk-import** | (unchanged) | ✅ Done | ✅ Done | ✅ Done | Yes (shared DB) | — | First adopter, proven |
-| **iitr-platform** | (unchanged) | ✅ Done | On IITR-STAGING server | ✅ Done | Yes (Postgres + Redis) | — | Separate server (136.243.71.58) |
-| **invoice-agent** | `uwi-invoice-agent` | MariusWilsch → org | `/home/marius/...` → `/home/deploy/` | Adopt | No — standalone FastAPI backend | High | Marius: "block invoice-agent davon" |
-| **call2tanss** | `call2tanss` | MariusWilsch → org | `/home/marius/...` → `/home/deploy/` | Adopt | No — standalone Flask/FastAPI | Medium | 3 running instances with hardcoded ports |
-| **archibus-fm-assistant** | `archibus-fm-assistant` | MariusWilsch → org | `/home/shared/` → `/home/deploy/` | Adopt | Evaluate (LibreChat + MongoDB + supporting services) | Medium | NOT legacy — separate product from archibus-bulk-import |
-| **rohdex** | `rohdex` | MariusWilsch → org | `/home/shared/` → `/home/deploy/` | Adopt | No — standalone backend | Low | Benefits from convention (auto-ports, healthchecks) |
-| **klimafolgenschutz** | `klimafolgenschutz-website` | MariusWilsch → org | Has CMS container | Transfer only | No | Low | CMS container stays as-is |
-| **wilsch-ai-site** | `wilsch-ai-site` | MariusWilsch → org | No server component | N/A | N/A | Low | Company website |
+| **archibus-bulk-import** | `01_ARCHIBUS__archibus-bulk-import` | ✅ Done | ✅ Done | ✅ Done | No — self-contained stack | — | First adopter, proven |
+| **iitr-platform** | `03_IITR__iitr-platform` | ✅ Done | On IITR-STAGING server | ✅ Done | Yes (GPU services + Langfuse) | — | Separate server |
+| **invoice-agent** | `02_UWI__invoice-agent` | MariusWilsch → org | `/home/marius/...` → `/home/deploy/` | Adopt | No — standalone FastAPI backend | High | Marius: "block invoice-agent davon" |
+| **call2tanss** | `02_UWI__call2tanss` | MariusWilsch → org | `/home/marius/...` → `/home/deploy/` | Adopt | No — standalone Flask/FastAPI | Medium | UWI telephony integration |
+| **archibus-fm-assistant** | `01_ARCHIBUS__archibus-fm-assistant` | MariusWilsch → org | `/home/shared/` → `/home/deploy/` | Adopt | Recommended: Chromote + MongoDB = infra, LibreChat + FastMCP = app | **First candidate** | First migration to validate approach. Absorbs #1061 (documentation deliverable for client ops still outstanding) |
+| **rohdex** | `04_ROHDEX__rohdex` | MariusWilsch → org | `/home/shared/` → `/home/deploy/` | Adopt | No — standalone backend | Low | Benefits from convention (auto-ports, healthchecks) |
+| **klimafolgenschutz** | `06_ABTMAYR-REICHERT__klimafolgenschutz-website` | ✅ Done (#1338) | Has CMS container | Transfer only | No | Low | CMS container stays as-is |
+| **wilsch-ai-site** | `00_WILSCH-AI-INTERNAL__wilsch-ai-site` | ✅ Done (#1338) | No server component | N/A | N/A | Low | Company website |
 
 **Not transferring (deferred or staying):**
 
 | Project | Decision | Rationale |
 |---------|----------|-----------|
 | `deliverable-tracking` | **Deferred indefinitely** | 1300+ issues, all agents reference it, highest redirect risk, low ROI now |
-| `claude-code-improvements` | **Stays on DaveX2001** | Will be retired when CCI-600 completes |
+| `claude-code-improvements` | **Stays on DaveX2001** | Continues after CCI-600 completes |
 | `public-wilsch-ai-pages` | **Stays on MariusWilsch** | Will be replaced by new publishing workflow |
 | `claude-code-conversation-store` | **Stays on MariusWilsch** | Audit trail, no transfer benefit |
 | `00_WILSCH-AI-INTERNAL__soloforce` | **Stays on MariusWilsch** | Marius's working directory |
@@ -215,16 +211,16 @@ Phase 0: Org Infrastructure
 └── DaveX2001 org invite
 
 Phase 1: Client repos (MariusWilsch → org)
-├── uwi__invoice-agent → uwi-invoice-agent (transfer + adopt) — HIGH
-├── Call2Tanss → call2tanss (transfer + adopt) — MEDIUM
-├── ARCHIBUS__archibus-poc → archibus-fm-assistant (transfer + adopt) — MEDIUM
-├── rohdex → rohdex (transfer + adopt) — LOW
-├── klimafolgenschutz-website (transfer only) — LOW
-└── wilsch-ai-site (transfer only) — LOW
+├── ARCHIBUS__archibus-poc → 01_ARCHIBUS__archibus-fm-assistant (transfer + adopt) — FIRST CANDIDATE
+├── uwi__invoice-agent → 02_UWI__invoice-agent (transfer + adopt) — HIGH
+├── Call2Tanss → 02_UWI__call2tanss (transfer + adopt) — MEDIUM
+├── rohdex → 04_ROHDEX__rohdex (transfer + adopt) — LOW
+├── klimafolgenschutz-website → ✅ Done (#1338)
+└── wilsch-ai-site → ✅ Done (#1338)
 
 Phase 2: Server-side consolidation (parallel with Phase 1)
-├── Fresh clone under /home/deploy/projects/ for each transferred repo
-├── Volume migration: copy named volumes to convention-scoped names
+├── Pre-transfer: pin COMPOSE_PROJECT_NAME in staging .env (prevents volume orphaning)
+├── Self-healing preflight auto-clones on first GHA deploy (no manual clone needed)
 └── Wire deploy-action per project (for "transfer + adopt" projects)
 
 Phase 3: Legacy cleanup (AFTER all Phases 1+2 verified)
@@ -242,13 +238,13 @@ Phase 4: Reference updates (after all transfers)
 
 For each repo transfer:
 
-1. **Pre-transfer:** Verify no active PRs or running workflows
-2. **Transfer:** Owner initiates via GitHub Settings → Transfer. For personal repos (`MariusWilsch/`): only the account owner can transfer. For org repos: org owners OR repo admins can transfer. ([GitHub docs](https://docs.github.com/en/repositories/creating-and-managing-repositories/transferring-a-repository))
-3. **Rename (if needed):** After transfer, rename repo to match naming convention (e.g., `ARCHIBUS__archibus-poc` → `archibus-fm-assistant`)
-4. **Post-transfer:** Verify redirect works (`curl -sI old-url | grep Location`)
-5. **Server-side:** Clone fresh under `/home/deploy/projects/{new-name}` as `deploy` user with `dev-team` group
-6. **Volume migration:** If project has Docker volumes, copy data from old project-scoped volumes to new convention-scoped names. Use Docker Compose project naming convention — no explicit `name:` in compose files. (Same approach as IITR migration.)
-7. **Verify:** Containers running, deployments working, App + ruleset applied
+1. **Pre-transfer:** Pin `COMPOSE_PROJECT_NAME` in staging `.env` — directory rename changes the default project name, orphaning existing volumes. Previews already get explicit names from deploy script; only staging needs pinning. (Lesson from CCI #646 — [comment](https://github.com/DaveX2001/claude-code-improvements/issues/646#issuecomment-4160133314).)
+2. **Pre-transfer:** Verify no active PRs or running workflows
+3. **Transfer:** Owner initiates via GitHub Settings → Transfer. For personal repos (`MariusWilsch/`): only the account owner can transfer. ([GitHub docs](https://docs.github.com/en/repositories/creating-and-managing-repositories/transferring-a-repository))
+4. **Rename:** After transfer, rename to convention name (e.g., `ARCHIBUS__archibus-poc` → `01_ARCHIBUS__archibus-fm-assistant`)
+5. **Post-transfer:** Verify redirect works (`curl -sI old-url | grep Location`)
+6. **First push:** Self-healing preflight (CCI #646 Level 0s) auto-creates `/home/deploy/projects/{new-name}`, clones repo, sets permissions — no manual clone needed
+7. **Verify:** Containers running, healthchecks passing, App + ruleset applied
 
 #### GitHub Redirect Risk
 
@@ -288,21 +284,31 @@ Each project's convention adoption sub-issue should specify which healthcheck ap
 
 ### Part 6: Convention Instruction Artifact
 
-As part of this migration, create a minimalistic Docker Compose convention as an auto-inserted instruction artifact — a file that activates whenever the AI works with compose files, without bloating CLAUDE.md.
+Two-layer delivery model, matching how conventions already propagate in the team:
 
-Reference: [Claude Code Rules — Stop Stuffing Everything into One CLAUDE.md](https://medium.com/@richardhightower/claude-code-rules-stop-stuffing-everything-into-one-claude-md-0b3732bca433)
+**Layer 1: Plugin Belief Block (universal rules)**
 
-**What the artifact defines:**
-- Path spec: `/home/deploy/projects/{project}/`
-- Compose convention: `docker-compose.yml` (app) + `docker-compose.infra.yml` (infra, if needed)
+Lives in `wilsch-ai-team-plugin` CLAUDE.md as a `<docker_compose_convention>` block — same pattern as the existing `<makefile_check>`. Activates via WHEN/WHY/Behavior conditioning: the AI reads the rule and applies it when compose file context is detected. No path-spec matching needed.
+
+Contains:
+- Port convention: `${PORT:-0}` (auto-assigned, no hardcoded ports)
+- No `container_name:` in app compose (prevents preview collisions)
+- Healthcheck required on every service (default: [microcheck](https://github.com/tarampampam/microcheck))
+- `deploy.entry` label on entry-point service
 - Volume naming: Docker Compose project convention (no explicit `name:`)
-- Port convention: env-var with `:-0` default (auto-assigned)
-- Healthcheck requirement: every service must have a healthcheck (see Part 4 Healthcheck Strategy)
-- Deploy labels: `deploy.entry` for routing
+- Compose split: `docker-compose.yml` (app) + `docker-compose.infra.yml` (infra, if needed)
 
-**Where:** Global `~/.claude/` instruction artifact or plugin-level. Auto-inserted when AI detects compose file context.
+**Layer 2: Template Repo (project-specific skeleton)**
 
-**Deliverable:** Created alongside the first "transfer + adopt" project to validate the pattern against real usage.
+WILSCH-AI-SERVICES template repo seeded with:
+- 12-line `deploy.yml` GHA workflow (see CCI #646 Part 7)
+- Convention-compliant compose skeleton
+- `.env.example` with standard variables
+- CLAUDE.md "Compose Architecture" section template (as seen in IITR and Archibus projects)
+
+**Precedent:** Both layers already exist in practice. IITR and Archibus project CLAUDE.md files contain project-specific compose architecture sections. The team plugin already carries cross-project belief blocks (`<makefile_check>`). This part formalizes the pattern.
+
+**Deliverable:** Plugin belief block created alongside FM Assistant migration (first candidate). Template repo created as CCI #646 Undefined Item #5.
 
 ### Part 7: Rollback Strategy
 
@@ -335,6 +341,7 @@ Reference: [Claude Code Rules — Stop Stuffing Everything into One CLAUDE.md](h
   - [Main Session 2026-03-29](https://app.fireflies.ai/view/01KMWVD13DSDJWMFQRZ5MADJ32) — deploy-action walkthrough, infra/app convention, per-project classification
 - **Review feedback:**
   - [Issue #1318 comments](https://github.com/DaveX2001/deliverable-tracking/issues/1318) — Marius's design doc walkthrough (2026-03-30), 6 comments covering per-project transfer decisions, classification, validated infra claims, convention artifact, server ops, access scope
+  - [SA review pass (2026-04-01)](https://github.com/DaveX2001/deliverable-tracking/issues/1318#issuecomment-4166883055) — 14 comments: naming convention, scope guard, convention artifact, volume pinning, FM Assistant as first candidate, template repo
 - **Artifacts:**
   - [CCI #646 Design Doc — Deployment & Runtime State](https://mariuswilsch.github.io/public-wilsch-ai-pages/project/WILSCH-AI-INTERNAL/deployment-runtime-state-design) — parent convention this migration builds on
   - [WILSCH-AI-SERVICES/iitr-platform](https://github.com/WILSCH-AI-SERVICES/iitr-platform) — reference implementation (deploy.yml, docker-compose.yml, docker-compose.infra.yml)
@@ -342,9 +349,14 @@ Reference: [Claude Code Rules — Stop Stuffing Everything into One CLAUDE.md](h
   - [microcheck](https://github.com/tarampampam/microcheck) — lightweight healthcheck binary for curl-less containers
   - [Issue #1318](https://github.com/DaveX2001/deliverable-tracking/issues/1318) — tracking issue
   - [Epic #646](https://github.com/DaveX2001/claude-code-improvements/issues/646) — parent epic
+  - [Issue #1061](https://github.com/DaveX2001/deliverable-tracking/issues/1061) — Monitoring & Debug Documentation Revision (closed, merged into #1318). FM Assistant documentation deliverable still outstanding.
+  - [Issue #1338](https://github.com/DaveX2001/deliverable-tracking/issues/1338) — Rename repos + grant admin access (completed)
+  - [docs/infrastructure.md](https://github.com/DaveX2001/deliverable-tracking/blob/main/docs/infrastructure.md) — Archibus infrastructure reference (historic context, stale)
 - **Sessions:**
   - /Users/daveFem/.claude/projects/-Users-daveFem-Desktop-claude-projects-00-WILSCH-AI-INTERNAL--deliverable/7e2cfb0d-ae02-4163-83b2-0c3e8975382d.jsonl (original design)
   - /Users/daveFem/.claude/projects/-Users-daveFem-Desktop-claude-projects-00-WILSCH-AI-INTERNAL--deliverable/0a41eb45-8096-4c51-a4a6-641a48cf808b.jsonl (review feedback incorporation)
+  - [Session 7e9dc88b (MariusWilsch)](https://github.com/MariusWilsch/claude-code-conversation-store/blob/main/projects/-Users-verdant-Documents-projects-00-WILSCH-AI-INTERNAL--soloforce/7e9dc88b-4d23-45ba-a216-a90a2ef4d407.jsonl) — SA review session (2026-04-01)
+  - /Users/daveFem/.claude/projects/-Users-daveFem-Desktop-claude-projects-00-WILSCH-AI-INTERNAL--deliverable/cbd361ea-cc30-4b62-9369-601a70312b47.jsonl (v3 extraction pass)
 
 ---
 
