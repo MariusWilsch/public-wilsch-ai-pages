@@ -43,6 +43,7 @@ The demo validated a complete pipeline for Assets. This is the baseline the othe
 **Pipeline stages:** parse → hierarchy → generate → build-json → push. Each stage is a module in `src/archibus_bulk_import/`. The `run_pipeline()` function chains them for one building at a time.
 
 **MCP tools (4):**
+
 | Tool | Purpose | Entity-specific? |
 |------|---------|-----------------|
 | `bem_context` | Serves BEM schema references (fields, asset types, status, hierarchy, countries) | Yes — Asset fields only |
@@ -51,6 +52,7 @@ The demo validated a complete pipeline for Assets. This is the baseline the othe
 | `run_import` | Bridge tool: contract + Excel → API submission | Yes — calls Asset import endpoints |
 
 **Skills (2):**
+
 | Skill | Mode | Status |
 |-------|------|--------|
 | `bem-setup` | Interactive (Steps 0→2) | Working — drove the demo |
@@ -86,7 +88,7 @@ Layer 5 (references L3-4):  Works (→ Asset + Employee), PM Schedules (→ Asse
 
 **Rein's Action Plan — API side (25 days total):**
 
-| Step | Days | What | Work stream |
+| Step | Days | What | Work Stream |
 |------|------|------|-------------|
 | 1. Search/lookup | 7 | Find entities by name/code — prerequisite for conditional imports | WS1 (Conditional) |
 | 2. Clean import | 5 | Insert into empty database — Partners, Employees/Depts, Works, PM Schedules | WS2 (Multi-entity) |
