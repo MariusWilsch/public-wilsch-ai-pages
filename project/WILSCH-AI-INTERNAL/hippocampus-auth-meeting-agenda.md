@@ -7,16 +7,15 @@ publish: true
 
 ## Meeting Goal
 
-Decide which publishing platform to migrate hippocampus to, given four evaluated options with trade-offs in auth model, effort, cost, and vendor dependency.
+Finalize the hippocampus platform migration decision, now narrowed from four to two viable options after Pass 2 research. Options B (Netlify) and D (self-hosted) are eliminated.
 
-1. **Platform decision** — select Option A, B, C, or D (or a hybrid) based on the evaluation
-2. **Domain strategy** — decide on the public-facing URL for the authenticated site
-3. **SSG question** — keep Jekyll now or invest in modernization (VitePress)
+1. **Platform confirmation** — Cloudflare or Vercel, given the auth, cost, and automation findings
+2. **DNS migration** — whether moving `wilsch-ai.com` DNS to Cloudflare is acceptable (required for the CF path)
 
 ## Pre-Read
 
-- [Design Doc: Hippocampus Auth Evaluation](hippocampus-auth-evaluation) — full evaluation with 4 options, comparison matrix, and trade-offs
-- [Issue #1217](https://github.com/DaveX2001/deliverable-tracking/issues/1217) — original issue with Marius's comment on requirements
+- [Design Doc: Hippocampus Auth Evaluation (Pass 2)](hippocampus-auth-evaluation) — updated evaluation with 4 options (current, Jekyll+CF, VitePress+CF, Vercel), comparison matrix, composability analysis, and agent automation assessment
+- [Issue #1217](https://github.com/DaveX2001/deliverable-tracking/issues/1217) — Marius's two feedback comments (2026-04-02) that shaped this pass
 
 ---
 
@@ -24,54 +23,44 @@ Decide which publishing platform to migrate hippocampus to, given four evaluated
 
 *Starting points for discussion, not limited to these.*
 
-### 1. The client sharing friction trade-off
+### 1. The auth cost asymmetry between Cloudflare and Vercel
 ⏱️ 10 min
 
-Each option handles client sharing differently. Options A and C ask clients for email OTP (30 seconds of friction). Option B requires clients to create an account. Option D generates signed URLs with zero client friction but requires Marius to run a script.
+Deep research reveals a stark difference in the auth model. Cloudflare provides email OTP for free with no client account requirement and full API automation. Vercel requires $20-170/month for production auth and either forces clients to create Vercel accounts or share a site-wide password.
 
-- Currently Marius sends a link and the client clicks — zero friction, zero auth
-- Email OTP is the lightest auth (no account, no password) but still 30 seconds
-- Signed URLs are invisible to the client but need a generation step on Marius's side
-- The decision depends on how often links are shared and how tech-savvy clients are
+- Cloudflare Access: free, email OTP, per-path policies, 100% agent-automatable
+- Vercel: $20/mo minimum for production auth, clients need Vercel accounts, user grants are dashboard-only
+- Vercel's advantage: better DX for VitePress, works with any DNS, faster setup (~30 min vs ~1 hour)
+- The two-phase path (Jekyll+CF now → VitePress+CF later) avoids Vercel's auth cost while keeping the VitePress upgrade option
 
-**To resolve:** The acceptable friction level for client document sharing — whether the client experience or the admin experience matters more.
+**To resolve:** Whether Vercel's DX and DNS flexibility justify the recurring cost and client friction, or whether Cloudflare's free auth and full automation make the platform choice clear.
 
-### 2. Vendor dependency vs operational ownership
+### 2. DNS migration to Cloudflare as a prerequisite
 ⏱️ 10 min
 
-Options A–C trade operational burden for vendor dependency. Option D trades vendor dependency for operational ownership. Both are valid — the question is which risk the team prefers to carry.
+Cloudflare Access requires DNS on Cloudflare — this is non-negotiable. If the team chooses the Cloudflare path, `wilsch-ai.com` DNS must move. The new company's domain would also need Cloudflare DNS.
 
-- Cloudflare/Netlify handle uptime, TLS, CDN, builds — but the auth model is their product decision
-- Self-hosted means Caddy + Docker on existing servers — full control, but the team owns incidents
-- The team already runs Docker services on wilsch-ai and DGX Spark, so ops capability exists
-- If Cloudflare changes pricing or discontinues the free Access tier, migration happens under pressure
+- Current DNS location for `wilsch-ai.com` is unknown — migration scope depends on current provider
+- Cloudflare DNS is free and widely used, but it means a single provider controls both hosting and DNS
+- The new company (IMIF, #1349) will have its own domain — that domain also needs CF DNS if choosing the CF path
+- Vercel has no DNS requirement — works with any provider via CNAME
+- Moving platforms breaks all existing `mariuswilsch.github.io/...` links — redirect strategy needed
 
-**To resolve:** Whether the team's existing operational capability makes self-hosting viable, or whether zero-ops managed platforms are the better investment of attention.
-
-### 3. The domain question shapes the migration
-⏱️ 5 min
-
-The current URL is `mariuswilsch.github.io/public-wilsch-ai-pages/`. Moving to any alternative changes this. The new domain choice affects DNS requirements, branding, and which options are feasible.
-
-- Options A and C require DNS on Cloudflare — if the domain is already on Cloudflare, zero friction; if not, DNS migration is a prerequisite
-- Option D uses any DNS — point a subdomain to the VPS
-- `docs.wilsch-ai.com` is the natural candidate, but any subdomain works
-- Existing external links to the `github.io` URL will break regardless of which option is chosen — a redirect from the old URL is possible if GitHub Pages stays active during transition
-
-**To resolve:** The target domain for the authenticated hippocampus site, and whether existing `github.io` links need redirect handling.
+**To resolve:** Whether DNS migration to Cloudflare is acceptable for both `wilsch-ai.com` and the new company's future domain, and what happens to existing shared links.
 
 ## Meeting Format
 
 - **Type:** Decision review
-- **Duration:** 25 min (3 topics)
-- **Expectation:** Read the design doc evaluation before the meeting. Come with a leaning toward one of the four options.
-- **Outcome:** Selected option + domain decision. Implementation can begin immediately after.
+- **Duration:** 20 min (2 topics)
+- **Expectation:** Read the updated design doc (Pass 2) before the meeting. The comparison table and Two-Phase Path section are the key decision inputs.
+- **Outcome:** Platform confirmation + DNS decision. Implementation begins immediately after.
 
 ## Related
 
 - **Issue:** [#1217 — Evaluate Vercel for Hippocampus Publishing](https://github.com/DaveX2001/deliverable-tracking/issues/1217)
-- **Design Doc:** [Hippocampus Auth Evaluation](hippocampus-auth-evaluation)
+- **Design Doc:** [Hippocampus Auth Evaluation (Pass 2)](hippocampus-auth-evaluation)
 - **Trigger:** [#847 — Contract Strategy](https://github.com/DaveX2001/deliverable-tracking/issues/847) (comments 35-36)
+- **Related:** [#1349 — New Company Formation](https://github.com/DaveX2001/deliverable-tracking/issues/1349)
 
 ---
 
