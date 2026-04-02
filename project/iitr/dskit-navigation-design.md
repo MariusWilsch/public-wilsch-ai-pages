@@ -214,7 +214,7 @@ Per SA directive ("why always deploy another one?") and [CCI #646 deployment con
 | Typesense | 8109 | Hybrid search (keyword + vector). All projects use separate collections via one instance. |
 Creates the `iitr-infra` network. App compose connects to this network as external.
 
-Observability: OpenWebUI's built-in Analytics + Feedback + OTEL replaces the former Langfuse stack (6 services removed). OTEL export configured in app compose via `ENABLE_OTEL=true` + `OTEL_EXPORTER_OTLP_ENDPOINT`. No additional infra services required — Grafana LGTM is optional and lightweight if infra metrics are desired.
+**Observability (replaces former Langfuse stack — 6 services removed):** Enable OpenWebUI's built-in OTEL export in app compose: `ENABLE_OTEL=true`, `ENABLE_OTEL_TRACES=true`, `ENABLE_OTEL_METRICS=true`, `OTEL_EXPORTER_OTLP_ENDPOINT=http://grafana:4317`. This gives distributed tracing (FastAPI routes, DB queries, external HTTP calls) and HTTP metrics (request count, latency histograms) — no additional infra services required. Recommended: add a Grafana LGTM container to infra compose for dashboard access. Combined with native Analytics (Admin → Analytics) and Feedback (Admin → Evaluations → Feedbacks with text annotations), this provides full observability without custom tracing code.
 
 **`docker-compose.yml`** — Serving layer (app, isolated per branch via `COMPOSE_PROJECT_NAME`):
 
