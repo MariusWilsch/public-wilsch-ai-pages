@@ -23,19 +23,41 @@ Das Modell folgt dem Prinzip, Angebot und Nachfrage parallel aufzubauen — Stud
 
 ## Erfolgsdefinition
 
-- **Ziel:** Klimafolgenschutz e.V. kann Klimaanpassungsmanager (Werkstudenten) für Kommunen über eine einheitliche Pipeline rekrutieren — von der Stellenbeschreibung über die LinkedIn-Präsenz bis zur Website-Integration
+| Element | Definition |
+|---------|-----------|
+| **Ziel** | Klimafolgenschutz e.V. betreibt eine Plattform, die Werkstudenten als Klimaanpassungsmanager mit Kommunen verbindet — Angebot und Nachfrage parallel skalierend |
+| **Erfolg** | 100 aktive Werkstudenten und 200 teilnehmende Gemeinden zum 1. September 2026 |
+| **Done-Test** | Kann ein offenes Design-Thema formuliert werden, das eine Meeting-Agenda braucht? → Wenn NEIN → Design ist vollständig |
 
 ---
 
 ## Vorgehen
 
-Die Pipeline besteht aus vier Teilen, die aufeinander aufbauen:
+Das Projekt gliedert sich in drei Meilensteine. Meilenstein 1 und 2 laufen parallel — Angebot (Werkstudenten) und Nachfrage (Gemeinden) müssen gleichzeitig aufgebaut werden.
 
 ```
-PIK/UBA-Recherche ──→ Agenda ──→ Stellenbeschreibung ──→ LinkedIn ──→ Website-CTA
+M1: Werkstudenten-Pipeline          ─── parallel ───          M2: Gemeinden-Akquise
+ (Agenda, Stellenbeschreibung,                                  (Sales Channels, Funnel,
+  LinkedIn, CTA, Screening)                                      Mitgliedschaft, Bedarfsmeldung)
+              ↘                                               ↙
+                    M3: KI-Matching + Projektabwicklung
+                            (zurückgestellt)
 ```
 
-### Teil 1: Klimaanpassungsmanager Agenda
+### Team
+
+| Person | Rolle | Verantwortung |
+|--------|-------|---------------|
+| **Michael Reichert** | Externe Beziehungen + Gemeinden-Netzwerk | BAFA/PEK-Kontakte, Gemeinden-Akquise über bestehende Netzwerke, Fördermittelklärung |
+| **Ralph Loser** | Geschäftsführer + Organisation | Meilensteinplanung, NDA-Vorlagen, Events (Bachelormesse), operative Koordination |
+| **Marius Wilsch** | Technische Umsetzung + Content | LinkedIn-Content, Design Docs, Plattform-Infrastruktur, GitHub-Tooling |
+| **David Eberle** | Entwicklung + Planung | Technische Entwicklung, Sales-Channel-Konzeption, Matching-System-Design |
+
+### Meilenstein 1: Werkstudenten-Pipeline
+
+Die bestehende Pipeline — von der Agenda über die Stellenbeschreibung bis zur Website-Integration — bildet den Angebotsaufbau. Ergänzt um Screening-Mechanismen und physische Akquise-Kanäle.
+
+#### Agenda (Klimalotse 5-Modul-Rahmenwerk)
 
 Ein Dokument mit doppeltem Zweck: Es zeigt Kandidaten, was sie im Einsatz tun werden, und gibt Kommunen Vertrauen in die Methodik. Abgeleitet vom bundesweiten Klimalotse 3.0 Rahmenwerk (UBA), nicht von Grund auf neu erfunden.
 
@@ -67,7 +89,7 @@ Die Agenda präsentiert den Klimalotse-Lebenszyklus, angepasst auf den Werkstude
 
 **Unterstützungsinfrastruktur:** Das ZKA bietet kostenlose Schulungsseminare (2,5 Tage, 6x/Jahr), ein Mentoring-Programm (Peer-Matching) und eine digitale Plattform für KAMs. Der Zugang für Werkstudenten zu diesen Programmen ist nicht explizit ausgeschlossen, aber nicht getestet — Anmeldeformulare erlauben flexible Angaben zu Stellenart und -umfang.
 
-### Teil 2: Stellenbeschreibung
+#### Stellenbeschreibung
 
 Deutsche Stellenbeschreibung für die Werkstudentenstelle. Inhaltlich abgeleitet von der Agenda — die Stellenbeschreibung ist die Agenda übersetzt in ein Rekrutierungsformat.
 
@@ -100,7 +122,7 @@ Deutsche Stellenbeschreibung für die Werkstudentenstelle. Inhaltlich abgeleitet
 
 **Marktpositionierung:** Der KAM-Werkstudent existiert am aktuellen Arbeitsmarkt nicht. Die Differenzierung gegenüber professionellen KAM-Ausschreibungen: niedrigere Einstiegshürde (Student, kein Abschluss erforderlich), Abschlussarbeit-Integration, strukturierte Methodik über die Agenda und ZKA-Netzwerkzugang über die e.V.-Anbindung.
 
-### Teil 3: LinkedIn Unternehmensseite + Content-Strategie
+#### LinkedIn Unternehmensseite + Content-Strategie
 
 Neue organisationale LinkedIn-Seite für Klimafolgenschutz e.V. — bisher existiert keine Vereinspräsenz auf LinkedIn. Die Seite bedient gleichzeitig zwei Zielgruppen (Tesla-Modell): Studierende auf der Suche nach Möglichkeiten und Kommunen auf der Suche nach Personallösungen.
 
@@ -130,7 +152,7 @@ Neue organisationale LinkedIn-Seite für Klimafolgenschutz e.V. — bisher exist
 
 **Tonalität:** Professionell aber zugänglich — behördennahe Glaubwürdigkeit mit studierendenfreundlicher Sprache. Nur Deutsch (DACH-Fokus).
 
-### Teil 4: Website-CTA-Integration
+#### Website-CTA-Integration
 
 Änderungen am bestehenden Klimaanpassungsmanager-Bereich auf klimafolgenschutz.com. Dies ist der einfachste Liefergegenstand — eine Umbenennung, ein Link-Tausch und Badge-Entfernung.
 
@@ -148,8 +170,65 @@ Neue organisationale LinkedIn-Seite für Klimafolgenschutz e.V. — bisher exist
 **Abhängigkeit:** Teil 3 (LinkedIn-Seite + Stellenanzeige) muss live sein, bevor der CTA darauf verweisen kann.
 
 ```
-Teil 3 (LinkedIn-Seite live) ──→ Teil 4 (CTA-URL tauschen)
+LinkedIn-Seite live ──→ CTA-URL tauschen
 ```
+
+#### Screening + Akquise-Kanäle
+
+Die Pipeline erweitert sich um Screening-Schritte und physische Kanäle jenseits der digitalen Präsenz.
+
+**Screening:**
+
+| Schritt | Methode | Automatisierung |
+|---------|---------|-----------------|
+| **Bewerbungseingang** | Online-Formular | KI-gestütztes Vorscreening |
+| **Persönlichkeitstest** | Standardisierter Test (Prinzipien-basiert) | KI-Auswertung, Human-on-the-Loop |
+| **Assessment Center** | Optional — für Kandidaten mit hohem Potenzial | Manuell |
+
+**Mindestanforderung:** Ab dem 3. Semester.
+
+**Physische Akquise-Kanäle:**
+- Bachelormesse München (25. April 2026)
+- Hochschulmessen mit Fokus auf Umwelt-/Ingenieurswissenschaften
+
+### Meilenstein 2: Gemeinden-Akquise
+
+Paralleler Aufbau der Nachfrageseite — Gemeinden als Einsatzorte für Werkstudenten gewinnen. Die ersten 100 Gemeinden erhalten eine kostenlose Vereinsmitgliedschaft. Gemeinden registrieren ihren Bedarf; die Plattform verbindet sie mit passenden Werkstudenten.
+
+**Zielgröße:** 200 Gemeinden zum 1. September 2026.
+
+**Go-to-Market:** Kostenlose Mitgliedschaft für die ersten 100 Gemeinden — Zugang zur Plattform, Bedarfsmeldung und Matching mit Werkstudenten.
+
+**Kommunale Bedarfe (aus dem Brainstorming):**
+- Geodatenanalyse (PIK, Deutscher Wetterdienst, Satellitenüberflugdaten)
+- Sensorinfrastruktur an neuralgischen Pumpen und Pegelständen
+- Geologische Risikokartierung
+- Digitalisierung der Wasserwirtschaft und Neuorganisation
+
+**Ungeklärt:** Sales Channels für Gemeinden-Akquise — welche Kanäle erreichen kommunale Entscheider? → Meeting Agenda
+
+**Ungeklärt:** Sales Funnel — wie verläuft der Prozess von Erstkontakt bis Bedarfsmeldung? → Meeting Agenda
+
+### Meilenstein 3: KI-basiertes Matching + Projektabwicklung (zurückgestellt)
+
+Langfristvision: Ein KI-System verbindet registrierte Werkstudenten mit Gemeinden, die Bedarf gemeldet haben. Setzt M1 (Werkstudenten im System) und M2 (Gemeinden im System) voraus.
+
+**Matching-Modell:** Push-basiert (Fiverr-Modell, nicht Tinder). Gemeinden registrieren Bedarf. Die KI identifiziert passende Werkstudenten und benachrichtigt sie aktiv.
+
+**Matching-Dimensionen:**
+
+| Dimension | Datenquelle |
+|-----------|------------|
+| **Standort** | Ortsbasiertes Match — Werkstudent in der Nähe der Kommune |
+| **Fachrichtung** | Studiengang, Semester, fachliche Schwerpunkte |
+| **Persönlichkeit** | Standardisierter Test (aus M1 Screening) |
+
+**Automatisierungsstufen:**
+1. Halbmanuell — KI schlägt vor, Mensch entscheidet (Human-on-the-Loop)
+2. Halbautomatisch — KI entscheidet, Mensch prüft Ausnahmen
+3. Vollautomatisch — KI-Matching mit Alarmglocken bei Sonderfällen
+
+**Aktivierung:** Sobald M1 und M2 eine kritische Masse erreicht haben (~85 Werkstudenten).
 
 ---
 
@@ -215,6 +294,14 @@ Nachschlagewerk zu den im Vorgehen referenzierten Institutionen, rechtlichen Rah
 - [ZKA KAM Beruf](https://zentrum-klimaanpassung.de/wissen/beruf-klimaanpassungsmanagerin/beruf-klimaanpassungsmanagerin) — Rollendefinition
 - [NKI / DAS Förderung](https://www.z-u-g.org/das/) — Bundesprogramm-Übersicht
 - [NKI Kommunalagentur](https://www.klimaschutz.de/de/foerderung-der-nki/ueber-die-nki-dashboard/agentur-fuer-kommunalen-klimaschutz) — Beratung für Kommunen
+
+### Transkripte
+- [Brainstorming 2026-04-02](https://app.fireflies.ai/view/01KN6WGW29D47Q6B11D9VCY063) — 3-Meilenstein-Struktur, Zielgrößen, Matching-Vision, Team
+- [Client Sync 2026-03-30](https://app.fireflies.ai/view/01KMZ8E02X2RGB29M3DSFQJVP1) — Team, Beschäftigungsmodelle, Content-Workflow
+- [Design Doc Erstellung 2026-03-23](https://app.fireflies.ai/view/01KMDCMMAF48SP1FBQ0JWW51R7) — PIK/UBA-Recherche, Klimalotse-Framework
+
+### Session
+- Pass 3: `211766c6` (2026-04-02) — Meilenstein-Restrukturierung, M2 + M3 hinzugefügt, Team-Sektion, Screening
 
 ---
 
