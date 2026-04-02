@@ -8,16 +8,18 @@ publish: true
 
 ## Meeting-Ziel
 
+> **Meeting abgeschlossen am 2. April 2026, 07:00–08:25.** Ergebnisse im [Design Doc](https://mariuswilsch.github.io/public-wilsch-ai-pages/project/uwi-retainer/design-doc-ulrich-sync-2026-03-30) dokumentiert.
+
 Follow-up zum 30. März: Fünf offene Punkte abarbeiten — Vertrag, NDA, Kate, Kundendaten, Newsletter. Zwei neue Themen dazu: Ostermann (Doku + Testumgebung) und Angebotsautomatisierung. Dazu Status-Runde zu den erledigten Action Items.
 
-1. **Vertrag** — Design-Partner-Modell besprechen, Vertragsbedingungen klären
-2. **NDA David** — Vorgehen ohne Lemke abstimmen
-3. **Kate/Malaysia** — Ergebnis von Ulrichs Gespräch auswerten
-4. **Kundendaten** — Repository-Lösung besprechen (GitLab?)
-5. **Newsletter** — Richtung und Zeitplan festlegen
-6. **Ostermann** — Doku-Status klären + Testumgebung besprechen
-7. **Angebotsautomatisierung** — Priorisierung mit Ulrich
-8. **Status-Runde** — Rechnungen, FSO-Kontakte, KI aus der Box
+1. **Vertrag** ⏳ — FDI-Modell besprochen, 2 Wochen Designphase
+2. **NDA David** ✅ — Thomas weist Chris an, auf NDA zu antworten
+3. **Kate/Malaysia** ⏳ — Ulrich spricht Kate über Ostern
+4. **Kundendaten** ✅ — DMZ-Architektur entschieden, Meeting Di nach Ostern
+5. **Newsletter** ⏳ — Marius Marketing-Projekt, 3–6 Monate
+6. **Ostermann** 🪦/⏳ — Testumgebung begraben, Doku Ulrich über Ostern
+7. **Angebotsautomatisierung** ⏳ — Q4/Jahresende verschoben
+8. **Status-Runde** ✅ — Rechnungen geklärt, AWO 10. April Meeting
 
 ## Vorab-Lektüre
 
@@ -122,16 +124,16 @@ Kurzer Check der Action Items vom 30. März:
 
 | Thema | Action | Owner | Status |
 |-------|--------|-------|--------|
-| **Rechnungen** | Rekers 40% Split bestätigen | Thomas | ❓ |
-| **Rechnungen** | Rekers-Rechnung senden | Marius | ❓ (nach Thomas-OK) |
-| **Rechnungen** | Witak anrufen (Entscheider-Team) | Ulrich | ❓ |
-| **Rechnungen** | DGX in Rechenzentrum umziehen | Thomas | April geplant |
-| **FSO-Seminar** | Kontakte nachtelefonieren | Ulrich | ❓ |
-| **FSO-Seminar** | 10 Website-Zugänge vergeben | Ulrich | ❓ |
-| **KI aus der Box** | PDF-Angebotsgenerator | David | ❓ |
-| **KI aus der Box** | 4 Artikel in Warenwirtschaft | Ulrich/Busch | ❓ |
-| **AWO** | DGX Kabel testen + Modell installieren | Marius | ❓ |
-| **Placetel** | Frank Lasinski Setup | Ulrich | ❓ |
+| **Rechnungen** | Rekers 40% Split bestätigen | Thomas | ✅ Bestätigt (40%) |
+| **Rechnungen** | Rekers-Rechnung senden | Thomas | ✅ 2. April |
+| **Rechnungen** | Witak anrufen (Entscheider-Team) | Ulrich | ⏳ Offen |
+| **Rechnungen** | DGX in Rechenzentrum umziehen | Thomas | ⏳ April geplant |
+| **FSO-Seminar** | Kontakte nachtelefonieren | Ulrich | ✅ Leads aktiv (Hasloff, Poggemüller, Amari) |
+| **FSO-Seminar** | 10 Website-Zugänge vergeben | Ulrich | → Evolviert zu #1334 (30-Tage Prospect Accounts) |
+| **KI aus der Box** | PDF-Angebotsgenerator | David | ⏳ Wartet auf Ulrichs Referenz-Dokumente |
+| **KI aus der Box** | 4 Artikel in Warenwirtschaft | Ulrich/Busch | ⏳ Offen |
+| **AWO** | DGX Kabel testen + Modell installieren | Marius | ✅ Hardware läuft, Model-Sharding offen (Ziel: 10. April) |
+| **Placetel** | Frank Lasinski Setup | Ulrich | ❌ Nicht besprochen |
 
 **Neue Entwicklung:** IITR Kraska-Meeting am 31. März erfolgreich — On-Premise Avatar-Lösung besprochen, nächstes Meeting 14. April. (Direkter FSO-Seminar Follow-up Erfolg!)
 
