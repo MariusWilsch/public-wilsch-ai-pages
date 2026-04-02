@@ -118,7 +118,7 @@ The four options below replace the final output (GitHub Pages) while preserving 
 
 **Migration:**
 - 334 markdown files transfer with frontmatter intact
-- Liquid conversions: `{%- include -%}` → Vue SFC components, `{%- raw -%}` → `:::v-pre`, `{%- variable -%}` → escaped or wrapped in `:::v-pre`
+- Liquid conversions: convert `include` tags to Vue SFC components, convert `raw` tags to `` `:::v-pre` ``, escape or wrap variables in `` `:::v-pre` ``
 - `publish: true` filtering: requires ~20-line pre-build Node script (VitePress has no built-in publish filter). Script reads frontmatter, generates `srcExclude` list
 - Mermaid: `npm i vitepress-plugin-mermaid mermaid` + wrap config with `withMermaid()` — zero markdown changes needed
 - Rewrite `default.html` as Vue theme component (~80 lines HTML+CSS → Vue SFC)
