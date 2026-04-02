@@ -29,7 +29,7 @@ IITR operates three separate RAG projects, each with distinct data and purpose. 
 
 Court Judgments and Masterfragen are separate projects with different data and retrieval — this design doc covers Navigation only.
 
-However, all three projects share IITR-STAGING infrastructure. The Unified Infrastructure section ensures they coexist safely — shared services (Ollama, Langfuse), one OpenWebUI serving layer with per-project pipeline filters, and per-project compose files connected via shared Docker network. This prevents the collateral damage observed during #1112 repo migration, where changes to Navigation broke Court-Judgments and Masterfragen serving paths.
+However, all three projects share IITR-STAGING infrastructure. The Unified Infrastructure section ensures they coexist safely — shared services (Ollama, Typesense, TEI), one OpenWebUI serving layer with per-project pipeline filters, and per-project compose files connected via shared Docker network. This prevents the collateral damage observed during #1112 repo migration, where changes to Navigation broke Court-Judgments and Masterfragen serving paths.
 
 **Preconditions:**
 - Design artifacts from prior attempt preserved: Pflichtenheft, test questions with source references (29 Q&A + Quelle column), Masterfragen CSV (22 entries), Anwenderleitfaden PDF, 56 DS-Kit templates
@@ -65,7 +65,7 @@ Deploy the retrieval and serving infrastructure on IITR-STAGING.
 | **Qwen 3.5 9B** via Ollama | Single model for answer generation | think:false + temperature:0 for deterministic RAG inference. Benchmarked on IITR hardware: 0.76s per call (RTX 4000 SFF Ada, 20 GB VRAM). |
 | **OpenWebUI** | Chat frontend | Already deployed with IITR Keycloak SSO integration. Familiar to client (Stellmacher has used it). Pipeline filter system enables RAG backend integration. |
 | **RTX 4000 SFF Ada** (20 GB VRAM) | GPU inference | Available on IITR-STAGING. Sufficient for Qwen 3.5 9B inference. |
-| **Langfuse** | Observability + tracing | One OpenWebUI conversation = one Langfuse session. Traces every query through retrieval and generation. Enables improvement loop: identify failure patterns, measure iteration progress, provide evidence for client reviews. Already running on IITR-STAGING. |
+| **OpenWebUI Native Observability** | Usage monitoring + quality feedback + infra metrics | Three built-in layers replace custom Langfuse tracing: (1) **Analytics Dashboard** — message volume, token usage, model breakdown, user activity. Admin Panel → Analytics. (2) **Feedback with Annotations** — thumbs up/down with 1-10 rating, reason chips, and free-text correction field. Stellmacher annotates wrong answers directly; visible in Admin → Evaluations → Feedbacks. 101 client feedback entries on staging validate adoption. (3) **OpenTelemetry** — 4 env vars enable distributed tracing + HTTP metrics to Grafana (FastAPI routes, DB queries, response times). RAG retrieval diagnostics (chunk-level) handled by the test harness, not the observability layer. |
 
 **Retrieval Components:**
 
@@ -81,13 +81,13 @@ Deploy the retrieval and serving infrastructure on IITR-STAGING.
 |--------|-------|-----------|-----------|
 | **Remove** | Chunkr | ~43 | Crash-looping, abandoned |
 | **Remove** | rag-dev | 4 | Dev experiment, not in use |
-| **Remove** | SigNoz + OpenLIT + OTEL | ~9 | Observability experiments, replaced by Langfuse |
+| **Remove** | SigNoz + OpenLIT | ~6 | Observability experiments, abandoned. OTEL re-enabled as OpenWebUI native feature (not standalone stack). |
 | **Remove** | langfuse-poc | 3 | POC instance, separate from production Langfuse |
 | **Remove** | typesense + dashboard | 2 | Old DS-Kit prototype, both unhealthy |
 | **Remove** | dskit-* (exited) | 5 | Old DS-Kit prototype, already stopped |
 | **Remove** | tei-qwen3 | 1 | Old embeddings experiment |
 | **Retain** | rag-staging | — | Masterfragen project stack (separate project, separate data) |
-| **Retain** | Langfuse | — | Production observability |
+| **Remove** | Langfuse | ~6 | Custom tracing caused repeated SDK failures (v2→v3 breaks, async drops, cross-project leakage). Native OpenWebUI Analytics + Feedback + OTEL replaces it. [Official Langfuse pipeline filter](https://github.com/open-webui/pipelines/blob/main/examples/filters/langfuse_filter_pipeline.py) available as zero-code backup (333 lines, 3 valves). |
 | **Retain** | MetaMCP | — | MCP gateway |
 | **Retain** | OpenWebUI | — | Chat frontend (Keycloak SSO) |
 
@@ -171,6 +171,20 @@ Run the test harness, iterate toward ≥26/29.
 
 When confident in iteration results, send CSV report to Stellmacher for review. CSV columns: question, expected answer, RAG answer, expected source, actual source. Stellmacher provides feedback on semantic accuracy and format — feedback feeds back into the next iteration cycle. This is not every run; only when results warrant client review (e.g., after significant score improvement or before bi-weekly meeting).
 
+#### Confidence Threshold (Production Quality Gate)
+
+Per client request (Kraska, April 2026): answers below a confidence threshold should signal uncertainty rather than hallucinate. Implementation uses Typesense relevance scores already returned with every query.
+
+**Mechanism:** Each pipeline filter checks the top-k Typesense score. If below threshold → the answer includes an uncertainty signal: *"Zu dieser Frage konnte keine eindeutige Antwort in [Datentopf] gefunden werden. Bitte wenden Sie sich an dskit@iitr.de."*
+
+**Cross-source evaluation — evaluated and rejected.** The original concept (Kraska, early 2026) proposed routing low-confidence answers to an instance that reads all three data sources together. Rejected because: Navigation, Masterfragen, and Urteile serve fundamentally different domains. Cross-source retrieval introduces irrelevant context (court rulings in navigation answers). The model selection UI already handles domain routing — users choose which project to query.
+
+**Alternative:** When confidence is low, suggest the user try another model: *"Möglicherweise finden Sie relevantere Informationen in einem anderen Datentopf."* This uses the existing multi-model serving architecture rather than building a meta-pipeline.
+
+**Threshold calibration:** Undefined. Requires empirical data — collect Typesense scores from production queries, correlate with Stellmacher's feedback annotations, then set threshold where false negatives (good answers flagged as uncertain) are minimized.
+
+**Source:** 📧 [Kraska email (2026-04-01)](https://mail.google.com/mail/u/0/#all/19d49c1740e702f3)
+
 #### Diagnostic Chain
 
 | Failure Type | Meaning | Fix | Owner |
@@ -198,9 +212,9 @@ Per SA directive ("why always deploy another one?") and [CCI #646 deployment con
 | Ollama | 11436 | Single GPU instance, all projects. Qwen 3.5 9B + 6 other models. |
 | TEI (bge-m3) | 8080 | BAAI/bge-m3 (1024d) embedding service. Single endpoint for all projects. |
 | Typesense | 8109 | Hybrid search (keyword + vector). All projects use separate collections via one instance. |
-| Langfuse | — | Observability for all projects (web + worker + clickhouse + minio + redis + postgres). |
-
 Creates the `iitr-infra` network. App compose connects to this network as external.
+
+Observability: OpenWebUI's built-in Analytics + Feedback + OTEL replaces the former Langfuse stack (6 services removed). OTEL export configured in app compose via `ENABLE_OTEL=true` + `OTEL_EXPORTER_OTLP_ENDPOINT`. No additional infra services required — Grafana LGTM is optional and lightweight if infra metrics are desired.
 
 **`docker-compose.yml`** — Serving layer (app, isolated per branch via `COMPOSE_PROJECT_NAME`):
 
@@ -252,12 +266,11 @@ Qdrant (previously used by Masterfragen) and Qwen3-Embedding-8B (previously used
 
 #### Caddy Routing
 
-Two domains. Project separation happens via OpenWebUI Models, not Caddy routing.
+One domain. Project separation happens via OpenWebUI Models, not Caddy routing.
 
 | Domain | Service |
 |--------|---------|
 | `rag-staging.iitr-cloud.de` | OpenWebUI (all 3 projects) |
-| `langfuse.iitr-cloud.de` | Langfuse |
 
 
 
@@ -265,7 +278,7 @@ Two domains. Project separation happens via OpenWebUI Models, not Caddy routing.
 
 Git push is the only deployment interface. No SSH, no manual Docker commands. Per [CCI #646](https://mariuswilsch.github.io/public-wilsch-ai-pages/project/WILSCH-AI-INTERNAL/deployment-runtime-state-design): the push IS the deployment.
 
-**Startup order:** Infra first (Ollama, TEI, Typesense, Langfuse), then app (OpenWebUI, Pipelines). Services depend on the `iitr-infra` network + GPU services.
+**Startup order:** Infra first (Ollama, TEI, Typesense), then app (OpenWebUI, Pipelines). Services depend on the `iitr-infra` network + GPU services.
 
 **GHA workflow (3 triggers):**
 
@@ -314,8 +327,7 @@ Server
 ├── infra (always running, one instance)
 │   ├── Ollama (GPU, port 11436)
 │   ├── TEI (BGE-M3, port 8080)
-│   ├── Typesense (port 8109)
-│   └── Langfuse
+│   └── Typesense (port 8109)
 │
 ├── staging (app compose, main branch)
 │   ├── OpenWebUI (port 3006)
@@ -360,6 +372,13 @@ Preview and staging share the same infra services (same Ollama, same Typesense c
 - [Dev Lead Witness & Review System](https://mariuswilsch.github.io/public-wilsch-ai-pages/global/dev-lead-witness-review-system) — test rubric ownership model
 - [Zielkorridor (24-32h corridor)](https://mariuswilsch.github.io/public-wilsch-ai-pages/project/iitr/dskit-navigation-rag-estimate)
 
+**Observability:**
+- [OpenWebUI Analytics](https://docs.openwebui.com/features/access-security/analytics/) — native usage monitoring (messages, tokens, models, users)
+- [OpenWebUI Evaluation](https://docs.openwebui.com/features/access-security/evaluation/) — feedback with text annotations, Elo leaderboard, arena mode
+- [OpenWebUI OpenTelemetry](https://docs.openwebui.com/reference/monitoring/otel/) — OTEL export to Grafana (4 env vars)
+- [Official Langfuse Pipeline Filter](https://github.com/open-webui/pipelines/blob/main/examples/filters/langfuse_filter_pipeline.py) — zero-code backup (333 lines, 3 valves), retained as optional fallback
+- 📧 [Stellmacher/Kraska evaluation (2026-04-01)](https://mail.google.com/mail/u/0/#all/19d49c1740e702f3) — Nav 27/30, MF 25/25, Urteile 22/25. Langfuse broken. Kraska confidence-rating concept.
+
 **Transcripts:**
 - [2026-01-15 Client Meeting](https://app.fireflies.ai/view/01KF0N6JDANZB4JGW9WEP4GNMC) — data gap discussion + dual-answer decision with Stellmacher/Kraska
 - [2026-03-04 Contract Meeting](https://drive.google.com/file/d/1wS9Z8jjH-hkeaCW5aQZ9aTXWBqIQ24H9/view) — Stellmacher cost corridor requirements, Kraska contract approval
@@ -387,6 +406,7 @@ Preview and staging share the same infra services (same Ollama, same Typesense c
 - Pass 10 (mono-repo reference update): /Users/daveFem/.claude/projects/-Users-daveFem-Desktop-claude-projects-03-IITR--deliverable/e2d015aa-d5c4-4c0b-9372-9a83783d9d3f.jsonl
 - Pass 11 (MF Typesense consolidation): /Users/daveFem/.claude/projects/-Users-daveFem-Desktop-claude-projects-03-IITR--deliverable/85060f90-01bf-4532-9e1e-5425e5ccd92e.jsonl
 - Pass 12 (CCI #646 deployment convention): /Users/daveFem/.claude/projects/-Users-daveFem-Desktop-claude-projects-03-IITR--deliverable/d13491e9-d102-4b36-a846-54774834c414.jsonl
+- Pass 13 (Observability — Langfuse → native OpenWebUI): /Users/daveFem/.claude/projects/-Users-daveFem-Desktop-claude-projects-03-IITR--deliverable/1049825a-90f5-45ea-a526-a0751c89deeb.jsonl
 
 ---
 
