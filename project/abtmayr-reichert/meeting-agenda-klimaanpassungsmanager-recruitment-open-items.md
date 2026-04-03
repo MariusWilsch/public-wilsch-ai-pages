@@ -7,15 +7,16 @@ publish: true
 
 ## Meeting Goal
 
-Resolve remaining design questions not covered in the April 2 brainstorming — focused on Gemeinden go-to-market strategy and two open governance topics carried forward from prior passes.
+Resolve remaining design questions from the Rekrutierungs-Pipeline design doc — focused on Gemeinden go-to-market strategy, open governance topics, and project visibility for external stakeholders.
 
 1. **Gemeinden sales strategy** — define channels and funnel for acquiring 200 municipalities
 2. **Funding model** — clarify DAS eligibility for Werkstudent positions
 3. **Content governance** — establish LinkedIn approval workflow between board and team
+4. **Projekttransparenz** — define how Ralph and Michael track project progress
 
 ## Pre-Read
 
-- [Design Doc: Rekrutierungs-Pipeline Klimaanpassungsmanager](https://mariuswilsch.github.io/public-wilsch-ai-pages/project/abtmayr-reichert/design-doc-klimaanpassungsmanager-recruitment-pipeline) — updated 2026-04-02 with 3-milestone structure, Team section, M2 (Gemeinden-Akquise), M3 (KI-Matching vision). Focus: M2 **Ungeklärt** markers and existing **Ungeklärt** in M1 (DAS funding, content approval).
+- [Design Doc: Rekrutierungs-Pipeline Klimaanpassungsmanager](https://mariuswilsch.github.io/public-wilsch-ai-pages/project/abtmayr-reichert/design-doc-klimaanpassungsmanager-recruitment-pipeline) — updated 2026-04-03 with 3-milestone structure, Team section, M2 (Gemeinden-Akquise), M3 (KI-Matching vision), and 5 **Ungeklärt** markers across M1/M2. Focus: Sales strategy (M2), DAS funding (M1), content approval (M1).
 
 ---
 
@@ -58,13 +59,25 @@ The LinkedIn content strategy is defined (4 pillars, 1–2x/week), but the appro
 
 **To resolve:** Whether posts go through Michael, Ralph, both, or neither before publishing — and whether this varies by content pillar.
 
+### 4. Projekttransparenz — Project Visibility for Ralph and Michael
+⏱️ 10 min
+
+Ralph and Michael need ongoing visibility into project progress without accessing the internal work board. The proposed solution is a dedicated GitHub Project board — same repository, same issues, different view — filtered to the Klimafolgenschutz Milestone only.
+
+- A GitHub Project board allows filtered views: only Milestone-relevant issues visible
+- Ralph and Michael would need GitHub accounts with viewer access
+- The board structure (columns, groupings) should reflect what's meaningful for non-technical stakeholders
+- This pattern applies to future external project participants
+
+**To resolve:** The information format, access mechanism, and update frequency through which Ralph and Michael track project progress.
+
 ## Meeting Format
 
 - **Type:** Weekly sync (design review)
 - **Duration:** 30–60 min (weekly, Tuesdays)
 - **Participants:** Michael Reichert, Ralph Loser, Marius Wilsch, David Eberle
 - **Expectation:** Michael brings BAFA/PEK contact update. Marius/David present initial sales channel research.
-- **Outcome:** Sales strategy direction for Gemeinden. DAS funding path confirmed or ruled out. Content approval agreed.
+- **Outcome:** Sales strategy direction for Gemeinden. DAS funding path confirmed or ruled out. Content approval agreed. Project visibility format for Ralph and Michael decided.
 
 ## Related
 
@@ -72,6 +85,7 @@ The LinkedIn content strategy is defined (4 pillars, 1–2x/week), but the appro
 - **Design Doc:** [Rekrutierungs-Pipeline Klimaanpassungsmanager](https://mariuswilsch.github.io/public-wilsch-ai-pages/project/abtmayr-reichert/design-doc-klimaanpassungsmanager-recruitment-pipeline)
 - **Parent Epic:** [DaveX2001/deliverable-tracking#726](https://github.com/DaveX2001/deliverable-tracking/issues/726)
 - **Prior meeting:** [Brainstorming 2026-04-02](https://app.fireflies.ai/view/01KN6WGW29D47Q6B11D9VCY063) — 3-milestone structure, targets, matching vision
+- **Prior grooming:** [Grooming 2026-04-03](https://app.fireflies.ai/view/01KN9MYRJHAEWB76FFPHASWZRT) — Marius feedback: Projekttransparenz topic added, client-facing doc cleanup
 
 ---
 

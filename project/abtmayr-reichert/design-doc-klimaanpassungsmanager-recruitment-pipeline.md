@@ -51,15 +51,6 @@ Geistiges Eigentum aus der gemeinsamen Arbeit gehört dem Klimafolgenschutz e.V.
 - **Wöchentliche Meetings:** Dienstags 13:00 Uhr
 - **Entscheidungsstruktur:** Michael (externe Beziehungen) + Ralph (operative Leitung) + Marius (technische Umsetzung)
 
-### Projekttransparenz
-
-**Ungeklärt:** Wie erhalten Ralph und Michael Einblick in den Projektfortschritt, ohne Zugang zum internen Arbeitsboard (deliverable-tracking) zu haben? → Meeting Agenda
-
-Optionen zur Klärung:
-- Separates GitHub Project im gleichen Repository — andere Ansicht, gleiche Issues
-- Posters/Reports als regelmäßige Statusübersicht
-- Skalierbares Muster für zukünftige externe Projektbeteiligte
-
 ---
 
 ## Vorgehen
@@ -387,6 +378,7 @@ Nachschlagewerk zu den im Vorgehen referenzierten Institutionen, rechtlichen Rah
 - [Design Doc Erstellung 2026-03-23](https://app.fireflies.ai/view/01KMDCMMAF48SP1FBQ0JWW51R7) — PIK/UBA-Recherche, Klimalotse-Framework
 
 ### Sessions
+- Pass 5: `75381981` (2026-04-03) — Projekttransparenz aus Design Doc entfernt (client-facing), als Meeting-Agenda-Topic verschoben
 - Pass 4: `04e8096c` (2026-04-03) — Undefined-Marker, Gemeinden-Leistungspaket, Beschäftigungsmodelle, Projekttransparenz, #1368/#1366 gemerged
 - Pass 3: `211766c6` (2026-04-02) — Meilenstein-Restrukturierung, M2 + M3 hinzugefügt, Team-Sektion, Screening
 
