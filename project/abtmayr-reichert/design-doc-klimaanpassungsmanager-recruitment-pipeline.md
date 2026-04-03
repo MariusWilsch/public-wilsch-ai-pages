@@ -31,6 +31,37 @@ Das Modell folgt dem Prinzip, Angebot und Nachfrage parallel aufzubauen — Stud
 
 ---
 
+## Rahmenbedingungen
+
+### Team
+
+| Person | Rolle | Verantwortung |
+|--------|-------|---------------|
+| **Michael Reichert** | Externe Beziehungen + Gemeinden-Netzwerk | BAFA/PEK-Kontakte, Gemeinden-Akquise über bestehende Netzwerke, Fördermittelklärung |
+| **Ralph Loser** | Geschäftsführer + Organisation | Meilensteinplanung, NDA-Vorlagen, Events (Bachelormesse), operative Koordination |
+| **Marius Wilsch** | Technische Umsetzung + Content | LinkedIn-Content, Design Docs, Plattform-Infrastruktur, GitHub-Tooling |
+| **David Eberle** | Entwicklung + Planung | Technische Entwicklung, Sales-Channel-Konzeption, Matching-System-Design |
+
+### IP-Eigentum
+
+Geistiges Eigentum aus der gemeinsamen Arbeit gehört dem Klimafolgenschutz e.V. Die genaue Ausgestaltung wird über eine Loyalitätsvereinbarung (NDA) geregelt.
+
+### Governance
+
+- **Wöchentliche Meetings:** Dienstags 13:00 Uhr
+- **Entscheidungsstruktur:** Michael (externe Beziehungen) + Ralph (operative Leitung) + Marius (technische Umsetzung)
+
+### Projekttransparenz
+
+**Ungeklärt:** Wie erhalten Ralph und Michael Einblick in den Projektfortschritt, ohne Zugang zum internen Arbeitsboard (deliverable-tracking) zu haben? → Meeting Agenda
+
+Optionen zur Klärung:
+- Separates GitHub Project im gleichen Repository — andere Ansicht, gleiche Issues
+- Posters/Reports als regelmäßige Statusübersicht
+- Skalierbares Muster für zukünftige externe Projektbeteiligte
+
+---
+
 ## Vorgehen
 
 Das Projekt gliedert sich in drei Meilensteine. Meilenstein 1 und 2 laufen parallel — Angebot (Werkstudenten) und Nachfrage (Gemeinden) müssen gleichzeitig aufgebaut werden.
@@ -44,18 +75,23 @@ M1: Werkstudenten-Pipeline          ─── parallel ───          M2: Ge
                             (zurückgestellt)
 ```
 
-### Team
-
-| Person | Rolle | Verantwortung |
-|--------|-------|---------------|
-| **Michael Reichert** | Externe Beziehungen + Gemeinden-Netzwerk | BAFA/PEK-Kontakte, Gemeinden-Akquise über bestehende Netzwerke, Fördermittelklärung |
-| **Ralph Loser** | Geschäftsführer + Organisation | Meilensteinplanung, NDA-Vorlagen, Events (Bachelormesse), operative Koordination |
-| **Marius Wilsch** | Technische Umsetzung + Content | LinkedIn-Content, Design Docs, Plattform-Infrastruktur, GitHub-Tooling |
-| **David Eberle** | Entwicklung + Planung | Technische Entwicklung, Sales-Channel-Konzeption, Matching-System-Design |
-
 ### Meilenstein 1: Werkstudenten-Pipeline
 
 Die bestehende Pipeline — von der Agenda über die Stellenbeschreibung bis zur Website-Integration — bildet den Angebotsaufbau. Ergänzt um Screening-Mechanismen und physische Akquise-Kanäle.
+
+#### Rekrutierungs-Funnel (End-to-End)
+
+**Ungeklärt:** Der Gesamtfluss von Erstkontakt bis Einsatz ist nicht formalisiert. Die einzelnen Komponenten (Agenda, Stellenbeschreibung, LinkedIn, CTA, Screening) sind definiert, aber der durchgängige Funnel — mit Entscheidungspunkten, Konversionsannahmen und Übergaben — fehlt. → Meeting Agenda
+
+Konzeptionelle Stufen:
+```
+Sichtbarkeit (LinkedIn/Messe/CTA) → Bewerbung → Screening → Matching → Einsatz in Kommune
+```
+
+Offene Fragen:
+- Wie viele Bewerbungen pro Stelle erwartet? Konversionsrate durch den Funnel?
+- Wer trifft die finale Einsatzentscheidung — Verein oder Kommune?
+- Wie verläuft die Übergabe von "gescreenter Werkstudent" zu "eingesetzter KAM"?
 
 #### Agenda (Klimalotse 5-Modul-Rahmenwerk)
 
@@ -102,6 +138,14 @@ Deutsche Stellenbeschreibung für die Werkstudentenstelle. Inhaltlich abgeleitet
 | **Methodik** | Die Agenda (Teil 1) leitet die Arbeit der Studierenden |
 | **Finanzierung** | **Ungeklärt:** DAS-Förderfähigkeit für Werkstudenten ist nicht getestet |
 
+**Alternative Beschäftigungswege:**
+
+| Weg | Beschreibung | Vorteil |
+|-----|-------------|---------|
+| **Werkstudent** | Max. 20 Std./Woche im Semester, Anstellung bei Kommune | Standardmodell, flexible Arbeitszeiten |
+| **Übungsleiter** | Beschäftigungsmodell über § 3 Nr. 26 EStG (Übungsleiterpauschale) | Steuerfreier Freibetrag bis 3.000 €/Jahr, niedrigere Hürde für Kommunen |
+| **Pflichtpraktikum** | Curricularer Bestandteil des Studiengangs | Kein Lohnaufwand für Kommune, Abschlussarbeit-Integration |
+
 **Zielkandidaten:**
 
 | Merkmal | Detail |
@@ -110,6 +154,7 @@ Deutsche Stellenbeschreibung für die Werkstudentenstelle. Inhaltlich abgeleitet
 | **Fachrichtungen** | Tiefbauingenieurwesen, Wasserwirtschaft, Geographie, Umweltwissenschaften, BWL/Ökonomie |
 | **Einsatzort** | Vor Ort in der Kommune — direkter Einsatz in der Verwaltung |
 | **Geltungsbereich** | Bundesweit — keine geografische Einschränkung |
+| **Semester** | Ab dem 3. Semester |
 | **Abschlussarbeit** | Optional — Studierende können ihre Bachelorarbeit zum Einsatzthema schreiben |
 
 **Stellenbeschreibung Inhalt (Entwurfsstruktur):**
@@ -167,7 +212,7 @@ Neue organisationale LinkedIn-Seite für Klimafolgenschutz e.V. — bisher exist
 
 **Umbenennungsumfang:** Seitenweit — jede Instanz von Klimafolgenschutzmanager wird zu Klimaanpassungsmanager. Begründung: Klimaanpassungsmanager ist die behördlich etablierte Begrifflichkeit.
 
-**Abhängigkeit:** Teil 3 (LinkedIn-Seite + Stellenanzeige) muss live sein, bevor der CTA darauf verweisen kann.
+**Abhängigkeit:** LinkedIn-Seite + Stellenanzeige muss live sein, bevor der CTA darauf verweisen kann.
 
 ```
 LinkedIn-Seite live ──→ CTA-URL tauschen
@@ -187,9 +232,17 @@ Die Pipeline erweitert sich um Screening-Schritte und physische Kanäle jenseits
 
 **Mindestanforderung:** Ab dem 3. Semester.
 
-**Physische Akquise-Kanäle:**
-- Bachelormesse München (25. April 2026)
-- Hochschulmessen mit Fokus auf Umwelt-/Ingenieurswissenschaften
+**Akquise-Kanäle:**
+
+| Kanal | Typ | Status |
+|-------|-----|--------|
+| **LinkedIn Stellenanzeige** | Digital | Definiert (Teil 3) |
+| **Website CTA** | Digital | Definiert (Teil 4) |
+| **Bachelormesse München** | Physisch | 25. April 2026 — Michael nimmt teil |
+| **Jobmesse Flughafen München** | Physisch | Juni 2026 |
+| **Campus Community Partnerships** | Partnerschaft | "Bildung durch Verantwortung", "Hochschulen engagiert" — Kooperation mit bestehenden Netzwerken |
+| **Hochschulmessen** | Physisch | Fokus Umwelt-/Ingenieurswissenschaften |
+| **Lead-Generation-Unternehmen** | Extern | Spezialisierte Firmen für Gemeinden-Ansprache |
 
 ### Meilenstein 2: Gemeinden-Akquise
 
@@ -197,7 +250,19 @@ Paralleler Aufbau der Nachfrageseite — Gemeinden als Einsatzorte für Werkstud
 
 **Zielgröße:** 200 Gemeinden zum 1. September 2026.
 
-**Go-to-Market:** Kostenlose Mitgliedschaft für die ersten 100 Gemeinden — Zugang zur Plattform, Bedarfsmeldung und Matching mit Werkstudenten.
+#### Leistungspaket für Gemeinden
+
+Was eine teilnehmende Gemeinde vom Verein erhält:
+
+| Leistung | Beschreibung |
+|----------|-------------|
+| **Kostenlose Mitgliedschaft** | Die ersten 100 Gemeinden werden kostenlos Vereinsmitglied — kein Risiko, keine Kosten |
+| **Dedizierter Klimaanpassungsmanager** | Die Gemeinde erhält einen zugewiesenen Werkstudenten: "In den nächsten Tagen meldet sich Ihr eigener Klimaanpassungsmanager, der für Sie zuständig ist" |
+| **Bedarfsprofil** | Die Gemeinde beschreibt ihren spezifischen Bedarf — Geodatenanalyse, Sensorinfrastruktur, Risikokartierung, Wasserwirtschaft — und erhält einen passend qualifizierten Studierenden |
+| **Strukturierter Einsatz** | Der Werkstudent arbeitet nach der Klimalotse-Agenda (M1) — keine Eigenentwicklung nötig |
+| **Fortschritts-Monitoring** | Ticketsystem für Transparenz: Anrufe, Besuche, Analysen — "sodass man immer aus der Ferne verfolgen kann, wie weit die sind" (Michael) |
+
+**Go-to-Market:** Push-basiertes Modell (Fiverr, nicht Tinder). Die Gemeinde registriert sich und meldet Bedarf. Das System identifiziert passende Werkstudenten und stellt den Kontakt her. Kein aktives Suchen durch die Gemeinde nötig.
 
 **Kommunale Bedarfe (aus dem Brainstorming):**
 - Geodatenanalyse (PIK, Deutscher Wetterdienst, Satellitenüberflugdaten)
@@ -205,9 +270,29 @@ Paralleler Aufbau der Nachfrageseite — Gemeinden als Einsatzorte für Werkstud
 - Geologische Risikokartierung
 - Digitalisierung der Wasserwirtschaft und Neuorganisation
 
-**Ungeklärt:** Sales Channels für Gemeinden-Akquise — welche Kanäle erreichen kommunale Entscheider? → Meeting Agenda
+#### Sales Channels für Gemeinden
 
-**Ungeklärt:** Sales Funnel — wie verläuft der Prozess von Erstkontakt bis Bedarfsmeldung? → Meeting Agenda
+**Ungeklärt:** Über welche Kanäle erreichen wir kommunale Entscheider? → Meeting Agenda
+
+Brainstorming-Ansätze als Ausgangspunkte:
+- Lead-Generation-Unternehmen mit Gemeinden-Fokus (Michael)
+- Campus Community Partnerships — "Bildung durch Verantwortung", "Hochschulen engagiert" (Ralph)
+- Michaels bestehendes BAFA/PEK-Netzwerk
+- Mund-zu-Mund zwischen Gemeinden: "Die Gemeinden sprechen sicherlich auch untereinander" (Ralph)
+- Webseiten, Reels, Werbeanschreiben (Michael)
+
+#### Sales Funnel für Gemeinden
+
+**Ungeklärt:** Wie verläuft der formalisierte Prozess von Erstkontakt bis Bedarfsmeldung? → Meeting Agenda
+
+Konzeptioneller Ablauf (aus Brainstorming, nicht formalisiert):
+```
+Problemwahrnehmung (KAnG-Pflicht) → Kontakt mit Verein → Registrierung als Mitglied → Bedarfsprofil ausfüllen → Werkstudent wird zugewiesen → Einsatz beginnt
+```
+
+#### Pricing nach den ersten 100
+
+**Ungeklärt:** Was passiert nach der kostenlosen Phase? Mitgliedsbeitrag? Vermittlungsgebühr? Retainer-Modell? → Meeting Agenda
 
 ### Meilenstein 3: KI-basiertes Matching + Projektabwicklung (zurückgestellt)
 
@@ -296,11 +381,13 @@ Nachschlagewerk zu den im Vorgehen referenzierten Institutionen, rechtlichen Rah
 - [NKI Kommunalagentur](https://www.klimaschutz.de/de/foerderung-der-nki/ueber-die-nki-dashboard/agentur-fuer-kommunalen-klimaschutz) — Beratung für Kommunen
 
 ### Transkripte
-- [Brainstorming 2026-04-02](https://app.fireflies.ai/view/01KN6WGW29D47Q6B11D9VCY063) — 3-Meilenstein-Struktur, Zielgrößen, Matching-Vision, Team
+- [Grooming 2026-04-03](https://app.fireflies.ai/view/01KN9MYRJHAEWB76FFPHASWZRT) — Marius-Feedback: Undefined-Marker, Sub-Issues closen, Projekttransparenz
+- [Brainstorming 2026-04-02](https://app.fireflies.ai/view/01KN6XT46VCJV55FCJGMFPQNFD) — 3-Meilenstein-Struktur, Gemeinden-Leistungspaket, Matching-Vision, Sales-Diskussion
 - [Client Sync 2026-03-30](https://app.fireflies.ai/view/01KMZ8E02X2RGB29M3DSFQJVP1) — Team, Beschäftigungsmodelle, Content-Workflow
 - [Design Doc Erstellung 2026-03-23](https://app.fireflies.ai/view/01KMDCMMAF48SP1FBQ0JWW51R7) — PIK/UBA-Recherche, Klimalotse-Framework
 
-### Session
+### Sessions
+- Pass 4: `04e8096c` (2026-04-03) — Undefined-Marker, Gemeinden-Leistungspaket, Beschäftigungsmodelle, Projekttransparenz, #1368/#1366 gemerged
 - Pass 3: `211766c6` (2026-04-02) — Meilenstein-Restrukturierung, M2 + M3 hinzugefügt, Team-Sektion, Screening
 
 ---
