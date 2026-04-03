@@ -7,16 +7,17 @@ publish: true
 
 ## Meeting Goal
 
-Three open design questions from the PDF quote system (#1334) need stakeholder input before implementation can begin.
+One open design question from the PDF quote system (#1334) needs Marius's input before the configurator's hardware options can be finalized.
 
-1. **Hardware options for the configurator** — confirm which hardware beyond single DGX Spark is ready to offer
-2. **Warenwirtschaft article mapping** — align the configurator's pricing model with Ulrich's billing system
-3. **Tracking presentation** — decide how prospect usage data reaches Ulrich
+1. **Dual DGX Spark model sharding** — confirm whether clustering is customer-ready or still in validation
+
+*Previously 3 questions. Warenwirtschaft article mapping resolved (PDF follows product structure per POW005, not billing system). Tracking presentation resolved (MVP manual lookup + V2 email notification on PDF generation).*
 
 ## Pre-Read
 
-- [Design Doc: PDF Quote System (#1334)](https://mariuswilsch.github.io/public-wilsch-ai-pages/project/uwi-retainer/design-doc-pdf-quote-system-1334) — full context, especially Parts 2, 3, and 5 where the Undefined markers are
+- [Design Doc: PDF Quote System (#1334)](https://mariuswilsch.github.io/public-wilsch-ai-pages/project/uwi-retainer/design-doc-pdf-quote-system-1334) — full context, especially Part 3 where the remaining Undefined marker is
 - [KI aus der Box Bundle Design Doc](https://mariuswilsch.github.io/public-wilsch-ai-pages/project/wilsch-group/design-doc-ki-aus-der-box-bundle) — current product structure and pricing
+- [Hardware-Strategie: Lokale KI-Inferenz](https://mariuswilsch.github.io/public-wilsch-ai-pages/project/wilsch-group/hardware-strategie-lokale-ki-inferenz) — DGX Spark clustering specs, Phase 1/2
 
 ---
 
@@ -24,45 +25,23 @@ Three open design questions from the PDF quote system (#1334) need stakeholder i
 
 *Starting points for discussion, not limited to these.*
 
-### 1. Hardware expansion beyond single DGX Spark
+### 1. Dual DGX Spark model sharding customer-readiness
 ⏱️ 10 min
 
-The configurator currently offers single DGX Spark only. Two expansion options exist in the product roadmap but aren't validated yet.
+The Bundle design doc describes Dual DGX Spark clustering as confirmed — Qwen3.5-397B, launch-cluster.sh, +€5K. The Hardware-Strategie confirms two units are operational with vLLM. But implementation experience suggests model sharding may not yet be reliable enough for customer-facing use.
 
-- Dual DGX Spark clustering (+€5K) is architecturally described in the bundle design doc — 256 GB unified memory, up to 397B parameter models
-- Mac Studio M3 Ultra is listed on the ki-performance page as "Not measured" — no benchmark data exists yet
-- Marius validated two-machine communication (1ms latency, 200 Gbps) but model sharding is still in validation
+- Two-machine communication validated: 1ms latency, 200 Gbps via ConnectX-7
+- Qwen3.5-397B listed as "confirmed" in Bundle design doc (March 25)
+- Model sharding listed as "still in validation" in PDF Quote design doc (April 2)
+- Mac Studio M3 Ultra is out of scope — different architecture (disaggregated inference, not clustering)
 
-**To resolve:** Which hardware options beyond single DGX Spark are ready to include in the configurator, and what benchmark data is needed before each can be offered to customers.
-
-### 2. Warenwirtschaft article structure for DGX Spark billing
-⏱️ 10 min
-
-The configurator generates a Richtpreisangebot, but the formal order flows through Wilsch KG Warenwirtschaft. Ulrich mentioned creating 4 articles for Busch to generate Auftragsbestätigungen — but the exact breakdown isn't specified yet.
-
-- Working assumption: Hardware purchase, Rental, Setup Manntage, Betreuungsvertrag — mapped from the product's pricing layers
-- The configurator's pricing model (purchase vs. rental) needs to align with how these articles are invoiced
-- Thomas writes complex offers in Office, simple ones from Warenwirtschaft — the PDF quote system should reduce the Office path
-
-**To resolve:** The exact article structure Ulrich will create in the Warenwirtschaft, and how the configurator's pricing options map to billable line items.
-
-### 3. Tracking presentation for Ulrich
-⏱️ 5 min
-
-Per-account usage tracking is being built — pages visited, time spent, frequency. The open question is how this data reaches Ulrich so he can use it for sales follow-up.
-
-- Marius mentioned heatmap-style visualization as an aspiration
-- Current plan: manual lookup by the team when Ulrich asks
-- Options range from simple (email digest) to sophisticated (admin dashboard with per-prospect activity timelines)
-- The right level depends on how frequently Ulrich checks and what decisions the data drives
-
-**To resolve:** The minimum viable presentation that gives Ulrich actionable insight into which prospects are engaged and which are cold.
+**To resolve:** Whether Dual DGX Spark model sharding is reliable enough to offer customers in the configurator, or whether it stays as a future addition after further validation.
 
 ## Meeting Format
 
 - **Type:** Review / decision
-- **Expectation:** Marius to confirm hardware readiness status; Ulrich to confirm Warenwirtschaft article plan
-- **Outcome:** Three design questions resolved → Undefined markers removed from design doc → implementation can begin
+- **Expectation:** Marius to confirm model sharding validation status with evidence (test results, reliability data)
+- **Outcome:** Single remaining Undefined marker resolved → design doc complete → implementation can begin
 
 ## Related
 

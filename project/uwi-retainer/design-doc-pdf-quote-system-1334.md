@@ -50,11 +50,15 @@ Current leads waiting for accounts: Hasloff (hottest — his CEO wants to meet t
 
 Per-account analytics: which pages the prospect visits, how long they stay, how frequently they return. Marius mentioned heatmap-style visualization as an aspiration.
 
-Data collection is in scope for this system. The presentation layer — how Ulrich actually sees this data — is deferred. For now, the team does a manual lookup when Ulrich asks "what's Hasloff been looking at?" A proper dashboard or email digest comes later, after the core system works.
+Data collection is in scope for this system. Presentation follows two tiers:
+
+**Tier 1 (MVP) — Manual lookup:** The team checks a prospect's activity when Ulrich asks. "Was hat Hasloff sich angeschaut?" — query by email, return pages visited + timestamps + time on page. This is the launch capability — it works from day one with the collected data.
+
+**Tier 2 — PDF generation notification:** When a prospect generates a PDF quote, the system sends an email notification to both Marius and Ulrich. PDF generation is the highest-intent signal in the funnel — a prospect who configures and downloads has moved from browsing to evaluating. This notification enables proactive follow-up without requiring Ulrich to check a dashboard.
+
+Dashboard and heatmap visualization are explicitly deferred. The data is collected from the start — presentation can evolve independently once the core system proves its value.
 
 Research needed: what analytics tools integrate with the existing Supabase + React stack for per-user page tracking.
-
-**Undefined:** How tracking data surfaces to Ulrich — dashboard, email digest, or manual lookup only. → [Meeting Agenda Topic 3](#3-tracking-presentation-for-ulrich)
 
 ### Part 3: Self-Service Configurator
 
@@ -70,15 +74,28 @@ Configurable dimensions:
 | **Data connectors** | SQL, Confluence, AS/400, Vector DB (checkboxes) | Included in setup scope or extra Manntage |
 | **Customer details** | Name + Company + Email | Inserted into PDF branding |
 
-Hardware is currently single DGX Spark only. Dual DGX Spark clustering and Mac Studio M3 Ultra are future additions pending hardware validation and benchmarking.
+Hardware is currently single DGX Spark only. Dual DGX Spark clustering (+€5K, 256 GB unified memory, up to 397B parameter models) is architecturally validated — networking confirmed at 1ms latency, 200 Gbps via ConnectX-7. Whether model sharding is customer-ready needs confirmation from Marius before it can appear in the configurator.
+
+Mac Studio M3 Ultra is a separate architecture entirely — disaggregated inference (DGX Spark handles prefill, Mac Studio handles decode) rather than clustering. It is not an additional hardware option for this configurator and is out of scope for this system.
 
 Pricing carries the "Richtpreis, kann sich ändern" disclaimer — this is an indicative quote, not a binding offer.
 
-**Undefined:** Dual DGX Spark and M3 Ultra as additional hardware options — both need validation before they can appear in the configurator. → [Meeting Agenda Topic 1](#1-hardware-expansion-beyond-single-dgx-spark)
+**Undefined:** Dual DGX Spark model sharding customer-readiness — the Bundle design doc describes it as confirmed (Qwen3.5-397B), but implementation experience suggests it's not yet reliable enough to offer. Marius to confirm. → [Meeting Agenda Topic 1](#1-dual-dgx-spark-model-sharding-customer-readiness)
 
 ### Part 4: PDF Quote Output
 
-Two-page branded PDF, generated from the configurator selections. Format inspired by Ulrich's IBM Power reference documents (POW004 Systemvergleich, POW005 Angebotsübersicht) but adapted for DGX Spark.
+Two-page branded PDF, generated from the configurator selections. Format follows Ulrich's IBM Power reference documents (POW004 Systemvergleich, POW005 Angebotsübersicht), adapted for DGX Spark. The reference PDFs establish the structure:
+
+- **POW004 (Systemvergleich):** Side-by-side hardware comparison with performance charts and 5-year TCO breakdown
+- **POW005 (Angebotsübersicht):** Page 1 = hardware specs + Angebotspreis, Page 2 = itemized service categories with scope descriptions + Projektpreis total
+
+The DGX Spark PDF mirrors this: Page 1 provides comparison context (why this product), Page 2 provides the configured offer (what you get, what it costs).
+
+**Branding elements (from reference PDFs):**
+- Header: Customer name + date + Wilsch logo (teal)
+- Product image
+- "Unser Angebot ist freibleibend, alle Preise zzgl. Mwst." disclaimer
+- Footer: Ulrich Wilsch GmbH & Co. KG contact details
 
 **Page 1 — Why KI aus der Box (Comparison Context):**
 Three-way comparison table mirroring the website's "Drei Wege zur KI" section: Cloud AI / KI aus der Box / Enterprise. Positions the prospect's choice within the market landscape. Key comparison dimensions: price, data privacy (DSGVO), database access, setup effort, ongoing control.
@@ -92,18 +109,17 @@ Technical approach: Markdown → PDF conversion pipeline. The configurator popul
 
 The PDF quote is a pre-sales artifact — a Richtpreisangebot, not a binding order. When a prospect decides to buy, the formal order goes through the existing Wilsch KG Warenwirtschaft system. Ulrich creates articles, Busch generates Auftragsbestätigungen. The website never processes payments.
 
-Working assumption for Warenwirtschaft articles:
+The PDF's line items follow the product structure — not the Warenwirtschaft article codes. The reference PDFs (POW005) establish the pattern: hardware with Angebotspreis on page 1, itemized services with scope descriptions on page 2, Projektpreis as the total. The DGX Spark PDF uses the same pattern:
 
-| Article | Type | Pricing |
-|---------|------|---------|
-| DGX Spark Hardware (Kauf) | One-time | ~€5,000 |
-| DGX Spark Miete | Monthly | €500/Mo |
-| Einrichtung / Setup | One-time | ~€5,000 (5 Manntage) |
-| Betreuungsvertrag | Monthly | ab €350/Mo |
+| PDF Line Item | Source | Price |
+|---------------|--------|-------|
+| DGX Spark Hardware | Configurator: Kauf (~€5K) or Miete (€500/Mo) | Prospect's selection |
+| Einrichtung / Setup | Configurator: Base (2 MT, ~€2K) or Full (5 MT, ~€5K) | Scope-dependent |
+| Data Connectors | Configurator: checkboxes | Included in setup or extra Manntage |
+| Betreuungsvertrag | Optional checkbox | ab €350/Mo |
+| **Projektpreis** | Calculated total | Sum of above |
 
-This mapping is inferred from the product structure — Ulrich hasn't confirmed the exact article breakdown yet.
-
-**Undefined:** Exact Warenwirtschaft article structure — needs confirmation from Ulrich and input from Marius on how the pricing model maps to billable line items. → [Meeting Agenda Topic 2](#2-warenwirtschaft-article-structure)
+How Ulrich maps these line items to Warenwirtschaft articles for formal Auftragsbestätigungen is an operational concern handled post-sale — it does not affect the PDF's design or the configurator's pricing logic.
 
 ---
 
@@ -112,10 +128,12 @@ This mapping is inferred from the product structure — Ulrich hasn't confirmed 
 - **Transcripts (2. April):** [Transcript 1](https://app.fireflies.ai/view/01KN0MEM6WSQXEM96A6E9XREQ4) · [Transcript 2](https://app.fireflies.ai/view/01KN6959QHKXZQ0ET0Q3GC51VP)
 - **Transcripts (30. März):** [Transcript 1](https://app.fireflies.ai/view/01KMT67DGFRWFQABVPQXJS4TG8) · [Transcript 2](https://app.fireflies.ai/view/01KMZHD5KNYE528RKCYD02V9J8)
 - **Design Docs:** [Ulrich Sync Design Doc — Part 7 + Part 11](https://mariuswilsch.github.io/public-wilsch-ai-pages/project/uwi-retainer/design-doc-ulrich-sync-2026-03-30) · [KI aus der Box Bundle](https://mariuswilsch.github.io/public-wilsch-ai-pages/project/wilsch-group/design-doc-ki-aus-der-box-bundle)
+- **Design Docs (Pass 2):** [Hardware-Strategie: Lokale KI-Inferenz](https://mariuswilsch.github.io/public-wilsch-ai-pages/project/wilsch-group/hardware-strategie-lokale-ki-inferenz)
 - **Reference PDFs:** POW004_Muster_SV_Baumarktkunde (Systemvergleich) · POW005_Muster_AU_Baumarktkunde (Angebotsübersicht) — in `Desktop/Wilsch-AI /02_UWI/`
 - **Website:** [wilsch-ai.com/ki-aus-der-box](https://wilsch-ai.com/ki-aus-der-box) (V2, behind auth)
 - **Tracking:** [#1334](https://github.com/DaveX2001/deliverable-tracking/issues/1334) · Parent [#650](https://github.com/DaveX2001/deliverable-tracking/issues/650)
-- **Session:** 77326ad8-8fe0-4ac8-aecb-dfb0ac893fc9
+- **Session (Pass 1):** 77326ad8-8fe0-4ac8-aecb-dfb0ac893fc9
+- **Session (Pass 2):** ef33fa5a-4cbf-4df2-8b55-5c1febc3667d
 
 🤖
 
