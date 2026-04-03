@@ -2,90 +2,90 @@
 publish: true
 ---
 
-# Meeting Agenda: Klimaanpassungsmanager Recruitment Pipeline — Open Items
+# Meeting Agenda: Rekrutierungs-Pipeline Klimaanpassungsmanager — Offene Punkte
 [[client-abtmayr-reichert]]
 
 ## Meeting Goal
 
-Resolve remaining design questions from the Rekrutierungs-Pipeline design doc — focused on Gemeinden go-to-market strategy, open governance topics, and project visibility for external stakeholders.
+Offene Design-Fragen aus dem Rekrutierungs-Pipeline Design Doc klären — Fokus auf Gemeinden-Akquise-Strategie, offene Governance-Themen und Projekttransparenz für externe Stakeholder.
 
-1. **Gemeinden sales strategy** — define channels and funnel for acquiring 200 municipalities
-2. **Funding model** — clarify DAS eligibility for Werkstudent positions
-3. **Content governance** — establish LinkedIn approval workflow between board and team
-4. **Projekttransparenz** — define how Ralph and Michael track project progress
+1. **Gemeinden-Akquise-Strategie** — Kanäle und Funnel für die Gewinnung von 200 Gemeinden definieren
+2. **Fördermodell** — DAS-Förderfähigkeit für Werkstudenten-Positionen klären
+3. **Content-Freigabe** — LinkedIn-Freigabe-Workflow zwischen Vorstand und Team etablieren
+4. **Projekttransparenz** — Wie Ralph und Michael den Projektfortschritt verfolgen
 
 ## Pre-Read
 
-- [Design Doc: Rekrutierungs-Pipeline Klimaanpassungsmanager](https://mariuswilsch.github.io/public-wilsch-ai-pages/project/abtmayr-reichert/design-doc-klimaanpassungsmanager-recruitment-pipeline) — updated 2026-04-03 with 3-milestone structure, Team section, M2 (Gemeinden-Akquise), M3 (KI-Matching vision), and 5 **Ungeklärt** markers across M1/M2. Focus: Sales strategy (M2), DAS funding (M1), content approval (M1).
+- [Design Doc: Rekrutierungs-Pipeline Klimaanpassungsmanager](https://mariuswilsch.github.io/public-wilsch-ai-pages/project/abtmayr-reichert/design-doc-klimaanpassungsmanager-recruitment-pipeline) — aktualisiert am 2026-04-03 mit 3-Meilenstein-Struktur, Team-Sektion, M2 (Gemeinden-Akquise), M3 (KI-Matching-Vision) und 5 **Ungeklärt**-Markern über M1/M2. Fokus: Akquise-Strategie (M2), DAS-Förderung (M1), Content-Freigabe (M1).
 
 ---
 
 ## Discussion Topics
 
-*Starting points for discussion, not limited to these.*
+*Ausgangspunkte für die Diskussion, nicht darauf beschränkt.*
 
-### 1. Gemeinden-Akquise — Sales Channels und Funnel
+### 1. Gemeinden-Akquise — Kanäle und Funnel
 ⏱️ 20 min
 
-The design doc defines the target (200 Gemeinden by September 2026) and the hook (first 100 free memberships), but the acquisition strategy is undefined. Marius and David flagged sales channels as open homework during the April 2 brainstorming.
+Das Design Doc definiert das Ziel (200 Gemeinden bis September 2026) und den Einstieg (erste 100 kostenlose Mitgliedschaften), aber die Akquise-Strategie ist ungeklärt. Marius und David haben Sales Channels als offenes Thema im Brainstorming am 2. April markiert.
 
-- Michael's existing BAFA and PEK contacts provide initial warm leads
-- Municipal decision-makers (Bürgermeister, Hauptamtsleiter) are the target personas
-- The free membership lowers the barrier but still requires a trigger to register
-- Michael described concrete municipal needs: sensor infrastructure, geodata, water system digitalization
+- Michaels bestehende BAFA- und PEK-Kontakte liefern erste warme Leads
+- Kommunale Entscheider (Bürgermeister, Hauptamtsleiter) sind die Zielpersonen
+- Die kostenlose Mitgliedschaft senkt die Hürde, erfordert aber einen Auslöser zur Registrierung
+- Michael beschrieb konkrete kommunale Bedarfe: Sensorinfrastruktur, Geodaten, Digitalisierung der Wasserwirtschaft
 
-**To resolve:** The channels and conversion process through which Gemeinden learn about, evaluate, and register with the platform.
+**Zu klären:** Über welche Kanäle und welchen Konversionsprozess Gemeinden von der Plattform erfahren, sie bewerten und sich registrieren.
 
 ### 2. DAS-Förderfähigkeit für Werkstudenten-Positionen
 ⏱️ 15 min
 
-The DAS-Förderrichtlinie funds "Fachpersonal" in "befristete Stelle für Klimaanpassungsmanagement." The April 2 brainstorming did not address this question. The design doc still marks it as **Ungeklärt** in the Beschäftigungsmodell section.
+Die DAS-Förderrichtlinie finanziert „Fachpersonal" in „befristete Stelle für Klimaanpassungsmanagement." Das Brainstorming am 2. April hat diese Frage nicht adressiert. Das Design Doc markiert sie weiterhin als **Ungeklärt** in der Beschäftigungsmodell-Sektion.
 
-- The Förderrichtlinie targets full-time professionals at TVöD EG 10–11
-- Werkstudent positions (20h/week) do not fit the standard funding profile
-- If DAS doesn't cover these positions, municipalities fund from own budget — changing the value proposition
-- Michael's BAFA/PEK contacts may have insight into non-traditional arrangements
+- Die Förderrichtlinie zielt auf Vollzeit-Fachkräfte auf TVöD EG 10–11
+- Werkstudenten-Positionen (20h/Woche) passen nicht ins Standard-Förderprofil
+- Falls DAS diese Positionen nicht abdeckt, finanzieren Kommunen aus eigenem Budget — was das Wertversprechen verändert
+- Michaels BAFA/PEK-Kontakte könnten Einblick in nicht-traditionelle Modelle haben
 
-**To resolve:** Whether DAS funding covers any Werkstudent employment path, or whether the model relies entirely on municipal budgets.
+**Zu klären:** Ob die DAS-Förderung einen Werkstudenten-Beschäftigungsweg abdeckt, oder ob das Modell vollständig auf kommunale Budgets angewiesen ist.
 
 ### 3. LinkedIn Content-Freigabe
 ⏱️ 5 min
 
-The LinkedIn content strategy is defined (4 pillars, 1–2x/week), but the approval workflow remains **Ungeklärt**. The April 2 brainstorming did not address this. With Ralph now confirmed as Geschäftsführer, the approval chain may involve him.
+Die LinkedIn-Content-Strategie ist definiert (4 Säulen, 1–2x/Woche), aber der Freigabe-Workflow bleibt **Ungeklärt**. Das Brainstorming am 2. April hat dies nicht adressiert. Mit Ralph als bestätigtem Geschäftsführer könnte die Freigabekette ihn einschließen.
 
-- Content pillars are defined (Klima-Wissen, Karriere, Gemeinden, Verein)
-- Some posts reference PIK contacts and municipal partnerships — may need board review
-- Ralph has been designated as LinkedIn admin
+- Content-Säulen sind definiert (Klima-Wissen, Karriere, Gemeinden, Verein)
+- Einige Beiträge referenzieren PIK-Kontakte und kommunale Partnerschaften — möglicherweise Vorstandsprüfung nötig
+- Ralph wurde als LinkedIn-Admin vorgesehen
 
-**To resolve:** Whether posts go through Michael, Ralph, both, or neither before publishing — and whether this varies by content pillar.
+**Zu klären:** Ob Beiträge durch Michael, Ralph, beide oder keinen vor Veröffentlichung geprüft werden — und ob dies je nach Content-Säule variiert.
 
-### 4. Projekttransparenz — Project Visibility for Ralph and Michael
+### 4. Projekttransparenz — Projektfortschritt für Ralph und Michael
 ⏱️ 10 min
 
-Ralph and Michael need ongoing visibility into project progress without accessing the internal work board. The proposed solution is a dedicated GitHub Project board — same repository, same issues, different view — filtered to the Klimafolgenschutz Milestone only.
+Ralph und Michael benötigen laufenden Einblick in den Projektfortschritt, ohne Zugang zum internen Arbeitsboard zu haben. Die vorgeschlagene Lösung ist ein dediziertes GitHub Project Board — gleiches Repository, gleiche Issues, andere Ansicht — gefiltert auf den Klimafolgenschutz-Meilenstein.
 
-- A GitHub Project board allows filtered views: only Milestone-relevant issues visible
-- Ralph and Michael would need GitHub accounts with viewer access
-- The board structure (columns, groupings) should reflect what's meaningful for non-technical stakeholders
-- This pattern applies to future external project participants
+- Ein GitHub Project Board ermöglicht gefilterte Ansichten: nur Meilenstein-relevante Issues sichtbar
+- Ralph und Michael benötigen GitHub-Accounts mit Viewer-Zugang
+- Die Board-Struktur (Spalten, Gruppierungen) sollte widerspiegeln, was für nicht-technische Stakeholder aussagekräftig ist
+- Dieses Muster gilt für zukünftige externe Projektbeteiligte
 
-**To resolve:** The information format, access mechanism, and update frequency through which Ralph and Michael track project progress.
+**Zu klären:** Das Informationsformat, der Zugangsmechanismus und die Aktualisierungsfrequenz, über die Ralph und Michael den Projektfortschritt verfolgen.
 
 ## Meeting Format
 
-- **Type:** Weekly sync (design review)
-- **Duration:** 30–60 min (weekly, Tuesdays)
-- **Participants:** Michael Reichert, Ralph Loser, Marius Wilsch, David Eberle
-- **Expectation:** Michael brings BAFA/PEK contact update. Marius/David present initial sales channel research.
-- **Outcome:** Sales strategy direction for Gemeinden. DAS funding path confirmed or ruled out. Content approval agreed. Project visibility format for Ralph and Michael decided.
+- **Typ:** Wöchentlicher Sync (Design-Review)
+- **Dauer:** 30–60 Min. (wöchentlich, dienstags)
+- **Teilnehmer:** Michael Reichert, Ralph Loser, Marius Wilsch, David Eberle
+- **Erwartung:** Michael bringt Update von BAFA/PEK-Kontakten mit. Marius/David präsentieren erste Sales-Channel-Recherche.
+- **Ergebnis:** Akquise-Strategie-Richtung für Gemeinden. DAS-Förderweg bestätigt oder ausgeschlossen. Content-Freigabe vereinbart. Projekttransparenz-Format für Ralph und Michael entschieden.
 
 ## Related
 
 - **Issue:** [DaveX2001/deliverable-tracking#1319](https://github.com/DaveX2001/deliverable-tracking/issues/1319)
 - **Design Doc:** [Rekrutierungs-Pipeline Klimaanpassungsmanager](https://mariuswilsch.github.io/public-wilsch-ai-pages/project/abtmayr-reichert/design-doc-klimaanpassungsmanager-recruitment-pipeline)
 - **Parent Epic:** [DaveX2001/deliverable-tracking#726](https://github.com/DaveX2001/deliverable-tracking/issues/726)
-- **Prior meeting:** [Brainstorming 2026-04-02](https://app.fireflies.ai/view/01KN6WGW29D47Q6B11D9VCY063) — 3-milestone structure, targets, matching vision
-- **Prior grooming:** [Grooming 2026-04-03](https://app.fireflies.ai/view/01KN9MYRJHAEWB76FFPHASWZRT) — Marius feedback: Projekttransparenz topic added, client-facing doc cleanup
+- **Vorheriges Meeting:** [Brainstorming 2026-04-02](https://app.fireflies.ai/view/01KN6WGW29D47Q6B11D9VCY063) — 3-Meilenstein-Struktur, Zielgrößen, Matching-Vision
+- **Vorheriges Grooming:** [Grooming 2026-04-03](https://app.fireflies.ai/view/01KN9MYRJHAEWB76FFPHASWZRT) — Marius-Feedback: Projekttransparenz-Topic hinzugefügt, client-facing Doc bereinigt
 
 ---
 
