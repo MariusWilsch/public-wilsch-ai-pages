@@ -5,7 +5,7 @@ publish: true
 # Kundengespräch: IBM 4247 Druckeranalyse
 [[client-02_uwi]]
 
-## Meeting Goal
+## Gesprächsziel
 
 Ulrich klärt mit seinem Kunden die offenen Punkte, die für eine konkrete Farbband-Bestellung und Migrationsentscheidung nötig sind.
 
@@ -13,13 +13,13 @@ Ulrich klärt mit seinem Kunden die offenen Punkte, die für eine konkrete Farbb
 2. **Bedarfsanalyse** — welche Formulare gedruckt werden und ob Durchschläge nötig sind
 3. **Migrationspfad-Auswahl** — auf Basis der Ergebnisse den passenden Pfad (A/B/C) wählen
 
-## Pre-Read
+## Vorbereitung
 
 - [Design Doc: IBM 4247 Druckerband-Beschaffung + Matrixdrucker-Ablösung](design-doc-printer-research-1375)
 
 ---
 
-## Discussion Topics
+## Gesprächsthemen
 
 *Ausgangspunkte für das Gespräch, nicht darauf beschränkt.*
 
@@ -33,7 +33,7 @@ Das Design Doc listet drei verschiedene Farbbandtypen für den IBM 4247 — welc
 - IBM 4247-L03 nutzt Farbband 41U2235 (15 Mio. Zeichen)
 - Modellbezeichnung steht auf dem Typenschild am Drucker
 
-**To resolve:** Exakte Modellbezeichnung(en) aller IBM 4247 im Einsatz, plus Anzahl der Geräte.
+**Zu klären:** Exakte Modellbezeichnung(en) aller IBM 4247 im Einsatz, plus Anzahl der Geräte.
 
 ### 2. Formulare und Durchschläge
 ⏱️ 10 min
@@ -45,7 +45,7 @@ Ob ein Umstieg auf Laser möglich ist, hängt davon ab, was auf den Nadeldrucker
 - Gibt es regulatorische Anforderungen für physische Kopien in der Branche?
 - Werden Endlosformulare (Traktor-Papier) verwendet oder Einzelblätter?
 
-**To resolve:** Vollständige Liste aller Formulartypen mit Angabe, ob Durchschläge erforderlich sind — dies bestimmt den Migrationspfad.
+**Zu klären:** Vollständige Liste aller Formulartypen mit Angabe, ob Durchschläge erforderlich sind — dies bestimmt den Migrationspfad.
 
 ### 3. IT-Infrastruktur und Software
 ⏱️ 5 min
@@ -57,15 +57,15 @@ Die ERP-/Software-Anbindung bestimmt, welche Ersatzdrucker kompatibel sind. Manc
 - Monatliches Druckvolumen (ungefähr)
 - Budget-Rahmen für eine eventuelle Umstellung
 
-**To resolve:** ERP-System und Druckprotokoll identifizieren — dies bestimmt die Hardware-Kompatibilität bei einer Migration.
+**Zu klären:** ERP-System und Druckprotokoll identifizieren — dies bestimmt die Hardware-Kompatibilität bei einer Migration.
 
-## Meeting Format
+## Gesprächsformat
 
 - **Typ:** Informationsgespräch / Bedarfserhebung
 - **Erwartung:** Kunde hat Zugang zu den Druckern (Typenschild-Foto) und kennt die gedruckten Formulare
 - **Ergebnis:** Ausgefüllte Checkliste → Ulrich kann konkreten Migrationspfad empfehlen
 
-## Related
+## Verknüpft
 
 - **Issue:** [#1375](https://github.com/DaveX2001/deliverable-tracking/issues/1375)
 - **Design Doc:** [IBM 4247 Druckerband-Beschaffung](design-doc-printer-research-1375)
