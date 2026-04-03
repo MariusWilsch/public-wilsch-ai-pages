@@ -2,105 +2,105 @@
 publish: true
 ---
 
-# Design Doc: Power10 Memory Compatibility — EMRF/EM7F vs EM78 for 9105-42A
+# Design Doc: Power10 Speicherkompatibilität — EMRF/EM7F vs EM78 für 9105-42A
 [[client-02_uwi]]
 
-Compatibility matrix documenting whether L1024 memory feature codes (EM7F, EMRF) can replace S1024 feature code EM78 on the IBM Power10 9105-42A — driven by a cost-saving procurement opportunity.
+Kompatibilitätsmatrix: Können L1024-Speicher-Feature-Codes (EM7F, EMRF) den S1024-Feature-Code EM78 auf dem IBM Power10 9105-42A ersetzen — getrieben durch eine günstigere Beschaffungsmöglichkeit.
 
 ---
 
-## Problem Statement
+## Problemstellung
 
-The IBM Power10 S1024 (9105-42A) requires feature code EM78 for its 256 GB DDR4 DDIMMs — at $60,000 per pair. A client in Ulrich's network has EM7F-labeled units available at lower cost. EM7F is officially designated for the Power L1024 (9786-42H), not the S1024. The question: is this a hard technical restriction or just an IBM ordering label on the same physical hardware?
+Der IBM Power10 S1024 (9105-42A) benötigt Feature-Code EM78 für seine 256 GB DDR4 DDIMMs — bei ca. $60.000 pro Paar. Ein Kunde aus Ulrichs Netzwerk hat EM7F-gelabelte Module zu einem niedrigeren Preis verfügbar. EM7F ist offiziell für den Power L1024 (9786-42H) vorgesehen, nicht den S1024. Die Frage: Ist das eine harte technische Einschränkung oder nur ein IBM-Bestelllabel auf derselben physischen Hardware?
 
-A parallel question exists for EMRF — another L1024 feature code for the same DIMM size. If both use identical hardware internally, the procurement constraint is commercial, not technical.
+Eine parallele Frage besteht für EMRF — ein weiterer L1024 Feature-Code für dieselbe DIMM-Größe. Wenn beide intern identische Hardware verwenden, ist die Beschaffungsbeschränkung kommerziell, nicht technisch.
 
-**Preconditions:**
-- Target system is a Power10 S1024 (9105-42A) with 4U DDIMM slots
-- EM78 is the only 256 GB DDR4 feature code IBM lists for 9105-42A (Table 1, IBM plugging rules)
-- EM7F and EMRF are listed for 9786-42H only (Table 3, IBM plugging rules)
-- Ulrich's client can supply EM7F units at a better price point
+**Voraussetzungen:**
+- Zielsystem ist ein Power10 S1024 (9105-42A) mit 4U DDIMM-Slots
+- EM78 ist der einzige 256 GB DDR4 Feature-Code den IBM für 9105-42A listet (Tabelle 1, IBM Plugging Rules)
+- EM7F und EMRF sind nur für 9786-42H gelistet (Tabelle 3, IBM Plugging Rules)
+- Ulrichs Kunde kann EM7F-Module günstiger liefern
 
 ---
 
-## Success Definition
+## Erfolgsdefinition
 
 | Element | Definition |
 |---------|-----------|
-| **Goal** | Ulrich can confidently procure EM7F (or EMRF) units for a 9105-42A system — knowing the technical compatibility, warranty implications, and cost trade-off |
-| **Success** | Ulrich reads this document and can answer his client's question definitively: "yes, these DIMMs work in the S1024" or "no, here's why not" — without needing to call IBM |
-| **Done test** | Does the compatibility matrix answer both key questions? (1) Can EM7F/EMRF physically replace EM78 on 9105-42A? (2) What are the CCIN and part numbers for EMRF? |
+| **Ziel** | Ulrich kann EM7F (oder EMRF) Module für ein 9105-42A System sicher beschaffen — mit Kenntnis der technischen Kompatibilität, Garantie-Implikationen und Kostenersparnis |
+| **Erfolg** | Ulrich liest dieses Dokument und kann die Frage seines Kunden definitiv beantworten: "Ja, diese DIMMs funktionieren im S1024" oder "Nein, hier ist der Grund" — ohne IBM anrufen zu müssen |
+| **Done-Test** | Beantwortet die Kompatibilitätsmatrix beide Kernfragen? (1) Können EM7F/EMRF den EM78 auf 9105-42A physisch ersetzen? (2) Was sind CCIN und Teilenummer für EMRF? |
 
 ---
 
-## Approach
+## Ansatz
 
-### Part 1: The "Technical Number" — CCIN 32AE
+### Teil 1: Die "Technische Nummer" — CCIN 32AE
 
-Every IBM DDIMM carries a CCIN (Custom Card Identification Number) — the hardware identifier that the system reads on boot. Feature codes like EM78 or EM7F are ordering labels, not hardware identifiers. The system sees the CCIN, not the feature code.
+Jedes IBM DDIMM trägt eine CCIN (Custom Card Identification Number) — die Hardware-Kennung die das System beim Booten liest. Feature-Codes wie EM78 oder EM7F sind Bestellbezeichnungen, keine Hardware-Kennungen. Das System sieht die CCIN, nicht den Feature-Code.
 
-All three feature codes in question resolve to the same physical module:
+Alle drei Feature-Codes verweisen auf dasselbe physische Modul:
 
-| Identifier | Value |
-|-----------|-------|
+| Kennung | Wert |
+|---------|------|
 | **CCIN** | 32AE |
-| **Part Number (FRU)** | 01GY925 |
-| **Capacity per DIMM** | 256 GB |
-| **Type** | DDR4 |
-| **Speed** | 2933 MHz |
-| **Density** | 16 Gbit |
-| **Height** | 4U |
+| **Teilenummer (FRU)** | 01GY925 |
+| **Kapazität pro DIMM** | 256 GB |
+| **Typ** | DDR4 |
+| **Geschwindigkeit** | 2933 MHz |
+| **Dichte** | 16 Gbit |
+| **Höhe** | 4U |
 
-Midland Information Systems lists EM78 and EM7F as a single product under one URL — same CCIN, same part number. DataTech lists the same 01GY925 / 32AE for EM78 on the E1050 (9043-MRX). Midland also lists EMC4 (the E1080 variant) with the same 32AE / 01GY925 in a 4-DIMM configuration.
+Midland Information Systems listet EM78 und EM7F als ein einziges Produkt unter einer URL — gleiche CCIN, gleiche Teilenummer. DataTech listet dieselbe 01GY925 / 32AE für EM78 auf dem E1050 (9043-MRX). Midland listet auch EMC4 (die E1080-Variante) mit derselben 32AE / 01GY925 in einer 4-DIMM-Konfiguration.
 
-This is not an anomaly. IBM uses different feature codes for identical hardware across system models — the same pattern applies to PCIe adapters (EN2L/EN2M share CCIN 2CFC, EJ2B/EJ2C share CCIN 57F2).
+Das ist kein Einzelfall. IBM verwendet verschiedene Feature-Codes für identische Hardware über Systemmodelle hinweg — dasselbe Muster gilt für PCIe-Adapter (EN2L/EN2M teilen CCIN 2CFC, EJ2B/EJ2C teilen CCIN 57F2).
 
-### Part 2: Feature Code Breakdown — EM78 vs EM7F vs EMRF
+### Teil 2: Feature-Code Aufschlüsselung — EM78 vs EM7F vs EMRF
 
-The three feature codes differ only in their IBM ordering context — target system and bundle size:
+Die drei Feature-Codes unterscheiden sich nur im IBM-Bestellkontext — Zielsystem und Paketgröße:
 
 | | EM78 | EM7F | EMRF |
 |---|---|---|---|
-| **Target System** | S1024 (9105-42A) | L1024 (9786-42H) | L1024 (9786-42H) |
-| **DIMMs per Feature** | 2 (standard pair) | 2 (standard pair) | 4 (SAP bundle) |
-| **Total per Feature** | 512 GB | 512 GB | 1024 GB |
-| **Per-DIMM Capacity** | 256 GB | 256 GB | 256 GB |
-| **Height** | 4U | 4U | 4U |
+| **Zielsystem** | S1024 (9105-42A) | L1024 (9786-42H) | L1024 (9786-42H) |
+| **DIMMs pro Feature** | 2 (Standard-Paar) | 2 (Standard-Paar) | 4 (SAP-Paket) |
+| **Gesamt pro Feature** | 512 GB | 512 GB | 1024 GB |
+| **Kapazität pro DIMM** | 256 GB | 256 GB | 256 GB |
+| **Höhe** | 4U | 4U | 4U |
 | **CCIN** | 32AE | 32AE | 32AE |
-| **Part # (FRU)** | 01GY925 | 01GY925 | 01GY925 |
-| **Ordering Rules** | Standard | Standard | SAP program, min 2 TB |
+| **Teilenr. (FRU)** | 01GY925 | 01GY925 | 01GY925 |
+| **Bestellregeln** | Standard | Standard | SAP-Programm, min 2 TB |
 
-EMRF is part of IBM's SAP memory bundle line (EMRX for 64 GB, EMRV for 128 GB, EMRF for 256 GB). These bundles carry different ordering constraints — minimum 2 TB total, L1024 only — but the individual DIMMs inside are physically identical to the standard EM7F and EM78 DIMMs.
+EMRF gehört zu IBMs SAP-Speicherpaket-Linie (EMRX für 64 GB, EMRV für 128 GB, EMRF für 256 GB). Diese Pakete haben andere Bestellbedingungen — Minimum 2 TB gesamt, nur L1024 — aber die einzelnen DIMMs darin sind physisch identisch mit den Standard EM7F- und EM78-DIMMs.
 
-The S1024 and L1024 are both 4U chassis, so there is no form factor incompatibility between their DDIMMs.
+Der S1024 und L1024 sind beide 4U-Gehäuse, es gibt also keine Formfaktor-Inkompatibilität zwischen ihren DDIMMs.
 
-### Part 3: Compatibility Verdict
+### Teil 3: Kompatibilitäts-Ergebnis
 
-**Q1: Can EM7F or EMRF physically/electrically replace EM78 on 9105-42A?**
+**F1: Können EM7F oder EMRF den EM78 auf 9105-42A physisch/elektrisch ersetzen?**
 
-**Yes.** The individual DIMMs are identical hardware — same CCIN (32AE), same FRU part number (01GY925), same DDR4 256 GB 2933 MHz spec, same 4U form factor. The S1024 identifies memory by CCIN on boot, not by the feature code printed on the purchase order. No firmware-level feature code validation was found in IBM documentation or community forums.
+**Ja.** Die einzelnen DIMMs sind identische Hardware — gleiche CCIN (32AE), gleiche FRU-Teilenummer (01GY925), gleiche DDR4 256 GB 2933 MHz Spezifikation, gleicher 4U Formfaktor. Der S1024 identifiziert Speicher beim Booten über die CCIN, nicht über den Feature-Code auf der Bestellung. In IBM-Dokumentation und Community-Foren wurde keine Feature-Code-Validierung auf Firmware-Ebene gefunden.
 
-Supporting evidence:
-- Midland lists EM78 + EM7F under one product listing (shared CCIN)
-- IBM reuses the same CCIN/FRU across 4+ feature codes (EM78, EM7F, EMC4, EMRF) spanning 4 different system models
-- DDR4 DDIMMs from Power10 systems are forward-compatible with Power11 via the same OMI interface — confirming cross-system hardware identity
+Belege:
+- Midland listet EM78 + EM7F unter einem Produkteintrag (geteilte CCIN)
+- IBM verwendet dieselbe CCIN/FRU über 4+ Feature-Codes (EM78, EM7F, EMC4, EMRF) auf 4 verschiedenen Systemmodellen
+- DDR4 DDIMMs von Power10-Systemen sind vorwärtskompatibel mit Power11 über dasselbe OMI-Interface — bestätigt systemübergreifende Hardware-Identität
 
-**Q2: What are CCIN and part number for EMRF?**
+**F2: Was sind CCIN und Teilenummer für EMRF?**
 
-Each individual DIMM in an EMRF bundle carries **CCIN 32AE** and **Part # 01GY925** — identical to EM78 and EM7F. EMRF is a 4-DIMM SAP ordering bundle, not a distinct piece of hardware. It has no unique CCIN of its own.
+Jedes einzelne DIMM in einem EMRF-Paket trägt **CCIN 32AE** und **Teilenr. 01GY925** — identisch mit EM78 und EM7F. EMRF ist ein 4-DIMM SAP-Bestellpaket, kein eigenständiges Hardwareteil. Es hat keine eigene CCIN.
 
-**Warranty note:** Since the CCIN and FRU are identical, IBM support tools identify the DIMM the same way regardless of which feature code was on the original purchase order. A support technician running diagnostics on a 9105-42A would see "CCIN 32AE / 01GY925" — indistinguishable from an EM78-purchased unit.
+**Garantie-Hinweis:** Da CCIN und FRU identisch sind, identifizieren IBM-Support-Tools das DIMM unabhängig davon, welcher Feature-Code auf der ursprünglichen Bestellung stand. Ein Support-Techniker der Diagnosen auf einem 9105-42A durchführt, sieht "CCIN 32AE / 01GY925" — nicht unterscheidbar von einem über EM78 gekauften Modul.
 
 ---
 
-## Source
+## Quelle
 
-- **IBM Documentation:** [Plugging rules for memory modules — 9105-41B, 9105-42A, 9786-42H](https://www.ibm.com/docs/en/power10/9105-41B?topic=modules-plugging-rules-memory-in-system) (Tables 1 and 3)
-- **Vendor — DataTech:** [EM78 512GB DDR4 Listing](https://datatechcomputer.com/memory/ibm-em78-512gb-Power10-S1024-9105-42A-ddr4-memory/) (CCIN 32AE, Part# 01GY925)
-- **Vendor — Midland:** [32AE EM78/EM7F 512GB Listing](https://www.midlandinfosys.com/ibm-32ae-01gy925-em78-em7f-512gb-ddr4-memory-2x256gb-ddimms) (shared product page)
-- **Vendor — Midland:** [32AE EMC4 1TB Listing](https://midlandinfosys.com/ibm-32ae-emc4-01gy925-1tb-ddr4-memory-9080-hex-e1080) (same CCIN on E1080)
-- **IBM Announcement:** [Enhanced Power10 capabilities (ENUS123-017)](https://www.ibm.com/common/ssi/cgi-bin/ssialias?infotype=an&subtype=ca&appname=gpateam&supplier=897&letternum=ENUS123-017) (EMRF/EMRV SAP bundle specs)
-- **Cross-gen compatibility:** [IT Jungle — IBM Preserves Memory Investments](https://www.itjungle.com/2025/05/21/ibm-preserves-memory-investments-across-power10-and-power11/)
+- **IBM Dokumentation:** [Plugging Rules für Speichermodule — 9105-41B, 9105-42A, 9786-42H](https://www.ibm.com/docs/en/power10/9105-41B?topic=modules-plugging-rules-memory-in-system) (Tabellen 1 und 3)
+- **Händler — DataTech:** [EM78 512GB DDR4 Listing](https://datatechcomputer.com/memory/ibm-em78-512gb-Power10-S1024-9105-42A-ddr4-memory/) (CCIN 32AE, Teilenr. 01GY925)
+- **Händler — Midland:** [32AE EM78/EM7F 512GB Listing](https://www.midlandinfosys.com/ibm-32ae-01gy925-em78-em7f-512gb-ddr4-memory-2x256gb-ddimms) (gemeinsame Produktseite)
+- **Händler — Midland:** [32AE EMC4 1TB Listing](https://midlandinfosys.com/ibm-32ae-emc4-01gy925-1tb-ddr4-memory-9080-hex-e1080) (gleiche CCIN auf E1080)
+- **IBM Announcement:** [Enhanced Power10 capabilities (ENUS123-017)](https://www.ibm.com/common/ssi/cgi-bin/ssialias?infotype=an&subtype=ca&appname=gpateam&supplier=897&letternum=ENUS123-017) (EMRF/EMRV SAP-Paket Spezifikationen)
+- **Generationskompatibilität:** [IT Jungle — IBM Preserves Memory Investments](https://www.itjungle.com/2025/05/21/ibm-preserves-memory-investments-across-power10-and-power11/)
 - **Session:** `5cabfe4e-32ae-4652-9811-458fbd5c211d`
 
 ---

@@ -7,11 +7,12 @@ publish: true
 
 ## Meeting Goal
 
-One open design question from the PDF quote system (#1334) needs Marius's input before the configurator's hardware options can be finalized.
+Two open design questions from the PDF quote system (#1334) need Marius's input — one on hardware options, one on prospect account security.
 
 1. **Dual DGX Spark model sharding** — confirm whether clustering is customer-ready or still in validation
+2. **Auth isolation strategy** — choose between extending Supabase RLS or adding Cloudflare Access for prospect accounts
 
-*Previously 3 questions. Warenwirtschaft article mapping resolved (PDF follows product structure per POW005, not billing system). Tracking presentation resolved (MVP manual lookup + V2 email notification on PDF generation).*
+*Previously 3 questions, reduced to 1 (pass 2), now 2 (pass 3). Warenwirtschaft resolved (pass 2). Tracking tool selection resolved — PostHog recommended (pass 3). Value management documented with two options — composable decision, no blocker (pass 3).*
 
 ## Pre-Read
 
@@ -37,11 +38,23 @@ The Bundle design doc describes Dual DGX Spark clustering as confirmed — Qwen3
 
 **To resolve:** Whether Dual DGX Spark model sharding is reliable enough to offer customers in the configurator, or whether it stays as a future addition after further validation.
 
+### 2. Auth isolation strategy for prospect accounts
+⏱️ 10 min
+
+The PDF quote system creates prospect accounts on the same Supabase project (WILSCH_AI_PROJECTS-PROD) that serves Invoice Agent, Call2Tanss, and a tax module. Invoice Agent's sensitive tables are protected by AAL2/MFA — prospects with basic email+password accounts (AAL1) cannot access invoices or tax keys. But cost_centers, call profiles, and tax tables have no such gate.
+
+- Four applications share one auth pool: public, invoice_agent, call_your_stars, tax
+- Invoice Agent: AAL2 gate on invoices_detail, invoices_header, tax_keys, transfer_audit_log
+- Exposed: invoice_agent.cost_centers (any authenticated), call_your_stars.profiles (any authenticated), tax schema (no RLS)
+- Marius flagged this in his April 3 review — "dieses Cloud Fair eigentlich voll crazy lazy"
+
+**To resolve:** Whether to extend the existing AAL2/RLS pattern (add policies to exposed tables, prospects stay AAL1) or add Cloudflare Access as a per-application gateway — including how much operational overhead is acceptable.
+
 ## Meeting Format
 
 - **Type:** Review / decision
-- **Expectation:** Marius to confirm model sharding validation status with evidence (test results, reliability data)
-- **Outcome:** Single remaining Undefined marker resolved → design doc complete → implementation can begin
+- **Expectation:** Marius to confirm model sharding status (Topic 1) and choose auth isolation approach (Topic 2)
+- **Outcome:** Both Undefined markers resolved → design doc complete → implementation can begin
 
 ## Related
 

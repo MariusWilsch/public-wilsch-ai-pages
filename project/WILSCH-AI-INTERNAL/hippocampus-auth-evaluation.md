@@ -5,7 +5,7 @@ publish: true
 # Hippocampus Publishing: Auth + Access Control Evaluation
 [[hippocampus-auth]]
 
-Evaluation of publishing alternatives for hippocampus — adding authentication and access control while preserving the push-to-deploy workflow.
+Design evaluation for hippocampus publishing — authentication and access control via Cloudflare Pages + Access, with a two-phase path (Jekyll now, VitePress later). Vercel and Obsidian Publish evaluated and rejected.
 
 ---
 
@@ -58,20 +58,29 @@ The hippocampus publishing chain spans two repositories and two GitHub Actions w
 
 **Agent workflow:** `verify_publish.sh` handles the full cycle: commit → push → poll both workflows → verify ETag freshness → open browser. The script doesn't care how deployment happens — it commits, pushes, polls, and verifies. Switching platforms means updating the GHA workflow and the URL base; the agent's experience barely changes.
 
-The four options below replace the final output (GitHub Pages) while preserving the publish chain.
+The two options below replace the final output (GitHub Pages) while preserving the publish chain. Vercel and Obsidian Publish were evaluated and rejected — see Rejected Options.
+
+**Decision: `publish: true` retirement.** With Cloudflare Access controlling who can view the site, the frontmatter filter becomes redundant. All content in the source repo deploys behind auth. This simplifies the pipeline: Workflow 1 copies all `.md` files instead of scanning for `publish: true`. Draft content is no longer a risk — unauthorized visitors can't reach any page.
 
 ### Option 2: Jekyll + Cloudflare Pages + Access
 
-**What changes:** Hosting moves from GitHub Pages to Cloudflare Pages. Cloudflare Access sits in front as an authentication layer. Jekyll stays. Content stays. Frontmatter stays.
+**What changes:** Hosting moves from GitHub Pages to Cloudflare Pages. Cloudflare Access sits in front as an authentication layer. Jekyll stays. Content stays. The `publish: true` frontmatter gate is retired — all content deploys behind auth.
 
 **Auth model:** Cloudflare Access (Zero Trust) intercepts every request at the network edge:
 - **Team:** Google OAuth — sign in with `@wilsch-ai.com`. Seamless.
-- **Clients:** Email OTP — client enters their email, receives a 6-digit code (not a clickable link), enters it. Session configurable per-app (`session_duration` field — 30 min to 7 days, default 24h). No account creation needed.
+- **Clients:** Email OTP (whitelist-only) — only emails explicitly added to the Access policy can authenticate. Non-whitelisted emails see "A code has been emailed to you" but receive nothing (deliberate security design — no information leakage about who is in the policy). Session configurable per-app (`session_duration` field — 30 min to 7 days, default 24h). No account creation needed.
 - **Per-path isolation:** Access apps support `host/path/*` patterns natively. One deployment, different auth per `/project/traceline/` vs `/project/wilsch-ai/`. This enables multi-tenant on a single site.
+
+**Session granularity:** Three-tier duration hierarchy:
+- **Global:** 15 min to 1 month (default 24h) — how often users re-authenticate with their IdP across all apps
+- **Per-app:** Override per Access application (same range)
+- **Per-policy:** Override within an app — e.g., contractors get 24h sessions, team gets 7 days
+
+Revocation is per-app (all sessions for one app) or per-user (one user across all apps). No per-user-per-app revocation — the one gap.
 
 **OTP ceremony:** Client receives link via email or WhatsApp → opens in browser → redirected to CF Access login → enters email → receives 6-digit code via email → enters code → gets session cookie. When link comes via WhatsApp, client must switch to email app for the code — real friction (~30-60 seconds total). Corporate email scanners may auto-consume OTP codes (documented CF limitation; mitigation: allowlist `noreply@notify.cloudflare.com`).
 
-**Agent automation (CLI/API):**
+**Agent automation (CLI/API/MCP):**
 
 | Operation | Method |
 |-----------|--------|
@@ -79,54 +88,92 @@ The four options below replace the final output (GitHub Pages) while preserving 
 | Deploy | `wrangler pages deploy _site/` (pre-build Jekyll first) |
 | Custom domains | REST API: `POST /accounts/{id}/pages/projects/{name}/domains` |
 | Config as code | `wrangler.toml` with `pages_build_output_dir` — becomes source of truth |
-| Create Access app | REST API: `POST /accounts/{id}/access/apps` |
-| Add client email | REST API: `PUT` policy's `include` array |
-| Revoke user | REST API: `DELETE /accounts/{id}/access/users/{user_id}` |
-| Enable OTP | REST API: `POST /accounts/{id}/access/identity_providers` type `onetimepin` |
+| Create Access app | REST API or CF MCP: `POST /accounts/{id}/access/apps` |
+| Add client email | REST API or CF MCP: `PUT` policy's `include` array |
+| Revoke user | REST API or CF MCP: `DELETE /accounts/{id}/access/users/{user_id}` |
+| Enable OTP | REST API or CF MCP: `POST /accounts/{id}/access/identity_providers` type `onetimepin` |
 
-**Agent completeness: 100%.** Every operation — project creation, deploy, auth config, client management, revocation — is CLI or API. No dashboard touch required.
+**Cloudflare MCP server:** Official `cloudflare/mcp` repository provides an MCP server covering ~2,500 API endpoints including Access and Pages. The agent can manage auth policies, user access, and deployments natively through MCP — no raw REST calls needed. Wrangler CLI covers Pages deployment but does not cover Access management.
+
+**Agent completeness: 100%.** Every operation — project creation, deploy, auth config, client management, revocation — is CLI, API, or MCP. No dashboard touch required.
 
 **Push-to-deploy:** Connect the GitHub repo to Cloudflare Pages. Every push to `main` triggers a Jekyll build automatically. Preview deployments per branch. The existing two-workflow chain works — Cloudflare Pages builds from the pages repo.
 
 **Migration:**
 - Add `Gemfile` if not already committed
 - Update `baseurl` in `_config.yml` — GitHub Pages uses `/public-wilsch-ai-pages`, Cloudflare uses `/`
-- DNS must move to Cloudflare (required for Access to intercept traffic)
+- Add CNAME record at current DNS provider: `docs.wilsch-ai.com` → `<project>.pages.dev` (no DNS zone migration needed — see Domain & DNS Strategy)
+- Remove `publish: true` frontmatter scanning from deploy workflow — all content goes live behind auth
 - Custom layout, Mermaid.js, copyright footer — all transfer unchanged (static output)
 
 **Cost:** Free. Cloudflare Pages (unlimited bandwidth, 500 builds/month per account) + Access Zero Trust (OTP included, no per-user cost). The widely-cited "50 user" limit is not confirmed in current CF docs — verify with Cloudflare support before treating as a hard constraint.
 
-**Composability:** 100 Pages projects per account (soft limit). Full onboarding scriptable: create project → deploy → attach domain → create Access app → create policy → link policy. Per-path Access apps enable multi-tenant on a single deployment — one hippocampus site, different auth per client path.
+**Composability:** 100 Pages projects per account (soft limit). Full onboarding scriptable: create project → deploy → attach domain → create Access app → create policy → link policy. See Multi-Instance Architecture for the concrete design.
 
 **Limitations:**
-- DNS must be on Cloudflare — non-negotiable for Access. If the new company has its own domain, that domain's DNS also needs CF.
 - 500 builds/month shared across ALL projects on the account
 - Corporate email scanners may auto-consume OTP codes (mitigation: email allowlist)
 - OTP code expires in 10 minutes
+- Per-user-per-app revocation not supported (revoke is per-app or per-user globally)
 
 **Effort:** ~1 hour setup. Zero content migration.
 
 ### Option 3: VitePress + Cloudflare Pages + Access
 
-**What changes:** Both the SSG and hosting change. Jekyll is replaced by VitePress. Hosting moves to Cloudflare Pages with Access for auth. Content transfers; templates are rewritten as Vue components.
+**What changes:** Both the SSG and hosting change. Jekyll is replaced by VitePress. Hosting moves to Cloudflare Pages with Access for auth. Content transfers; templates are rewritten as Vue components. The `publish: true` filter is already gone (retired in Phase 1).
 
-**Why VitePress:** Purpose-built for documentation. Build time drops from 60-120s (Jekyll, 334 pages) to ~20s. Built-in local search (zero-config). Instant HMR during development (sub-100ms vs Jekyll's 30-60s full rebuilds). Broken relative links surface as build errors — strict but catches accumulated dead links. The theme can be packaged as an npm module for reuse across instances.
+**Why VitePress:** Purpose-built for documentation. Build time drops from 60-120s (Jekyll, 334 pages) to ~20s. Built-in local search via MiniSearch (Ctrl+K modal, 1 line of config). Instant HMR during development (sub-100ms vs Jekyll's 30-60s full rebuilds). Broken relative links surface as build errors — strict but catches accumulated dead links. The theme can be packaged as an npm module for reuse across instances.
 
-**Auth model:** Same as Option 2 — Cloudflare Access with Google OAuth (team) + email OTP (clients). The auth layer is platform-level, independent of the SSG.
+**Search:** VitePress includes MiniSearch-powered full-text search out of the box. Activated with one config line: `themeConfig: { search: { provider: 'local' } }`. Appears as a modal dialog triggered by Ctrl+K from the nav bar. Supports fuzzy matching, custom rendering, and per-page exclusion via `search: false` frontmatter. For 334+ docs, the client-side index is substantial — Algolia DocSearch is available as a built-in alternative if performance needs scale (`provider: 'algolia'`).
+
+**Plugin ecosystem:**
+
+| Plugin | Purpose |
+|--------|---------|
+| `vitepress-plugin-mermaid` | Diagram rendering (already in use) |
+| `vitepress-sidebar` | Auto-generates sidebar from file structure |
+| `vitepress-export-pdf` | Export full site to PDF |
+| `vite-pwa/vitepress` | Zero-config PWA (offline access) |
+| `vitepress-plugin-search` | FlexSearch alternative to built-in MiniSearch |
+
+No auth plugins exist in the VitePress ecosystem — auth is handled at the Cloudflare layer (platform-level, SSG-independent).
+
+**Auth model:** Same as Option 2 — Cloudflare Access with whitelist-only email OTP (clients) + Google OAuth (team). Same CF MCP server for agent automation. The auth layer is platform-level, independent of the SSG.
 
 **Push-to-deploy:** Same as Option 2 — Cloudflare Pages builds on push. Build command: `npm run docs:build`, output: `.vitepress/dist/`. Critical: disable HTML minification in Cloudflare Pages — it strips Vue hydration comments and causes client-side errors.
 
 **Migration:**
 - 334 markdown files transfer with frontmatter intact
-- Liquid conversions: convert `include` tags to Vue SFC components, convert `raw` tags to `` `:::v-pre` ``, escape or wrap variables in `` `:::v-pre` ``
-- `publish: true` filtering: requires ~20-line pre-build Node script (VitePress has no built-in publish filter). Script reads frontmatter, generates `srcExclude` list
+- Liquid conversions: convert `include` tags to Vue SFC components, convert `raw` tags to `:::v-pre`, escape or wrap variables in `:::v-pre`
 - Mermaid: `npm i vitepress-plugin-mermaid mermaid` + wrap config with `withMermaid()` — zero markdown changes needed
 - Rewrite `default.html` as Vue theme component (~80 lines HTML+CSS → Vue SFC)
 - `permalink:` frontmatter has no VitePress equivalent — files must be renamed to match desired URLs
 - HTML strictness: VitePress validates bare `<`/`>` — long tail of small fixes across content files
 - Set `ignoreDeadLinks: true` during migration, flip off to fix accumulated broken links
 
-**Composability:** The theme can be published as an npm package (`hippocampus-theme`). New instance = `npx vitepress init` + install theme + 30-50 lines config (title, logo, nav). All layout, components, and CSS shared via the package. Per-instance config is minimal.
+**Composability — npm theme packaging:** The theme is published as an npm package (`hippocampus-theme`) that exports a VitePress theme object and a base config. A new instance installs the package and extends it:
+
+```
+// .vitepress/theme/index.ts (3 lines)
+import HippocampusTheme from 'hippocampus-theme'
+export default HippocampusTheme
+
+// .vitepress/config.ts (~15 lines)
+import baseConfig from 'hippocampus-theme/config'
+import { defineConfigWithTheme } from 'vitepress'
+
+export default defineConfigWithTheme({
+  extends: baseConfig,
+  title: 'Instance Name',
+  themeConfig: {
+    logo: '/logo.png',
+    siteTitle: 'Instance Docs',
+    nav: [{ text: 'Guide', link: '/guide/' }]
+  }
+})
+```
+
+Per-instance customization: logo, title, nav, sidebar, colors (CSS variables), footer. Shared via theme: layout components, global styles, Mermaid plugin, search config. Total per-instance config: ~30-50 lines.
 
 **Cost:** Free (same Cloudflare stack as Option 2). VitePress is open source.
 
@@ -138,106 +185,152 @@ The four options below replace the final output (GitHub Pages) while preserving 
 
 **Effort:** ~3-7 days for migration + Cloudflare setup. Ongoing DX improvement over Jekyll.
 
-### Option 4: Vercel
+### Rejected Options
 
-**What changes:** Hosting moves to Vercel. Jekyll stays (Vercel supports Jekyll natively with auto-detection). Vercel provides deployment protection for auth.
+Two additional platforms were evaluated and rejected.
 
-**Why Vercel:** Best-in-class CLI (`vercel`), native VitePress support for the future upgrade path, and the most polished developer experience. Vercel's GitHub integration auto-deploys on push. For a "Jekyll now, VitePress later" strategy, Vercel is the platform that's most natural for the VitePress phase.
+**Vercel** — rejected due to cost and client friction:
+- Minimum viable auth: $20/mo (clients must create Vercel accounts) or $170/mo (shared password)
+- No email OTP — no low-friction client access path
+- Individual user grants are dashboard-only (no API) — breaks agent automation requirement
+- No per-path access control — multi-tenant requires separate projects at additional cost
+- Advantage (DNS flexibility, best VitePress DX) does not offset the auth limitations
 
-**Auth model — the critical constraint:**
-- **Hobby (free):** Production is always public. Only preview URLs are protectable. Max 1 external user. Not viable for client-facing protected docs.
-- **Pro ($20/mo):** Vercel Authentication on all deployments — but clients must create a Vercel account to access. No email OTP, no email allowlisting, no self-serve invites.
-- **Password protection:** Requires Pro + Advanced Deployment Protection add-on = **$170/mo total**. Single shared password per project (no per-user passwords).
-- **Per-path protection:** Not supported. One auth scope per project — no multi-tenant on a single deployment.
-- **Shareable Links:** Available on all plans as a bypass — anyone with the link skips auth. Useful as a workaround but defeats the purpose of access control.
-
-**OTP ceremony:** Vercel has no email OTP. The only zero-account option is password protection at $170/mo. With Vercel Authentication, the client flow is: receive link → open → redirected to Vercel login → create Vercel account (if new) → request access → Marius approves in dashboard → client accesses. This is significantly more friction than Cloudflare's OTP.
-
-**Agent automation (CLI/API):**
-
-| Operation | Method |
-|-----------|--------|
-| Create project | `vercel project add` / REST API `POST /v11/projects` |
-| Deploy | `vercel --prod` / `vercel deploy --prod --token $TOKEN` |
-| Custom domains | `vercel domains add` |
-| Config as code | `vercel.json` (build settings only — auth NOT configurable in vercel.json) |
-| Enable auth | REST API: `PATCH /v9/projects/{id}` with `ssoProtection` or `passwordProtection` |
-| Add/remove user access | **Dashboard only** — no documented API for granting individual access |
-
-**Agent completeness: ~85%.** Deploy, config, domains, and auth toggles are scriptable. But granting/revoking individual user access requires the dashboard — the gap that breaks full automation.
-
-**Push-to-deploy:** Connect GitHub repo to Vercel. Auto-deploys on push. Jekyll is auto-detected; no `vercel.json` required for basic setup.
-
-**Migration:**
-- Zero content migration — Vercel builds Jekyll natively
-- Optional `vercel.json` for build customization
-- DNS: works with any provider (no Cloudflare-style lock-in)
-
-**Cost:**
-- Hobby (free): not viable for protected production docs
-- Pro ($20/mo): Vercel Auth on all deployments (clients need Vercel accounts)
-- Pro + Advanced ($170/mo): password protection (shared password, no accounts needed)
-
-**Composability:** 200 projects on Hobby, unlimited on Pro. Full project creation scriptable via API. But each project = one auth scope — no per-path policies. Multi-tenant requires separate Vercel projects per client/company.
-
-**Limitations:**
-- Auth on free tier is effectively useless for this use case (production always public)
-- Minimum viable auth = $20/mo (requires client Vercel accounts) or $170/mo (password)
-- No per-path access control — separate projects needed for multi-tenant
-- Individual user grants are dashboard-only (no API)
-- No email OTP — clients must create platform accounts or use shared passwords
-
-**Effort:** ~30 minutes setup. Zero content migration. DNS flexibility (any provider).
+**Obsidian Publish** — rejected due to two hard blockers:
+- No publishing API — content must be published through the Obsidian desktop app GUI. No headless, CLI, or API path exists. An AI agent cannot publish programmatically.
+- No email OTP — static site password only (shared passwords for the entire site). No per-user auth, no SSO, no audit trail.
+- Cost: $8-10/site/month. Custom domain supported (via Cloudflare), full-text search included, Mermaid native.
+- The auth and automation gaps are fundamental — not workaround-able within the platform.
 
 ### Comparison
 
-| Dimension | 1: Current | 2: Jekyll + CF | 3: VitePress + CF | 4: Vercel |
-|-----------|-----------|---------------|-------------------|-----------|
-| **Auth** | None (public) | Email OTP (free) | Email OTP (free) | Vercel accounts ($20/mo) or password ($170/mo) |
-| **Client friction** | Zero | OTP 30-60s, no account | OTP 30-60s, no account | Create Vercel account or enter shared password |
-| **Agent automation** | 100% (push → done) | 100% (CLI + API) | 100% (CLI + API) | ~85% (user grants = dashboard) |
-| **Push-to-deploy** | Git push → auto | Git push → auto | Git push → auto | Git push → auto |
-| **Jekyll support** | Native | Native | N/A (VitePress) | Native |
-| **VitePress support** | N/A | Supported (disable minification) | Native | Native (best DX) |
-| **Content migration** | — | Zero | 3-7 days | Zero |
-| **Setup effort** | — | ~1 hour | ~3-7 days | ~30 minutes |
-| **Cost** | Free | Free | Free | $20-170/mo |
-| **Per-path auth** | N/A | Yes (native) | Yes (native) | No (project-scoped) |
-| **Composability** | N/A | Per-path multi-tenant + 100 projects | npm theme + per-path | Separate projects only |
-| **DNS requirement** | GitHub | Cloudflare DNS | Cloudflare DNS | Any DNS |
-| **Scaling (users)** | N/A | Free tier (verify limit with CF) | Same as Option 2 | 1 on Hobby, unlimited on Pro |
+| Dimension | Current | Phase 1: Jekyll + CF | Phase 2: VitePress + CF |
+|-----------|---------|---------------------|------------------------|
+| **Auth** | None (public) | Email OTP (free, whitelist-only) | Email OTP (free, whitelist-only) |
+| **Client friction** | Zero | OTP 30-60s, no account | OTP 30-60s, no account |
+| **Agent automation** | 100% (push → done) | 100% (CLI + API + MCP) | 100% (CLI + API + MCP) |
+| **Push-to-deploy** | Git push → auto | Git push → auto | Git push → auto |
+| **SSG** | Jekyll | Jekyll | VitePress |
+| **Search** | None | None (Jekyll limitation) | MiniSearch built-in (Ctrl+K) |
+| **Content migration** | — | Zero | 3-7 days (from Jekyll) |
+| **Setup effort** | — | ~1 hour | ~3-7 days |
+| **Cost** | Free | Free | Free |
+| **Per-path auth** | N/A | Yes (native) | Yes (native) |
+| **Composability** | N/A | Per-path multi-tenant + scriptable | npm theme + separate projects |
+| **DNS requirement** | GitHub | CNAME to .pages.dev (any DNS provider) | CNAME to .pages.dev (any DNS provider) |
+| **Publish filter** | `publish: true` | Retired (auth replaces it) | N/A (never had it) |
 
-### Two-Phase Path
+### Two-Phase Path (Confirmed)
 
-Marius identified a deployment path: start with Option 2 (Jekyll + Cloudflare) for immediate auth, upgrade to Option 3 (VitePress + Cloudflare) later for DX improvement.
+**Phase 1 — Now:** Move to Cloudflare Pages + Access. Keep Jekyll. Auth is live within hours. Zero content migration. Agent workflow changes minimally (update URL base in verify_publish.sh, update GHA workflow deploy target). The `publish: true` filter is retired — all content deploys behind auth.
 
-**Phase 1 — Now:** Move to Cloudflare Pages + Access. Keep Jekyll. Auth is live within hours. Zero content migration. Agent workflow changes minimally (update URL base in verify_publish.sh, update GHA workflow deploy target).
-
-**Phase 2 — Later:** Migrate Jekyll to VitePress. Same Cloudflare hosting and auth (no platform change). Migration effort: 3-7 days of focused engineering. Gains: 3-6x faster builds, built-in search, instant HMR, npm-packageable theme for composability.
+**Phase 2 — Later:** Migrate Jekyll to VitePress. Same Cloudflare hosting and auth (no platform change). Migration effort: 3-7 days of focused engineering. Gains: 3-6x faster builds, built-in search (MiniSearch), instant HMR, npm-packageable theme for composability across company instances.
 
 **Why this path works:** Cloudflare supports both Jekyll and VitePress. The SSG choice and the hosting/auth choice are independent. Moving hosting now doesn't lock in Jekyll — VitePress migration can happen whenever there's capacity.
-
-**Vercel alternative path:** Start with Vercel (Jekyll), upgrade to VitePress later on the same platform. Vercel is the most natural home for Vite-based sites. But auth cost ($20-170/mo) and client friction (Vercel accounts or shared passwords) are the tradeoffs.
 
 ### Domain & DNS Strategy
 
 **Current URL:** `mariuswilsch.github.io/public-wilsch-ai-pages/`
 
-**Cloudflare path (Options 2 & 3):** DNS must move to Cloudflare. Default URL: `something.pages.dev`. Custom domain (e.g., `docs.wilsch-ai.com`) requires `wilsch-ai.com` DNS on Cloudflare. If the new company has its own domain, that domain also needs Cloudflare DNS.
+**Target domain:** `docs.wilsch-ai.com` — consistent with the main website branding.
 
-**Vercel path (Option 4):** Works with any DNS provider. Default URL: `something.vercel.app`. Custom domain via CNAME — no DNS migration needed.
+**DNS setup (no zone migration needed):** Cloudflare Pages supports custom domains via CNAME record from any DNS provider. No need to move `wilsch-ai.com` DNS to Cloudflare. Setup:
+1. Create the Pages project on Cloudflare and associate `docs.wilsch-ai.com` as a custom domain
+2. Add a CNAME record at the current DNS provider: `docs` → `<project>.pages.dev`
+3. Cloudflare issues the SSL certificate automatically
 
-**Old links:** Moving platforms breaks `mariuswilsch.github.io/...` links. Mitigation: keep GitHub Pages active as a redirect target, or accept the break and update shared links.
+**Important:** The custom domain must be associated in the Cloudflare Pages dashboard BEFORE adding the CNAME record at the external DNS provider. Adding the CNAME first results in a 522 error.
 
-**Undefined:** Which domain to use and whether DNS migration to Cloudflare is acceptable. → [Meeting Agenda](hippocampus-auth-meeting-agenda)
+**New company instances:** Same pattern. Each company domain adds a CNAME for its docs subdomain (e.g., `docs.newcompany.com` → `<project>.pages.dev`). No DNS provider lock-in.
+
+**Old links:** Moving platforms breaks `mariuswilsch.github.io/...` links. Mitigation options:
+- Keep GitHub Pages active with Jekyll redirects to the new domain
+- Accept the break — update shared links in email/WhatsApp threads
+- Redirect via Jekyll plugin (if keeping Pages temporarily as redirect target)
+
+### Multi-Instance Architecture
+
+Each company gets its own hippocampus instance: separate repo, separate Cloudflare Pages project, separate Access app. Shared infrastructure (theme, CI/CD templates) is reused across instances.
+
+**Phase 1 architecture (Jekyll):**
+
+```
+Company A (Wilsch AI)           Company B (New Company)
+┌─────────────────────┐        ┌─────────────────────┐
+│ source-repo-a/      │        │ source-repo-b/      │
+│   hippocampus/      │        │   hippocampus/      │
+│     global/         │        │     global/         │
+│     project/        │        │     project/        │
+│   _layouts/         │        │   _layouts/         │
+│   _config.yml       │        │   _config.yml       │
+└─────────┬───────────┘        └─────────┬───────────┘
+          │ git push                     │ git push
+          ▼                              ▼
+┌─────────────────────┐        ┌─────────────────────┐
+│ CF Pages Project A  │        │ CF Pages Project B  │
+│ docs.wilsch-ai.com  │        │ docs.newco.com      │
+│ + CF Access App A   │        │ + CF Access App B   │
+│   (team + clients)  │        │   (team + clients)  │
+└─────────────────────┘        └─────────────────────┘
+```
+
+Each instance is fully isolated: different content, different domain, different auth policies. The `_layouts/`, `_config.yml`, and deploy workflow are duplicated — in Phase 1 this is acceptable overhead for fast setup.
+
+**Phase 2 architecture (VitePress + npm theme):**
+
+```
+hippocampus-theme (npm package)
+├── Layout.vue          (shared)
+├── styles/             (shared)
+├── components/         (shared)
+├── plugins/mermaid     (shared)
+└── config.ts           (shared base config)
+           │
+    npm install
+    ┌──────┴──────┐
+    ▼              ▼
+Instance A         Instance B
+├── docs/          ├── docs/
+│   global/        │   global/
+│   project/       │   project/
+├── .vitepress/    ├── .vitepress/
+│   config.ts      │   config.ts      (~15 lines)
+│   theme/         │   theme/
+│     index.ts     │     index.ts     (3 lines)
+├── public/        ├── public/
+│   logo.png       │   logo.png       (per-company)
+└── package.json   └── package.json
+```
+
+Shared: layout, styles, components, plugins, search config. Per-instance: logo, title, nav, sidebar, colors (~30-50 lines config).
+
+**Onboarding a new company (scripted):**
+
+Phase 1:
+1. Clone template repo → update `_config.yml` (title, logo, copyright)
+2. `wrangler pages project create <name>`
+3. Set up GitHub integration or deploy workflow
+4. Associate custom domain in CF Pages dashboard
+5. Add CNAME at company's DNS provider
+6. Create CF Access app via MCP/API (set email policies)
+7. Verify: `verify_publish.sh`
+
+Phase 2:
+1. `npx vitepress init` → `npm install hippocampus-theme`
+2. Write `config.ts` (~15 lines) + `theme/index.ts` (3 lines)
+3. Same CF Pages + Access setup as Phase 1
+
+**Isolation model:** Full isolation by default. Each instance has its own Git repository, Cloudflare Pages project, Cloudflare Access app (independent email policies), custom domain, and content (no cross-contamination).
+
+Per-path Access apps on a single deployment remain available as a lightweight alternative for internal sub-divisions (e.g., different auth per `/project/client-a/` vs `/project/client-b/` within the same company instance).
 
 ### Scaling
 
-**User growth:** Currently under 20 people need access. Could grow to 50 across all clients. Cloudflare's free tier user limit is unconfirmed in current docs — verify before committing. Vercel Pro supports unlimited users but at $20/mo minimum.
+**User growth:** Currently under 20 people need access. Could grow to 50 across all clients. Cloudflare's free tier user limit is unconfirmed in current docs — verify with Cloudflare support before treating as a hard constraint.
 
-**Instance growth:** The new company (#1349) will need its own hippocampus instance. Cloudflare supports this via per-path Access apps (one deployment, multiple auth scopes) or separate projects (100 per account). Vercel requires separate projects (200 on Hobby).
+**Instance growth:** Each new company gets a separate CF Pages project (100 projects per account, soft limit). The Multi-Instance Architecture section describes the concrete setup. Current need: 2 instances (Wilsch AI + new company). Capacity: 100 projects on the free account.
 
-**Build budget:** Cloudflare: 500 builds/month shared across all projects. Vercel: 100 deployments/day on Hobby. Both sufficient for current usage but worth monitoring as instances multiply.
+**Build budget:** Cloudflare: 500 builds/month shared across all projects. With 2-3 instances and normal publishing cadence (~5-10 publishes/day across all instances), this is well within limits. Monitor as instances multiply.
 
 ---
 
@@ -248,8 +341,9 @@ Marius identified a deployment path: start with Option 2 (Jekyll + Cloudflare) f
 - **Sessions:**
   - JA extraction pass 1 (2026-04-01): session `3aa18eda-a131-488b-ab55-3d802f295edd`
   - JA extraction pass 2 (2026-04-02): session `563457e9-ba31-4e9a-ad19-8def6f199cfb` — Marius feedback incorporated, deep platform research, composability analysis
+  - JA extraction pass 3 (2026-04-03): session `d483109e-c8f5-40be-a02f-f22c2b932f0e` — Marius decisions incorporated (Vercel rejected, Obsidian rejected, publish filter retired), DNS CNAME discovery, CF MCP server, multi-instance architecture, OTP whitelist-only confirmation
 - **Investigated repos:** `veloxforce/claude-user-configs` (hippocampus source + deploy workflow), `MariusWilsch/public-wilsch-ai-pages` (pages output + deploy workflow)
-- **Platform docs:** [Cloudflare Pages](https://developers.cloudflare.com/pages/), [CF Access OTP](https://developers.cloudflare.com/cloudflare-one/identity/one-time-pin/), [Vercel Deployment Protection](https://vercel.com/docs/security/deployment-protection), [VitePress](https://vitepress.dev/), [vitepress-plugin-mermaid](https://github.com/emersonbottero/vitepress-plugin-mermaid)
+- **Platform docs:** [Cloudflare Pages](https://developers.cloudflare.com/pages/), [CF Access OTP](https://developers.cloudflare.com/cloudflare-one/identity/one-time-pin/), [CF Access Session Management](https://developers.cloudflare.com/cloudflare-one/identity/users/session-management/), [CF Pages Custom Domains](https://developers.cloudflare.com/pages/configuration/custom-domains/), [CF MCP Server](https://github.com/cloudflare/mcp), [VitePress](https://vitepress.dev/), [VitePress Search](https://vitepress.dev/reference/default-theme-search), [vitepress-plugin-mermaid](https://github.com/emersonbottero/vitepress-plugin-mermaid), [Obsidian Publish](https://obsidian.md/publish)
 - **Related issues:** [#1349 — New Company Formation](https://github.com/DaveX2001/deliverable-tracking/issues/1349)
 
 ---

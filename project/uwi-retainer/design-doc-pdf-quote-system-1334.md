@@ -46,6 +46,23 @@ Access scope: full website. Ulrich reviewed the content and confirmed nothing ne
 
 Current leads waiting for accounts: Hasloff (hottest — his CEO wants to meet the team), Poggemüller, Amari.
 
+#### Cross-Application Isolation
+
+The website shares a single Supabase project (WILSCH_AI_PROJECTS-PROD) with three other applications: Invoice Agent, Call2Tanss (call_your_stars), and a tax module. All four applications share one auth pool — a user created for the PDF quote system exists in the same auth.users table as internal users.
+
+The Invoice Agent already enforces an AAL2 (MFA) gate on sensitive tables — invoices, tax keys, and transfer logs require multi-factor authentication. Prospect accounts are AAL1 (email + password only), so they cannot access invoice data through Supabase's Row Level Security enforcement.
+
+Gaps remain: invoice_agent.cost_centers allows any authenticated user to read, call_your_stars.profiles exposes all profiles to any authenticated user, and the tax schema has no RLS policies. These tables are accessible to any account in the shared auth pool, including prospect accounts.
+
+Two isolation strategies under consideration:
+
+| Strategy | Mechanism | Trade-off |
+|----------|-----------|-----------|
+| **Extend AAL2 pattern** | Add RLS policies to exposed tables. Prospect accounts stay AAL1 — blocked from all internal data by default. | Minimal infrastructure change. Relies on complete RLS coverage — any missed table is a gap. |
+| **Cloudflare Access gateway** | Per-application access rules at the network layer. Prospects reach the website but not Invoice Agent or other app endpoints. | Belt-and-suspenders. Adds operational overhead — each new app needs Cloudflare configuration. |
+
+**Undefined:** Auth isolation strategy — extend existing AAL2/RLS pattern or add Cloudflare Access as external gateway. Both options viable; Marius to decide based on operational preference. → [Meeting Agenda Topic 2](#2-auth-isolation-strategy-for-prospect-accounts)
+
 ### Part 2: Usage Tracking
 
 Per-account analytics: which pages the prospect visits, how long they stay, how frequently they return. Marius mentioned heatmap-style visualization as an aspiration.
@@ -56,9 +73,19 @@ Data collection is in scope for this system. Presentation follows two tiers:
 
 **Tier 2 — PDF generation notification:** When a prospect generates a PDF quote, the system sends an email notification to both Marius and Ulrich. PDF generation is the highest-intent signal in the funnel — a prospect who configures and downloads has moved from browsing to evaluating. This notification enables proactive follow-up without requiring Ulrich to check a dashboard.
 
-Dashboard and heatmap visualization are explicitly deferred. The data is collected from the start — presentation can evolve independently once the core system proves its value.
+#### Tool Selection
 
-Research needed: what analytics tools integrate with the existing Supabase + React stack for per-user page tracking.
+Two levels of tracking serve different stakeholders: page-level analytics for Ulrich ("was hat Hasloff sich angeschaut?") and element-level heatmaps for Marius (scroll depth, click patterns, drop-off points on the configurator). Both are needed — page-level first, element-level as the system matures.
+
+**Recommended: PostHog** (self-hosted). Open-source product analytics with React SDK, per-user identification (ties directly to Supabase auth context via identify() API), page views, heatmaps, session replay, and funnel analysis. Self-hosting keeps all prospect behavior data in-house — DSGVO solved by architecture, not policy. Free for self-hosted deployments.
+
+| Tool | Page-level | Element-level | Self-hostable | DSGVO |
+|------|-----------|--------------|---------------|-------|
+| **PostHog** (recommended) | ✅ | ✅ Heatmaps + session replay | ✅ | ✅ |
+| **Matomo** (alternative) | ✅ | ✅ Heatmaps via plugin | ✅ | ✅ |
+| **Custom Supabase table** (fallback) | ✅ | ❌ | ✅ | ✅ |
+
+Tier 1 can launch with either a custom Supabase page_views table (simplest, zero new dependencies) or PostHog basic events (more setup upfront, but the same tool scales to Tier 2). Tier 2 activates PostHog heatmaps and session replay — the element-level capability that requires an external tool.
 
 ### Part 3: Self-Service Configurator
 
@@ -121,6 +148,30 @@ The PDF's line items follow the product structure — not the Warenwirtschaft ar
 
 How Ulrich maps these line items to Warenwirtschaft articles for formal Auftragsbestätigungen is an operational concern handled post-sale — it does not affect the PDF's design or the configurator's pricing logic.
 
+### Part 6: Configurator Value Management
+
+Hardware prices are volatile — IBM raised Spyre component prices 55% in March, and DGX Spark pricing follows market conditions. The configurator's pricing and product options cannot be hardcoded in React components. Changes to prices, setup scopes, or available connectors should not require a code deployment.
+
+Values that change:
+
+| Category | Example | Frequency |
+|----------|---------|-----------|
+| **Prices** | DGX Spark €5K → €6K, rental €500 → €550/Mo | Anytime (market-driven) |
+| **Product options** | New connector type, dual DGX Spark added | Quarterly |
+| **Setup scope** | Base days, full days, Manntage rates | Annually |
+| **Campaign messaging** | Scarcity framing, disclaimer text | Per campaign |
+
+The configurator reads current values from a data source at runtime. The PDF generation pipeline pulls the same values — configurator and PDF are always in sync.
+
+Two approaches under consideration:
+
+| Approach | How it works | Trade-off |
+|----------|-------------|-----------|
+| **Supabase-native admin** | Products/prices table in the existing Supabase project. Simple admin page on the website (protected route). Marius or David edits values via web form. | Simplest — no new infrastructure. Limited to structured data (fields, not rich text). |
+| **Payload CMS** | Headless CMS with admin UI, API, and content modeling. Configurator reads from Payload API. Richer editing experience — visual preview, draft/publish workflow. | More capable editor. Requires separate server + database. New infrastructure dependency. |
+
+Both approaches serve the core requirement: prices and options editable without code changes. The choice depends on how rich the editing experience needs to be and whether the operational overhead of a separate CMS server is justified for ~10 product entries. Marius to decide.
+
 ---
 
 ## Source
@@ -134,6 +185,8 @@ How Ulrich maps these line items to Warenwirtschaft articles for formal Auftrags
 - **Tracking:** [#1334](https://github.com/DaveX2001/deliverable-tracking/issues/1334) · Parent [#650](https://github.com/DaveX2001/deliverable-tracking/issues/650)
 - **Session (Pass 1):** 77326ad8-8fe0-4ac8-aecb-dfb0ac893fc9
 - **Session (Pass 2):** ef33fa5a-4cbf-4df2-8b55-5c1febc3667d
+- **Transcript (3. April):** [Grooming Session](https://app.fireflies.ai/view/01KN9MYRJHAEWB76FFPHASWZRT) — Cloudflare auth discussion, design doc review feedback
+- **Session (Pass 3):** 0877d265-e31a-46e3-9b59-91010990d80c
 
 🤖
 
