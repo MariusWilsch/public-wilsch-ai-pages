@@ -42,7 +42,9 @@ Marius creates individual email-based accounts for each seminar lead — one acc
 
 Authentication runs through Cloudflare Access — not Supabase. Marius adds a prospect's email address to the Access policy. The prospect receives an email one-time passcode (OTP) to log in — no passwords to manage, no Supabase accounts to create. Cloudflare Access session duration controls the 30-day window. After expiry, the prospect loses access without manual cleanup.
 
-This decouples the website's authentication entirely from the shared Supabase project (WILSCH_AI_PROJECTS-PROD) that serves Invoice Agent, Call2Tanss, and the tax module. Prospect accounts never enter the internal auth pool — the cross-application isolation concern that existed with Supabase auth disappears by architecture.
+This is also a validation experiment: testing how simple or hard Cloudflare Access is as an alternative to Supabase auth for sites that don't need a full project database. The strategic positioning: Supabase stays the auth layer for project applications (Invoice Agent, Call2Tanss, tax module), while Cloudflare Access becomes the pattern for one-off sites — similar to how Hippocampus v2 operates. If the experiment succeeds here, it becomes the default for future one-off deployments.
+
+This decouples the website's authentication entirely from the shared Supabase project (WILSCH_AI_PROJECTS-PROD) that serves the project applications. Prospect accounts never enter the internal auth pool — the cross-application isolation concern that existed with Supabase auth disappears by architecture.
 
 Access scope: full website. Ulrich reviewed the content and confirmed nothing needs to be restricted. Marius flagged AWO/Rekers case study data as potentially sensitive, but Ulrich approved full access.
 
