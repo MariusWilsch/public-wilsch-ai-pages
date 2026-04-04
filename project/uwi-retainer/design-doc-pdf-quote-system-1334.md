@@ -38,30 +38,17 @@ Ulrich's benchmark: Holger Scherer's IBM Power configurator — "gewisse Werte e
 
 ### Part 1: Prospect Account System
 
-Marius creates individual email-based accounts for each seminar lead — one account per person per company. No shared logins, no self-registration. Accounts expire automatically after 30 days.
+Marius creates individual email-based accounts for each seminar lead — one account per person per company. No shared logins, no self-registration. Accounts expire after 30 days.
 
-The website already runs Supabase auth. Account creation is a manual but fast operation — Marius or David creates the account, sends the credentials to the prospect. Ulrich provides the lead's email address.
+Authentication runs through Cloudflare Access — not Supabase. Marius adds a prospect's email address to the Access policy. The prospect receives an email one-time passcode (OTP) to log in — no passwords to manage, no Supabase accounts to create. Cloudflare Access session duration controls the 30-day window. After expiry, the prospect loses access without manual cleanup.
+
+This decouples the website's authentication entirely from the shared Supabase project (WILSCH_AI_PROJECTS-PROD) that serves Invoice Agent, Call2Tanss, and the tax module. Prospect accounts never enter the internal auth pool — the cross-application isolation concern that existed with Supabase auth disappears by architecture.
 
 Access scope: full website. Ulrich reviewed the content and confirmed nothing needs to be restricted. Marius flagged AWO/Rekers case study data as potentially sensitive, but Ulrich approved full access.
 
 Current leads waiting for accounts: Hasloff (hottest — his CEO wants to meet the team), Poggemüller, Amari.
 
-#### Cross-Application Isolation
-
-The website shares a single Supabase project (WILSCH_AI_PROJECTS-PROD) with three other applications: Invoice Agent, Call2Tanss (call_your_stars), and a tax module. All four applications share one auth pool — a user created for the PDF quote system exists in the same auth.users table as internal users.
-
-The Invoice Agent already enforces an AAL2 (MFA) gate on sensitive tables — invoices, tax keys, and transfer logs require multi-factor authentication. Prospect accounts are AAL1 (email + password only), so they cannot access invoice data through Supabase's Row Level Security enforcement.
-
-Gaps remain: invoice_agent.cost_centers allows any authenticated user to read, call_your_stars.profiles exposes all profiles to any authenticated user, and the tax schema has no RLS policies. These tables are accessible to any account in the shared auth pool, including prospect accounts.
-
-Two isolation strategies under consideration:
-
-| Strategy | Mechanism | Trade-off |
-|----------|-----------|-----------|
-| **Extend AAL2 pattern** | Add RLS policies to exposed tables. Prospect accounts stay AAL1 — blocked from all internal data by default. | Minimal infrastructure change. Relies on complete RLS coverage — any missed table is a gap. |
-| **Cloudflare Access gateway** | Per-application access rules at the network layer. Prospects reach the website but not Invoice Agent or other app endpoints. | Belt-and-suspenders. Adds operational overhead — each new app needs Cloudflare configuration. |
-
-**Undefined:** Auth isolation strategy — extend existing AAL2/RLS pattern or add Cloudflare Access as external gateway. Both options viable; Marius to decide based on operational preference. → [Meeting Agenda Topic 2](#2-auth-isolation-strategy-for-prospect-accounts)
+Prospect records — email, company, name, account creation date, expiry — are managed as a Payload CMS collection (see Part 6). This gives the team a single admin interface for both content management and prospect access.
 
 ### Part 2: Usage Tracking
 
@@ -77,15 +64,17 @@ Data collection is in scope for this system. Presentation follows two tiers:
 
 Two levels of tracking serve different stakeholders: page-level analytics for Ulrich ("was hat Hasloff sich angeschaut?") and element-level heatmaps for Marius (scroll depth, click patterns, drop-off points on the configurator). Both are needed — page-level first, element-level as the system matures.
 
-**Recommended: PostHog** (self-hosted). Open-source product analytics with React SDK, per-user identification (ties directly to Supabase auth context via identify() API), page views, heatmaps, session replay, and funnel analysis. Self-hosting keeps all prospect behavior data in-house — DSGVO solved by architecture, not policy. Free for self-hosted deployments.
+**Recommended: PostHog** (self-hosted). Open-source product analytics with React SDK, per-user identification (ties to Cloudflare Access email claim via identify() API), page views, heatmaps, session replay, and funnel analysis. Self-hosting keeps all prospect behavior data in-house — DSGVO solved by architecture, not policy. Free for self-hosted deployments. PostHog runs on a separate VPS — not on Cloudflare Workers — as it requires persistent storage and background processing.
+
+**Baseline: Cloudflare Web Analytics** (free, zero-config). Privacy-first page-level analytics with no cookies and no JavaScript tag required. Provides aggregate page views, top pages, and referrer data out of the box. Not a replacement for PostHog — it covers the "is anyone visiting?" question while PostHog answers "what is Hasloff doing?"
 
 | Tool | Page-level | Element-level | Self-hostable | DSGVO |
 |------|-----------|--------------|---------------|-------|
 | **PostHog** (recommended) | ✅ | ✅ Heatmaps + session replay | ✅ | ✅ |
 | **Matomo** (alternative) | ✅ | ✅ Heatmaps via plugin | ✅ | ✅ |
-| **Custom Supabase table** (fallback) | ✅ | ❌ | ✅ | ✅ |
+| **Cloudflare Web Analytics** (baseline) | ✅ | ❌ | N/A (Cloudflare-hosted) | ✅ |
 
-Tier 1 can launch with either a custom Supabase page_views table (simplest, zero new dependencies) or PostHog basic events (more setup upfront, but the same tool scales to Tier 2). Tier 2 activates PostHog heatmaps and session replay — the element-level capability that requires an external tool.
+Tier 1 launches with Cloudflare Web Analytics (zero setup) plus PostHog basic events for per-user tracking. Tier 2 activates PostHog heatmaps and session replay — the element-level capability Marius wants for configurator optimization.
 
 ### Part 3: Self-Service Configurator
 
@@ -148,7 +137,7 @@ The PDF's line items follow the product structure — not the Warenwirtschaft ar
 
 How Ulrich maps these line items to Warenwirtschaft articles for formal Auftragsbestätigungen is an operational concern handled post-sale — it does not affect the PDF's design or the configurator's pricing logic.
 
-### Part 6: Configurator Value Management
+### Part 6: Content Infrastructure — Payload CMS
 
 Hardware prices are volatile — IBM raised Spyre component prices 55% in March, and DGX Spark pricing follows market conditions. The configurator's pricing and product options cannot be hardcoded in React components. Changes to prices, setup scopes, or available connectors should not require a code deployment.
 
@@ -163,14 +152,87 @@ Values that change:
 
 The configurator reads current values from a data source at runtime. The PDF generation pipeline pulls the same values — configurator and PDF are always in sync.
 
-Two approaches under consideration:
+#### Resolved: Payload CMS
 
-| Approach | How it works | Trade-off |
-|----------|-------------|-----------|
-| **Supabase-native admin** | Products/prices table in the existing Supabase project. Simple admin page on the website (protected route). Marius or David edits values via web form. | Simplest — no new infrastructure. Limited to structured data (fields, not rich text). |
-| **Payload CMS** | Headless CMS with admin UI, API, and content modeling. Configurator reads from Payload API. Richer editing experience — visual preview, draft/publish workflow. | More capable editor. Requires separate server + database. New infrastructure dependency. |
+Payload CMS v3 serves as content infrastructure for the entire website — not just the configurator. MIT-licensed, open-source, free to self-host. Figma acquired Payload in June 2025 and committed to continued open-source investment. The REICHERT project (Klimafolgenschutz website) already runs Payload v3 with PostgreSQL, Lexical rich text, and Resend email integration — a proven pattern within the team.
 
-Both approaches serve the core requirement: prices and options editable without code changes. The choice depends on how rich the editing experience needs to be and whether the operational overhead of a separate CMS server is justified for ~10 product entries. Marius to decide.
+Payload v3 is Next.js-native — it embeds directly into the `/app` folder, sharing one codebase, one deployment. Server components access the database directly via Payload's Local API, no HTTP API calls needed. The admin panel runs at `/admin` on the same domain.
+
+#### Cloudflare-Native Deployment
+
+The entire stack runs on Cloudflare:
+
+| Layer | Service | Purpose |
+|-------|---------|---------|
+| **Compute** | Cloudflare Workers | Next.js + embedded Payload v3 |
+| **Database** | Cloudflare D1 | Serverless SQLite via `@payloadcms/db-sqlite` |
+| **Media** | Cloudflare R2 | Product images, PDF assets, uploaded media |
+| **Auth** | Cloudflare Access | Prospect email OTP, session management (see Part 1) |
+| **Analytics** | Cloudflare Web Analytics | Baseline page-level metrics (free) |
+
+No Supabase, no separate CMS server, no Docker. One deployment target. Payload on Cloudflare Workers is officially supported with one-click deployment.
+
+#### Collection Model (Phased)
+
+**MVP — PDF Quote System:**
+- **Products** — Hardware configs and pricing (purchase/rental)
+- **SetupScopes** — Base vs Full setup options with included connectors
+- **DataConnectors** — Available connector types and pricing
+- **Prospects** — Account management (email, company, expiry)
+- **PDFAssets** — Branding elements, disclaimer text, comparison content
+- **Media** — Image uploads (built-in Payload collection)
+
+**V2 — Newsletter (3-6 months):**
+- **Subscribers** — Email list with preferences and subscription status
+- **Newsletters** — Rich text content, scheduling, send status
+
+Email delivery via Resend — the same adapter used in the REICHERT project. The `payload-plugin-newsletter` community plugin provides subscriber management, scheduling, and pre-built signup forms. Marius's personal "Marketingstruktur" initiative — deferred but architecturally ready.
+
+**V3 — Content Platform:**
+- **BlogPosts** — Thought leadership and product marketing with Lexical rich text, draft/publish workflow
+- **CaseStudies** — Client success stories (replaces the 5 static JSON files currently in the codebase)
+- **Pages** — CMS-managed page sections (hero, CTAs, product descriptions currently hardcoded in React)
+- **Legal** — Impressum, Datenschutz (same pattern as REICHERT)
+
+**Globals (site-wide config):**
+- **SiteConfig** — Company name, contact info, social links
+- **Navigation** — Menu items, footer links
+- **CampaignConfig** — Active campaigns, scarcity messaging, disclaimer text
+
+The collection model is composable — MVP collections ship with the PDF quote system, V2 and V3 collections are added when the business need materializes. Adding a collection is a config change, not a rebuild.
+
+### Part 7: Website Architecture Migration
+
+The wilsch-ai.com website currently runs as a React 19 + Vite single-page application on Vercel, with Supabase authentication and all content hardcoded in React components or static JSON files. The Payload CMS integration requires migrating to Next.js — Payload v3 embeds natively into Next.js and cannot integrate with a Vite-based SPA.
+
+| Aspect | Current | Target |
+|--------|---------|--------|
+| **Framework** | React 19 + Vite + React Router v7 | Next.js 15 + embedded Payload v3 |
+| **Deployment** | Vercel | Cloudflare Workers + Pages |
+| **Auth** | Supabase (magic link + password) | Cloudflare Access (email OTP) |
+| **Content** | Hardcoded in components + 5 static JSON case studies | Payload CMS collections (D1 database) |
+| **CMS** | None | Payload admin at `/admin` |
+| **Blog/Newsletter** | None | V2/V3 collections when ready |
+
+#### Why Rebuild Now
+
+The site currently needs no server-side rendering — all routes are behind authentication, so SEO is irrelevant. Under normal circumstances, this would favor keeping the React + Vite stack and using Payload as a headless API.
+
+However, the newsletter and blog capabilities are 3-6 months away, not years. When public content launches, SSR and SEO become essential. Rebuilding from Vite to Next.js later would require a second migration — paying migration tax twice. Doing it once during the PDF quote system implementation avoids this.
+
+The existing codebase is manageable: ~960 lines in the main App.jsx, 9 routes, 5 case study JSON files, and standard libraries (Three.js, Framer Motion, shadcn/ui, Recharts) that all work in Next.js.
+
+#### Migration Scope
+
+| Component | Migration Path |
+|-----------|---------------|
+| **Routes** | React Router v7 → Next.js App Router (file-based) |
+| **Auth** | Supabase `AuthContext` → Cloudflare Access middleware |
+| **Content** | Hardcoded JSX → Payload CMS API / server components |
+| **Case Studies** | Static JSON files → CaseStudies collection |
+| **Styling** | Tailwind + shadcn/ui → unchanged (works in Next.js) |
+| **3D/Animations** | Three.js + Framer Motion → client components (unchanged) |
+| **Build** | Vite → Next.js build (`@cloudflare/next-on-pages`) |
 
 ---
 
@@ -187,6 +249,8 @@ Both approaches serve the core requirement: prices and options editable without 
 - **Session (Pass 2):** ef33fa5a-4cbf-4df2-8b55-5c1febc3667d
 - **Transcript (3. April):** [Grooming Session](https://app.fireflies.ai/view/01KN9MYRJHAEWB76FFPHASWZRT) — Cloudflare auth discussion, design doc review feedback
 - **Session (Pass 3):** 0877d265-e31a-46e3-9b59-91010990d80c
+- **Research (Pass 4):** [Payload CMS Docs](https://payloadcms.com/docs) · [REICHERT Repo](https://github.com/DaveX2001/06_ABTMAYR-REICHERT__klimafolgenschutz-website) · [Payload on Cloudflare](https://blog.cloudflare.com/payload-cms-workers/)
+- **Session (Pass 4):** 8b1e37ff-7b58-4044-bfc0-54ed7aa7c3ce
 
 🤖
 
