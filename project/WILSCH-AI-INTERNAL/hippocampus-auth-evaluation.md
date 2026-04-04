@@ -69,7 +69,21 @@ The two options below replace the final output (GitHub Pages) while preserving t
 **Auth model:** Cloudflare Access (Zero Trust) intercepts every request at the network edge:
 - **Team:** Google OAuth — sign in with `@wilsch-ai.com`. Seamless.
 - **Clients:** Email OTP (whitelist-only) — only emails explicitly added to the Access policy can authenticate. Non-whitelisted emails see "A code has been emailed to you" but receive nothing (deliberate security design — no information leakage about who is in the policy). Session configurable per-app (`session_duration` field — 30 min to 7 days, default 24h). No account creation needed.
-- **Per-path isolation:** Access apps support `host/path/*` patterns natively. One deployment, different auth per `/project/traceline/` vs `/project/wilsch-ai/`. This enables multi-tenant on a single site.
+- **Per-path isolation:** Access apps support `host/path/*` patterns natively. The more specific path wins — a broad `docs.wilsch-ai.com/*` policy for team access stacks correctly with narrow per-client policies. This is more granular than GitHub's repository-level access model: per-path auth achieves per-client isolation within a single deployment, without splitting repositories or projects.
+
+  **Concrete example:**
+
+  | Access App | Path Pattern | Policy | Auth |
+  |------------|-------------|--------|------|
+  | Team (broad) | `/*` | Allow `@wilsch-ai.com` | Google OAuth |
+  | Traceline | `/project/traceline/*` | Allow `client@traceline.de` | Email OTP |
+  | Reichert | `/project/abtmayr-reichert/*` | Allow `r.reichert@example.com` | Email OTP |
+
+  Traceline client navigating to `/project/abtmayr-reichert/` is blocked — Cloudflare shows a branded "Access Denied" page (customizable: default CF page, custom redirect URL on free tier, or custom HTML on paid tier). The denial page can be replaced with a Worker-based 404 response if path-existence concealment is needed.
+
+  **Cookie behavior:** The `CF_Authorization` cookie is domain-scoped by default. A user authenticates once and Access evaluates their identity against each path's policy — the cookie carries identity, the policy grants or denies per path. A consultant in both Traceline and Reichert whitelists authenticates once and can access both. Optional: enable `Cookie Path Attribute` for per-path cookie scoping (separate auth per path).
+
+  **User management:** Each Access app has its own email policy. Access Groups can DRY up common whitelists (e.g., a "wilsch-ai-internal" group reused across all per-path apps).
 
 **Session granularity:** Three-tier duration hierarchy:
 - **Global:** 15 min to 1 month (default 24h) — how often users re-authenticate with their IdP across all apps
@@ -80,22 +94,30 @@ Revocation is per-app (all sessions for one app) or per-user (one user across al
 
 **OTP ceremony:** Client receives link via email or WhatsApp → opens in browser → redirected to CF Access login → enters email → receives 6-digit code via email → enters code → gets session cookie. When link comes via WhatsApp, client must switch to email app for the code — real friction (~30-60 seconds total). Corporate email scanners may auto-consume OTP codes (documented CF limitation; mitigation: allowlist `noreply@notify.cloudflare.com`).
 
-**Agent automation (CLI/API/MCP):**
+**Agent automation preference hierarchy:**
 
-| Operation | Method |
-|-----------|--------|
-| Create project | `wrangler pages project create` |
-| Deploy | `wrangler pages deploy _site/` (pre-build Jekyll first) |
-| Custom domains | REST API: `POST /accounts/{id}/pages/projects/{name}/domains` |
-| Config as code | `wrangler.toml` with `pages_build_output_dir` — becomes source of truth |
-| Create Access app | REST API or CF MCP: `POST /accounts/{id}/access/apps` |
-| Add client email | REST API or CF MCP: `PUT` policy's `include` array |
-| Revoke user | REST API or CF MCP: `DELETE /accounts/{id}/access/users/{user_id}` |
-| Enable OTP | REST API or CF MCP: `POST /accounts/{id}/access/identity_providers` type `onetimepin` |
+The agent must prefer MCP over CLI, and CLI over API. API is the fallback for operations not covered by MCP or CLI.
 
-**Cloudflare MCP server:** Official `cloudflare/mcp` repository provides an MCP server covering ~2,500 API endpoints including Access and Pages. The agent can manage auth policies, user access, and deployments natively through MCP — no raw REST calls needed. Wrangler CLI covers Pages deployment but does not cover Access management.
+| Preference | Tool | Covers |
+|------------|------|--------|
+| **1st: MCP** | Cloudflare MCP server (`cloudflare/mcp`) | Access apps, policies, user management, identity providers, Pages config (~2,500 endpoints) |
+| **2nd: CLI** | Wrangler CLI | Pages project creation, deployment, `wrangler.toml` config-as-code |
+| **3rd: API** | REST API | Custom domains (`POST .../domains`), edge cases not covered by MCP or CLI |
 
-**Agent completeness: 100%.** Every operation — project creation, deploy, auth config, client management, revocation — is CLI, API, or MCP. No dashboard touch required.
+| Operation | Preferred | Command |
+|-----------|-----------|---------|
+| Create Access app | MCP | `POST /accounts/{id}/access/apps` |
+| Add client email | MCP | `PUT` policy `include` array |
+| Revoke user | MCP | `DELETE /accounts/{id}/access/users/{user_id}` |
+| Enable OTP | MCP | `POST /accounts/{id}/access/identity_providers` type `onetimepin` |
+| Create Pages project | CLI | `wrangler pages project create` |
+| Deploy | CLI | `wrangler pages deploy _site/` |
+| Config as code | CLI | `wrangler.toml` with `pages_build_output_dir` |
+| Custom domains | API | `POST /accounts/{id}/pages/projects/{name}/domains` |
+
+**Cloudflare MCP server:** Official `cloudflare/mcp` repository. The agent manages auth policies, user access, and deployments natively through MCP. Wrangler CLI covers Pages deployment and project setup. REST API is the fallback for operations not yet exposed via MCP or CLI (currently: custom domain association).
+
+**Agent completeness: 100%.** Every operation — project creation, deploy, auth config, client management, revocation — is MCP, CLI, or API. No dashboard touch required.
 
 **Push-to-deploy:** Connect the GitHub repo to Cloudflare Pages. Every push to `main` triggers a Jekyll build automatically. Preview deployments per branch. The existing two-workflow chain works — Cloudflare Pages builds from the pages repo.
 
@@ -124,7 +146,26 @@ Revocation is per-app (all sessions for one app) or per-user (one user across al
 
 **Why VitePress:** Purpose-built for documentation. Build time drops from 60-120s (Jekyll, 334 pages) to ~20s. Built-in local search via MiniSearch (Ctrl+K modal, 1 line of config). Instant HMR during development (sub-100ms vs Jekyll's 30-60s full rebuilds). Broken relative links surface as build errors — strict but catches accumulated dead links. The theme can be packaged as an npm module for reuse across instances.
 
-**Search:** VitePress includes MiniSearch-powered full-text search out of the box. Activated with one config line: `themeConfig: { search: { provider: 'local' } }`. Appears as a modal dialog triggered by Ctrl+K from the nav bar. Supports fuzzy matching, custom rendering, and per-page exclusion via `search: false` frontmatter. For 334+ docs, the client-side index is substantial — Algolia DocSearch is available as a built-in alternative if performance needs scale (`provider: 'algolia'`).
+**Search evaluation:**
+
+Four search providers were evaluated for a 334-doc private site behind Cloudflare Access. The auth constraint is decisive: any solution that crawls a live URL fails against CF Access unless injecting Service Token credentials. Build-time indexing from source files is the safe path.
+
+| Provider | Type | CF Access Compatible | Integration | Status |
+|----------|------|---------------------|-------------|--------|
+| **MiniSearch** (built-in) | Client-side, build-time index | Yes (no crawler) | 1 config line | Active (VitePress core) |
+| **Typesense** | Server-side, build-time index | Yes (`vitepress-plugin-typesense`) | ~15 lines + server | Active (v1.1.5, Feb 2026) |
+| **Algolia DocSearch** | Server-side, crawler | No (free tier requires public site; paid tier needs CF Service Token) | Built-in provider | Rejected |
+| **FlexSearch** | Client-side, build-time index | Yes (no crawler) | Community plugin | Rejected (abandoned Apr 2023) |
+
+**Decision: MiniSearch as default, Typesense as upgrade path.**
+
+MiniSearch ships with VitePress — zero dependencies, 1 config line: `themeConfig: { search: { provider: 'local' } }`. Ctrl+K modal, fuzzy matching, per-page exclusion via `search: false` frontmatter. At 334 docs (2-5 KB each), the client-side index is well within MiniSearch's comfortable range.
+
+Typesense is the upgrade path if search quality needs typo tolerance, relevance ranking, or faceted filtering beyond MiniSearch's capabilities. `vitepress-plugin-typesense` builds the index at `vitepress build` time (no crawler, no CF Access friction). Requires one Docker container (self-hosted, free) or Typesense Cloud ($7-58/month). Evaluate when build time exceeds 2 minutes or search quality requirements grow.
+
+**Algolia rejected:** Free DocSearch tier explicitly requires public sites. The crawler cannot authenticate through CF Access without a paid plan + CF Service Token configuration. Paid Algolia ($50-200/month) is disproportionate for a private 334-doc site.
+
+**FlexSearch rejected:** `vitepress-plugin-search` (the FlexSearch wrapper) has no stable release — last published April 2023 (alpha), 8 unresolved issues, no VitePress 1.x compatibility verification. Do not use.
 
 **Plugin ecosystem:**
 
@@ -132,9 +173,29 @@ Revocation is per-app (all sessions for one app) or per-user (one user across al
 |--------|---------|
 | `vitepress-plugin-mermaid` | Diagram rendering (already in use) |
 | `vitepress-sidebar` | Auto-generates sidebar from file structure |
-| `vitepress-export-pdf` | Export full site to PDF |
+| `vitepress-export-pdf` | Per-page and full-site PDF export |
 | `vite-pwa/vitepress` | Zero-config PWA (offline access) |
-| `vitepress-plugin-search` | FlexSearch alternative to built-in MiniSearch |
+| `vitepress-plugin-typesense` | Typesense search integration (upgrade path) |
+
+**PDF export:** `vitepress-export-pdf` generates PDF companions at build time via Puppeteer (headless Chrome). Each page gets a downloadable PDF with Mermaid diagrams rendered correctly (JavaScript executes during PDF generation). Distribution: a "Download PDF" button on each doc page, served at the same path with `.pdf` extension — protected by the same CF Access policy as the HTML version. Build time impact: ~2-5 minutes added to CI for 334 pages. Can be scoped to `project/` only (client-facing docs) if `global/` PDFs are unnecessary.
+
+**Sidebar navigation:** VitePress supports multi-sidebar — different sidebar trees per URL path prefix. Combined with per-path auth, this creates clean client isolation at both access and navigation layers:
+
+```ts
+sidebar: {
+  '/project/traceline/': [
+    // Only Traceline docs visible in sidebar
+  ],
+  '/project/abtmayr-reichert/': [
+    // Only Reichert docs visible in sidebar
+  ],
+  '/global/': [
+    // Methodology, position agreements — team only
+  ]
+}
+```
+
+A Traceline client at `/project/traceline/` sees only Traceline entries in the sidebar. They never encounter other clients' content or directory names in navigation. `vitepress-sidebar` auto-generates these sidebar trees from the directory structure — no manual listing of individual pages required.
 
 No auth plugins exist in the VitePress ecosystem — auth is handled at the Cloudflare layer (platform-level, SSG-independent).
 
@@ -208,14 +269,18 @@ Two additional platforms were evaluated and rejected.
 |-----------|---------|---------------------|------------------------|
 | **Auth** | None (public) | Email OTP (free, whitelist-only) | Email OTP (free, whitelist-only) |
 | **Client friction** | Zero | OTP 30-60s, no account | OTP 30-60s, no account |
-| **Agent automation** | 100% (push → done) | 100% (CLI + API + MCP) | 100% (CLI + API + MCP) |
+| **Agent automation** | 100% (push → done) | 100% (MCP → CLI → API) | 100% (MCP → CLI → API) |
+| **Agent preference** | N/A | MCP → CLI → API | MCP → CLI → API |
 | **Push-to-deploy** | Git push → auto | Git push → auto | Git push → auto |
 | **SSG** | Jekyll | Jekyll | VitePress |
-| **Search** | None | None (Jekyll limitation) | MiniSearch built-in (Ctrl+K) |
+| **Search** | None | None (Jekyll limitation) | MiniSearch default, Typesense upgrade |
+| **PDF export** | N/A | N/A | Per-page download (build-time) |
+| **Sidebar** | N/A | N/A | Multi-sidebar (per-path isolation) |
 | **Content migration** | — | Zero | 3-7 days (from Jekyll) |
 | **Setup effort** | — | ~1 hour | ~3-7 days |
 | **Cost** | Free | Free | Free |
 | **Per-path auth** | N/A | Yes (native) | Yes (native) |
+| **Client versioning** | N/A | Snapshot URLs (immutable per-deploy) | Snapshot URLs (immutable per-deploy) |
 | **Composability** | N/A | Per-path multi-tenant + scriptable | npm theme + separate projects |
 | **DNS requirement** | GitHub | CNAME to .pages.dev (any DNS provider) | CNAME to .pages.dev (any DNS provider) |
 | **Publish filter** | `publish: true` | Retired (auth replaces it) | N/A (never had it) |
@@ -236,17 +301,14 @@ Two additional platforms were evaluated and rejected.
 
 **DNS setup (no zone migration needed):** Cloudflare Pages supports custom domains via CNAME record from any DNS provider. No need to move `wilsch-ai.com` DNS to Cloudflare. Setup:
 1. Create the Pages project on Cloudflare and associate `docs.wilsch-ai.com` as a custom domain
-2. Add a CNAME record at the current DNS provider: `docs` → `<project>.pages.dev`
+2. Add a CNAME record at the current DNS provider: `docs` → `<project>.pages.dev` (Cloudflare Pages default domain — every Pages project gets a `<project>.pages.dev` subdomain automatically)
 3. Cloudflare issues the SSL certificate automatically
 
 **Important:** The custom domain must be associated in the Cloudflare Pages dashboard BEFORE adding the CNAME record at the external DNS provider. Adding the CNAME first results in a 522 error.
 
 **New company instances:** Same pattern. Each company domain adds a CNAME for its docs subdomain (e.g., `docs.newcompany.com` → `<project>.pages.dev`). No DNS provider lock-in.
 
-**Old links:** Moving platforms breaks `mariuswilsch.github.io/...` links. Mitigation options:
-- Keep GitHub Pages active with Jekyll redirects to the new domain
-- Accept the break — update shared links in email/WhatsApp threads
-- Redirect via Jekyll plugin (if keeping Pages temporarily as redirect target)
+**Migration strategy:** Run both systems in parallel until the Done Test passes (see Success Definition). GitHub Pages stays live at `mariuswilsch.github.io/...` while Cloudflare Pages runs at `docs.wilsch-ai.com`. When all four Done Test criteria are confirmed, GitHub Pages is decommissioned and old links break. The team accepts the link breakage — there are few shared links in circulation, and impacted recipients will be notified directly.
 
 ### Multi-Instance Architecture
 
@@ -324,6 +386,23 @@ Phase 2:
 
 Per-path Access apps on a single deployment remain available as a lightweight alternative for internal sub-divisions (e.g., different auth per `/project/client-a/` vs `/project/client-b/` within the same company instance).
 
+### Client Versioning
+
+When sharing a design doc with a client, the team may want to pin a specific version while development continues. This is a post-implementation capability — it does not block Phase 1 or Phase 2 delivery.
+
+**Mechanism:** Every Cloudflare Pages deployment creates an immutable snapshot URL (`<hash>.docs.pages.dev`). This URL is permanent — it never changes regardless of future pushes to `main`. When a document version is ready for client review, the agent shares that deployment's snapshot URL. Ongoing development continues on `main` with new deployments getting new URLs.
+
+**Workflow:**
+1. Design doc reaches review-ready state (e.g., after extraction pass 3)
+2. Agent notes the current deployment's snapshot URL
+3. Agent sends snapshot URL to client (via email or WhatsApp)
+4. Work continues on `main` — client's link always shows the version they received
+5. When the next version is ready, agent sends a new snapshot URL
+
+**Trade-off:** New URL each time means the client cannot bookmark a single stable link. This is acceptable — re-sharing creates a natural touchpoint for the client to provide feedback on the new version.
+
+**Alternative (if needed later):** Branch-per-client deploys (`client/reichert` branch → `client-reichert.docs.pages.dev`) provide a stable URL that updates only when explicitly pushed. This adds branch management overhead and should only be considered if re-sharing becomes friction.
+
 ### Scaling
 
 **User growth:** Currently under 20 people need access. Could grow to 50 across all clients. Cloudflare's free tier user limit is unconfirmed in current docs — verify with Cloudflare support before treating as a hard constraint.
@@ -342,8 +421,9 @@ Per-path Access apps on a single deployment remain available as a lightweight al
   - JA extraction pass 1 (2026-04-01): session `3aa18eda-a131-488b-ab55-3d802f295edd`
   - JA extraction pass 2 (2026-04-02): session `563457e9-ba31-4e9a-ad19-8def6f199cfb` — Marius feedback incorporated, deep platform research, composability analysis
   - JA extraction pass 3 (2026-04-03): session `d483109e-c8f5-40be-a02f-f22c2b932f0e` — Marius decisions incorporated (Vercel rejected, Obsidian rejected, publish filter retired), DNS CNAME discovery, CF MCP server, multi-instance architecture, OTP whitelist-only confirmation
+  - JA extraction pass 4 (2026-04-04): session `be03dcb5-f1dc-4104-bf44-ea5c4ab3adc1` — Marius April 4 feedback: search design pass (MiniSearch/Typesense/Algolia/FlexSearch evaluated), client versioning (snapshot URLs), PDF export, sidebar navigation, per-path auth expansion, agent preference hierarchy, migration decision
 - **Investigated repos:** `veloxforce/claude-user-configs` (hippocampus source + deploy workflow), `MariusWilsch/public-wilsch-ai-pages` (pages output + deploy workflow)
-- **Platform docs:** [Cloudflare Pages](https://developers.cloudflare.com/pages/), [CF Access OTP](https://developers.cloudflare.com/cloudflare-one/identity/one-time-pin/), [CF Access Session Management](https://developers.cloudflare.com/cloudflare-one/identity/users/session-management/), [CF Pages Custom Domains](https://developers.cloudflare.com/pages/configuration/custom-domains/), [CF MCP Server](https://github.com/cloudflare/mcp), [VitePress](https://vitepress.dev/), [VitePress Search](https://vitepress.dev/reference/default-theme-search), [vitepress-plugin-mermaid](https://github.com/emersonbottero/vitepress-plugin-mermaid), [Obsidian Publish](https://obsidian.md/publish)
+- **Platform docs:** [Cloudflare Pages](https://developers.cloudflare.com/pages/), [CF Access OTP](https://developers.cloudflare.com/cloudflare-one/identity/one-time-pin/), [CF Access Session Management](https://developers.cloudflare.com/cloudflare-one/identity/users/session-management/), [CF Pages Custom Domains](https://developers.cloudflare.com/pages/configuration/custom-domains/), [CF MCP Server](https://github.com/cloudflare/mcp), [CF Access App Paths](https://developers.cloudflare.com/cloudflare-one/access-controls/policies/app-paths/), [CF Access Custom Pages](https://developers.cloudflare.com/cloudflare-one/reusable-components/custom-pages/access-block-page/), [VitePress](https://vitepress.dev/), [VitePress Search](https://vitepress.dev/reference/default-theme-search), [vitepress-plugin-mermaid](https://github.com/emersonbottero/vitepress-plugin-mermaid), [Typesense](https://typesense.org/), [vitepress-plugin-typesense](https://www.npmjs.com/package/vitepress-plugin-typesense), [Obsidian Publish](https://obsidian.md/publish)
 - **Related issues:** [#1349 — New Company Formation](https://github.com/DaveX2001/deliverable-tracking/issues/1349)
 
 ---
