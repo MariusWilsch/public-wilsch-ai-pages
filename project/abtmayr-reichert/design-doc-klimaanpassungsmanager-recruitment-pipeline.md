@@ -39,7 +39,7 @@ Das Modell folgt dem Prinzip, Angebot und Nachfrage parallel aufzubauen — Stud
 |--------|-------|---------------|
 | **Michael Reichert** | Externe Beziehungen + Gemeinden-Netzwerk | BAFA/PEK-Kontakte, Gemeinden-Akquise über bestehende Netzwerke, Fördermittelklärung |
 | **Ralph Loser** | Geschäftsführer + Organisation | Meilensteinplanung, NDA-Vorlagen, Events (Bachelormesse), operative Koordination |
-| **Marius Wilsch** | Technische Umsetzung + Content | LinkedIn-Content, Design Docs, Plattform-Infrastruktur, GitHub-Tooling |
+| **Wilsch AI** | Technische Umsetzung + Content | LinkedIn-Content, Design Docs, Plattform-Infrastruktur, GitHub-Tooling |
 | **David Eberle** | Entwicklung + Planung | Technische Entwicklung, Sales-Channel-Konzeption, Matching-System-Design |
 
 ### IP-Eigentum
@@ -78,11 +78,6 @@ Konzeptionelle Stufen:
 ```
 Sichtbarkeit (LinkedIn/Messe/CTA) → Bewerbung → Screening → Matching → Einsatz in Kommune
 ```
-
-Offene Fragen:
-- Wie viele Bewerbungen pro Stelle erwartet? Konversionsrate durch den Funnel?
-- Wer trifft die finale Einsatzentscheidung — Verein oder Kommune?
-- Wie verläuft die Übergabe von "gescreenter Werkstudent" zu "eingesetzter KAM"?
 
 #### Agenda (Klimalotse 5-Modul-Rahmenwerk)
 
@@ -265,7 +260,7 @@ Was eine teilnehmende Gemeinde vom Verein erhält:
 
 **Ungeklärt:** Über welche Kanäle erreichen wir kommunale Entscheider? → Meeting Agenda
 
-Brainstorming-Ansätze als Ausgangspunkte:
+Brainstorming-Ansätze als Ausgangspunkte (nicht darauf beschränkt):
 - Lead-Generation-Unternehmen mit Gemeinden-Fokus (Michael)
 - Campus Community Partnerships — "Bildung durch Verantwortung", "Hochschulen engagiert" (Ralph)
 - Michaels bestehendes BAFA/PEK-Netzwerk

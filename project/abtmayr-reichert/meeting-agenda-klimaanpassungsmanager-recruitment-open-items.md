@@ -7,16 +7,18 @@ publish: true
 
 ## Meeting Goal
 
-Offene Design-Fragen aus dem Rekrutierungs-Pipeline Design Doc klären — Fokus auf Gemeinden-Akquise-Strategie, offene Governance-Themen und Projekttransparenz für externe Stakeholder.
+Alle offenen Design-Fragen aus dem Rekrutierungs-Pipeline Design Doc klären — jeder **Ungeklärt**-Marker hat ein Diskussionsthema.
 
 1. **Gemeinden-Akquise-Strategie** — Kanäle und Funnel für die Gewinnung von 200 Gemeinden definieren
 2. **Fördermodell** — DAS-Förderfähigkeit für Werkstudenten-Positionen klären
 3. **Content-Freigabe** — LinkedIn-Freigabe-Workflow zwischen Vorstand und Team etablieren
 4. **Projekttransparenz** — Wie Ralph und Michael den Projektfortschritt verfolgen
+5. **Werkstudenten-Funnel** — Gesamtfluss von Erstkontakt bis Einsatz in der Kommune formalisieren
+6. **Pricing** — Erlösmodell nach den ersten 100 kostenlosen Gemeinde-Mitgliedschaften
 
 ## Pre-Read
 
-- [Design Doc: Rekrutierungs-Pipeline Klimaanpassungsmanager](https://mariuswilsch.github.io/public-wilsch-ai-pages/project/abtmayr-reichert/design-doc-klimaanpassungsmanager-recruitment-pipeline) — aktualisiert am 2026-04-03 mit 3-Meilenstein-Struktur, Team-Sektion, M2 (Gemeinden-Akquise), M3 (KI-Matching-Vision) und 5 **Ungeklärt**-Markern über M1/M2. Fokus: Akquise-Strategie (M2), DAS-Förderung (M1), Content-Freigabe (M1).
+- [Design Doc: Rekrutierungs-Pipeline Klimaanpassungsmanager](https://mariuswilsch.github.io/public-wilsch-ai-pages/project/abtmayr-reichert/design-doc-klimaanpassungsmanager-recruitment-pipeline) — aktualisiert am 2026-04-04 mit 3-Meilenstein-Struktur, Team-Sektion, M2 (Gemeinden-Akquise), M3 (KI-Matching-Vision) und 6 **Ungeklärt**-Markern über M1/M2. Alle 6 Marker haben ein Diskussionsthema in dieser Agenda.
 
 ---
 
@@ -71,13 +73,42 @@ Ralph und Michael benötigen laufenden Einblick in den Projektfortschritt, ohne 
 
 **Zu klären:** Das Informationsformat, der Zugangsmechanismus und die Aktualisierungsfrequenz, über die Ralph und Michael den Projektfortschritt verfolgen.
 
+### 5. Werkstudenten Rekrutierungs-Funnel — von Sichtbarkeit bis Einsatz
+⏱️ 15 min
+
+Das Design Doc definiert die einzelnen Komponenten (Agenda, Stellenbeschreibung, LinkedIn, CTA, Screening), aber der durchgängige Funnel mit Entscheidungspunkten und Übergaben fehlt. Im Brainstorming am 2. April wurden Screening-Schritte skizziert (KI-Vorauswahl, Persönlichkeitstest, Assessment Center), aber der Einsatz-Schritt — wie ein gescreenter Werkstudent bei einer Kommune ankommt — blieb offen.
+
+- Die konzeptionellen Stufen stehen: Sichtbarkeit → Bewerbung → Screening → Matching → Einsatz
+- Screening-Mechanismen wurden im Brainstorming diskutiert: KI-gestütztes Vorscreening, Persönlichkeitstest, optionales Gruppen-Assessment-Center
+- Der Übergang von "gescreenter Werkstudent" zu "eingesetzter KAM" ist nicht definiert — weder der Entscheidungsträger noch der Übergabeprozess
+- Marius' offene Frage aus dem Brainstorming: Self-Service-Plattform oder kuratierte Vermittlung durch den Verein?
+
+**Zu klären:** Der formalisierte Gesamtfluss von Erstkontakt bis Einsatz in der Kommune — mit besonderem Fokus auf die Vermittlung im Startbetrieb (bevor ein automatisiertes Matching-System existiert).
+
+### 6. Pricing nach den ersten 100 Gemeinden
+⏱️ 10 min
+
+Die ersten 100 Gemeinden werden kostenlose Vereinsmitglieder. Was danach kommt, ist **Ungeklärt**. Das Brainstorming am 2. April hat das Thema nicht adressiert — der Fokus lag auf der kostenlosen Phase als Einstieg.
+
+- Die kostenlose Phase schafft kritische Masse und Sichtbarkeit: "kriegen wir überall Türen geöffnet" (Michael)
+- Kommunen haben Budget für Klimaanpassung (KAnG-Pflicht), die Zahlungsbereitschaft ist grundsätzlich gegeben
+- Das Pricing-Modell beeinflusst direkt die Skalierungsstrategie und den Break-Even des Vereins
+
+Denkbare Modelle als Ausgangspunkte (nicht darauf beschränkt):
+- Jährlicher Mitgliedsbeitrag (gestaffelt nach Gemeindegröße)
+- Vermittlungsgebühr pro zugewiesenem Werkstudenten
+- Retainer-Modell mit laufender Betreuung
+- Hybride Kombination
+
+**Zu klären:** Welches Erlösmodell für Gemeinden ab der 101. Mitgliedschaft gilt — und ob die Preisgestaltung vor oder nach Erreichen der 100er-Schwelle definiert werden muss.
+
 ## Meeting Format
 
 - **Typ:** Wöchentlicher Sync (Design-Review)
-- **Dauer:** 30–60 Min. (wöchentlich, dienstags)
+- **Dauer:** 60–75 Min. (wöchentlich, dienstags)
 - **Teilnehmer:** Michael Reichert, Ralph Loser, Marius Wilsch, David Eberle
 - **Erwartung:** Michael bringt Update von BAFA/PEK-Kontakten mit. Marius/David präsentieren erste Sales-Channel-Recherche.
-- **Ergebnis:** Akquise-Strategie-Richtung für Gemeinden. DAS-Förderweg bestätigt oder ausgeschlossen. Content-Freigabe vereinbart. Projekttransparenz-Format für Ralph und Michael entschieden.
+- **Ergebnis:** Akquise-Strategie-Richtung für Gemeinden. DAS-Förderweg bestätigt oder ausgeschlossen. Content-Freigabe vereinbart. Projekttransparenz-Format entschieden. Werkstudenten-Funnel-Richtung definiert. Pricing-Diskussion eröffnet.
 
 ## Related
 
