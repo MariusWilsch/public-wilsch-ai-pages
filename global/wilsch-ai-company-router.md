@@ -16,7 +16,8 @@ Entry point for all position-specific Operations Manuals at Wilsch AI Services. 
 
 | Month | Status | Plan | Design Doc |
 |-------|--------|------|-----------|
-| Feb 23 – Mar 31, 2026 | Active | [→ view](https://mariuswilsch.github.io/public-wilsch-ai-pages/project/soloforce/monthly-plan-2026-02-23-to-2026-03-31) | [Design](https://mariuswilsch.github.io/public-wilsch-ai-pages/project/soloforce/monthly-planning-system-design) |
+| Feb 23 – Mar 31, 2026 | Archived | [→ view](https://mariuswilsch.github.io/public-wilsch-ai-pages/project/soloforce/monthly-plan-2026-02-23-to-2026-03-31) | [Design](https://mariuswilsch.github.io/public-wilsch-ai-pages/project/soloforce/monthly-planning-system-design) |
+| Apr 1 – Apr 30, 2026 | Active | [→ view](https://mariuswilsch.github.io/public-wilsch-ai-pages/project/soloforce/monthly-plan-2026-04-01-to-2026-04-30) | [Design](https://mariuswilsch.github.io/public-wilsch-ai-pages/project/soloforce/monthly-planning-system-design) |
 
 ---
 
