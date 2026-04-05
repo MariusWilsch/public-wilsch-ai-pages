@@ -105,26 +105,28 @@ Pricing carries the "Richtpreis, kann sich ändern" disclaimer — this is an in
 
 ### Part 4: PDF Quote Output
 
-Two-page branded PDF, generated from the configurator selections. Format follows Ulrich's IBM Power reference documents (POW004 Systemvergleich, POW005 Angebotsübersicht), adapted for DGX Spark. The reference PDFs establish the structure:
+Two-page branded PDF, generated from the configurator selections. Structural pattern follows Ulrich's IBM Power reference documents — **POW004 (Systemvergleich)** for the comparison-context page and **POW005 (Angebotsübersicht)** for the configured-offer page:
 
-- **POW004 (Systemvergleich):** Side-by-side hardware comparison with performance charts and 5-year TCO breakdown
-- **POW005 (Angebotsübersicht):** Page 1 = hardware specs + Angebotspreis, Page 2 = itemized service categories with scope descriptions + Projektpreis total
+- **POW004:** Side-by-side hardware comparison with performance charts
+- **POW005:** Page 1 = hardware specs + Angebotspreis, Page 2 = itemized service categories + Projektpreis total
 
-The DGX Spark PDF mirrors this: Page 1 provides comparison context (why this product), Page 2 provides the configured offer (what you get, what it costs).
+The DGX Spark PDF adopts the same 2-page flow (comparison context → configured offer), but **visual design is not POW005 replication**. The template is designed to match the wilsch-ai.com aesthetic — typography, color palette, layout density — so the PDF feels consistent with the website the prospect just browsed. POW004/POW005 establish the structural skeleton (what goes on each page); developer owns the visual expression.
 
-**Branding elements (from reference PDFs):**
+**Branding elements:**
 - Header: Customer name + date + Wilsch logo (teal)
 - Product image
 - "Unser Angebot ist freibleibend, alle Preise zzgl. Mwst." disclaimer
 - Footer: Ulrich Wilsch GmbH & Co. KG contact details
 
 **Page 1 — Why KI aus der Box (Comparison Context):**
-Three-way comparison table mirroring the website's "Drei Wege zur KI" section: Cloud AI / KI aus der Box / Enterprise. Positions the prospect's choice within the market landscape. Key comparison dimensions: price, data privacy (DSGVO), database access, setup effort, ongoing control.
+Three-way comparison mirroring the website's "Drei Wege zur KI" section: Cloud AI / KI aus der Box / Enterprise. Source of truth: `DreiWegeComparison` Global in Payload (see Part 6), consumed by both the Vite website section and this PDF page.
 
 **Page 2 — Your Configured Offer:**
 The prospect's specific selection: hardware specs, setup scope, selected data connectors, pricing model (purchase or rental), and total price. Customer name and company inserted automatically. Wilsch branding (logo, contact info, legal disclaimer). Ulrich's directive: "Verliert euch nicht in zu vielen technischen Details... so ein One Pager vor der Rückseite kommt gut an."
 
-Technical approach: HTML+CSS template → Puppeteer → PDF, rendered server-side in the CMS Next.js app. The configurator POSTs the prospect's selections to a CMS API route, which fetches branding assets and the template from Payload's Local API, merges them with the selections, and renders the PDF via `puppeteer-core` + `@sparticuz/chromium`. The same endpoint triggers the Tier 2 notification email (see Part 2). Markdown was considered but cannot express the multi-column layouts, per-page headers, and precise logo placement required for the Angebotsübersicht quality bar — HTML+CSS is the correct intermediate for branded business documents.
+**Template ownership:** The HTML+CSS template lives in the CMS Next.js repo as code — developer-owned, version-controlled, deploy to change layout. Payload supplies the **data** the template consumes: prices and product specs from `Products`, scope pricing from `SetupScopes`, connector pricing from `DataConnectors`, 3-way comparison content from `DreiWegeComparison` Global, branding assets from `PDFAssets` (logo, disclaimer text, contact info). This matches Marius's stated Payload use case ("change the values easily") without pushing template authoring into the admin UI.
+
+**Rendering pipeline:** The Vite configurator POSTs selections to the CMS's `/api/generate-quote` endpoint. The handler fetches branding assets and collection data via Payload's Local API, merges them with the prospect's selections, and renders the PDF via `puppeteer-core` + `@sparticuz/chromium`. The same endpoint fires the Tier 2 notification email (see Part 2), returns the PDF buffer to the browser, and completes — **no Quote record persisted** (stateless flow; the notification email is the audit trail).
 
 ### Part 5: Order Flow Integration
 
@@ -183,13 +185,14 @@ Cloudflare Workers + D1 + R2 was considered and dropped. The D1 adapter has two 
 #### Collection Model (Phased)
 
 **MVP — PDF Quote System:**
-- **Products** — Hardware configs and pricing (purchase/rental)
-- **SetupScopes** — Base vs Full setup options with included connectors
-- **DataConnectors** — Available connector types and pricing
-- **Prospects** — Account management (email, company, expiry)
-- **PDFAssets** — Branding elements, disclaimer text, template configuration
-- **ComparisonDimensions** — "Drei Wege zur KI" comparison (10 dimensions × 3 plans), consumed by both the Vite KI aus der Box page and the PDF Page 1 comparison context
+- **Products** — Hardware records with a `pricingOptions` array field (one record per hardware, e.g. DGX Spark Bundle). Each pricingOption carries `type` (purchase/rental), `label`, `amount`, `unit` (einmalig/monatlich). Composable — new pricing models (lease, financing) plug in without schema changes.
+- **SetupScopes** — Base vs Full setup options with day count, price, and bundled connectors
+- **DataConnectors** — Available connector types and pricing (bundled-in-scope flag + extra-Manntage price)
+- **Prospects** — Account management (email, company, expiry); Marius maintains
+- **PDFAssets** — Branding elements, disclaimer text, footer contact info, teal color token
 - **Media** — Image uploads (built-in Payload collection)
+
+**Stateless quote flow — no Quotes collection.** The configurator POSTs selections, the server renders the PDF, the notification email captures the configuration (prospect + selections + total), and the request completes. No quote history persisted for MVP. Re-download and historical analytics deferred to V2 if ever needed — PostHog covers event-level analytics in the meantime.
 
 **V2 — Newsletter (3-6 months):**
 - **Subscribers** — Email list with preferences and subscription status
@@ -204,11 +207,27 @@ Email delivery via Resend — the same adapter used in the REICHERT project. The
 - **Legal** — Impressum, Datenschutz (same pattern as REICHERT)
 
 **Globals (site-wide config):**
+- **DreiWegeComparison** — "Drei Wege zur KI" 3-plan × 10-dimension comparison (Cloud AI / KI aus der Box / Enterprise). Singleton, edited as a whole. Single source of truth consumed by the Vite KI aus der Box page AND the PDF Page 1 comparison context.
 - **SiteConfig** — Company name, contact info, social links
 - **Navigation** — Menu items, footer links
 - **CampaignConfig** — Active campaigns, scarcity messaging, disclaimer text
 
 The collection model is composable — MVP collections ship with the PDF quote system, V2 and V3 collections are added when the business need materializes. Adding a collection is a config change, not a rebuild.
+
+#### Editor Ownership
+
+Who touches what, day-to-day:
+
+| Content | Primary editor | Cadence |
+|---------|----------------|---------|
+| DreiWegeComparison (Global) | Marius + David | Rare — positioning stable |
+| Products (prices, specs) | Marius (+ Ulrich for market DGX Spark pricing) | Market-driven |
+| SetupScopes, DataConnectors | Marius | Quarterly |
+| Prospects | Marius | Per-lead, operational |
+| PDFAssets | David | Deploy-adjacent |
+| Media | David + Marius | As needed |
+
+This matches the REICHERT precedent: content editing is a Marius+David operation. Payload admin is a small-team tool, not a client-facing CMS.
 
 ### Part 7: Architecture — Split Apps
 
@@ -276,6 +295,8 @@ PDF rendering is a Next.js API route in the CMS app (see Part 4 for the technica
 - **Session (Pass 4):** 8b1e37ff-7b58-4044-bfc0-54ed7aa7c3ce
 - **Research (Pass 5):** [Cloudflare Web Analytics docs](https://developers.cloudflare.com/web-analytics/about/) · [PostHog identify() docs](https://posthog.com/docs/getting-started/identify-users) · [CF Access get-identity](https://developers.cloudflare.com/cloudflare-one/access-controls/applications/http-apps/authorization-cookie/application-token/) · [Payload D1 adapter issue #14766](https://github.com/payloadcms/payload/issues/14766) · [Payload D1 adapter issue #15219](https://github.com/payloadcms/payload/issues/15219) · REICHERT repo deep-dive (frontend Vike+Vite / `/cms` Next.js+Payload+Postgres on WILSCH-AI-SERVER) · wilsch-ai-site repo scan (7 pages, Drei Wege in KiAusDerBoxV2.jsx lines 332-478)
 - **Session (Pass 5):** d1a3c2a0-6991-447f-afbf-55fa5eaeb697
+- **Research (Pass 6):** REICHERT `Content.ts` collection pattern (discriminated enum, no Globals) · wilsch-ai-site `KiAusDerBoxV2.jsx` lines 332-478 (Drei Wege actual shape — plan-nested, not flat matrix) · POW005 Angebotsübersicht review (single-Angebotspreis pattern, service packages as named SKUs)
+- **Session (Pass 6):** a2bb5cda-7582-436c-9b04-591fde35e8ab
 
 🤖
 
