@@ -5,7 +5,7 @@ publish: true
 # PII Pseudonymizer Design — OpenWebUI User Protection
 [[project-iitr-pii-pseudonymizer-design]]
 
-Design for pseudonymizing user PII across OpenWebUI's SQLite database and Langfuse pipeline traces on IITR-PROD. Batch cleanup of existing DB records, scheduled re-runs for new OIDC users, and trace-level hashing while Langfuse remains active.
+Design for pseudonymizing user PII in OpenWebUI's SQLite database and eliminating the Langfuse trace PII surface on IITR-PROD. Batch cleanup of existing DB records, scheduled re-runs for new OIDC users, and full removal of the Langfuse stack (replaced by native OpenWebUI observability).
 
 ---
 
@@ -15,12 +15,12 @@ OpenWebUI on IITR-PROD stores real user identities (names, emails) from Keycloak
 
 A simplified pseudonymization script exists (`masterfragen/package/pseudonymize_simple.py`, 104 lines) but is hardcoded to the dev environment and has never been executed on production. An older protection system (`masterfragen/src/utils/protection.py`, 227 lines) coexists but is dead code — not imported anywhere. Evidence of both systems in the DB: one user record has hex-encoded name/email from the old system, while no `@anon.de` format records exist (simplified script never ran).
 
-**Observability context (#1297, closed 2026-04-02):** Custom Langfuse pipeline tracing is scheduled for removal but has not been stripped yet — #1297 was closed but its implementation PR (#32) was not merged. All three pipeline filters still contain inline Langfuse code (~106 lines total) sending `user_id` to Langfuse traces, and the Langfuse stack (6 services) remains in `docker-compose.infra.yml`. Until Langfuse is stripped, pipeline filter traces are a live PII surface requiring pseudonymization (see Part 2). Native OpenWebUI observability (Analytics dashboard, Feedback/Evaluation, OpenTelemetry) is the intended replacement — all native surfaces read from the same SQLite DB, so pseudonymizing the DB covers native observability automatically.
+**Observability context (#1297, closed 2026-04-02):** Custom Langfuse pipeline tracing was scheduled for removal in #1297 but its implementation PR (#32) was never merged — the Langfuse stack (6 services) and inline tracing code (~100-135 lines across 3 pipeline filters + `langfuse_utils.py`) still run on staging/prod. **Langfuse removal is part of this scope (see Part 2)** — Langfuse traces are a secondary PII surface (real user emails in trace metadata), and eliminating the stack entirely closes that surface rather than patching it. Native OpenWebUI observability (Analytics dashboard, Feedback/Evaluation, OpenTelemetry) replaces Langfuse — all native surfaces read from the same SQLite DB that Part 1 pseudonymizes.
 
 **Preconditions:**
 - IITR uses Keycloak SSO (`sso.iitr.de`) for OpenWebUI authentication — real PII enters through OIDC tokens
 - OpenWebUI (v0.8.10 staging, v0.6.17 prod) is deployed as an unmodified upstream container — PII enters at OIDC login and is written to SQLite before any application code can intercept
-- Native OpenWebUI observability (Analytics, Feedback, OTEL) reads from the same SQLite DB — no separate PII surface once Langfuse is stripped. While Langfuse remains, pipeline filter traces are an additional PII surface
+- Native OpenWebUI observability (Analytics, Feedback, OTEL) reads from the same SQLite DB that Part 1 pseudonymizes — no separate PII surface once Langfuse is removed (Part 2)
 - Three pseudonymization formats exist across the system: hex-encoded (old `protection.py`, one record in prod DB), `@anon.de` (simplified script, never ran on prod), and `@pseudonym.local` (one record in prod DB). Standardizing to a single format going forward (see Part 1)
 - GDPR compliance requires pseudonymization of non-admin user data before broader rollout
 
@@ -67,13 +67,23 @@ The existing `pseudonymize_simple.py` (104 lines) provides the core logic: copy 
 - Pseudonymizing the email field does not break OIDC re-login. OpenWebUI matches returning users by `oauth_sub` (primary lookup), not by email — 61/63 prod users have `oauth_sub` set as `oidc@<keycloak-uuid>`. Email is only used as a fallback if `OAUTH_MERGE_ACCOUNTS_BY_EMAIL` is enabled and `oauth_sub` lookup returns nothing. The `@pseudonym.local` format passes OpenWebUI's email validation regex (`[^@]+@[^@]+\.[^@]+`)
 - SHA-256 hashing is one-way by design — pseudonymized records cannot be reversed to recover the original email. However, with <100 users, re-identification is trivial: hash every email in Keycloak's user database and match against pseudonymized values. Keycloak itself serves as the "separate information" that GDPR pseudonymization requires — no additional lookup table is needed at this scale
 
-### Part 2: Pipeline Filter Trace Pseudonymization — While Langfuse Remains
+### Part 2: Langfuse Stack Removal
 
-All three pipeline filters (Navigation, Masterfragen, Court Judgments) send `user_id` to Langfuse traces via their `_init_langfuse()` and inlet methods (~106 lines total across filters). While Langfuse remains on staging/prod, this is a live PII surface — real user emails appear in Langfuse trace metadata.
+The Langfuse stack (6 services running on staging/prod) is being removed entirely as part of this scope. This eliminates the secondary PII surface (real user emails in trace metadata) rather than patching it with trace-level hashing — removal is cleaner than defensive coverage for a stack that would be deleted anyway.
 
-**Design:** Each filter's inlet applies the shared `hash_pii()` utility (from Part 1) to the user identifier before passing it to Langfuse trace creation. The same `PROTECTED_EMAILS` whitelist (Part 3) governs which users pass through unhashed for admin visibility in Langfuse dashboards.
+**What gets removed:**
+- Inline Langfuse code from the 3 pipeline filters (Navigation, Masterfragen, Court Judgments) — the `_init_langfuse()` method and inlet Langfuse spans in each filter (~100-135 LOC total)
+- `masterfragen/app/util/langfuse_utils.py` — data masking helper (63 LOC), no longer needed once no code calls Langfuse
+- The Langfuse stack from `docker-compose.infra.yml` — 6 services (langfuse-web, langfuse-worker, langfuse-postgres, langfuse-clickhouse, langfuse-minio, langfuse-redis) and their ~154-line config block
+- Langfuse environment variables (`LANGFUSE_HOST`, `LANGFUSE_PUBLIC_KEY`, `LANGFUSE_SECRET_KEY`, `LANGFUSE_S3_*`) from `.env` files and compose passthrough
+- Dead `CJ_LANGFUSE_*` env vars (provisioned but never read — carried forward as cleanup)
+- `simple_app.py` Langfuse code is already removed as part of Part 1c (Flask proxy deletion) — not duplicated here
 
-**Scope note:** This part becomes unnecessary once Langfuse is fully stripped (#1297 implementation). The ~363 lines of Langfuse code (106 in filters, 175 in `docker-compose.infra.yml`, 63 in `langfuse_utils.py`, 8 env vars, 11 in `simple_app.py`) are a separate cleanup task from the pseudonymizer itself.
+**What replaces it:** Native OpenWebUI observability — Analytics dashboard (usage metrics), Feedback modal with text annotations (101 entries already on staging from Stellmacher), and OpenTelemetry (4 env vars, exports to Grafana). All three read from the same SQLite DB that Part 1 pseudonymizes. The observability architecture itself is owned by #1093 — this Part covers only the removal, not the replacement design.
+
+**Parallel to Part 1:** Langfuse removal and the batch pseudonymizer share no files and no ordering constraint — they can ship as parallel implementation sub-issues under #1100. Removing Langfuse does not require the batch pseudonymizer to land first, and vice versa.
+
+**Historical traces:** Existing Langfuse traces (staging-only) contain unhashed PII but are discarded with the stack. Retroactive cleanup is unnecessary — the ClickHouse/Postgres volumes are dropped with removal.
 
 ### Part 3: Whitelist Management — Environment-Variable-Driven
 
@@ -109,8 +119,6 @@ Deployment follows CCI #646 conventions: GHA scheduled workflow for batch operat
 
 **Verification prerequisite:** Marius has copied the prod database to staging (`masterfragen/data/webui-prod.db`, committed in `a9531e4`). Staging runs OpenWebUI 0.8.10 — run the adapted script against the staging DB first to verify schema compatibility (see Part 1d) before production deployment.
 
-**Note on historical Langfuse traces:** Prior Langfuse traces contain unhashed PII from usage before pseudonymization. Since Langfuse stripping is pending (#1297 closed, PR #32 not merged) and existing traces are staging data only, retroactive cleanup is not worth the effort. If the official Langfuse pipeline filter is later enabled as a backup, it would start fresh — all new traces would reference pseudonymized user records from Part 1.
-
 ---
 
 ## Source
@@ -128,6 +136,7 @@ Deployment follows CCI #646 conventions: GHA scheduled workflow for batch operat
 - **Session:** `6bb689e1-1e1e-493d-8983-ef6f3eb45451` (2026-04-01 fresh design pass — scope expansion to all 3 filters)
 - **Session:** `e740877e-a9c8-45df-b7e6-26895b6d7723` (2026-04-03 SA feedback pass — Langfuse stripped, scope narrowed to SQLite DB, Part 2 dissolved, CCI #646 alignment)
 - **Session:** `43c3a4bb-ae78-4a83-8bf5-993d4359878d` (2026-04-04 SA feedback pass — Langfuse reality correction, format standardization to @pseudonym.local, Part 2 restored, backup retention, OIDC/reversibility)
+- **Session:** `f0cf71cd-4fca-493d-ad57-1500bbc39e54` (2026-04-05 SA feedback pass — Apr 5 feedback applied, Part 2 rewritten as Langfuse Stack Removal, full stack removal scope, parallel to Part 1)
 
 ---
 
