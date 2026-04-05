@@ -42,6 +42,8 @@ Marius creates individual email-based accounts for each seminar lead — one acc
 
 Authentication runs through Cloudflare Access — not Supabase. Marius adds a prospect's email address to the Access policy. The prospect receives an email one-time passcode (OTP) to log in — no passwords to manage, no Supabase accounts to create. Cloudflare Access session duration controls the 30-day window. After expiry, the prospect loses access without manual cleanup.
 
+The cutover is phased: this auth layer runs alongside the existing Supabase auth gating wilsch-ai.com. Internal users keep their Supabase accounts during the transition — only new prospects go through Cloudflare Access for MVP. Full Supabase removal is deferred to a later migration pass.
+
 This is also a validation experiment: testing how simple or hard Cloudflare Access is as an alternative to Supabase auth for sites that don't need a full project database. The strategic positioning: Supabase stays the auth layer for project applications (Invoice Agent, Call2Tanss, tax module), while Cloudflare Access becomes the pattern for one-off sites — similar to how Hippocampus v2 operates. If the experiment succeeds here, it becomes the default for future one-off deployments.
 
 This decouples the website's authentication entirely from the shared Supabase project (WILSCH_AI_PROJECTS-PROD) that serves the project applications. Prospect accounts never enter the internal auth pool — the cross-application isolation concern that existed with Supabase auth disappears by architecture.
@@ -66,17 +68,18 @@ Data collection is in scope for this system. Presentation follows two tiers:
 
 Two levels of tracking serve different stakeholders: page-level analytics for Ulrich ("was hat Hasloff sich angeschaut?") and element-level heatmaps for Marius (scroll depth, click patterns, drop-off points on the configurator). Both are needed — page-level first, element-level as the system matures.
 
-**Recommended: PostHog** (self-hosted). Open-source product analytics with React SDK, per-user identification (ties to Cloudflare Access email claim via identify() API), page views, heatmaps, session replay, and funnel analysis. Self-hosting keeps all prospect behavior data in-house — DSGVO solved by architecture, not policy. Free for self-hosted deployments. PostHog runs on a separate VPS — not on Cloudflare Workers — as it requires persistent storage and background processing.
+**Recommended: PostHog Cloud (EU region).** Managed product analytics with React SDK, per-user identification, page views, heatmaps, session replay, and funnel analysis. The free tier covers up to 1M events/month — prospect-scale traffic sits well under that ceiling. EU-hosted data residency satisfies DSGVO without self-hosting burden. Zero ops, zero hosting cost.
 
-**Baseline: Cloudflare Web Analytics** (free, zero-config). Privacy-first page-level analytics with no cookies and no JavaScript tag required. Provides aggregate page views, top pages, and referrer data out of the box. Not a replacement for PostHog — it covers the "is anyone visiting?" question while PostHog answers "what is Hasloff doing?"
+**Identity wiring:** When a prospect lands on any wilsch-ai.com page, a small client-side snippet fetches their Cloudflare Access identity from `/cdn-cgi/access/get-identity`, extracts the email claim, and calls `posthog.identify(email)`. Every event from that session is automatically tied to the prospect — no manual instrumentation per page.
 
-| Tool | Page-level | Element-level | Self-hostable | DSGVO |
-|------|-----------|--------------|---------------|-------|
-| **PostHog** (recommended) | ✅ | ✅ Heatmaps + session replay | ✅ | ✅ |
-| **Matomo** (alternative) | ✅ | ✅ Heatmaps via plugin | ✅ | ✅ |
-| **Cloudflare Web Analytics** (baseline) | ✅ | ❌ | N/A (Cloudflare-hosted) | ✅ |
+**Baseline: Cloudflare Web Analytics** (free, zero-config). Privacy-first page-level analytics with no cookies and no JavaScript tag required. Provides aggregate page views, top pages, and referrer data out of the box. Cloudflare Web Analytics cannot answer "what did Hasloff view" — architecturally it has no concept of a named visitor (no cookies, no persistent identifier, aggregate-only). It complements PostHog for population-level questions but cannot replace it.
 
-Tier 1 launches with Cloudflare Web Analytics (zero setup) plus PostHog basic events for per-user tracking. Tier 2 activates PostHog heatmaps and session replay — the element-level capability Marius wants for configurator optimization.
+| Tool | Page-level | Per-user identity | Element-level | DSGVO |
+|------|-----------|------------------|--------------|-------|
+| **PostHog Cloud EU** (recommended) | ✅ | ✅ via identify() | ✅ Heatmaps + session replay | ✅ |
+| **Cloudflare Web Analytics** (baseline) | ✅ aggregate only | ❌ architecturally impossible | ❌ | ✅ |
+
+Tier 1 launches with both: Cloudflare Web Analytics for aggregate metrics, PostHog Cloud for per-user events via the identify() wire. Tier 2 activates PostHog heatmaps and session replay — the element-level capability Marius wants for configurator optimization.
 
 ### Part 3: Self-Service Configurator
 
@@ -121,7 +124,7 @@ Three-way comparison table mirroring the website's "Drei Wege zur KI" section: C
 **Page 2 — Your Configured Offer:**
 The prospect's specific selection: hardware specs, setup scope, selected data connectors, pricing model (purchase or rental), and total price. Customer name and company inserted automatically. Wilsch branding (logo, contact info, legal disclaimer). Ulrich's directive: "Verliert euch nicht in zu vielen technischen Details... so ein One Pager vor der Rückseite kommt gut an."
 
-Technical approach: Markdown → PDF conversion pipeline. The configurator populates a Markdown template with the prospect's selections, then renders to PDF with branding applied.
+Technical approach: HTML+CSS template → Puppeteer → PDF, rendered server-side in the CMS Next.js app. The configurator POSTs the prospect's selections to a CMS API route, which fetches branding assets and the template from Payload's Local API, merges them with the selections, and renders the PDF via `puppeteer-core` + `@sparticuz/chromium`. The same endpoint triggers the Tier 2 notification email (see Part 2). Markdown was considered but cannot express the multi-column layouts, per-page headers, and precise logo placement required for the Angebotsübersicht quality bar — HTML+CSS is the correct intermediate for branded business documents.
 
 ### Part 5: Order Flow Integration
 
@@ -158,21 +161,24 @@ The configurator reads current values from a data source at runtime. The PDF gen
 
 Payload CMS v3 serves as content infrastructure for the entire website — not just the configurator. MIT-licensed, open-source, free to self-host. Figma acquired Payload in June 2025 and committed to continued open-source investment. The REICHERT project (Klimafolgenschutz website) already runs Payload v3 with PostgreSQL, Lexical rich text, and Resend email integration — a proven pattern within the team.
 
-Payload v3 is Next.js-native — it embeds directly into the `/app` folder, sharing one codebase, one deployment. Server components access the database directly via Payload's Local API, no HTTP API calls needed. The admin panel runs at `/admin` on the same domain.
+Payload v3 requires Next.js as its host framework — `@payloadcms/next` is the only official adapter. Payload embeds into a Next.js `/app` folder, with Server Components accessing the database directly via Payload's Local API (no HTTP round-trip), and the admin panel at `/admin` on the same domain. In the wilsch-ai.com architecture, this Next.js+Payload app lives as a **standalone service separate from the main Vite frontend** — see Part 7 for the split architecture details.
 
-#### Cloudflare-Native Deployment
+#### Docker Deployment on WILSCH-AI-SERVER
 
-The entire stack runs on Cloudflare:
+The CMS runs as a Docker Compose stack on WILSCH-AI-SERVER — the same infrastructure pattern as the REICHERT project (klimafolgenschutz-cms.wilsch-deployment.com). Proven, operational, no Cloudflare Workers learning curve, no D1 adapter bugs.
 
 | Layer | Service | Purpose |
 |-------|---------|---------|
-| **Compute** | Cloudflare Workers | Next.js + embedded Payload v3 |
-| **Database** | Cloudflare D1 | Serverless SQLite via `@payloadcms/db-sqlite` |
-| **Media** | Cloudflare R2 | Product images, PDF assets, uploaded media |
-| **Auth** | Cloudflare Access | Prospect email OTP, session management (see Part 1) |
-| **Analytics** | Cloudflare Web Analytics | Baseline page-level metrics (free) |
+| **Compute** | Docker Compose (Next.js 15 container) | Next.js + embedded Payload v3 |
+| **Database** | PostgreSQL container via `@payloadcms/db-postgres` | Stable adapter, proven in REICHERT |
+| **Media** | Local volume on WILSCH-AI-SERVER | Product images, PDF assets, uploaded media |
+| **Auth (prospects)** | Cloudflare Access | Email OTP, session management (see Part 1) |
+| **Auth (Payload admin)** | Payload's built-in auth | Separate login for Marius + David |
+| **Analytics** | PostHog Cloud EU + Cloudflare Web Analytics | Per-user + aggregate (see Part 2) |
 
-No Supabase, no separate CMS server, no Docker. One deployment target. Payload on Cloudflare Workers is officially supported with one-click deployment.
+Hostname: `wilsch-ai-cms.wilsch-deployment.com` (follows REICHERT naming pattern). Deployment: git pull + `docker compose build && up -d`. Environment variables hold database credentials, Payload secret, Resend API key, and CORS origins (wilsch-ai.com).
+
+Cloudflare Workers + D1 + R2 was considered and dropped. The D1 adapter has two open production bugs — SQL variable limits on large schemas and data-loss risk on array field updates without atomic batch operations. Paid Workers ($5/mo) is mandatory for the Payload template (3MB bundle size limit on free tier), and the team has no prior Workers experience. The REICHERT pattern ships all the same capabilities on familiar infrastructure with zero marginal hosting cost.
 
 #### Collection Model (Phased)
 
@@ -181,7 +187,8 @@ No Supabase, no separate CMS server, no Docker. One deployment target. Payload o
 - **SetupScopes** — Base vs Full setup options with included connectors
 - **DataConnectors** — Available connector types and pricing
 - **Prospects** — Account management (email, company, expiry)
-- **PDFAssets** — Branding elements, disclaimer text, comparison content
+- **PDFAssets** — Branding elements, disclaimer text, template configuration
+- **ComparisonDimensions** — "Drei Wege zur KI" comparison (10 dimensions × 3 plans), consumed by both the Vite KI aus der Box page and the PDF Page 1 comparison context
 - **Media** — Image uploads (built-in Payload collection)
 
 **V2 — Newsletter (3-6 months):**
@@ -203,38 +210,52 @@ Email delivery via Resend — the same adapter used in the REICHERT project. The
 
 The collection model is composable — MVP collections ship with the PDF quote system, V2 and V3 collections are added when the business need materializes. Adding a collection is a config change, not a rebuild.
 
-### Part 7: Website Architecture Migration
+### Part 7: Architecture — Split Apps
 
-The wilsch-ai.com website currently runs as a React 19 + Vite single-page application on Vercel, with Supabase authentication and all content hardcoded in React components or static JSON files. The Payload CMS integration requires migrating to Next.js — Payload v3 embeds natively into Next.js and cannot integrate with a Vite-based SPA.
+The wilsch-ai.com website currently runs as a React 19 + Vite single-page application on Vercel, with Supabase authentication gating all routes and content hardcoded in React components + 5 static JSON case studies. **No full rebuild.** The existing Vite site stays untouched — the PDF quote system is added via a companion CMS app.
 
-| Aspect | Current | Target |
-|--------|---------|--------|
-| **Framework** | React 19 + Vite + React Router v7 | Next.js 15 + embedded Payload v3 |
-| **Deployment** | Vercel | Cloudflare Workers + Pages |
-| **Auth** | Supabase (magic link + password) | Cloudflare Access (email OTP) |
-| **Content** | Hardcoded in components + 5 static JSON case studies | Payload CMS collections (D1 database) |
-| **CMS** | None | Payload admin at `/admin` |
-| **Blog/Newsletter** | None | V2/V3 collections when ready |
+| Layer | Location | Stack | Host |
+|-------|----------|-------|------|
+| **Public site + configurator** | `wilsch-ai.com` (unchanged) | React 19 + Vite + React Router v7 | Vercel |
+| **CMS + PDF generation** | `wilsch-ai-cms.wilsch-deployment.com` (new) | Next.js 15 + Payload v3 + Postgres | WILSCH-AI-SERVER (Docker) |
+| **Prospect auth gate** | Cloudflare Access (edge) | Email OTP | Cloudflare |
 
-#### Why Rebuild Now
+The Vite site fetches CMS content at runtime via Payload's REST API. The configurator calls the CMS's `/api/generate-quote` endpoint to produce PDFs server-side. CORS configured in `payload.config.ts` allows the wilsch-ai.com origin.
 
-The site currently needs no server-side rendering — all routes are behind authentication, so SEO is irrelevant. Under normal circumstances, this would favor keeping the React + Vite stack and using Payload as a headless API.
+#### Why Split, Not Unified
 
-However, the newsletter and blog capabilities are 3-6 months away, not years. When public content launches, SSR and SEO become essential. Rebuilding from Vite to Next.js later would require a second migration — paying migration tax twice. Doing it once during the PDF quote system implementation avoids this.
+REICHERT precedent: the Klimafolgenschutz website uses exactly this pattern — Vike/Vite frontend on Vercel, separate Next.js+Payload CMS on WILSCH-AI-SERVER, communicating via REST. It works operationally. Payload v3 requires Next.js (`@payloadcms/next` is the only official framework adapter), but Next.js does not have to be the frontend.
 
-The existing codebase is manageable: ~960 lines in the main App.jsx, 9 routes, 5 case study JSON files, and standard libraries (Three.js, Framer Motion, shadcn/ui, Recharts) that all work in Next.js.
+The design doc previously argued for a full Vite→Next.js rebuild to avoid "migration tax twice" when newsletter/blog public content ships in 3-6 months. That argument no longer holds. With split apps, future newsletter/blog capabilities can ship inside the Next.js CMS app directly — no migration of the existing Vite site is ever needed.
 
-#### Migration Scope
+#### What Changes On The Vite Site (Minimal Touch)
 
-| Component | Migration Path |
-|-----------|---------------|
-| **Routes** | React Router v7 → Next.js App Router (file-based) |
-| **Auth** | Supabase `AuthContext` → Cloudflare Access middleware |
-| **Content** | Hardcoded JSX → Payload CMS API / server components |
-| **Case Studies** | Static JSON files → CaseStudies collection |
-| **Styling** | Tailwind + shadcn/ui → unchanged (works in Next.js) |
-| **3D/Animations** | Three.js + Framer Motion → client components (unchanged) |
-| **Build** | Vite → Next.js build (`@cloudflare/next-on-pages`) |
+The existing wilsch-ai.com codebase gets three targeted additions, not a rewrite:
+
+| Touch | Scope |
+|-------|-------|
+| **Cloudflare Access gate** | Layered above existing Supabase auth (phased cutover, see Part 1). No code change in the Vite app — gate happens at the edge. |
+| **Configurator component** | New React component added to the KI aus der Box page (or dedicated route). Fetches Products, SetupScopes, DataConnectors from CMS REST API. |
+| **Drei Wege content migration** | `src/pages/KiAusDerBoxV2.jsx` lines 332-478: replace hardcoded `ComparisonSection` with a fetch from `CMS_URL/api/comparison-dimensions`. Single source of truth with the PDF Page 1 content. |
+
+All other existing pages (App.jsx home, HardwareOptionen, KiPerformance, CaseStudy, etc.) remain hardcoded for MVP. Full CMS-driven content migration is a V2/V3 concern, not MVP scope.
+
+#### Data Fetching Pattern
+
+Following REICHERT's proven pattern — runtime REST calls with an env-var CMS URL:
+
+```typescript
+const CMS_URL = import.meta.env.PUBLIC_ENV__CMS_URL ||
+                'https://wilsch-ai-cms.wilsch-deployment.com'
+
+const products = await fetch(`${CMS_URL}/api/products`).then(r => r.json())
+```
+
+Types are generated on the CMS side via `payload generate:types` and manually copied to the Vite frontend — same sync pattern as REICHERT. A schema change in Payload triggers a type-sync commit in the Vite app.
+
+#### PDF Generation
+
+PDF rendering is a Next.js API route in the CMS app (see Part 4 for the technical pipeline). The Vite configurator POSTs selections to `CMS_URL/api/generate-quote`, the CMS renders with Puppeteer + Payload's Local API, returns the PDF buffer, and fires the notification email in the same request — one atomic operation.
 
 ---
 
@@ -253,6 +274,8 @@ The existing codebase is manageable: ~960 lines in the main App.jsx, 9 routes, 5
 - **Session (Pass 3):** 0877d265-e31a-46e3-9b59-91010990d80c
 - **Research (Pass 4):** [Payload CMS Docs](https://payloadcms.com/docs) · [REICHERT Repo](https://github.com/DaveX2001/06_ABTMAYR-REICHERT__klimafolgenschutz-website) · [Payload on Cloudflare](https://blog.cloudflare.com/payload-cms-workers/)
 - **Session (Pass 4):** 8b1e37ff-7b58-4044-bfc0-54ed7aa7c3ce
+- **Research (Pass 5):** [Cloudflare Web Analytics docs](https://developers.cloudflare.com/web-analytics/about/) · [PostHog identify() docs](https://posthog.com/docs/getting-started/identify-users) · [CF Access get-identity](https://developers.cloudflare.com/cloudflare-one/access-controls/applications/http-apps/authorization-cookie/application-token/) · [Payload D1 adapter issue #14766](https://github.com/payloadcms/payload/issues/14766) · [Payload D1 adapter issue #15219](https://github.com/payloadcms/payload/issues/15219) · REICHERT repo deep-dive (frontend Vike+Vite / `/cms` Next.js+Payload+Postgres on WILSCH-AI-SERVER) · wilsch-ai-site repo scan (7 pages, Drei Wege in KiAusDerBoxV2.jsx lines 332-478)
+- **Session (Pass 5):** d1a3c2a0-6991-447f-afbf-55fa5eaeb697
 
 🤖
 

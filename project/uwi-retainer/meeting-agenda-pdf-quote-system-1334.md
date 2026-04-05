@@ -11,7 +11,7 @@ One open design question from the PDF quote system (#1334) needs Marius's input 
 
 1. **Dual DGX Spark model sharding** — confirm whether clustering is customer-ready or still in validation
 
-*Previously 3 questions (pass 1), reduced to 1 (pass 2), expanded to 2 (pass 3), reduced to 1 (pass 4). Auth isolation resolved — Cloudflare Access Gateway replaces Supabase auth entirely (pass 4). Value management resolved — Payload CMS on Cloudflare (pass 4). Warenwirtschaft resolved (pass 2). Tracking tool selection confirmed — PostHog (pass 3/4).*
+*Question count by pass: 3 (pass 1) → 1 (pass 2) → 2 (pass 3) → 1 (pass 4) → 1 (pass 5). Auth isolation resolved — Cloudflare Access for prospects, phased cutover with existing Supabase users (pass 4/5). Value management resolved — Payload CMS on WILSCH-AI-SERVER via Docker + Postgres, REICHERT pattern (pass 5; Cloudflare Workers/D1 dropped). Warenwirtschaft resolved (pass 2). Tracking resolved — PostHog Cloud EU free tier + CF Web Analytics baseline (pass 5). Architecture resolved — split apps, no Vite rebuild (pass 5). PDF pipeline corrected — HTML+CSS → Puppeteer server-side (pass 5).*
 
 ## Pre-Read
 
