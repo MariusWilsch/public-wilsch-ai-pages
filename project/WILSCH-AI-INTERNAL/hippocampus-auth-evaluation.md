@@ -119,6 +119,31 @@ The agent must prefer MCP over CLI, and CLI over API. API is the fallback for op
 
 **Agent completeness: 100%.** Every operation — project creation, deploy, auth config, client management, revocation — is MCP, CLI, or API. No dashboard touch required.
 
+**Access management — Cloudflare role spec:**
+
+Operations required to manage a hippocampus instance:
+
+| Operation | CF Product | Permission |
+|-----------|-----------|------------|
+| Create/deploy Pages project | Workers/Pages | Write |
+| Create/edit Access app | Zero Trust Access | Write |
+| Create/edit Access policy | Zero Trust Access | Write |
+| Add/remove client email from whitelist | Zero Trust Access | Write |
+| Custom domain / CNAME configuration | DNS (domain-scoped) | Write |
+| View deployment logs | Workers/Pages | Read |
+
+**User role (least-privilege combination):**
+
+| Role | Scope | Covers |
+|------|-------|--------|
+| `Workers Platform Admin` | Account | Pages create/deploy/manage, logs read |
+| `Cloudflare Access` | Account | Access apps, policies, email whitelist management |
+| `Domain DNS` | Domain-scoped (e.g., `docs.wilsch-ai.com`) | Custom domain CNAME configuration |
+
+This combination is the minimum-viable set of stable roles for the operations above. Resource-scoped `Cloudflare Access App Admin` and `Cloudflare Access Policy Admin` roles (Beta) offer tighter blast-radius if needed later.
+
+**MCP automation uses a separate API token — not the user session.** The Claude agent invoking the Cloudflare MCP server authenticates via API token, scoped independently of any member's role. The automation token should be narrower than the user role: restrict it to specific Pages project IDs and Access app IDs rather than account-wide. The user role remains available for dashboard and emergency access outside the MCP flow.
+
 **Push-to-deploy:** Connect the GitHub repo to Cloudflare Pages. Every push to `main` triggers a Jekyll build automatically. Preview deployments per branch. The existing two-workflow chain works — Cloudflare Pages builds from the pages repo.
 
 **Migration:**
@@ -280,7 +305,7 @@ Two additional platforms were evaluated and rejected.
 | **Setup effort** | — | ~1 hour | ~3-7 days |
 | **Cost** | Free | Free | Free |
 | **Per-path auth** | N/A | Yes (native) | Yes (native) |
-| **Client versioning** | N/A | Snapshot URLs (immutable per-deploy) | Snapshot URLs (immutable per-deploy) |
+| **Client versioning** | N/A | Branch + main (stable URL, CF-native) | Branch + main (stable URL, CF-native) |
 | **Composability** | N/A | Per-path multi-tenant + scriptable | npm theme + separate projects |
 | **DNS requirement** | GitHub | CNAME to .pages.dev (any DNS provider) | CNAME to .pages.dev (any DNS provider) |
 | **Publish filter** | `publish: true` | Retired (auth replaces it) | N/A (never had it) |
@@ -388,20 +413,32 @@ Per-path Access apps on a single deployment remain available as a lightweight al
 
 ### Client Versioning
 
-When sharing a design doc with a client, the team may want to pin a specific version while development continues. This is a post-implementation capability — it does not block Phase 1 or Phase 2 delivery.
+Clients receive a stable URL (`docs.wilsch-ai.com/project/<client>/...`) that reflects the current state of the `main` branch. Drafting happens on feature branches with team-only preview access; explicit merge to `main` promotes the version the client sees. This is Cloudflare Pages' native production-branch model.
 
-**Mechanism:** Every Cloudflare Pages deployment creates an immutable snapshot URL (`<hash>.docs.pages.dev`). This URL is permanent — it never changes regardless of future pushes to `main`. When a document version is ready for client review, the agent shares that deployment's snapshot URL. Ongoing development continues on `main` with new deployments getting new URLs.
+**Mechanism:** Cloudflare Pages deploys the configured production branch (`main`) to the custom domain. Every non-production branch auto-deploys to a preview URL (`<hash>.<project>.pages.dev`). Preview URLs are protected by a single project-level Access toggle (team-only policy). The custom domain is protected by a separate Access app with per-path client policies.
 
 **Workflow:**
-1. Design doc reaches review-ready state (e.g., after extraction pass 3)
-2. Agent notes the current deployment's snapshot URL
-3. Agent sends snapshot URL to client (via email or WhatsApp)
-4. Work continues on `main` — client's link always shows the version they received
-5. When the next version is ready, agent sends a new snapshot URL
+1. Team creates a feature branch for new or updated content (e.g., `docs/reichert-update`)
+2. Push → Cloudflare auto-deploys to a preview URL (team-only Access)
+3. Team reviews the preview (Speechify, internal feedback)
+4. Merge to `main` → Cloudflare deploys to `docs.wilsch-ai.com`
+5. Client's stable URL automatically reflects the new version on next visit
 
-**Trade-off:** New URL each time means the client cannot bookmark a single stable link. This is acceptable — re-sharing creates a natural touchpoint for the client to provide feedback on the new version.
+**Why this model solves all three client-sharing concerns:**
+- **Stable URL:** client bookmarks once; no re-sharing friction
+- **Drafting privacy:** feature branches sit behind the team-only preview Access policy; clients cannot reach in-progress work
+- **Release-gate timing:** `git merge → main` is the explicit promotion act — updates reach clients only when the team pushes
 
-**Alternative (if needed later):** Branch-per-client deploys (`client/reichert` branch → `client-reichert.docs.pages.dev`) provide a stable URL that updates only when explicitly pushed. This adds branch management overhead and should only be considered if re-sharing becomes friction.
+**Two-Access-app model (CF Pages requirement):**
+
+| App | Scope | Policy | Purpose |
+|-----|-------|--------|---------|
+| Preview Access (project-level toggle) | All `*.pages.dev` previews for the project | Team-only (`@wilsch-ai.com`) | Protects in-progress work across every branch |
+| Production Access (custom domain) | `docs.wilsch-ai.com` | Per-path client policies + team | What clients see |
+
+The project-level preview toggle applies uniformly to every preview URL — no per-branch configuration required.
+
+**Trade-off:** No version pinning. Once merged to `main`, the client sees the latest content on their next visit. If a client explicitly needs to stay on a prior version (e.g., legal archive, "the version attached to the contract"), a client-specific branch deployed to a separate URL remains available as a CF-native pattern — not the default path, added only if the need materializes.
 
 ### Scaling
 
@@ -422,8 +459,9 @@ When sharing a design doc with a client, the team may want to pin a specific ver
   - JA extraction pass 2 (2026-04-02): session `563457e9-ba31-4e9a-ad19-8def6f199cfb` — Marius feedback incorporated, deep platform research, composability analysis
   - JA extraction pass 3 (2026-04-03): session `d483109e-c8f5-40be-a02f-f22c2b932f0e` — Marius decisions incorporated (Vercel rejected, Obsidian rejected, publish filter retired), DNS CNAME discovery, CF MCP server, multi-instance architecture, OTP whitelist-only confirmation
   - JA extraction pass 4 (2026-04-04): session `be03dcb5-f1dc-4104-bf44-ea5c4ab3adc1` — Marius April 4 feedback: search design pass (MiniSearch/Typesense/Algolia/FlexSearch evaluated), client versioning (snapshot URLs), PDF export, sidebar navigation, per-path auth expansion, agent preference hierarchy, migration decision
+  - JA extraction pass 5 (2026-04-05): session `ec0fd284-3b20-4ee3-a638-ce676b1429a1` — Marius April 5 feedback: client versioning rewritten (branch + main model, snapshot URL retired), CF role spec added (user role + API token), two-Access-app model confirmed
 - **Investigated repos:** `veloxforce/claude-user-configs` (hippocampus source + deploy workflow), `MariusWilsch/public-wilsch-ai-pages` (pages output + deploy workflow)
-- **Platform docs:** [Cloudflare Pages](https://developers.cloudflare.com/pages/), [CF Access OTP](https://developers.cloudflare.com/cloudflare-one/identity/one-time-pin/), [CF Access Session Management](https://developers.cloudflare.com/cloudflare-one/identity/users/session-management/), [CF Pages Custom Domains](https://developers.cloudflare.com/pages/configuration/custom-domains/), [CF MCP Server](https://github.com/cloudflare/mcp), [CF Access App Paths](https://developers.cloudflare.com/cloudflare-one/access-controls/policies/app-paths/), [CF Access Custom Pages](https://developers.cloudflare.com/cloudflare-one/reusable-components/custom-pages/access-block-page/), [VitePress](https://vitepress.dev/), [VitePress Search](https://vitepress.dev/reference/default-theme-search), [vitepress-plugin-mermaid](https://github.com/emersonbottero/vitepress-plugin-mermaid), [Typesense](https://typesense.org/), [vitepress-plugin-typesense](https://www.npmjs.com/package/vitepress-plugin-typesense), [Obsidian Publish](https://obsidian.md/publish)
+- **Platform docs:** [Cloudflare Pages](https://developers.cloudflare.com/pages/), [CF Pages Preview Deployments](https://developers.cloudflare.com/pages/configuration/preview-deployments/), [CF Pages Branch Build Controls](https://developers.cloudflare.com/pages/configuration/branch-build-controls/), [CF Account Roles](https://developers.cloudflare.com/fundamentals/manage-members/roles/), [CF Zero Trust Roles](https://developers.cloudflare.com/cloudflare-one/roles-permissions/), [CF Access OTP](https://developers.cloudflare.com/cloudflare-one/identity/one-time-pin/), [CF Access Session Management](https://developers.cloudflare.com/cloudflare-one/identity/users/session-management/), [CF Pages Custom Domains](https://developers.cloudflare.com/pages/configuration/custom-domains/), [CF MCP Server](https://github.com/cloudflare/mcp), [CF Access App Paths](https://developers.cloudflare.com/cloudflare-one/access-controls/policies/app-paths/), [CF Access Custom Pages](https://developers.cloudflare.com/cloudflare-one/reusable-components/custom-pages/access-block-page/), [VitePress](https://vitepress.dev/), [VitePress Search](https://vitepress.dev/reference/default-theme-search), [vitepress-plugin-mermaid](https://github.com/emersonbottero/vitepress-plugin-mermaid), [Typesense](https://typesense.org/), [vitepress-plugin-typesense](https://www.npmjs.com/package/vitepress-plugin-typesense), [Obsidian Publish](https://obsidian.md/publish)
 - **Related issues:** [#1349 — New Company Formation](https://github.com/DaveX2001/deliverable-tracking/issues/1349)
 
 ---
