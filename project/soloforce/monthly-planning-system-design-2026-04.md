@@ -114,37 +114,30 @@ The monthly plan is not an activity list — it is a context window. Like an aut
 ### Part 5: Enforcement — Shutdown Ritual
 
 ```mermaid
-stateDiagram-v2
-    [*] --> Grooming: Board state
-    Grooming --> Ritual: Post-grooming — 10 min
+flowchart TD
+    G[Grooming — board state] -->|post-grooming trigger| R[Shutdown Ritual — 10 min]
 
-    state Ritual {
-        Walk: Walk milestones (project + position)
-        Force: Apply forcing function
-        Seq: Instinct sequences blocks
-        Walk --> Force
-        Force --> Seq
-    }
+    subgraph FF[Forcing Function]
+        VIS[Sprint Board — Visibility]
+        SOC[Meeting Cadence — Social]
+        FIN[Milestone Dates — Financial]
+    end
 
-    Ritual --> Block1
-    Block1 --> Block2
-    Block2 --> Manager
-    Manager --> [*]
+    FF -->|narrows the field| R
+    R -->|instinct sequences| B1
 
-    state Block1 {
-        [*] --> Review: Single terminal
-        Review: Clear review queue
-    }
+    B1["Block 1: Review
+    Single terminal — clear queue"]
+    B1 --> B2
 
-    state Block2 {
-        [*] --> Terminals: Multi-terminal (4-5)
-        Terminals --> ProjMilestones: Project work
-        Terminals --> PosMilestones: Position work
-    }
+    B2["Block 2: Own Work
+    Multi-terminal (4-5)"]
+    B2 --> PROJ[Project Milestones]
+    B2 --> POS[Position Milestones]
+    B2 --> BM
 
-    state Manager {
-        [*] --> Reactive: Fires + admin
-    }
+    BM["Manager Block
+    Reactive — fires + admin"]
 ```
 
 The ritual walks milestones from both streams. Forcing function narrows: visibility (sprint board) + social (meeting dates) + financial (commitments). Instinct sequences within the narrowed field.
