@@ -42,16 +42,38 @@ Capturing is nearly free. Everything after capture is refinement — routing wor
 Three tiers route work from client relationship to delivered code. Two ceremonies gate progression.
 
 ```mermaid
-graph LR
-    A["Capture"] --> B["JA Design"]
-    B -->|"design doc"| C["Decompose"]
-    C --> D["dev/design"]
-    D -->|"Design Review ✓"| E["dev/implement"]
-    E --> F["Implement Review"]
-    F -->|"pass"| G["Done"]
-    F -.->|"fail"| H["Close → New"]
-    H -.-> D
-    G -.->|"proof point"| B
+sequenceDiagram
+    participant VP as VP/Delivery
+    participant JA as Junior Architect
+    participant Dev as Developer
+    participant DL as Dev Lead
+
+    VP->>JA: Create JA Design issue
+    JA->>JA: Extraction passes → design doc
+    JA->>Dev: Design doc complete (grooming handoff)
+    Dev->>Dev: Decompose → 2-3 sub-issues
+
+    loop Per sub-issue
+        Dev->>DL: dev/design → tracking.md ready (Review)
+        alt Design Review pass
+            DL->>Dev: Label flip → dev/implement
+        else Design Review reject
+            DL->>Dev: Feedback → rework
+        end
+        Dev->>Dev: Implement + AC verify + deploy preview
+        Dev->>DL: Ready for witness (Review)
+        alt Implement Review pass
+            DL->>Dev: Done ✓
+        else Fail — spec problem
+            DL->>Dev: Close issue → new under JA
+        else Fail — code problem
+            DL->>Dev: Fix → re-deploy
+        end
+    end
+
+    Note over Dev,JA: Proof point reached
+    Dev->>JA: Evidence → reopen JA
+    JA->>Dev: Next decomposition batch
 ```
 
 **Three Tiers:**
@@ -69,7 +91,22 @@ graph LR
 | **Design Review** | Developer's spec (tracking.md with DoD + ACs) is sound before implementation begins | Dev Lead |
 | **Implement Review** | Running system works as designed — human witness at the gemba | Dev Lead |
 
-**See also:** [Organization Chart](https://mariuswilsch.github.io/public-wilsch-ai-pages/global/organization-chart-wilsch-ai-services) — the position hierarchy these tiers map to. Position Agreements define each role's full accountability: [Dev Lead PA](https://mariuswilsch.github.io/public-wilsch-ai-pages/global/dev-lead-position-agreement-wilsch-ai-services), [Developer PA](https://mariuswilsch.github.io/public-wilsch-ai-pages/global/developer-position-agreement-wilsch-ai-services), [JA PA](https://mariuswilsch.github.io/public-wilsch-ai-pages/global/junior-architect-position-agreement-wilsch-ai-services).
+**See also:**
+- [Organization Chart](https://mariuswilsch.github.io/public-wilsch-ai-pages/global/organization-chart-wilsch-ai-services) — the position hierarchy these tiers map to
+- [Dev Lead PA](https://mariuswilsch.github.io/public-wilsch-ai-pages/global/dev-lead-position-agreement-wilsch-ai-services) — reviewer accountability and standards
+- [Developer PA](https://mariuswilsch.github.io/public-wilsch-ai-pages/global/developer-position-agreement-wilsch-ai-services) — implementer accountability and standards
+- [JA PA](https://mariuswilsch.github.io/public-wilsch-ai-pages/global/junior-architect-position-agreement-wilsch-ai-services) — designer accountability and standards
+
+**Two operating modes:**
+
+| Mode | What It Means | Touchpoints |
+|------|--------------|-------------|
+| **Human-in-the-loop** | Interactive Claude sessions. Human present during execution — guiding, deciding in real-time. | Continuous (human is there) |
+| **Human-on-the-loop** | Non-interactive sessions. AI executes autonomously. Human reviews at defined ceremony boundaries. | Design Review, Implement Review |
+
+The pipeline is designed for both modes. The ceremonies are the touchpoints — they work whether a human is watching the session (in-the-loop) or reviewing the output afterward (on-the-loop). The transition from in-the-loop to on-the-loop is the scaling mechanism: more autonomous Developers (Ralph) producing work, with a dedicated reviewer processing ceremonies continuously.
+
+**Undefined:** Position handoff signals — the Developer ↔ Dev Lead handoffs are well-defined (Review column + label flip). The remaining handoffs lack explicit signals: VP → JA (issue creation is clear, but JA review cycle with SA/VP is not), JA → Developer (what artifact/gate says "ready for decomposition"?), proof point → JA reopen (who triggers it?), all JA issues complete → VP epic closure (who signals?). The JA's internal extraction pass loop and its review gate also need specification. Requires a dedicated extraction pass on position handoff ceremonies. Future pass should also produce a dedicated "Full Lifecycle" part showing the entire flow from commitment creation to closure — all positions, all handoffs, one end-to-end diagram.
 
 VP/Delivery creates the Commitment Epic. The JA produces a design doc within it. The Developer decomposes that design doc into sub-issues under the JA issue. Each sub-issue cycles through dev/design → dev/implement, gated by Design Review and Implement Review. The Developer runs AC verification internally before claiming implementation is ready for review. When the witness fails, the sub-issue closes and a fresh one starts (clean trace). Proof points route back to the JA issue for the next decomposition batch.
 
@@ -139,22 +176,25 @@ The JA issue's open/close state signals who has the ball — design team or dev 
 
 **Trunk-first:** The Developer creates only 2-3 sub-issues up to the first proof point. Everything beyond the proof point stays in the design doc, not on the board. This prevents approved-but-invalid issues (evidence: [IITR Post-Mortem](https://mariuswilsch.github.io/public-wilsch-ai-pages/project/iitr/iitr-post-mortem), [Archibus Post-Mortem](https://mariuswilsch.github.io/public-wilsch-ai-pages/project/archibus-fm-assistant/archibus-post-mortem)).
 
-**See also:** [General Decomposition Design](https://mariuswilsch.github.io/public-wilsch-ai-pages/project/WILSCH-AI-INTERNAL/general-decomposition-design) — trunk-first methodology, spike-or-issues gate, proof point types.
+**See also:**
+- [General Decomposition Design](https://mariuswilsch.github.io/public-wilsch-ai-pages/project/WILSCH-AI-INTERNAL/general-decomposition-design) — trunk-first methodology, spike-or-issues gate, proof point types
 
 ### Part 4 — Sub-Issue Dual Cycle
 
 Every dev sub-issue starts as `dev/design` and cycles through two phases in the same issue. The label changes; the issue doesn't.
 
 ```mermaid
-graph LR
-    A["dev/design<br/>(Working)"] -->|"tracking.md ready"| B["Review<br/>(Design Review)"]
-    B -->|"Reject"| A
-    B -->|"Approve: label flip"| C["dev/implement<br/>(Working)"]
-    C -->|"AC verified + deployed"| D["Review<br/>(Implement Review)"]
-    D -->|"Pass"| E["Done"]
-    D -.->|"Fail: spec problem"| F["Close Issue"]
-    D -->|"Fail: code problem"| C
-    F -.->|"new issue under JA"| A
+stateDiagram-v2
+    [*] --> dev_design
+    dev_design --> Review : tracking.md ready
+    Review --> dev_design : Reject
+    Review --> dev_implement : Approve (label flip)
+    dev_implement --> Review2 : AC verified + deployed
+    Review2 --> Done : Pass
+    Review2 --> dev_implement : Fail (code)
+    Review2 --> Closed : Fail (spec problem)
+    Closed --> [*] : New issue under JA
+    Done --> [*]
 ```
 
 **Phase 1 — dev/design:** The Developer creates the spec: DoD + ACs in tracking.md. When complete, the issue moves to the Review column for Design Review.
@@ -187,7 +227,10 @@ No closing criteria in the body — closure is systemic (Design Review pass + Im
 
 **Undefined:** Preview witness model — witnessing on preview environments before merge to staging. Code race condition mitigated by rebase at AC verify + Dev Lead review ([Pending Head](https://www.martinfowler.com/bliki/PendingHead.html)). Volume state reconciliation (one-directional by design) is ad-hoc. Needs dedicated design pass. See [CCI #646](https://github.com/DaveX2001/claude-code-improvements/issues/646).
 
-**See also:** [Deployment & Runtime State Design](https://mariuswilsch.github.io/public-wilsch-ai-pages/project/WILSCH-AI-INTERNAL/deployment-runtime-state-design) — how preview environments are created and torn down (push = preview). [Dev Lead Witness & Review System](https://mariuswilsch.github.io/public-wilsch-ai-pages/global/dev-lead-witness-review-system) — the witness ceremony details (guided tour, Feynman Test, spot-check depth). [AC DoD Framework](https://mariuswilsch.github.io/public-wilsch-ai-pages/global/ac-dod-framework) — how DoD and ACs in tracking.md are structured and why they're separated.
+**See also:**
+- [Deployment & Runtime State Design](https://mariuswilsch.github.io/public-wilsch-ai-pages/project/WILSCH-AI-INTERNAL/deployment-runtime-state-design) — how preview environments are created and torn down (push = preview)
+- [Dev Lead Witness & Review System](https://mariuswilsch.github.io/public-wilsch-ai-pages/global/dev-lead-witness-review-system) — the witness ceremony details (guided tour, Feynman Test, spot-check depth)
+- [AC DoD Framework](https://mariuswilsch.github.io/public-wilsch-ai-pages/global/ac-dod-framework) — how DoD and ACs in tracking.md are structured and why they're separated
 
 ### Part 5 — Ceremonies
 
@@ -235,9 +278,12 @@ If any hard gate fails → send back to Working with specific feedback. If all p
 
 The Work Board's Review column IS the Dev Lead Review Queue. A dedicated Review view (`status:Review`) surfaces all items waiting for review, grouped by milestone.
 
-**Processing:** Continuous — the dedicated reviewer processes items as they arrive, not in daily batches. FIFO by date (oldest first). Items in Review longer than 2 business days = escalation signal.
+**Processing:** Continuous — the dedicated reviewer processes items as they arrive, not in daily batches. Items in Review longer than 2 business days = escalation signal.
 
-**See also:** [Dev Lead Position Agreement](https://mariuswilsch.github.io/public-wilsch-ai-pages/global/dev-lead-position-agreement-wilsch-ai-services) — defines the full accountability, standards, and BDP loop for the reviewer operating this queue.
+**Undefined:** Review prioritization — when multiple items are in the queue, how should the reviewer prioritize? FIFO by date, by client milestone urgency, by spec-vs-witness type? Needs empirical evidence from continuous review operation.
+
+**See also:**
+- [Dev Lead Position Agreement](https://mariuswilsch.github.io/public-wilsch-ai-pages/global/dev-lead-position-agreement-wilsch-ai-services) — defines the full accountability, standards, and BDP loop for the reviewer operating this queue
 
 ### Part 6 — Board Architecture & Grooming
 
@@ -271,15 +317,15 @@ Four universal columns — all work types (ja/design, dev/design, dev/implement,
 
 #### Grooming
 
-Daily operational ceremony (VP/Delivery + Worker, 15-30 min). Two gates, every session.
+Daily operational ceremony (VP/Delivery team). The general shape: triage unmilestoned items, then prioritize what to work on today. The specifics below are carried forward from the previous ILR version and need validation against current practice.
 
-**Gate 1 — Triage (Grooming View):** "Do we need to commit to this right now?" Items without milestones. Joint decision — VP has priority context, worker has capacity context. Passing this gate means the item gains a milestone.
+**Undefined:** Grooming ceremony — the two-gate model (Triage + Prioritization), attendees, cadence, and worker self-pull rules were designed pre-March. With continuous review and the JA-as-parent model, grooming may need redesigning. What actually happens in grooming now? Does the VP/Delivery team include JA + Developer + Dev Lead in the same session? Are the two gates still the right framing? Requires its own extraction pass with empirical evidence from current practice.
 
-**Gate 2 — Prioritization (Sprint View):** "What's the most impactful item to start today?" Milestones processed closest-touchpoint-first. VP moves selected items from Backlog → Working.
+**Gate 1 — Triage:** Items without milestones. Joint decision — does this need a milestone now?
 
-**Worker does NOT self-pull from Backlog between groomings.** Fires/urgency: VP has authority to bypass both gates and drop items directly into Working.
+**Gate 2 — Prioritization:** What should move to Working today? Milestones processed closest-touchpoint-first.
 
-**Every new item goes through Gate 1** — even sub-issues spawned mid-sprint. No milestone inheritance. This prevents scope creep through cascading sub-issues.
+**Every new item goes through Gate 1** — even sub-issues spawned mid-sprint. No milestone inheritance.
 
 #### Milestones & Forcing Functions
 
@@ -292,7 +338,8 @@ Example: `[ARCHIBUS] 2026-04-11 — Rein meeting`
 
 Milestones auto-create on touchpoint date passage (agent reads cadence from closing milestone body). Closed milestones preserve history (not deleted).
 
-**See also:** [Stakes Visibility: Forcing Function](https://mariuswilsch.github.io/public-wilsch-ai-pages/global/stakes-visibility-forcing-function) — why milestones derive their power from external consequences (social + financial), not internal deadlines.
+**See also:**
+- [Stakes Visibility: Forcing Function](https://mariuswilsch.github.io/public-wilsch-ai-pages/global/stakes-visibility-forcing-function) — why milestones derive their power from external consequences (social + financial), not internal deadlines
 
 ### Part 7 — Labels & Closure
 
@@ -310,11 +357,7 @@ Phase labels encode both type and position. Columns carry status — no status l
 | **epic** | Identifies Commitment Epics on Commitments Board | VP/Delivery |
 | **Client labels** | Per-client filtering (e.g., `01_ARCHIBUS`) | Grooming |
 
-**Phase label transitions:**
-- Issue created → `dev/design` (Developer), `ja/design` (JA), or `manager`
-- Design Review approved → Dev Lead changes label to `dev/implement` + comment
-- Design Review rejected → stays `dev/design` + feedback comment
-- Implement Review approved → issue closes (Done)
+Phase label transitions are defined in [Part 4](#part-4--sub-issue-dual-cycle) (the state diagram).
 
 #### Closure Semantics
 
@@ -329,7 +372,28 @@ Phase labels encode both type and position. Columns carry status — no status l
 
 #### Conversation Audit Trail
 
-Developer sessions (Claude Code conversations) are pushed to a shared repository and linked from issue comments. This gives the Dev Lead forensic-level access to investigate decisions point-in-time using the conversation-reader skill, without relying on the Developer's account of what happened.
+All sessions linked to an issue (Developer, JA, Dev Lead) are pushed to a shared repository and linked from issue comments. This gives any position forensic-level access to investigate decisions point-in-time using the conversation-reader skill, without relying on the session holder's account of what happened.
+
+---
+
+## Glossary
+
+Terms used throughout this document, not limited to these.
+
+| Term | Definition |
+|------|-----------|
+| **Trace line** | The comment history, commits, and artifacts accumulated on a single issue. Close-on-failure preserves the old trace as a sealed learning artifact. |
+| **Junior Architect (JA)** | Position that produces design docs through extraction passes (SCOPE → SURFACE → PROBE → UPDATE → ASSESS). Interactive mode only. |
+| **Developer** | Position that implements code. Interactive (Alan) or autonomous (Ralph). |
+| **Dev Lead** | Position that reviews specs (Design Review) and witnesses implementations (Implement Review). Reports to VP/Delivery. |
+| **VP/Delivery** | Creates commitment epics, manages capacity, grooming authority, signs off on JA design docs. |
+| **Gemba** | The running system — not the code, not the report, not the PR. From Deming: "go see the actual work." |
+| **Proof point** | Validation boundary in trunk-first decomposition. The assumption whose failure would invalidate the most downstream work. |
+| **Extraction pass** | One JA cycle: SCOPE → SURFACE → PROBE → UPDATE → ASSESS. Session-atomic. |
+| **tracking.md** | Spec artifact in `.claude/tracking/issue-{N}/` containing DoD + ACs. |
+| **Project Index** | Centralized reference to transcripts, data artifacts, and external sources for a project phase. Lives in `.claude/tracking/issue-{N}/project-index.md`. |
+| **Human-in-the-loop** | Interactive sessions — human present during execution. |
+| **Human-on-the-loop** | Non-interactive sessions — AI executes autonomously, human reviews at ceremony touchpoints. |
 
 ---
 
