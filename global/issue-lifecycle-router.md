@@ -3,7 +3,7 @@ publish: true
 ---
 
 # Issue Lifecycle Router
-[[issue-lifecycle]]
+[[claude-code-architecture]]
 
 Defines the refinement pipeline that routes issues from capture to delivery, the positions accountable at each stage, and the ceremonies that gate progression.
 
