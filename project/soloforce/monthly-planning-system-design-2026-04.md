@@ -22,7 +22,7 @@ The monthly plan's core principle survives: pre-decide direction so daily decisi
 - March daily log (23 entries) + shutdown ritual commits (15) provide empirical evidence of the shift
 - Position work demonstrated independent urgency (CCI #600, #602 — organizational bottleneck)
 - Design Partner model emerging (#847) — changes what "client" means
-- March revenue €18,736 vs €8K target — cash flow no longer the primary constraint
+- March revenue €18,736 vs €8K target — survival constraint met, enabling strategic focus alongside cash flow
 
 ---
 
@@ -75,7 +75,7 @@ The v1 design stated: "Position improvement is a byproduct of project delivery, 
 
 **Position work gets its own forcing function.** Not client meeting dates — organizational bottleneck visibility. CCI #600 and #602 are urgent because they unblock the next capacity step: #600 (ILR redesign) must land so #602 (Ralph system) can live inside it, which unblocks JA decomposition, which massively increases capacity. The urgency is structural, not calendar-driven.
 
-**Confirmation bias separation.** Position work needs its own terminal to prevent the builder from also reviewing — same principle as Session C (blind verification) in the CCI model.
+**Confirmation bias separation.** The person who implements should not also review — the builder carries confirmation bias about their own work. This drives the dedicated reviewer role: Ralph implements, a separate person reviews. Same principle as Session C (blind verification) in the CCI model.
 
 ### Part 3: The Forcing Function
 
@@ -111,30 +111,49 @@ The monthly plan is not an activity list — it is a context window. Like an aut
 
 **Undefined:** The walkthrough's concrete steps — how the three-lens evaluation is conducted per client, what the output artifact looks like. → Next extraction pass (per-client walkthrough).
 
-### Part 5: Enforcement — Shutdown Ritual Evolution
+### Part 5: Enforcement — Shutdown Ritual
 
-The Shutdown Ritual remains the enforcement mechanism. What changed is what it selects from.
+```mermaid
+stateDiagram-v2
+    [*] --> Grooming: Board state
+    Grooming --> Ritual: Post-grooming — 10 min
 
-**v1:** The ritual selected from docket packages — "which package do I work on tomorrow?"
+    state Ritual {
+        Walk: Walk milestones (project + position)
+        Force: Apply forcing function
+        Seq: Instinct sequences blocks
+        Walk --> Force
+        Force --> Seq
+    }
 
-**v2:** The ritual walks milestones from both streams — project milestones and position milestones — and sequences tomorrow's blocks based on forcing function pressure (meeting proximity, bottleneck urgency, instinct).
+    Ritual --> Block1
+    Block1 --> Block2
+    Block2 --> Manager
+    Manager --> [*]
 
-**Block evolution visible in practice** (15 commits, Feb 22 → Apr 1):
-- `0094667` (Feb 22): Package selection enforces monthly plan
-- `356a776` (Mar 6): Evolve from worker package selection to CEO block sequencing
-- `04e9467` (Mar 19): Merge VP/Delivery into Block 2, remove separate Block 1 delivery/review distinction
+    state Block1 {
+        [*] --> Review: Single terminal
+        Review: Clear review queue
+    }
 
-**What survived from v1:**
-- Post-grooming trigger (not standalone evening habit)
-- Three time blocks (Enable Worker, Own Work, Manager)
-- Night-before timing for overnight incubation
+    state Block2 {
+        [*] --> Terminals: Multi-terminal (4-5)
+        Terminals --> ProjMilestones: Project work
+        Terminals --> PosMilestones: Position work
+    }
 
-**What changed:**
-- Block 1 no longer distinguishes delivery from review — "effectively, it's the same thing"
-- Block 2 hosts both project work AND position work as independent terminals (March daily log shows CCI terminals alongside project terminals)
-- Milestone proximity drives selection, not package affinity
+    state Manager {
+        [*] --> Reactive: Fires + admin
+    }
+```
 
-**Undefined:** Block-level redesign — the specific responsibilities, ritual questions, and selection mechanics per block under the new model. → Separate extraction pass, grounded in shutdown ritual commit diffs.
+The ritual walks milestones from both streams. Forcing function narrows: visibility (sprint board) + social (meeting dates) + financial (commitments). Instinct sequences within the narrowed field.
+
+**Block 1 — Review.** Single terminal. Clear the review queue — delivery and review are no longer distinguished as separate activities. What's in review gets reviewed.
+
+**Block 2 — Own Work.** Multi-terminal (4-5). Project milestones and position milestones sit side by side as independent terminals. Selection by milestone proximity and bottleneck urgency.
+
+**Manager Block.** Reactive. Manager-labeled issues, fires, admin. Context-switching expected, short tasks normal.
 
 ---
 
