@@ -69,6 +69,8 @@ graph LR
 | **Design Review** | Developer's spec (tracking.md with DoD + ACs) is sound before implementation begins | Dev Lead |
 | **Implement Review** | Running system works as designed — human witness at the gemba | Dev Lead |
 
+**See also:** [Organization Chart](https://mariuswilsch.github.io/public-wilsch-ai-pages/global/organization-chart-wilsch-ai-services) — the position hierarchy these tiers map to. Position Agreements define each role's full accountability: [Dev Lead PA](https://mariuswilsch.github.io/public-wilsch-ai-pages/global/dev-lead-position-agreement-wilsch-ai-services), [Developer PA](https://mariuswilsch.github.io/public-wilsch-ai-pages/global/developer-position-agreement-wilsch-ai-services), [JA PA](https://mariuswilsch.github.io/public-wilsch-ai-pages/global/junior-architect-position-agreement-wilsch-ai-services).
+
 VP/Delivery creates the Commitment Epic. The JA produces a design doc within it. The Developer decomposes that design doc into sub-issues under the JA issue. Each sub-issue cycles through dev/design → dev/implement, gated by Design Review and Implement Review. The Developer runs AC verification internally before claiming implementation is ready for review. When the witness fails, the sub-issue closes and a fresh one starts (clean trace). Proof points route back to the JA issue for the next decomposition batch.
 
 ### Part 2 — Commitment Epic
@@ -231,7 +233,7 @@ If any hard gate fails → send back to Working with specific feedback. If all p
 
 #### Dev Lead Review Queue
 
-The Work Board's Review column IS the Dev Lead Review Queue. No separate project needed — the Sprint view filtered to `status:Review` surfaces all items waiting for review.
+The Work Board's Review column IS the Dev Lead Review Queue. A dedicated Review view (`status:Review`) surfaces all items waiting for review, grouped by milestone.
 
 **Processing:** Continuous — the dedicated reviewer processes items as they arrive, not in daily batches. FIFO by date (oldest first). Items in Review longer than 2 business days = escalation signal.
 
@@ -292,7 +294,69 @@ Milestones auto-create on touchpoint date passage (agent reads cadence from clos
 
 **See also:** [Stakes Visibility: Forcing Function](https://mariuswilsch.github.io/public-wilsch-ai-pages/global/stakes-visibility-forcing-function) — why milestones derive their power from external consequences (social + financial), not internal deadlines.
 
+### Part 7 — Labels & Closure
+
+#### Label Architecture
+
+Phase labels encode both type and position. Columns carry status — no status labels needed.
+
+| Label | Purpose | Who |
+|-------|---------|-----|
+| **ja/design** | JA extraction pass work (design doc) | Junior Architect |
+| **dev/design** | Developer spec phase (DoD + AC in tracking.md) | Developer |
+| **dev/implement** | Developer build phase (code + AC verify) | Developer |
+| **manager** | Quick admin/coordination task (no spec flow) | VP/Delivery |
+| **blocked** | External dependency — signal overlay | Any |
+| **epic** | Identifies Commitment Epics on Commitments Board | VP/Delivery |
+| **Client labels** | Per-client filtering (e.g., `01_ARCHIBUS`) | Grooming |
+
+**Phase label transitions:**
+- Issue created → `dev/design` (Developer), `ja/design` (JA), or `manager`
+- Design Review approved → Dev Lead changes label to `dev/implement` + comment
+- Design Review rejected → stays `dev/design` + feedback comment
+- Implement Review approved → issue closes (Done)
+
+#### Closure Semantics
+
+| Type | Done When | Closing Action |
+|------|-----------|---------------|
+| **ja/design** | Design doc published, decomposition complete | JA issue closes. Reopens at proof points (see [Part 3](#part-3--ja-design-container)). |
+| **dev/design** | DoD + AC in tracking.md, Design Review approved | Label flips to `dev/implement` — issue continues, doesn't close. |
+| **dev/implement** | Implement Review passed on preview | Issue closes. PR merges to staging. |
+| **dev/implement (fail)** | Implement Review failed on spec problem | Issue CLOSES as learning artifact. New issue under same JA parent. |
+| **manager** | Task complete | Closes directly (Backlog → Working → Done, no Review). |
+| **Commitment Epic** | Client relationship concludes | VP/Delivery closes. Rare — epics stay open for the relationship duration. |
+
+#### Conversation Audit Trail
+
+Developer sessions (Claude Code conversations) are pushed to a shared repository and linked from issue comments. This gives the Dev Lead forensic-level access to investigate decisions point-in-time using the conversation-reader skill, without relying on the Developer's account of what happened.
+
+---
+
+## Source
+
+**Supersedes:** [Issue Lifecycle Router v1](https://mariuswilsch.github.io/public-wilsch-ai-pages/global/issue-lifecycle-router-v1) — February 2026 extraction passes, archived.
+
+**v1 extraction history (2026-02):**
+- E-Myth Management Strategy interview (2026-02-06) — ILR reconciliation with Operations Manual
+- Original Issue Lifecycle Router (2026-01)
+- Framework: Michael Gerber, *The E-Myth Revisited*, Chapter 15
+- Epic Lifecycle extraction pass (2026-02-16) — Session: 3762438b
+- Dev Lead observability extraction pass (2026-02-17) — Session: 478e31b8
+- Review Queue config spec extraction pass (2026-02-19) — Session: e139408b
+- Epic model restructure extraction pass (2026-02-24) — Session: 73be003e
+- Operational model extraction pass (2026-02-26) — Session: dc864b00
+- Milestone retrofit + ILR contradiction pass (2026-02-27) — Session: 316adeee
+- Ceremony definition extraction pass (2026-02-28) — Session: 83d4d2fe
+- Sub-issue lifecycle extraction pass (2026-02-28) — Session: a38692bf
+- Trunk-first decomposition extraction pass (2026-03-21) — Session: d2f2ef3a
+
+**v2 extraction (2026-04):**
+- ILR retrofit extraction pass (2026-04-05) — JA-as-parent, commitment epic, close-on-witness-failure, continuous review model, ceremony naming, preview witness (Undefined → #646)
+- Session: /Users/verdant/.claude/projects/-Users-verdant-Documents-projects-00-WILSCH-AI-INTERNAL--soloforce/02f9a9a7-e02a-43a2-8262-b64f45ee1730.jsonl
+- Sources: CCI #600, #602, #605, #646, #657. Dev Lead PA. Developer protocol. Dev Lead protocol. Ship with Confidence. Deployment & Runtime State Design.
+- Evidence: Position epics (88+ observations on #605), IITR + Archibus post-mortems, March operational evidence (David operating Developer position)
+
 ---
 
 © 2026 Wilsch AI Services OÜ. All rights reserved. Licensed under [CC BY-NC-ND 4.0](https://creativecommons.org/licenses/by-nc-nd/4.0/).
-
