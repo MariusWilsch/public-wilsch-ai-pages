@@ -2,10 +2,10 @@
 publish: true
 ---
 
-# Monthly Planning System — Design Doc (v2)
+# Monthly Planning System — Design Doc (April 2026)
 [[coo-position]]
 
-Redesign of the monthly planning methodology. Replaces the Package Model (v1) with a three-lens evaluation framework after March practice invalidated the project-position coupling. Supersedes [v1](monthly-planning-system-design).
+April redesign of the monthly planning methodology. Replaces the Package Model with a three-lens evaluation framework after March practice invalidated the project-position coupling. Previous design: [Feb–Mar 2026](monthly-planning-system-design).
 
 ---
 
