@@ -60,6 +60,82 @@ The package model assumed project and position form a single unit — "working o
 
 **Undefined:** Per-client scoring schema — the weighted evaluation replacing the docket. → Next extraction pass.
 
+### Part 2: Position Work as First-Class Citizen
+
+The v1 design stated: "Position improvement is a byproduct of project delivery, not a standalone activity." This inverted in practice.
+
+**The E-Myth evolution path:**
+- **February:** Marius owns everything — developer, JA, dev lead, system engineer. The entire VP of Delivery path. Unscalable.
+- **March:** David takes worker positions (developer, JA). Marius becomes reviewer only — 4 hours morning Block 1, clearing the review queue. The system works: "the issue was never finding people, it was finding my system first."
+- **April target:** Review bottleneck removed. One dedicated reviewer handles review continuously (not a 4-hour morning block). Ralph drives autonomous implementation. Marius and David freed for #847 (Design Partner / company direction).
+
+**The capacity model shift:**
+- **Current (1-to-4):** One operator, four interactive terminals. Context-switching between terminals in a maker session.
+- **Target (1-to-N):** One reviewer, N autonomous agents in non-interactive sessions. Capacity limited only by review throughput. "As soon as the implementation moves autonomous, we can have as many as we want — blocked only by review."
+
+**Position work gets its own forcing function.** Not client meeting dates — organizational bottleneck visibility. CCI #600 and #602 are urgent because they unblock the next capacity step: #600 (ILR redesign) must land so #602 (Ralph system) can live inside it, which unblocks JA decomposition, which massively increases capacity. The urgency is structural, not calendar-driven.
+
+**Confirmation bias separation.** Position work needs its own terminal to prevent the builder from also reviewing — same principle as Session C (blind verification) in the CCI model.
+
+### Part 3: The Forcing Function
+
+The sprint board does not drive urgency — it drives visibility. Urgency comes from the social and financial consequences attached to milestones.
+
+**Five drivers** (from [Stakes Visibility](https://mariuswilsch.github.io/public-wilsch-ai-pages/global/stakes-visibility-forcing-function)): financial incentives, social consequences, structural clarity, visibility, ownership. Three are active in the current model:
+
+1. **Visibility** — the sprint board shows all milestones and their sub-issues. The board's value is making everything observable at once, not driving any specific action.
+2. **Social consequences** — "I don't want to go into the meeting with nothing to show." Client meeting dates create accountability that exists regardless of the plan.
+3. **Financial consequences** — commitments per milestone, retainer obligations, contract deliverables.
+
+**Instinct is flavor, not the engine.** After the forcing function narrows the field (what's visible, what has consequences), instinct prioritizes: "not all things are equal." Instinct informed by system knowledge — what's working well, what's not — breaks ties. The v1 design worried that instinct alone produces "smart instincts, not strategy." The v2 position: instinct within a forced field IS strategy. The forcing function provides the field; instinct selects within it.
+
+**Milestones give visibility; meeting cadence gives consequences.** The milestone itself doesn't create urgency — it shows when something is due. The meeting cadence creates the social and financial pressure that makes the milestone matter. Both are needed: visibility without consequences is a dashboard nobody acts on; consequences without visibility is stress without direction.
+
+### Part 4: The Monthly Plan as Context Window
+
+The monthly plan is not an activity list — it is a context window. Like an autoregressive model where each token is conditioned on prior tokens, each daily decision is conditioned on the monthly direction: "where do we want to be at end of month?"
+
+**What it pre-decides:**
+- Which clients are active and what each contributes (cash flow, validation, IP — from the three-lens walkthrough)
+- Which position commitments are active this month (independent of client work)
+- Binary pre-decisions (leads yes/no, capacity investments yes/no)
+
+**What it does NOT pre-decide:**
+- Which issues to work on (milestones + instinct handle this daily)
+- Which position to work on in a given session (urgency-driven, not planned)
+- The split between project work and position work (emerges from the forcing function, not allocated top-down)
+
+**The Shutdown Ritual is the enforcement layer.** Post-grooming, the ritual walks milestones from both streams — project milestones and position milestones — and sequences tomorrow's blocks. The sprint board provides the visibility; the ritual converts it into action. The plan is the context that makes the ritual's selections coherent across days.
+
+**The walkthrough methodology changes.** The v1 walkthrough asked five questions ending in "project + position = package." The v2 walkthrough walks each client through the three lenses (cash flow, validation, IP) and evaluates each position commitment independently. The output is not a docket of packages but a weighted evaluation per engagement plus a list of active position commitments.
+
+**Undefined:** The walkthrough's concrete steps — how the three-lens evaluation is conducted per client, what the output artifact looks like. → Next extraction pass (per-client walkthrough).
+
+### Part 5: Enforcement — Shutdown Ritual Evolution
+
+The Shutdown Ritual remains the enforcement mechanism. What changed is what it selects from.
+
+**v1:** The ritual selected from docket packages — "which package do I work on tomorrow?"
+
+**v2:** The ritual walks milestones from both streams — project milestones and position milestones — and sequences tomorrow's blocks based on forcing function pressure (meeting proximity, bottleneck urgency, instinct).
+
+**Block evolution visible in practice** (15 commits, Feb 22 → Apr 1):
+- `0094667` (Feb 22): Package selection enforces monthly plan
+- `356a776` (Mar 6): Evolve from worker package selection to CEO block sequencing
+- `04e9467` (Mar 19): Merge VP/Delivery into Block 2, remove separate Block 1 delivery/review distinction
+
+**What survived from v1:**
+- Post-grooming trigger (not standalone evening habit)
+- Three time blocks (Enable Worker, Own Work, Manager)
+- Night-before timing for overnight incubation
+
+**What changed:**
+- Block 1 no longer distinguishes delivery from review — "effectively, it's the same thing"
+- Block 2 hosts both project work AND position work as independent terminals (March daily log shows CCI terminals alongside project terminals)
+- Milestone proximity drives selection, not package affinity
+
+**Undefined:** Block-level redesign — the specific responsibilities, ritual questions, and selection mechanics per block under the new model. → Separate extraction pass, grounded in shutdown ritual commit diffs.
+
 ---
 
 ## Source
