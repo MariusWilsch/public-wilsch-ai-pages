@@ -35,6 +35,27 @@ Capturing is nearly free. Everything after capture is refinement — routing wor
 
 ---
 
+## Glossary
+
+Terms used throughout this document, not limited to these.
+
+| Term | Definition |
+|------|-----------|
+| **Trace line** | The comment history, commits, and artifacts accumulated on a single issue. Close-on-failure preserves the old trace as a sealed learning artifact. |
+| **Junior Architect (JA)** | Position that produces design docs through extraction passes (SCOPE → SURFACE → PROBE → UPDATE → ASSESS). Interactive mode only. |
+| **Developer** | Position that implements code. Interactive (Alan) or autonomous (Ralph). |
+| **Dev Lead** | Position that reviews specs (Design Review) and witnesses implementations (Implement Review). Reports to VP/Delivery. |
+| **VP/Delivery** | Creates commitment epics, manages capacity, grooming authority, signs off on JA design docs. |
+| **Gemba** | The running system — not the code, not the report, not the PR. From Deming: "go see the actual work." |
+| **Proof point** | Validation boundary in trunk-first decomposition. The assumption whose failure would invalidate the most downstream work. |
+| **Extraction pass** | One JA cycle: SCOPE → SURFACE → PROBE → UPDATE → ASSESS. Session-atomic. |
+| **tracking.md** | Spec artifact in `.claude/tracking/issue-{N}/` containing DoD + ACs. |
+| **Project Index** | Centralized reference to transcripts, data artifacts, and external sources for a project phase. Lives in `.claude/tracking/issue-{N}/project-index.md`. |
+| **Human-in-the-loop** | Interactive sessions — human present during execution. |
+| **Human-on-the-loop** | Non-interactive sessions — AI executes autonomously, human reviews at ceremony touchpoints. |
+
+---
+
 ## Approach
 
 ### Part 1 — The Refinement Pipeline
@@ -49,8 +70,15 @@ sequenceDiagram
     participant DL as Dev Lead
 
     VP->>JA: Create JA Design issue
-    JA->>JA: Extraction passes → design doc
-    JA->>Dev: Design doc complete (grooming handoff)
+    loop Extraction passes
+        JA->>JA: Extraction pass → publish update
+        JA->>DL: Design doc ready for review
+        alt Not ready
+            DL->>JA: Feedback → another pass
+        else Ready for decomposition
+            DL->>Dev: Grooming handoff
+        end
+    end
     Dev->>Dev: Decompose → 2-3 sub-issues
 
     loop Per sub-issue
@@ -155,7 +183,7 @@ graph LR
 
 | Phase | JA Issue State | What Happens |
 |-------|---------------|-------------|
-| **Design** | Open | JA runs extraction passes, produces design doc. SA/VP reviews. |
+| **Design** | Open | JA runs extraction pass → publishes update → Dev Lead reviews → another pass if needed. Cycles until Dev Lead signals "ready for decomposition." |
 | **Decompose** | Open → Close | Developer reads design doc, creates 2-3 sub-issues as children of JA issue. JA closes. |
 | **Implementation** | Closed | Dev sub-issues cycle through dev/design → dev/implement. JA is dormant. |
 | **Proof Point** | Reopen | Evidence routes to JA issue as comment. Next decomposition batch created. |
@@ -186,13 +214,13 @@ Every dev sub-issue starts as `dev/design` and cycles through two phases in the 
 ```mermaid
 stateDiagram-v2
     [*] --> dev_design
-    dev_design --> Review : tracking.md ready
-    Review --> dev_design : Reject
-    Review --> dev_implement : Approve (label flip)
-    dev_implement --> Review2 : AC verified + deployed
-    Review2 --> Done : Pass
-    Review2 --> dev_implement : Fail (code)
-    Review2 --> Closed : Fail (spec problem)
+    dev_design --> Design_Review : tracking.md ready
+    Design_Review --> dev_design : Reject
+    Design_Review --> dev_implement : Approve (label flip)
+    dev_implement --> Implement_Review : AC verified + deployed
+    Implement_Review --> Done : Pass
+    Implement_Review --> dev_implement : Fail (code)
+    Implement_Review --> Closed : Fail (spec problem)
     Closed --> [*] : New issue under JA
     Done --> [*]
 ```
@@ -373,27 +401,6 @@ Phase label transitions are defined in [Part 4](#part-4--sub-issue-dual-cycle) (
 #### Conversation Audit Trail
 
 All sessions linked to an issue (Developer, JA, Dev Lead) are pushed to a shared repository and linked from issue comments. This gives any position forensic-level access to investigate decisions point-in-time using the conversation-reader skill, without relying on the session holder's account of what happened.
-
----
-
-## Glossary
-
-Terms used throughout this document, not limited to these.
-
-| Term | Definition |
-|------|-----------|
-| **Trace line** | The comment history, commits, and artifacts accumulated on a single issue. Close-on-failure preserves the old trace as a sealed learning artifact. |
-| **Junior Architect (JA)** | Position that produces design docs through extraction passes (SCOPE → SURFACE → PROBE → UPDATE → ASSESS). Interactive mode only. |
-| **Developer** | Position that implements code. Interactive (Alan) or autonomous (Ralph). |
-| **Dev Lead** | Position that reviews specs (Design Review) and witnesses implementations (Implement Review). Reports to VP/Delivery. |
-| **VP/Delivery** | Creates commitment epics, manages capacity, grooming authority, signs off on JA design docs. |
-| **Gemba** | The running system — not the code, not the report, not the PR. From Deming: "go see the actual work." |
-| **Proof point** | Validation boundary in trunk-first decomposition. The assumption whose failure would invalidate the most downstream work. |
-| **Extraction pass** | One JA cycle: SCOPE → SURFACE → PROBE → UPDATE → ASSESS. Session-atomic. |
-| **tracking.md** | Spec artifact in `.claude/tracking/issue-{N}/` containing DoD + ACs. |
-| **Project Index** | Centralized reference to transcripts, data artifacts, and external sources for a project phase. Lives in `.claude/tracking/issue-{N}/project-index.md`. |
-| **Human-in-the-loop** | Interactive sessions — human present during execution. |
-| **Human-on-the-loop** | Non-interactive sessions — AI executes autonomously, human reviews at ceremony touchpoints. |
 
 ---
 
